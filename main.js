@@ -16,10 +16,6 @@ if (Meteor.isClient) {
 
     route = new ReactiveVar("quiz");
 
-    Router.route('/', function () {
-        Router.go('/quiz');
-    }, { 'name': '/' });
-
     Router.route('/signIn', function () {
         return this.render('signIn');
     } ,{

@@ -1,7 +1,7 @@
 Router.route('/profile', function () {
     route.set("profile");
     this.layout('ScriptLayout');
-    this.wait(Meteor.subscribe('feedback'));
+    this.wait(Meteor.subscribe('feedback'),     Accounts.loginServicesConfigured());
     if(this.ready()){
         var myfeedback = Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId() }).fetch();
         var data = { profile : Meteor.user().profile };
@@ -101,5 +101,30 @@ if(Meteor.isServer) {
             var users = Meteor.users.find({}, {profile : 1})
             return [fb, users];
         });
+
+
+        Meteor.startup(function () {
+
+
+        /*Accounts.ui.config({
+            requestPermissions: {
+                linkedin: ['r_basicprofile'],
+            },
+        }); */
+
+          Accounts.loginServiceConfiguration.upsert({
+            service: 'linkedin'
+          }, {
+            service: 'linkedin',
+            //clientId: "774nha79etnktx", 
+            //secret: "l6ZbFCEDQ2D0hENo1",
+            
+            clientId:"81c7xemys60qav", // Not working , seems not proper configuration
+            secret:"SrqKYk5zbL9nZ0xz",
+            loginStyle: 'popup'
+          });
+        });
+
     });
 }
+
