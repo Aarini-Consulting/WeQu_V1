@@ -115,10 +115,7 @@ if(Meteor.isServer) {
             service: 'linkedin'
           }, {
             service: 'linkedin',
-            //clientId: "774nha79etnktx", 
-            //secret: "l6ZbFCEDQ2D0hENo1",
-            
-            clientId:"81c7xemys60qav", // Not working , seems not proper configuration
+            clientId:"81c7xemys60qav",
             secret:"SrqKYk5zbL9nZ0xz",
             loginStyle: 'popup'
           });
