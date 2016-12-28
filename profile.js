@@ -86,6 +86,12 @@ dataForRadar =  function dataForRadar(score) {
     }));
 };
 if (Meteor.isClient){
+    Accounts.ui.config({
+        requestPermissions: {
+            linkedin: ['r_basicprofile'],
+        }
+    });    
+
     Template.radar.onCreated(function(){
         this.data.points = dataForRadar(this.data.score)
     })
@@ -104,15 +110,8 @@ if(Meteor.isServer) {
 
 
         Meteor.startup(function () {
-
-
-        /*Accounts.ui.config({
-            requestPermissions: {
-                linkedin: ['r_basicprofile'],
-            },
-        }); */
-
-          Accounts.loginServiceConfiguration.upsert({
+ 
+        Accounts.loginServiceConfiguration.upsert({
             service: 'linkedin'
           }, {
             service: 'linkedin',
