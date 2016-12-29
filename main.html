@@ -8,20 +8,28 @@
 </body>
 
 <template name="login">
+
+
   {{#if loginWithEmail}}
-      {{>signIn}}
+  {{>signIn}}
   {{else}}
-  <section>
-    <button class="loginLinkedin">
-      <img src="/img/icon_linkedin.png">Login with LinkedIn
-    </button>
-    <br>
-    or
-    <button class="loginEmail">
-      Login with email
-    </button>
-  </section>
+
+  <div class="row">
+  <div class="col-md-6 col-sm-6 col-xs-6">
+      <section>
+        <button class="loginLinkedin">
+          <img src="/img/icon_linkedin.png">Login with LinkedIn
+        </button>
+        <br>
+        or
+        <button class="loginEmail">
+          Login with email
+        </button>
+      </section>
+    </div>
+  </div>
   {{/if}}
+
 </template>
 
 <template name="menu">
@@ -48,45 +56,45 @@
 </template>
 
 <template name="ApplicationLayout">
-    {{> menu}}
-    {{> yield}}
+  {{> menu}}
+  {{> yield}}
 </template>
 
 <template name="ScriptLayout">
-    {{> yield}}
+  {{> yield}}
 </template>
 
 <template name="profile">
   {{#if inScript}}
-    <section class="feed">
-      <section class="bgGrey ptb_h1">
-        <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
-        <div><b>{{username profile}}</b></div>
-      </section>
-      <section class="ptb_h1">
-        <img src="/img/icon_overview.png" class="titleIcon">
-        <h3>Soft Skill Overview</h3>
-        <h5>Your soft skill profile based on the questions<br> you answered about yourself</h5>
-        <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills.png'); background-size: cover;">
-          {{> radar score=myscore color="white" outline="#E96956"}}
-        </svg>
-        <div class="radarAgenda">
-          <div><img src="/img/myradar.png"></div>
-          <div><img src="/img/othersradar.png" class="t50"></div>
-        </div>
-      </section>
-      <section class="bgGrey ptb_h1">
-        <img src="/img/icon_top3.png" class="titleIcon">
-        <h3>Your 3 strengths</h3>
-        {{> threeSkills data=top3}}
-        <h3>Skills you could work out</h3>
-        {{> threeSkills data=weak3}}
-      </section>
-      <section class="ptb_h1">
-        <img src="/img/icon_mirror.png" class="titleIcon">
-        <h3>Use WeQu to find out how others see you</h3>
-        <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
-      </section>
+  <section class="feed">
+    <section class="bgGrey ptb_h1">
+      <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
+      <div><b>{{username profile}}</b></div>
+    </section>
+    <section class="ptb_h1">
+      <img src="/img/icon_overview.png" class="titleIcon">
+      <h3>Soft Skill Overview</h3>
+      <h5>Your soft skill profile based on the questions<br> you answered about yourself</h5>
+      <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills.png'); background-size: cover;">
+        {{> radar score=myscore color="white" outline="#E96956"}}
+      </svg>
+      <div class="radarAgenda">
+        <div><img src="/img/myradar.png"></div>
+        <div><img src="/img/othersradar.png" class="t50"></div>
+      </div>
+    </section>
+    <section class="bgGrey ptb_h1">
+      <img src="/img/icon_top3.png" class="titleIcon">
+      <h3>Your 3 strengths</h3>
+      {{> threeSkills data=top3}}
+      <h3>Skills you could work out</h3>
+      {{> threeSkills data=weak3}}
+    </section>
+    <section class="ptb_h1">
+      <img src="/img/icon_mirror.png" class="titleIcon">
+      <h3>Use WeQu to find out how others see you</h3>
+      <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
+    </section>
       <!--<section class="bgGrey ptb_h1">
         <img src="/img/icon_track.png" class="titleIcon">
         <h3>Track your soft skills</h3>
@@ -95,7 +103,7 @@
       </section>-->
       <button id="finish">Invite people <img src="/img/next_small.png" class="nextSmall"></button>
     </section>
-  {{else}}
+    {{else}}
     {{> menuProfile}}
     <section class="feed">
       <section class="ptb_h1">
@@ -120,111 +128,111 @@
         {{> threeSkills data=weak3}}
       </section>
     </section>
-  {{/if}}
-</template>
+    {{/if}}
+  </template>
 
-<template name="threeSkills">
-  <ul class="maxContainer">
-    {{#each data}}
+  <template name="threeSkills">
+    <ul class="maxContainer">
+      {{#each data}}
       <li class="max">
         <img src="/img/skills/{{skill}}.png">
         {{text}}
       </li>
-    {{/each}}
-  </ul>
-</template>
+      {{/each}}
+    </ul>
+  </template>
 
-<template name="radar">
-        <polygon points="{{points.self_mgmt}} {{points.problem_solving}} {{points.team_work}} {{points.communication}} {{points.leadership}} {{points.value}}"
-        fill={{color}} fill-opacity="0.5" stroke="{{outline}}" stroke-width="1" />
-</template>
+  <template name="radar">
+    <polygon points="{{points.self_mgmt}} {{points.problem_solving}} {{points.team_work}} {{points.communication}} {{points.leadership}} {{points.value}}"
+    fill={{color}} fill-opacity="0.5" stroke="{{outline}}" stroke-width="1" />
+  </template>
 
-<template name="profileSkills">
-  {{> menuProfile}}
-  <section class="feed">
-    <!--<h3>Skill Categories</h3>-->
-    {{#if enoughData}}
+  <template name="profileSkills">
+    {{> menuProfile}}
+    <section class="feed">
+      <!--<h3>Skill Categories</h3>-->
+      {{#if enoughData}}
       {{> skillCategories}}
-    {{else}}
+      {{else}}
       {{> skillsPreview}}
       <a href="/invite" class="button">Invite people</a>
-    {{/if}}
-  </section>
-</template>
+      {{/if}}
+    </section>
+  </template>
 
-<template name="skillsPreview">
-  <img src="/img/skills_dumb.png" style="width:100%; height:auto;">
-</template>
+  <template name="skillsPreview">
+    <img src="/img/skills_dumb.png" style="width:100%; height:auto;">
+  </template>
 
-<template name="skillCategories">
-  {{#each categories}}
+  <template name="skillCategories">
+    {{#each categories}}
     <div class="skillElement">
       <div class="title"><b class="h4">{{name}}</b></div>
       <div class="underBar" style="width:60%; visibility: hidden"></div>
     </div>
     {{#each skills}}
-        <div class="skillElement">
-          <div class="title">{{name}}</div>
-          <div class="underBar" style="width:60%">
-            <div class="bar {{category}}" style="width:{{value}}%"></div>
-          </div>
-          <div class="score">{{scored}}/{{total}}</div>
-        </div>
+    <div class="skillElement">
+      <div class="title">{{name}}</div>
+      <div class="underBar" style="width:60%">
+        <div class="bar {{category}}" style="width:{{value}}%"></div>
+      </div>
+      <div class="score">{{scored}}/{{total}}</div>
+    </div>
     {{/each}}
-  {{/each}}
-</template>
+    {{/each}}
+  </template>
 
-<template name="profileWrittenFeedback">
-  {{> menuProfile}}
-  <section class="feed">
-    <div class="feedElement">
-      <div class="who">
-        <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
+  <template name="profileWrittenFeedback">
+    {{> menuProfile}}
+    <section class="feed">
+      <div class="feedElement">
+        <div class="who">
+          <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
+        </div>
+        <div class="what">
+          <b>Ivan Pashchenko</b> wrote<br>
+          Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free XOXO wolf typewriter mixtape small batch.
+        </div>
       </div>
-      <div class="what">
-        <b>Ivan Pashchenko</b> wrote<br>
-        Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free XOXO wolf typewriter mixtape small batch.
+      <div class="feedElement">
+        <div class="who">
+          <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
+        </div>
+        <div class="what">
+          <b>Ivan Pashchenko</b> wrote<br>
+          Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free XOXO wolf typewriter mixtape small batch.
+        </div>
       </div>
-    </div>
-    <div class="feedElement">
-      <div class="who">
-        <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
+      <div class="feedElement">
+        <div class="who">
+          <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
+        </div>
+        <div class="what">
+          <b>Ivan Pashchenko</b> wrote<br>
+          Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free XOXO wolf typewriter mixtape small batch.
+        </div>
       </div>
-      <div class="what">
-        <b>Ivan Pashchenko</b> wrote<br>
-        Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free XOXO wolf typewriter mixtape small batch.
-      </div>
-    </div>
-    <div class="feedElement">
-      <div class="who">
-        <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
-      </div>
-      <div class="what">
-        <b>Ivan Pashchenko</b> wrote<br>
-        Kogi Cosby sweater ethical squid irony disrupt, organic tote bag gluten-free XOXO wolf typewriter mixtape small batch.
-      </div>
-    </div>
-  </section>
-</template>
+    </section>
+  </template>
 
-<template name="quizNothing">
-<section class="whiteText gradient{{currentUser.profile.gradient}}">
-  <h3>You have no one to evaluate</h3>
-  <a href="/invite" class="button">Invite people</a>
-</section>
-</template>
+  <template name="quizNothing">
+    <section class="whiteText gradient{{currentUser.profile.gradient}}">
+      <h3>You have no one to evaluate</h3>
+      <a href="/invite" class="button">Invite people</a>
+    </section>
+  </template>
 
-<template name='quiz'>
-  <section class="vote gradient{{person.gradient}}">
-    <section class="person">
+  <template name='quiz'>
+    <section class="vote gradient{{person.gradient}}">
+      <section class="person">
         <div>
           <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img src="/img/left.png" class="nav"></a>
         </div>
         <div class="h4">
           {{#if person.pictureUrl}}
-            <img src="{{person.pictureUrl}}" class="avatar">
+          <img src="{{person.pictureUrl}}" class="avatar">
           {{else}}
-            <img src="/img/avatar.png" class="avatar">
+          <img src="/img/avatar.png" class="avatar">
           {{/if}}
           <br>
           {{username person}}
@@ -232,16 +240,16 @@
         <div>
           <a id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img src="/img/right.png" class="nav"></a>
         </div>
-    </section>
-    {{#if feedback}}
-    <section>
-      {{#if writtenFeedback}}
+      </section>
+      {{#if feedback}}
+      <section>
+        {{#if writtenFeedback}}
         <div class="question">
           Why do you think so?
         </div>
         <textarea rows="3" style="width:100%">Wrote your feedback here</textarea>
 
-      {{else}}
+        {{else}}
         <div class="question">
           <h2>{{question.text}}</h2>
           <!--{{#unless self}}
@@ -250,70 +258,70 @@
         </div>
         <ul class="answers">
           {{#each question.answers}}
-            <li class="answer" id="{{_id}}">{{text}}</li>
+          <li class="answer" id="{{_id}}">{{text}}</li>
           {{/each}}
         </ul>
+        {{/if}}
+        <div class="statusBar">
+          <div>Question {{questionNum}} of {{questionsTotal}}</div>
+          {{#unless self}}
+          <!--<a href="" class="skip">Skip</a>-->
+          <!--<a href="" class="writeAnswer">Answer</a>-->
+          <div><a href="" class="skip">Skip this question</a></div>
+          {{/unless}}
+        </div>
+      </section>
       {{/if}}
-      <div class="statusBar">
-        <div>Question {{questionNum}} of {{questionsTotal}}</div>
-        {{#unless self}}
-        <!--<a href="" class="skip">Skip</a>-->
-        <!--<a href="" class="writeAnswer">Answer</a>-->
-        <div><a href="" class="skip">Skip this question</a></div>
-        {{/unless}}
-      </div>
     </section>
-    {{/if}}
-  </section>
-</template>
+  </template>
 
-<template name="evaluate">
-  Evaluate me
-</template>
+  <template name="evaluate">
+    Evaluate me
+  </template>
 
-<template name="admin">
-  <section>
-    <button id="import"> import answers </button>
-    <button id="reset"> reset login script </button>
-    <button id="logout"> logout </button>
-    <button id="login"> login with test account </button>
-  </section>
-</template>
+  <template name="admin">
+    <section>
+      <button id="import"> import answers </button>
+      <button id="reset"> reset login script </button>
+      <button id="logout"> logout </button>
+      <button id="login"> login with test account </button>
+    </section>
+  </template>
 
-<template name="invite">
-  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
-    {{#case inviteStatus='default'}}
+  <template name="invite">
+    <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
+      {{#case inviteStatus='default'}}
       <h3>Invite people to get<br> their feedback</h3>
-    {{/case}}
-    {{#case inviteStatus='sending'}}
+      {{/case}}
+      {{#case inviteStatus='sending'}}
       <span class="sendingStatus"><img src="/img/status_sending.png">sending...</span>
-    {{/case}}
-    {{#case inviteStatus='sent'}}
+      {{/case}}
+      {{#case inviteStatus='sent'}}
       <span class="sendingStatus"><img src="/img/status_sent.png">sent!</span>
-    {{/case}}
-    {{#case inviteStatus='error'}}
+      {{/case}}
+      {{#case inviteStatus='error'}}
       <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
-    {{/case}}
-    <div>
-      <input name="name" placeholder="name" />
-      <input name="email" placeholder="email" autocapitalize="off" autocorrect="off"/>
-      <button id="invite">Invite</button>
-    </div>
+      {{/case}}
+      <div>
+        <input name="name" placeholder="name" />
+        <input name="email" placeholder="email" autocapitalize="off" autocorrect="off"/>
+        <button id="invite">Invite</button>
+      </div>
     <!--{{#if inScript}}
     <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
     {{/if}}-->
     {{#if inScript}}
     {{else}}
-      {{#each users}}
-        <div class="friend">
-          {{#if profile.pictureUrl}}
-          <img src="{{profile.pictureUrl}}" class="avatarSmall"><br>
-          {{else}}
-          <img src="/img/avatar.png" class="avatarSmall">
-          {{/if}}
-          {{username profile}}
-        </div>
-      {{/each}}
+    {{#each users}}
+    <div class="friend">
+      {{#if profile.pictureUrl}}
+      <img src="{{profile.pictureUrl}}" class="avatarSmall"><br>
+      {{else}}
+      <img src="/img/avatar.png" class="avatarSmall">
+      {{/if}}
+      {{username profile}}
+    </div>
+    {{/each}}
     {{/if}}
   </section>
 </template>
@@ -372,20 +380,20 @@
 <template name="scriptLoginFail">
   <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
     <h2 style="width:65%">
-        Something went wrong with initial setup
-        <button> restart </button>
+      Something went wrong with initial setup
+      <button> restart </button>
     </h2>
   </section>
 </template>
 
 <template name="scriptLoginFinish">
-<section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
     <h2>
       Well done!<br>
       Now answer questions<br>about this person
     </h2>
     <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
-</section>
+  </section>
 </template>
 
 <template name="scriptInviteInit">
@@ -405,21 +413,21 @@
       <h2>Which strength do you have?</h2>
       <!--<button class="next loginLinkedin">
           <img src="/img/icon_linkedin.png"> Login with LinkedIn
-      </button>-->
+        </button>-->
+      </section>
+      {{> login}}
     </section>
-    {{> login}}
-  </section>
-</template>
+  </template>
 
-<template name="error">
-  <section class="gradient1 whiteText alignCenter">
-    <section>
+  <template name="error">
+    <section class="gradient1 whiteText alignCenter">
+      <section>
         <h2> {{message}} </h2>
+      </section>
     </section>
-  </section>
 
-</template>
+  </template>
 
-<template name="_case_default">
-  {{> UI.contentBlock}}
-</template>
+  <template name="_case_default">
+    {{> UI.contentBlock}}
+  </template>
