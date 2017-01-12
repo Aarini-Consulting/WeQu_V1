@@ -7,7 +7,6 @@ $h3: 4vmin;
 $h4: 3.5vmin;
 $h5: 3vmin;
 
-
 @mixin clip-path($clip) {
   -webkit-clip-path: $clip;
   -moz-clip-path: $clip;
@@ -83,7 +82,7 @@ h3 + h5 {
 .alignCenter {text-align: center}
 
 button, .button {
-  width: 40%;
+  width: 80%;
   padding: 18px 0;
   margin: 20px 0;
 

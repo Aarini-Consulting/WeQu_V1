@@ -1,30 +1,20 @@
-  <template name="signIn">
+<template name="signIn">
+  <section class="signIn">
+    {{#if signUpShow}}
+      {{>signUp}}
+    {{else}}
+    <form id="signIn">
+        <input type="email" name="loginEmail" placeholder="email"  required>
+        <input type="password" name="loginPassword" placeholder="password" required>
+        <button type="submit">
+          Login
+        </button>
+    </form>
+    <div id="error"></div>
+    <br>
+    or
+    <a href="{{pathFor 'signUp'}}" id="signUp">Sign up</a>
+    {{/if}}
+  </section>
 
-
-    <div class="row">
-      <div class="col-md-3 col-sm-3 col-xs-3">
-      </div>
-      <div class="col-md-1 col-sm-1 col-xs-1">
-        <section class="signIn">
-          {{#if signUpShow}}
-          {{>signUp}}
-          {{else}}
-          <form id="signIn">
-            <input type="email" name="loginEmail" placeholder="email"  required>
-            <input type="password" name="loginPassword" placeholder="password" required>
-            <button type="submit">
-              Login
-            </button>
-          </form>
-          <div id="error"></div>
-          <br>
-          or
-          <a href="{{pathFor 'signUp'}}" id="signUp">Sign up</a>
-          {{/if}}
-        </section>
-      </div>
-      <div class="col-md-3 col-sm-3 col-xs-3">
-      </div>
-    </div>
-
-  </template>
+</template>
