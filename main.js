@@ -19,11 +19,16 @@ if (Meteor.isClient) {
     Router.route('/signIn', function () {
         return this.render('signIn');
     } ,{
+        name: 'signIn' });
+
+    Router.route('/', function () {
+        return this.render('signIn');
+    });
+
+    Router.route('/signUp', function () {
+        return this.render('signUp');
+    } ,{
         name: 'signUp' });
-        Router.route('/signUp', function () {
-            return this.render('signUp');
-        } ,{
-            name: 'signIn' });
 
     Router.route('/feed', function () {
         route.set('feed')
