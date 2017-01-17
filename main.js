@@ -2,7 +2,7 @@ if (Meteor.isClient) {
 
     Router.configure({ layoutTemplate: 'ApplicationLayout' });
     Router.onBeforeAction(function () {
-        Meteor.userId() ? this.next() : this.render('signIn');
+        Meteor.userId() ? this.next() : this.render('login');
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp'] });
 
     Router.onBeforeAction(function () {
@@ -38,7 +38,7 @@ if (Meteor.isClient) {
       route: function(status) {
         return status == route.get();
       },
-      loggedIn(){
+      loggedIn: function(){
         return !Meteor.userId();
       }
     });
