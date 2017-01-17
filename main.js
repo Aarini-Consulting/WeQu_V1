@@ -8,26 +8,27 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript()) {
+        } else if(getLoginScript() && Router.current().route.getName()!="/invite") {
             Router.go('/script-login')
         }
         return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id' ] });
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite' ] });
 
     route = new ReactiveVar("quiz");
-
-    Router.route('/', function () {
-        Router.go('/quiz');
-    }, { 'name': '/' });
 
     Router.route('/signIn', function () {
         return this.render('signIn');
     } ,{
+        name: 'signIn' });
+
+    Router.route('/', function () {
+        return this.render('signIn');
+    });
+
+    Router.route('/signUp', function () {
+        return this.render('signUp');
+    } ,{
         name: 'signUp' });
-        Router.route('/signUp', function () {
-            return this.render('signUp');
-        } ,{
-            name: 'signIn' });
 
     Router.route('/feed', function () {
         route.set('feed')
@@ -36,14 +37,25 @@ if (Meteor.isClient) {
     Template.menu.helpers ({
       route: function(status) {
         return status == route.get();
+      },
+      loggedIn: function(){
+        return !Meteor.userId();
       }
     });
+
+    Template.menu.events({
+      "click #logout" : function(){
+          Meteor.logout();
+          Router.go('/profile');
+       }
+   });
 
     Template.menuProfile.helpers ({
       route: function(status) {
         return status == route.get();
       }
     });
+
     Template.login.events({
         "click .loginLinkedin" : function(){
             Meteor.loginWithLinkedin(function(err){
@@ -53,8 +65,9 @@ if (Meteor.isClient) {
         "click .loginEmail" : function(){
           Session.set("loginWithEmail", true);
           Router.go('/signIn');
-        },
+        }
     })
+
     Template.login.helpers({
       loginWithEmail: function () {
         return Session.get('loginWithEmail');

@@ -1,7 +1,7 @@
 Router.route('/profile', function () {
     route.set("profile");
     this.layout('ScriptLayout');
-    this.wait(Meteor.subscribe('feedback'));
+    this.wait(Meteor.subscribe('feedback'),     Accounts.loginServicesConfigured());
     if(this.ready()){
         var myfeedback = Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId() }).fetch();
         var data = { profile : Meteor.user().profile };
@@ -86,6 +86,12 @@ dataForRadar =  function dataForRadar(score) {
     }));
 };
 if (Meteor.isClient){
+    Accounts.ui.config({
+        requestPermissions: {
+            linkedin: ['r_basicprofile'],
+        }
+    });    
+
     Template.radar.onCreated(function(){
         this.data.points = dataForRadar(this.data.score)
     })
@@ -101,5 +107,20 @@ if(Meteor.isServer) {
             var users = Meteor.users.find({}, {profile : 1})
             return [fb, users];
         });
+
+
+        Meteor.startup(function () {
+ 
+        Accounts.loginServiceConfiguration.upsert({
+            service: 'linkedin'
+          }, {
+            service: 'linkedin',
+            clientId:"758ew0beoeqe01",
+            secret:"qwAMdc8wlJ3KxgY1",
+            loginStyle: 'popup'
+          });
+        });
+
     });
 }
+
