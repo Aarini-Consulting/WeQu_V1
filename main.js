@@ -2,7 +2,7 @@ if (Meteor.isClient) {
 
     Router.configure({ layoutTemplate: 'ApplicationLayout' });
     Router.onBeforeAction(function () {
-        Meteor.userId() ? this.next() : this.render('login');
+        Meteor.userId() ? this.next() : this.render('signIn');
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp'] });
 
     Router.onBeforeAction(function () {
@@ -37,14 +37,25 @@ if (Meteor.isClient) {
     Template.menu.helpers ({
       route: function(status) {
         return status == route.get();
+      },
+      loggedIn(){
+        return !Meteor.userId();
       }
     });
+
+    Template.menu.events({
+      "click #logout" : function(){
+          Meteor.logout();
+          Router.go('/profile');
+       }
+   });
 
     Template.menuProfile.helpers ({
       route: function(status) {
         return status == route.get();
       }
     });
+
     Template.login.events({
         "click .loginLinkedin" : function(){
             Meteor.loginWithLinkedin(function(err){
@@ -54,8 +65,9 @@ if (Meteor.isClient) {
         "click .loginEmail" : function(){
           Session.set("loginWithEmail", true);
           Router.go('/signIn');
-        },
+        }
     })
+
     Template.login.helpers({
       loginWithEmail: function () {
         return Session.get('loginWithEmail');
