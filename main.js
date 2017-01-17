@@ -8,11 +8,11 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript()) {
+        } else if(getLoginScript() && Router.current().route.getName()!="/invite") {
             Router.go('/script-login')
         }
         return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id' ] });
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite' ] });
 
     route = new ReactiveVar("quiz");
 

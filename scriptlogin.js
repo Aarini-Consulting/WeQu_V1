@@ -97,12 +97,12 @@ if(Meteor.isClient){
     });
 
     Template.scriptLoginFail.events({
-        "click button" : function(){
+      /*  "click button" : function(){
             Meteor.call("reset", function(){
                 setLoginScript('init');
                 Router.go("/");
             })
-        }
+        } */
     });
     Template['scriptLoginFinish'].events({
         'click #next' : function () {
