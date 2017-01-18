@@ -5,6 +5,10 @@ Template.signIn.events({
           if(err){
             $('#error').text(err);
           }
+          else
+          {
+            Router.go('/quiz');
+          }
         });
     },
     'click #signUp': function (event) {

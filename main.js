@@ -8,7 +8,7 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript()) {
+        } else if(getLoginScript() /* && Router.current().route.getName()!="/invite" */) {
             Router.go('/script-login')
         }
         return this.next();
@@ -59,7 +59,10 @@ if (Meteor.isClient) {
     Template.login.events({
         "click .loginLinkedin" : function(){
             Meteor.loginWithLinkedin(function(err){
-                console.log("login", err);
+                if(err)
+                    console.log("login", err);
+                else
+                setLoginScript("quiz");
             })
         },
         "click .loginEmail" : function(){
@@ -73,6 +76,12 @@ if (Meteor.isClient) {
         return Session.get('loginWithEmail');
       },
     });
+
+    setLoginScript =  function setLoginScript(value) {
+        Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': value } });
+    };
+
+
     Template.registerHelper("username", getUserName);
     Template.registerHelper("case", function(){
         var pair =_.chain(this).pairs().first().value();
