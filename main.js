@@ -8,7 +8,7 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript() && Router.current().route.getName()!="/invite") {
+        } else if(getLoginScript()) {
             Router.go('/script-login')
         }
         return this.next();

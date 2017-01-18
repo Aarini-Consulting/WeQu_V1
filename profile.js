@@ -115,8 +115,8 @@ if(Meteor.isServer) {
             service: 'linkedin'
           }, {
             service: 'linkedin',
-            clientId:"758ew0beoeqe01",
-            secret:"qwAMdc8wlJ3KxgY1",
+            clientId:"81c7xemys60qav",
+            secret:"SrqKYk5zbL9nZ0xz",
             loginStyle: 'popup'
           });
         });
