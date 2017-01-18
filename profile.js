@@ -110,13 +110,24 @@ if(Meteor.isServer) {
 
 
         Meteor.startup(function () {
+
+            var clientId,secret;
+            if(Meteor.isDevelopment)
+            {
+                clientId = "81c7xemys60qav";
+                secret = "SrqKYk5zbL9nZ0xz";
+            }
+            if(Meteor.isProduction){
+                clientId = "758ew0beoeqe01";
+                secret = "qwAMdc8wlJ3KxgY1";
+            }
  
         Accounts.loginServiceConfiguration.upsert({
             service: 'linkedin'
           }, {
             service: 'linkedin',
-            clientId:"81c7xemys60qav",
-            secret:"SrqKYk5zbL9nZ0xz",
+            clientId:clientId,
+            secret: secret,
             loginStyle: 'popup'
           });
         });
