@@ -48,6 +48,7 @@ if (Meteor.isClient) {
           Meteor.logout();
           Router.go('/profile');
        }
+        
    });
 
     Template.menuProfile.helpers ({
@@ -56,16 +57,13 @@ if (Meteor.isClient) {
       }
     });
 
+    Template.login.rendered = function(){
+        // TODO : Temporarily doing this .. verify is this way needed .
+        Session.set("loginWithEmail", true);
+    }
+
     Template.login.events({
-        "click .loginLinkedin" : function(){
-            Meteor.loginWithLinkedin(function(err){
-                if(err)
-                    console.log("login", err);
-                else
-                setLoginScript("quiz");
-            })
-        },
-        "click .loginEmail" : function(){
+       "click .loginEmail" : function(){
           Session.set("loginWithEmail", true);
           Router.go('/signIn');
         }

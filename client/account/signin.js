@@ -12,7 +12,16 @@ Template.signIn.events({
         });
     },
     'click #signUp': function (event) {
+      Router.go('/signUp');
       Session.set('signUp', true);
+    },
+    'click .loginLinkedin' : function(){
+            Meteor.loginWithLinkedin(function(err){
+                if(err)
+                    console.log("login", err);
+                else
+                setLoginScript("quiz");
+            })
     }
 });
 Template.signIn.helpers({

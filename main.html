@@ -1,27 +1,21 @@
 <head>
   <title>WeQu</title>
   <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no">
-  <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="/img/assets/wequ_icon.png"/>
 </head>
 
 <body>
 </body>
 
 <template name="login">
+ 
+ <div class="loginBody">
+  
   {{#if loginWithEmail}}
       {{>signIn}}
-  {{else}} 
-  <section>
-    <button class="loginLinkedin">
-      <img src="/img/icon_linkedin.png">Login with LinkedIn
-    </button>
-    <br>
-    or
-    <button class="loginEmail">
-      Login with email
-    </button>
-  </section>
   {{/if}}
+
+  </div>
 </template>
 
 <template name="menu">
@@ -31,7 +25,7 @@
     <!--<a href="/feed" class="{{#if route 'feed'}}t100{{else}}t50{{/if}}"><img src="/img/icon_feed.png"></a>-->
     <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}"><img src="/img/icon_profile.png" ></a>
 
-    <a href="#" id="login" class="{{#unless loggedIn}}hidden{{/unless}}"> <img src="/img/login_button.png" ></a>
+    <a href="{{pathFor 'signIn'}}" id="login" class="{{#unless loggedIn}}hidden{{/unless}}"> <img src="/img/login_button.png" ></a>
     <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img src="/img/login_button_deactive.png" ></a>
 
     <!--<a href="/admin">A</a>-->
@@ -52,7 +46,7 @@
 </template>
 
 <template name="ApplicationLayout">
-    {{> menu}}
+    <!-- {{> menu}} -->
     {{> yield}}
 </template>
 

@@ -1,10 +1,35 @@
-<template name="signUp">
-    <form>
-        <input type="email" name="registerEmail" placeholder="email" required>
-        <input type="password" name="registerPassword" placeholder="password" required>
-        <button type="submit">Register</button>
-    </form>
-    <div id="error">
+	<template name="signUp">
+		<div class="row signUp">
+		 <div class="container">
+			<div class="col-md-3 col-sm-3"></div>
+			<div class="col-md-6 col-sm-6">
+				<form action="#">
+					<input type="text" name="firstName" placeholder="firstName" required>
+					<input type="text" name="lastName" placeholder="lastName" required>
 
-    </div>
-</template>
+					<input type="email" name="registerEmail" placeholder="email" required>
+					<input type="password" name="registerPassword" placeholder="password" required>
+					<button type="submit" class="btn btn-primary btn-small" id="submitForm"> signUp </button>
+					<div>
+						<h5> By clicking Sign up you are agreeing to the <b>Terms and Conditions </b> and <b>Privacy Policy </b>
+						</h5>
+					</div>
+
+					<!-- <div class="row">
+					 	<div class="col-md-6 col-sm-6">
+					  		<h5> Already have account ! click here </h5>
+					  	</div>
+					  	<div class="col-md-6 col-sm-6">
+					  		<input type="button" class="btn btn-default btn-small" name="" id="signin" value="sign in">
+					  	</div>
+					 </div>
+					 -->
+				</form>
+				<div id="error">
+
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3"></div>
+			</div>
+		</div>
+	</template>
