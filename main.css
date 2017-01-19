@@ -1,3 +1,19 @@
 .hidden{
 	display: none;
 }
+
+.loginBody .signUp{
+	 background-image:url(/img/assets/background.png); 
+	 margin-bottom: 100px;
+}
+
+/* TODO : Bad practice without bootstrap doing this way ..  */
+
+.loginBody{
+	 margin-top: 20px;
+	 overflow: scroll;
+}
+
+.wequ_icon{
+	width: 25%;
+}
