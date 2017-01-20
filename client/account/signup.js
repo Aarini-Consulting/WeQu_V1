@@ -24,3 +24,9 @@ Template.signUp.events({
           }});
     }
     });
+
+
+
+Template.signUp.rendered = function(){
+  $('.menuBar').hide();
+}

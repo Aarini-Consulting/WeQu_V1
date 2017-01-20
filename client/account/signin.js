@@ -29,3 +29,7 @@ Template.signIn.helpers({
     return Session.get('signUp');
   },
 });
+
+Template.signIn.rendered = function(){
+  $('.menuBar').hide();
+}
