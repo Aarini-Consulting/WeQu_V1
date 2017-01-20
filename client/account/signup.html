@@ -1,35 +1,62 @@
 	<template name="signUp">
-		<div class="row signUp">
-		 <div class="container">
-			<div class="col-md-3 col-sm-3"></div>
-			<div class="col-md-6 col-sm-6">
-				<form action="#">
-					<input type="text" name="firstName" class="form-control" placeholder="firstName" required>
-					<input type="text" name="lastName" class="form-control" placeholder="lastName" required>
 
-					<input type="email" name="registerEmail" placeholder="email" required>
-					<input type="password" name="registerPassword" placeholder="password" required>
-					<button type="submit" class="btn btn-primary btn-small" id="submitForm"> signUp </button>
-					<div>
-						<h5> By clicking Sign up you are agreeing to the <b>Terms and Conditions </b> and <b>Privacy Policy </b>
-						</h5>
+		<div class="row">
+		<div class="col-md-2 col-sm-2"> </div>
+			<div class="col-md-8 col-sm-8"> 
+
+				<div class="panel panel-default">
+					<div class="row">
+						<div class="col-md-5 col-sm-5"> </div>
+						<div class="col-md-4 col-sm-4"> 
+							<img class="wequ_icon" src="/img/assets/wequ_icon.png">
+						</div>
+						<div class="col-md-3 col-sm-3"> </div>
 					</div>
 
-					<!-- <div class="row">
-					 	<div class="col-md-6 col-sm-6">
-					  		<h5> Already have account ! click here </h5>
-					  	</div>
-					  	<div class="col-md-6 col-sm-6">
-					  		<input type="button" class="btn btn-default btn-small" name="" id="signin" value="sign in">
-					  	</div>
-					 </div>
-					 -->
-				</form>
-				<div id="error">
+
+					<div class="row signUp">
+
+						<div class="col-md-1 col-sm-1"></div>
+						<div class="col-md-10 col-sm-10">
+							<form>
+								<div class="form-group">
+								<input type="text" name="firstName" class="form-control input-lg" placeholder="firstName" required>
+								<input type="text" name="lastName" class="form-control input-lg" placeholder="lastName" required>
+
+								<input type="email" name="registerEmail" class="form-control input-lg" placeholder="email" required>
+								<input type="password" name="registerPassword" class="form-control input-lg" placeholder="password" required>
+								</div>
+
+								<button type="submit" class="btn btn-primary btn-lg" id="submitForm"> Sign Up </button>
+								<div id="error" class="black-text">
+								</div>
+
+								<div class="black-text">
+									<h5> By clicking Sign up you are agreeing to the <b>Terms and Conditions </b> and <b>Privacy Policy </b>
+									</h5>
+								</div>
+
+								<div class="row">
+									<div class="col-md-8 col-sm-8">
+										<h5 class="black-text"> Already have account ! click here </h5>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<input type="button" class="btn btn-default sign-in" name="" id="signIn" value="Sign in">
+									</div>
+								</div>
+
+							</form>
+							
+						</div>
+						<div class="col-md-1 col-sm-1"></div>
+
+					</div>
 
 				</div>
+				<div class="col-md-2 col-sm-2"> </div>
 			</div>
-			<div class="col-md-3 col-sm-3"></div>
-			</div>
+
+
+
 		</div>
 	</template>

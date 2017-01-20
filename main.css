@@ -3,8 +3,8 @@
 }
 
 .loginBody .signUp{
-	 background-image:url(/img/assets/background.png); 
-	 margin-bottom: 100px;
+	/* background-image:url(/img/assets/background.png); */
+	 margin-bottom: 20px;
 }
 
 #signInForm{
@@ -14,7 +14,7 @@
 
 .signIn{
 	margin-top: 100px;
-	margin-bottom: 100px;
+	margin-bottom: 20px !important;
 }
 
 .loginBody{
@@ -36,8 +36,8 @@
 	color: white;
 }
 
-#sign-up{
-	margin-top: 0px;
+#sign-up .sign-in{
+	margin-top: 0px !important;
 	border-color: black;
 }
 
