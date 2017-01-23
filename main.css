@@ -7,7 +7,7 @@
 	 margin-bottom: 20px;
 }
 
-#signInForm{
+#form{
 	 
 	background: url(/img/assets/background.png) no-repeat center center fixed;
 	background-repeat: no-repeat;
@@ -17,17 +17,18 @@
 }
 
 .signIn{
-	margin-top: 100px;
+	margin-top: 50px;
 	margin-bottom: 20px !important;
 }
 
 .loginBody{
 	 overflow: scroll;
+	 overflow-x: hidden;
 	 cursor: default;
 }
 
 .wequ_icon{
-	margin-top: 20px;
+	margin-top: 10px;
 	width: 100%;
 	position: center;
 }
@@ -40,10 +41,16 @@
 	color: white;
 }
 
-#sign-up .sign-in{
+.sign-in{
 	margin-top: 0px !important;
 	border-color: black;
 }
+
+#sign-up{
+	margin-top: 0px !important;
+}
+
+
 
 #grey-color{
 	background-color: #ccc;
@@ -59,4 +66,8 @@
 
 html {
     height: 100%
+}
+
+#submitForm{
+	width: 100%;
 }

@@ -1,23 +1,23 @@
 	<template name="signUp">
 
-		<div class="row">
-		<div class="col-md-2 col-sm-2"> </div>
-			<div class="col-md-8 col-sm-8"> 
+		<div class="row" id="form">
+		<div class="col-md-3 col-sm-3 col-xs-3"> </div>
+			<div class="col-md-6 col-sm-6 col-xs-6"> 
 
 				<div class="panel panel-default">
 					<div class="row">
-						<div class="col-md-5 col-sm-5"> </div>
-						<div class="col-md-4 col-sm-4"> 
+						<div class="col-md-4 col-sm-4 col-xs-4"> </div>
+						<div class="col-md-4 col-sm-4 col-xs-4"> 
 							<img class="wequ_icon" src="/img/assets/favicon.png">
 						</div>
-						<div class="col-md-3 col-sm-3"> </div>
+						<div class="col-md-4 col-sm-4 col-xs-4"> </div>
 					</div>
 
 
 					<div class="row signUp">
 
-						<div class="col-md-1 col-sm-1"></div>
-						<div class="col-md-10 col-sm-10">
+						<div class="col-md-1 col-sm-1  col-xs-2"></div>
+						<div class="col-md-10 col-sm-10  col-xs-8">
 							<form>
 								<div class="form-group">
 								<input type="text" name="firstName" class="form-control input-lg" placeholder="firstName" required>
@@ -27,8 +27,11 @@
 								<input type="password" name="registerPassword" class="form-control input-lg" placeholder="password" required>
 								</div>
 
+								<div class="form-group">
 								<button type="submit" class="btn btn-primary btn-lg" id="submitForm"> Sign Up </button>
+								</div>
 								<div id="error" class="black-text">
+
 								</div>
 
 								<div class="black-text">
@@ -37,10 +40,10 @@
 								</div>
 
 								<div class="row">
-									<div class="col-md-8 col-sm-8">
+									<div class="col-md-9 col-sm-9 col-xs-9">
 										<h5 class="black-text"> Already have account ! click here </h5>
 									</div>
-									<div class="col-md-4 col-sm-4">
+									<div class="col-md-3 col-sm-3 col-xs-3">
 										<input type="button" class="btn btn-default sign-in" name="" id="signIn" value="Sign in">
 									</div>
 								</div>
@@ -48,12 +51,12 @@
 							</form>
 							
 						</div>
-						<div class="col-md-1 col-sm-1"></div>
+						<div class="col-md-1 col-sm-1 col-xs-2"></div>
 
 					</div>
 
 				</div>
-				<div class="col-md-2 col-sm-2"> </div>
+				<div class="col-md-3 col-sm-3 col-xs-3"> </div>
 			</div>
 
 
