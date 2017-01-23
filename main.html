@@ -294,9 +294,11 @@
       <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
     {{/case}}
     <div>
-      <input name="name" placeholder="name" />
-      <input name="email" placeholder="email" autocapitalize="off" autocorrect="off"/>
-      <button id="invite">Invite</button>
+      <form>
+      <input name="name" placeholder="name" required />
+      <input name="email" type="email" required placeholder="email" autocapitalize="off" autocorrect="off"/>
+      <button type="submit" id="invite">Invite</button>
+      </form>
     </div>
     <!--{{#if inScript}}
     <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
