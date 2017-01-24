@@ -3,17 +3,75 @@
 }
 
 .loginBody .signUp{
-	 background-image:url(/img/assets/background.png); 
-	 margin-bottom: 100px;
+	/* background-image:url(/img/assets/background.png); */
+	 margin-bottom: 20px;
 }
 
-/* TODO : Bad practice without bootstrap doing this way ..  */
+#form{
+	 
+	background: url(/img/assets/background2.png) no-repeat center center fixed;
+	background-repeat: no-repeat;
+    background-size: cover;
+	color: white;
+}
+
+.signIn{
+	margin-top: 50px;
+	margin-bottom: 20px !important;
+}
 
 .loginBody{
-	 margin-top: 20px;
 	 overflow: scroll;
+	 overflow-x: hidden;
+	 cursor: default;
 }
 
 .wequ_icon{
-	width: 25%;
+	margin-top: 10px;
+	width: 100%;
+	position: center;
+}
+
+.black-text{
+	color:black;
+}
+
+.white-text{
+	color: white;
+}
+
+.sign-in{
+	margin-top: 0px !important;
+	border-color: black;
+}
+
+#sign-up{
+	margin-top: 0px !important;
+	position: right;
+}
+
+
+
+#grey-color{
+	background-color: #ccc;
+}
+
+#light-grey-color{
+	background-color: #e7e7e7;
+}
+
+.bg-white{
+	background-color: white;
+}
+
+html {
+    height: 100%
+}
+
+#submitForm{
+	width: 100%;
+}
+
+img.lg-icon{
+	width: 30px !important;
 }

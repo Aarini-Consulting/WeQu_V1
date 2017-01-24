@@ -11,7 +11,7 @@ Template.signIn.events({
           }
         });
     },
-    'click #signUp': function (event) {
+    'click #sign-up': function (event) {
       Router.go('/signUp');
       Session.set('signUp', true);
     },
@@ -29,3 +29,7 @@ Template.signIn.helpers({
     return Session.get('signUp');
   },
 });
+
+Template.signIn.rendered = function(){
+  $('.menuBar').hide();
+}

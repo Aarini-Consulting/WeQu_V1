@@ -1,6 +1,9 @@
 if (Meteor.isClient) {
 
-    Router.configure({ layoutTemplate: 'ApplicationLayout' });
+    Router.configure({ layoutTemplate: 'ApplicationLayout' },
+        {
+        except: ['signIn']
+    });
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp'] });
