@@ -1,6 +1,9 @@
 if (Meteor.isClient) {
 
-    Router.configure({ layoutTemplate: 'ApplicationLayout' });
+    Router.configure({ layoutTemplate: 'ApplicationLayout' },
+        {
+        except: ['signIn']
+    });
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp'] });
@@ -8,7 +11,7 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript() && Router.current().route.getName()!="/invite") {
+        } else if(getLoginScript() /* && Router.current().route.getName()!="/invite" */) {
             Router.go('/script-login')
         }
         return this.next();
@@ -48,6 +51,7 @@ if (Meteor.isClient) {
           Meteor.logout();
           Router.go('/profile');
        }
+        
    });
 
     Template.menuProfile.helpers ({
@@ -56,13 +60,13 @@ if (Meteor.isClient) {
       }
     });
 
+    Template.login.rendered = function(){
+        // TODO : Temporarily doing this .. verify is this way needed .
+        Session.set("loginWithEmail", true);
+    }
+
     Template.login.events({
-        "click .loginLinkedin" : function(){
-            Meteor.loginWithLinkedin(function(err){
-                console.log("login", err);
-            })
-        },
-        "click .loginEmail" : function(){
+       "click .loginEmail" : function(){
           Session.set("loginWithEmail", true);
           Router.go('/signIn');
         }
@@ -73,6 +77,12 @@ if (Meteor.isClient) {
         return Session.get('loginWithEmail');
       },
     });
+
+    setLoginScript =  function setLoginScript(value) {
+        Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': value } });
+    };
+
+
     Template.registerHelper("username", getUserName);
     Template.registerHelper("case", function(){
         var pair =_.chain(this).pairs().first().value();

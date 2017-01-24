@@ -5,10 +5,23 @@ Template.signIn.events({
           if(err){
             $('#error').text(err);
           }
+          else
+          {
+            Router.go('/quiz');
+          }
         });
     },
-    'click #signUp': function (event) {
+    'click #sign-up': function (event) {
+      Router.go('/signUp');
       Session.set('signUp', true);
+    },
+    'click .loginLinkedin' : function(){
+            Meteor.loginWithLinkedin(function(err){
+                if(err)
+                    console.log("login", err);
+                else
+                setLoginScript("quiz");
+            })
     }
 });
 Template.signIn.helpers({
@@ -16,3 +29,7 @@ Template.signIn.helpers({
     return Session.get('signUp');
   },
 });
+
+Template.signIn.rendered = function(){
+  $('.menuBar').hide();
+}

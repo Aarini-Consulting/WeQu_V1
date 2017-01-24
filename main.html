@@ -1,27 +1,21 @@
 <head>
   <title>WeQu</title>
   <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no">
-  <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="/img/assets/favicon.png"/>
 </head>
 
 <body>
 </body>
 
 <template name="login">
+ 
+ <div class="loginBody">
+  
   {{#if loginWithEmail}}
       {{>signIn}}
-  {{else}} 
-  <section>
-    <button class="loginLinkedin">
-      <img src="/img/icon_linkedin.png">Login with LinkedIn
-    </button>
-    <br>
-    or
-    <button class="loginEmail">
-      Login with email
-    </button>
-  </section>
   {{/if}}
+
+  </div>
 </template>
 
 <template name="menu">
@@ -30,9 +24,7 @@
     <a href="/invite" class="{{#if route 'invite'}}t100{{else}}t50{{/if}}"><img src="/img/icon_invite.png"></a>
     <!--<a href="/feed" class="{{#if route 'feed'}}t100{{else}}t50{{/if}}"><img src="/img/icon_feed.png"></a>-->
     <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}"><img src="/img/icon_profile.png" ></a>
-
-    <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img src="/img/icon_logout.png" ></a>
-
+    <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a>
     <!--<a href="/admin">A</a>-->
   </div>
 </template>
@@ -51,7 +43,7 @@
 </template>
 
 <template name="ApplicationLayout">
-    {{> menu}}
+    {{> menu}} 
     {{> yield}}
 </template>
 
@@ -299,9 +291,11 @@
       <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
     {{/case}}
     <div>
-      <input name="name" placeholder="name" />
-      <input name="email" placeholder="email" autocapitalize="off" autocorrect="off"/>
-      <button id="invite">Invite</button>
+      <form>
+      <input name="name" placeholder="name" required />
+      <input name="email" type="email" required placeholder="email" autocapitalize="off" autocorrect="off"/>
+      <button type="submit" id="invite">Invite</button>
+      </form>
     </div>
     <!--{{#if inScript}}
     <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">

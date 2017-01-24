@@ -1,20 +1,87 @@
-<template name="signIn">
-  <section class="signIn">
-    {{#if signUpShow}}
-      {{>signUp}}
-    {{else}}
-    <form id="signIn">
-        <input type="email" name="loginEmail" placeholder="email"  required>
-        <input type="password" name="loginPassword" placeholder="password" required>
-        <button type="submit">
-          Login 
-        </button>
-    </form>
-    <div id="error"></div>
-    <br>
-    or
-    <a href="{{pathFor 'signUp'}}" id="signUp">Sign up</a>
-    {{/if}}
-  </section>
+	<template name="signIn">
 
-</template>
+		{{#if signUpShow}}
+		{{>signUp}}
+		{{else}}
+
+
+
+		<div class="row" id="form"> 
+			<div class="col-xs-4 col-md-6 col-sm-6">
+
+
+			<section class="signIn">
+				<div class="panel panel-default">
+					<div class="row">
+						<div class="col-xs-4 col-md-4 col-sm-4"> </div>
+						<div class="col-xs-4 col-md-4 col-sm-4"> 
+							<img class="wequ_icon" src="/img/assets/wequ_icon.png">
+						</div>
+						<div class="col-xs-4 col-md-4 col-sm-4"> </div>
+					</div>
+
+
+					<div class="panel-body black-text">
+						<h4> "Feedback is a breakfast for champians" 
+							<br> <center> - Ken Blanchard </center>
+						</h4>
+					</div>
+
+
+
+					<form id="signIn">
+
+						<div class="row">
+
+							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
+
+							<div class="col-md-10 col-sm-10 col-xs-10">
+
+								<button class="loginLinkedin" type="button">
+									<img src="/img/icon_linkedin.png"> <span class="white-text"> Login with LinkedIn </span>
+								</button>
+								<br>
+								<hr>
+
+								<div class="form-group">
+									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="your email" id="light-grey-color" required>
+									<input type="password" name="loginPassword" class="form-control input-lg" placeholder="password" id="light-grey-color" required>
+								</div>
+								<button type="submit" id="grey-color">
+									Log in
+								</button>
+
+								<div id="error" class="black-text"></div>
+
+								<div class="row">
+									
+									<div class="col-md-6 col-sm-6 col-xs-6 black-text">
+										<h5> New to WeQu ? </h5>
+									</div>
+									<div class="col-md-6 col-sm-6 col-xs-6">
+										<input type="button" class="btn btn-default btn-small" id="sign-up" value="Sign Up">
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
+
+						</div>
+					</form>
+				</div>
+
+				<div class="black-text bg-white"> <center> <h5> <a href="#"> Forgot Password ? </a> </h5> </center> </div>
+
+			</section>
+
+			</div>
+
+			<div class="col-xs-3 col-md-3 col-sm-3"> </div>
+
+
+		</div>
+
+		{{/if}}
+
+	</template>
