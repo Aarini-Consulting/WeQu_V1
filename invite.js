@@ -14,7 +14,9 @@ if(Meteor.isClient) {
     }, { 'name': '/invite' });
 
     inviteStatus = new ReactiveVar('default');
-    Template.invite.events( { "submit form" : function (event, template) {
+    Template.invite.events({
+
+     "submit form" : function (event, template) {
         event.preventDefault();
         inviteStatus.set('sending');
         var email = template.$('input[name=email]').val();
@@ -39,7 +41,15 @@ if(Meteor.isClient) {
             }
             console.log(err, userId);
         });
-    }})
+      }  
+    })
+
+   Template.invite.rendered = function(){
+        $('.menuBar').show();
+   }
+ 
+
+
 }
 if(Meteor.isServer)  {
     Meteor.methods({
