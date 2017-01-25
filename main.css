@@ -9,7 +9,7 @@
 
 #form{
 	 
-	background: url(/img/assets/background2.png) no-repeat center center fixed;
+	background: url(/img/assets/background2.png) no-repeat center center;
 	background-repeat: no-repeat;
     background-size: cover;
 	color: white;
@@ -40,9 +40,22 @@
 	color: white;
 }
 
+@media only screen and (min-width: 480px) {
+    .sign-in{
+		margin-top: 0px !important;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+    .sign-in{
+    	font-size: smaller;
+    }
+}
+
 .sign-in{
-	margin-top: 0px !important;
 	border-color: black;
+	float: right;
+	min-width: 65px;
 }
 
 #sign-up{
