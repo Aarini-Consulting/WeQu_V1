@@ -3,8 +3,9 @@
 }
 
 .loginBody .signUp{
-	/* background-image:url(/img/assets/background.png); */
 	 margin-bottom: 20px;
+	 margin-left: 0px !important;
+	 margin-right: 0px !important;	 
 }
 
 #form{
