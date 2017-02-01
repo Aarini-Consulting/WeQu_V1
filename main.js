@@ -130,12 +130,4 @@ if (Meteor.isServer) {
         });
         // code to run on server at startup
     });
-
-    Accounts.onCreateUser(function (options, user) {
-        user.profile = options.profile || {};
-        user.profile.loginScript = 'init';
-        user.profile.gradient = Math.floor(Math.random() * 5) + 1;
-        console.log('onUserCreated', user);
-        return user;
-    });
 }
