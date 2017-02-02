@@ -16,11 +16,18 @@ Template.signIn.events({
       Session.set('signUp', true);
     },
     'click .loginLinkedin' : function(){
-            Meteor.loginWithLinkedin(function(err){
+            Meteor.loginWithLinkedin(function(err,result){
                 if(err)
-                    console.log("login", err);
+                     $('#error').text(err);
                 else
-                setLoginScript("quiz");
+                setLoginScript("init");
+                Meteor.setTimeout(function () {
+                  const {firstName, lastName}  = Meteor.user().services.linkedin;
+                  Meteor.users.update({_id: Meteor.userId()},
+                                      {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
+                }, 100);
+
+
             })
     }
 });
