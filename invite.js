@@ -16,7 +16,7 @@ if(Meteor.isClient) {
     inviteStatus = new ReactiveVar('default');
     Template.invite.events({
 
-       "submit form" : function (event, template) {
+     "submit form" : function (event, template) {
         event.preventDefault();
         inviteStatus.set('sending');
         var email = template.$('input[name=email]').val();
@@ -54,12 +54,12 @@ if(Meteor.isClient) {
 if(Meteor.isServer)  {
     Meteor.methods({
         'inviteLogin' : function(token){
-         var feedback = Feedback.findOne({_id : token}) 
-         if(!feedback) return;
-         if(feedback.done) return;
-         var user = Meteor.users.findOne({_id : feedback.from});
-         if(!user) return;
-         return user.username;
+           var feedback = Feedback.findOne({_id : token}) 
+           if(!feedback) return;
+           if(feedback.done) return;
+           var user = Meteor.users.findOne({_id : feedback.from});
+           if(!user) return;
+           return user.username;
            //TODO: change password to login only once with token
            //TODO: update email verified
        },
@@ -97,38 +97,23 @@ if(Meteor.isServer)  {
             Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
         }
 
-           /*
-            var template = _.template(Assets.getText('emails/invite.txt'));
+        SSR.compileTemplate('htmlEmail', Assets.getText('html-email.html'));
 
-            Email.send({
-                'to': email,
-                'from': 'WeQu <info@wequ.co>',
-                'subject': _.template("Let’s learn from each other")({ to: toName, from:name }),
-                'text': template({
-                    'from': name,
-                    'to' : toName,
-                    'link': Meteor.absoluteUrl('invitation/' + _id)
-                })
-            });
-            */
+        var emailData = {
+            'from': name,
+            'to' : toName,
+            'link': Meteor.absoluteUrl('invitation/' + _id)
+            
+        };
 
-            SSR.compileTemplate('htmlEmail', Assets.getText('html-email.html'));
+        Email.send({
+          'to': email,
+          'from': 'WeQu <info@wequ.co>',
+          'subject': _.template("Let’s learn from each other")({ to: toName, from:name }),
+          html: SSR.render('htmlEmail', emailData),
+      });
 
-            var emailData = {
-                'from': name,
-                'to' : toName,
-                'link': Meteor.absoluteUrl('invitation/' + _id)
-                
-            };
-
-            Email.send({
-              'to': email,
-              'from': 'WeQu <info@wequ.co>',
-              'subject': _.template("Let’s learn from each other")({ to: toName, from:name }),
-              html: SSR.render('htmlEmail', emailData),
-            });
-
-            return userId;
-        }
-    })
+        return userId;
+    }
+})
 }

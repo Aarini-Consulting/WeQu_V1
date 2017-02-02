@@ -35,6 +35,7 @@ Meteor.startup(function () {
 
         console.log('onUserCreated', user);
         return user;
+
     });
 
 

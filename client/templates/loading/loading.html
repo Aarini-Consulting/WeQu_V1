@@ -1,0 +1,21 @@
+<template name="loading">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+
+
+    {{#unless currentUser.emails.[0].verified}}
+
+    <div  class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <p class="alert alert-warning">You need to verify your email address before using wequ. <a href="#" class="resend-verification-link"><br> <center>Resend verification link</center></a></p>
+      </div>
+    </div>
+
+    {{else}}
+    loading...
+    {{/unless}}
+
+    <div id="error"></div>
+    <div id="info"></div>
+
+  </section>
+</template>

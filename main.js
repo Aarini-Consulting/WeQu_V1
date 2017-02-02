@@ -11,11 +11,12 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript() /* && Router.current().route.getName()!="/invite" */) {
+        } else if(getLoginScript()  && Router.current().route.getName()!="/verify-email/:token") {
             Router.go('/script-login')
         }
         return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite' ] });
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite', 
+                     '/verify-email/:token' ] });
 
     route = new ReactiveVar("quiz");
 
@@ -37,6 +38,7 @@ if (Meteor.isClient) {
         route.set('feed')
         return this.render('feed');
     }, { 'name': '/feed' });
+
     Template.menu.helpers ({
       route: function(status) {
         return status == route.get();
