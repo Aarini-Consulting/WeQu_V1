@@ -77,6 +77,15 @@ Router.route('/script-login', function () {
 
        console.log(this.params.token);
 
+       Accounts.verifyEmail( this.params.token, ( error ) =>{
+          if ( error ) {
+            console.log( error.reason);
+          } else {
+            alert( 'Email verified! Thanks!', 'success' );
+            Router.go( '/script-login' );
+          }
+      });
+
        this.render('verifyEmail', {data : this })
 
     }, { 'name': '/verify-email:token' });
