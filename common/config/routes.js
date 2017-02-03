@@ -82,7 +82,11 @@ Router.route('/script-login', function () {
             console.log( error.reason);
           } else {
             alert( 'Email verified! Thanks!', 'success' );
+            
             Router.go( '/script-login' );
+            setLoginScript("quiz");
+
+            
           }
       });
 

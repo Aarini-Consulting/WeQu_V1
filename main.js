@@ -11,12 +11,12 @@ if (Meteor.isClient) {
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
             Router.go('/script-invitation');
-        } else if(getLoginScript()  && Router.current().route.getName()!="/verify-email/:token") {
+        } else if(getLoginScript()) {
             Router.go('/script-login')
         }
         return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite', 
-                     '/verify-email/:token' ] });
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite'
+                     ] });
 
     route = new ReactiveVar("quiz");
 
