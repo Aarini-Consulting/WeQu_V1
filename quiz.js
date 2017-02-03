@@ -71,7 +71,6 @@ if(Meteor.isClient) {
             return this.feedback.from == this.feedback.to;
         },
         'question' : function () {
-            console.log(this.feedback.qset);
             return currentQuestion(this.feedback.qset);
         },
         'questionNum' : function(){

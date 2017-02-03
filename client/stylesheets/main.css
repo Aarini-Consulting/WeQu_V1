@@ -87,3 +87,9 @@ html {
 img.lg-icon{
 	width: 30px !important;
 }
+
+#error{
+	width: 100%;
+	font-size: medium;
+	color: red;
+}

@@ -74,7 +74,11 @@ if(Meteor.isServer)  {
         }
         var profile = Meteor.user().profile;
         var name = getUserName(profile);
-        qset = genInitialQuestionSet(name, qdata.type1others, 10);
+        var gender = Meteor.user().profile.gender ? "He" : "She"; 
+
+        qset = genInitialQuestionSet(gender, qdata.type1others, 10);
+
+
         var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
         var _id = Random.secret()
         var userId;
@@ -83,7 +87,7 @@ if(Meteor.isServer)  {
                 username: Random.id(), 
                 email: email, 
                 password: _id,
-                profile : { emailAddress : email, name: toName}
+                profile : { emailAddress : email, name: toName, inviteGender: gender}
             });
         } else {
             userId = user._id;
