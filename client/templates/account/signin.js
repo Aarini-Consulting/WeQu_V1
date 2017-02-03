@@ -20,6 +20,7 @@ Template.signIn.events({
                 if(err)
                      $('#error').text(err);
                 else
+                Session.set('loginLinkedin', true);
                 setLoginScript("init");
                 Meteor.setTimeout(function () {
                   const {firstName, lastName}  = Meteor.user().services.linkedin;

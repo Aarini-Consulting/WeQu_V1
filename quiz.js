@@ -71,6 +71,7 @@ if(Meteor.isClient) {
             return this.feedback.from == this.feedback.to;
         },
         'question' : function () {
+            console.log(this.feedback.qset);
             return currentQuestion(this.feedback.qset);
         },
         'questionNum' : function(){
@@ -98,10 +99,23 @@ if(Meteor.isClient) {
             var feedback = template.data.feedback;
             var question = currentQuestion(feedback.qset);
             var buttonType = event.target.getAttribute('class');
+
             if(buttonType == 'answer') {
                 question.answer = event.target.getAttribute('id');
                 question.written = false;
+
+                // ------ Updating the user gender here ---------
+                // attribute data-skill is used to identify the gender question
+                // id has the gender details Male or Female 
+
+                var skill = event.target.getAttribute('data-skill')
+                if(skill == "genderId")
+                {
+                    Meteor.users.update({_id: Meteor.userId()},
+                                      {$set : { "profile.gender": event.target.getAttribute('id') }});
+                }
             }
+
             if(buttonType == 'skip'){
                 if(_.has(question, 'answer')) {
                     question.written = false
@@ -109,6 +123,7 @@ if(Meteor.isClient) {
                     question.answer = false
                 }
             } 
+            
             if(buttonType == 'writeAnswer') {
                 question.written = template.$('textarea').val();
             }

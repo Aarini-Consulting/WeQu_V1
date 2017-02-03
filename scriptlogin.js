@@ -2,7 +2,9 @@ if(Meteor.isClient){
 
     Template.scriptLoginInit.onCreated(function () {
 
-      if(Meteor.user() && Meteor.user().emails[0].verified){
+      var condition = Session.get('loginLinkedin') ? true : Meteor.user().emails[0].verified ;
+
+      if(Meteor.user() && condition ){
           Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
             console.log('gen-question-set', err, result);
             setLoginScript('quiz');
@@ -28,12 +30,6 @@ if(Meteor.isClient){
             }
         }
 
-    });
-
-
-
-    Template.registerHelper('inScript', function () {
-        return getLoginScript();
     });
 
 }
@@ -81,7 +77,8 @@ if(Meteor.isServer){
             var name = userId;
             var qset;
             if(userId == Meteor.userId()) {
-                qset = genInitialQuestionSet("You", qdata.type1you, 12);
+                qset = genInitialQuestionSet("You", qdata.type1you, 13);
+                console.log("you");
             } else if(user && user.profile){
                 qset = genQuizQuestionSet(getUserName(user.profile));
             }

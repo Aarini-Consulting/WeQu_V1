@@ -246,7 +246,7 @@
         </div>
         <ul class="answers">
           {{#each question.answers}}
-          <li class="answer" id="{{_id}}">{{text}}</li>
+          <li class="answer" id="{{_id}}" data-skill="{{skill}}" >{{text}}</li>
           {{/each}}
         </ul>
         {{/if}}
