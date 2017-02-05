@@ -34,3 +34,5 @@ standard-minifier-js
 shell-server
 
 twbs:bootstrap
+meteorhacks:ssr # server side rendering 
+msavin:mongol #  debugOnly package
