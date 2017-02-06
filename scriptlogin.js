@@ -86,6 +86,8 @@ if(Meteor.isServer){
                 qset = genQuizQuestionSet(getUserName(user.profile));
             }
 
+            console.log(qset);
+
             Feedback.upsert({
                 'from': Meteor.userId(),
                 'to': userId

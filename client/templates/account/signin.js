@@ -22,9 +22,14 @@ Template.signIn.events({
                 else
                 setLoginScript("init");
                 Meteor.setTimeout(function () {
+                  try{
                   const {firstName, lastName}  = Meteor.user().services.linkedin;
                   Meteor.users.update({_id: Meteor.userId()},
                                       {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
+                  }
+                  catch(e){
+                    console.log(e);
+                  }
                 }, 100);
 
 
