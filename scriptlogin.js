@@ -2,7 +2,7 @@ if(Meteor.isClient){
 
     Template.scriptLoginInit.onCreated(function () {
 
-      if(Meteor.user() && Meteor.user().emails[0].verified){
+      if(Meteor.user()){
           Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
             console.log('gen-question-set', err, result);
             setLoginScript('quiz');

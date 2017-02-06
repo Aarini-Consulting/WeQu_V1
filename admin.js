@@ -17,7 +17,6 @@ if (Meteor.isClient) {
         },
         'click #logout' : function(){
             Meteor.logout();
-            Router.go("/");
         },
         'click #login' : function(){
             Meteor.call("loginTestUser", function(err, result){

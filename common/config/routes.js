@@ -1,7 +1,7 @@
 //All the routes are configured here 
 if (Meteor.isClient) {
 
-Router.route('/script-login', function () {
+    Router.route('/script-login', function () {
         this.layout('ScriptLayout');
 
         if(! Meteor.user()) {
@@ -14,10 +14,27 @@ Router.route('/script-login', function () {
 
         console.log(phase);
 
+        // Move these functionalities to the rendered function 
         switch(getLoginScript()) {
             case 'init': {
-                this.render('scriptLoginInit')
-                break;
+                var condition;
+
+                if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != "undefined" )
+                    condition = true;
+                else
+                    condition = Meteor.user() && Meteor.user().email && Meteor.user().email[0].verified;
+                
+                if(condition)
+                {
+                    this.render('scriptLoginInit');
+                    break;
+                }
+                else
+                {
+                    this.render('emailVerified');
+                    break;
+                }   
+                
             }
             case 'quiz': {
                 this.wait(Meteor.subscribe('feedback'));
@@ -72,27 +89,27 @@ Router.route('/script-login', function () {
 
 
     Router.route('/verify-email/:token', function () {
-       
-       this.layout('ScriptLayout');
+     
+     this.layout('ScriptLayout');
 
-       console.log(this.params.token);
+     console.log(this.params.token);
 
-       Accounts.verifyEmail( this.params.token, ( error ) =>{
-          if ( error ) {
-            console.log( error.reason);
-          } else {
-            alert( 'Email verified! Thanks!', 'success' );
-            
-            Router.go( '/script-login' );
-            setLoginScript("quiz");
+     Accounts.verifyEmail( this.params.token, ( error ) =>{
+      if ( error ) {
+        console.log( error.reason);
+    } else {
+        alert( 'Email verified! Thanks!', 'success' );
+        
+        Router.go( '/script-login' );
+        setLoginScript("quiz");
 
-            
-          }
-      });
+        
+    }
+});
 
-       this.render('verifyEmail', {data : this })
+     this.render('verifyEmail', {data : this })
 
-    }, { 'name': '/verify-email:token' });
+ }, { 'name': '/verify-email:token' });
 
 
 }

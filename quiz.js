@@ -6,7 +6,9 @@ if(Meteor.isClient) {
         if(!this.ready()) {
             this.render('loading');
             return;
-        }
+        } 
+        
+        console.log("this");
 
         var iid = Session.get('invitation-id');
         if(iid) {
@@ -15,6 +17,8 @@ if(Meteor.isClient) {
                 console.log("mergeAccounts", err, result);
             });
         }
+        
+        console.log("this");
 
         var feedbacks = Feedback.find().fetch()
         var friends =  _.chain(feedbacks).map(function(feedback){
@@ -34,10 +38,14 @@ if(Meteor.isClient) {
             quizPerson.set(friends[0]);
         }
 
+        console.log("this");
+
         answering = false;
         var userId = quizPerson.get();
         var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
         data.friends = friends;
+
+        console.log("this");
 
         if(!data.feedback) {
             Meteor.call('gen-question-set', userId, function (err, result) {
