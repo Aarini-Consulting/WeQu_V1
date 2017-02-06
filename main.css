@@ -44,6 +44,7 @@
 
 .black-text{
 	color:black;
+	font-size: initial;
 }
 
 .white-text{
@@ -72,8 +73,6 @@
 	margin-top: 0px !important;
 	position: right;
 }
-
-
 
 #grey-color{
 	background-color: #ccc;
