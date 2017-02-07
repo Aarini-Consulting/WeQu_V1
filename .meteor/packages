@@ -30,9 +30,12 @@ ejson
 spacebars
 check
 standard-minifier-css
-standard-minifier-js
+# standard-minifier-js
 shell-server
 
 twbs:bootstrap
 meteorhacks:ssr # server side rendering 
-msavin:mongol #  debugOnly package
+# msavin:mongol  # debugOnly package
+
+juliancwirko:s-alert
+juliancwirko:s-alert-genie
