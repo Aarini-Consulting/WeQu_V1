@@ -19,10 +19,10 @@ if (Meteor.isClient) {
             case 'init': {
                 var condition;
 
-                if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != "undefined" )
+                if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined )
                     condition = true;
                 else
-                    condition = Meteor.user() && Meteor.user().email && Meteor.user().email[0].verified;
+                    condition = Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].verified;
                 
                 if(condition)
                 {
