@@ -43,7 +43,7 @@
             // Move these functionalities to the rendered function 
             switch(getLoginScript()) {
                 case 'init': {
-                    var condition;
+                    var condition = true;
 
                     if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined )
                         condition = true;
