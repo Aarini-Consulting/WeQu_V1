@@ -45,16 +45,6 @@
   </div>
 </template>
 
-<template name="ApplicationLayout">
-  {{> menu}} 
-  {{> yield}}
-</template>
-
-<template name="ScriptLayout">
-  {{> menu}}
-  {{> yield}}
-</template>
-
 <template name="profile">
   {{#if inScript}}
   <section class="feed">
@@ -268,15 +258,6 @@
 
   <template name="evaluate">
     Evaluate me
-  </template>
-
-  <template name="admin">
-    <section>
-      <button id="import"> import answers </button>
-      <button id="reset"> reset login script </button>
-      <button id="logout"> logout </button>
-      <button id="login"> login with test account </button>
-    </section>
   </template>
 
   <template name="invite">

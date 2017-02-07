@@ -10,32 +10,7 @@ if(Meteor.isClient){
       }
 
   });
-
-    Template.scriptLoginInit.events({
-
-        'click .resend-verification-link' ( event, template ) {
-            var userId = Meteor.userId();
-            if(userId)
-            {
-                Meteor.call( 'sendVerificationLink', userId, ( error, response ) => {
-                  if ( error ) {
-                    $('#error').text(err.reason);
-                } else {
-                    var email = Meteor.user().emails[ 0 ].address;
-                    $('#info').text(`Verification sent to ${ email }!`, 'success');
-                }
-                });
-            }
-        }
-
-    });
-
-
-
-    Template.registerHelper('inScript', function () {
-        return getLoginScript();
-    });
-
+    
 }
 
 
