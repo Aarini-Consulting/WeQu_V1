@@ -13,7 +13,9 @@
 
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
-    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp'] });
+    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp', 
+                    '/RecoverPassword', '/verify-email:token','/reset-password/:token'
+    ] });
 
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
@@ -22,7 +24,9 @@
             Router.go('/script-login')
         }
         return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite'
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
+                      '/RecoverPassword', '/verify-email:token'
+
     ] });
 
     route = new ReactiveVar("quiz");
@@ -120,7 +124,7 @@
 
        console.log(this.params.token);
 
-       Accounts.verifyEmail( this.params.token, ( error ) =>{
+      /* Accounts.verifyEmail( this.params.token, ( error ) =>{
           if ( error ) {
             console.log( error.reason);
         } else {
@@ -130,8 +134,8 @@
             setLoginScript("quiz");
 
 
-        }
-    });
+        } 
+    }); */
 
        this.render('verifyEmail', {data : this })
 
@@ -162,3 +166,28 @@
         route.set('feed')
         return this.render('feed');
     }, { 'name': '/feed' });
+
+
+
+    Router.route('/RecoverPassword', function () {
+        
+        return this.render('RecoverPassword');
+    }, { 'name': '/RecoverPassword' });
+
+
+    Router.map(function(){
+    
+    this.route('resetpassword', {
+            path: '/reset-password/:token',
+            template: 'RecoverPassword',
+            data: function(){
+                
+                return {
+                isresetPassword: true
+                };    
+        }
+       
+
+    });
+
+    });

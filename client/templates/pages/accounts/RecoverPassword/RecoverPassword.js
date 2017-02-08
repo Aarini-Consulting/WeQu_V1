@@ -26,6 +26,7 @@ Template.RecoverPassword.events({
       // You will probably want more robust validation than this!
       Accounts.forgotPassword({email: email}, function(err) {
         if (err) {
+          $('#info').text('');
           if (err.message === 'User not found [403]') {
             //sAlert.error('This email does not exist.');
             $('#error').text(err.message);
