@@ -29,6 +29,7 @@ Meteor.methods({
     
     //Creating a method to send verification.
     sendVerificationLink(result) {
+    	console.log(result);
 	   	return Accounts.sendVerificationEmail( result );
   	}
 

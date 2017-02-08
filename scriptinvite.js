@@ -64,6 +64,7 @@ if (Meteor.isClient) {
             }
             case 'filldata':{
                 this.wait(Meteor.subscribe('invitation', invitationId));
+                console.log(this.ready());
                 if(!Meteor.user() || !this.ready()){
                     this.render("loading");
                     return;

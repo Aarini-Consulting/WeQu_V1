@@ -2,7 +2,7 @@
   // Server authentication info
   "servers": [
     {
-      "host": "54.93.98.138",
+      "host": "52.28.201.144",
       "username": "ubuntu",
       //"password": "password"
       // or pem file (ssh based authentication)
@@ -27,14 +27,14 @@
   "enableUploadProgressBar": true,
 
   // Application name (No spaces)
-  "appName": "wequ",
+  "appName": "app-test",
 
   // Location of app (local directory)
   "app": "D:/WeQu_V1/",
 
   // Configure environment
   "env": {
-    "ROOT_URL": "http://app.wequ.co",
+    "ROOT_URL": "http://app-test.wequ.co/",
     "MAIL_URL": "smtp://postmaster@sandboxccf5233b3ff6497a8c351c3fe0e2cf1f.mailgun.org:2e7ea3fb57bb4dba29e6595e6498e0e7@smtp.mailgun.org:25"
   },
 

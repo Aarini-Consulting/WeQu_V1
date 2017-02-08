@@ -2,9 +2,11 @@ if(Meteor.isClient){
 
     Template.scriptLoginInit.onCreated(function () {
 
+
       var condition = Session.get('loginLinkedin') ? true : Meteor.user().emails[0].verified ;
 
       if(Meteor.user() && condition ){
+
           Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
             console.log('gen-question-set', err, result);
             setLoginScript('quiz');
@@ -82,6 +84,8 @@ if(Meteor.isServer){
             } else if(user && user.profile){
                 qset = genQuizQuestionSet(getUserName(user.profile));
             }
+
+            console.log(qset);
 
             Feedback.upsert({
                 'from': Meteor.userId(),

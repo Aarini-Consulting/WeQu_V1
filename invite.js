@@ -101,8 +101,6 @@ if(Meteor.isServer)  {
             Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
         }
 
-        SSR.compileTemplate('htmlEmail', Assets.getText('html-email.html'));
-
         var emailData = {
             'from': name,
             'to' : toName,

@@ -5,6 +5,9 @@
 </head>
 
 <body>
+<!-- For the salert package -->
+{{> sAlert}}
+
 </body>
 
 <template name="login">
@@ -40,16 +43,6 @@
     <a href="/profile/skills" class="{{#if route 'skills'}}t100{{else}}t50{{/if}}">Skills</a>
     <!--<a href="/profile/written-feedback" class="{{#if route 'feedback'}}t100{{else}}t50{{/if}}">Feedback</a>-->
   </div>
-</template>
-
-<template name="ApplicationLayout">
-  {{> menu}} 
-  {{> yield}}
-</template>
-
-<template name="ScriptLayout">
-  {{> menu}}
-  {{> yield}}
 </template>
 
 <template name="profile">
@@ -265,15 +258,6 @@
 
   <template name="evaluate">
     Evaluate me
-  </template>
-
-  <template name="admin">
-    <section>
-      <button id="import"> import answers </button>
-      <button id="reset"> reset login script </button>
-      <button id="logout"> logout </button>
-      <button id="login"> login with test account </button>
-    </section>
   </template>
 
   <template name="invite">

@@ -1,0 +1,14 @@
+{
+  "public": {
+
+    "domain": {
+      "url": "http://app.wequ.tech",
+      "int": "http://app.wequ.co"
+    }
+  },
+  "private": {
+
+    "postmail": "postmaster@wequ.co",
+    "verifyEmail": "true"
+  }
+}
