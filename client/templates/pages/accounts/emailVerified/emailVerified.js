@@ -1,5 +1,4 @@
     
-
     Template.emailVerified.events({
 
         'click .resend-verification-link' ( event, template ) {
@@ -10,7 +9,7 @@
             {
                 Meteor.call( 'sendVerificationLink', userId, ( error, response ) => {
                   if ( error ) {
-                    console.log(error);
+                    console.log(error,response);
                     $('#error').text(error);
                 } else {
                     var email = Meteor.user().emails[ 0 ].address;
@@ -21,3 +20,16 @@
         }
 
     });
+
+
+
+    Template.emailVerified.helpers({
+
+
+        emailVerified(){
+
+        }
+    })
+Template.emailVerified.rendered = function(){
+
+}

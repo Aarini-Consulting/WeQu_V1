@@ -1,19 +1,16 @@
     //All the routes are configured here 
 
-    Router.configure({
-        layoutTemplate: 'ScriptLayout',
-        notFoundTemplate: 'notFoundLayout'
-    });
-
-
     Router.configure(
         {  layoutTemplate: 'ApplicationLayout' },
+        {  notFoundTemplate: 'notFoundLayout'  },
         {  except: ['signIn']  }
         );
 
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
-    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp'] });
+    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp', '/verify-email:token',
+                    'RecoverPassword'
+                    ] });
 
     Router.onBeforeAction(function () {
         if(Session.get('invite')) {
@@ -22,7 +19,8 @@
             Router.go('/script-login')
         }
         return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite'
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite', 
+                     '/verify-email:token', 'RecoverPassword'
     ] });
 
     route = new ReactiveVar("quiz");
@@ -118,24 +116,21 @@
 
        this.layout('ScriptLayout');
 
-       console.log(this.params.token);
-
-       Accounts.verifyEmail( this.params.token, ( error ) =>{
-          if ( error ) {
-            console.log( error.reason);
-        } else {
-            alert( 'Email verified! Thanks!', 'success' );
-
-            Router.go( '/script-login' );
-            setLoginScript("quiz");
-
-
-        }
-    });
-
-       this.render('verifyEmail', {data : this })
+       return this.render('verifyEmail');
 
     }, { 'name': '/verify-email:token' });
+
+
+    Router.route('resetpassword', {
+            path: '/reset-password/:token',
+            template: 'RecoverPassword',
+            data: function(){
+                
+                return {
+                isresetPassword: true
+                };    
+        }
+    });
 
     Router.route('/admin', function () {
         return this.render('admin');
@@ -162,3 +157,10 @@
         route.set('feed')
         return this.render('feed');
     }, { 'name': '/feed' });
+
+
+Router.map(function(){
+    this.route('RecoverPassword');
+
+
+})
