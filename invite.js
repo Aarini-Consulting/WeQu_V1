@@ -12,45 +12,9 @@ if(Meteor.isClient) {
 
         this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
     }, { 'name': '/invite' });
-
-    inviteStatus = new ReactiveVar('default');
-    Template.invite.events({
-
-     "submit form" : function (event, template) {
-        event.preventDefault();
-        inviteStatus.set('sending');
-        var email = template.$('input[name=email]').val();
-        var name = template.$('input[name=name]').val();
-        Meteor.call('invite', name, email, function (err, userId) {
-            if(err){
-                console.log("error", err);
-                inviteStatus.set('error');
-                return;
-            } 
-
-            template.$('input[name=name]').val('')
-            template.$('input[name=email]').val('');
-            inviteStatus.set('sent');
-
-            setInterval(function () {
-                return inviteStatus.set('default');
-            }, 3000);
-            if(getLoginScript()){
-                quizPerson.set(userId);
-                return setLoginScript('finish');
-            }
-            console.log(err, userId);
-        });
-    }  
-})
-
-    Template.invite.rendered = function(){
-        $('.menuBar').show();
-    }
-
-
-
 }
+
+
 if(Meteor.isServer)  {
     Meteor.methods({
         'inviteLogin' : function(token){
@@ -63,7 +27,7 @@ if(Meteor.isServer)  {
            //TODO: change password to login only once with token
            //TODO: update email verified
        },
-       'invite' : function (toName, email) {
+       'invite' : function (toName, email, gender) {
         check(Meteor.userId(), String);
         if(!toName){
             throw (new Meteor.Error("empty_name"));
@@ -74,9 +38,12 @@ if(Meteor.isServer)  {
         }
         var profile = Meteor.user().profile;
         var name = getUserName(profile);
-        var gender = Meteor.user().profile.gender ? "He" : "She"; 
+        
+        //Logic profile data should take priority
 
-        qset = genInitialQuestionSet(gender, qdata.type1others, 10);
+        var gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : gender
+
+        qset = genInitialQuestionSet(gender_result, qdata.type1others, 10);
 
 
         var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
@@ -87,7 +54,7 @@ if(Meteor.isServer)  {
                 username: Random.id(), 
                 email: email, 
                 password: _id,
-                profile : { emailAddress : email, name: toName, inviteGender: gender}
+                profile : { emailAddress : email, name: toName, inviteGender: gender_result}
             });
         } else {
             userId = user._id;

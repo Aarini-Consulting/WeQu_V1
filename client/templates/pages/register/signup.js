@@ -25,9 +25,7 @@ Template.signUp.events({
    }
     else if(result)
     {
-     Router.go('/signIn');
-     sAlert.success('Account created , sign in to continue', {onRouteClose: false , timeout: 5000});
-     Session.set('signUp', false);
+     Router.go('/script-login');
    }
  });
  }
