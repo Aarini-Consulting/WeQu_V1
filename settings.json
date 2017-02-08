@@ -4,11 +4,11 @@
     "domain": {
       "url": "http://app.wequ.tech",
       "int": "http://app.wequ.co"
-    }
+    },
+    "verifyEmail": true
   },
   "private": {
 
-    "postmail": "postmaster@wequ.co",
-    "verifyEmail": "true"
+    "postmail": "postmaster@wequ.co"
   }
 }

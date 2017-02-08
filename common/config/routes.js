@@ -51,9 +51,9 @@
 
                     if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined )
                         condition = true;
-                    else
-                        condition = Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].verified;
-                    
+                    else if(Meteor.settings.public.verifyEmail) 
+                            condition = Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].verified;
+
                     if(condition)
                     {
                         this.render('scriptLoginInit');
