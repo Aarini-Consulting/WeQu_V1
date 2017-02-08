@@ -2,10 +2,7 @@ if(Meteor.isClient){
 
     Template.scriptLoginInit.onCreated(function () {
 
-
-      var condition = Session.get('loginLinkedin') ? true : Meteor.user().emails[0].verified ;
-
-      if(Meteor.user() && condition ){
+      if(Meteor.user()){
 
           Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
             console.log('gen-question-set', err, result);
