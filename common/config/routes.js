@@ -49,13 +49,19 @@
                 case 'init': {
                     var condition = true;
 
-                    if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined )
+                    // TODO : Need more robust condition here
+
+                    if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined 
+                         || Session.get('loginLinkedin')  )
                        {
                         condition = true; 
                        }
                     else if(Meteor.settings.public.verifyEmail) 
                        {
                             condition = Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].verified;
+                       }
+                    else{
+                            condition = true;
                        }
 
                     console.log(condition);
