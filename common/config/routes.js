@@ -50,9 +50,15 @@
                     var condition = true;
 
                     if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined )
-                        condition = true;
+                       {
+                        condition = true; 
+                       }
                     else if(Meteor.settings.public.verifyEmail) 
+                       {
                             condition = Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].verified;
+                       }
+
+                    console.log(condition);
 
                     if(condition)
                     {
@@ -122,22 +128,7 @@
 
        this.layout('ScriptLayout');
 
-       console.log(this.params.token);
-
-      /* Accounts.verifyEmail( this.params.token, ( error ) =>{
-          if ( error ) {
-            console.log( error.reason);
-        } else {
-            alert( 'Email verified! Thanks!', 'success' );
-
-            Router.go( '/script-login' );
-            setLoginScript("quiz");
-
-
-        } 
-    }); */
-
-       this.render('verifyEmail', {data : this })
+       this.render('verifyEmail');
 
     }, { 'name': '/verify-email:token' });
 

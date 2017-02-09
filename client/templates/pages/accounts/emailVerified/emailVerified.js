@@ -1,4 +1,4 @@
-    
+
     Template.emailVerified.events({
 
         'click .resend-verification-link' ( event, template ) {
@@ -7,6 +7,7 @@
             var userId = Meteor.userId();
             if(userId)
             {
+                $('#info').text('Please wait , processing ');  
                 Meteor.call( 'sendVerificationLink', userId, ( error, response ) => {
                   if ( error ) {
                     console.log(error,response);
@@ -15,21 +16,14 @@
                     var email = Meteor.user().emails[ 0 ].address;
                     $('#info').text(`Verification sent to ${ email }!`, 'success');
                 }
-                });
+            });
+                setTimeout(function () {                           
+                    $('#info').text('');               
+                }, 20000); 
+
             }
         }
 
     });
 
 
-
-    Template.emailVerified.helpers({
-
-
-        emailVerified(){
-
-        }
-    })
-Template.emailVerified.rendered = function(){
-
-}

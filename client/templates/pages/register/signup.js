@@ -25,7 +25,15 @@ Template.signUp.events({
    }
     else if(result)
     {
-     Router.go('/script-login');
+     Meteor.loginWithPassword(registerEmail, registerPassword , function (err) {
+          if(err){
+            $('#error').text(err);
+          }
+          else
+          {
+            Router.go('/quiz');
+          }
+        });
    }
  });
  }
