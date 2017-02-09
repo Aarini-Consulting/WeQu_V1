@@ -1,0 +1,57 @@
+
+<template name="scriptLoginInit">
+  {{>loading}} 
+</template>
+
+
+<template name="scriptLoginAfterQuiz">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+    <h2 style="width:65%">
+      Well done!<br>
+      Check out your soft skills
+    </h2>
+    <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
+  </section>
+</template>
+
+<template name="scriptLoginFail">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+    <h2 style="width:65%">
+      Something went wrong with initial setup
+      <button> restart </button>
+    </h2>
+  </section>
+</template>
+
+<template name="scriptLoginFinish">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+    <h2>
+      Well done!<br>
+      Now answer questions<br>about this person
+    </h2>
+    <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
+  </section>
+</template>
+
+<template name="scriptInviteInit">
+  {{>loading}}
+</template>
+
+<template name="scriptInvitationFillData">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+    <section>
+      <h2>Well done {{currentUser.profile.name}}!</h2>
+      <h2>
+        You have discovered that<br>
+        {{username person}}'s top strengths are
+      </h2>
+      <!--person: {{username person}}<br>-->
+      {{> threeSkills data=top3}}
+      <h2>Which strength do you have?</h2>
+      <!--<button class="next loginLinkedin">
+          <img src="/img/icon_linkedin.png"> Login with LinkedIn
+        </button>-->
+      </section>
+      {{> login}}
+    </section>
+  </template>

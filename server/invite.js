@@ -1,21 +1,5 @@
-if(Meteor.isClient) {
-    Router.route('/invite', function () {
-        route.set('invite');
-        this.wait(Meteor.subscribe('feedback'));
-        if (!this.ready()){
-            this.render('loading');
-            return;
-        }
-
-        var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
-        users = _.without(users, Meteor.userId());
-
-        this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
-    }, { 'name': '/invite' });
-}
 
 
-if(Meteor.isServer)  {
     Meteor.methods({
         'inviteLogin' : function(token){
            var feedback = Feedback.findOne({_id : token}) 
@@ -85,4 +69,3 @@ if(Meteor.isServer)  {
         return userId;
     }
 })
-}
