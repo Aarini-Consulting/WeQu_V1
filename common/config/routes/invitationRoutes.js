@@ -1,6 +1,4 @@
-
-if (Meteor.isClient) {
-    Router.route('/invitation/:_id', function () {
+  Router.route('/invitation/:_id', function () {
         this.wait(Meteor.subscribe('invitation', this.params._id));
         if(!this.ready()){
             this.render('loading');
@@ -92,57 +90,3 @@ if (Meteor.isClient) {
         }
         Router.go('/');
     }
-
-    Template.scriptInvitationFillData.onCreated(function(){
-        var user = Meteor.user()
-        if(user && user.profile && user.profile.firstName && user.profile.pictureUrl) {
-            finishInviteScript();
-        }
-    });
-
-    Template.scriptInvitationFillData.events({
-        "click button" : function(){
-            Meteor.loginWithLinkedin({});
-        }
-    });
-
-    Template.scriptInviteInit.onCreated(function () {
-        var invitationId = Session.get('invitation-id');
-        Meteor.call('inviteLogin', invitationId, function(err, username){
-            console.log("invite login result", err, username);
-            if(username){
-                Meteor.loginWithPassword(username, invitationId);
-            }
-            Session.setPersistent('invite', 'quiz');
-        });
-    });
-}
-
-if(Meteor.isServer) {
-    Meteor.methods({
-        /* "getMergeToken" : function(){
-            if(!Meteor.userId()) {
-                throw new Meteor.Error("not_logged_in");
-            }
-
-            var token = Random.secret();
-            Meteor.users.update({_id : Meteor.userId}, {$set : { "services.merge.token" : token }});
-            return token;
-        },*/
-        "mergeAccounts" : function(invitationId){
-            if(!Meteor.userId()) {
-                throw new Meteor.Error("not_logged_in");
-            }
-            var oldUser = Meteor.users.findOne({"services.invitationId": invitationId});
-            if(!oldUser){
-                throw new Meteor.Error("invalid_token");
-            }
-            var curUser = _.clone(Meteor.user())
-            console.log("mergeAccounts", oldUser._id, curUser._id);
-            Feedback.update({from: oldUser._id}, {$set : { from : curUser._id}}, {multi : true});
-            Feedback.update({to: oldUser._id}, {$set : { to : curUser._id}}, {multi : true});
-            Meteor.users.remove({ _id: oldUser._id });
-        }
-    });
-    
-}

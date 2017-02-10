@@ -1,3 +1,11 @@
+  var questionDep =  new Tracker.Dependency();
+    var currentQuestion = function currentQuestion(questions) {
+        questionDep.depend();
+        return _.find(questions, function (question) {
+            return !_.has(question, 'answer');// || !_.has(question, 'written');
+        });
+    };
+
  Template.quiz.helpers({
     'writtenFeedback' : function () {
         var question = currentQuestion(this.feedback.qset);

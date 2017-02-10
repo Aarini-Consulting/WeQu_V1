@@ -1,4 +1,3 @@
-if(Meteor.isClient) {
     quizPerson = new ReactiveVar()
     Router.route('/quiz', function(){
         route.set("quiz");
@@ -60,14 +59,4 @@ if(Meteor.isClient) {
 
         this.render('quiz', {data : data});
     }, { 'name': '/quiz' });
-
-    var questionDep =  new Tracker.Dependency();
-    var currentQuestion = function currentQuestion(questions) {
-        questionDep.depend();
-        return _.find(questions, function (question) {
-            return !_.has(question, 'answer');// || !_.has(question, 'written');
-        });
-    };
-
    
-}
