@@ -64,12 +64,12 @@
     Template.invite.events({
         "click #male" : function(event,template){
             event.preventDefault();
-            template.gender.set('Male');
+            template.gender.set('He');
         },
 
         "click #female" : function(event,template){
             event.preventDefault();
-            template.gender.set('Female');
+            template.gender.set('She');
         }
 
     });
