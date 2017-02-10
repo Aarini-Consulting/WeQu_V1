@@ -6,55 +6,25 @@ setLoginScript =  function setLoginScript(value) {
     Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': value } });
 };
 
-	//Validation Rules
-	trimInput = function(val){
-		return val.replace(/^\s*$/g, "");
-	}
-
-	isNonEmpty = function(val){
-		if(val && val !== ''){
-			return true;
-		}
-
-		sAlert.error("Please fill in all fields");
-		return false;
-	};
-
-	isEmail = function(val){
-		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		if(filter.test(val)){
-			return true;
-		}
-
-		sAlert.error("Please use a valid email address");
-		return false;
-	};
-
-	isValidPassword = function(password){
-		if(password.length < 6){
-			sAlert.error("Password must be at least 6 characters");
-			return false;
-		}
-		return true;
-	};
-
-	isValidConfirmPassword = function(password, confirm){
-		if(!isValidPassword(password)){
-			return false;
-		}
-
-		if(password !== confirm){
-			sAlert.error("Passwords do not match");
-			return false;
-		}
-
-		return true;
-
-	};
-
-
-	checkLoggedIn = function(ctx, redirect) {  
-	  if (!Meteor.userId()) {
-	    redirect('/')
-	  }
-	}
+dataForRadar =  function dataForRadar(score) {
+    var radius = 120;
+    var center = 150;
+    var vertices = _.keys(framework)['length'];
+    var i = 0;
+    return _.object(_.map([
+        'self_mgmt',
+        'problem_solving',
+        'team_work',
+        'communication',
+        'leadership',
+        'value'
+    ], function (key) {
+        var len = score[key];
+        var angle = Math.PI * 0.5 + i * (2 * Math.PI / vertices);
+        i = 1 + i;
+        return [
+            key,
+            Math.round(center + Math.cos(angle) * radius * len) + ',' + Math.round(center + Math.sin(angle) * radius * len)
+        ];
+    }));
+};

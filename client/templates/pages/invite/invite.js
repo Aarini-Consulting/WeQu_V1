@@ -1,7 +1,7 @@
 
-    inviteStatus = new ReactiveVar('default');
+inviteStatus = new ReactiveVar('default');
 
-    Template.invite.created = function () {
+Template.invite.created = function () {
         this.gender = new ReactiveVar('Male'); // Setting default to male , since in UI default value is male
     }
 
@@ -13,7 +13,7 @@
 
     Template.invite.events({
 
-       "submit form" : function (event, template) {
+     "submit form" : function (event, template) {
         event.preventDefault();
         inviteStatus.set('sending');
         var email = template.$('input[name=email]').val();
@@ -45,11 +45,26 @@
         });
 
 
-    }  
-    })
+    },
+    "click #next" : function () {
+        return setLoginScript('finish');
+    },
+    "click #male" : function(event,template){
+        event.preventDefault();
+        template.gender.set('Male');
+    },
+
+    "click #female" : function(event,template){
+        event.preventDefault();
+        template.gender.set('Female');
+    }
+})
+
 
     Template.invite.rendered = function(){
-        $('.menuBar').show();
+        
+        //TODO : use the layout instead
+        //$('.menuBar').show();
 
         $('.gender').on('click', function(){
             if(!$(this).hasClass('selected'))
@@ -58,19 +73,4 @@
             }
         });
 
-
     }
-
-    Template.invite.events({
-        "click #male" : function(event,template){
-            event.preventDefault();
-            template.gender.set('He');
-        },
-
-        "click #female" : function(event,template){
-            event.preventDefault();
-            template.gender.set('She');
-        }
-
-    });
-

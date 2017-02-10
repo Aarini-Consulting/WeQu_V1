@@ -21,7 +21,8 @@
          $('#error').text(err);
        else
         Session.set('loginLinkedin', true);
-      setLoginScript("init");
+    //  setLoginScript("init");
+     Router.go('/quiz');
 
       Meteor.setTimeout(function () {
                   try{
