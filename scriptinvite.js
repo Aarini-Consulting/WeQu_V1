@@ -144,14 +144,5 @@ if(Meteor.isServer) {
             Meteor.users.remove({ _id: oldUser._id });
         }
     });
-    Meteor.startup(function () {
-        Meteor.publish('invitation', function (id) {
-            var fb = Feedback.findOne(id);
-            if(!fb) { return [] }
-            return [
-                Feedback.find(id),
-                Meteor.users.find({ '_id': fb.to }, { 'fields': { 'profile': 1 } })
-            ];
-        });
-    });
+    
 }

@@ -2,7 +2,9 @@ if(Meteor.isClient){
 
     Template.scriptLoginInit.onCreated(function () {
 
-      if(Meteor.user()){
+      var data = Feedback.findOne({to: Meteor.userId(), from: Meteor.userId()});
+
+      if(Meteor.user() && !data){
 
           Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
             console.log('gen-question-set', err, result);

@@ -29,4 +29,10 @@ Meteor.startup(function() {
         // }
      }); 
 
+      Accounts.ui.config({
+        requestPermissions: {
+            linkedin: ['r_basicprofile'],
+        }
+    });  
+
 });
