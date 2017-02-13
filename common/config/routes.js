@@ -34,7 +34,7 @@
 
     Router.route('/script-login', function () {
 
-        this.layout('ScriptLayout');
+        this.layout('ApplicationLayout');
 
 
         if(! Meteor.user()) {
