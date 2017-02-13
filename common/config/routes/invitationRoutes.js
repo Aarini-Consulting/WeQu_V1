@@ -1,4 +1,7 @@
   Router.route('/invitation/:_id', function () {
+
+        this.layout('ApplicationLayout');
+
         this.wait(Meteor.subscribe('invitation', this.params._id));
         if(!this.ready()){
             this.render('loading');
@@ -25,7 +28,8 @@
 
 
     Router.route('/script-invitation', function () {
-        this.layout('ScriptLayout');
+
+        this.layout('ApplicationLayout');
 
         var invitationId = Session.get('invitation-id')
         switch(Session.get('invite')) {

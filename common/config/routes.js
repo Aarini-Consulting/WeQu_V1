@@ -146,6 +146,7 @@
  }, { 'name': '/verify-email:token' });
 
     Router.route('/admin', function () {
+        this.layout('ApplicationLayout');
         return this.render('admin');
     }, { 'name': '/admin' });
 
