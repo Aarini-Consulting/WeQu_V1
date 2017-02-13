@@ -13,7 +13,7 @@ dataForRadar =  function dataForRadar(score) {
     var i = 0;
     return _.object(_.map([
         'VIRTUE',
-        'SELF MANAGEMENT',
+        'SELF_MANAGEMENT',
         'COMMUNICATION',
         'TEAMWORK',
         'LEADERSHIP',
