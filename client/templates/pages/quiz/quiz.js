@@ -1,4 +1,4 @@
-  var questionDep =  new Tracker.Dependency();
+  questionDep =  new Tracker.Dependency();
     var currentQuestion = function currentQuestion(questions) {
         questionDep.depend();
         return _.find(questions, function (question) {

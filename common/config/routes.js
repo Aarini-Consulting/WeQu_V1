@@ -7,7 +7,8 @@
 
 
     Router.configure(
-        {  layoutTemplate: 'ApplicationLayout' },
+        //TODO : Verify all the routes , and configure application layouts
+       // {  layoutTemplate: 'ApplicationLayout' },
         {  except: ['signIn']  }
         );
 
@@ -32,7 +33,9 @@
     route = new ReactiveVar("quiz");
 
     Router.route('/script-login', function () {
+
         this.layout('ScriptLayout');
+
 
         if(! Meteor.user()) {
             this.render('loading')
@@ -150,6 +153,9 @@
 
 
     Router.route('/signIn', function () {
+
+        this.layout('commonLayout');
+
         return this.render('signIn');
     } ,{
         name: 'signIn' });
@@ -165,11 +171,13 @@
 
     Router.route('/feed', function () {
         route.set('feed')
+        this.layout('ApplicationLayout');
         return this.render('feed');
     }, { 'name': '/feed' });
 
     Router.route('/invite', function () {
         route.set('invite');
+        this.layout('ApplicationLayout');
         this.wait(Meteor.subscribe('feedback'));
         if (!this.ready()){
             this.render('loading');
@@ -186,7 +194,7 @@
     
     Router.route('/profile', function () {
         route.set("profile");
-        this.layout('ScriptLayout');
+        this.layout('ApplicationLayout');
         this.wait(Meteor.subscribe('feedback'),     Accounts.loginServicesConfigured());
         if(this.ready()){
             var myfeedback = Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId() }).fetch();
@@ -209,7 +217,7 @@
 
     Router.route('/profile/skills', function () {
         route.set("skills");
-        this.layout('ScriptLayout');
+        this.layout('ApplicationLayout');
         this.wait(Meteor.subscribe('feedback'));
         if(this.ready()){
             var data = { profile : Meteor.user().profile }
@@ -242,7 +250,7 @@
 
     Router.route('/profile/written-feedback', function () {
         route.set("feedback");
-        this.layout('ScriptLayout');
+        this.layout('ApplicationLayout');
         return this.render('profileWrittenFeedback', {
             'data': function () { return Meteor.user(); }
         });
