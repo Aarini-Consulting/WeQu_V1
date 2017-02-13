@@ -15,10 +15,13 @@
 
   	data(){
   		var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: true});
+  		if(myfeedback){
   		var data = calculateTopWeak([myfeedback]);
         data.myscore = calculateScore(myfeedback.qset);
         data.profile = Meteor.user().profile;
         return data;
+        }
+        return null;
     }
 
   })

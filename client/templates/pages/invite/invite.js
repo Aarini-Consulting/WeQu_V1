@@ -62,9 +62,6 @@ Template.invite.created = function () {
 
 
     Template.invite.rendered = function(){
-        
-        //TODO : use the layout instead
-        //$('.menuBar').show();
 
         $('.gender').on('click', function(){
             if(!$(this).hasClass('selected'))
