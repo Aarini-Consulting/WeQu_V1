@@ -12,12 +12,12 @@ dataForRadar =  function dataForRadar(score) {
     var vertices = _.keys(framework)['length'];
     var i = 0;
     return _.object(_.map([
-        'self_mgmt',
-        'problem_solving',
-        'team_work',
-        'communication',
-        'leadership',
-        'value'
+        'VIRTUE',
+        'SELF MANAGEMENT',
+        'COMMUNICATION',
+        'TEAMWORK',
+        'LEADERSHIP',
+        'PROBLEM SOLVING'
     ], function (key) {
         var len = score[key];
         var angle = Math.PI * 0.5 + i * (2 * Math.PI / vertices);
