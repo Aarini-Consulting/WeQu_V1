@@ -8,7 +8,7 @@ Meteor.startup(function () {
 
     importQuestions = function importQuestions() {
         qdata = { type1you : [], type1others : [], type3 : [] };
-        var qs = Assets.getText('questionset - type1you.csv');
+        var qs = Assets.getText('WeQu Qualites - 1_You.csv');
         var lines = Papa.parse(qs).data;
         var i; 
         var skill;
@@ -22,7 +22,7 @@ Meteor.startup(function () {
             qdata.type1you.push({_id: String(i), skill: skill, text: l[1]});
         }
 
-        qs = Assets.getText('questionset - type1others.csv');
+        qs = Assets.getText('WeQu Qualites - 2_He.csv');
         lines = Papa.parse(qs).data;
         for (i = 1; i < lines.length; i++) {
             var l =  lines[i];
