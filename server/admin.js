@@ -34,12 +34,12 @@ Meteor.startup(function () {
             }
             qdata.type1others.push({_id: String(i), skill: skill, text: l[1]});
         }
-        qs = Assets.getText('questionset - type3.csv');
+        qs = Assets.getText('WeQu Qualites - 3_She.csv');
         lines = Papa.parse(qs).data;
         var question;
         for (i = 1; i < lines.length; i++) {
             var l =  lines[i];
-            skill = l[2].trim()
+            skill = l[0].trim()
 
             if(skill && !skill2category[skill]) {
                 console.log("type3: unknown skill", skill, l.join(" "));
