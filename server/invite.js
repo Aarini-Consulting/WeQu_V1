@@ -2,7 +2,7 @@
 
     Meteor.methods({
         'inviteLogin' : function(token){
-           var feedback = Feedback.findOne({_id : token}) 
+           var feedback = Feedback.findOne({_id : token})
            if(!feedback) return;
            if(feedback.done) return;
            var user = Meteor.users.findOne({_id : feedback.from});
@@ -22,21 +22,26 @@
         }
         var profile = Meteor.user().profile;
         var name = getUserName(profile);
-        
+
         //Logic profile data should take priority
 
         var gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : gender
 
-        qset = genInitialQuestionSet(gender_result, qdata.type1others, 10);
+        if (gender_result = 'Male'){
+          qset = genInitialQuestionSet(gender_result, qdata.type1he, 10);
+        } else if (gender_result = 'Female') {
+          qset = genInitialQuestionSet(gender_result, qdata.type1she, 10);
+        }
+
 
 
         var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
         var _id = Random.secret()
         var userId;
         if(! user){
-            userId = Accounts.createUser({ 
-                username: Random.id(), 
-                email: email, 
+            userId = Accounts.createUser({
+                username: Random.id(),
+                email: email,
                 password: _id,
                 profile : { emailAddress : email, name: toName, inviteGender: gender_result}
             });
@@ -56,7 +61,7 @@
             'from': name,
             'to' : toName,
             'link': Meteor.absoluteUrl('invitation/' + _id)
-            
+
         };
 
         Email.send({
