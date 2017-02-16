@@ -27,23 +27,26 @@
 
         var gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : gender
 
-        if (gender_result = 'Male'){
-          qset = genInitialQuestionSet(gender_result, qdata.type1he, 10);
-        } else if (gender_result = 'Female') {
-          qset = genInitialQuestionSet(gender_result, qdata.type1she, 10);
+        if (gender_result  = 'Male'){
+          qset = genInitialQuestionSet(name, qdata.type1he, 10);
+        } else if (gender_result  = 'Female') {
+          qset = genInitialQuestionSet(name, qdata.type1she, 10);
         }
-
-
-
+        if (gender  = 'Male'){
+          qset1 = genInitialQuestionSet(toName, qdata.type1he, 10);
+        } else if (gender  = 'Female') {
+          qset1 = genInitialQuestionSet(toName, qdata.type1she, 10);
+        }
         var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
         var _id = Random.secret()
+        var _id1 = Random.secret()
         var userId;
         if(! user){
             userId = Accounts.createUser({
                 username: Random.id(),
                 email: email,
                 password: _id,
-                profile : { emailAddress : email, name: toName, inviteGender: gender_result}
+                profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result}
             });
         } else {
             userId = user._id;
@@ -52,7 +55,7 @@
         var feedback = Feedback.findOne({ 'from': userId, 'to': Meteor.userId() });
 
         var fbId = Feedback.insert({_id: _id, from : userId, to: Meteor.userId(), qset : qset, invite : true, done: false });
-
+        var fbId1 = Feedback.insert({_id: _id1, from : Meteor.userId(), to: userId, qset : qset1, invite : false, done: false });
         if(!user){
             Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
         }

@@ -28,7 +28,7 @@ Template.invite.created = function () {
                 console.log("error", err);
                 inviteStatus.set('error');
                 return;
-            } 
+            }
 
             template.$('input[name=name]').val('')
             template.$('input[name=email]').val('');
@@ -37,10 +37,10 @@ Template.invite.created = function () {
             setInterval(function () {
                 return inviteStatus.set('default');
             }, 3000);
-            if(getLoginScript()){
+    //        if(getLoginScript()){
                 quizPerson.set(userId);
                 return setLoginScript('finish');
-            }
+    //        }
             console.log(err, userId);
         });
 
