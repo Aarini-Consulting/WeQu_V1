@@ -24,8 +24,7 @@
         var name = getUserName(profile);
 
         //Logic profile data should take priority
-
-        var gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : gender
+        var gender_result = Meteor.user().profile.gender;
 
         if (gender_result  = 'Male'){
           qset = genInitialQuestionSet(name, qdata.type1he, 10);
