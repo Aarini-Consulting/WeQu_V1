@@ -26,14 +26,14 @@
         //Logic profile data should take priority
         var gender_result = Meteor.user().profile.gender;
 
-        if (gender_result  = 'Male'){
+        if (gender_result  == 'Male'){
           qset = genInitialQuestionSet(name, qdata.type1he, 10);
-        } else if (gender_result  = 'Female') {
+        } else if (gender_result  == 'Female') {
           qset = genInitialQuestionSet(name, qdata.type1she, 10);
         }
-        if (gender  = 'Male'){
+        if (gender  == 'Male'){
           qset1 = genInitialQuestionSet(toName, qdata.type1he, 10);
-        } else if (gender  = 'Female') {
+        } else if (gender  == 'Female') {
           qset1 = genInitialQuestionSet(toName, qdata.type1she, 10);
         }
         var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
