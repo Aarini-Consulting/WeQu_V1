@@ -9,9 +9,7 @@
         }
         var feedback = Feedback.findOne({_id : this.params._id});
         if(feedback && feedback.done) {
-            sAlert.warning("Already completed",{timeout: '3000', onRouteClose: false});
-            Router.go(`/script-invitation/${this.params._id}`)
-            Session.set('invite',"filldata")
+            Router.go('/')
             return;
         }
         Session.setPersistent('invitation-id', this.params._id);
@@ -24,8 +22,7 @@
                 return;
             }
         }
-        //Session.setPersistent('invite', 'init');
-        Session.set('invite', 'init');
+        Session.setPersistent('invite', 'init');
 
         Router.go(`/script-invitation/${this.params._id}`);
 
@@ -65,7 +62,6 @@
                     setTimeout(function(){
                         finishInviteScript();
                     }, 3000)
-
                     return;
                 }
 
