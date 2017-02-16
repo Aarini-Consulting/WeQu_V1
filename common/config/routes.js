@@ -19,11 +19,12 @@
     ] });
 
     Router.onBeforeAction(function () {
-        if(Session.get('invite')) {
+       /* if(Session.get('invite')) {
             Router.go('/script-invitation');
         } else if(getLoginScript()) {
             Router.go('/script-login')
         }
+        */
         return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
     '/RecoverPassword', '/verify-email:token'

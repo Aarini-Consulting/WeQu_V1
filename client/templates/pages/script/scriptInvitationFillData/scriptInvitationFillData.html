@@ -1,24 +1,27 @@
 <template name="scriptInvitationFillData">
 
   {{#if data}}
-    <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
 
+    <h2 class="scriptInvitationFillData">Well done {{currentUser.profile.name}}!</h2>
+    <h2>
+      You have discovered that<br>
+      {{username data.person}}'s top strengths are
+    </h2>
+    <!--person: {{username person}}<br>-->
+    {{> threeSkills data=data.top3}}
+    <h2>Which strength do you have?</h2>
+
+
+        <button class="next width-half">
+          <a href="/signUp"> Create your account to find out </a>
+        </button>
       
-        <h2>Well done {{currentUser.profile.name}}!</h2>
-        <h2>
-          You have discovered that<br>
-          {{username data.person}}'s top strengths are
-        </h2>
-        <!--person: {{username person}}<br>-->
-        {{> threeSkills data=data.top3}}
-        <h2>Which strength do you have?</h2>
-        <!--<button class="next loginLinkedin">
-            <img src="/img/icon_linkedin.png"> Login with LinkedIn
-          </button>-->
-        </section>
-     
-    {{else}}
-        {{> loading}}
-    {{/if}}
 
-  </template>
+  </section>
+
+  {{else}}
+  {{> loading}}
+  {{/if}}
+
+</template>

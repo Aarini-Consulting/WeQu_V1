@@ -20,3 +20,11 @@
 	background:white !important;
 	color:black !important;
 }
+
+h2.scriptInvitationFillData{
+	margin-top: -150px;
+}
+
+.width-half{
+	width: 60%
+}

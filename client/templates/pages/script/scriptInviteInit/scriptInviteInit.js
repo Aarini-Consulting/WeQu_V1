@@ -1,6 +1,9 @@
    
     Template.scriptInviteInit.onCreated(function () {
-        var invitationId = Session.get('invitation-id');
+
+
+        let invitationId = Router.current().params._id;
+
         Meteor.call('inviteLogin', invitationId, function(err, username){
             console.log("invite login result", err, username);
             if(username){

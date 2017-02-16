@@ -33,7 +33,10 @@
 
         this.layout('ApplicationLayout');
 
-        var invitationId = Session.get('invitation-id')
+        this.wait(Meteor.subscribe('invitation', this.params._id));
+
+        let invitationId =  this.params._id;
+
         switch(Session.get('invite')) {
             case 'init': {
                 this.render("scriptInviteInit")
@@ -73,9 +76,11 @@
         }
 
         this.render("error", {data : { message: "Unkonwn invitation script state: " + Session.get("invite")}});
-        setTimeout(function(){
+       
+       /* setTimeout(function(){
             finishInviteScript();
-        }, 3000)
+        }, 5000)
+       */
 
 
     }, { 'name': '/script-invitation' });

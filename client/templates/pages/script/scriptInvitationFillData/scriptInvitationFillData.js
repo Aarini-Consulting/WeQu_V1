@@ -8,9 +8,11 @@
  Template.scriptInvitationFillData.created = function () {
 
         // Avoid session and get the invitation id using the url
-        var invitationId = Session.get('invitation-id');
+        let invitationId = Router.current().params._id;
 
-        Meteor.subscribe('invitation', invitationId);
+        Tracker.autorun(function(){
+            Meteor.subscribe('invitation', invitationId);
+        })
 
         this.invitationId = new ReactiveVar(invitationId);
     }
@@ -33,11 +35,4 @@
         }
 
     });
-
-    Template.scriptInvitationFillData.events({
-        "click button" : function(){
-            Meteor.loginWithLinkedin({});
-        }
-    });
-
 
