@@ -111,13 +111,6 @@
                         this.render('scriptLoginFail');
                         return;
                     }
-                   /* var data = calculateTopWeak([myfeedback]);
-                    data.myscore = calculateScore(myfeedback.qset);
-                    data.profile = Meteor.user().profile;
-
-                    this.render('profile', { 'data': data });
-                    */
-
                     this.render('profile');
 
                     break;

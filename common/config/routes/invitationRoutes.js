@@ -23,11 +23,13 @@
             }
         }
         Session.setPersistent('invite', 'init');
-        Router.go('/script-invitation');
+
+        Router.go(`/script-invitation/${this.params._id}`);
+
     }, { 'name': '/invitation/:_id' });
 
 
-    Router.route('/script-invitation', function () {
+    Router.route('/script-invitation/:_id?', function () {
 
         this.layout('ApplicationLayout');
 
@@ -65,17 +67,7 @@
                 return;
             }
             case 'filldata':{
-                this.wait(Meteor.subscribe('invitation', invitationId));
-                console.log(this.ready());
-                if(!Meteor.user() || !this.ready()){
-                    this.render("loading");
-                    return;
-                }
-                var feedback = Feedback.findOne({_id : invitationId})
-                var data = calculateTopWeak([feedback]);
-                data.person = Meteor.users.findOne({_id : feedback.to}).profile;
-
-                this.render('scriptInvitationFillData', { data: data });
+                this.render('scriptInvitationFillData');
                 return;
             }
         }
