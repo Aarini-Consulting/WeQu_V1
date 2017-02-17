@@ -41,8 +41,6 @@
 
         event.preventDefault();
 
-        console.log("quiz event ")
-
         if(answering){
             return;
         }
