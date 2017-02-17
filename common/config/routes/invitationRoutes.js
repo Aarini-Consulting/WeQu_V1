@@ -77,10 +77,10 @@
 
         this.render("error", {data : { message: "Unkonwn invitation script state: " + Session.get("invite")}});
        
-       /* setTimeout(function(){
+        setTimeout(function(){
             finishInviteScript();
         }, 5000)
-       */
+       
 
 
     }, { 'name': '/script-invitation' });
