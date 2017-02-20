@@ -88,7 +88,8 @@
                 questionDep.changed()
                 if(!currentQuestion(feedback.qset)) {
                     if(Session.get('invite')){
-                        Session.setPersistent('invite', 'filldata');
+                        //Session.setPersistent('invite', 'filldata');
+                        Session.set('invite', 'filldata');
                     } else if(getLoginScript()) {
                         setLoginScript('after-quiz');
                     } 
