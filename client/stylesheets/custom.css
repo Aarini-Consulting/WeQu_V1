@@ -37,12 +37,20 @@
 
 .title{
 	text-align: left !important;
-	margin-right: 50px;
+	white-space: nowrap;
+	margin-right: 50px !important;
 }
 
-.skillElement{
-	width: 400px important;
+@media only screen and (min-width: 600px) {
+	.skillElement .title{
+		width: 20% !important;
+ }	
 }
+
+.skillElement .title{
+		width: 30% ;
+ }
+
 
 /* Applying skills category color */
 
