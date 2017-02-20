@@ -21,10 +21,16 @@
 	color:black !important;
 }
 
-h2.scriptInvitationFillData{
-	margin-top: -150px;
+@media only screen {
+	h2.scriptInvitationFillData{
+		 margin-top: -40px !important; 
+    }
 }
 
 .width-half{
 	width: 60%
+}
+
+.font-white{
+	color:white;
 }
