@@ -8,15 +8,85 @@
 
 #outer
 {
-    width:100%;
-    /* text-align: center; */
+	width:100%;
+	/* text-align: center; */
 }
 .inner
 {
-    /* display: inline-block; */
+	/* display: inline-block; */
 }
 
 .selected{
 	background:white !important;
 	color:black !important;
+}
+
+@media only screen {
+	h2.scriptInvitationFillData{
+		margin-top: -40px !important; 
+	}
+}
+
+.width-half{
+	width: 60%
+}
+
+.font-white{
+	color:white;
+}
+
+.title{
+	text-align: left !important;
+	white-space: nowrap;
+}
+
+
+@media only screen and (min-width: 600px) {
+	.skillElement .title {
+		width: 10% !important;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.skillElement .title{
+		width: 20% !important;
+	}	
+}
+
+@media only screen and (max-width: 400px) {
+	.skillElement .title{
+		width: 50% !important;
+	}	
+}
+
+.skillElement .title{
+	width: 30% !important;
+}
+
+
+/* Applying skills category color */
+
+.VIRTUE{
+	background-color: #d0376f !important;
+}
+
+.SELF_MANAGEMENT{
+	background-color: #9964b8 !important;
+}
+
+.COMMUNICATION{
+	background-color: #00aadb !important;
+}
+
+
+.TEAMWORK{	
+	background-color: #f46021 !important;
+}
+
+.LEADERSHIP{
+	background-color: #1c307e !important;
+}
+
+.PROBLEM_SOLVING{
+	background-color: #3fa033 !important;
 }

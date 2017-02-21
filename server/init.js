@@ -1,9 +1,6 @@
 
 Meteor.startup(function () {
 
-   // SMTP Configuration
-   process.env.MAIL_URL = 'smtp://postmaster@wequ.co:3055595afb57b03693562aceb84ad359@smtp.mailgun.org:587';
-
    // Linked in configuration
    var clientId,secret;
     if(Meteor.isDevelopment)
@@ -25,7 +22,7 @@ Meteor.startup(function () {
         loginStyle: 'popup'
       });
 
-    // On Creating user gives a call back function 
+    // On Creating user gives a call back function
     Accounts.onCreateUser(function (options, user) {
         user.profile = options.profile || {};
         user.profile.loginScript = 'init';
@@ -38,7 +35,6 @@ Meteor.startup(function () {
 
     });
 
-    Accounts.config({sendVerificationEmail: true, forbidClientAccountCreation: false}); 
+    Accounts.config({sendVerificationEmail: true, forbidClientAccountCreation: false});
 
     });
-

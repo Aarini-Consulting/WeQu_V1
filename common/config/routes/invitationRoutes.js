@@ -23,15 +23,20 @@
             }
         }
         Session.setPersistent('invite', 'init');
-        Router.go('/script-invitation');
+
+        Router.go(`/script-invitation/${this.params._id}`);
+
     }, { 'name': '/invitation/:_id' });
 
 
-    Router.route('/script-invitation', function () {
+    Router.route('/script-invitation/:_id?', function () {
 
         this.layout('ApplicationLayout');
 
-        var invitationId = Session.get('invitation-id')
+        this.wait(Meteor.subscribe('invitation', this.params._id));
+
+        let invitationId =  this.params._id;
+
         switch(Session.get('invite')) {
             case 'init': {
                 this.render("scriptInviteInit")
@@ -65,25 +70,17 @@
                 return;
             }
             case 'filldata':{
-                this.wait(Meteor.subscribe('invitation', invitationId));
-                console.log(this.ready());
-                if(!Meteor.user() || !this.ready()){
-                    this.render("loading");
-                    return;
-                }
-                var feedback = Feedback.findOne({_id : invitationId})
-                var data = calculateTopWeak([feedback]);
-                data.person = Meteor.users.findOne({_id : feedback.to}).profile;
-
-                this.render('scriptInvitationFillData', { data: data });
+                this.render('scriptInvitationFillData');
                 return;
             }
         }
 
         this.render("error", {data : { message: "Unkonwn invitation script state: " + Session.get("invite")}});
+       
         setTimeout(function(){
             finishInviteScript();
-        }, 3000)
+        }, 5000)
+       
 
 
     }, { 'name': '/script-invitation' });

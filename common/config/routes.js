@@ -1,4 +1,4 @@
-    //All the routes are configured here 
+    //All the routes are configured here
 
     Router.configure({
         layoutTemplate: 'ScriptLayout',
@@ -7,26 +7,26 @@
 
 
     Router.configure(
-        //TODO : Verify all the routes , and configure application layouts
-       // {  layoutTemplate: 'ApplicationLayout' },
-        {  except: ['signIn']  }
-        );
+        {  except: ['signIn','signUp']  }
+    );
 
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
-    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp', 
+
+    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp',
     '/RecoverPassword', '/verify-email:token','/reset-password/:token'
-    ] });
+    ] }); 
 
     Router.onBeforeAction(function () {
-        if(Session.get('invite')) {
+       if(Session.get('invite')) {
             Router.go('/script-invitation');
         } else if(getLoginScript()) {
             Router.go('/script-login')
         }
+
         return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
-    '/RecoverPassword', '/verify-email:token'
+    '/RecoverPassword', '/verify-email:token','/signUp'
 
     ] });
 
@@ -47,19 +47,19 @@
 
         console.log(phase);
 
-            // Move these functionalities to the rendered function 
+            // Move these functionalities to the rendered function
             switch(getLoginScript()) {
                 case 'init': {
                     var condition = true;
 
                     // TODO : Need more robust condition here
 
-                    if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined 
+                    if(Meteor.user() && Meteor.user().services && Meteor.user().services.linkedin != undefined
                        || Session.get('loginLinkedin')  )
                     {
-                        condition = true; 
+                        condition = true;
                     }
-                    else if(Meteor.settings.public.verifyEmail) 
+                    else if(Meteor.settings.public.verifyEmail)
                     {
                         condition = Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].verified;
                     }
@@ -78,8 +78,8 @@
                     {
                         this.render('emailVerified');
                         break;
-                    }   
-                    
+                    }
+
                 }
                 case 'quiz': {
                     this.wait(Meteor.subscribe('feedback'));
@@ -97,7 +97,7 @@
                             'feedback': myfeedback,
                             'person': Meteor.user().profile
                         }
-                    })                         
+                    })
                     break;
                 }
                 case 'profile' : {
@@ -111,25 +111,18 @@
                         this.render('scriptLoginFail');
                         return;
                     }
-                   /* var data = calculateTopWeak([myfeedback]);
-                    data.myscore = calculateScore(myfeedback.qset);
-                    data.profile = Meteor.user().profile;
-
-                    this.render('profile', { 'data': data });
-                    */
-
                     this.render('profile');
 
                     break;
                 }
 
-                case 'after-quiz' : 
+                case 'after-quiz' :
                 this.render('scriptLoginAfterQuiz')
                 break;
-                case 'invite' : 
+                case 'invite' :
                 this.render('invite');
                 break;
-                case 'finish': 
+                case 'finish':
                 this.render('scriptLoginFinish');
                 break
             }
@@ -168,7 +161,7 @@
     Router.route('/signUp', function () {
         return this.render('signUp');
     } ,{
-        name: 'signUp' });
+        name: '/signUp' });
 
     Router.route('/feed', function () {
         route.set('feed')
@@ -177,8 +170,15 @@
     }, { 'name': '/feed' });
 
     Router.route('/invite', function () {
+      this.layout('ApplicationLayout');
+        switch(getLoginScript()) {
+          case 'finish':
+          this.render('scriptLoginFinish');
+            return;
+          break
+          }
+        
         route.set('invite');
-        this.layout('ApplicationLayout');
         this.wait(Meteor.subscribe('feedback'));
         if (!this.ready()){
             this.render('loading');
@@ -192,7 +192,7 @@
     }, { 'name': '/invite' });
 
     // Profile routing starts ..
-    
+
     Router.route('/profile', function () {
         route.set("profile");
         this.layout('ApplicationLayout');
@@ -210,7 +210,7 @@
             data.enoughData = (validAnswers.length > 30);
 
             _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
-            this.render('profile', { data : data});  
+            this.render('profile', { data : data});
         } else {
             this.render('loading');
         }
@@ -262,23 +262,23 @@
 
 
     Router.route('/RecoverPassword', function () {
-        
+
         return this.render('RecoverPassword');
     }, { 'name': '/RecoverPassword' });
 
 
     Router.map(function(){
-        
+
         this.route('resetpassword', {
             path: '/reset-password/:token',
             template: 'RecoverPassword',
             data: function(){
-                
+
                 return {
                     isresetPassword: true
-                };    
+                };
             }
-            
+
 
         });
 

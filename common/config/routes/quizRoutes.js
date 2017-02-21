@@ -8,8 +8,8 @@
         if(!this.ready()) {
             this.render('loading');
             return;
-        } 
-        
+        }
+
         var iid = Session.get('invitation-id');
         if(iid) {
             Session.clear("invitation-id");
@@ -17,7 +17,7 @@
                 console.log("mergeAccounts", err, result);
             });
         }
-        
+
         var feedbacks = Feedback.find().fetch()
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
@@ -30,7 +30,7 @@
         if(friends.length == 0) {
             this.render('quizNothing');
             return;
-        } 
+        }
 
         if(friends.indexOf(quizPerson.get()) < 0) {
             quizPerson.set(friends[0]);
@@ -41,10 +41,9 @@
         var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
         data.friends = friends;
 
-        if(!data.feedback) {
+        if(!data.feedback.qset) {
             Meteor.call('gen-question-set', userId, function (err, result) {
                 questionDep.changed();
-                console.log('gen-question-set', err);
             });
         }
         var user = Meteor.users.findOne({_id : userId});
@@ -54,4 +53,3 @@
 
         this.render('quiz', {data : data});
     }, { 'name': '/quiz' });
-   

@@ -28,3 +28,11 @@ dataForRadar =  function dataForRadar(score) {
         ];
     }));
 };
+
+
+finishInviteScript = function() {                                                                                    
+    if (Session.get('invite')) {                                                                                   
+        Session.clear('invite');                                                                                   
+    }                                                                                                              
+    Router.go('/');                                                                                                
+} 

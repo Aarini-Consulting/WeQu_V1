@@ -7,7 +7,7 @@
 }
 
 .loginBody{
-	/* height: 100%; */
+	 height: 100%;
 }
 
 #form{ 
@@ -23,6 +23,7 @@
 .signupForm{
 	padding-top: 100px;
 	padding-bottom: 100px;
+	height: 100%;
 }
 
 .signIn{

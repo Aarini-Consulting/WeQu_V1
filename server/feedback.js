@@ -11,7 +11,7 @@
                 qset = genInitialQuestionSet("You", qdata.type1you, 12);
             } else {
                 var user = Meteor.users.findOne({ _id: fb.to });
-                qset = genQuizQuestionSet(getUserName(user.profile));
+                qset = genQuizQuestionSet(user.profile);
             }
             Feedback.insert({from: fb.from, to: fb.to, qset: qset, done : false})
         }
