@@ -1,0 +1,18 @@
+<template name="profileSkills">
+    {{> menuProfile}}
+
+   
+        <section class="feed">
+        {{#if enoughData}}
+        {{> skillCategories}}
+        {{else}}
+        {{> skillsPreview}}
+        <a href="/invite" class="button">Invite people</a>
+        {{/if}}
+      </section>
+     
+
+  </template>
+
+
+  
