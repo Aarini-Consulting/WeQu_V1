@@ -8,12 +8,12 @@
 
 #outer
 {
-    width:100%;
-    /* text-align: center; */
+	width:100%;
+	/* text-align: center; */
 }
 .inner
 {
-    /* display: inline-block; */
+	/* display: inline-block; */
 }
 
 .selected{
@@ -23,8 +23,8 @@
 
 @media only screen {
 	h2.scriptInvitationFillData{
-		 margin-top: -40px !important; 
-    }
+		margin-top: -40px !important; 
+	}
 }
 
 .width-half{
@@ -38,18 +38,30 @@
 .title{
 	text-align: left !important;
 	white-space: nowrap;
-	margin-right: 50px !important;
+}
+
+
+@media only screen and (min-width: 600px) {
+	.skillElement .title {
+		width: 10% !important;
+	}
 }
 
 @media only screen and (min-width: 600px) {
 	.skillElement .title{
 		width: 20% !important;
- }	
+	}	
+}
+
+@media only screen and (max-width: 400px) {
+	.skillElement .title{
+		width: 50% !important;
+	}	
 }
 
 .skillElement .title{
-		width: 30% ;
- }
+	width: 30% !important;
+}
 
 
 /* Applying skills category color */
