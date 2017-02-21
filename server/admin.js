@@ -7,10 +7,10 @@ Meteor.startup(function () {
 })
 
     importQuestions = function importQuestions() {
-        qdata = { type1you : [], type1others : [], type3 : [] };
-        var qs = Assets.getText('questionset - type1you.csv');
+        qdata = { type1you : [], type1he : [], type1she : [] };
+        var qs = Assets.getText('WeQu Qualites - 1_You.csv');
         var lines = Papa.parse(qs).data;
-        var i; 
+        var i;
         var skill;
         for (i = 1; i < lines.length; i++) {
             var l =  lines[i];
@@ -22,41 +22,52 @@ Meteor.startup(function () {
             qdata.type1you.push({_id: String(i), skill: skill, text: l[1]});
         }
 
-        qs = Assets.getText('questionset - type1others.csv');
+        qs = Assets.getText('WeQu Qualites - 2_He.csv');
         lines = Papa.parse(qs).data;
         for (i = 1; i < lines.length; i++) {
             var l =  lines[i];
             skill = l[0].trim()
 
             if(!skill2category[skill]) {
-                console.log("type1others: unknown skill", skill, l.join(" "));
+                console.log("type1he: unknown skill", skill, l.join(" "));
                 continue;
             }
-            qdata.type1others.push({_id: String(i), skill: skill, text: l[1]});
+            qdata.type1he.push({_id: String(i), skill: skill, text: l[1]});
         }
-        qs = Assets.getText('questionset - type3.csv');
+        qs = Assets.getText('WeQu Qualites - 3_She.csv');
         lines = Papa.parse(qs).data;
-        var question;
         for (i = 1; i < lines.length; i++) {
             var l =  lines[i];
-            skill = l[2].trim()
+            skill = l[0].trim()
 
-            if(skill && !skill2category[skill]) {
-                console.log("type3: unknown skill", skill, l.join(" "));
+            if(!skill2category[skill]) {
+                console.log("type1she: unknown skill", skill, l.join(" "));
                 continue;
             }
-            if(l[0]) {
-                qdata.type3.push(question);
-                question = { text : l[0], answers : [ {_id: String(i), text: l[1], skill: skill} ] };
-            } else if(question){
-                question.answers.push({_id: String(i), text: l[1], skill: skill});
-            } 
+            qdata.type1she.push({_id: String(i), skill: skill, text: l[1]});
         }
-        qdata.type3.push(question);
+        // lines = Papa.parse(qs).data;
+        // var question;
+        // for (i = 1; i < lines.length; i++) {
+        //     var l =  lines[i];
+        //     skill = l[0].trim()
+        //
+        //     if(skill && !skill2category[skill]) {
+        //         console.log("type3: unknown skill", skill, l.join(" "));
+        //         continue;
+        //     }
+        //     if(l[0]) {
+        //         qdata.type3.push(question);
+        //         question = { text : l[0], answers : [ {_id: String(i), text: l[1], skill: skill} ] };
+        //     } else if(question){
+        //         question.answers.push({_id: String(i), text: l[1], skill: skill});
+        //     }
+        // }
+        // qdata.type3.push(question);
     };
 
 
-Meteor.methods({ 
+Meteor.methods({
     import : importQuestions,
     reset : function(){
         if(Meteor.userId()) {
@@ -67,10 +78,10 @@ Meteor.methods({
     },
     loginTestUser : function(){
         var username = "test" + Math.round(Math.random() * 10000000);
-        Accounts.createUser({ 
-            username: username, 
-            email: username + "@email.test", 
-            password: username, 
+        Accounts.createUser({
+            username: username,
+            email: username + "@email.test",
+            password: username,
             profile: { firstName : username, lastName : ""}});
         return username;
 

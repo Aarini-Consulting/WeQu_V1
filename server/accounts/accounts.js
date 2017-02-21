@@ -16,7 +16,7 @@ Meteor.methods({
 
 		  	Meteor.call( 'sendVerificationLink', result, ( error, response ) => {
                     if ( error ) {
-                        console.log( error.reason, 'danger' );
+                        console.log( error.reason );
                     } else {
                         console.log( 'Welcome!', 'success' );
                     }
@@ -29,7 +29,6 @@ Meteor.methods({
     
     //Creating a method to send verification.
     sendVerificationLink(result) {
-    	console.log(result);
 	   	return Accounts.sendVerificationEmail( result );
   	}
 

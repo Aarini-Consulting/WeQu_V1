@@ -1,0 +1,52 @@
+  <template name="invite">
+    <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
+      {{#case inviteStatus='default'}}
+      <h3>Invite people to get<br> their feedback</h3>
+      {{/case}}
+      {{#case inviteStatus='sending'}}
+      <span class="sendingStatus"><img src="/img/status_sending.png">sending...</span>
+      {{/case}}
+      {{#case inviteStatus='sent'}}
+      <span class="sendingStatus"><img src="/img/status_sent.png">sent!</span>
+      {{/case}}
+      {{#case inviteStatus='error'}}
+      <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
+      {{/case}}
+      <div>
+        <form>
+          <input name="name" placeholder="name" required />
+          <input name="email" type="email" required placeholder="email" autocapitalize="off" autocorrect="off"/>
+          
+
+          <div id="outer">
+           <div class="row">
+           <div class="col-md-6 col-sm-6">
+              <div class="inner"><button type="button" id="male" class="gender selected">Male</button></div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <div class="inner"><button type="button" id="female" class="gender">Female</button></div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="invite">Invite</button>
+      </form>
+    </div>
+    <!--{{#if inScript}}
+    <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
+    {{/if}}-->
+    {{#if inScript}}
+    {{else}}
+    {{#each users}}
+    <div class="friend">
+      {{#if profile.pictureUrl}}
+      <img src="{{profile.pictureUrl}}" class="avatarSmall"><br>
+      {{else}}
+      <img src="/img/avatar.png" class="avatarSmall">
+      {{/if}}
+      {{username profile}}
+    </div>
+    {{/each}}
+    {{/if}}
+  </section>
+</template>
