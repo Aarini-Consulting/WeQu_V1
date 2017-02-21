@@ -19,6 +19,7 @@
   		var data = calculateTopWeak([myfeedback]);
         data.myscore = calculateScore(myfeedback.qset);
         data.profile = Meteor.user().profile;
+        console.log(data);
         return data;
         }
         return null;

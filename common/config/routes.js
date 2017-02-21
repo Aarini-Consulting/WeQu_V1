@@ -7,16 +7,15 @@
 
 
     Router.configure(
-        //TODO : Verify all the routes , and configure application layouts
-       // {  layoutTemplate: 'ApplicationLayout' },
-        {  except: ['signIn']  }
-        );
+        {  except: ['signIn','signUp']  }
+    );
 
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
+
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp',
     '/RecoverPassword', '/verify-email:token','/reset-password/:token'
-    ] });
+    ] }); 
 
     Router.onBeforeAction(function () {
        if(Session.get('invite')) {
@@ -27,7 +26,7 @@
 
         return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
-    '/RecoverPassword', '/verify-email:token'
+    '/RecoverPassword', '/verify-email:token','/signUp'
 
     ] });
 
@@ -162,7 +161,7 @@
     Router.route('/signUp', function () {
         return this.render('signUp');
     } ,{
-        name: 'signUp' });
+        name: '/signUp' });
 
     Router.route('/feed', function () {
         route.set('feed')
