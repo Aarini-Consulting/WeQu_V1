@@ -15,6 +15,7 @@
         })
 
         this.invitationId = new ReactiveVar(invitationId);
+
     }
 
     Template.scriptInvitationFillData.helpers({
@@ -35,3 +36,13 @@
         }
 
     });
+
+
+    Template.scriptInvitationFillData.events({
+
+        'click .font-white':function(event,template){
+            event.preventDefault();
+            Meteor.logout();
+            Router.go('/signUp');
+        }
+    })

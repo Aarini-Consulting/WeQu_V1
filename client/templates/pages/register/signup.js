@@ -2,7 +2,7 @@ Template.signUp.events({
 
   'click #signIn': function (event) {
     event.preventDefault();
-    Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': "init" } });
+    //Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': "init" } });
     Router.go('/signIn');
     Session.set('signUp', false);
   },
@@ -44,4 +44,5 @@ Template.signUp.events({
 
 Template.signUp.rendered = function(){
   $('.menuBar').hide();
+  Session.clear('invite');
 }
