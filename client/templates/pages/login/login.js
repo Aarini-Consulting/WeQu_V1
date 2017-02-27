@@ -1,6 +1,7 @@
  Template.login.rendered = function(){
         // TODO : Temporarily doing this .. verify is this way needed .
         Session.set("loginWithEmail", true);
+        Session.clear('invite');
     }
 
     Template.login.events({

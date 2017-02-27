@@ -15,6 +15,11 @@
         })
 
         this.invitationId = new ReactiveVar(invitationId);
+
+          Meteor.call("removeAccounts", Meteor.userId(), function(err, result){
+                console.log("remove accounts", err, result);
+          });
+
     }
 
     Template.scriptInvitationFillData.helpers({
@@ -35,3 +40,13 @@
         }
 
     });
+
+
+    Template.scriptInvitationFillData.events({
+
+        'click .font-white':function(event,template){
+            event.preventDefault();
+            Meteor.logout();
+            Router.go('/signUp');
+        }
+    })
