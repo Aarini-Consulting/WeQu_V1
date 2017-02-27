@@ -101,7 +101,7 @@
                     break;
                 }
                 case 'profile' : {
-                    this.wait(Meteor.subscribe('feedback'));
+                    this.wait(Meteor.subscribe('feedback'),     Accounts.loginServicesConfigured());
                     if(!this.ready()) {
                         this.render("loading");
                         return
@@ -111,7 +111,21 @@
                         this.render('scriptLoginFail');
                         return;
                     }
-                    this.render('profile');
+                     if(this.ready()){
+                        var myfeedback = Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId() }).fetch();
+                        var data = { profile : Meteor.user().profile };
+                        data.myscore = calculateScore(joinFeedbacks(myfeedback));
+
+                        var otherFeedback = Feedback.find({ 'from': { '$ne': Meteor.userId() }, 'to' : Meteor.userId() }).fetch();
+                        var qset = joinFeedbacks(otherFeedback);
+
+                        var validAnswers = _.filter(qset, function(question) { return question.answer });
+                        data.otherscore = calculateScore(qset);
+                        data.enoughData = (validAnswers.length > 30);
+
+                        _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
+                        this.render('profile', { data : data});
+                    }
 
                     break;
                 }
