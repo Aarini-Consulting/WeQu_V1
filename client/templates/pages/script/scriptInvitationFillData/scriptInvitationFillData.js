@@ -16,6 +16,10 @@
 
         this.invitationId = new ReactiveVar(invitationId);
 
+          Meteor.call("removeAccounts", Meteor.userId(), function(err, result){
+                console.log("remove accounts", err, result);
+          });
+
     }
 
     Template.scriptInvitationFillData.helpers({

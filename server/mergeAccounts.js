@@ -21,6 +21,12 @@
             Feedback.update({from: oldUser._id}, {$set : { from : curUser._id}}, {multi : true});
             Feedback.update({to: oldUser._id}, {$set : { to : curUser._id}}, {multi : true});
             Meteor.users.remove({ _id: oldUser._id });
+        },
+
+        "removeAccounts" : function(id){
+            return Meteor.users.remove({ _id: id});  
         }
+
+
     });
     
