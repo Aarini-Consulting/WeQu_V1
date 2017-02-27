@@ -30,7 +30,11 @@ Meteor.methods({
     //Creating a method to send verification.
     sendVerificationLink(result) {
 	   	return Accounts.sendVerificationEmail( result );
-  	}
+  	},
+
+  	verifiedTrue(userId){
+      	return	Meteor.users.update(userId, {$set: {"emails.0.verified" :true}});
+    }
 
 
 })

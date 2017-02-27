@@ -17,6 +17,10 @@ Template.signUp.events({
 
    let data = {registerEmail:registerEmail, registerPassword:registerPassword, firstName: firstName, lastName:lastName}
 
+   let verified = Router.current().params.invited && Router.current().params.invited == "invited" ? true : false;
+
+   console.log(verified);
+
    Meteor.call('createAccount', data , function (err, result) {
 
     if(err)
@@ -31,6 +35,15 @@ Template.signUp.events({
           }
           else
           {
+            // Manually overriding the verified as true for the invited 
+            if(verified)
+            { 
+                Meteor.call('verifiedTrue', Meteor.userId(), function (err, userId) {
+                  if(err){
+                      console.log("error", err);
+                  }
+                });
+            }
             Router.go('/quiz');
           }
         });
@@ -46,3 +59,14 @@ Template.signUp.rendered = function(){
   $('.menuBar').hide();
   Session.clear('invite');
 }
+
+
+Template.signUp.helpers({
+     invitedEmail(){
+      if(Router.current().params.email)
+        {
+          return Router.current().params.email;
+        }
+        return null;
+     }
+});

@@ -171,9 +171,19 @@
     Router.route('/', function () {
         return this.render('signIn');
     });
+   
+    // TODO : Improve with passing as query insteas params
 
-    Router.route('/signUp', function () {
+    Router.route('/signUp/:invited?/:email?', function () {
+        var id = this.params._id;
+        var query = this.params.query;
+
+        console.log(id,query);
+
+
         return this.render('signUp');
+         
+
     } ,{
         name: '/signUp' });
 

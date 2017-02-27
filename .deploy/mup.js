@@ -25,7 +25,7 @@ module.exports = {
     },
 
     dockerImage: 'abernix/meteord',
-    deployCheckWaitTime: 60
+    deployCheckWaitTime: 180
   },
 
   mongo: {
