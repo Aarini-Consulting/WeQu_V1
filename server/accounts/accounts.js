@@ -12,7 +12,7 @@ Meteor.methods({
 			lastName: data.lastName
 		}); 
 
-		if(!verify){
+		if(verify){
 
 			Meteor.setTimeout(function() {
 				Meteor.call( 'sendVerificationLink', result, ( error, response ) => {
