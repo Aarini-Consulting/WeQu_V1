@@ -41,12 +41,24 @@
         var _id1 = Random.secret()
         var userId;
         if(! user){
+            let username = Random.id();
             userId = Accounts.createUser({
-                username: Random.id(),
+                username: username,
                 email: email,
                 password: _id,
                 profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result}
             });
+
+          // inserting the inforamtion into the connections collection
+
+          Connections.insert({username: username,
+              email: email,
+              password: _id,
+              userId : userId,
+              services : {invitationId: _id},
+              profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result}
+            });
+
         } else {
             userId = user._id;
         }

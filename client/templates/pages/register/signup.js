@@ -16,12 +16,12 @@ Template.signUp.events({
    let lastName =  event.target.lastName.value;
 
    let data = {registerEmail:registerEmail, registerPassword:registerPassword, firstName: firstName, lastName:lastName}
+   let oldUser = Connections.findOne({"emails.address":registerEmail});
+   let verify = !oldUser ? false : true;
 
-   let verified = Router.current().params.invited && Router.current().params.invited == "invited" ? true : false;
+   console.log(verify);
 
-   console.log(verified);
-
-   Meteor.call('createAccount', data , function (err, result) {
+   Meteor.call('createAccount', data , verify, function (err, result) {
 
     if(err)
     { $('#error').text(err);
@@ -36,12 +36,10 @@ Template.signUp.events({
           else
           {
             // Manually overriding the verified as true for the invited 
-            if(verified)
+            if(verify)
             { 
-                Meteor.call('verifiedTrue', Meteor.userId(), function (err, userId) {
-                  if(err){
-                      console.log("error", err);
-                  }
+                Meteor.call('verifiedTrue', Meteor.userId(), function (err, result) {
+                  console.log(err,result);
                 });
             }
             Router.go('/quiz');

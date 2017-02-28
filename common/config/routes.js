@@ -178,12 +178,8 @@
         var id = this.params._id;
         var query = this.params.query;
 
-        console.log(id,query);
-
-
+        //console.log(id,query);
         return this.render('signUp');
-         
-
     } ,{
         name: '/signUp' });
 
@@ -203,7 +199,7 @@
           }
         
         route.set('invite');
-        this.wait(Meteor.subscribe('feedback'));
+        this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'));
         if (!this.ready()){
             this.render('loading');
             return;
@@ -212,7 +208,11 @@
         var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
         users = _.without(users, Meteor.userId());
 
-        this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
+    //  this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
+
+        this.render('invite', {data : { users : Connections.find({}) }});        
+
+
     }, { 'name': '/invite' });
 
     // Profile routing starts ..
