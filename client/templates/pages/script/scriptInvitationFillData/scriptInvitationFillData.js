@@ -20,6 +20,7 @@
 
           Meteor.call("removeAccounts", Meteor.userId(), function(err, result){
                 console.log("remove accounts", err, result);
+                Meteor.logout();
           });
 
     }
@@ -35,7 +36,7 @@
                 if(feedback){
                     data =  calculateTopWeak([feedback]);                
                     data.person = Meteor.users.findOne({_id : feedback.to}).profile;
-                    let email = Meteor.users.findOne({_id : feedback.to}).emails[0].address;
+                    let email = Connections.findOne({userId : feedback.from}).profile.emailAddress;
                     Template.instance().emailId.set(email);
                 }
                 return data;
