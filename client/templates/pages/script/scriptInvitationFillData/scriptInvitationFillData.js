@@ -34,7 +34,7 @@
             if(invitationId){
                 var feedback = Feedback.findOne({_id : invitationId})
                 if(feedback){
-                    data =  calculateTopWeak([feedback]);                
+                    data =  calculateTopWeak([feedback]);
                     data.person = Meteor.users.findOne({_id : feedback.to}).profile;
                     let email = Connections.findOne({userId : feedback.from}).profile.emailAddress;
                     Template.instance().emailId.set(email);
@@ -52,6 +52,7 @@
         'click .font-white':function(event,template){
             event.preventDefault();
             let email= template.emailId.get();
+            setLoginScript('init');
             Meteor.logout();
             Router.go(`/signUp/invited/${email}`);
         }

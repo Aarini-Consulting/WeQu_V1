@@ -15,7 +15,7 @@
 
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp',
     '/RecoverPassword', '/verify-email:token','/reset-password/:token'
-    ] }); 
+    ] });
 
     Router.onBeforeAction(function () {
        if(Session.get('invite')) {
@@ -117,12 +117,14 @@
                         data.myscore = calculateScore(joinFeedbacks(myfeedback));
 
                         var otherFeedback = Feedback.find({ 'from': { '$ne': Meteor.userId() }, 'to' : Meteor.userId() }).fetch();
+                        if(otherFeedback) {
                         var qset = joinFeedbacks(otherFeedback);
 
                         var validAnswers = _.filter(qset, function(question) { return question.answer });
                         data.otherscore = calculateScore(qset);
-                        data.enoughData = (validAnswers.length > 30);
 
+                        data.enoughData = (validAnswers.length > 30);
+                      }
                         _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
                         this.render('profile', { data : data});
                     }
@@ -171,7 +173,7 @@
     Router.route('/', function () {
         return this.render('signIn');
     });
-   
+
     // TODO : Improve with passing as query insteas params
 
     Router.route('/signUp/:invited?/:email?', function () {
@@ -197,7 +199,7 @@
             return;
           break
           }
-        
+
         route.set('invite');
         this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'));
         if (!this.ready()){
@@ -210,7 +212,7 @@
 
     //  this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
 
-        this.render('invite', {data : { users : Connections.find({}) }});        
+        this.render('invite', {data : { users : Connections.find({}) }});
 
 
     }, { 'name': '/invite' });

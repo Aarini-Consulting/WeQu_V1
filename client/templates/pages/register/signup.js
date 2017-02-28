@@ -16,7 +16,7 @@ Template.signUp.events({
    let lastName =  event.target.lastName.value;
 
    let data = {registerEmail:registerEmail, registerPassword:registerPassword, firstName: firstName, lastName:lastName}
-   let oldUser = Connections.findOne({"emails.address":registerEmail});
+   let oldUser = Connections.findOne({"email":registerEmail});
    let verify = !oldUser ? false : true;
 
    console.log(verify);
@@ -35,9 +35,9 @@ Template.signUp.events({
           }
           else
           {
-            // Manually overriding the verified as true for the invited 
+            // Manually overriding the verified as true for the invited
             if(verify)
-            { 
+            {
                 Meteor.call('verifiedTrue', Meteor.userId(), function (err, result) {
                   console.log(err,result);
                 });
