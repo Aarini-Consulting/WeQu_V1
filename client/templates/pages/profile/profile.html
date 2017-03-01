@@ -1,6 +1,8 @@
 <template name="profile">
+    <section class="feed">
+
   {{#if inScript}}
-  <section class="feed">
+
     <section class="bgGrey ptb_h1">
       <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
       <div><b>{{username profile}}</b></div>
@@ -36,10 +38,10 @@
         {{> skillsPreview}}
       </section>-->
       <button id="finish">Invite people <img src="/img/next_small.png" class="nextSmall"></button>
-    </section>
+    
     {{else}}
     {{> menuProfile}}
-    <section class="feed">
+    
       <section class="ptb_h1">
         <img src="/img/icon_overview.png" class="titleIcon">
         <h3>Soft Skill Overview</h3>
@@ -61,6 +63,11 @@
         <h3>Your 3 weaknesses</h3>
         {{> threeSkills data=weak3}}
       </section>
-    </section>
+    
     {{/if}}
+
+    {{> marketingVideo}}
+
+    </section>
+
   </template>
