@@ -1,10 +1,10 @@
 <template name="adminUser">
 
-<!-- Menubar not properly positioned , temporairly setting position via css -->
-<!-- TODO : Use proper bootstrap instead -->
-<div class="menuBar">
-  <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a>
-</div>
+	<!-- Menubar not properly positioned , temporairly setting position via css -->
+	<!-- TODO : Use proper bootstrap instead -->
+	<div class="menuBar">
+		<a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a>
+	</div>
 
 	<div class="row"> 
 		<div class="col-md-12 col-sm-12 col-xs-12">
@@ -12,106 +12,114 @@
 			<center> Welcome to the admin Dashboard </center>
 
 			<div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="widget widget-fullwidth widget-small">
-                <div class="widget-head">
-                    <div class="title"><strong>{{listusers.count}}</strong> Users (click on the user row to see more details)</div>
-                </div>
-                <div class="table-responsive noSwipe">
-                    <table class="table table-fw-widget table-hover">
-                        <thead>
-                        <tr>
-                            <th></th>
-                          <!--  <th width="10%">Id</th> -->
-                            <th></th>
-                            <th width="30%">Name / Email</th>
-                            <th width="10%">Type</th>
-                            <th width="5%"> Email Confirmed</th>
-                            <th width="20%">Created</th>
-                            <th> Last Login</th>
-                        </tr>
-                        </thead>
-                        <tbody class="no-border-x">
-                        {{#each listusers}}
-                            <tr id="user" data-userId="{{_id}}">
+				<div class="widget widget-fullwidth widget-small">
+					<div class="widget-head">
+						<div class="title"><strong>{{listusers.count}}</strong> Users </div>
+					</div>
+					<div class="table-responsive noSwipe">
+						<table class="table table-fw-widget table-hover">
+							<thead>
+								<tr>
+									<th></th>
+									<!--  <th width="10%">Id</th> -->
+									<th></th>
+									<th width="10%">Name / Email</th>
+									<th width="10%">Type</th>
+									<th width="5%"> Email Confirmed</th>
+									<th width="20%">Created</th>
+									<th> Last Login</th>
+								</tr>
+							</thead>
+							<tbody class="no-border-x">
+								{{#each listusers}}
+								<tr id="user" data-userId="{{_id}}">
 
-                                <td>{{#if status.online}}
-                                    <span class="badge badge-success">&nbsp;</span>
-                                {{else}}
-                                    <span class="badge badge-warning">&nbsp;</span>
-                                {{/if}}
-                                </td>
-                                <!-- <td width="10%">{{_id}}</td> -->
-                              
-                                <td class="user-avatar">
-                                    <div><span class="status"></span>
-                                        {{#if picture _id}}
-                                            <img class="img-circle" src="{{picture _id}}">
-                                        {{else}}
-                                            <img class="img-circle" width="75" height="75" src="/img/profile/profile4.png">
-                                        {{/if}}
+									<td>{{#if status.online}}
+										<span class="badge badge-success">&nbsp;</span>
+										{{else}}
+										<span class="badge badge-warning">&nbsp;</span>
+										{{/if}}
+									</td>
+									<!-- <td width="10%">{{_id}}</td> -->
 
-
-
-                                    </div>
-                                </td>
-                                <td>
+									<td class="user-avatar">
+										<div><span class="status"></span>
+											{{#if picture _id}}
+											<img class="img-circle" src="{{picture _id}}">
+											{{else}}
+											<img class="img-circle" width="75" height="75" src="/img/profile/profile4.png">
+											{{/if}}
 
 
-                                    <b class="text-capitalize">
 
-                                        {{profile.firstName}}
+										</div>
+									</td>
+									<td>
 
-                                        {{profile.lastName}}
-                                    </b>
-                                    <br/>
-                                    {{#each emails}} {{address}} {{/each}}
 
-                                </td>
+										<b class="text-capitalize">
 
-                                <td>
-                                  <!--  <span class="text-capitalize">{{profile.userType}}
-                                        <br/>
-                                        {{profile.principalType}}
-                                    </span> -->
+											{{profile.firstName}}
 
-                                    {{#if this.roles}}
-                                        <span class="badge badge-primary">
-                                            {{this.roles}}
-                                        </span>
-                                    {{/if}}
-                                    
-                                    <span class="badge badge-primary">
-                                    {{#if emails}} Wequ {{else}} Linked In {{/if}}
-                                    </span>
-                                    
+											{{profile.lastName}}
 
-                                </td>
-                                <td>
-                                    {{#each emails}}
-                                        {{#if verified}}
-                                            <span class="badge badge-success">YES</span>
-                                        {{/if}}
+										</b>
+										<br/>
+										{{#if profile.publicProfileUrl}}
+										<span class="badge badge-info"> {{profile.publicProfileUrl}} </span>
+										{{/if}}
 
-                                        {{#unless verified}}
-                                          <span class="badge badge-default">NO</span>
-                                        {{/unless}}
 
-                                    {{/each}}
-                                    {{#unless emails}}
-                                    <span class="badge badge-default">NA</span>
-                                    {{/unless}}
-                                </td>
-                                <td>{{formatDateTime createdAt}}</td>
-                                <td>
-                                    {{ formatDateTime status.lastLogin.date}}
-                                </td>
-                            </tr>
-                        {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+										<br/>
+										<h5 class="pull-left"> {{#each emails}} {{address}} {{/each}} </h5>
+
+									</td>
+
+									<td>
+
+										<span class="badge badge-info">
+											{{#if emails}} Wequ {{else}} Linked In {{/if}}
+										</span>
+
+										{{#if this.roles}}
+										<span class="badge badge-info">
+											{{this.roles}}
+										</span>
+										{{/if}}
+
+										{{#if services.invitationId}} 
+										<span class="badge badge-info">
+											Invited
+										</span>
+										{{/if}}
+
+									</td>
+									<td>
+										{{#each emails}}
+										{{#if verified}}
+										<span class="badge badge-success">YES</span>
+										{{/if}}
+
+										{{#unless verified}}
+										<span class="badge badge-warning">NO</span>
+										{{/unless}}
+
+										{{/each}}
+										{{#unless emails}}
+										<span class="badge badge-default">NA</span>
+										{{/unless}}
+									</td>
+									<td>{{formatDateTime createdAt}}</td>
+									<td>
+										{{ formatDateTime status.lastLogin.date}}
+									</td>
+								</tr>
+								{{/each}}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
