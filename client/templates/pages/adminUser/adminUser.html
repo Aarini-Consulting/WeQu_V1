@@ -25,7 +25,7 @@
                             <th></th>
                             <th width="30%">Name / Email</th>
                             <th width="10%">Type</th>
-                            <th> Email Confirmed</th>
+                            <th width="5%"> Email Confirmed</th>
                             <th width="20%">Created</th>
                             <th> Last Login</th>
                         </tr>
@@ -79,16 +79,27 @@
                                             {{this.roles}}
                                         </span>
                                     {{/if}}
+                                    
+                                    <span class="badge badge-primary">
+                                    {{#if emails}} Wequ {{else}} Linked In {{/if}}
+                                    </span>
+                                    
 
                                 </td>
                                 <td>
                                     {{#each emails}}
                                         {{#if verified}}
                                             <span class="badge badge-success">YES</span>
-                                        {{else}}
-                                            <span class="badge badge-default">NO</span>
                                         {{/if}}
+
+                                        {{#unless verified}}
+                                          <span class="badge badge-default">NO</span>
+                                        {{/unless}}
+
                                     {{/each}}
+                                    {{#unless emails}}
+                                    <span class="badge badge-default">NA</span>
+                                    {{/unless}}
                                 </td>
                                 <td>{{formatDateTime createdAt}}</td>
                                 <td>
