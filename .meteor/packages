@@ -43,5 +43,8 @@ juliancwirko:s-alert-genie
 
 npm-bcrypt
 
+momentjs:moment
+wizonesolutions:moment-duration-format
+
 alanning:roles
 mizzao:user-status 

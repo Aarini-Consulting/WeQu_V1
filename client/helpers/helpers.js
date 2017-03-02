@@ -34,3 +34,32 @@
             return pair[1].get();
         });
     });
+
+
+    Template.registerHelper('formatDate', function (val) {
+    if (val) {
+        return moment(val).format('ll');
+    }
+    return null;
+    });
+
+    Template.registerHelper('formatDateTime', function (val) {
+        if (val) {
+            return moment(val).format('MM/DD h:mm a');
+        }
+        return null;
+    });
+
+
+    // Create profile picture collection to store the profile picture
+
+    Template.registerHelper('profilePicture', function () {
+    let currentUser = Meteor.users.findOne({_id: Meteor.userId()});
+    let picture, data;
+    if (currentUser) {
+        picture = currentUser.profile.profilePicture;
+        data = ProfilePicture.findOne({_id: picture});
+        return data && data.url();
+    }
+    return false;
+    });

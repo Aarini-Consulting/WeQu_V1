@@ -1,4 +1,10 @@
  
+ 
+Template.adminLogin.rendered = function(){
+  if(Meteor.userId()){
+    Router.go('/adminUser');
+  }
+}
 
  Template.adminLogin.events({
     'submit #signIn': function(event) {
