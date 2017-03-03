@@ -8,27 +8,27 @@
 
     Router.configure(
         {  except: ['signIn','signUp']  }
-    );
+        );
 
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
 
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp',
-    '/RecoverPassword', '/verify-email:token','/reset-password/:token'
-    ] });
+    '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin'
+    ] }); 
 
     Router.onBeforeAction(function () {
        if(Session.get('invite')) {
-            Router.go('/script-invitation');
-        } else if(getLoginScript()) {
-            Router.go('/script-login')
-        }
+        Router.go('/script-invitation');
+    } else if(getLoginScript()) {
+        Router.go('/script-login')
+    }
 
-        return this.next();
-    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
-    '/RecoverPassword', '/verify-email:token','/signUp'
+    return this.next();
+}, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
+'/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser'
 
-    ] });
+] });
 
     route = new ReactiveVar("quiz");
 
@@ -111,20 +111,20 @@
                         this.render('scriptLoginFail');
                         return;
                     }
-                     if(this.ready()){
+                    if(this.ready()){
                         var myfeedback = Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId() }).fetch();
                         var data = { profile : Meteor.user().profile };
                         data.myscore = calculateScore(joinFeedbacks(myfeedback));
 
                         var otherFeedback = Feedback.find({ 'from': { '$ne': Meteor.userId() }, 'to' : Meteor.userId() }).fetch();
                         if(otherFeedback) {
-                        var qset = joinFeedbacks(otherFeedback);
+                            var qset = joinFeedbacks(otherFeedback);
 
-                        var validAnswers = _.filter(qset, function(question) { return question.answer });
-                        data.otherscore = calculateScore(qset);
+                            var validAnswers = _.filter(qset, function(question) { return question.answer });
+                            data.otherscore = calculateScore(qset);
 
-                        data.enoughData = (validAnswers.length > 30);
-                      }
+                            data.enoughData = (validAnswers.length > 30);
+                        }
                         _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
                         this.render('profile', { data : data});
                     }
@@ -193,29 +193,29 @@
 
     Router.route('/invite', function () {
       this.layout('ApplicationLayout');
-        switch(getLoginScript()) {
+      switch(getLoginScript()) {
           case 'finish':
           this.render('scriptLoginFinish');
-            return;
+          return;
           break
-          }
+      }
 
-        route.set('invite');
-        this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'));
-        if (!this.ready()){
-            this.render('loading');
-            return;
-        }
-
-        var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
-        users = _.without(users, Meteor.userId());
-
-    //  this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
-
-        this.render('invite', {data : { users : Connections.find({}) }});
+      route.set('invite');
+      this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'));
+      if (!this.ready()){
+        this.render('loading');
+        return;
+    }
 
 
-    }, { 'name': '/invite' });
+    var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
+    users = _.without(users, Meteor.userId());
+
+    this.render('invite', {data : { users : Connections.find({}) }});
+}, { 'name': '/invite' });
+
+/* this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
+}, { 'name': '/invite' }); */
 
     // Profile routing starts ..
 
@@ -304,8 +304,39 @@
                     isresetPassword: true
                 };
             }
+        });
 
+        this.route('adminUser', {
+            layout : 'ApplicationLayout',
+            path: '/adminUser',
+            template: 'adminUser',
+            data: function(){
+            }
+        });
 
+        this.route('adminLogin', {
+            layout : 'ApplicationLayout',
+            path: '/adminLogin',
+            template: 'adminLogin',
+            data: function(){
+            }
         });
 
     });
+
+    // Custom logic for adminUserPage
+
+    
+    Router.onBeforeAction(checkAdminLoggedIn, {
+      only: ['adminUser']
+      // or except: ['routeOne', 'routeTwo']
+  });
+
+    function checkAdminLoggedIn(context,redirect){
+      if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+        this.render('/adminLogin');
+    } else {
+        this.next();
+    }
+}
+

@@ -1,0 +1,44 @@
+<template name="adminLogin">
+   
+   <div class="menuBar margin-top">
+	  <a href="/" class="{{#if loggedIn}}hidden{{/if}}"> Home <img class="lg-icon" src="/img/login_button.png" ></a>
+   </div>
+
+	<center> Welcome to the admin login page </center>
+
+	<div class="row" id="form"> 
+		<div class="col-xs-4 col-md-6 col-sm-6">
+
+
+			<section class="signIn">
+				<div class="panel panel-default">
+
+					<form id="signIn">
+
+						<div class="row">
+
+							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
+
+							<div class="col-md-10 col-sm-10 col-xs-10">
+
+								<div class="form-group">
+									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="admin email" id="light-grey-color" required>
+									<input type="password" name="loginPassword" class="form-control input-lg" placeholder="admin password" id="light-grey-color" required>
+								</div>
+								<button type="submit" id="grey-color">
+									Log in
+								</button>
+
+								<div id="error" class="black-text"></div>
+
+							</div>
+
+							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
+
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+	</div>
+</template>
