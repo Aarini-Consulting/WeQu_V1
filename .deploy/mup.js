@@ -3,7 +3,7 @@ module.exports = {
     one: {
       host: '52.28.201.144',
       username: 'ubuntu',
-      pem: 'D:/WeQu_V1/WeQu.pem',
+      pem: 'wequ.pem',
       // password:
       // or leave blank for authenticate from ssh-agent
     }
@@ -11,13 +11,12 @@ module.exports = {
 
   meteor: {
     name: 'app-test',
-    path: 'D:/WeQu_V1',
+    path: 'WeQu_V1/',
     servers: {
       one: {}
     },
     buildOptions: {
       serverOnly: true,
-      buildLocation: 'D:/build', // defaults to /tmp/<uuid>
     },
     env: {
       ROOT_URL: 'http://app-test.wequ.co',
