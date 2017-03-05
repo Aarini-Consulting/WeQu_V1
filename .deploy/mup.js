@@ -11,7 +11,7 @@ module.exports = {
 
   meteor: {
     name: 'app-test',
-    path: 'WeQu_V1/',
+    path: '/home/rof/src/github.com/Aarini-Consulting/WeQu_V1/',
     servers: {
       one: {}
     },
