@@ -3,7 +3,7 @@ module.exports = {
     one: {
       host: '52.28.201.144',
       username: 'ubuntu',
-      pem: 'wequ.pem',
+      pem: '/home/rof/src/github.com/Aarini-Consulting/WeQu_V1/wequ.pem',
       // password:
       // or leave blank for authenticate from ssh-agent
     }
