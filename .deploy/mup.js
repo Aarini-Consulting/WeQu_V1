@@ -8,7 +8,6 @@ module.exports = {
       // or leave blank for authenticate from ssh-agent
     }
   },
-
   meteor: {
     name: 'app-test',
     path: '/home/rof/src/github.com/Aarini-Consulting/WeQu_V1/',
