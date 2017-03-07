@@ -4,8 +4,7 @@ Template.marketingVideo.onRendered(function() {
    var onPlayerReady = function(event) {
      // event.target.playVideo();  
     };
-
-   
+      
    setTimeout(function(){
       onYouTubeIframeAPIReady();
    }, 1000)
@@ -14,8 +13,8 @@ Template.marketingVideo.onRendered(function() {
     var player;
     function onYouTubeIframeAPIReady() {
     var player = new YT.Player('player', {
-        height: '100%',
-        width: '100%',
+        height: '390',
+        width: '640',
         videoId : 'RwvjDSWh-So',
         events : {
             'onReady' : onPlayerReady
