@@ -14,7 +14,7 @@ Template.marketingVideo.onRendered(function() {
     var player;
     function onYouTubeIframeAPIReady() {
     var player = new YT.Player('player', {
-        height: '600',
+        height: '100%',
         width: '100%',
         videoId : 'RwvjDSWh-So',
         events : {
