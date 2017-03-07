@@ -85,7 +85,7 @@ Meteor.methods({
         };
 
         // Sending Email through custom server method 
-        let email = sendtoEmail ;
+        let sendtoEmail = email;
         let subject = _.template("Let’s learn from each other")({ to: toName, from:name });
         let body = SSR.render('htmlEmail', emailData);
 
