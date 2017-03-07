@@ -96,3 +96,22 @@
 .menuBar{
 	width: 100%;
 }
+
+
+.colorRed{
+	color: black !important;
+}
+
+
+
+@media only screen and (min-width: 600px) {
+	.margin-top {
+		margin-top: 50px;
+	}
+}
+
+@media only screen and (min-width: 760px) {
+	.margin-top {
+		margin-top: 100px;
+	}
+}
