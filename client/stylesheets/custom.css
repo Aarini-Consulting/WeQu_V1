@@ -137,3 +137,12 @@
 	width:100% !important;
 	height:100% !important;
 }
+
+.margin25{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.margin30{
+	margin-bottom: 30px;
+}
