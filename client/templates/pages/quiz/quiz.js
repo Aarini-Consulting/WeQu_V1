@@ -26,7 +26,6 @@
             return !_.has(question, 'answer');
         });
         return idx;
-
     }, 
     'questionsTotal' : function(){
         questionDep.depend();
@@ -63,6 +62,42 @@
                     Meteor.users.update({_id: Meteor.userId()},
                       {$set : { "profile.gender": event.target.getAttribute('id') }});
                 }
+
+                // After reaching the last question of the set 
+                // Display the next person , instead of starting question set 4/4
+
+                var idx = 0;
+                _.find(template.data.feedback.qset, function (question) {
+                    idx++;
+                    return !_.has(question, 'answer');
+                });
+                console.log("idx = ", idx);
+
+                // Total number of questions ..
+                let questionsTotal = template.data.feedback.qset.length; 
+
+                if(idx == questionsTotal+1)
+                {
+                    console.log(template.data.nextPerson);
+                    // Navigate to the next person ..
+                    if(template.data.nextPerson == true){
+                        var friends = template.data.friends;
+                        var idx = friends.indexOf(quizPerson.get())
+                        if(idx >= 0 && idx < friends.length - 1){
+                            quizPerson.set(friends[idx + 1]);
+                        }
+                    }
+                    // Navigate to the first person (current user) ..
+                    else{
+                        var friends = template.data.friends;
+                        var idx = friends.indexOf(quizPerson.get())
+                        if(idx >= 1 && idx < friends.length){
+                           // quizPerson.set(friends[idx - 1]);
+                           quizPerson.set(friends[0]);
+                        }
+                    }
+                }
+
             }
 
             if(buttonType == 'skip'){
