@@ -31,6 +31,53 @@
         }
     }, { 'name': '/profile/user/:userId' });
 
+
+     Router.route('/profile/skills/:userId', function () {
+        route.set("skills");
+        this.layout('ApplicationLayout');
+        this.wait(Meteor.subscribe('feedback'));
+        if(this.ready()){
+
+             // Replacing userId with custom Id
+            var id = this.params.userId;
+            let user = Meteor.users.findOne({_id : id});
+
+            if(user)
+            {
+
+            let userId = user._id;
+
+            var data = { profile : user.profile }
+            var otherFeedback = Feedback.find({ 'to' : userId }).fetch();
+            var joinedQset = joinFeedbacks(otherFeedback);
+
+            var validAnswers = _.filter(joinedQset, function(question) { return question.answer });
+            var otherscore = calculateScore(joinedQset, true);
+            data.enoughData = (validAnswers.length > 15);
+
+            data.categories = _.map(_.keys(framework), function(category) {
+                return {
+                    name : i18n[category],
+                    category : category,
+                    skills : _.map(framework[category], function(skill){
+                        var data = {name : i18n[skill], value: 0, scored: otherscore.scored[skill], total: otherscore.total[skill], skill: skill, category: category }
+                        if(otherscore.total[skill] > 0) {
+                            data.value = Math.round(otherscore.scored[skill] * 100 / otherscore.total[skill]);
+                        }
+                        return data;
+                    })
+                }
+            })
+            this.render('profileSkills', { data : data });
+            }
+
+        } else {
+            this.render('loading');
+        }
+    }, { 'name': '/profile/skills/:userId' });
+
+
+
       // Profile routing starts ..
 
       Router.route('/profile', function () {
