@@ -110,5 +110,14 @@
             if(idx >= 1 && idx < friends.length){
                 quizPerson.set(friends[idx - 1]);
             }
+        },
+
+        "click #specificUser" : function(event, template){
+            event.preventDefault();
+            let userId = $(event.target).attr('data-filter-id'); //quizPerson.get()
+            if(userId == Meteor.userId())
+                Router.go(`/profile`); //Current user    
+            else
+                Router.go(`/profile/user/${userId}`); 
         }
     });

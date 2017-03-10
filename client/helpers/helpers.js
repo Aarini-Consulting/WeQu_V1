@@ -63,3 +63,8 @@
     }
     return false;
     });
+
+    // Used in menubar
+    Template.registerHelper('route', function (status) {
+        return status == route.get();
+    });
