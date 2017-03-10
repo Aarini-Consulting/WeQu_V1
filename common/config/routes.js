@@ -189,7 +189,7 @@
         route.set('feed')
         this.layout('ApplicationLayout');
         return this.render('feed');
-    }, { 'name': '/feed' });
+    }, { 'name': '/feed'});
 
     Router.route('/invite', function () {
       this.layout('ApplicationLayout');

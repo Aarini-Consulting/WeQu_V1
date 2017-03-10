@@ -63,3 +63,13 @@
     }
     return false;
     });
+
+
+    Template.registerHelper('route', function (status) {
+        return status == route.get();
+    });
+
+
+    Template.registerHelper('profile', function (status) {
+        return Meteor.user() && Meteor.user().profile;
+    });
