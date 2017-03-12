@@ -9,6 +9,17 @@
   },
   "private": {
 
-    "postmail": "postmaster@wequ.co"
+    "postmail": "postmaster@wequ.co",
+    "defaultUsers": [
+      {
+        "firstName": "Admin",
+        "lastName": "User",
+        "email": "admin@wequ.co",
+        "password": "wequ1",
+        "roles": [
+          "admin"
+        ]
+      }
+    ]
   }
 }

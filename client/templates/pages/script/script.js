@@ -1,9 +1,10 @@
-Template['scriptLoginAfterQuiz'].events({ 
+Template['scriptLoginAfterQuiz'].events({
         "click #next" : function () {
             setLoginScript('profile');
+            return Router.go('/profile');
         }
     });
-  
+
 
     Template.scriptLoginFail.events({
         "click button" : function(){

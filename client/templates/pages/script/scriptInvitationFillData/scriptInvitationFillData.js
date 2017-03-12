@@ -16,6 +16,8 @@
 
         this.invitationId = new ReactiveVar(invitationId);
 
+        this.emailId = new ReactiveVar('');
+
           Meteor.call("removeAccounts", Meteor.userId(), function(err, result){
                 console.log("remove accounts", err, result);
           });
@@ -31,8 +33,15 @@
             if(invitationId){
                 var feedback = Feedback.findOne({_id : invitationId})
                 if(feedback){
-                    data =  calculateTopWeak([feedback]);                
+                    data =  calculateTopWeak([feedback]);
                     data.person = Meteor.users.findOne({_id : feedback.to}).profile;
+                    let connection = Connections.findOne({userId : feedback.from});
+
+                    if(connection){
+                    let email = connection.profile.emailAddress;
+                    Template.instance().emailId.set(email);
+                    }
+
                 }
                 return data;
             }
@@ -46,7 +55,9 @@
 
         'click .font-white':function(event,template){
             event.preventDefault();
+            let email= template.emailId.get();
+            setLoginScript('init');
             Meteor.logout();
-            Router.go('/signUp');
+            Router.go(`/signUp/invited/${email}`);
         }
     })
