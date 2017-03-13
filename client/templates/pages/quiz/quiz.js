@@ -1,12 +1,12 @@
   questionDep =  new Tracker.Dependency();
-    var currentQuestion = function currentQuestion(questions) {
-        questionDep.depend();
-        return _.find(questions, function (question) {
+  var currentQuestion = function currentQuestion(questions) {
+    questionDep.depend();
+    return _.find(questions, function (question) {
             return !_.has(question, 'answer');// || !_.has(question, 'written');
         });
-    };
+};
 
- Template.quiz.helpers({
+Template.quiz.helpers({
     'writtenFeedback' : function () {
         var question = currentQuestion(this.feedback.qset);
         !(this.feedback.to == this.feedback.from) && question && _.has(question, 'answer') && !_.has(question, 'written');
@@ -26,7 +26,6 @@
             return !_.has(question, 'answer');
         });
         return idx;
-
     }, 
     'questionsTotal' : function(){
         questionDep.depend();
@@ -35,8 +34,8 @@
 });
 
 
- var answering = false;
- Template['quiz'].events({
+var answering = false;
+Template['quiz'].events({
     "click .answer, click .skip, click .writeAnswer" : function (event, template) {
 
         event.preventDefault();
@@ -72,22 +71,42 @@
                     question.answer = false
                 }
             } 
-            
+
             if(buttonType == 'writeAnswer') {
                 question.written = template.$('textarea').val();
             }
 
             Meteor.call('feedback', feedback._id, feedback.qset, function (err, result) {
-                if(err) {
+                if(err){
                     console.log('feedback error', err);
                 }
-                if(result){
-                    console.log('feedback result',result);
+
+            // After reaching the last question of the set 
+            // Display the next person , instead of starting question set 4/4
+            
+            if(result)
+            {
+               if(template.data.nextPerson == true){
+                var friends = template.data.friends;
+                var idx = friends.indexOf(quizPerson.get())
+                if(idx >= 0 && idx < friends.length - 1){
+                    quizPerson.set(friends[idx + 1]);
                 }
-                answering = false;
-                questionDep.changed()
-                if(!currentQuestion(feedback.qset)) {
-                    if(Session.get('invite')){
+            }
+             if(template.data.nextPerson == false){
+                var friends = template.data.friends;
+                var idx = friends.indexOf(quizPerson.get())
+                if(idx >= 1 && idx < friends.length){
+                           // quizPerson.set(friends[idx - 1]);
+                           quizPerson.set(friends[0]);
+                       }
+                   }
+            }
+
+               answering = false;
+               questionDep.changed()
+               if(!currentQuestion(feedback.qset)) {
+                if(Session.get('invite')){
                         //Session.setPersistent('invite', 'filldata');
                         Session.set('invite', 'filldata');
                     } else if(getLoginScript()) {

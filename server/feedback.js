@@ -14,5 +14,7 @@
                 qset = genQuizQuestionSet(user.profile);
             }
             Feedback.insert({from: fb.from, to: fb.to, qset: qset, done : false})
+
+            return true;
         }
     });
