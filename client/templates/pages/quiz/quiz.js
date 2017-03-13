@@ -93,7 +93,7 @@ Template['quiz'].events({
                     quizPerson.set(friends[idx + 1]);
                 }
             }
-            else{
+             if(template.data.nextPerson == false){
                 var friends = template.data.friends;
                 var idx = friends.indexOf(quizPerson.get())
                 if(idx >= 1 && idx < friends.length){
@@ -101,7 +101,8 @@ Template['quiz'].events({
                            quizPerson.set(friends[0]);
                        }
                    }
-               }
+            }
+
                answering = false;
                questionDep.changed()
                if(!currentQuestion(feedback.qset)) {

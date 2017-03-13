@@ -8,6 +8,9 @@
 
  Meteor.publish('feedback', function () {
             var fb = Feedback.find({$or : [ {from : this.userId}, {to : this.userId} ]});
+            
+            //let fb = Feedback.find({});
+
             //var userList = fb.map(function(fb){ return [fb.to, fb.from] });
             //userList = _.uniq(_.flatten(users));
             //console.log("userList", userList);
