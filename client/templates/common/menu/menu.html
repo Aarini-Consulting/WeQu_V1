@@ -17,8 +17,13 @@
     <div><img src="/img/back.png" style="width:18px; visibility: hidden"></div>
   </div>
   <div class="menuBar">
-    <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}">Overview</a>
-    <a href="/profile/skills" class="{{#if route 'skills'}}t100{{else}}t50{{/if}}">Skills</a>
-    <!--<a href="/profile/written-feedback" class="{{#if route 'feedback'}}t100{{else}}t50{{/if}}">Feedback</a>-->
+    {{#if userId}}
+      <a href="/profile/user/{{userId}}" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}">Overview</a>
+      <a href="/profile/skills/{{userId}}" class="{{#if route 'skills'}}t100{{else}}t50{{/if}}">Skills</a>
+    {{else}}
+      <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}">Overview</a>
+      <a href="/profile/skills" class="{{#if route 'skills'}}t100{{else}}t50{{/if}}">Skills</a>
+      <!--<a href="/profile/written-feedback" class="{{#if route 'feedback'}}t100{{else}}t50{{/if}}">Feedback</a>-->
+    {{/if}}
   </div>
 </template>

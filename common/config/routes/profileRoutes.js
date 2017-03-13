@@ -46,8 +46,8 @@
             {
 
             let userId = user._id;
-
-            var data = { profile : user.profile }
+            var data = { profile : user.profile };
+            data.userId = userId;
             var otherFeedback = Feedback.find({ 'to' : userId }).fetch();
             var joinedQset = joinFeedbacks(otherFeedback);
 
