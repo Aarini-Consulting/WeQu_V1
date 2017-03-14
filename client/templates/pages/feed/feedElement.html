@@ -28,7 +28,7 @@
   {{/if}}
 
 
-   <!-- On Submitting the answers -->
+   <!-- On Submitting the answers How my friend rates me -->
 
   {{#if equals type  1 }} 
 
@@ -41,7 +41,7 @@
               {{/if}}
             </div>
             <div class="what white">
-             {{type}} <b>  </b> {{comment}}
+             {{type}} <b>  </b> {{comment}}  David thinks you're more Creative than Assertive
            </div>
            <div class="what white">
             <b> {{formatDate createdAt}} </b> 
@@ -49,6 +49,28 @@
         </div>
 
    {{/if}} 
+
+   <!-- How I rate my friends -->
+
+   {{#if equals type  2 }} 
+
+      <div class="feedElement">
+            <div class="who">
+              {{#if picture _id}}
+              <img class="avatarSmall" src="{{picture _id}}">
+              {{else}}
+              <img class="avatarSmall" src="/img/profile/profile4.png">
+              {{/if}}
+            </div>
+            <div class="what white">
+             {{type}} <b>  </b> {{comment}} You thinks David is more resilient than creative
+           </div>
+           <div class="what white">
+            <b> {{formatDate createdAt}} </b> 
+          </div>
+        </div>
+
+   {{/if}}
 
 
 </template>

@@ -77,7 +77,9 @@
                 question.written = template.$('textarea').val();
             }
 
-            Meteor.call('feedback', feedback._id, feedback.qset, function (err, result) {
+            let type = feedback.from == feedback.to ? 2 : 1
+
+            Meteor.call('feedback', feedback._id, feedback.qset, type, function (err, result) {
                 if(err) {
                     console.log('feedback error', err);
                 }

@@ -1,5 +1,5 @@
 
-// For storing the invitee users 
+// For storing the feeds
 
 Feeds = new Mongo.Collection("feeds");
 
