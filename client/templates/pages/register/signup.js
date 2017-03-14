@@ -45,6 +45,26 @@ Template.signUp.events({
             Router.go('/quiz');
           }
         });
+
+       // Insert data into Feeds collection during invited user onboarding
+
+       if(verify){
+         let data = { inviteId : oldUser.inviteId,
+                      type : 0,
+                      comment: `Congrats. ${firstName} ${lastName} accepts your invitation. Give him some feedback!`
+                    }
+
+         Meteor.call('addFeed', data, function (err, result) {
+          if(err)
+            {
+              console.log(err);
+            }
+            if(result){
+              console.log(result);
+            }
+         });
+       }
+
    }
  });
  }

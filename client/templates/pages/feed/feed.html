@@ -26,6 +26,24 @@
       </div>
     </div>
 
+    {{#each feeds}}
+     <div class="feedElement">
+      <div class="who">
+        {{#if picture _id}}
+        <img class="avatarSmall" src="{{picture _id}}">
+        {{else}}
+        <img class="avatarSmall" src="/img/profile/profile4.png">
+        {{/if}}
+      </div>
+      <div class="what white">
+       {{type}} <b> {{inviteId}} </b> {{comment}}
+      </div>
+      <div class="what white">
+        <b> {{formatDate createdAt}} </b> 
+      </div>
+    </div>
+    {{/each}}
+
 
   </section>
 </template>

@@ -73,3 +73,37 @@
     Template.registerHelper('profile', function (status) {
         return Meteor.user() && Meteor.user().profile;
     });
+
+
+    Template.registerHelper('picture', function (userId) {
+        //TODO : Applicable only for linked in login
+         let data = Meteor.users.findOne({_id: userId});
+         let pictureUrl = data && data.profile && data.profile.pictureUrl;
+         return pictureUrl;
+    });
+
+
+     Template.registerHelper('formatDate', function (val) {
+        if (val) {
+            let day = moment().dayOfYear() - moment(val).dayOfYear(); // gives number of days 
+            // Writing custom logic for calculating days , weeks 
+            if(day > 7){
+                let week =  parseInt(day / 7) ;
+
+                if(week > 4 )
+                {
+                    let month =  parseInt(week / 4) ;
+                    return `${month}m`
+                }
+
+                return `${week}w`;
+            }
+            if(day == 0){
+                day++;    
+            }
+            return `${day}d`;
+
+
+        }
+        return null;
+    });
