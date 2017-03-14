@@ -1,49 +1,24 @@
 
 <template name="feed">
 
-<div class="menuBar">
+  <div class="menuBar">
     <a href="/quiz"><img src="/img/back.png" style="width:18px;"></a>
     <div><b>{{username profile}}</b>
     </div>
     <div><img src="/img/back.png" style="width:18px; visibility: hidden">
-    <a href="/settings"><img src="/img/icon_settings.png" style="width:18px;"></a> 
+      <a href="/settings"><img src="/img/icon_settings.png" style="width:18px;"></a> 
     </div>
   </div>
   
   <section class="feed gradient{{currentUser.profile.gradient}}">
-    
+
     <div class="margin25"> </div>
 
-    <div class="feedElement">
-      <div class="who">
-        <img class="avatarSmall" src="https://lh4.googleusercontent.com/-bvrHTZDafaU/AAAAAAAAAAI/AAAAAAAAAAA/mudP_cQ1mYI/s128-c-k/photo.jpg">
-      </div>
-      <div class="what white">
-        <b>Ivan Pashchenko</b> voted Empathy.
-      </div>
-      <div class="what white">
-        <b> 1d </b> 
-      </div>
-    </div>
-
     {{#each feeds}}
-     <div class="feedElement">
-      <div class="who">
-        {{#if picture _id}}
-        <img class="avatarSmall" src="{{picture _id}}">
-        {{else}}
-        <img class="avatarSmall" src="/img/profile/profile4.png">
-        {{/if}}
-      </div>
-      <div class="what white">
-       {{type}} <b> {{inviteId}} </b> {{comment}}
-      </div>
-      <div class="what white">
-        <b> {{formatDate createdAt}} </b> 
-      </div>
-    </div>
+      {{> feedElement}}
     {{/each}}
 
 
   </section>
+
 </template>

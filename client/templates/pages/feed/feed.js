@@ -1,7 +1,18 @@
 Template.feed.helpers({
 	feeds(){
 
-		return Feeds.find();
+		 return Feeds.find({},{
+                    transform: function (doc) {
+                        doc.userInfo = Meteor.users.findOne({_id: doc.inviteId});
+                        doc.displayTrue = Meteor.users.findOne({_id: doc.inviteId})._id == Meteor.userId()
+                        console.log(doc);
+                        return doc;
+                    }
+                }); 
+
+                //return Feeds.find({});
+
+		
 
 	}
 

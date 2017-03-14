@@ -1,0 +1,54 @@
+ 
+ <template name="feedElement">
+
+  <!-- For the type invite user onboarding  -->
+
+   {{#if equals type  0 }} 
+
+        {{#if displayTrue}} 
+
+            <div class="feedElement">
+              <div class="who">
+                {{#if picture _id}}
+                <img class="avatarSmall" src="{{picture _id}}">
+                {{else}}
+                <img class="avatarSmall" src="/img/profile/profile4.png">
+                {{/if}}
+              </div>
+              <div class="what white">
+               <b>  {{username userInfo.profile}}  </b> {{comment}}
+             </div>
+             <div class="what white">
+              <b> {{formatDate createdAt}} </b> 
+            </div>
+          </div>
+
+      {{/if}}
+
+  {{/if}}
+
+
+   <!-- On Submitting the answers -->
+
+  {{#if equals type  1 }} 
+
+          <div class="feedElement">
+            <div class="who">
+              {{#if picture _id}}
+              <img class="avatarSmall" src="{{picture _id}}">
+              {{else}}
+              <img class="avatarSmall" src="/img/profile/profile4.png">
+              {{/if}}
+            </div>
+            <div class="what white">
+             {{type}} <b>  </b> {{comment}}
+           </div>
+           <div class="what white">
+            <b> {{formatDate createdAt}} </b> 
+          </div>
+        </div>
+
+   {{/if}} 
+
+
+</template>
