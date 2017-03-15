@@ -49,15 +49,74 @@
         var question = currentQuestion(feedback.qset);
         var buttonType = event.target.getAttribute('class');
 
+        var skill = event.target.getAttribute('data-skill');
+
         if(buttonType == 'answer') {
             question.answer = event.target.getAttribute('id');
             question.written = false;
 
+            // TODO: Prepare comment in UI , rather than js
+
+            // ----------------- Inserting data into the feeds collection --------------- //
+            var id = event.target.getAttribute('id')
+
+            console.log(question.answers, id   );
+
+             // my friend rates me then type 1 
+             // I rate my friends them type 2
+
+             // Determine type by comparing the feedback from , to id's with Meteor.userId()
+             let type = feedback.from == feedback.to ? 2 : 1;
+
+             // TODO:  Manipulate the name , verify the type checking ..
+
+               if(type == 2)
+               {
+                    var comment , name=' ivan ' ;
+                    if (question.answers[0]._id == event.target.getAttribute('id'))
+                    {
+                        comment = `You think ${name} is ${question.answers[0].skill} more than ${question.answers[1].skill} `;
+                    }
+
+                     if (question.answers[1]._id == event.target.getAttribute('id'))
+                    {
+                        comment = `You think ${name} is ${question.answers[1].skill} more than ${question.answers[0].skill} `;
+                    }
+
+                }
+
+                if(type == 1){
+                    var comment , name=' David ' ;
+                    if (question.answers[0]._id == event.target.getAttribute('id'))
+                    {
+                        comment = `${name} thinks you're more ${question.answers[0].skill} than ${question.answers[1].skill} `;
+                    }
+
+                     if (question.answers[1]._id == event.target.getAttribute('id'))
+                    {
+                        comment = `${name} thinks you're more ${question.answers[1].skill} than ${question.answers[0].skill}  `;
+                    }
+                }
+            
+               let data = {type : type , comment: comment};
+
+               if(skill != "genderId"){
+                   Meteor.call('addNormalFeed', data, function (err, result) {
+                      if(err)
+                      {
+                          console.log(err);
+                      }
+                      if(result){
+                          console.log(result);
+                      }
+                  });
+                }
+
+
                 // ------ Updating the user gender here ---------
                 // attribute data-skill is used to identify the gender question
                 // id has the gender details Male or Female 
-
-                var skill = event.target.getAttribute('data-skill')
+                
                 if(skill == "genderId")
                 {
                     Meteor.users.update({_id: Meteor.userId()},
@@ -77,9 +136,8 @@
                 question.written = template.$('textarea').val();
             }
 
-            let type = feedback.from == feedback.to ? 2 : 1
-
-            Meteor.call('feedback', feedback._id, feedback.qset, type, function (err, result) {
+          
+            Meteor.call('feedback', feedback._id, feedback.qset, function (err, result) {
                 if(err) {
                     console.log('feedback error', err);
                 }

@@ -25,8 +25,15 @@ FeedsSchema = new SimpleSchema({
     },
     "comment":{
         type: String,
-        label: "comment"
+        label: "comment",
+        optional: true // remove this after completing the statement 
     },
+    "statement":{
+        type: String,
+        label: "statement",
+        optional: true
+    },
+
     "createdAt": {
         type: Date,
         autoValue: function() {
