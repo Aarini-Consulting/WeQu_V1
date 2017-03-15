@@ -71,19 +71,36 @@ Meteor.methods({
           Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
         }
 
-        var emailData = {
-          'from': name,
-          'to' : toName,
-          'link': Meteor.absoluteUrl('invitation/' + _id)
-
-        };
-
-        Email.send({
+       /* Email.send({
           'to': email,
           'from': 'WeQu <info@wequ.co>',
           'subject': _.template("Let’s learn from each other")({ to: toName, from:name }),
           html: SSR.render('htmlEmail', emailData),
         });
+        */
+        var emailData = {
+          'from': name,
+          'to' : toName,
+          'link': Meteor.absoluteUrl('invitation/' + _id)
+        };
+
+        // Sending Email through custom server method 
+        let sendtoEmail = email;
+        let subject = _.template("Let’s learn from each other")({ to: toName, from:name });
+        let body = SSR.render('htmlEmail', emailData);
+
+        Meteor.call('sendEmail', sendtoEmail, subject, body , function(err, result){
+              if(err){
+                console.log(err);
+              }
+              if(result)
+              {
+              console.log(result,'send notification message complete');
+              }
+
+        });
+
+
 
         return userId;
       }
