@@ -151,3 +151,23 @@
 .white{
   color: white;
 }
+
+.lightBlack{
+	background-color: #323232 !important;
+}
+
+#logout{
+	width: 78%;
+}
+
+.marginLeft10{
+	margin-left: -5% !important;
+}
+
+.width{
+	width: 100%;
+}
+
+.marginTop25{
+	margin-top: 25px !important;
+}
