@@ -28,7 +28,9 @@
   {{/if}}
 
 
-   <!-- On Submitting the answers How my friend rates me -->
+   <!-- Type 1 answer myself -->
+
+  <!-- {{#if filter}} -->
 
   {{#if equals type  1 }} 
 
@@ -41,7 +43,7 @@
               {{/if}}
             </div>
             <div class="what white">
-             {{type}} <b>  </b> {{comment}}
+             <b>  </b> {{comment}}
            </div>
            <div class="what white">
             <b> {{formatDate createdAt}} </b> 
@@ -50,7 +52,7 @@
 
    {{/if}} 
 
-   <!-- How I rate my friends -->
+   <!-- -->
 
    {{#if equals type  2 }} 
 
@@ -72,5 +74,6 @@
 
    {{/if}}
 
+ <!-- {{/if}} -->
 
 </template>

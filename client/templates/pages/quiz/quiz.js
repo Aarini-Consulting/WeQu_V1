@@ -60,19 +60,31 @@
             // ----------------- Inserting data into the feeds collection --------------- //
             var id = event.target.getAttribute('id')
 
-            console.log(question.answers, id   );
+            //console.log(question.answers, id   );
 
              // my friend rates me then type 1 
              // I rate my friends them type 2
 
-             // Determine type by comparing the feedback from , to id's with Meteor.userId()
-             let type = feedback.from == feedback.to ? 2 : 1;
+             var type, comment;
 
-             // TODO:  Manipulate the name , verify the type checking ..
+             //TYPE  1 answer myself 
+             if( feedback.from === feedback.to && feedback.from === Meteor.userId()  ){
+                type =1;
+                  if (question.answers[0]._id == event.target.getAttribute('id'))
+                    {
+                        comment = `You think you are more ${question.answers[0].skill} than ${question.answers[1].skill} `;
+                    }
 
+                     if (question.answers[1]._id == event.target.getAttribute('id'))
+                    {
+                        comment = `You think you are more ${question.answers[1].skill} than ${question.answers[0].skill} `;
+                    }
+             }
+
+             /*
                if(type == 2)
                {
-                    var comment , name=' ivan ' ;
+                    var name=' ivan ' ;
                     if (question.answers[0]._id == event.target.getAttribute('id'))
                     {
                         comment = `You think ${name} is ${question.answers[0].skill} more than ${question.answers[1].skill} `;
@@ -96,20 +108,19 @@
                     {
                         comment = `${name} thinks you're more ${question.answers[1].skill} than ${question.answers[0].skill}  `;
                     }
-                }
+                } */
             
                let data = {type : type , comment: comment};
 
                if(skill != "genderId"){
-                   Meteor.call('addNormalFeed', data, function (err, result) {
-                      if(err)
-                      {
-                          console.log(err);
-                      }
-                      if(result){
-                          console.log(result);
-                      }
-                  });
+                 if(type){
+                      Meteor.call('addNormalFeed', data, function (err, result) {
+                          if(err)
+                          {
+                              console.log(err);
+                          }
+                      });
+                    }
                 }
 
 
