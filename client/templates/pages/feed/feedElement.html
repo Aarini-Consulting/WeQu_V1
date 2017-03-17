@@ -16,7 +16,7 @@
                 {{/if}}
               </div>
               <div class="what white">
-               <b>  {{username userInfo.profile}}  </b> {{comment}}
+               <b>  {{username userInfo.profile}}  </b> {{statement1}}
              </div>
              <div class="what white">
               <b> {{formatDate createdAt}} </b> 
@@ -42,10 +42,10 @@
               <img class="avatarSmall" src="/img/avatar.png">
               {{/if}}
             </div>
-            <div class="what white">
-             <b>  </b> {{comment}}
+            <div class="what white comment">
+             You think you are more <b> {{statement1}} </b> than <b> {{statement2}} </b>
            </div>
-           <div class="what white">
+           <div class="what white pull-right">
             <b> {{formatDate createdAt}} </b> 
           </div>
         </div>
@@ -65,7 +65,7 @@
               {{/if}}
             </div>
             <div class="what white">
-             {{type}} <b>  </b> {{comment}} 
+             {{type}} <b> {{statement1}} </b>  
            </div>
            <div class="what white">
             <b> {{formatDate createdAt}} </b> 

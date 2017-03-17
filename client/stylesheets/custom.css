@@ -171,3 +171,7 @@
 .marginTop25{
 	margin-top: 25px !important;
 }
+
+	.comment{
+		max-width:65%;
+	}

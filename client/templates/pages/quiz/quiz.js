@@ -65,19 +65,22 @@
              // my friend rates me then type 1 
              // I rate my friends them type 2
 
-             var type, comment;
+             var type, statement1, statement2;
 
              //TYPE  1 answer myself 
              if( feedback.from === feedback.to && feedback.from === Meteor.userId()  ){
                 type =1;
                   if (question.answers[0]._id == event.target.getAttribute('id'))
                     {
-                        comment = `You think you are more ${question.answers[0].skill} than ${question.answers[1].skill} `;
+                       statement1  = `${question.answers[0].skill}`;
+                       statement2 = `${question.answers[1].skill} `;
+
                     }
 
                      if (question.answers[1]._id == event.target.getAttribute('id'))
                     {
-                        comment = `You think you are more ${question.answers[1].skill} than ${question.answers[0].skill} `;
+                        statement1 = `${question.answers[1].skill}`;
+                        statement2 = `${question.answers[0].skill}`;
                     }
              }
 
@@ -87,34 +90,34 @@
                     var name=' ivan ' ;
                     if (question.answers[0]._id == event.target.getAttribute('id'))
                     {
-                        comment = `You think ${name} is ${question.answers[0].skill} more than ${question.answers[1].skill} `;
+                        statement1 = `You think ${name} is ${question.answers[0].skill} more than ${question.answers[1].skill} `;
                     }
 
                      if (question.answers[1]._id == event.target.getAttribute('id'))
                     {
-                        comment = `You think ${name} is ${question.answers[1].skill} more than ${question.answers[0].skill} `;
+                        statement1 = `You think ${name} is ${question.answers[1].skill} more than ${question.answers[0].skill} `;
                     }
 
                 }
 
                 if(type == 1){
-                    var comment , name=' David ' ;
+                    var statement1 , name=' David ' ;
                     if (question.answers[0]._id == event.target.getAttribute('id'))
                     {
-                        comment = `${name} thinks you're more ${question.answers[0].skill} than ${question.answers[1].skill} `;
+                        statement1 = `${name} thinks you're more ${question.answers[0].skill} than ${question.answers[1].skill} `;
                     }
 
                      if (question.answers[1]._id == event.target.getAttribute('id'))
                     {
-                        comment = `${name} thinks you're more ${question.answers[1].skill} than ${question.answers[0].skill}  `;
+                        statement1 = `${name} thinks you're more ${question.answers[1].skill} than ${question.answers[0].skill}  `;
                     }
                 } */
             
-               let data = {type : type , comment: comment};
+               let data = {type : type , statement1: statement1 , statement2: statement2 };
 
                if(skill != "genderId"){
                  if(type){
-                      Meteor.call('addNormalFeed', data, function (err, result) {
+                      Meteor.call('addFeedType1', data, function (err, result) {
                           if(err)
                           {
                               console.log(err);

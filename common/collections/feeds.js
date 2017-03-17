@@ -23,17 +23,21 @@ FeedsSchema = new SimpleSchema({
         label: "inviteId",
         optional:true // since applicable only for invited user on boarding
     },
-    "comment":{
+    "statement1":{
+        type: String,
+        label: "comment",
+    },
+    "statement2":{
         type: String,
         label: "comment",
         optional: true // remove this after completing the statement 
     },
-    "statement":{
+    "statement3":{
         type: String,
-        label: "statement",
-        optional: true
+        label: "comment",
+        optional: true // remove this after completing the statement 
     },
-
+    
     "createdAt": {
         type: Date,
         autoValue: function() {
