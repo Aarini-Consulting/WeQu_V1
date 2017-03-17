@@ -33,6 +33,8 @@ standard-minifier-css
 # standard-minifier-js
 shell-server
 
+aldeed:collection2
+
 twbs:bootstrap
 meteorhacks:ssr # server side rendering 
 msavin:mongol #  debugOnly package

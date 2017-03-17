@@ -3,7 +3,7 @@
             var done = !_.find(qset, function (question) { return !_.has(question, 'answer'); });
             Feedback.update({ '_id': id }, { '$set': { 'qset': qset, done: done } });
             var fb = Feedback.findOne({_id : id});
-            if(!fb || !done){
+            if(!fb || !done){            
                 return;
             }
 

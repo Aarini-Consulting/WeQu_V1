@@ -1,0 +1,15 @@
+
+<template name="feed">
+
+  <section class="feed gradient{{currentUser.profile.gradient}}">
+
+    <div class="margin25"> </div>
+
+    {{#each feeds}}
+      {{> feedElement}}
+    {{/each}}
+
+
+  </section>
+
+</template>
