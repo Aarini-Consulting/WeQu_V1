@@ -61,7 +61,6 @@ Meteor.methods({
           userId : userId,
 
           inviteId : Meteor.userId(),
-          inviteName : name,
 
           services : {invitationId: _id},
           profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result}

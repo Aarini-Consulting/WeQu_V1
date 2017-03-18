@@ -208,8 +208,8 @@
     }
 
 
-    var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
-    users = _.without(users, Meteor.userId());
+   // var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
+   // users = _.without(users, Meteor.userId());
 
     this.render('invite', {data : { users : Connections.find({inviteId:Meteor.userId()}) }});
 }, { 'name': '/invite' });
