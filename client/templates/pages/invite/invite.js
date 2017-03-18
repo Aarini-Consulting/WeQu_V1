@@ -6,9 +6,8 @@ Template.invite.created = function () {
     }
 
     Template.invite.helpers({
-        connectionProfile(){
-            return Connections.findOne({inviteId:Meteor.userId()}) &&  Connections.findOne({inviteId:Meteor.userId()}).profile;
-        }
+
+
     })
 
 

@@ -70,9 +70,9 @@
     });
 
 
-    Template.registerHelper('profile', function (status) {
+/*    Template.registerHelper('profile', function (status) {
         return Meteor.user() && Meteor.user().profile;
-    });
+    }); */
 
 
     Template.registerHelper('picture', function (userId) {
