@@ -71,14 +71,7 @@ Template.adminUser.helpers({
     },
     loggedIn: function(){
     	return !Meteor.userId();
-    },
-    picture(userId){
-    	//TODO : Applicable only for linked in login
-    	 let data = Meteor.users.findOne({_id: userId});
-         let pictureUrl = data && data.profile && data.profile.pictureUrl;
-         return pictureUrl;
     }
-
 });
 
  Template.adminUser.events({

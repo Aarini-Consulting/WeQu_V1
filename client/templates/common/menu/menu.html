@@ -3,9 +3,9 @@
   <div class="menuBar">
     <a href="/quiz" class="{{#if route 'quiz'}}t100{{else}}t50{{/if}}"><img src="/img/icon_vote.png"></a>
     <a href="/invite" class="{{#if route 'invite'}}t100{{else}}t50{{/if}}"><img src="/img/icon_invite.png"></a>
-    <!--<a href="/feed" class="{{#if route 'feed'}}t100{{else}}t50{{/if}}"><img src="/img/icon_feed.png"></a>-->
+    <a href="/feed" class="{{#if route 'feed'}}t100{{else}}t50{{/if}}"><img src="/img/icon_feed.png"></a>
     <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}"><img src="/img/icon_profile.png" ></a>
-    <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a>
+    <!-- <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a> -->
     <!--<a href="/admin">A</a>-->
   </div>
 </template>
@@ -13,8 +13,11 @@
 <template name="menuProfile">
   <div class="menuBar">
     <a href="/quiz"><img src="/img/back.png" style="width:18px;"></a>
-    <div><b>{{username profile}}</b></div>
-    <div><img src="/img/back.png" style="width:18px; visibility: hidden"></div>
+    <div><b>{{username profile}}</b>
+    </div>
+    <div><img src="/img/back.png" style="width:18px; visibility: hidden">
+    <a href="/settings"><img src="/img/icon_settings.png" style="width:18px;"></a> 
+    </div>
   </div>
   <div class="menuBar">
     <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}">Overview</a>

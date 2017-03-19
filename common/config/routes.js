@@ -26,7 +26,7 @@
 
     return this.next();
 }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
-'/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser'
+'/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings'
 
 ] });
 
@@ -189,7 +189,7 @@
         route.set('feed')
         this.layout('ApplicationLayout');
         return this.render('feed');
-    }, { 'name': '/feed' });
+    }, { 'name': '/feed'});
 
     Router.route('/invite', function () {
       this.layout('ApplicationLayout');
@@ -208,10 +208,10 @@
     }
 
 
-    var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
-    users = _.without(users, Meteor.userId());
+   // var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
+   // users = _.without(users, Meteor.userId());
 
-    this.render('invite', {data : { users : Connections.find({}) }});
+    this.render('invite', {data : { users : Connections.find({inviteId:Meteor.userId()}) }});
 }, { 'name': '/invite' });
 
 /* this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})

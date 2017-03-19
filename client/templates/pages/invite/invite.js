@@ -7,6 +7,7 @@ Template.invite.created = function () {
 
     Template.invite.helpers({
 
+
     })
 
 
