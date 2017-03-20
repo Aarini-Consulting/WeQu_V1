@@ -13,7 +13,7 @@
             if(user){
 
                 let userId = user._id;
-                var myfeedback = Feedback.find({ 'from': userId, 'to' : userId }).fetch();
+                var myfeedback = Feedback.find({ 'from': userId, 'to' : Meteor.userId() }).fetch();
                 var data = { profile : user.profile };
                 data.userId = userId;
                 data.myscore = calculateScore(joinFeedbacks(myfeedback));
