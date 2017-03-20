@@ -42,9 +42,14 @@
       {{#if profile.pictureUrl}}
       <img src="{{profile.pictureUrl}}" class="avatarSmall"><br>
       {{else}}
-      <img src="/img/avatar.png" class="avatarSmall">
+      <img src="/img/avatar.png" class="avatarSmall"> 
       {{/if}}
       {{username profile}}
+      {{#if profile.trialMember}} 
+      <span class="dots"> 
+       <span class="dot dot-danger">  </span> 
+       </span>
+      {{/if}}
     </div>
     {{/each}}
     {{/if}}

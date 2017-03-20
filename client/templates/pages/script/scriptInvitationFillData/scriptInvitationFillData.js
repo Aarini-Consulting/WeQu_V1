@@ -22,6 +22,9 @@
                 console.log("remove accounts", err, result);
           });
 
+          Meteor.call("updateTrialUser", Meteor.userId(), function(err, result){
+                    console.log("updateTrialUser", err, result);
+          });
     }
 
     Template.scriptInvitationFillData.helpers({
@@ -54,7 +57,8 @@
     Template.scriptInvitationFillData.events({
 
         'click .font-white':function(event,template){
-            event.preventDefault();
+            event.preventDefault();                        
+
             let email= template.emailId.get();
             setLoginScript('init');
             Meteor.logout();
