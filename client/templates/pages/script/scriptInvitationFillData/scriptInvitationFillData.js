@@ -18,9 +18,9 @@
 
         this.emailId = new ReactiveVar('');
 
-          Meteor.call("removeAccounts", Meteor.userId(), function(err, result){
+       /*   Meteor.call("removeAccounts", Meteor.userId(), function(err, result){
                 console.log("remove accounts", err, result);
-          });
+          }); */
 
           Meteor.call("updateTrialUser", Meteor.userId(), function(err, result){
                     console.log("updateTrialUser", err, result);
@@ -60,8 +60,9 @@
             event.preventDefault();                        
 
             let email= template.emailId.get();
+            let invitationId = template.invitationId.get();
             setLoginScript('init');
             Meteor.logout();
-            Router.go(`/signUp/invited/${email}`);
+            Router.go(`/signUp/invited/${email}/${invitationId}`);
         }
     })

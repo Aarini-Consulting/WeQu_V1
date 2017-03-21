@@ -49,7 +49,6 @@ Template.invite.created = function () {
         else{
             inviteStatus.set('alreadyInvited');
             setInterval(function () {
-                    
                     return inviteStatus.set('default');
             }, 3000);
         }

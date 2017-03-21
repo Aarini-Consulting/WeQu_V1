@@ -39,7 +39,8 @@
     <!--{{#if inScript}}
     <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
     {{/if}}-->
-    {{#if inScript}}
+
+    {{#if inScript}} 
     {{else}}
     {{#each users}}
     <div class="friend">
@@ -48,7 +49,7 @@
       {{else}}
       <img src="/img/avatar.png" class="avatarSmall"> 
       {{/if}}
-      {{username profile}}
+      {{username profile}} 
       {{#if profile.trialMember}} 
       <span class="dots"> 
        <span class="dot dot-danger">  </span> 

@@ -176,7 +176,7 @@
 
     // TODO : Improve with passing as query insteas params
 
-    Router.route('/signUp/:invited?/:email?', function () {
+    Router.route('/signUp/:invited?/:email?/:invitationId?', function () {
         var id = this.params._id;
         var query = this.params.query;
 
@@ -201,7 +201,7 @@
       }
 
       route.set('invite');
-      this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'));
+      this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'),Accounts.loginServicesConfigured());
       if (!this.ready()){
         this.render('loading');
         return;
@@ -211,9 +211,13 @@
    // var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
    // users = _.without(users, Meteor.userId());
 
+   // TODO : Re-write this logic
+  // Connections.find( { $or : [ {inviteId:Meteor.userId()} , {email : Meteor.user().emails[0].address}     ] }); 
+
     this.render('invite', {
                             data : { 
-                                   users : Connections.find( { $or : [ {inviteId:Meteor.userId()} , {email : Meteor.user().emails[0].address}     ] }) }
+                                   users : Connections.find( {inviteId:Meteor.userId()} ) 
+                                   }
                           });
 }, { 'name': '/invite' }); 
 
