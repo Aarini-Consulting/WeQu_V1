@@ -40,6 +40,7 @@
         var userId = quizPerson.get();
         var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
         data.friends = friends;
+        data.userId = userId;
 
         if(!data.feedback.qset) {
             Meteor.call('gen-question-set', userId, function (err, result) {

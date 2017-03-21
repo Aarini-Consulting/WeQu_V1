@@ -1,0 +1,56 @@
+<template name="displayProfile">
+  <section class="feed">
+
+    {{#if inScript}}
+
+    <section class="bgGrey ptb_h1">
+      <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
+      <div><b>{{username profile}}</b></div>
+    </section>
+    <section class="ptb_h1">
+      <img src="/img/icon_overview.png" class="titleIcon">
+      <h3>WeQu Scores</h3>
+      <h5>Your soft skill profile based on the questions<br> you answered about yourself</h5>
+      <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
+        {{> radar score=myscore color="white" outline="#E96956"}}
+      </svg>
+      <div class="radarAgenda">
+        <div><img src="/img/Diamond_Myself.png"> <span class="marginleft10"> You </span> </div>
+        <div class="text-capitalize">  <img src="/img/Diamond_Others.png" class="t50"> 
+          <span class="marginleft10"> {{username profile}} </span>
+        </div>
+      </div>
+    </section>
+
+
+    {{else}}
+
+    {{> menuProfile userId=userId profile=profile }}
+
+    <section class="ptb_h1">
+      <img src="/img/icon_overview.png" class="titleIcon">
+      <h3>WeQu Scores</h3>
+      <h5></h5>
+      <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
+        {{> radar score=myscore color="white" outline="#E96956"}}
+        {{> radar score=otherscore color="#E96956" outline="white"}}
+      </svg>
+      <div class="radarAgenda">
+        <div><img src="/img/Diamond_Myself.png">
+        <span class="marginleft10 font-small">  
+         How <span class="text-capitalize"> {{username profile}} </span> sees me  
+         </span>
+        </div>
+        <div><img src="/img/Diamond_Others.png" class="t50">
+        <span class="marginleft10 font-small">
+        How I see <span class="text-capitalize"> {{username profile}} </span> 
+        </span> 
+        </div>
+      </div>
+    </section>
+
+    {{/if}}
+
+  </section>
+
+</template>
