@@ -12,10 +12,14 @@
       {{#case inviteStatus='error'}}
       <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
       {{/case}}
+       {{#case inviteStatus='alreadyInvited'}}
+      <span class="sendingStatus"><img src="/img/status_error.png">Already Invited</span>
+      {{/case}}
+
       <div>
         <form>
-          <input name="name" placeholder="name" required />
-          <input name="email" type="email" required placeholder="email" autocapitalize="off" autocorrect="off"/>
+          <input name="name" placeholder="name" id="email" required />
+          <input name="email" type="email" id="email" value="" required placeholder="email" autocapitalize="off" autocorrect="off"/>
           
 
           <div id="outer">

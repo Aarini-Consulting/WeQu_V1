@@ -22,29 +22,37 @@ Template.invite.created = function () {
 
         var gender = template.gender.get(); //template.find('#gender').value;
 
-        console.log(gender);
+         let oldUser = Connections.findOne({"email":email},{"inviteId": Meteor.userId()} );
+         let exists = !oldUser ? false : true;
+         console.log(exists);
 
-        Meteor.call('invite', name, email, gender, function (err, userId) {
-            if(err){
-                console.log("error", err);
-                inviteStatus.set('error');
-                return;
-            }
+         if(!exists){
+            Meteor.call('invite', name, email, gender, function (err, userId) {
+                if(err){
+                    console.log("error", err);
+                    inviteStatus.set('error');
+                    return;
+                }
 
-            template.$('input[name=name]').val('')
-            template.$('input[name=email]').val('');
-            inviteStatus.set('sent');
+                template.$('input[name=name]').val('')
+                template.$('input[name=email]').val('');
+                inviteStatus.set('sent');
 
+                setInterval(function () {
+                    return inviteStatus.set('default');
+                }, 3000);
+                    quizPerson.set(userId);
+                    return setLoginScript('finish');
+                    console.log(err, userId);
+            });
+        }
+        else{
+            inviteStatus.set('alreadyInvited');
             setInterval(function () {
-                return inviteStatus.set('default');
+                    
+                    return inviteStatus.set('default');
             }, 3000);
-    //        if(getLoginScript()){
-                quizPerson.set(userId);
-                return setLoginScript('finish');
-    //        }
-            console.log(err, userId);
-        });
-
+        }
 
     },
     "click #next" : function () {
