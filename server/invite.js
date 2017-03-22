@@ -48,9 +48,9 @@ Meteor.methods({
     var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
     var _id = Random.secret()
     var _id1 = Random.secret()
-    var userId;
+    var userId , username;
     if(! user){
-      var username = Random.id();
+      username = Random.id();
       userId = Accounts.createUser({
         username: username,
         email: email,
@@ -65,7 +65,7 @@ Meteor.methods({
 
     // inserting the inforamtion into the connections collection
 
-    Connections.insert({username: username,
+    Connections.insert({username: toName,
       email: email,
       password: _id,
       userId : userId,

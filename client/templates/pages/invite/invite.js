@@ -6,7 +6,21 @@ Template.invite.created = function () {
     }
 
     Template.invite.helpers({
+        users(){
+            return Connections.find( { $or : [ {inviteId:Meteor.userId()} , {email : Meteor.user().emails[0].address}     ] } , 
+                                     {
+                                           transform: function (doc) {
+                                           let invitedPerson = doc.email == Meteor.user().emails[0].address;
+                                           doc.invitedPerson = false;
+                                           if(invitedPerson){
+                                            doc.invitedPerson = true;
+                                            doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
+                                           }
+                                           return doc;
+                                      }
+                             }); 
 
+        }
 
     })
 
@@ -22,7 +36,15 @@ Template.invite.created = function () {
 
         var gender = template.gender.get(); //template.find('#gender').value;
 
-         let oldUser = Connections.findOne({"email":email},{"inviteId": Meteor.userId()} );
+        // Sending invite email to self , avoided .
+        if(email == Meteor.user().emails[0].address){
+                return inviteStatus.set('error');
+                setInterval(function () {
+                    return inviteStatus.set('default');
+                }, 3000);
+        }
+
+         let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": Meteor.userId()} ] } );
          let exists = !oldUser ? false : true;
          console.log(exists);
 

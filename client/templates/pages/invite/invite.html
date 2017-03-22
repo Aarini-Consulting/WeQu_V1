@@ -15,7 +15,7 @@
        {{#case inviteStatus='alreadyInvited'}}
       <span class="sendingStatus"><img src="/img/status_error.png">Already Invited</span>
       {{/case}}
-
+      {{inviteStatus}}
       <div>
         <form>
           <input name="name" placeholder="name" id="email" required />
@@ -49,7 +49,7 @@
       {{else}}
       <img src="/img/avatar.png" class="avatarSmall"> 
       {{/if}}
-      {{username profile}} 
+      {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}
       {{#if profile.trialMember}} 
       <span class="dots"> 
        <span class="dot dot-danger">  </span> 
