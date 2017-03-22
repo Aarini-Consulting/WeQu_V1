@@ -7,10 +7,10 @@ Template.invite.created = function () {
 
     Template.invite.helpers({
         users(){
-            return Connections.find( { $or : [ {inviteId:Meteor.userId()} , {email : Meteor.user().emails[0].address}     ] } , 
+            return Connections.find( { $or : [ {inviteId:Meteor.userId()} , {email : Meteor.user().emails && Meteor.user().emails[0].address}     ] } , 
                                      {
                                            transform: function (doc) {
-                                           let invitedPerson = doc.email == Meteor.user().emails[0].address;
+                                           let invitedPerson = doc.email == Meteor.user().emails && Meteor.user().emails[0].address;
                                            doc.invitedPerson = false;
                                            if(invitedPerson){
                                             doc.invitedPerson = true;
@@ -37,7 +37,7 @@ Template.invite.created = function () {
         var gender = template.gender.get(); //template.find('#gender').value;
 
         // Sending invite email to self , avoided .
-        if(email == Meteor.user().emails[0].address){
+        if(email == Meteor.user() && Meteor.user().emails[0].address){
                 return inviteStatus.set('error');
                 setInterval(function () {
                     return inviteStatus.set('default');
