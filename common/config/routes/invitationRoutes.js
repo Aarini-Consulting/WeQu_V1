@@ -1,6 +1,6 @@
   Router.route('/invitation/:_id', function () {
 
-        this.layout('ApplicationLayout');
+        this.layout('ScriptLayout');
 
         this.wait(Meteor.subscribe('invitation', this.params._id));
         if(!this.ready()){
@@ -31,7 +31,7 @@
 
     Router.route('/script-invitation/:_id?', function () {
 
-        this.layout('ApplicationLayout');
+        this.layout('ScriptLayout');
 
         this.wait(Meteor.subscribe('invitation', this.params._id));
 
@@ -77,10 +77,10 @@
 
         this.render("error", {data : { message: "Unkonwn invitation script state: " + Session.get("invite")}});
        
-        setTimeout(function(){
+       /* setTimeout(function(){
             finishInviteScript();
         }, 5000)
-       
+       */
 
 
     }, { 'name': '/script-invitation' });

@@ -21,12 +21,6 @@
 	color:black !important;
 }
 
-@media only screen {
-	h2.scriptInvitationFillData{
-		margin-top: -40px !important; 
-	}
-}
-
 .width-half{
 	width: 60%
 }
@@ -222,4 +216,15 @@
 
 form#signIn{
 	margin-bottom: 40px;
+}
+
+/* Linked in login Button color*/
+.LLBColor{
+	background-color: #345BB5 !important;
+	border : none !important;
+}
+
+.customDimension{
+	max-width: 500px;
+	max-height: 100px;
 }

@@ -42,6 +42,7 @@
 
                     if(connection){
                     let email = connection.profile.emailAddress;
+                    data.profile = connection.profile;
                     Template.instance().emailId.set(email);
                     }
 
