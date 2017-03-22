@@ -138,5 +138,8 @@ Template.signUp.helpers({
           return Router.current().params.email;
         }
         return null;
+     },
+     emailDisable(){
+      return !Router.current().params.email ? false : true ;
      }
 });

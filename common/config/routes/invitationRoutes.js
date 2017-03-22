@@ -77,6 +77,8 @@
 
         this.render("error", {data : { message: "Unkonwn invitation script state: " + Session.get("invite")}});
        
+       // For Testing Purpose , so un comment this 
+
        /* setTimeout(function(){
             finishInviteScript();
         }, 5000)
