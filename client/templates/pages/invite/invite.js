@@ -11,8 +11,10 @@ Template.invite.created = function () {
                                      {
                                            transform: function (doc) {
                                            let invitedPerson = doc.email == Meteor.user().emails && Meteor.user().emails[0].address;
+                                           // Linked in login
+                                           let invitedPerson2 = doc.email == Meteor.user().profile.emailAddress;
                                            doc.invitedPerson = false;
-                                           if(invitedPerson){
+                                           if(invitedPerson || invitedPerson2){
                                             doc.invitedPerson = true;
                                             doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
                                            }

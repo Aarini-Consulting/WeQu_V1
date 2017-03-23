@@ -13,6 +13,9 @@
             return false;
         },
         'updateProfile' : function (data) {
-           return Meteor.users.update({_id: data.userId}, {$set: {'profile.firstName' : data.firstName , 'profile.lastName' : data.lastName } });
+           return Meteor.users.update({_id: data.userId}, {$set: {'profile.firstName' : data.firstName ,
+                                                                  'profile.lastName' : data.lastName , 
+                                                                   'services.invitationId': 'inviteProcessed' 
+                                                                 } });
        } 
     });

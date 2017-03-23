@@ -71,11 +71,13 @@
             Router.go(`/signUp/invited/${email}/${invitationId}`);
         },
          'click .loginLinkedin' : function(){
+
               Meteor.loginWithLinkedin(function(err,result){
                 if(err)
                  $('#error').text(err);
                else
                 Session.set('loginLinkedin', true);
+                Session.clear('invite');
                     //  setLoginScript("init");
                      Router.go('/quiz');
 
@@ -92,7 +94,7 @@
                                   catch(e){
                                     console.log(e);
                                   }
-                                }, 1000);
+                           }, 1000);
 
 
                     })
