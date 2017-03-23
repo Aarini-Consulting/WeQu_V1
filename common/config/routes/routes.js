@@ -4,7 +4,7 @@
         layoutTemplate: 'ScriptLayout',
         notFoundTemplate: 'notFoundLayout'
     });
-
+ 
 
     Router.configure(
         {  except: ['signIn','signUp']  }
