@@ -34,7 +34,14 @@
 
     Router.route('/script-login', function () {
 
-        this.layout('ApplicationLayout');
+        let feedbackDone = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: true })
+        if(feedbackDone)
+        {
+          this.layout('ApplicationLayout');
+        }
+        else{
+         this.layout('ScriptLayout');  //no menubar
+        }
 
 
         if(! Meteor.user()) {
