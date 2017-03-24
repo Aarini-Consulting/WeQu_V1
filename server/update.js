@@ -17,5 +17,10 @@
                                                                   'profile.lastName' : data.lastName , 
                                                                    'services.invitationId': 'inviteProcessed' 
                                                                  } });
-       } 
+       }/*,
+       'updateServices' : function(data){
+          console.log(data);
+          const {userId, services } = data;
+          return Meteor.users.update({_id: data.userId}, {$set: {'services.linkedin' : services.linkedin } });
+       } */
     });
