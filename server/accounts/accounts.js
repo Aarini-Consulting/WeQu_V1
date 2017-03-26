@@ -37,7 +37,11 @@ Meteor.methods({
 
     verifiedTrue(userId){
     	return	Meteor.users.update({_id : userId}, {$set: {"emails.0.verified" :true}});
-    }
+    },
+
+    setPassword(userId,newPassword){
+   		 return Accounts.setPassword(userId, newPassword);
+	}
 
 
 })

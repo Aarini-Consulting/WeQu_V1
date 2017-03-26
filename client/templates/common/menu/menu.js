@@ -1,9 +1,6 @@
 
 
     Template.menu.helpers ({
-      route: function(status) {
-        return status == route.get();
-      },
       loggedIn: function(){
         return !Meteor.userId();
       }
@@ -16,9 +13,3 @@
        }
         
    });
-
-    Template.menuProfile.helpers ({
-      route: function(status) {
-        return status == route.get();
-      }
-    });

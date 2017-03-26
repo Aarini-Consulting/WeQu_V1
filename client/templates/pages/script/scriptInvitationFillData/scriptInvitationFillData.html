@@ -3,7 +3,7 @@
   {{#if data}}
   <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
 
-    <h2 class="scriptInvitationFillData">Well done {{currentUser.profile.name}}!</h2>
+    <h2 class="scriptInvitationFillData marginTop25 marginTop25">Well done {{username data.profile}}!</h2>
     <h2>
       You have discovered that<br>
       {{username data.person}}'s top strengths are
@@ -12,11 +12,13 @@
     {{> threeSkills data=data.top3}}
     <h2>Which strength do you have?</h2>
 
-
-        <button class="next width-half">
-          <a class="font-white"> Create your account to find out </a>
+        <button class="loginLinkedin LLBColor customDimension" type="button">
+                  <img src="/img/icon_linkedin.png"> <span class="white-text"> Sign up with LinkedIn </span>
         </button>
-      
+
+        <button class="next transparent customDimension margin30">
+          <a class="font-white"> Sign up with email </a>
+        </button>
 
   </section>
 
