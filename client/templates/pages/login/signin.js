@@ -17,8 +17,19 @@
     },
     'click .loginLinkedin' : function(){
       Meteor.loginWithLinkedin(function(err,result){
-        if(err)
-         $('#error').text(err);
+        if(err){
+          //TODO : Using the validateNewUser block to update services in existing user 
+          // Now again login ...
+          console.log(err);
+          if(err == "Error: User validation failed [403]"){
+              Meteor.setTimeout(function () {
+               Meteor.loginWithLinkedin(function(err,result){});
+             },2000);
+          }
+          else{
+            $('#error').text(err);   
+          }
+        }
        else
         Session.set('loginLinkedin', true);
     //  setLoginScript("init");
