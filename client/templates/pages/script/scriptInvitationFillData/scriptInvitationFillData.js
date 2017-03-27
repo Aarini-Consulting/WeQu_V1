@@ -70,31 +70,57 @@
             Meteor.logout();
             Router.go(`/signUp/invited/${email}/${invitationId}`);
         },
-         'click .loginLinkedin' : function(){
+         'click .loginLinkedin' : function(event,template){
 
               Meteor.loginWithLinkedin(function(err,result){
-                if(err)
-                 $('#error').text(err);
-               else
-                Session.set('loginLinkedin', true);
-                Session.clear('invite');
-                    //  setLoginScript("init");
-                     Router.go('/quiz');
 
-                      Meteor.setTimeout(function () {
-                                  try{
-                                    // production issue ..
-                                    if(Meteor.user() && Meteor.user().services){
+                // TODO: Improve with bootbox.js implementation later
+                if(err == "Error: User validation failed [403]"){
+                  var password = prompt("Please enter your wequ password", "");
+                  let email= template.emailId.get();
+                  if (!password) {
+                    $('#error').text("Please provide wequ to continue");             
+                  }
+                  else
+                  {
+                      Meteor.loginWithPassword(email,password, function (err) {
+                      if(err){
+                        $('#error').text(err);
+                      }
+                      else
+                      {
+                        Router.go('/quiz');
+                      }
+                    });
+                  }
+                }
 
-                                      const {firstName, lastName}  = Meteor.user().services.linkedin;
-                                      Meteor.users.update({_id: Meteor.userId()},
-                                        {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
-                                    }
-                                  }
-                                  catch(e){
-                                    console.log(e);
-                                  }
-                           }, 1000);
+                    if(err){
+                      $('#error').text(err);
+                    }
+
+                   else
+                   {
+                    Session.set('loginLinkedin', true);
+                    Session.clear('invite');
+                        //  setLoginScript("init");
+                         Router.go('/quiz');
+
+                          Meteor.setTimeout(function () {
+                                      try{
+                                        // production issue ..
+                                        if(Meteor.user() && Meteor.user().services){
+
+                                          const {firstName, lastName}  = Meteor.user().services.linkedin;
+                                          Meteor.users.update({_id: Meteor.userId()},
+                                            {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
+                                        }
+                                      }
+                                      catch(e){
+                                        console.log(e);
+                                      }
+                               }, 1000);
+                    }
 
 
                     })

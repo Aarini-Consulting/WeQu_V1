@@ -21,21 +21,32 @@
           //TODO : Using the validateNewUser block to update services in existing user 
           // Now again login ...
           console.log(err);
-          if(err == "Error: User validation failed [403]"){
-              Meteor.setTimeout(function () {
-               Meteor.loginWithLinkedin(function(err,result){});
-             },2000);
-          }
-          else{
-            $('#error').text(err);   
-          }
+              if(err == "Error: User validation failed [403]"){
+                  let email= prompt("Please enter your email", "");
+                  var password = prompt("Please enter your password", "");
+                  if (!password || !email) {
+                    $('#error').text("Please provide email && password to continue");             
+                  }
+                  else
+                  {
+                      Meteor.loginWithPassword(email,password, function (err) {
+                      if(err){
+                        $('#error').text(err);
+                      }
+                      else
+                      {
+                        Router.go('/quiz');
+                      }
+                    });
+                  }
+                }
         }
        else
         Session.set('loginLinkedin', true);
-    //  setLoginScript("init");
-     Router.go('/quiz');
+        //  setLoginScript("init");
+         Router.go('/quiz');
 
-      Meteor.setTimeout(function () {
+         Meteor.setTimeout(function () {
                   try{
                     // production issue ..
                     if(Meteor.user() && Meteor.user().services){
