@@ -83,6 +83,27 @@ Template['quiz'].events({
                     }
              }
 
+             // Case :  Existing invited user tries to answer about his invited person . Insert only one time .
+             let email = Meteor.user().emails[0].address || Meteor.user().profile.emailAddress;
+             let existingInvitedUser =  Connections.findOne( { "profile.emailAddress" : email },{userId: Meteor.userId() });
+             if(existingInvitedUser){
+                  let username = getUserName(Meteor.user().profile);
+                  let inviteId = existingInvitedUser.inviteId;
+                  if( feedback.to === inviteId && feedback.from === Meteor.userId()  ){
+                    let data = { inviteId : inviteId,
+                          type : 0,
+                          statement1: `Congrats. ${username} accepts your invitation. Give him some feedback!`
+                        }
+
+                       Meteor.call('addFeedType0', data, function (err, result) {
+                        if(err)
+                          {
+                            console.log(err);
+                          }
+                       });
+                 }  
+             }          
+
              /*
                if(type == 2)
                {
