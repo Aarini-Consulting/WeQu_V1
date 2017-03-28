@@ -2,7 +2,15 @@
     'submit #signIn': function(event) {
       event.preventDefault();
       
-      
+      let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
+
+      // If invited person then find that persons _id and set the quiz person .
+      var email, user;
+      if(setQuizPerson)
+      {
+         email = Router.current().params && Router.current().params.email;
+         user = Connections.findOne( { "profile.emailAddress" : email });
+      }
       
       Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
         if(err){
@@ -10,7 +18,11 @@
         }
         else
         {
-          Router.go('/quiz');
+          Router.go(`/quiz`);
+          if(setQuizPerson){
+            console.log(user);
+           // quizPerson.set(user.inviteId);
+          }
         }
       });
 
