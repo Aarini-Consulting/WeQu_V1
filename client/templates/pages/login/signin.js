@@ -21,7 +21,7 @@
           Router.go(`/quiz`);
           if(setQuizPerson){
             console.log(user);
-           // quizPerson.set(user.inviteId);
+            quizPerson.set(user.inviteId);
           }
         }
       });
@@ -33,6 +33,18 @@
       Session.set('signUp', true);
     },
     'click .loginLinkedin' : function(){
+
+      let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
+
+      // If invited person then find that persons _id and set the quiz person .
+      var email, user;
+      if(setQuizPerson)
+      {
+         email = Router.current().params && Router.current().params.email;
+         user = Connections.findOne( { "profile.emailAddress" : email });
+      }
+
+
       Meteor.loginWithLinkedin(function(err,result){
         if(err){
           //TODO : Using the validateNewUser block to update services in existing user 
@@ -53,6 +65,10 @@
                       else
                       {
                         Router.go('/quiz');
+                        if(setQuizPerson){
+                          console.log(user);
+                          quizPerson.set(user.inviteId);
+                        }
                       }
                     });
                   }
@@ -63,6 +79,10 @@
         Session.set('loginLinkedin', true);
         //  setLoginScript("init");
          Router.go('/quiz');
+         if(setQuizPerson){
+            console.log(user);
+            quizPerson.set(user.inviteId);
+          }
 
          Meteor.setTimeout(function () {
                   try{
