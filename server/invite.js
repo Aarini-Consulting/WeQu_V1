@@ -49,18 +49,22 @@ Meteor.methods({
     var _id = Random.secret()
     var _id1 = Random.secret()
     var userId , username;
+
+    var link;
     if(! user){
       username = Random.id();
       userId = Accounts.createUser({
-        username: username,
-        email: email,
-        password: _id,
-        trialMember: true,
-        profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result, }
-      });
-
-    } else {
+                username: username,
+                email: email,
+                password: _id,
+                trialMember: true,
+                profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result, }
+              });
+      link = `invitation/${_id}`;
+    } 
+    else {
       userId = user._id;
+      link = `signIn/invited/${email}/${_id}`;
     }
 
     // inserting the inforamtion into the connections collection
@@ -88,10 +92,11 @@ Meteor.methods({
       Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
     }
 
+
     var emailData = {
       'from': name,
       'to' : toName,
-      'link': Meteor.absoluteUrl('invitation/' + _id)
+      'link': Meteor.absoluteUrl(link)
     };
 
     // Sending Email through custom server method 

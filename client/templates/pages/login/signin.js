@@ -1,6 +1,9 @@
   Template.signIn.events({
     'submit #signIn': function(event) {
       event.preventDefault();
+      
+      
+      
       Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
         if(err){
           $('#error').text(err);
@@ -10,6 +13,8 @@
           Router.go('/quiz');
         }
       });
+
+
     },
     'click #sign-up': function (event) {
       Router.go('/signUp');
@@ -40,6 +45,7 @@
                     });
                   }
                 }
+                $('#error').text(err);
         }
        else
         Session.set('loginLinkedin', true);
@@ -69,4 +75,14 @@
     signUpShow: function() {
       return Session.get('signUp');
     },
+    invitedEmail(){
+      if(Router.current().params.email)
+        {
+          return Router.current().params.email;
+        }
+        return null;
+     },
+     emailDisable(){
+      return !Router.current().params.email ? false : true ;
+     }
   });

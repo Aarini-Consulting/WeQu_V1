@@ -13,7 +13,7 @@
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
 
-    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp',
+    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn/a', '/signUp',
     '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin'
     ] }); 
 
@@ -169,13 +169,13 @@
 
 
 
-    Router.route('/signIn', function () {
+    Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
 
         this.layout('commonLayout');
 
         return this.render('signIn');
     } ,{
-        name: 'signIn' });
+        name: 'signIn/a' });
 
     Router.route('/', function () {
         return this.render('signIn');
