@@ -89,6 +89,13 @@ Template['quiz'].events({
              if(existingInvitedUser){
                   let username = getUserName(Meteor.user().profile);
                   let inviteId = existingInvitedUser.inviteId;
+
+                  let userId = Meteor.userId();
+                  Meteor.call("updateTrialUser", userId , function(err, result){
+                            console.log("updateTrialUser", err, result);
+                  });
+
+
                   if( feedback.to === inviteId && feedback.from === Meteor.userId()  ){
                     let data = { inviteId : inviteId,
                           type : 0,
