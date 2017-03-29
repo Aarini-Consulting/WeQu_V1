@@ -26,7 +26,7 @@
        return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
-                 'existingUserAfterQuiz'
+                 'existingUserAfterQuiz/:_id'
 
                 ] });
 
@@ -41,7 +41,7 @@
         }
         else{
          this.layout('ScriptLayout');  //no menubar
-        } 
+        }
 
 
         if(! Meteor.user()) {
@@ -259,9 +259,9 @@
             } 
         });
 
-        this.route('existingUserAfterQuiz', {
+        this.route('/existingUserAfterQuiz', {
             layout : 'ApplicationLayout',
-            path: '/existingUserAfterQuiz/:userId',
+            path: '/existingUserAfterQuiz/:userId?',
             template: 'existingUserAfterQuiz',
             data: function(){
             } 
