@@ -44,42 +44,45 @@ Template.invite.created = function () {
         var gender = template.gender.get(); //template.find('#gender').value;
 
         // Sending invite email to self , avoided .
-        if(email == Meteor.user() && Meteor.user().emails[0].address){
-                return inviteStatus.set('error');
+        if(email == ( Meteor.user() && Meteor.user().emails[0].address ) ){
+                inviteStatus.set('error');
                 setInterval(function () {
                     return inviteStatus.set('default');
                 }, 3000);
         }
 
-         let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": Meteor.userId()} ] } );
-         let exists = !oldUser ? false : true;
-         console.log(exists);
+        else 
+        {
+             let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": Meteor.userId()} ] } );
+             let exists = !oldUser ? false : true;
+             console.log(exists);
 
-         if(!exists){
-            Meteor.call('invite', name, email, gender, function (err, userId) {
-                if(err){
-                    console.log("error", err);
-                    inviteStatus.set('error');
-                    return;
-                }
+             if(!exists){
+                Meteor.call('invite', name, email, gender, function (err, userId) {
+                    if(err){
+                        console.log("error", err);
+                        inviteStatus.set('error');
+                        return;
+                    }
 
-                template.$('input[name=name]').val('')
-                template.$('input[name=email]').val('');
-                inviteStatus.set('sent');
+                    template.$('input[name=name]').val('')
+                    template.$('input[name=email]').val('');
+                    inviteStatus.set('sent');
 
+                    setInterval(function () {
+                        return inviteStatus.set('default');
+                    }, 3000);
+                        quizPerson.set(userId);
+                        return setLoginScript('finish');
+                        console.log(err, userId);
+                });
+            }
+            else{
+                inviteStatus.set('alreadyInvited');
                 setInterval(function () {
-                    return inviteStatus.set('default');
+                        return inviteStatus.set('default');
                 }, 3000);
-                    quizPerson.set(userId);
-                    return setLoginScript('finish');
-                    console.log(err, userId);
-            });
-        }
-        else{
-            inviteStatus.set('alreadyInvited');
-            setInterval(function () {
-                    return inviteStatus.set('default');
-            }, 3000);
+            }
         }
 
     },
