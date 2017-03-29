@@ -20,15 +20,15 @@
     Router.onBeforeAction(function () {
        if(Session.get('invite')) {
         Router.go('/script-invitation');
-    } else if(getLoginScript()) {
-        Router.go('/script-login')
-    }
+       } else if(getLoginScript()) {
+            Router.go('/script-login')
+       }
+       return this.next();
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
+                 '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
+                 'existingUserAfterQuiz'
 
-    return this.next();
-}, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
-'/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings'
-
-] });
+                ] });
 
     route = new ReactiveVar("quiz");
 
@@ -41,7 +41,7 @@
         }
         else{
          this.layout('ScriptLayout');  //no menubar
-        }
+        } 
 
 
         if(! Meteor.user()) {
@@ -258,6 +258,15 @@
             data: function(){
             } 
         });
+
+        this.route('existingUserAfterQuiz', {
+            layout : 'ApplicationLayout',
+            path: '/existingUserAfterQuiz/:userId',
+            template: 'existingUserAfterQuiz',
+            data: function(){
+            } 
+        });
+
 
     });
 

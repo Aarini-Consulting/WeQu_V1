@@ -8,3 +8,4 @@
        return this.render('settings');
 
     }, { 'name': '/settings' });
+ 
