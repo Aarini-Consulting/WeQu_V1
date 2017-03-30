@@ -20,6 +20,7 @@
         {
           Router.go(`/quiz`);
           if(setQuizPerson){
+            setLoginScript(false);
             console.log(user);
             quizPerson.set(user.inviteId);
           }

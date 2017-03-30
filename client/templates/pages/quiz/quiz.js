@@ -190,9 +190,9 @@ Template['quiz'].events({
             {
               var id = quizPerson.get();
 
-               if( id != Meteor.userId() ){
+              /* if( id != Meteor.userId() ){
                 Router.go(`/existingUserAfterQuiz/${id}`);
-               } 
+               } */
 
                if(template.data.nextPerson == true){
                 var friends = template.data.friends;

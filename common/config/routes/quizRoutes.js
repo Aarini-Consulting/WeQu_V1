@@ -42,7 +42,10 @@
         data.friends = friends;
         data.userId = userId;
 
+        // data.feedback && !data.feedback.done
+        // TODO : Issue here resolve 
         if(!data.feedback.qset) {
+            console.log("gen-question-set \n ",userId);
             Meteor.call('gen-question-set', userId, function (err, result) {
                 questionDep.changed();
             });

@@ -85,9 +85,11 @@ Meteor.methods({
    
 
     var feedback = Feedback.findOne({ 'from': userId, 'to': Meteor.userId() });
+    console.log("qset1 \n " ,qset1," \n");
 
     var fbId = Feedback.insert({_id: _id, from : userId, to: Meteor.userId(), qset : qset, invite : true, done: false });
     var fbId1 = Feedback.insert({_id: _id1, from : Meteor.userId(), to: userId, qset : qset1, invite : false, done: false });
+    console.log("\n fbId1 \t ", fbId1,"\n");
     if(!user){
       Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
     }
