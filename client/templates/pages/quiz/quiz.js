@@ -84,7 +84,7 @@ Template['quiz'].events({
              }
 
              // Case :  Existing invited user tries to answer about his invited person . Insert only one time .
-             let email = Meteor.user().emails[0].address || Meteor.user().profile.emailAddress;
+             var email = Meteor.user().emails[0].address || Meteor.user().profile.emailAddress;
              var existingInvitedUser =  Connections.findOne( { "profile.emailAddress" : email },{userId: Meteor.userId() });
              if(existingInvitedUser){
                   let username = getUserName(Meteor.user().profile);
@@ -190,9 +190,15 @@ Template['quiz'].events({
             {
               var id = quizPerson.get();
 
-              /* if( id != Meteor.userId() ){
-                Router.go(`/existingUserAfterQuiz/${id}`);
-               } */
+              let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": quizPerson.get() } ] } );
+              let exists = !oldUser ? false : true;
+              console.log(exists);
+
+              if(exists){
+                //if( id != Meteor.userId() ){
+                   Router.go(`/existingUserAfterQuiz/${id}`);
+                 //}  
+               }
 
                if(template.data.nextPerson == true){
                 var friends = template.data.friends;
