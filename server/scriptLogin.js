@@ -17,6 +17,8 @@ Meteor.methods({
                 throw new Meteor.Error("qset undefined");
             }
 
+            // Here schema validation fails
+            
             Feedback.upsert({
                 'from': Meteor.userId(),
                 'to': userId
@@ -26,6 +28,20 @@ Meteor.methods({
                 'qset': qset,
                 'done': false,
             });
+
+            // TODO : Convert the above statement into below ..
+
+            /* Feedback.upsert({
+                'from': Meteor.userId(),
+                'to': userId
+                }, {$set:
+                {'from': Meteor.userId(),
+                    'to': userId,
+                    'qset': qset,
+                    'done': false}
+                 }); 
+             */
+
             return qset;
         }
     });

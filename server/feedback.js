@@ -13,7 +13,13 @@
                 var user = Meteor.users.findOne({ _id: fb.to });
                 qset = genQuizQuestionSet(user.profile);
             }
-            Feedback.insert({from: fb.from, to: fb.to, qset: qset, done : false})
+
+            if(qset == [] || qset.length == 0 ){
+                throw new Meteor.Error("qset undefined");
+            }
+            
+            let a = Feedback.insert({from: fb.from, to: fb.to, qset: qset, done : false});
+            console.log(qset , a , fb);
 
             return true;
         }
