@@ -96,7 +96,10 @@
                     }
                     var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
                     if(!myfeedback) {
-                        this.render('scriptLoginFail');
+                        //TODO : Making this temporarily .. to avoid scriptFail
+
+                        this.render('scriptLoginInit');
+                        //this.render('scriptLoginFail');
                         return;
                     }
                     this.render('quiz', {
@@ -114,7 +117,7 @@
                         return
                     }
                     var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: true});
-                    if(!myfeedback) {
+                    if(!myfeedback) {  
                         this.render('scriptLoginFail');
                         return;
                     }

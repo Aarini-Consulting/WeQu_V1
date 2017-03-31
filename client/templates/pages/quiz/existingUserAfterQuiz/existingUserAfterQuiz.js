@@ -15,7 +15,7 @@ Template.existingUserAfterQuiz.helpers({
 
    Template['existingUserAfterQuiz'].events({
         "click #next" : function (event,template) {
-            //setLoginScript('profile');
+            setLoginScript(false);
             let userId =  template.userId.get();
             return Router.go(`/profile/user/${userId}`);
         }
