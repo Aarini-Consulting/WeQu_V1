@@ -84,7 +84,7 @@ Template['quiz'].events({
              }
 
              // Case :  Existing invited user tries to answer about his invited person . Insert only one time .
-             var email = Meteor.user().emails[0].address || Meteor.user().profile.emailAddress;
+             var email = ( Meteor.user().emails && Meteor.user().emails[0].address )|| Meteor.user().profile.emailAddress ;
              var existingInvitedUser =  Connections.findOne( { "profile.emailAddress" : email },{userId: Meteor.userId() });
              if(existingInvitedUser){
                   let username = getUserName(Meteor.user().profile);
