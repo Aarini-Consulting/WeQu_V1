@@ -228,3 +228,10 @@ form#signIn{
 	max-width: 500px;
 	max-height: 100px;
 }
+
+
+
+.linkedinInvitedUser{
+	padding-top: 50px;
+	height: 100% !important;
+}

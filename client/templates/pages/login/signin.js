@@ -117,5 +117,12 @@
      },
      emailDisable(){
       return !Router.current().params.email ? false : true ;
+     },
+     linkedinInvitedUser(){
+      if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ) ){
+        return false;
+      }
+      return true;
      }
+
   });

@@ -64,7 +64,12 @@ Meteor.methods({
     } 
     else {
       userId = user._id;
+      // When an invitation send to an existing user (the account created with linkedin)
+      // the email login field should not displayed
       link = `signIn/invited/${email}/${_id}`;
+      if(user && user.services && user.services.linkedin){
+        link = `signIn/linkedinInvited/${email}/${_id}`;        
+      }
     }
 
     // inserting the inforamtion into the connections collection
