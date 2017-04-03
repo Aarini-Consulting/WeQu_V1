@@ -44,7 +44,8 @@ Template.invite.created = function () {
         var gender = template.gender.get(); //template.find('#gender').value;
 
         // Sending invite email to self , avoided .
-        if(email == Meteor.user() && Meteor.user().emails[0].address){
+        if(email == ( Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address ) || 
+            email == ( Meteor.user() && Meteor.user().profile.emailAddress ) ){
                 inviteStatus.set('error');
                 setInterval(function () {
                     return inviteStatus.set('default');
