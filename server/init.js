@@ -63,6 +63,7 @@ Meteor.startup(function () {
 
         if(options.trialMember){
             user.profile.trialMember = options.trialMember;
+            user.profile.trial = options.trial; // account created by user then set to false
         }
 
         console.log('----- \n onUserCreated ---------- \n', user);
