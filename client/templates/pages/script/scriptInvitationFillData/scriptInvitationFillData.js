@@ -96,6 +96,7 @@ Template.scriptInvitationFillData.events({
               }
               else
               {
+                Session.set('loginLinkedin', true);
                 Session.clear('invite');
                 if(!newAcc){
                   setLoginScript(false); 

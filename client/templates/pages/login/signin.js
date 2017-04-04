@@ -35,7 +35,7 @@
     },
     'click .loginLinkedin' : function(){
 
-      let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
+      let setQuizPerson = Router.current().params && Router.current().params.invited == "linkedinInvited" ? true  :false;
 
       // If invited person then find that persons _id and set the quiz person .
       var email, user;
@@ -65,11 +65,11 @@
                       }
                       else
                       {
-                        Router.go('/quiz');
                         if(setQuizPerson){
                           console.log(user);
                           quizPerson.set(user.inviteId);
                         }
+                        Router.go('/quiz');
                       }
                     });
                   }

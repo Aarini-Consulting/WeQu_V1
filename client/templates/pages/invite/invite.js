@@ -22,7 +22,7 @@ Template.invite.created = function () {
                                                 doc.invitedPerson = true;
                                                 doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
                                                }
-                                               console.log(doc);
+                                               //console.log(doc);
                                                return doc;
                                            }
                                      });
