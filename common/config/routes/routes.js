@@ -21,13 +21,12 @@
        if(Session.get('invite')) {
         Router.go('/script-invitation');
        } else if(getLoginScript()) {
-            Router.go('/script-login')
+        Router.go('/script-login')
        }
        return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
-                 'existingUserAfterQuiz/:_id'
-
+                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?'
                 ] });
 
     route = new ReactiveVar("quiz");
@@ -143,7 +142,9 @@
                 }
 
                 case 'after-quiz' :
-                this.render('scriptLoginAfterQuiz')
+                //this.render('scriptLoginAfterQuiz');
+                var userId = Meteor.userId();
+                Router.go(`/scriptLoginAfterQuiz/${userId}`);
                 break;
                 case 'invite' :
                 this.render('invite');

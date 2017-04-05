@@ -9,3 +9,10 @@
 
     }, { 'name': '/settings' });
  
+ Router.route('/scriptLoginAfterQuiz/:userId?', function () {
+
+     this.layout('ApplicationLayout');
+
+     return this.render('scriptLoginAfterQuiz');
+
+ }, { 'name': '/scriptLoginAfterQuiz/:userId?' });
