@@ -98,9 +98,6 @@ Template.scriptInvitationFillData.events({
               {
                 Session.set('loginLinkedin', true);
                 Session.clear('invite');
-                if(!newAcc){
-                  setLoginScript(false); 
-                }
                 Router.go('/quiz');
               }
             });
