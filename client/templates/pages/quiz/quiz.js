@@ -3,56 +3,56 @@
     questionDep.depend();
     return _.find(questions, function (question) {
             return !_.has(question, 'answer');// || !_.has(question, 'written');
-        });
-};
+          });
+  };
 
-Template.quiz.helpers({
+  Template.quiz.helpers({
     'writtenFeedback' : function () {
-        var question = currentQuestion(this.feedback.qset);
-        !(this.feedback.to == this.feedback.from) && question && _.has(question, 'answer') && !_.has(question, 'written');
-        return false;
+      var question = currentQuestion(this.feedback.qset);
+      !(this.feedback.to == this.feedback.from) && question && _.has(question, 'answer') && !_.has(question, 'written');
+      return false;
     },
     'self' : function () {
-        return this.feedback.from == this.feedback.to;
+      return this.feedback.from == this.feedback.to;
     },
     'question' : function () {
-        return currentQuestion(this.feedback.qset);
+      return currentQuestion(this.feedback.qset);
     },
     'questionNum' : function(){
-        questionDep.depend();
-        var idx = 0
-        _.find(this.feedback.qset, function (question) {
-            idx++;
-            return !_.has(question, 'answer');
-        });
-        return idx;
+      questionDep.depend();
+      var idx = 0
+      _.find(this.feedback.qset, function (question) {
+        idx++;
+        return !_.has(question, 'answer');
+      });
+      return idx;
     }, 
     'questionsTotal' : function(){
-        questionDep.depend();
-        return this.feedback.qset.length;
+      questionDep.depend();
+      return this.feedback.qset.length;
     }
-});
+  });
 
 
-var answering = false;
-Template['quiz'].events({
+  var answering = false;
+  Template['quiz'].events({
     "click .answer, click .skip, click .writeAnswer" : function (event, template) {
 
-        event.preventDefault();
+      event.preventDefault();
 
-        if(answering){
-            return;
-        }
-        answering = true
-        var feedback = template.data.feedback;
-        var question = currentQuestion(feedback.qset);
-        var buttonType = event.target.getAttribute('class');
+      if(answering){
+        return;
+      }
+      answering = true
+      var feedback = template.data.feedback;
+      var question = currentQuestion(feedback.qset);
+      var buttonType = event.target.getAttribute('class');
 
-        var skill = event.target.getAttribute('data-skill');
+      var skill = event.target.getAttribute('data-skill');
 
-        if(buttonType == 'answer') {
-            question.answer = event.target.getAttribute('id');
-            question.written = false;
+      if(buttonType == 'answer') {
+        question.answer = event.target.getAttribute('id');
+        question.written = false;
 
             // TODO: Prepare comment in UI , rather than js
 
@@ -68,48 +68,48 @@ Template['quiz'].events({
 
              //TYPE  1 answer myself 
              if( feedback.from === feedback.to && feedback.from === Meteor.userId()  ){
-                type =1;
-                  if (question.answers[0]._id == event.target.getAttribute('id'))
-                    {
-                       statement1  = `${question.answers[0].skill}`;
-                       statement2 = `${question.answers[1].skill} `;
+              type =1;
+              if (question.answers[0]._id == event.target.getAttribute('id'))
+              {
+               statement1  = `${question.answers[0].skill}`;
+               statement2 = `${question.answers[1].skill} `;
 
-                    }
-
-                     if (question.answers[1]._id == event.target.getAttribute('id'))
-                    {
-                        statement1 = `${question.answers[1].skill}`;
-                        statement2 = `${question.answers[0].skill}`;
-                    }
              }
+
+             if (question.answers[1]._id == event.target.getAttribute('id'))
+             {
+              statement1 = `${question.answers[1].skill}`;
+              statement2 = `${question.answers[0].skill}`;
+            }
+          }
 
              // Case :  Existing invited user tries to answer about his invited person . Insert only one time .
              var email = ( Meteor.user().emails && Meteor.user().emails[0].address )|| Meteor.user().profile.emailAddress ;
              var existingInvitedUser =  Connections.findOne( { "profile.emailAddress" : email },{userId: Meteor.userId() });
              if(existingInvitedUser){
-                  let username = getUserName(Meteor.user().profile);
-                  let inviteId = existingInvitedUser.inviteId;
+              let username = getUserName(Meteor.user().profile);
+              let inviteId = existingInvitedUser.inviteId;
 
-                  let userId = Meteor.userId();
-                  Meteor.call("updateTrialUser", userId , function(err, result){
-                            console.log("updateTrialUser", err, result);
-                  });
+              let userId = Meteor.userId();
+              Meteor.call("updateTrialUser", userId , function(err, result){
+                console.log("updateTrialUser", err, result);
+              });
 
 
-                  if( feedback.to === inviteId && feedback.from === Meteor.userId()  ){
-                    let data = { inviteId : inviteId,
-                          type : 0,
-                          statement1: `Congrats. ${username} accepts your invitation. Give him some feedback!`
-                        }
+              if( feedback.to === inviteId && feedback.from === Meteor.userId()  ){
+                let data = { inviteId : inviteId,
+                  type : 0,
+                  statement1: `Congrats. ${username} accepts your invitation. Give him some feedback!`
+                }
 
-                       Meteor.call('addFeedType0', data, function (err, result) {
-                        if(err)
-                          {
-                            console.log(err);
-                          }
-                       });
-                 }  
-             }          
+                Meteor.call('addFeedType0', data, function (err, result) {
+                  if(err)
+                  {
+                    console.log(err);
+                  }
+                });
+              }  
+            }          
 
              /*
                if(type == 2)
@@ -138,19 +138,19 @@ Template['quiz'].events({
                     {
                         statement1 = `${name} thinks you're more ${question.answers[1].skill} than ${question.answers[0].skill}  `;
                     }
-                } */
-            
-               let data = {type : type , statement1: statement1 , statement2: statement2 };
+                  } */
+                  
+                  let data = {type : type , statement1: statement1 , statement2: statement2 };
 
-               if(skill != "genderId"){
-                 if(type){
-                      Meteor.call('addFeedType1', data, function (err, result) {
-                          if(err)
-                          {
-                              console.log(err);
-                          }
-                      });
-                    }
+                  if(skill != "genderId"){
+                   if(type){
+                    Meteor.call('addFeedType1', data, function (err, result) {
+                      if(err)
+                      {
+                        console.log(err);
+                      }
+                    });
+                  }
                 }
 
 
@@ -160,27 +160,27 @@ Template['quiz'].events({
                 
                 if(skill == "genderId")
                 {
-                    Meteor.users.update({_id: Meteor.userId()},
-                      {$set : { "profile.gender": event.target.getAttribute('id') }});
+                  Meteor.users.update({_id: Meteor.userId()},
+                    {$set : { "profile.gender": event.target.getAttribute('id') }});
                 }
-            }
+              }
 
-            if(buttonType == 'skip'){
+              if(buttonType == 'skip'){
                 if(_.has(question, 'answer')) {
-                    question.written = false
+                  question.written = false
                 } else {
-                    question.answer = false
+                  question.answer = false
                 }
-            } 
+              } 
 
-            if(buttonType == 'writeAnswer') {
+              if(buttonType == 'writeAnswer') {
                 question.written = template.$('textarea').val();
-            }
+              }
 
-          
-            Meteor.call('feedback', feedback._id, feedback.qset, function (err, result) {
+              
+              Meteor.call('feedback', feedback._id, feedback.qset, function (err, result) {
                 if(err){
-                    console.log('feedback error', err);
+                  console.log('feedback error', err);
                 }
 
             // After reaching the last question of the set 
@@ -192,65 +192,69 @@ Template['quiz'].events({
 
               let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": quizPerson.get() } ] } );
               let exists = !oldUser ? false : true;
-              console.log(exists);
+              var count, condition;
+              let feedbackData = Feedback.find({from  : Meteor.userId(), to: id}) ;
+              
+              count = feedbackData.count();
+              console.log(count);
+              condition = count > 2 ? false : true;
 
-              if(exists){
-                //if( id != Meteor.userId() ){
-                   Router.go(`/existingUserAfterQuiz/${id}`);
-                 //}  
-               }
+              // Only for the first time navigate
+              if(exists && condition){
+               Router.go(`/existingUserAfterQuiz/${id}`);
+             }
 
-               if(template.data.nextPerson == true){
-                var friends = template.data.friends;
-                var idx = friends.indexOf(quizPerson.get())
-                if(idx >= 0 && idx < friends.length - 1){
-                    quizPerson.set(friends[idx + 1]);
-                }
+             if(template.data.nextPerson == true){
+              var friends = template.data.friends;
+              var idx = friends.indexOf(quizPerson.get())
+              if(idx >= 0 && idx < friends.length - 1){
+                quizPerson.set(friends[idx + 1]);
+              }
             }
-             if(template.data.nextPerson == false){
-                var friends = template.data.friends;
-                var idx = friends.indexOf(quizPerson.get())
-                if(idx >= 1 && idx < friends.length){
+            if(template.data.nextPerson == false){
+              var friends = template.data.friends;
+              var idx = friends.indexOf(quizPerson.get())
+              if(idx >= 1 && idx < friends.length){
                            // quizPerson.set(friends[idx - 1]);
                            quizPerson.set(friends[0]);
+                         }
                        }
-                   }
-            }
+                     }
 
-               answering = false;
-               questionDep.changed()
-               if(!currentQuestion(feedback.qset)) {
-                if(Session.get('invite')){
+                     answering = false;
+                     questionDep.changed()
+                     if(!currentQuestion(feedback.qset)) {
+                      if(Session.get('invite')){
                         //Session.setPersistent('invite', 'filldata');
                         Session.set('invite', 'filldata');
-                    } else if(getLoginScript()) {
+                      } else if(getLoginScript()) {
                         setLoginScript('after-quiz');
+                      } 
+
                     } 
-
-                } 
-            });
-        },
-        "click #nextPerson" : function(event, template){
-            var friends = template.data.friends;
-            var idx = friends.indexOf(quizPerson.get())
-            if(idx >= 0 && idx < friends.length - 1){
+                  });
+            },
+            "click #nextPerson" : function(event, template){
+              var friends = template.data.friends;
+              var idx = friends.indexOf(quizPerson.get())
+              if(idx >= 0 && idx < friends.length - 1){
                 quizPerson.set(friends[idx + 1]);
-            }
-        },
-        "click #prevPerson" : function(event, template){
-            var friends = template.data.friends;
-            var idx = friends.indexOf(quizPerson.get())
-            if(idx >= 1 && idx < friends.length){
+              }
+            },
+            "click #prevPerson" : function(event, template){
+              var friends = template.data.friends;
+              var idx = friends.indexOf(quizPerson.get())
+              if(idx >= 1 && idx < friends.length){
                 quizPerson.set(friends[idx - 1]);
-            }
-        },
+              }
+            },
 
-        "click #specificUser" : function(event, template){
-            event.preventDefault();
+            "click #specificUser" : function(event, template){
+              event.preventDefault();
             let userId = $(event.target).attr('data-filter-id'); //quizPerson.get()
             if(userId == Meteor.userId())
                 Router.go(`/profile`); //Current user    
-            else
+              else
                 Router.go(`/profile/user/${userId}`); 
-        }
-    });
+            }
+          });
