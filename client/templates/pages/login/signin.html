@@ -4,9 +4,7 @@
 		{{>signUp}}
 		{{else}}
 
-
-
-		<div class="row" id="form"> 
+		<div class="row {{#unless linkedinInvitedUser}}linkedinInvitedUser{{/unless}}" id="form"> 
 			<div class="col-xs-4 col-md-6 col-sm-6">
 
 
@@ -35,14 +33,19 @@
 								</button>
 								<br>
 								<hr>
+								
+								<!--TODO : Create a separate templates to avoid pollution -->
+								{{#if linkedinInvitedUser}}
 
 								<div class="form-group">
-									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="your email" id="light-grey-color" required>
+									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="your email" id="light-grey-color" value="{{invitedEmail}}" disabled={{emailDisable}} required>
 									<input type="password" name="loginPassword" class="form-control input-lg" placeholder="password" id="light-grey-color" required>
 								</div>
 								<button type="submit" id="grey-color">
 									Log in
 								</button>
+
+								{{/if}}
 
 								<div id="error" class="black-text"></div>
 

@@ -13,22 +13,21 @@
     Router.onBeforeAction(function () {
         Meteor.userId() ? this.next() : this.render('login');
 
-    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn', '/signUp',
+    }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn/a', '/signUp',
     '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin'
     ] }); 
 
     Router.onBeforeAction(function () {
        if(Session.get('invite')) {
         Router.go('/script-invitation');
-    } else if(getLoginScript()) {
+       } else if(getLoginScript()) {
         Router.go('/script-login')
-    }
-
-    return this.next();
-}, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
-'/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings'
-
-] });
+       }
+       return this.next();
+    }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
+                 '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
+                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?'
+                ] });
 
     route = new ReactiveVar("quiz");
 
@@ -96,7 +95,10 @@
                     }
                     var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
                     if(!myfeedback) {
-                        this.render('scriptLoginFail');
+                        //TODO : Making this temporarily .. to avoid scriptFail
+
+                        this.render('scriptLoginInit');
+                        //this.render('scriptLoginFail');
                         return;
                     }
                     this.render('quiz', {
@@ -114,7 +116,7 @@
                         return
                     }
                     var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: true});
-                    if(!myfeedback) {
+                    if(!myfeedback) {  
                         this.render('scriptLoginFail');
                         return;
                     }
@@ -140,7 +142,9 @@
                 }
 
                 case 'after-quiz' :
-                this.render('scriptLoginAfterQuiz')
+                //this.render('scriptLoginAfterQuiz');
+                var userId = Meteor.userId();
+                Router.go(`/scriptLoginAfterQuiz/${userId}`);
                 break;
                 case 'invite' :
                 this.render('invite');
@@ -169,13 +173,13 @@
 
 
 
-    Router.route('/signIn', function () {
+    Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
 
         this.layout('commonLayout');
 
         return this.render('signIn');
     } ,{
-        name: 'signIn' });
+        name: 'signIn/a' });
 
     Router.route('/', function () {
         return this.render('signIn');
@@ -258,6 +262,15 @@
             data: function(){
             } 
         });
+
+        this.route('/existingUserAfterQuiz', {
+            layout : 'ApplicationLayout',
+            path: '/existingUserAfterQuiz/:userId?',
+            template: 'existingUserAfterQuiz',
+            data: function(){
+            } 
+        });
+
 
     });
 
