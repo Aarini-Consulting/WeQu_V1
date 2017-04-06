@@ -150,7 +150,7 @@
 	background-color: #323232 !important;
 }
 
-#logout{
+.width78{
 	width: 78%;
 }
 
@@ -227,4 +227,11 @@ form#signIn{
 .customDimension{
 	max-width: 500px;
 	max-height: 100px;
+}
+
+
+
+.linkedinInvitedUser{
+	padding-top: 50px;
+	height: 100% !important;
 }

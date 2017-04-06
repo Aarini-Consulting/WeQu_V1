@@ -53,7 +53,7 @@
 
             var validAnswers = _.filter(joinedQset, function(question) { return question.answer });
             var otherscore = calculateScore(joinedQset, true);
-            data.enoughData = (validAnswers.length > 15);
+            data.enoughData = (validAnswers.length > 9);
 
             data.categories = _.map(_.keys(framework), function(category) {
                 return {

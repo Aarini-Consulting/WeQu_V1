@@ -1,0 +1,14 @@
+
+
+<!-- After existing invited user answers question , navigate to this page -->
+
+<template name="existingUserAfterQuiz">
+ {{>menu}}
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter">
+    <h2 style="width:65%">
+      Well done!<br>
+      Check out the WeQu Scores between {{username invitedPerson.profile}} and you 
+    </h2>
+    <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
+  </section>
+</template>

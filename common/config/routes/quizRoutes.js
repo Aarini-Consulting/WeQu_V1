@@ -42,11 +42,17 @@
         data.friends = friends;
         data.userId = userId;
 
-        if(!data.feedback.qset) {
-            Meteor.call('gen-question-set', userId, function (err, result) {
-                questionDep.changed();
-            });
+        // TODO : Verify once , is the issue here resolved
+
+        if(data.feedback){
+            if(!data.feedback.qset) {
+                console.log("gen-question-set \n ",userId);
+                Meteor.call('gen-question-set', userId, function (err, result) {
+                    questionDep.changed();
+                });
+            }
         }
+
         var user = Meteor.users.findOne({_id : userId});
         if(user) data.person = user.profile;
         data.nextPerson = (friends.indexOf(quizPerson.get()) < friends.length - 1);

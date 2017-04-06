@@ -49,18 +49,28 @@ Meteor.methods({
     var _id = Random.secret()
     var _id1 = Random.secret()
     var userId , username;
+
+    var link;
     if(! user){
       username = Random.id();
       userId = Accounts.createUser({
-        username: username,
-        email: email,
-        password: _id,
-        trialMember: true,
-        profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result, }
-      });
-
-    } else {
+                username: username,
+                email: email,
+                password: _id,
+                trialMember: true,
+                trial: true,
+                profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result, }
+              });
+      link = `invitation/${_id}`;
+    } 
+    else {
       userId = user._id;
+      // When an invitation send to an existing user (the account created with linkedin)
+      // the email login field should not displayed
+      link = `signIn/invited/${email}/${_id}`;
+      if(user && user.services && user.services.linkedin){
+        link = `signIn/linkedinInvited/${email}/${_id}`;        
+      }
     }
 
     // inserting the inforamtion into the connections collection
@@ -81,17 +91,20 @@ Meteor.methods({
    
 
     var feedback = Feedback.findOne({ 'from': userId, 'to': Meteor.userId() });
+    console.log("qset1 \n " ,qset1," \n");
 
     var fbId = Feedback.insert({_id: _id, from : userId, to: Meteor.userId(), qset : qset, invite : true, done: false });
     var fbId1 = Feedback.insert({_id: _id1, from : Meteor.userId(), to: userId, qset : qset1, invite : false, done: false });
+    console.log("\n fbId1 \t ", fbId1,"\n");
     if(!user){
       Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
     }
 
+
     var emailData = {
       'from': name,
       'to' : toName,
-      'link': Meteor.absoluteUrl('invitation/' + _id)
+      'link': Meteor.absoluteUrl(link)
     };
 
     // Sending Email through custom server method 
