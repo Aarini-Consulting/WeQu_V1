@@ -215,24 +215,22 @@
               var friends = template.data.friends;
               var idx = friends.indexOf(quizPerson.get())
               if(idx >= 1 && idx < friends.length){
-                           // quizPerson.set(friends[idx - 1]);
-                           quizPerson.set(friends[0]);
-                         }
-                       }
-                     }
+               quizPerson.set(friends[0]);
+             }
+           }
+         }
 
-                     answering = false;
-                     questionDep.changed()
-                     if(!currentQuestion(feedback.qset)) {
-                      if(Session.get('invite')){
-                        //Session.setPersistent('invite', 'filldata');
-                        Session.set('invite', 'filldata');
-                      } else if(getLoginScript()) {
-                        setLoginScript('after-quiz');
-                      } 
+         answering = false;
+         questionDep.changed()
+         if(!currentQuestion(feedback.qset)) {
+          if(Session.get('invite')){
+            Session.set('invite', 'filldata');
+          } else if(getLoginScript()) {
+            setLoginScript('after-quiz');
+          } 
 
-                    } 
-                  });
+        } 
+      });
             },
             "click #nextPerson" : function(event, template){
               var friends = template.data.friends;

@@ -52,7 +52,7 @@
           // Now again login ...
           console.log(err);
               if(err == "Error: User validation failed [403]"){
-                  let email= prompt("Please enter your email", "");
+                 /* let email= prompt("Please enter your email", "");
                   var password = prompt("Please enter your password", "");
                   if (!password || !email) {
                     $('#error').text("Please provide email && password to continue");             
@@ -72,17 +72,18 @@
                         Router.go('/quiz');
                       }
                     });
-                  }
+                  } */
                 }
-                $('#error').text(err);
+                $('#error').text(err, "Please re-login , something wrong happened ");
         }
        else
         Session.set('loginLinkedin', true);
-        //  setLoginScript("init");
-         Router.go('/quiz');
+                 
          if(setQuizPerson){
             console.log(user);
+            setLoginScript(false);
             quizPerson.set(user.inviteId);
+            Router.go('/quiz');
           }
 
          Meteor.setTimeout(function () {
