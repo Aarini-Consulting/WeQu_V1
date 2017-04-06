@@ -1,7 +1,7 @@
   Template.signIn.events({
     'submit #signIn': function(event) {
       event.preventDefault();
-      
+
       let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
 
       // If invited person then find that persons _id and set the quiz person .
@@ -11,7 +11,7 @@
          email = Router.current().params && Router.current().params.email;
          user = Connections.findOne( { "profile.emailAddress" : email });
       }
-      
+
       Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
         if(err){
           $('#error').text(err);
@@ -48,14 +48,14 @@
 
       Meteor.loginWithLinkedin(function(err,result){
         if(err){
-          //TODO : Using the validateNewUser block to update services in existing user 
+          //TODO : Using the validateNewUser block to update services in existing user
           // Now again login ...
           console.log(err);
               if(err == "Error: User validation failed [403]"){
                  /* let email= prompt("Please enter your email", "");
                   var password = prompt("Please enter your password", "");
                   if (!password || !email) {
-                    $('#error').text("Please provide email && password to continue");             
+                    $('#error').text("Please provide email && password to continue");
                   }
                   else
                   {
@@ -78,14 +78,13 @@
         }
        else
         Session.set('loginLinkedin', true);
-                 
+
          if(setQuizPerson){
             console.log(user);
             setLoginScript(false);
             quizPerson.set(user.inviteId);
-            Router.go('/quiz');
           }
-
+          Router.go('/quiz');
          Meteor.setTimeout(function () {
                   try{
                     // production issue ..
