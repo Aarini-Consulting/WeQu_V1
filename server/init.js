@@ -34,7 +34,7 @@ Meteor.startup(function () {
           let exists = !existingUser ? false  :true ;
           if(exists){
             let linkedin = user.services.linkedin ;
-            user.services.linkedin = ""; // Doing this to avoid --- Duplicate id exists --- 
+           // user.services.linkedin = ""; // Doing this to avoid --- Duplicate id exists --- 
            
               Meteor.setTimeout(function () {
               try{
@@ -45,7 +45,8 @@ Meteor.startup(function () {
                 console.log(e);
               }
              },2000);
-             return false;
+            // return false;
+             throw new Meteor.Error( user, "Error: User validation failed [403]");
           }
         }
 

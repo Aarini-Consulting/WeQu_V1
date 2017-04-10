@@ -40,6 +40,8 @@ meteorhacks:ssr # server side rendering
 msavin:mongol #  debugOnly package
 ecmascript
 
+peppelg:bootstrap-3-modal # equivalent to bootstrap modal
+
 juliancwirko:s-alert
 juliancwirko:s-alert-genie
 
