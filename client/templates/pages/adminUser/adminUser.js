@@ -78,6 +78,11 @@ Template.adminUser.helpers({
       "click #logout" : function(){
           Meteor.logout();
           Router.go('/adminLogin');
-       }
-        
+       },
+
+      "click #user" : function(event,template){
+          event.preventDefault();
+          Modal.show('adminViewUserProfile'); // Adding Master Admin functionality to view user's profile.
+      }
+      
    });
