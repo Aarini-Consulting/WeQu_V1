@@ -3,7 +3,7 @@ Template.adminUser.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
 		self.subscribe("connections");
-		self.subscribe("feedback");
+		self.subscribe("feedback","allData");
 		self.subscribe("usersInfo");  
 	});
 });
@@ -82,7 +82,8 @@ Template.adminUser.helpers({
 
       "click #user" : function(event,template){
           event.preventDefault();
-          Modal.show('adminViewUserProfile'); // Adding Master Admin functionality to view user's profile.
+          let userId = $(event.currentTarget).attr('data-userId');
+          Modal.show('adminViewUserProfile', {userId:userId } ); // Adding Master Admin functionality to view user's profile.
       }
       
    });

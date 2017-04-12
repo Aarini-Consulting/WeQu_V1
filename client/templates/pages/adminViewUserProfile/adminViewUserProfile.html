@@ -21,6 +21,14 @@
                         </div>
                     </div>
 
+                    {{#with displayProfile}}
+                        {{#if enoughData}}  
+                          {{> skillCategories categories=categories skills =skills  }}
+                        {{else}}
+                        {{> skillsPreview}}
+                        {{/if}}
+                      
+                    {{/with}}
                     
                 </div>
 

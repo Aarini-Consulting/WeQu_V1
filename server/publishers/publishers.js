@@ -6,11 +6,15 @@
 });
 
 
- Meteor.publish('feedback', function () {
+ Meteor.publish('feedback', function (allData) {
 
            var fb = Feedback.find({$or : [ {from : this.userId}, {to : this.userId} ]});
-            
-           // let fb = Feedback.find({});
+            console.log(allData);
+            if(allData == "allData"){    
+              let fb = Feedback.find({});
+              var users = Meteor.users.find({}, {profile : 1})
+              return [fb, users];
+            }
 
             //var userList = fb.map(function(fb){ return [fb.to, fb.from] });
             //userList = _.uniq(_.flatten(users));
