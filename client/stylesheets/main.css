@@ -11,8 +11,8 @@
 }
 
 #form{ 
-	/*background: url(/img/assets/background2.png) no-repeat center center;*/
 	/*Start 55-new-improve-ui*/
+	/*background: url(/img/assets/background2.png) no-repeat center center;*/
 	background: url(/img/assets/background_white.png) no-repeat center center;
 	/*end 55-new-improve-ui*/
 	
@@ -83,7 +83,10 @@
 }
 
 #grey-color{
-	background-color: #ccc;
+	/*Start 55-new-improve-ui*/
+	/*background-color: #ccc;*/
+	background-color: #484848;
+	/*end 55-new-improve-ui*/
 }
 
 #light-grey-color{
