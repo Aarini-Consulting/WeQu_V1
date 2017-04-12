@@ -8,10 +8,47 @@ Template.adminViewUserProfile.onCreated(function() {
 
 Template.adminViewUserProfile.helpers({
 
-	displayProfile(){
+   profile(){
+  		let user = Meteor.users.findOne({_id : this.userId});
+  		if(user && user.profile){
+  			return user.profile;
+  		}
+  		return null;
+   }, 
+
+   displayRadar(){
+   	 		
+   	 		var id = this.userId;
+            let user = Meteor.users.findOne({_id : id});
+            if(user){
+
+            let userId = user._id;
+   	 		var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
+            var data = { profile : Meteor.user().profile };
+            data.myscore = calculateScore(joinFeedbacks(myfeedback));
+
+            var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+            var qset = joinFeedbacks(otherFeedback);
+
+            var validAnswers = _.filter(qset, function(question) { return question.answer });
+            data.otherscore = calculateScore(qset);
+            data.enoughData = (validAnswers.length > 30);
+
+            _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch()));
+
+            return data;
+           }
+            
+
+   	  return null;
+
+   },
+
+
+	displaySkills(){
 		
             // Replacing userId with custom Id
-            var id = this.userId;   //this.params.userId;
+            var id = this.userId;
             let user = Meteor.users.findOne({_id : id});
             if(user){
 

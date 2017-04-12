@@ -6,21 +6,16 @@
 });
 
 
- Meteor.publish('feedback', function (allData) {
+ Meteor.publish('feedback', function (data) {
 
            var fb = Feedback.find({$or : [ {from : this.userId}, {to : this.userId} ]});
-            console.log(allData);
-            if(allData == "allData"){    
-              let fb = Feedback.find({});
-              var users = Meteor.users.find({}, {profile : 1})
+           var users; 
+            if(data == "allData"){    
+              fb = Feedback.find({});
+              users = Meteor.users.find({}, {profile : 1})
               return [fb, users];
             }
-
-            //var userList = fb.map(function(fb){ return [fb.to, fb.from] });
-            //userList = _.uniq(_.flatten(users));
-            //console.log("userList", userList);
-            //var users = Meteor.users.find({_id : {$in : userList}}, {profile : 1});
-            var users = Meteor.users.find({}, {profile : 1})
+            users = Meteor.users.find({}, {profile : 1})
             return [fb, users];
         });
 
