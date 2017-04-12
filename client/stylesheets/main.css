@@ -11,7 +11,11 @@
 }
 
 #form{ 
-	background: url(/img/assets/background2.png) no-repeat center center;
+	/*background: url(/img/assets/background2.png) no-repeat center center;*/
+	/*Start 55-new-improve-ui*/
+	background: url(/img/assets/background_white.png) no-repeat center center;
+	/*end 55-new-improve-ui*/
+	
 	-webkit-background-size: cover;
     -moz-background-size: cover;
 	-o-background-size: cover;
