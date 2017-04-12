@@ -39,6 +39,15 @@
     <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
     {{/if}}-->
 
+    <div>
+        {{#if isInRole 'GameMaster'}}
+       <button type="submit" id="addRoleGameMaster">Remove from GameMaster </button>  
+       {{else}}
+       <button type="submit" id="addRoleGameMaster">Add as GameMaster </button>  
+       {{/if}}
+
+
+    </div>
   
     {{#each users}}
     <div class="friend">
