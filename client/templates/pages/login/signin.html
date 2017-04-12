@@ -37,8 +37,10 @@
 										<!-- end 55 new-improve-ui -->	
 										</span>
 								</button>
-								<br>
-								<hr>
+								<!-- start 55 new-improve-ui -->
+								<!-- <br> -->
+								<!-- <hr> -->
+								<!-- end 55 new-improve-ui -->
 								
 								<!--TODO : Create a separate templates to avoid pollution -->
 								{{#if linkedinInvitedUser}}
@@ -47,6 +49,15 @@
 									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="your email" id="light-grey-color" value="{{invitedEmail}}" disabled={{emailDisable}} required>
 									<input type="password" name="loginPassword" class="form-control input-lg" placeholder="password" id="light-grey-color" required>
 								</div>
+								<!-- start 55 new-improve-ui -->
+								<div class="black-text bg-white"> 
+
+								<!-- <center> <h5> <a href="/RecoverPassword"> Forgot Password ? </a> </h5> </center> 
+								 -->
+								<a href="/RecoverPassword" class="font-text-small"> Forgot Password ? </a>
+								</div>
+								<!-- end 55 new-improve-ui -->
+
 								<button type="submit" id="grey-color">
 									<!-- start 55 new-improve-ui -->
 									<!-- Log In -->
@@ -75,8 +86,9 @@
 						</div>
 					</form>
 				</div>
-
-				<div class="black-text bg-white"> <center> <h5> <a href="/RecoverPassword"> Forgot Password ? </a> </h5> </center> </div>
+				<!-- start 55 new-improve-ui -->
+				<!-- <div class="black-text bg-white"> <center> <h5> <a href="/RecoverPassword"> Forgot Password ? </a> </h5> </center> </div> -->
+				<!-- end 55 new-improve-ui -->
 
 			</section>
 
