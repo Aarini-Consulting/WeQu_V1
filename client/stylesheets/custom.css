@@ -187,8 +187,14 @@
 
 #beta_tag{
 	position: absolute;
-	left: -30px;
-	top: -30px;
+	/*start 55 new-improve-ui*/
+	/*left: -30px;
+	top: -30px;*/
+	width: 210px;
+	left: -50px;
+	top: -50px;
+	/* end 55 new-improve-ui*/
+	
 }
 
 @media only screen and (min-width: 600px) {
@@ -203,6 +209,11 @@
 		top: -25px;
 		left: -25px;
 	}
+	/* start 55 - improve ui*/
+	.panel{
+		background-color: #fff !important;
+	}
+	/* end 55 - improve ui*/
 }
 
 
@@ -212,6 +223,13 @@
 		top: -20px;
 		left: -20px;
 	}
+
+	/* start 55 - improve ui*/
+	.panel{
+		background-color: transparent !important;
+		height: 510px;
+	}
+	/* end 55 - improve ui*/
 }
 
 form#signIn{
@@ -255,3 +273,17 @@ button.close{
 .modal-footer{
 	background-color: none;
 }
+
+/* start #55 - improve UI */
+.panel-default {
+    border-color: none !important;
+}
+
+.panel {
+    margin-bottom: 20px !important;
+    border: 0px solid transparent !important;
+    border-radius: 4px !important;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05) !important;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .05) !important;
+}
+/* end #55 - improve UI */
