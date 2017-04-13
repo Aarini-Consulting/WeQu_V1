@@ -196,21 +196,37 @@
 	/* end 55 new-improve-ui*/
 }
 
-@media only screen and (min-width: 600px) {
+/*@media only screen and (min-width: 600px) {*/
+@media only screen and (max-width: 979px) {
+
 	/* start 55 - improve ui*/
+
+	#beta_tag{
+		width: 140px;
+		top: -22px;
+		left: -22px;
+	}
+
 	.panel{
 		/*min-width: 400px;*/
-		width: 650px;
+		background-color: #fff !important;
+		width: 500px;
+		height: 550px;
+
 	}
 	.button-login{
-    	width: 400px !important;
-    	height: 60px !important;
+    	width: 300px !important;
+    	height: 40px !important;
     	padding: 0px !important;
 	}
-	/* end 55 - improve ui*/
+
+	.recoverPassword{
+		padding-left: 58px;
+	}
+/* end 55 - improve ui*/
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 1000px) {
 	#beta_tag{
 		width: 160px;
 		top: -25px;
@@ -220,14 +236,17 @@
 	.panel{
 		background-color: #fff !important;
 		width: 650px;
+		max-height: 550px;
 	}
 
 	.button-login{
     	width: 400px !important;
-    	height: 60px !important;
+    	height: 40px !important;
     	padding: 0px !important;
 	}
-
+	.recoverPassword{
+		padding-left: 70px;
+	}
 	/* end 55 - improve ui*/
 }
 
@@ -251,6 +270,10 @@
     	height: 40px !important;
     	width: 250px !important;
     	padding: 0px !important;
+	}
+
+	.recoverPassword{
+		padding-left: 0px;
 	}
 	/* end 55 - improve ui*/
 }
@@ -317,6 +340,7 @@ button.close{
 .font-text-smaller{
 	font-size: smaller;
 }
+
 
 
 

@@ -51,6 +51,7 @@
 	margin-top: 20px;
 	width: 100%;
 	position: center;
+	height: auto;	
 }
 
 .black-text{
@@ -82,7 +83,8 @@
 
 #sign-up{
 	margin-top: 0px !important;
-	position: right;
+	    margin-bottom: 15px;
+	/*position: right;*/
 }
 
 #grey-color{
@@ -117,3 +119,39 @@ img.lg-icon{
 	font-size: medium;
 	color: red;
 }
+
+/*Start 55-new-improve-ui*/
+@media only screen and (min-width: 1000px) {
+    .wequ_icon{
+		width: 80%;
+	}
+
+	#sign-up{
+		margin-left: 150px;
+	}
+}
+
+@media only screen and (max-width: 979px) {
+	 .wequ_icon{
+		width: 80%;
+	}
+
+	#sign-up{
+		margin-left: 120px;
+	}
+}
+
+@media only screen and (max-width: 414px) {
+    
+	#sign-up{
+		margin-left: 70px;
+	}
+}
+
+
+#recoverPassword{
+	margin-left: 70px;
+}
+
+
+/*end 55-new-improve-ui*/
