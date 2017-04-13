@@ -342,6 +342,9 @@ button.close{
 }
 
 
-
+.loginLinkedin img {
+	width: 20px !important;
+    margin-bottom: 7px !important;
+}
 
 /* end #55 - improve UI */
