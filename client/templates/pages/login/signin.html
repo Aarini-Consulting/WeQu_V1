@@ -28,15 +28,15 @@
 
 							<div class="col-md-10 col-sm-10 col-xs-10">
 
-								<button class="loginLinkedin" type="button">
+								<center><button class="button-login" type="button">
 									<img src="/img/icon_linkedin.png"> 
-										<span class="white-text"> 
+										<span class="white-text font-text-smaller"> 
 										<!-- start 55 new-improve-ui -->
 										<!-- Login with LinkedIn  -->
 										Log in with LinkedIn
 										<!-- end 55 new-improve-ui -->	
 										</span>
-								</button>
+								</button></center>
 								<!-- start 55 new-improve-ui -->
 								<!-- <br> -->
 								<!-- <hr> -->
@@ -45,9 +45,9 @@
 								<!--TODO : Create a separate templates to avoid pollution -->
 								{{#if linkedinInvitedUser}}
 
-								<div class="form-group">
-									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="your email" id="light-grey-color" value="{{invitedEmail}}" disabled={{emailDisable}} required>
-									<input type="password" name="loginPassword" class="form-control input-lg" placeholder="password" id="light-grey-color" required>
+								<div class="form-group"><center>
+									<input type="email" name="loginEmail" class="form-control input-lg button-login" placeholder="your email" id="light-grey-color" value="{{invitedEmail}}" disabled={{emailDisable}} required>
+									<input type="password" name="loginPassword" class="form-control input-lg button-login" placeholder="password" id="light-grey-color" required></center>
 								</div>
 								<!-- start 55 new-improve-ui -->
 								<div class="black-text bg-white"> 
@@ -58,12 +58,12 @@
 								</div>
 								<!-- end 55 new-improve-ui -->
 
-								<button type="submit" id="grey-color">
+								<center><button type="submit" id="grey-color" class="button-login">
 									<!-- start 55 new-improve-ui -->
 									<!-- Log In -->
-									<span class="white-text"> Log in with email </span> 
+									<span class="white-text font-text-smaller"> Log in with email </span> 
 									<!-- end 55 new-improve-ui -->
-								</button>
+								</button></center>
 								
 								{{/if}}
 
@@ -77,6 +77,7 @@
 									<div class="col-md-5 col-sm-5 col-xs-5">
 										<input type="button" class="btn btn-default btn-small" id="sign-up" value="Sign Up">
 									</div>
+
 								</div>
 
 							</div>

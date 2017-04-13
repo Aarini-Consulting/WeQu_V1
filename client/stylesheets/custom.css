@@ -197,10 +197,17 @@
 }
 
 @media only screen and (min-width: 600px) {
+	/* start 55 - improve ui*/
 	.panel{
 		/*min-width: 400px;*/
 		width: 650px;
 	}
+	.button-login{
+    	width: 400px !important;
+    	height: 60px !important;
+    	padding: 0px !important;
+	}
+	/* end 55 - improve ui*/
 }
 
 @media only screen and (max-width: 600px) {
@@ -213,6 +220,12 @@
 	.panel{
 		background-color: #fff !important;
 		width: 650px;
+	}
+
+	.button-login{
+    	width: 400px !important;
+    	height: 60px !important;
+    	padding: 0px !important;
 	}
 
 	/* end 55 - improve ui*/
@@ -232,6 +245,12 @@
 		width: auto;
 		background-color: transparent !important;
 		height: 510px;
+	}
+
+	.button-login{
+    	height: 40px !important;
+    	width: 250px !important;
+    	padding: 0px !important;
 	}
 	/* end 55 - improve ui*/
 }
@@ -294,5 +313,11 @@ button.close{
 .font-text-small{
 	font-size: small;
 }
+
+.font-text-smaller{
+	font-size: smaller;
+}
+
+
 
 /* end #55 - improve UI */
