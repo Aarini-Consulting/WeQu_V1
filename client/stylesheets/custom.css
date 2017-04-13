@@ -213,7 +213,7 @@
 		/*min-width: 400px;*/
 		background-color: #fff !important;
 		width: 500px;
-		height: 600px;
+		height: 550px;
 
 	}
 	.button-login{
@@ -250,7 +250,7 @@
 	.panel{
 		background-color: #fff !important;
 		width: 650px;
-		max-height: 600px;
+		max-height: 550px;
 	}
 
 	.button-login{
@@ -389,7 +389,7 @@ button.close{
 }
 
 .font-grey-color{
-	color: #484848;
+	color: #484848 !important
 }
 
 .signUpEmailBtn{
@@ -404,6 +404,10 @@ button.close{
 
 .wordWrap{
 	word-wrap: break-word;
+}
+
+.border0{
+	border: 0px
 }
 
 
