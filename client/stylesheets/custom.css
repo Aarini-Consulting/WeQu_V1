@@ -196,6 +196,8 @@
 	/* end 55 new-improve-ui*/
 }
 
+
+
 /*@media only screen and (min-width: 600px) {*/
 @media only screen and (max-width: 979px) {
 
@@ -345,6 +347,14 @@ button.close{
 .loginLinkedin img {
 	width: 20px !important;
     margin-bottom: 7px !important;
+}
+
+.recoverPassword{
+	margin-top: -20px;
+}
+
+.font-grey-color{
+	color: #484848;
 }
 
 /* end #55 - improve UI */
