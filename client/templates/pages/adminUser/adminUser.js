@@ -3,7 +3,7 @@ Template.adminUser.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
 		self.subscribe("connections");
-		self.subscribe("feedback");
+		self.subscribe("feedback","allData");
 		self.subscribe("usersInfo");  
 	});
 });
@@ -51,33 +51,43 @@ Template.adminUser.helpers({
             }
         } else {
             filter = {};
-        } */
+          } */
 
-        filter ={};
+          filter ={};
 
-        return Meteor.users.find(
-        	filter,
-        	{
-        		transform: function (doc) {
+          return Meteor.users.find(
+           filter,
+           {
+            transform: function (doc) {
                     //picture
                  //   let data = ProfilePicture.findOne({_id: doc.profile.profilePicture});
                  //   doc.picture = data && data.url();
                  return doc;
-             }
-         });
-    },
-    route: function(status) {
-    	return status == route.get();
-    },
-    loggedIn: function(){
-    	return !Meteor.userId();
-    }
-});
-
- Template.adminUser.events({
-      "click #logout" : function(){
-          Meteor.logout();
-          Router.go('/adminLogin');
+               }
+             });
+        },
+        route: function(status) {
+         return status == route.get();
+       },
+       loggedIn: function(){
+         return !Meteor.userId();
        }
-        
-   });
+     });
+
+
+Template.adminUser.events({
+  "click #logout" : function(){
+    Meteor.logout();
+    Router.go('/adminLogin');
+  },
+
+  "click #user" : function(event,template){
+    event.preventDefault();
+    let userId = $(event.currentTarget).attr('data-userId');
+    if(userId != Meteor.userId())
+    {
+      Modal.show('adminViewUserProfile', {userId:userId } ); // Adding Master Admin functionality to view user's profile.
+    }
+   }
+
+});

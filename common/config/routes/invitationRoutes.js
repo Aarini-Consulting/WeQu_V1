@@ -83,7 +83,7 @@
             finishInviteScript();
         }, 5000)
        */
-
+ 
 
     }, { 'name': '/script-invitation' });
 

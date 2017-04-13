@@ -1,0 +1,80 @@
+<template name="adminViewUserProfile">
+    <div class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- <div class="modal-header">
+                     <h4 class="modal-title"> </h4> 
+                </div> -->
+
+                <div class="modal-body">
+                    
+                  <div class="row">
+                        <div class="col-xs-2 col-md-2 col-sm-2"> 
+                        </div>
+                        <div class="col-xs-8 col-md-8 col-sm-8"> 
+                         <center> <div class="text-capitalize"> {{username profile}} </div> </center>
+                        </div>
+                        <div class="col-xs-2 col-md-2 col-sm-2"> 
+                            <button type="button" class="close" data-dismiss="modal">
+                            <img id="" class="pull-right" src="/img/login/X_button.png">    
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                       <div class="col-xs-2 col-md-2 col-sm-2"> 
+                       </div>
+                       <div class="col-xs-8 col-md-8 col-sm-8"> 
+                         <center> 
+
+                            {{#with displayRadar}}
+                            <svg height="300" width="300" style="zmin-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
+                              {{> radar score=myscore color="white" outline="#E96956"}}
+                              {{> radar score=otherscore color="#E96956" outline="white"}}
+                          </svg>
+                          {{/with}}
+                      </center>
+                        <div class="col-xs-2 col-md-2 col-sm-2"> 
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-sm-12"> 
+
+                         <div class="radarAgenda">
+                            <div><img src="/img/Diamond_Myself.png">
+                                How <span class="text-capitalize"> {{username profile}} </span>
+                                sees himself 
+                           </div>
+                           <div>
+                               <img src="/img/Diamond_Others.png" class="t50"> 
+                               How others see <span class="text-capitalize">  {{username profile}} </span>
+                            </div>
+
+                            </div>
+                        </div>
+                     </div>
+
+                    <div class="row">
+                    {{#with displaySkills}}
+                        {{#if enoughData}}  
+                          {{> skillCategories categories=categories}}
+                        {{else}}
+                        {{> skillsPreview}}
+                        {{/if}}
+                      
+                    {{/with}}
+                    </div>
+                    
+                </div>
+
+                <!-- <div class="modal-footer">
+                   
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</template>
