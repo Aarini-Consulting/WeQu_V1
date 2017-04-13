@@ -1,0 +1,27 @@
+
+<template name="gameMasterView">
+
+	{{>createGroup}}
+
+	{{#each listGroup}}
+
+	<div class="row">
+		<div class="col-xs-12 col-md-12 col-sm-12"> 
+			<img src="/img/status_sending.png"> {{groupName}}
+		</div>
+	</div>
+
+	{{/each}}
+
+	<div class="row">
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+			<button type="submit" id="addRoleGameMaster">Remove from GameMaster </button>  
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+
+	</div>
+
+</template>

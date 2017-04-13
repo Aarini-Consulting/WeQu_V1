@@ -255,3 +255,19 @@ button.close{
 .modal-footer{
 	background-color: none;
 }
+
+
+/* GameMasterView */
+.-webkit-align-items-inherit{
+	-webkit-align-items: inherit !important;
+}
+
+.width40{
+	width: 40px;
+}
+
+
+.margonTop20{
+	margin-top: 20px;
+}
+
