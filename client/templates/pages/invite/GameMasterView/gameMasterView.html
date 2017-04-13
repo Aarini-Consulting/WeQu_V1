@@ -1,27 +1,110 @@
 
 <template name="gameMasterView">
 
+	{{>slider}}
+
+	{{#if equals step "step1"}} <!-- Game Master 2 --> 
+
 	{{>createGroup}}
 
-	{{#each listGroup}}
+	{{>step1}}
+
+	{{/if}}
+
+	{{#if equals step "step2"}} <!-- Game Master 3 -->
+
+	{{>createGroup2}}
 
 	<div class="row">
-		<div class="col-xs-12 col-md-12 col-sm-12"> 
-			<img src="/img/status_sending.png"> {{groupName}}
+		<div class="col-xs-1 col-md-1 col-sm-1"> 
+		</div>
+		<div class="col-xs-10 col-md-10 col-sm-10"> 
+			<form>
+				<div class="form-group">
+					<input type="text" name="groupName" class="form-control input-lg" placeholder="group name" required>
+					<input type="text" name="emails" class="form-control input-lg" placeholder="emails" required>
+					<span class="pull-left"> type multiple emails </span>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-1 col-md-1 col-sm-1"> 
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-lg blueBg" id="send"> Send </button>
+			</div>
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+	</div>
+
+	{{/if}}
+
+	{{#if equals step "step3"}} <!-- Game Master 4 -->
+	{{>createGroup2}}
+
+	<center> Your invitation has sent to [x] people </center>
+
+	<div class="row">
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-lg blueBg" id="ok"> OK! </button>
+			</div>
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+	</div>
+
+	{{/if}}
+
+
+	{{#if equals step "step4"}} <!-- Game Master 4 copy -->
+	{{>createGroup2}}
+
+	<center> Error. Check the email addresses again  </center>
+
+	<div class="row">
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-lg blueBg" id="back"> Back </button>
+			</div>
+		</div>
+		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		</div>
+	</div>
+
+	{{/if}}
+
+
+	{{#if equals step "viewGroup"}}
+	{{>createGroup2 groupname="A"}}
+	{{#each groupMembers}}
+	<div class="row">
+		<div class="col-xs-12 col-md-12 col-sm-12"> 
+			<img src="/img/icon_anonymous.png" class="pull-left"> {{memberName}}
+		</div>
+	</div>
 	{{/each}}
 
 	<div class="row">
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		<div class="col-xs-12 col-md-12 col-sm-12"> 
+			{{#each groupMembers}}
+			<div class="row">
+				Radar Chart of each Person
+			</div>
+			{{/each}}
 		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-			<button type="submit" id="addRoleGameMaster">Remove from GameMaster </button>  
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-		</div>
-
 	</div>
+	{{/if}}
+	
 
 </template>

@@ -271,3 +271,13 @@ button.close{
 	margin-top: 20px;
 }
 
+.width30{
+	width: 30px !important;
+}
+
+
+.blueBg{
+	background-color: #286090 !important;
+	border-color: #2e6da4 !important;
+	border-radius: 0px !important;
+}
