@@ -235,3 +235,23 @@ form#signIn{
 	padding-top: 50px;
 	height: 100% !important;
 }
+
+
+/* Email coupling  */
+
+.modal-dialog  {
+	max-width: 600px !important;
+	max-height: 350px !important;
+}
+
+.width100{
+	width: 100%;
+}
+
+button.close{
+	margin-top: 0px;
+}
+
+.modal-footer{
+	background-color: none;
+}
