@@ -105,12 +105,12 @@ Template.invite.created = function () {
         event.preventDefault();
         Meteor.call('addRoleGameMaster', Meteor.userId() , function (err, result) {
             //console.log(err, result);
-            if(result){
+           /* if(result){
                 sAlert.success("Current user role is now Normal User", {position:'top-right'} )
             }
             else{
                 sAlert.success("Current user role is now Game Master", {position:'top-right'} )   
-            }
+            } */
         });
 
     }

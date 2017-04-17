@@ -1,5 +1,5 @@
 
-Meteor.startup(function () {
+Meteor.startup(function () { 
 
     // admin.js
     importQuestions();

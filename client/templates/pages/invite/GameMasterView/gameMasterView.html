@@ -14,51 +14,22 @@
 	{{#if equals step "step2"}} <!-- Game Master 3 -->
 
 	{{>createGroup2}}
-
-	<div class="row">
-		<div class="col-xs-1 col-md-1 col-sm-1"> 
-		</div>
-		<div class="col-xs-10 col-md-10 col-sm-10"> 
-			<form>
-				<div class="form-group">
-					<input type="text" name="groupName" class="form-control input-lg" placeholder="group name" required>
-					<input type="text" name="emails" class="form-control input-lg" placeholder="emails" required>
-					<span class="pull-left"> type multiple emails </span>
-				</div>
-			</form>
-		</div>
-		<div class="col-xs-1 col-md-1 col-sm-1"> 
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-lg blueBg" id="send"> Send </button>
-			</div>
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-		</div>
-	</div>
+	
+	{{>step2}}
 
 	{{/if}}
 
 	{{#if equals step "step3"}} <!-- Game Master 4 -->
+
 	{{>createGroup2}}
 
 	<center> Your invitation has sent to [x] people </center>
 
 	<div class="row">
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		<div class="col-xs-12 col-md-12 col-sm-12"> 
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary btn-lg blueBg" id="ok"> OK! </button>
 			</div>
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
 		</div>
 	</div>
 
@@ -71,14 +42,10 @@
 	<center> Error. Check the email addresses again  </center>
 
 	<div class="row">
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		<div class="col-xs-12 col-md-12 col-sm-12"> 
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary btn-lg blueBg" id="back"> Back </button>
 			</div>
-		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
 		</div>
 	</div>
 
@@ -86,21 +53,46 @@
 
 
 	{{#if equals step "viewGroup"}}
-	{{>createGroup2 groupname="A"}}
+	{{>createGroup2 groupname=groupName}}
 	{{#each groupMembers}}
+
+	{{#each emails}}
 	<div class="row">
-		<div class="col-xs-12 col-md-12 col-sm-12"> 
-			<img src="/img/icon_anonymous.png" class="pull-left"> {{memberName}}
+		<div class="col-xs-1 col-md-1 col-sm-1"> 
+		</div>
+		<div class="col-xs-10 col-md-10 col-sm-10"> 
+			<div class="pull-left">
+				<img src="/img/icon_anonymous.png">
+				
+				<span> {{this}} </span>
+				
+			</div>
+		</div>
+		<div class="col-xs-1 col-md-1 col-sm-1"> 
 		</div>
 	</div>
 	{{/each}}
-
+	{{/each}}
+	<br>
 	<div class="row">
 		<div class="col-xs-12 col-md-12 col-sm-12"> 
 			{{#each groupMembers}}
+
+			{{#each emails}}
 			<div class="row">
-				Radar Chart of each Person
+				<div class="col-xs-1 col-md-1 col-sm-1"> 
+				</div>
+				<div class="col-xs-10 col-md-10 col-sm-10"> 
+					<div class="panel panel-default">
+						<svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
+							{{> radar score=myscore color="white" outline="#E96956"}}
+						</svg>
+					</div>
+				</div>
+				<div class="col-xs-1 col-md-1 col-sm-1"> 
+				</div>
 			</div>
+			{{/each}}
 			{{/each}}
 		</div>
 	</div>

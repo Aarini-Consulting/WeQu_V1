@@ -2,11 +2,12 @@
 <template name="createGroup">
 
 	<div class="row margonTop20">
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-			<b> Create group </b>
+		<div class="col-xs-1 col-md-1 col-sm-1"> 
 		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		<div class="col-xs-6 col-md-6 col-sm-6"> 
+		  <div class="pull-left"> <b> Create group </b> </div>
 		</div>
+		
 		<div class="col-xs-4 col-md-4 col-sm-4"> 
 		  	<img class="width40" id="createGroup" src="/img/gameMaster/Invite_Plus_black.png">
 		</div>
@@ -20,15 +21,15 @@
 <template name="createGroup2">
 
 	<div class="row margonTop20">
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-			<img src="/img/back.png"> &nbsp; &nbsp;
+		<div class="col-xs-6 col-md-6 col-sm-6"> 
+			<img src="/img/back.png" id="previous" > &nbsp; &nbsp;
 			{{#if groupName}}
-			Project group {{groupName}}
+			Project group <div class="text-capitalize"> {{groupName}} </div>
 			{{else}}
 			<b> Create group </b>
 			{{/if}}
 		</div>
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
+		<div class="col-xs-2 col-md-2 col-sm-2"> 
 		</div>
 		<div class="col-xs-4 col-md-4 col-sm-4"> 
 		</div>
