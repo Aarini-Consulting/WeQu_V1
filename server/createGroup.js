@@ -16,7 +16,16 @@
   			var subject = `Inviting for group joining ${groupName}` ;
   			var message = `Please join the group by clicking the invitation link ${link}`
 
-  			Meteor.call('sendEmail', arr_emails[i], subject, message, function (err, result) {
+  			 var emailData = {
+		      'from': '',
+		      'to' : '',
+		      'link': Meteor.absoluteUrl(link),
+		      'groupName': groupName
+		    };
+
+  			let body = SSR.render('GroupInviteHtmlEmail', emailData);
+
+  			Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
   				console.log(err, result);
   				if(err){ return err};
   			});

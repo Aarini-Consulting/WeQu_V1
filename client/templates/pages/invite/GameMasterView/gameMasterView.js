@@ -8,6 +8,7 @@ Template.gameMasterView.onCreated(function(){
 Template.gameMasterView.created = function () {
 	this.step = new ReactiveVar("step1"); 
 	this.groupId = new ReactiveVar();
+	this.groupName = new ReactiveVar();
 }
 
 Template.gameMasterView.helpers({
@@ -19,6 +20,15 @@ Template.gameMasterView.helpers({
 		 return data;
 		}
 		//return null;
+	},
+
+	groupName(){
+		let groupId = Template.instance().groupId.get();
+		{
+		 let data = Group.findOne({_id: groupId }).groupName;
+		 return data;
+		}
+		return null;
 	},
 
 	step(){
