@@ -30,7 +30,20 @@
     'questionsTotal' : function(){
       questionDep.depend();
       return this.feedback.qset.length;
+    },
+
+    groupName(){
+      let groupId = Router.current() && Router.current().params.groupId;
+      if(groupId){
+        let currentGroup = Group.findOne({_id:groupId});
+        if(currentGroup){
+            let groupName = currentGroup.groupName;
+            return groupName;
+         }
+      }
+      return null;
     }
+
   });
 
 

@@ -9,6 +9,7 @@ Template.gameMasterView.created = function () {
 	this.step = new ReactiveVar("step1"); 
 	this.groupId = new ReactiveVar();
 	this.groupName = new ReactiveVar();
+	this.info = new ReactiveVar('');
 }
 
 Template.gameMasterView.helpers({
@@ -33,8 +34,10 @@ Template.gameMasterView.helpers({
 
 	step(){
 		return Template.instance().step.get();
+	},
+	info(){
+		return Template.instance().info.get();
 	}
-
 
 });
 
@@ -53,9 +56,12 @@ Template.gameMasterView.events({
         var list_email = $('#list_email').val(); 
         var arr_emails = list_email //.split(',');
 
+        template.info.set("Please wait ...")
+
         Meteor.call('createGroup', groupName, arr_emails , function (err, res) {
         	if(res){
 				    template.step.set("step3");
+				    template.info.set(arr_emails.length);
 				}
 				if(err)
 				{

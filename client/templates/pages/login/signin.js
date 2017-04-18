@@ -110,7 +110,9 @@
       return !Router.current().params.email ? false : true ;
     },
     linkedinInvitedUser(){
-      if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ) ){
+      if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ||  
+          Router.current().params.invited == "groupInvitationLinkedinUser"  ) )
+      {
         return false;
       }
       return true;

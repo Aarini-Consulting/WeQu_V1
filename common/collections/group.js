@@ -5,22 +5,13 @@ GroupSchema = new SimpleSchema({
       type: String,
       label: "groupName"
     },
-    "id":{
-      type: String,
-      label: "id",
-       autoValue: function() {
-            if (this.isInsert) {
-                return Meteor.userId();
-            } 
-        }
-    },
     "emails":{
       type: [String],
       label: "emails",
       optional: true
     },
 
-    "creator": {
+    "creatorId": {
         type: String,
         label: "creator",
         optional: true,

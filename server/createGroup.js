@@ -5,12 +5,15 @@
   		var data, index , i , link; 
 
   		for (i = 0; i < arr_emails.length; i++) {
-  			data = Meteor.users.findOne( {"email":arr_emails[i]} );
-  			if (data) {
-  				link = `signIn/groupInvitation/existingUser/${arr_emails[i]}/${groupId}`;
+  			user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i] }, { "profile.emailAddress" : arr_emails[i] }]} );
+  			if (user) {
+  				link = `signIn/groupInvitation/${arr_emails[i]}/${groupId}`;
+  				if(user && user.services && user.services.linkedin){
+  				link = `signIn/groupInvitationLinkedinUser/${arr_emails[i]}/${groupId}`;
+  				}
   			}
   			else{
-  				link = `signIn/groupInvitation/newUser/${arr_emails[i]}/${groupId}`
+  				link = `signUp/groupInvitation/${arr_emails[i]}/${groupId}`
   			}
 
   			var subject = `Inviting for group joining ${groupName}` ;

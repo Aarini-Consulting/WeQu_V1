@@ -1,5 +1,5 @@
     quizPerson = new ReactiveVar()
-    Router.route('/quiz', function(){
+    Router.route('/quiz/:groupId?', function(){
         route.set("quiz");
 
         this.layout('ApplicationLayout');
@@ -27,6 +27,41 @@
             return user._id;
         });
 
+        // Filter current user in the quiz list if group invited
+
+        var groupId=  Router.current() && Router.current().params.groupId;
+        if (groupId)
+        {
+            let currentGroup = Group.findOne({_id:groupId});
+            if(currentGroup){
+
+                friends =  friends.filter(groupInvited);
+                function groupInvited(data) {
+                    return data != Meteor.userId();
+                }
+                
+                let userId = currentGroup.creatorId;
+                
+                var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
+
+                if(data.feedback){
+                    if(!data.feedback.qset)  {
+                     console.log("gen-question-set \n ",userId);
+                         Meteor.call('gen-question-set', userId, function (err, result) {
+                            questionDep.changed();
+                        }); 
+                    }
+                }
+                else{
+                    console.log("gen-question-set \n ",userId);
+                         Meteor.call('gen-question-set', userId, function (err, result) {
+                            questionDep.changed();
+                        }); 
+                }
+            }
+        } 
+
+
         if(friends.length == 0) {
             this.render('quizNothing');
             return;
@@ -41,8 +76,6 @@
         var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
         data.friends = friends;
         data.userId = userId;
-
-        // TODO : Verify once , is the issue here resolved
 
         if(data.feedback){
             if(!data.feedback.qset) {
@@ -59,4 +92,4 @@
         data.prevPerson = (friends.indexOf(quizPerson.get()) > 0)
 
         this.render('quiz', {data : data});
-    }, { 'name': '/quiz' });
+        }, { 'name': '/quiz/:groupId' });
