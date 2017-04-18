@@ -64,23 +64,33 @@
 .white-text{
 	color: white;
 }
-
-@media only screen and (min-width: 480px) {
+/*Start 55-new-improve-ui*/
+/*@media only screen and (min-width: 480px) {
     .sign-in{
 		margin-top: 0px !important;
 	}
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (min-width: 1000px) {
+    .sign-in{
+		margin-top: 0px !important;
+	}
+}*/
+
+
+/*@media only screen and (max-width: 700px) {
     .sign-in{
     	font-size: smaller;
     }
-}
+}*/
+/*end 55-new-improve-ui*/
+
 
 .sign-in{
 	border-color: black;
 	float: right;
 	min-width: 65px;
+	margin-top: 0px !important;
 }
 
 #sign-up{
@@ -123,6 +133,16 @@ img.lg-icon{
 }
 
 /*Start 55-new-improve-ui*/
+@media only screen and (max-width: 979px) {
+	.wequ_icon{
+		width: 80%;
+	}
+
+	#sign-up{
+		margin-left: 120px;
+	}
+}
+
 @media only screen and (min-width: 1000px) {
     .wequ_icon{
 		width: 80%;
@@ -130,16 +150,6 @@ img.lg-icon{
 
 	#sign-up{
 		margin-left: 150px;
-	}
-}
-
-@media only screen and (max-width: 979px) {
-	 .wequ_icon{
-		width: 80%;
-	}
-
-	#sign-up{
-		margin-left: 120px;
 	}
 }
 

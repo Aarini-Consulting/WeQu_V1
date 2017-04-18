@@ -227,14 +227,14 @@
 	}
 
 	.signInBtnPosition{
-		margin-left: 80px;	
+		margin-left: 100px;	
 	}
 	.signUpFields{
 		width: 300px !important;
     	height: 40px !important;
 	}
 	.privacyStat{
-		padding-left: 58px;
+		padding-left: 115px;
 	}
 
 /* end 55 - improve ui*/
@@ -262,14 +262,14 @@
 		padding-left: 70px;
 	}
 	.signInBtnPosition{
-		margin-left: 120px;	
+		margin-left: 130px;	
 	}
 	.signUpFields{
 		width: 400px !important;
 		height:40px !important;
 	}
 	.privacyStat{
-		padding-left: 70px;
+		padding-left: 140px;
 	}
 
 	/* end 55 - improve ui*/
@@ -302,14 +302,14 @@
 		padding-left: 0px;
 	}
 	.signInBtnPosition{
-		margin-left: 40px;	
+		margin-left: 60px;	
 	}
 	.signUpFields{
 		height: 40px !important;
     	width: 250px !important;
 	}
 	.privacyStat{
-		padding-left: 0px;
+		padding-left: 40px;
 	}
 
 	/* end 55 - improve ui*/
