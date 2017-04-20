@@ -14,7 +14,7 @@
         Meteor.userId() ? this.next() : this.render('login');
 
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn/a', '/signUp',
-    '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin','/quiz/:groupId'
+    '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin'
     ] }); 
 
     Router.onBeforeAction(function () {
@@ -26,7 +26,7 @@
        return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
-                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','/quiz/:groupId'
+                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?'/*,'/quiz/:groupId'*/
                 ] }); 
 
     route = new ReactiveVar("quiz");

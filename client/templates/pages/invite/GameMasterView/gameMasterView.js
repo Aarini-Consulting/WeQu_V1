@@ -56,24 +56,30 @@ Template.gameMasterView.events({
         var list_email = $('#list_email').val(); 
         var arr_emails = list_email //.split(',');
 
-        template.info.set("Please wait ...")
-
-        Meteor.call('createGroup', groupName, arr_emails , function (err, res) {
-        	if(res){
-				    template.step.set("step3");
-				    template.info.set(arr_emails.length);
-				}
-				if(err)
-				{
-					template.step.set("step4");
-				}     
+        if(arr_emails.length <2){
+        	template.info.set("Please enter atleast two group members ");
+        }
+        else
+        {
+	        template.info.set("Please wait ...")
+	        Meteor.call('createGroup', groupName, arr_emails , function (err, res) {
+	        	if(res){
+					    template.step.set("step3");
+					    template.info.set(arr_emails.length);
+					}
+					if(err)
+					{
+						template.step.set("step4");
+					}     
 			});    
+    	}
 
     },
 
     "click #ok" : function(event,template){
     	event.preventDefault();
     	template.step.set("step1");
+    	template.info.set('');
     },
 
     "click #back" : function(event,template){

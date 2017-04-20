@@ -12,18 +12,46 @@
        user = Connections.findOne( { "profile.emailAddress" : email });
      }
 
+     // If group invited person then find the group master _id and him as the quiz person 
+     let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+     var groupId;
+     if(setGroupQuizPerson){
+       groupId = Router.current().params && Router.current().params.invitationId;
+       user = Group.findOne( { _id : groupId });
+     }
+
+
      Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
       if(err){
         $('#error').text(err);
       }
       else
       {
+         if(setGroupQuizPerson){
+          setLoginScript(false);
+          
+          //TODO : Create questions for Group members instead group creator
+
+          //quizPerson.set(user._id);
+
+          let userId = Meteor.userId(); let flag = true;
+          Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+                  console.log("updateProfileGroupQuizPerson",err,result);
+          });
+
+          Router.go(`/quiz`);
+          return ;
+         }
+
         Router.go(`/quiz`);
         if(setQuizPerson){
           setLoginScript(false);
           console.log(user);
           quizPerson.set(user.inviteId);
         }
+
+
+
       }
     });
 

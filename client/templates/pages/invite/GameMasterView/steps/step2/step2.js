@@ -15,7 +15,9 @@ Template.step2.rendered = function () {
 
     function validateEmail(email) {
     	var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	let user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]})
+    	let currentEmail = Meteor.user().emails && Meteor.user().emails[0] && Meteor.user().emails[0].address ||
+                           Meteor.user() && Meteor.user().profile && Meteor.user().profile.emailAddress;
+        let user = email == currentEmail;
         // Avoiding self user invite
         if(user){
             return false;

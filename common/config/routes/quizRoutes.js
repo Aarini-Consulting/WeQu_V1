@@ -4,7 +4,7 @@
 
         this.layout('ApplicationLayout');
 
-        this.wait(Meteor.subscribe('feedback'));
+        this.wait([ Meteor.subscribe('feedback') , Meteor.subscribe('group') ] );
         if(!this.ready()) {
             this.render('loading');
             return;
@@ -27,20 +27,36 @@
             return user._id;
         });
 
-        // Filter current user in the quiz list if group invited
+       //TODO : group invited person not should be normal person's quiz list 
+       // map it accordingly to hide 
+       // Add a new profile data groupInvited and refer that 
 
+        friends =  friends.filter(groupInvited);
+        function groupInvited(data) {
+            let user = Meteor.users.findOne({_id:data , "profile.groupQuizPerson": true });
+            let condition = user ? false : true;
+            if(condition){
+            return data ;
+            }
+        } 
+
+        // Filter current user in the quiz list if group invited
         var groupId=  Router.current() && Router.current().params.groupId;
         if (groupId)
         {
-            let currentGroup = Group.findOne({_id:groupId});
+            let currentGroup = Group.findOne({_id :groupId});
             if(currentGroup){
 
-                friends =  friends.filter(groupInvited);
+               /* friends =  friends.filter(groupInvited);
                 function groupInvited(data) {
                     return data != Meteor.userId();
                 }
-                
+                */
+
                 let userId = currentGroup.creatorId;
+
+                //TODO : Create questions for Group members instead group creator
+
                 
                 var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
 
@@ -58,6 +74,8 @@
                             questionDep.changed();
                         }); 
                 }
+
+               //  quizPerson.set(userId);
             }
         } 
 

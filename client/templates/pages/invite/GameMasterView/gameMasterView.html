@@ -6,7 +6,6 @@
 	{{#if equals step "step1"}} <!-- Game Master 2 --> 
 
 	{{>createGroup}}
-
 	{{>step1}}
 
 	{{/if}}
@@ -14,7 +13,6 @@
 	{{#if equals step "step2"}} <!-- Game Master 3 -->
 
 	{{>createGroup2}}
-	
 	{{>step2 info=info}}
 
 	{{/if}}
@@ -22,32 +20,14 @@
 	{{#if equals step "step3"}} <!-- Game Master 4 -->
 
 	{{>createGroup2}}
-
-	<center> Your invitation has sent to [{{info}}] people </center>
-
-	<div class="row">
-		<div class="col-xs-12 col-md-12 col-sm-12"> 
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-lg blueBg" id="ok"> OK! </button>
-			</div>
-		</div>
-	</div>
+	{{>step3 info=info}}
 
 	{{/if}}
 
 
 	{{#if equals step "step4"}} <!-- Game Master 4 copy -->
 	{{>createGroup2}}
-
-	<center> Error. Check the email addresses again  </center>
-
-	<div class="row">
-		<div class="col-xs-12 col-md-12 col-sm-12"> 
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-lg blueBg" id="back"> Back </button>
-			</div>
-		</div>
-	</div>
+	{{>step4}}
 
 	{{/if}}
 

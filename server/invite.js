@@ -87,7 +87,11 @@ Meteor.methods({
                   trialMember: true}
     });
 
-   
+    // Updating the profile groupQuizPerson to false
+    let flag = false;
+    Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+            console.log("updateProfileGroupQuizPerson",err,result);
+    });
    
 
     var feedback = Feedback.findOne({ 'from': userId, 'to': Meteor.userId() });
