@@ -1,82 +1,29 @@
 	<template name="signUp">
 
-		<div id="form" class="row signupForm">
-		<section> 
-		  <!-- <div class="col-md-3 col-sm-3 col-xs-2"> </div> --> 
-			<!-- <div class="col-md-6 col-sm-6 col-xs-8"> -->
-
-					<div class="panel panel-default">
-						<div class="row">
-							<!-- <div class="col-md-4 col-sm-4 col-xs-4"> </div> -->
-							<div class="col-xs-4 col-md-4 col-sm-4"> 
-									<img id="beta_tag" src="/img/login/beta_tag.png">
-							</div>
-							<div class="col-md-4 col-sm-4 col-xs-4"> 
-								<center><img class="wequ_icon" src="/img/assets/wequ_icon.png"></center>
-							</div>
-							<div class="col-md-4 col-sm-4 col-xs-4"> </div>
-						</div>
-
-
-						<div class="row">
-
-							<!-- <div class="col-md-1 col-sm-1  col-xs-1"></div>
-							<div class="col-md-10 col-sm-10  col-xs-10"> -->
-								<form>
-									<div class="form-group">
-									<center>
-										<input type="text" name="firstName" class="form-control input-lg signUpFields" placeholder="first name" required>
-										<input type="text" name="lastName" class="form-control input-lg signUpFields" placeholder="last name" required>
-
-										<input type="email" name="registerEmail" class="form-control input-lg signUpFields" placeholder="email" value="{{invitedEmail}}" disabled={{emailDisable}} required>
-										<input type="password" name="registerPassword" class="form-control input-lg signUpFields" placeholder="password" required>
-									</center>	
-									</div>
-
-									<div class="form-group">
-									<center>
-									<!-- start 55 new-improve-ui -->
-										<!-- <button type="submit" class="btn btn-primary btn-lg signUpFields" id="submitForm"> Sign Up with email </button> -->
-										<button type="submit" id="submitForm" class="signUpFields signUpEmailBtn" >Sign Up with email 
-											<!-- <span class="white-text font-text-smaller"> Sign Up with email </span> -->
-										</button>
-									<!-- end 55 new-improve-ui -->	
-									</center>
-									</div>
-									<div id="error" class="black-text"> </div>
-
-									<div class="black-text font-xx-small privacyStat">
-										<!-- <h6> --> 
-										<span>
-										By clicking Sign up you are agreeing to the <b> <a href="https://www.wequ.co/pages/terms-of-service">Terms of Service</a> </b> and <b> <a href="https://www.wequ.co/pages/privacy-policy">Privacy Policy.</a>
-										</b>
-										</span>
-										<!-- </h6> -->
-									</div>
-
-									<div class="row">
-										<!-- start 55 new-improve-ui -->
-										<!-- <div class="col-md-6 col-sm-6 col-xs-6">
-											<h6 class="black-text"> Sign in now if you have an account </h6>
-										</div>
-										<div class="col-md-6 col-sm-6 col-xs-6">
-											<input type="button" class="btn btn-default btn-small sign-in" name="" id="signIn" value="Sign in"> -->
-										<div class="col-md-6 col-sm-6 col-xs-6 signInBtnPosition">
-											<input type="button" class="btn btn-default sign-in border0 font-grey-color" name="" id="signIn" value="Log in">
-										<!-- end 55 new-improve-ui -->	
-										</div>
-									</div>
-
-								</form>
-								
-							<!-- </div> -->
-							<!-- <div class="col-md-1 col-sm-1 col-xs-1"></div> -->
-
-						</div> 
-
-					</div> 
-				<!-- <div class="col-md-3 col-sm-3 col-xs-2"> </div> -->
-			<!-- </div> -->
-		 </section>	
-		</div>
+		<!-- <div id="form" class="row signupForm"> -->
+			<div class="loginwraper">
+			    <div class="loginbox signupbox"><img class="image-2" src="/img/assets/WEQU_LOGO_NEW.png">
+			      <div class="formarea w-container">
+			      	<a id="linkedinSignupbttn" class="linkedinbttn w-button" href="#">Sign Up With LinkedIn</a>
+			        <div class="w-form">
+			          <form class="loginemail" data-name="Email Form" name="email-form">
+			            <input class="emailfield w-input" maxlength="256" name="firstName" placeholder="first name" required="required" type="text">
+			            <input class="emailfield w-input" maxlength="256" name="lastName" placeholder="last name" required="required" type="text">
+			            <input class="emailfield w-input" maxlength="256" name="registerEmail" placeholder="email address" type="text"
+			            value="{{invitedEmail}}" disabled={{emailDisable}} required>
+			            <input class="emailfield w-input" maxlength="256" name="registerPassword" placeholder="password" required="required" type="password">
+			            <div class="formtext">By clicking Sign Up, you agree to our <a href="https://">Terms</a> and confirm that you have read our <a href="#">Privacy Policy</a>.</div>
+			            <input class="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign up With Email">
+			          </form>
+			          <div class="w-form-done">
+			            <div>Thank you! Your submission has been received!</div>
+			          </div>
+			          <!-- <div class="errormsg w-form-fail"> -->
+			            <div id="#error" class="errormsg"></div>
+			          <!-- </div> -->
+			        </div><a class="signup" id="signIn" href="#">Log In</a>
+			      </div>
+			    </div>
+			</div>
+		<!-- </div> -->
 	</template>

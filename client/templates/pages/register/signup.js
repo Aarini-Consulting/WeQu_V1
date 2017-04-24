@@ -8,6 +8,7 @@ Template.signUp.events({
   },
 
   'submit form': function(event){
+
    event.preventDefault();
 
    let registerEmail = event.target.registerEmail.value;

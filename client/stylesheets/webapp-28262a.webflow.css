@@ -1,0 +1,270 @@
+.loginwraper {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+  margin-top: 0px;
+  padding-top: 0px;
+  background-image: url('/img/assets/Background_white20.png');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.image {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+}
+
+.bgimage {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+}
+
+.bgimagefile {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+  background-image: url('/img/assets/Background_white20.png');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.loginbox {
+  display: block;
+  padding: 30px;
+  border-radius: 10px;
+  background-image: -webkit-linear-gradient(270deg, #fff, #fff);
+  background-image: linear-gradient(180deg, #fff, #fff);
+  box-shadow: 0 0 2px 0 #969696;
+}
+
+.loginbox {
+  position: fixed;
+  left: 0px;
+  top: 50px;
+  right: 0px;
+  display: block;
+  width: 400px;
+  height: 650px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 2px;
+  background-image: -webkit-linear-gradient(270deg, #fff, #fff);
+  background-image: linear-gradient(180deg, #fff, #fff);
+  box-shadow: 0 0 10px 2px #b8b8b8;
+}
+
+.loginbox.signupbox {
+  height: 680px;
+}
+
+.loginbox.forgottenpw {
+  height: 530px;
+}
+
+.image-2 {
+  display: block;
+  width: 160px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.formarea {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.linkedinbttn {
+  display: block;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 2px solid #345bb5;
+  border-radius: 100px;
+  background-color: #fff;
+  -webkit-transition: background-color 400ms ease;
+  transition: background-color 400ms ease;
+  font-family: Raleway, sans-serif;
+  color: #345bb5;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.linkedinbttn:hover {
+  background-color: #345bb5;
+  color: #fff;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 100px;
+  background-color: #b9b9b9;
+  -webkit-transition: background-color 400ms ease;
+  transition: background-color 400ms ease;
+  font-family: Raleway, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.submit-button:hover {
+  background-color: #3f3f3f;
+}
+
+.emailfield {
+  margin-top: 10px;
+  border-style: none none solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #b9b9b9;
+  background-color: transparent;
+  font-family: Raleway, sans-serif;
+  text-align: left;
+}
+
+.emailfield:focus {
+  border-width: 2px;
+  border-bottom-color: #345bb5;
+}
+
+.bg {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-image: url('/img/assets/Background_white20.png');
+  background-position: 50% 50%;
+  background-size: auto;
+  background-attachment: fixed;
+}
+
+.textform {
+  margin-top: -7px;
+  padding-bottom: 10px;
+  font-family: Raleway, sans-serif;
+}
+
+.forgottenpw {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.linktext {
+  font-family: Raleway, sans-serif;
+  color: #3f3f3f;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.signup {
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  -webkit-transition: color 400ms ease;
+  transition: color 400ms ease;
+  font-family: Raleway, sans-serif;
+  color: #b9b9b9;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.signup:hover {
+  color: #333;
+}
+
+.formtext {
+  font-family: Raleway, sans-serif;
+  font-size: 10px;
+  line-height: 13px;
+  text-align: left;
+  color: black;
+}
+
+.formtext.lostpw {
+  font-size: 13px;
+}
+
+.errormsg {
+  font-family: Raleway, sans-serif;
+}
+
+.formheader {
+  margin-top: 10px;
+  font-family: Raleway, sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  color: black;
+}
+
+html.w-mod-js *[data-ix="loginbox"] {
+  display: none;
+  opacity: 0;
+  -webkit-transform: scale(1.1, 1.1);
+  -ms-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
+}
+
+@media (max-width: 991px) {
+  .bgimage {
+    background-image: url('/img/assets/Background_white20.png');
+    background-position: 50% 50%;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 767px) {
+  .loginbox {
+    width: 100%;
+    background-image: none;
+    box-shadow: none;
+  }
+  .image-2 {
+    width: 150px;
+  }
+}
+
+@media (max-width: 479px) {
+  .loginbox {
+    position: fixed;
+    top: 30px;
+    padding: 0px;
+  }
+  .formarea {
+    margin-top: 10px;
+  }
+  .emailfield {
+    display: block;
+    overflow: visible;
+    background-color: transparent;
+  }
+  .formheader {
+    font-family: Raleway, sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+  }
+}
+
