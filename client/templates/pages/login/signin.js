@@ -29,11 +29,6 @@
       {
          if(setGroupQuizPerson){
           setLoginScript(false);
-          
-          //TODO : Create questions for Group members instead group creator
-
-          //quizPerson.set(user._id);
-
           let userId = Meteor.userId(); let flag = true;
           Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
                   console.log("updateProfileGroupQuizPerson",err,result);
@@ -73,6 +68,13 @@
        user = Connections.findOne( { "profile.emailAddress" : email });
      }
 
+     // If group invited person then find the group master _id and him as the quiz person 
+     let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+     var groupId;
+     if(setGroupQuizPerson){
+       groupId = Router.current().params && Router.current().params.invitationId;
+       user = Group.findOne( { _id : groupId });
+     }
 
      Meteor.loginWithLinkedin(function(err,result){
       if(err){
@@ -98,6 +100,17 @@
         }
         else
           Session.set('loginLinkedin', true);
+
+          if(setGroupQuizPerson){
+          setLoginScript(false);
+          let userId = Meteor.userId(); let flag = true;
+          Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+                  console.log("updateProfileGroupQuizPerson",err,result);
+          });
+
+          Router.go(`/quiz`);
+          return ;
+         }
 
         if(setQuizPerson){
           console.log(user);

@@ -56,7 +56,9 @@
 
     // Creating questions for Group members (Existing Users)
 
-      try{
+      var i , j , user , user2;
+
+      //try{
           arr_emails = arr_emails.filter(isExistingUser); // Filtering existing members
 
           function isExistingUser(email){
@@ -65,33 +67,44 @@
               return email;
           };
 
+          //TODO : Directly use user instead email , Code Optimization
+
           for (i = 0; i < arr_emails.length; i++) {
 
             for (j = 0; j < arr_emails.length; j++) {            
 
               if(i != j){
               user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
-              var name = getUserName(user.profile);
-              var gender_result = user.profile.gender ? user.profile.gender : "He"
+              user2 = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[j]  }, { "profile.emailAddress" : arr_emails[j] }]} );
+
+              var name = getUserName(user2.profile);
+              var gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
 
               if (gender_result  == 'Male'){
                 qset = genInitialQuestionSet(name, qdata.type1he, 10);
               } else if (gender_result  == 'Female') {
                 qset = genInitialQuestionSet(name, qdata.type1she, 10);
               }
+              else{
+                qset = genInitialQuestionSet(name, qdata.type1he, 10);
+              }
               var _id = Random.secret();
-              var fbId = Feedback.insert({_id: _id, from : arr_emails[i], to: arr_emails[j], qset : qset, invite : true, done: false });
+              if(!qset){
+                  throw new Meteor.Error("qset undefined");
+              }
+
+              var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset, invite : true, done: false });
               console.log(fbId);
               }
 
             }
           }
 
-        }
+       /* }
         catch(e){
           console.log("error in creating questions for group members")
           throw (new Meteor.Error("empty_group_creation_questions"));
-        }
+        } */
 
         return true;
 

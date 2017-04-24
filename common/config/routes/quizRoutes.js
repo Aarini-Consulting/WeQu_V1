@@ -22,10 +22,20 @@
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
         }).flatten().uniq().sortBy().value();
-        //TODO: some friends disappear from friendlist???
-        var friends = Meteor.users.find({_id : {$in : friends}}, {profile : 1}).map(function(user){
-            return user._id;
-        });
+        
+        // Ordering the quiz person list 
+
+        var condition;
+        // 1. Group Quiz Person
+
+        var friends = Meteor.users.find( { $and: [  {_id : {$in : friends}}, 
+                                                     { '_id': { '$ne': Meteor.userId() } } ]
+                                         } , 
+                                         { profile : 1}).map(function(user){
+                                          condition = Connections.findOne({userId: user._id}) ? true : false;
+                                                      return user._id;
+                                                            });
+        
 
        //TODO : group invited person not should be normal person's quiz list 
        // map it accordingly to hide 
@@ -47,37 +57,55 @@
             let currentGroup = Group.findOne({_id :groupId});
             if(currentGroup){
 
-               /* friends =  friends.filter(groupInvited);
-                function groupInvited(data) {
-                    return data != Meteor.userId();
-                }
-                */
+                //TODO : Create questions for Group members 
 
-                let userId = currentGroup.creatorId;
+                try{
 
-                //TODO : Create questions for Group members instead group creator
+                let arr_emails = currentGroup.emails;
 
-                
-                var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
+                arr_emails = arr_emails.filter(isNewUser); // Filtering existing members
 
-                if(data.feedback){
-                    if(!data.feedback.qset)  {
-                     console.log("gen-question-set \n ",userId);
-                         Meteor.call('gen-question-set', userId, function (err, result) {
-                            questionDep.changed();
-                        }); 
+                  function isNewUser(email){
+                    user = Meteor.users.findOne({$or : [ {"emails.address" : email  }, { "profile.emailAddress" : email }]} );
+                    if (!user) 
+                      return email;
+                  };
+
+                  var data;
+
+                  for (i = 0; i < arr_emails.length; i++) {
+                   /* user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
+                    data = { feedback : Feedback.findOne({to: user._id, from: Meteor.userId(), done: false }) }
+
+                    if(data.feedback){
+                        if(!data.feedback.qset)  {
+                         console.log("gen-question-set \n ",userId);
+                             Meteor.call('gen-question-set', userId, function (err, result) {
+                                questionDep.changed();
+                            }); 
+                        }
                     }
-                }
-                else{
-                    console.log("gen-question-set \n ",userId);
-                         Meteor.call('gen-question-set', userId, function (err, result) {
-                            questionDep.changed();
-                        }); 
-                }
+                    else{
+                        console.log("gen-question-set \n ",userId);
+                             Meteor.call('gen-question-set', userId, function (err, result) {
+                                questionDep.changed();
+                            }); 
+                    } */
 
-               //  quizPerson.set(userId);
+                  }
+              }
+              catch(e){
+                console.log(e , "Error Create questions for Group members");
+              }
+
+
             }
         } 
+
+        // 2. Myself
+        friends.push(Meteor.userId());
+
+        //3. User without a group
 
 
         if(friends.length == 0) {
