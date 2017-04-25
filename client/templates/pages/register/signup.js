@@ -7,6 +7,14 @@ Template.signUp.events({
     Session.set('signUp', false);
   },
 
+  'click #terms': function (event) {
+    alert("in terms");
+    event.preventDefault();
+    //Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': "init" } });
+    Router.go('/terms');
+    //Session.set('signUp', false);
+  },
+
   'submit form': function(event){
 
    event.preventDefault();

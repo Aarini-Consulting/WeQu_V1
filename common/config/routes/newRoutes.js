@@ -16,3 +16,12 @@
      return this.render('scriptLoginAfterQuiz');
 
  }, { 'name': '/scriptLoginAfterQuiz/:userId?' });
+
+
+ Router.route('/terms', function () {
+    this.layout('ApplicationLayout');
+
+   return this.render('terms');
+
+}, { 'name': 'terms' });
+ 
