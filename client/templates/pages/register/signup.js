@@ -8,12 +8,14 @@ Template.signUp.events({
   },
 
   'click #terms': function (event) {
-    alert("in terms");
     event.preventDefault();
-    //Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': "init" } });
     Router.go('/terms');
-    //Session.set('signUp', false);
-  },
+   },
+
+   'click #privacyPolicy': function (event) {
+    event.preventDefault();
+    Router.go('/privacyPolicy');
+   },
 
   'submit form': function(event){
 

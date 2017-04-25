@@ -239,6 +239,7 @@
 .textblock {
   display: inline-block;
   font-family: Raleway, sans-serif;
+  font-size: 14px
 }
 
 .text-bold {
@@ -254,6 +255,7 @@
   padding-right: 40px;
   padding-bottom: 40px;
   padding-left: 40px;
+  font-size:small;
 }
 
 .topbanner {
@@ -279,6 +281,8 @@
   padding-left: 40px;
   font-family: Raleway, sans-serif;
   color: #e0e0e0;
+  font-size: 14px;
+
 }
 
 html.w-mod-js *[data-ix="loginbox"] {
@@ -309,7 +313,7 @@ html.w-mod-js *[data-ix="loginbox"] {
     background-position: 50% 0px;
     background-size: cover;
   }
-  .fottertext {
+  .footertext {
     padding-top: 30px;
     padding-right: 40px;
     padding-left: 40px;
@@ -362,4 +366,22 @@ html.w-mod-js *[data-ix="loginbox"] {
     background-size: 500px;
   }
 }
+
+
+.termswraper {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+  margin-top: 0px;
+  padding-top: 0px;
+  background-image: none;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: scroll;
+}
+
 

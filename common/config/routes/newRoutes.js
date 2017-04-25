@@ -17,11 +17,15 @@
 
  }, { 'name': '/scriptLoginAfterQuiz/:userId?' });
 
+Router.route('/terms', function () {
+  this.layout('ScriptLayout');
+    this.render('terms');
 
- Router.route('/terms', function () {
-    this.layout('ApplicationLayout');
+});
 
-   return this.render('terms');
+Router.route('/privacyPolicy', function () {
+  this.layout('ScriptLayout');
+    this.render('privacyPolicy');
 
-}, { 'name': 'terms' });
+});
  
