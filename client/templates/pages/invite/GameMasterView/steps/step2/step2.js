@@ -4,6 +4,7 @@ Template.step2.rendered = function () {
     	createTag: function(term, data) {
     		var value = term.term;
     		if(validateEmail(value)) {
+                info.set('');
     			return {
     				id: value,
     				text: value

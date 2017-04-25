@@ -5,11 +5,13 @@ Template.gameMasterView.onCreated(function(){
 	  });
 })
 
+info = new ReactiveVar('');  
+
 Template.gameMasterView.created = function () {
 	this.step = new ReactiveVar("step1"); 
 	this.groupId = new ReactiveVar();
 	this.groupName = new ReactiveVar();
-	this.info = new ReactiveVar('');
+	//this.info = new ReactiveVar('');
 }
 
 Template.gameMasterView.helpers({
@@ -36,7 +38,7 @@ Template.gameMasterView.helpers({
 		return Template.instance().step.get();
 	},
 	info(){
-		return Template.instance().info.get();
+		return info.get();
 	}
 
 });
@@ -57,15 +59,15 @@ Template.gameMasterView.events({
         var arr_emails = list_email //.split(',');
 
         if(arr_emails.length <2){
-        	template.info.set("Please enter atleast two group members ");
+        	info.set("Please enter atleast two group members ");
         }
         else
         {
-	        template.info.set("Please wait ...")
+	        info.set("Please wait ...")
 	        Meteor.call('createGroup', groupName, arr_emails , function (err, res) {
 	        	if(res){
 					    template.step.set("step3");
-					    template.info.set(arr_emails.length);
+					    info.set(arr_emails.length);
 					}
 					if(err)
 					{
@@ -79,7 +81,7 @@ Template.gameMasterView.events({
     "click #ok" : function(event,template){
     	event.preventDefault();
     	template.step.set("step1");
-    	template.info.set('');
+    	info.set('');
     },
 
     "click #back" : function(event,template){
