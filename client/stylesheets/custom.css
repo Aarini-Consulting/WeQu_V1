@@ -410,6 +410,11 @@ button.close{
 	border: 0px
 }
 
+.info{
+	color: black;
+    font-size: 14px;
+    text-align: left;
+}
 
 
 /* end #55 - improve UI */
