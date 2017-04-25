@@ -38,7 +38,9 @@
         let currentGroup = Group.findOne({_id:groupId});
         if(currentGroup){
             let groupName = currentGroup.groupName;
-            return groupName;
+            if(quizPerson.get() != Meteor.userId() ){
+              return groupName;
+            }
          }
       }
       return null;

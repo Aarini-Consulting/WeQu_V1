@@ -18,15 +18,36 @@
             });
         }
 
-        var feedbacks = Feedback.find().fetch()
+        //var feedbacks = Feedback.find().fetch();
+
+        // 1. Group Quiz Person
+
+        var feedbacks = Feedback.find({ 'invite': { '$ne': true } }).fetch();
+        var feedbacks2 = {} ;
+
+        // Finding Count 
+        var friends2 =  _.chain(feedbacks).map(function(feedback){
+            return [feedback.from, feedback.to];
+        }).flatten().uniq().sortBy().value();
+
+        var feedbacksCount = Meteor.users.find( { $and: [  {_id : {$in : friends2}}, 
+                                                     { '_id': { '$ne': Meteor.userId() } } ]
+                                         } , 
+                                         { profile : 1}).count();
+
+
+        //3. User without a group
+        feedbacks =  Feedback.find({invite:true}).fetch();
+        feedbacks.concat(feedbacks2);
+
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
         }).flatten().uniq().sortBy().value();
-        
+                
         // Ordering the quiz person list 
 
         var condition;
-        // 1. Group Quiz Person
+        
 
         var friends = Meteor.users.find( { $and: [  {_id : {$in : friends}}, 
                                                      { '_id': { '$ne': Meteor.userId() } } ]
@@ -102,11 +123,9 @@
             }
         } 
 
+        console.log(feedbacksCount);
         // 2. Myself
-        friends.push(Meteor.userId());
-
-        //3. User without a group
-
+        friends.splice (feedbacksCount ,0, Meteor.userId());
 
         if(friends.length == 0) {
             this.render('quizNothing');

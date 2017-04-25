@@ -69,7 +69,7 @@
      }
 
      // If group invited person then find the group master _id and him as the quiz person 
-     let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+     let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitationLinkedinUser" ? true  :false;
      var groupId;
      if(setGroupQuizPerson){
        groupId = Router.current().params && Router.current().params.invitationId;

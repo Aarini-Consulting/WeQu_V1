@@ -63,7 +63,8 @@ Template.gameMasterView.events({
         }
         else
         {
-	        info.set("Please wait ...")
+	        info.set("Please wait ...");
+	        $('#send :submit').prop('disabled',true);
 	        Meteor.call('createGroup', groupName, arr_emails , function (err, res) {
 	        	if(res){
 					    template.step.set("step3");

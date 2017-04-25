@@ -44,7 +44,7 @@
       // TODO : Use the filtered isExisting user arr_emails .
 
       Meteor.call('genGroupQuestionSet', arr_emails , function (err, result) {
-        console.log("genGroupQuestionSet" , err, result);
+      //  console.log("genGroupQuestionSet" , err, result);
         if(err){ return err};
       });
 
@@ -94,7 +94,7 @@
               }
 
               var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset, invite : true, done: false });
-              console.log(fbId);
+             // console.log(fbId);
               }
 
             }
