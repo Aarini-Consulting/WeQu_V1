@@ -109,6 +109,7 @@
 .linkedinbttn:hover {
   background-color: #345bb5;
   color: #fff;
+  text-decoration: none
 }
 
 .submit-button {
@@ -193,6 +194,7 @@
 
 .signup:hover {
   color: #333;
+  text-decoration: none;
 }
 
 .formtext {
@@ -217,6 +219,7 @@
   font-size: 25px;
   font-weight: 600;
   color: black;
+  text-align: left;
 }
 
 html.w-mod-js *[data-ix="loginbox"] {
