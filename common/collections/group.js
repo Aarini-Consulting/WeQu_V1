@@ -8,6 +8,17 @@ GroupSchema = new SimpleSchema({
     "emails":{
       type: [String],
       label: "emails",
+    },
+
+    "arr_emails_existing":{
+      type: [String],
+      label: "emails",
+      optional: true
+    },
+
+    "arr_emails_notExisting":{
+      type: [String],
+      label: "emails",
       optional: true
     },
 
