@@ -158,7 +158,7 @@
   background-color: transparent;
   font-family: Raleway, sans-serif;
   text-align: left;
-  height: 33px;  
+  height: 35px;  
 }
 
 .emailfield:focus {
@@ -254,6 +254,7 @@
 
 .errormsg {
   font-family: Raleway, sans-serif;
+  margin-top: -10px;
 }
 
 .formheader {
