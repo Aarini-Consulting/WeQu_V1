@@ -113,7 +113,7 @@ Template.registerHelper('formatDateTime', function (val) {
     });
 
     Template.registerHelper('GameMaster', function (status) {
-        let emailAddress =  Meteor.user().emails[0].address;
+        let emailAddress =  Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address;
         if(emailAddress == "wequ-test1@springbuck.tech"){
             return true;
         }
