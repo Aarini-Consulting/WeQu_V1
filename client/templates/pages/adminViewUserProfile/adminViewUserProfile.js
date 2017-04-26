@@ -24,7 +24,7 @@ Template.adminViewUserProfile.helpers({
 
             let userId = user._id;
    	 		var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
-            var data = { profile : Meteor.user().profile };
+            var data = { profile : user.profile };
             data.myscore = calculateScore(joinFeedbacks(myfeedback));
 
             var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
@@ -53,7 +53,7 @@ Template.adminViewUserProfile.helpers({
             if(user){
 
                 let userId = user._id;
-                var myfeedback = Feedback.find({ 'from': userId, 'to' : Meteor.userId() }).fetch();
+                var myfeedback = Feedback.find({ 'from': userId, 'to' : userId }).fetch();
                 var data = { profile : user.profile };
                 data.userId = userId;
                 data.myscore = calculateScore(joinFeedbacks(myfeedback));
@@ -61,7 +61,7 @@ Template.adminViewUserProfile.helpers({
                 var qset = joinFeedbacks(otherFeedback);
                 var validAnswers = _.filter(qset, function(question) { return question.answer });
                 var otherscore = calculateScore(qset,true);
-                data.enoughData = (validAnswers.length > 10);
+                data.enoughData = (validAnswers.length > 9);
 
 	            data.categories = _.map(_.keys(framework), function(category) {
 	                return {

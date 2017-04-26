@@ -7,7 +7,18 @@ Template.signUp.events({
     Session.set('signUp', false);
   },
 
+  'click #terms': function (event) {
+    event.preventDefault();
+    Router.go('/terms');
+   },
+
+   'click #privacyPolicy': function (event) {
+    event.preventDefault();
+    Router.go('/privacyPolicy');
+   },
+
   'submit form': function(event){
+
    event.preventDefault();
 
    let registerEmail = event.target.registerEmail.value;

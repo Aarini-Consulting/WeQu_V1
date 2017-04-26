@@ -1,0 +1,109 @@
+	<template name="signInbk">
+
+		{{#if signUpShow}}
+		{{>signUp}}
+		{{else}}
+
+		<div class="row {{#unless linkedinInvitedUser}}linkedinInvitedUser{{/unless}}" id="form"> 
+			<!-- <div class="col-xs-4 col-md-6 col-sm-6"> -->
+
+
+			<section class="signIn">
+				<div class="panel panel-default">
+					<div class="row">
+						<div class="col-xs-4 col-md-4 col-sm-4"> 
+						<img id="beta_tag" src="/img/login/beta_tag.png">
+						</div>
+						<div class="col-xs-4 col-md-4 col-sm-4"> 
+							<center><img class="wequ_icon" src="/img/assets/wequ_icon.png"></center>
+						</div>
+						<div class="col-xs-4 col-md-4 col-sm-4"> </div>
+					</div>
+
+					<form id="signIn">
+
+						<div class="row">
+
+							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
+
+							<div class="col-md-10 col-sm-10 col-xs-10">
+
+								<center><button class="loginLinkedin button-login" type="button">
+									<img src="/img/icon_linkedin.png"> 
+										<span class="white-text font-text-smaller"> 
+										<!-- start 55 new-improve-ui -->
+										<!-- Login with LinkedIn  -->
+										Log in with LinkedIn
+										<!-- end 55 new-improve-ui -->	
+										</span>
+								</button></center>
+								<!-- start 55 new-improve-ui -->
+								<!-- <br> -->
+								<!-- <hr> -->
+								<!-- end 55 new-improve-ui -->
+								
+								<!--TODO : Create a separate templates to avoid pollution -->
+								{{#if linkedinInvitedUser}}
+
+								<div class="form-group"><center>
+									<input type="email" name="loginEmail" class="form-control input-lg button-login" placeholder="your email" id="light-grey-color" value="{{invitedEmail}}" disabled={{emailDisable}} required>
+									<input type="password" name="loginPassword" class="form-control input-lg button-login" placeholder="password" id="light-grey-color" required></center>
+								</div>
+								<!-- start 55 new-improve-ui -->
+								<!-- <div class="black-text bg-white">  -->
+								<div class="recoverPassword">	
+								<!-- <center> <h5> <a href="/RecoverPassword"> Forgot Password ? </a> </h5> </center> 
+								 -->
+								<a href="/RecoverPassword" class="font-text-small font-grey-color"> Forgotten Password ? </a>
+								</div>
+								<!-- end 55 new-improve-ui -->
+
+								<center><button type="submit" id="grey-color" class="button-login">
+									<!-- start 55 new-improve-ui -->
+									<!-- Log In -->
+									<span class="white-text font-text-smaller"> Log in with email </span> 
+									<!-- end 55 new-improve-ui -->
+								</button></center>
+								
+								{{/if}}
+
+								<div id="error" class="black-text"></div>
+
+								<div class="row">
+									<!-- start 55 new-improve-ui -->
+
+									<!-- <div class="col-md-7 col-sm-7 col-xs-7 black-text">
+										<h5> New to WeQu ? </h5>
+									</div> -->
+									<!-- end 55 new-improve-ui -->
+									
+									<div class="col-md-5 col-sm-5 col-xs-5">
+										<center><input type="button" class="btn btn-default font-text-smaller border0 font-grey-color" id="sign-up" value="Sign Up">
+										</center>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
+
+						</div>
+					</form>
+				</div>
+				<!-- start 55 new-improve-ui -->
+				<!-- <div class="black-text bg-white"> <center> <h5> <a href="/RecoverPassword"> Forgot Password ? </a> </h5> </center> </div> -->
+				<!-- end 55 new-improve-ui -->
+
+			</section><!-- 
+
+			 </div>
+
+			<div class="col-xs-3 col-md-3 col-sm-3"> </div> -->
+
+
+		</div>
+
+		{{/if}}
+
+	</template>

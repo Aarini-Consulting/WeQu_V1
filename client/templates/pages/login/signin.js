@@ -56,7 +56,9 @@
     Router.go('/signUp');
     Session.set('signUp', true);
   },
-  'click .loginLinkedin' : function(){
+  'click #logInLinkedIn' : function(){
+
+  /*'click .loginLinkedin' : function(){*/
 
     let setQuizPerson = Router.current().params && Router.current().params.invited == "linkedinInvited" ? true  :false;
 

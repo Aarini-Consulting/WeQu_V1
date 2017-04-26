@@ -74,7 +74,15 @@ Template.RecoverPassword.events({
      }
   }
  return false;
-}
+},
+// newly added
+'click #signIn': function (event) {
+    event.preventDefault();
+    //Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': "init" } });
+    Router.go('/signIn');
+    Session.set('signUp', false);
+  },
+
 
 });
 

@@ -4,78 +4,31 @@
 		{{>signUp}}
 		{{else}}
 
-		<div class="row {{#unless linkedinInvitedUser}}linkedinInvitedUser{{/unless}}" id="form"> 
-			<div class="col-xs-4 col-md-6 col-sm-6">
+		<!-- <div class="row {{#unless linkedinInvitedUser}}linkedinInvitedUser{{/unless}}" id="form">  -->
+		<div class="row {{#unless linkedinInvitedUser}}linkedinInvitedUser{{/unless}}"> 	
 
-
-			<section class="signIn">
-				<div class="panel panel-default">
-					<div class="row">
-						<div class="col-xs-4 col-md-4 col-sm-4"> 
-						<img id="beta_tag" src="/img/login/beta_tag.png">
-						</div>
-						<div class="col-xs-4 col-md-4 col-sm-4"> 
-							<img class="wequ_icon" src="/img/assets/wequ_icon.png">
-						</div>
-						<div class="col-xs-4 col-md-4 col-sm-4"> </div>
-					</div>
-
-					<form id="signIn">
-
-						<div class="row">
-
-							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
-
-							<div class="col-md-10 col-sm-10 col-xs-10">
-
-								<button class="loginLinkedin" type="button">
-									<img src="/img/icon_linkedin.png"> <span class="white-text"> Login with LinkedIn </span>
-								</button>
-								<br>
-								<hr>
-								
-								<!--TODO : Create a separate templates to avoid pollution -->
-								{{#if linkedinInvitedUser}}
-
-								<div class="form-group">
-									<input type="email" name="loginEmail" class="form-control input-lg" placeholder="your email" id="light-grey-color" value="{{invitedEmail}}" disabled={{emailDisable}} required>
-									<input type="password" name="loginPassword" class="form-control input-lg" placeholder="password" id="light-grey-color" required>
-								</div>
-								<button type="submit" id="grey-color">
-									Log in
-								</button>
-
-								{{/if}}
-
-								<div id="error" class="black-text"></div>
-
-								<div class="row">
-									
-									<div class="col-md-7 col-sm-7 col-xs-7 black-text">
-										<h5> New to WeQu ? </h5>
-									</div>
-									<div class="col-md-5 col-sm-5 col-xs-5">
-										<input type="button" class="btn btn-default btn-small" id="sign-up" value="Sign Up">
-									</div>
-								</div>
-
-							</div>
-
-							<div class="col-md-1 col-sm-1 col-xs-1"> </div>
-
-						</div>
-					</form>
-				</div>
-
-				<div class="black-text bg-white"> <center> <h5> <a href="/RecoverPassword"> Forgot Password ? </a> </h5> </center> </div>
-
-			</section>
-
+			<div class="loginwraper">
+			    <div class="loginbox" data-ix="loginbox"><img class="image-3" src="/img/assets/WEQU_LOGO_NEW.png">
+			      <div class="formarea w-container">
+			      	<a id="logInLinkedIn" class="linkedinbttn w-button" href="#">Log In With LinkedIn</a>
+			        <div class="w-form">
+			          <form class="loginemail" data-name="Email Form" id="signIn" name="email-form">
+			            <input class="emailfield w-input" maxlength="256" name="loginEmail" placeholder="email address" type="email" value="{{invitedEmail}}" disabled={{emailDisable}} required>
+			            <input class="emailfield w-input" maxlength="256" name="loginPassword" placeholder="password" required="required" type="password">
+			            <a class="linktext" href="/RecoverPassword">Forgotten password?</a>
+			            <input class="submit-button w-button" data-wait="Please wait..." type="submit" value="Log In With Email">
+			          </form>
+			          <!-- <div class="w-form-done">
+			            <div>Thank you! Your submission has been received!</div>
+			          </div> -->
+			          <!-- <div class="w-form-fail"> -->
+			            <div id="error" class="errormsg"></div>
+			          <!-- </div> -->
+			        </div>
+			        <a id="sign-up" class="loginBtn" href="#">Sign Up</a>
+			      </div>
+			    </div>
 			</div>
-
-			<div class="col-xs-3 col-md-3 col-sm-3"> </div>
-
-
 		</div>
 
 		{{/if}}

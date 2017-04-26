@@ -11,22 +11,31 @@
 }
 
 #form{ 
-	background: url(/img/assets/background2.png) no-repeat center center;
+	/*Start 55-new-improve-ui*/
+	/*background: url(/img/assets/background2.png) no-repeat center center;*/
+	/*background: url(/img/assets/background_white.png) no-repeat center center;*/
+	/*end 55-new-improve-ui*/
+	
 	-webkit-background-size: cover;
     -moz-background-size: cover;
 	-o-background-size: cover;
 	background-repeat: no-repeat;
     background-size: cover;
 	color: white;
+	/*Start 55-new-improve-ui*/
+	height: inherit;
+	/*end 55-new-improve-ui*/
 }
 
 .signupForm{
-	padding-top: 100px;
-	padding-bottom: 100px;
+	/*padding-top: 100px;*/
+	padding-top: 50px;
+	/*padding-bottom: 100px;
 	height: 100%;
 	overflow: scroll;
 	overflow-x: hidden;
-	margin-right: 0px;
+	margin-right: 0px;*/
+	margin-bottom: 20px !important;
 }
 
 .signIn{
@@ -44,6 +53,7 @@
 	margin-top: 20px;
 	width: 100%;
 	position: center;
+	height: auto;	
 }
 
 .black-text{
@@ -54,32 +64,46 @@
 .white-text{
 	color: white;
 }
-
-@media only screen and (min-width: 480px) {
+/*Start 55-new-improve-ui*/
+/*@media only screen and (min-width: 480px) {
     .sign-in{
 		margin-top: 0px !important;
 	}
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (min-width: 1000px) {
+    .sign-in{
+		margin-top: 0px !important;
+	}
+}*/
+
+
+/*@media only screen and (max-width: 700px) {
     .sign-in{
     	font-size: smaller;
     }
-}
+}*/
+/*end 55-new-improve-ui*/
+
 
 .sign-in{
 	border-color: black;
 	float: right;
 	min-width: 65px;
+	margin-top: 0px !important;
 }
 
-#sign-up{
+/*#sign-up{
 	margin-top: 0px !important;
+	    margin-bottom: 15px;
 	position: right;
-}
+}*/
 
 #grey-color{
-	background-color: #ccc;
+	/*Start 55-new-improve-ui*/
+	/*background-color: #ccc;*/
+	background-color: #484848;
+	/*end 55-new-improve-ui*/
 }
 
 #light-grey-color{
@@ -104,6 +128,42 @@ img.lg-icon{
 
 #error{
 	width: 100%;
-	font-size: medium;
+	font-size: small;
 	color: red;
 }
+
+/*Start 55-new-improve-ui*/
+/*@media only screen and (max-width: 979px) {
+	.wequ_icon{
+		width: 80%;
+	}
+
+	#sign-up{
+		margin-left: 120px;
+	}
+}
+
+@media only screen and (min-width: 1000px) {
+    .wequ_icon{
+		width: 80%;
+	}
+
+	#sign-up{
+		margin-left: 150px;
+	}
+}
+
+@media only screen and (max-width: 414px) {
+    
+	#sign-up{
+		margin-left: 70px;
+	}
+}*/
+
+
+#recoverPassword{
+	margin-left: 70px;
+}
+
+
+/*end 55-new-improve-ui*/
