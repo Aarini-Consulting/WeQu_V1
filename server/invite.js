@@ -133,14 +133,7 @@ Meteor.methods({
 
     },
     addRoleGameMaster(userId){
-     if (Roles.userIsInRole( userId, "GameMaster" ) ){
-      Roles.removeUsersFromRoles( userId, 'GameMaster');
-      return true;
-     }
-     else
-     {
       Roles.addUsersToRoles(userId, "GameMaster" );
       return false;
-     }
     }
 })

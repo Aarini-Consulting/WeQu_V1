@@ -1,9 +1,10 @@
 
 inviteStatus = new ReactiveVar('default');
 
+
 Template.invite.created = function () {
         this.gender = new ReactiveVar('Male'); // Setting default to male , since in UI default value is male
-    }
+}
 
     Template.invite.helpers({
         users(){// TODO : Re-write this logic .
@@ -99,12 +100,6 @@ Template.invite.created = function () {
     "click #female" : function(event,template){
         event.preventDefault();
         template.gender.set('Female');
-    },
-
-    "click #addRoleGameMaster" : function(event,template){
-        event.preventDefault();
-        Meteor.call('addRoleGameMaster', Meteor.userId() , function (err, result) {
-        });
     }
 })
 

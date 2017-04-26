@@ -1,17 +1,9 @@
   <template name="invite">
-    {{>menu}} 
+    {{>menu normalView=normalView}} 
 
-    {{#if isInRole 'GameMaster'}}
-
-     <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed -webkit-align-items-inherit">
-       {{>gameMasterView}}
-     </section>
-
-    {{else}}
+    {{#if normalView}}
 
     <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
-
-    {{#unless isInRole 'GameMaster'}}
 
       {{#case inviteStatus='default'}}
       <h3>Invite people to get<br> their feedback</h3>
@@ -25,7 +17,7 @@
       {{#case inviteStatus='error'}}
       <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
       {{/case}}
-       {{#case inviteStatus='alreadyInvited'}}
+      {{#case inviteStatus='alreadyInvited'}}
       <span class="sendingStatus"><img src="/img/status_error.png">Already Invited</span>
       {{/case}}    
 
@@ -37,7 +29,7 @@
 
           <div id="outer">
            <div class="row">
-           <div class="col-md-6 col-sm-6">
+             <div class="col-md-6 col-sm-6">
               <div class="inner"><button type="button" id="male" class="gender selected">Male</button></div>
             </div>
             <div class="col-md-6 col-sm-6">
@@ -61,27 +53,23 @@
       {{#if profile.trialMember}} 
       <span class="dots"> 
        <span class="dot dot-danger">  </span> 
-       </span>
-      {{/if}}
-    </div>
-    {{/each}}
+     </span>
+     {{/if}}
+   </div>
+   {{/each}}
 
-    {{/unless}}
+ </section>
 
-    <!--
-    <div>
-        <label class="switch" id="addRoleGameMaster">
-          <input type="checkbox">
-          <div class="slider round"></div>
-        </label>
-    </div>
-    -->
-   
-  </section>
 
-  {{/if}}
+ {{else}}
 
-    
-   
+ <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed -webkit-align-items-inherit">
+   {{>gameMasterView}}
+ </section>
+
+ {{/if}}
+
+
+
 
 </template>

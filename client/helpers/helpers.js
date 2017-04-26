@@ -111,11 +111,3 @@ Template.registerHelper('formatDateTime', function (val) {
     Template.registerHelper('route', function (status) {
         return status == route.get();
     });
-
-    Template.registerHelper('GameMaster', function (status) {
-        let emailAddress =  Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address;
-        if(emailAddress == "wequ-test1@springbuck.tech"){
-            return true;
-        }
-        return false;
-    });
