@@ -46,7 +46,8 @@
 
 .loginbox {
   display: block;
-  padding: 30px;
+  /*padding: 30px;*/
+  padding:20px;
   border-radius: 10px;
   background-image: -webkit-linear-gradient(270deg, #fff, #fff);
   background-image: linear-gradient(180deg, #fff, #fff);
@@ -56,11 +57,12 @@
 .loginbox {
   position: fixed;
   left: 0px;
-  top: 50px;
+  /*top: 50px;*/
+  top:30px;
   right: 0px;
   display: block;
   width: 400px;
-  height: 650px;
+  height: 510px;
   margin-right: auto;
   margin-left: auto;
   border-radius: 2px;
@@ -70,11 +72,11 @@
 }
 
 .loginbox.signupbox {
-  height: 680px;
+  height: 530px;
 }
 
 .loginbox.forgottenpw {
-  height: 560px;
+  height: 510px;
 }
 
 .image-2 {
@@ -83,17 +85,33 @@
   margin-right: auto;
   margin-left: auto;
 }
+.image-3 {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin-right: auto;
+  margin-left: auto;
+}
 
 .formarea {
-  margin-top: 20px;
+ /* margin-top: 20px;*/
   padding: 20px;
+}
+
+.formareaSignUp {
+ /* margin-top: 20px;*/
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top:5px;
 }
 
 .linkedinbttn {
   display: block;
-  margin-bottom: 20px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /*margin-bottom: 20px;*/
+  /*padding-top: 15px;
+  padding-bottom: 15px;*/
   border: 2px solid #345bb5;
   border-radius: 100px;
   background-color: #fff;
@@ -115,9 +133,10 @@
 .submit-button {
   display: block;
   width: 100%;
-  margin-top: 20px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: : 10px;
+  /*padding-top: 15px;
+  padding-bottom: 15px;*/
   border-radius: 100px;
   background-color: #b9b9b9;
   -webkit-transition: background-color 400ms ease;
@@ -139,6 +158,7 @@
   background-color: transparent;
   font-family: Raleway, sans-serif;
   text-align: left;
+  height: 33px;  
 }
 
 .emailfield:focus {
@@ -179,7 +199,7 @@
 .signup {
   display: inline-block;
   width: 100%;
-  margin-top: 20px;
+  /*margin-top: 20px;*/
   margin-right: auto;
   margin-left: auto;
   -webkit-transition: color 400ms ease;
@@ -196,6 +216,29 @@
   color: #333;
   text-decoration: none;
 }
+
+
+.loginBtn {
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  -webkit-transition: color 400ms ease;
+  transition: color 400ms ease;
+  font-family: Raleway, sans-serif;
+  color: #b9b9b9;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.loginBtn:hover {
+  color: #333;
+  text-decoration: none;
+}
+
 
 .formtext {
   font-family: Raleway, sans-serif;
@@ -383,5 +426,9 @@ html.w-mod-js *[data-ix="loginbox"] {
   background-attachment: fixed;
   overflow-y: scroll;
 }
+
+
+
+
 
 

@@ -1,29 +1,24 @@
 	<template name="signUp">
 
-		<!-- <div id="form" class="row signupForm"> -->
 			<div class="loginwraper">
-			    <div class="loginbox signupbox"><img class="image-2" src="/img/assets/WEQU_LOGO_NEW.png">
-			      <div class="formarea w-container">
-			      	<a id="linkedinSignupbttn" class="linkedinbttn w-button" href="#">Sign Up With LinkedIn</a>
-			        <div class="w-form">
-			          <form class="loginemail" data-name="Email Form" name="email-form">
-			            <input class="emailfield w-input" maxlength="256" name="firstName" placeholder="first name" required="required" type="text">
-			            <input class="emailfield w-input" maxlength="256" name="lastName" placeholder="last name" required="required" type="text">
-			            <input class="emailfield w-input" maxlength="256" name="registerEmail" placeholder="email address" type="text"
-			            value="{{invitedEmail}}" disabled={{emailDisable}} required>
-			            <input class="emailfield w-input" maxlength="256" name="registerPassword" placeholder="password" required="required" type="password">
-			            <div class="formtext">	By clicking Sign Up, you agree to our <a id="terms" href="#">Terms</a> and confirm that you have read our <a id="privacyPolicy" href="#">Privacy Policy</a>.</div>
-			            <input class="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up With Email">
-			          </form>
-			         <!--  <div class="w-form-done">
-			            <div>Thank you! Your submission has been received!</div>
-			          </div> -->
-			          <!-- <div class="errormsg w-form-fail"> -->
-			            <div id="error" class="errormsg"></div>
-			          <!-- </div> -->
-			        </div><a class="signup" id="signIn" href="#">Log In</a>
-			      </div>
-			    </div>
+			    <div class="loginbox signupbox">
+			    	<img class="image-3" src="/img/assets/WEQU_LOGO_NEW.png">
+				    <div class="formareaSignUp w-container">
+				      	<a id="linkedinSignupbttn" class="linkedinbttn w-button" href="#">Sign Up With LinkedIn</a>
+				        <div class="w-form">
+				          <form class="loginemail" data-name="Email Form" name="email-form">
+				            <input class="emailfield w-input" maxlength="256" name="firstName" placeholder="first name" required="required" type="text">
+				            <input class="emailfield w-input" maxlength="256" name="lastName" placeholder="last name" required="required" type="text">
+				            <input class="emailfield w-input" maxlength="256" name="registerEmail" placeholder="email address" type="text"
+				            value="{{invitedEmail}}" disabled={{emailDisable}} required>
+				            <input class="emailfield w-input" maxlength="256" name="registerPassword" placeholder="password" required="required" type="password">
+				            <div class="formtext">	By clicking Sign Up, you agree to our <a id="terms" href="#">Terms</a> and confirm that you have read our <a id="privacyPolicy" href="#">Privacy Policy</a>.</div>
+				            <input class="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up With Email">
+				          </form>
+				          <div id="error" class="errormsg"></div>
+				          <a class="signup" id="signIn" href="#">Log In</a>
+				        </div>  
+				      </div>
+				    </div>
 			</div>
-		<!-- </div> -->
 	</template>
