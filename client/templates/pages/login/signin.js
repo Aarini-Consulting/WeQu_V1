@@ -33,7 +33,7 @@
     Router.go('/signUp');
     Session.set('signUp', true);
   },
-  'click #linkedinbttn' : function(){
+  'click #logInLinkedIn' : function(){
 
   /*'click .loginLinkedin' : function(){*/
 
