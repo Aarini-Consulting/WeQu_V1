@@ -1,9 +1,3 @@
-      normalView = true;
-      if (Roles.userIsInRole( Meteor.userId(), "GameMaster" ) ){
-        normalView = false;
-      }     
-      normalView = new ReactiveVar(normalView);
-
       Template.menu.created = function () {
         
       }
