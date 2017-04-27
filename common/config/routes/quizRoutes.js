@@ -31,9 +31,9 @@
         }).flatten().uniq().sortBy().value();
 
         var feedbacksCount = Meteor.users.find( { $and: [  {_id : {$in : friends2}}, 
-                                                     { '_id': { '$ne': Meteor.userId() } } ]
-                                         } , 
-                                         { profile : 1}).count();
+           { '_id': { '$ne': Meteor.userId() } } ]
+       } , 
+       { profile : 1}).count();
 
 
         //3. User without a group
@@ -43,89 +43,69 @@
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
         }).flatten().uniq().sortBy().value();
-                
+
         // Ordering the quiz person list 
 
         var condition;
-        
+        friends = Meteor.users.find( { $and: [  {_id : {$in : friends}}, 
+           { '_id': { '$ne': Meteor.userId() } } ]
+       } , 
+       { profile : 1}).map(function(user){
+          condition = Connections.findOne({userId: user._id}) ? true : false;
+          return user._id;
+      }); 
 
-        var friends = Meteor.users.find( { $and: [  {_id : {$in : friends}}, 
-                                                     { '_id': { '$ne': Meteor.userId() } } ]
-                                         } , 
-                                         { profile : 1}).map(function(user){
-                                          condition = Connections.findOne({userId: user._id}) ? true : false;
-                                                      return user._id;
-                                                            });
-        
 
        //TODO : group invited person not should be normal person's quiz list 
        // map it accordingly to hide 
        // Add a new profile data groupInvited and refer that 
 
-        friends =  friends.filter(groupInvited);
-        function groupInvited(data) {
-            let user = Meteor.users.findOne({_id:data , "profile.groupQuizPerson": true });
-            let condition = user ? false : true;
-            if(condition){
+       friends =  friends.filter(groupInvited);
+       function groupInvited(data) {
+        let user = Meteor.users.findOne({_id:data , "profile.groupQuizPerson": true });
+        let condition = user ? false : true;
+        if(condition){
             return data ;
-            }
+        }
         } 
 
         // Filter current user in the quiz list if group invited
         var groupId=  Router.current() && Router.current().params.groupId;
-        if (groupId)
+        let currentGroup , currentUserEmail;
+        currentGroup = Group.findOne({_id :groupId});
+        if (currentGroup)
         {
-            let currentGroup = Group.findOne({_id :groupId});
-            if(currentGroup){
+         currentUserEmail =  currentEmail(); 
 
-                //TODO : Create questions for Group members 
+         const{arr_emails_notExisting} =  currentGroup;
 
-                try{
+         var condition =  arr_emails_notExisting.indexOf(currentUserEmail) != -1;
+         console.log(condition);
 
-                let arr_emails = currentGroup.emails;
-
-                arr_emails = arr_emails.filter(isNewUser); // Filtering existing members
-
-                  function isNewUser(email){
-                    user = Meteor.users.findOne({$or : [ {"emails.address" : email  }, { "profile.emailAddress" : email }]} );
-                    if (!user) 
-                      return email;
-                  };
-
-                  var data;
-
-                  for (i = 0; i < arr_emails.length; i++) {
-                   /* user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
-                    data = { feedback : Feedback.findOne({to: user._id, from: Meteor.userId(), done: false }) }
-
-                    if(data.feedback){
-                        if(!data.feedback.qset)  {
-                         console.log("gen-question-set \n ",userId);
-                             Meteor.call('gen-question-set', userId, function (err, result) {
-                                questionDep.changed();
-                            }); 
-                        }
-                    }
-                    else{
-                        console.log("gen-question-set \n ",userId);
-                             Meteor.call('gen-question-set', userId, function (err, result) {
-                                questionDep.changed();
-                            }); 
-                    } */
-
-                  }
-              }
-              catch(e){
-                console.log(e , "Error Create questions for Group members");
-              }
-
-
-            }
+         if(currentGroup && condition) {
+           Meteor.call('genGroupQuestionSetNewUser', currentGroup , currentUserEmail, function (err, result) {
+                    console.log(err,result);
+             });
+         }
         } 
 
         console.log(feedbacksCount);
-        // 2. Myself
-        friends.splice (feedbacksCount ,0, Meteor.userId());
+
+        friends.splice (feedbacksCount ,0, Meteor.userId()); // 2. Myself
+
+        //Temporary ------- Sorting not works because of this
+
+        var feedbacks = Feedback.find().fetch();
+        var friends =  _.chain(feedbacks).map(function(feedback){
+            return [feedback.from, feedback.to];
+        }).flatten().uniq().sortBy().value();
+
+        friends = Meteor.users.find( {_id : {$in : friends}},{ profile : 1}).map(function(user){
+          return user._id;
+        }); 
+        
+        // Temporary Ends -----------
+
 
         if(friends.length == 0) {
             this.render('quizNothing');
@@ -157,4 +137,4 @@
         data.prevPerson = (friends.indexOf(quizPerson.get()) > 0)
 
         this.render('quiz', {data : data});
-        }, { 'name': '/quiz/:groupId' });
+    }, { 'name': '/quiz/:groupId' });

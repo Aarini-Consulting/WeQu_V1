@@ -70,7 +70,7 @@
        user = Connections.findOne( { "profile.emailAddress" : email });
      }
 
-     // If group invited person then find the group master _id and him as the quiz person 
+     // If group invited person then find the group master _id 
      let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitationLinkedinUser" ? true  :false;
      var groupId;
      if(setGroupQuizPerson){

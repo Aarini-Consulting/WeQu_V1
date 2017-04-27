@@ -57,12 +57,14 @@ GroupSchema = new SimpleSchema({
 
 })
 
-Group.attachSchema(GroupSchema);
+//Group.attachSchema(GroupSchema);
 
 if (Meteor.isClient) {
   Meteor.subscribe("group");
 }
 
+
+// TODO : For only Testing Purpose , Remove later
 
 Group.allow({
   'insert': function () {

@@ -450,3 +450,7 @@ button.close{
 
 
 /* end #55 - improve UI */
+
+/*.select2-results{  
+	display: none !important;
+}*/

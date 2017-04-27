@@ -26,7 +26,7 @@
        return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
-                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy'
+                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy','/quiz/:_id?'
                 ] });
 
     route = new ReactiveVar("quiz");

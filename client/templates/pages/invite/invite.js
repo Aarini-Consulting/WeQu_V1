@@ -31,7 +31,6 @@ Template.invite.created = function () {
 
         },
        normalView(){
-          console.log(normalView);
           return normalView.get(); 
         } 
     })

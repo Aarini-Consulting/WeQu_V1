@@ -5,9 +5,6 @@
       Template.menu.helpers ({
         loggedIn: function(){
           return !Meteor.userId();
-        },
-        normalView(){
-          return normalView.get(); 
         }
       });
 
