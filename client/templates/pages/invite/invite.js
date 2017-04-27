@@ -29,7 +29,6 @@ Template.invite.created = function () {
                                      });
 
         }
-
     })
 
 
