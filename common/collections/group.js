@@ -57,7 +57,7 @@ GroupSchema = new SimpleSchema({
 
 })
 
-//Group.attachSchema(GroupSchema);
+Group.attachSchema(GroupSchema);
 
 if (Meteor.isClient) {
   Meteor.subscribe("group");
