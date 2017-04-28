@@ -41,7 +41,7 @@
 
       // TODO : Use the filtered isExisting user arr_emails .
 
-      Meteor.call('genGroupQuestionSet', arr_emails , groupId , function (err, result) {
+      Meteor.call('genGroupQuestionSet', arr_emails , groupId , groupName, function (err, result) {
       //  console.log("genGroupQuestionSet" , err, result);
       if(err){ return err};
     });
@@ -50,7 +50,7 @@
 
     },
 
-    'genGroupQuestionSet' : function (arr_emails , groupId) {
+    'genGroupQuestionSet' : function (arr_emails , groupId , groupName) {
 
     // Creating questions for Group members (Existing Users)
 
@@ -105,8 +105,10 @@
                   throw new Meteor.Error("qset undefined");
                 }
 
-                var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset, invite : true, done: false });
-             // console.log(fbId);
+                var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset,
+                                             invite : false, done: false ,
+                                             groupName: groupName
+                                            });
            }
 
          }

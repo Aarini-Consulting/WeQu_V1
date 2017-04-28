@@ -38,7 +38,9 @@
         let currentGroup = Group.findOne({_id:groupId});
         if(currentGroup){
             let groupName = currentGroup.groupName;
-            if(quizPerson.get() != Meteor.userId() ){
+            let condition1 = quizPerson.get() != Meteor.userId();
+            let condition2 = Connections.findOne({inviteId: Meteor.userId() , userId: quizPerson.get() }) ? false : true;
+            if(condition1 && condition2 ){
               return groupName;
             }
          }

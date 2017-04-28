@@ -94,7 +94,7 @@
         friends.splice (feedbacksCount ,0, Meteor.userId()); // 2. Myself
 
         //Temporary ------- Sorting not works because of this
-
+        /*
         var feedbacks = Feedback.find().fetch();
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
@@ -103,7 +103,7 @@
         friends = Meteor.users.find( {_id : {$in : friends}},{ profile : 1}).map(function(user){
           return user._id;
         }); 
-        
+        */
         // Temporary Ends -----------
 
 

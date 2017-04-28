@@ -1,3 +1,5 @@
+  grId = new ReactiveVar('');  
+
   Template.signIn.events({
     'submit #signIn': function(event) {
       event.preventDefault();
@@ -18,6 +20,7 @@
      if(setGroupQuizPerson){
        groupId = Router.current().params && Router.current().params.invitationId;
        user = Group.findOne( { _id : groupId });
+       grId.set(groupId)
      }
 
 
@@ -34,7 +37,7 @@
                   console.log("updateProfileGroupQuizPerson",err,result);
           });
 
-          Router.go(`/quiz`);
+          Router.go(`/quiz/${groupId}`);
           return ;
          }
 

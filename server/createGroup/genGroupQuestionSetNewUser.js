@@ -49,9 +49,10 @@ Meteor.methods({
           if(!qset1 || !qset2){
             throw new Meteor.Error("qset undefined");
           }
+          const {groupName} = currentGroup;
 
-          var fbId = Feedback.insert({_id: _id, from : user1._id , to: user2._id , qset : qset2, invite : true, done: false });
-          var fbId1 = Feedback.insert({_id: _id2, from : user2._id , to: user1._id , qset : qset1, invite : true, done: false });
+          var fbId = Feedback.insert({_id: _id, from : user1._id , to: user2._id , qset : qset2, invite : false, done: false , groupName: groupName});
+          var fbId1 = Feedback.insert({_id: _id2, from : user2._id , to: user1._id , qset : qset1, invite : false, done: false ,groupName: groupName});
         }
       }
     }
