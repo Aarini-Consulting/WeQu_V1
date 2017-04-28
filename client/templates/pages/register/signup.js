@@ -7,6 +7,68 @@ Template.signUp.events({
     Session.set('signUp', false);
   },
 
+  'click #linkedinSignupbttn' : function(){
+
+    let setQuizPerson = Router.current().params && Router.current().params.invited == "linkedinInvited" ? true  :false;
+
+      // If invited person then find that persons _id and set the quiz person .
+      var email, user;
+      if(setQuizPerson)
+      {
+       email = Router.current().params && Router.current().params.email;
+       user = Connections.findOne( { "profile.emailAddress" : email });
+     }
+
+
+     Meteor.loginWithLinkedin(function(err,result){
+      if(err){
+        console.log(err);
+        if(err.reason === "Error: User validation failed [403]"){ 
+
+            console.log(err.error); // Now again login ...
+            let user = err.error; //Using the validateNewUser block to update services in existing user
+
+            let email= "";
+            var profile = ""
+            var userName = ""; 
+            if(user){
+              email = user.profile.emailAddress ;
+              profile = user.profile;
+              userName = user.services.linkedin.firstName + user.services.linkedin.lastName;
+            }
+
+            Modal.show('emailCoupling'  , { invitedEmail: email, userName: userName, 
+              setQuizPerson:setQuizPerson } ) ;                                  
+
+          }
+        }
+        else
+          Session.set('loginLinkedin', true);
+
+        if(setQuizPerson){
+          console.log(user);
+          setLoginScript(false);
+          quizPerson.set(user.inviteId);
+        }
+        Router.go('/quiz');
+        Meteor.setTimeout(function () {
+          try{
+                if(Meteor.user() && Meteor.user().services){ // production issue ..
+
+                      const {firstName, lastName}  = Meteor.user().services.linkedin;
+                      Meteor.users.update({_id: Meteor.userId()},
+                        {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
+               }
+             }
+         catch(e){
+                  console.log(e);
+               }
+         }, 1000);
+
+
+      })
+   },
+
   'click #terms': function (event) {
     event.preventDefault();
     Router.go('/terms');

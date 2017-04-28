@@ -35,8 +35,6 @@
   },
   'click #logInLinkedIn' : function(){
 
-  /*'click .loginLinkedin' : function(){*/
-
     let setQuizPerson = Router.current().params && Router.current().params.invited == "linkedinInvited" ? true  :false;
 
       // If invited person then find that persons _id and set the quiz person .
