@@ -18,8 +18,6 @@
             });
         }
 
-        //var feedbacks = Feedback.find().fetch();
-
         // 1. Group Quiz Person
 
         //var feedbacks = Feedback.find({ 'invite': { '$ne': true } }).fetch();
@@ -36,9 +34,8 @@
        } , 
        { profile : 1}).count();
 
-
         //3. User without a group
-        feedbacks =  Feedback.find({invite:true}).fetch();
+        feedbacks2 =  Feedback.find({invite:true}).fetch();
         feedbacks.concat(feedbacks2);
 
         var friends =  _.chain(feedbacks).map(function(feedback){
@@ -58,17 +55,15 @@
 
 
        //TODO : group invited person not should be normal person's quiz list 
-       // map it accordingly to hide 
-       // Add a new profile data groupInvited and refer that 
 
-       friends =  friends.filter(groupInvited);
+       /* friends =  friends.filter(groupInvited);
        function groupInvited(data) {
         let user = Meteor.users.findOne({_id:data , "profile.groupQuizPerson": true });
         let condition = user ? false : true;
         if(condition){
             return data ;
         }
-        } 
+        }  */
 
         // Filter current user in the quiz list if group invited
         var groupId=  Router.current() && Router.current().params.groupId;
@@ -90,12 +85,11 @@
          }
         } 
 
-        console.log(feedbacksCount);
-
+        feedbacksCount--;
         friends.splice (feedbacksCount ,0, Meteor.userId()); // 2. Myself
 
         //Temporary ------- Sorting not works because of this
-        
+       /* 
         var feedbacks = Feedback.find().fetch();
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
@@ -103,10 +97,8 @@
 
         friends = Meteor.users.find( {_id : {$in : friends}},{ profile : 1}).map(function(user){
           return user._id;
-        }); 
-        
+        */
         // Temporary Ends -----------
-
 
         if(friends.length == 0) {
             this.render('quizNothing');
