@@ -10,7 +10,9 @@
 			<div class="loginwraper">
 			    <div class="loginbox" data-ix="loginbox"><img class="image-3" src="/img/assets/WEQU_LOGO_NEW.png">
 			      <div class="formarea w-container">
+			      {{#unless linkedinInvitedUser}}
 			      	<a id="logInLinkedIn" class="linkedinbttn w-button" href="#">Log In With LinkedIn</a>
+			      	{{/unless}}
 			        <div class="w-form">
 			          <form class="loginemail" data-name="Email Form" id="signIn" name="email-form">
 			            <input class="emailfield w-input" maxlength="256" name="loginEmail" placeholder="email address" type="email" value="{{invitedEmail}}" disabled={{emailDisable}} required>

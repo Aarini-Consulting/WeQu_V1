@@ -454,3 +454,7 @@ button.close{
 /*.select2-results{  
 	display: none !important;
 }*/
+
+.loginbox{
+	height:auto !important;
+}
