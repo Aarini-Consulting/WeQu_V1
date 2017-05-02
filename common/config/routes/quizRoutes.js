@@ -22,7 +22,8 @@
 
         // 1. Group Quiz Person
 
-        var feedbacks = Feedback.find({ 'invite': { '$ne': true } }).fetch();
+        //var feedbacks = Feedback.find({ 'invite': { '$ne': true } }).fetch();
+        var feedbacks = Feedback.find({ 'invite': false }).fetch();
         var feedbacks2 = {} ;
 
         // Finding Count 
@@ -94,7 +95,7 @@
         friends.splice (feedbacksCount ,0, Meteor.userId()); // 2. Myself
 
         //Temporary ------- Sorting not works because of this
-        /*
+        
         var feedbacks = Feedback.find().fetch();
         var friends =  _.chain(feedbacks).map(function(feedback){
             return [feedback.from, feedback.to];
@@ -103,7 +104,7 @@
         friends = Meteor.users.find( {_id : {$in : friends}},{ profile : 1}).map(function(user){
           return user._id;
         }); 
-        */
+        
         // Temporary Ends -----------
 
 
@@ -121,6 +122,14 @@
         var data = { feedback : Feedback.findOne({to: userId, from: Meteor.userId(), done: false }) }
         data.friends = friends;
         data.userId = userId;
+
+        var a = []
+        a = Feedback.find({to: userId, from: Meteor.userId(),done: true}).fetch();
+        if(userId !== Meteor.userId()){
+        if(a && a[0] && a[0].groupName){
+          data.feedback.groupName = a[0].groupName;
+          } 
+        }
 
         if(data.feedback){
             if(!data.feedback.qset) {
