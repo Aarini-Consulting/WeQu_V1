@@ -155,13 +155,22 @@
     emailDisable(){
       return !Router.current().params.email ? false : true ;
     },
-    linkedinInvitedUser(){
-      if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ||  
+    groupLinkedinInvitedUser(){
+      /*if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ||  
           Router.current().params.invited == "groupInvitationLinkedinUser"  ) )
       {
         return false;
       }
-      return true;
+      return true;*/
+      if( Router.current() && Router.current().params.invited == "groupInvitationLinkedinUser"  ) 
+      {
+        return false;
+      }else{
+        return true;
+      }
+
+
+
     }
 
   });
