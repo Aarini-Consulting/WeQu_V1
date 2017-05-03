@@ -7,7 +7,7 @@
  
 
     Router.configure(
-        {  except: ['signIn','signUp']  }
+        {  except: ['signIn','signUp','quiz']  }
         );
 
     Router.onBeforeAction(function () {
@@ -26,7 +26,8 @@
        return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
-                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy'
+                 'existingUserAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy',
+                 '/quiz/:_id?'
                 ] });
 
     route = new ReactiveVar("quiz");
@@ -179,7 +180,7 @@
 
         return this.render('signIn');
     } ,{
-        name: 'signIn/a' });
+        name: 'signIn' });
 
     Router.route('/', function () {
         return this.render('signIn');
@@ -202,8 +203,9 @@
         return this.render('feed');
     }, { 'name': '/feed'});
 
+
     Router.route('/invite', function () {
-      this.layout('ApplicationLayout');
+      this.layout('ScriptLayout');
       switch(getLoginScript()) {
           case 'finish':
           this.render('scriptLoginFinish');
@@ -217,16 +219,9 @@
         this.render('loading');
         return;
     }
-
-
-   // var users = Feedback.find({ $or : [ {to: Meteor.userId()}, {from: Meteor.userId()} ]} ).map(function(fb){ return fb.from });
-   // users = _.without(users, Meteor.userId());
-
     this.render('invite');   
-}, { 'name': '/invite' }); 
+    }, { 'name': '/invite' }); 
 
-/* this.render('invite', {data : { users : Meteor.users.find({_id : {$in : users}}, {profile : 1}) }})
-}, { 'name': '/invite' }); */
 
     Router.route('/RecoverPassword', function () {
 

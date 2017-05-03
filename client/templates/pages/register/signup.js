@@ -94,6 +94,14 @@ Template.signUp.events({
 
    console.log(verify); // true means invited user
 
+   // If group invited person then find the group master _id 
+   var setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+   var groupId;
+   if(setGroupQuizPerson){
+     groupId = Router.current().params && Router.current().params.invitationId;
+     user = Group.findOne( { _id : groupId });
+   }
+
    Meteor.call('createAccount', data , verify, function (err, result) {
 
    if(err)
@@ -163,13 +171,29 @@ Template.signUp.events({
           }
           else
           {
-            // Manually overriding the verified as true for the invited
-            if(verify)
+            // Manually overriding the verified as true for the invited & group member
+            if(verify || setGroupQuizPerson)
             {
                 Meteor.call('verifiedTrue', Meteor.userId(), function (err, result) {
                   console.log(err,result);
                 });
             }
+
+             if(setGroupQuizPerson){
+                Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
+                  console.log('gen-question-set', err, result);
+                });
+                setLoginScript(false);
+                let userId = Meteor.userId(); let flag = true;
+                Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+                        console.log("updateProfileGroupQuizPerson",err,result);
+                });
+
+                Router.go(`/quiz/${groupId}`);
+                return ;
+              }
+
+
             Router.go('/quiz');
           }
         });

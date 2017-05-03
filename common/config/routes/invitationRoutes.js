@@ -1,4 +1,4 @@
-  Router.route('/invitation/:_id', function () {
+  Router.route('/invitation/:_id', function () {      
 
         this.layout('ScriptLayout');
 
@@ -29,7 +29,7 @@
     }, { 'name': '/invitation/:_id' });
 
 
-    Router.route('/script-invitation/:_id?', function () {
+    Router.route('/script-invitation/:_id?', function () {      
 
         this.layout('ScriptLayout');
 

@@ -10,23 +10,19 @@
 			<div class="loginwraper">
 			    <div class="loginbox" data-ix="loginbox"><img class="image-3" src="/img/assets/WEQU_LOGO_NEW.png">
 			      <div class="formarea w-container">
-			      	<a id="logInLinkedIn" class="linkedinbttn w-button" href="#">Log In With LinkedIn</a>
-		            {{#if linkedinInvitedUser}}
-			        <div class="w-form">
+		      
+			      	<a id="logInLinkedIn" class="linkedinbttn w-button" href="#" >Log In With LinkedIn</a>
+			      
+			        <div style="visibility:{{#if groupLinkedinInvitedUser}}visible{{else}}hidden{{/if}}" class="w-form">
+
 			          <form class="loginemail" data-name="Email Form" id="signIn" name="email-form">
 			            <input class="emailfield w-input" maxlength="256" name="loginEmail" placeholder="email address" type="email" value="{{invitedEmail}}" disabled={{emailDisable}} required>
 			            <input class="emailfield w-input" maxlength="256" name="loginPassword" placeholder="password" required="required" type="password">
 			            <a class="linktext" href="/RecoverPassword">Forgotten password?</a>
 			            <input class="submit-button w-button" data-wait="Please wait..." type="submit" value="Log In With Email">
 			          </form>
-			          <!-- <div class="w-form-done">
-			            <div>Thank you! Your submission has been received!</div>
-			          </div> -->
-			          <!-- <div class="w-form-fail"> -->
-			            <div id="error" class="errormsg"></div>
-			          <!-- </div> -->
+			          <div id="error" class="errormsg"></div>
 			        </div>
-					{{/if}}
 
 			        <a id="sign-up" class="loginBtn" href="#">Sign Up</a>
 			      </div>

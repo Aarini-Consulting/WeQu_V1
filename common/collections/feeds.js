@@ -62,7 +62,7 @@ FeedsSchema = new SimpleSchema({
 Feeds.attachSchema(FeedsSchema);
 
 if (Meteor.isClient) {
-    Meteor.subscribe("feeds");
+   // Meteor.subscribe("feeds");
 }
 
 

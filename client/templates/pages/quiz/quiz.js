@@ -6,6 +6,20 @@
           });
   };
 
+  Template.quiz.onCreated(function () {
+
+      // Adding beacause script bypass group user , to have questions
+      var data = Feedback.findOne({to: Meteor.userId(), from: Meteor.userId()});
+
+      if(Meteor.user() && !data){
+          Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
+            console.log('gen-question-set', err, result);
+        });
+      }
+
+  });
+
+
   Template.quiz.helpers({
     'writtenFeedback' : function () {
       var question = currentQuestion(this.feedback.qset);
@@ -31,6 +45,7 @@
       questionDep.depend();
       return this.feedback.qset.length;
     }
+       
   });
 
 

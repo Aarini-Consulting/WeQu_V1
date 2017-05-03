@@ -1,0 +1,35 @@
+<template name="step2">
+
+	<form id="send">
+		<div class="row">
+			<div class="col-xs-1 col-md-1 col-sm-1"> 
+			</div>
+			<div class="col-xs-10 col-md-10 col-sm-10"> 
+				
+				<div class="form-group">
+					<input type="text" name="groupName" id="groupName" class="form-control input-lg" placeholder="group name" required>
+					<!--	<input type="text" name="emails" id="emails" class="form-control input-lg" placeholder="emails" required> -->
+
+					<select id="list_email" multiple="" class="tags" parsley-trigger="change" required="" >
+					</select>
+					<span class="pull-left"> type multiple emails </span> {{info}}
+				</div>
+				
+			</div>
+			<div class="col-xs-1 col-md-1 col-sm-1"> 
+			</div>
+		</div>
+
+		<div class="row">
+			
+			<div class="col-xs-12 col-md-12 col-sm-12"> 
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-lg blueBg"> Send </button>
+				</div>
+			</div>
+			
+		</div>
+	</form>
+
+
+</template>

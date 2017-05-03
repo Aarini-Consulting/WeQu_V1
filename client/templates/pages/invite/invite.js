@@ -3,7 +3,9 @@ inviteStatus = new ReactiveVar('default');
 
 Template.invite.created = function () {
         this.gender = new ReactiveVar('Male'); // Setting default to male , since in UI default value is male
-    }
+        normalView = true;
+        normalView = new ReactiveVar(normalView);
+}
 
     Template.invite.helpers({
         users(){// TODO : Re-write this logic .
@@ -27,8 +29,10 @@ Template.invite.created = function () {
                                            }
                                      });
 
-        }
-
+        },
+       normalView(){
+          return normalView.get(); 
+        } 
     })
 
 

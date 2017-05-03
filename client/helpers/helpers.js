@@ -111,3 +111,7 @@ Template.registerHelper('formatDateTime', function (val) {
     Template.registerHelper('route', function (status) {
         return status == route.get();
     });
+
+    Template.registerHelper('currentUserEmail', function () {
+       return currentEmail();
+    });

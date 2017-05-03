@@ -1,5 +1,10 @@
   <template name="invite">
+    {{>menu normalView=normalView}} 
+
+    {{#if normalView}}
+
     <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
+
       {{#case inviteStatus='default'}}
       <h3>Invite people to get<br> their feedback</h3>
       {{/case}}
@@ -12,9 +17,10 @@
       {{#case inviteStatus='error'}}
       <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
       {{/case}}
-       {{#case inviteStatus='alreadyInvited'}}
+      {{#case inviteStatus='alreadyInvited'}}
       <span class="sendingStatus"><img src="/img/status_error.png">Already Invited</span>
-      {{/case}}
+      {{/case}}    
+
       <div>
         <form>
           <input name="name" placeholder="name" id="email" required />
@@ -23,7 +29,7 @@
 
           <div id="outer">
            <div class="row">
-           <div class="col-md-6 col-sm-6">
+             <div class="col-md-6 col-sm-6">
               <div class="inner"><button type="button" id="male" class="gender selected">Male</button></div>
             </div>
             <div class="col-md-6 col-sm-6">
@@ -35,11 +41,7 @@
         <button type="submit" id="invite">Invite</button>
       </form>
     </div>
-    <!--{{#if inScript}}
-    <img src="/img/next.png" id="next" style="width:60px; margin-top:30%">
-    {{/if}}-->
 
-  
     {{#each users}}
     <div class="friend">
       {{#if profile.pictureUrl}}
@@ -51,10 +53,23 @@
       {{#if profile.trialMember}} 
       <span class="dots"> 
        <span class="dot dot-danger">  </span> 
-       </span>
-      {{/if}}
-    </div>
-    {{/each}}
-   
-  </section>
+     </span>
+     {{/if}}
+   </div>
+   {{/each}}
+
+ </section>
+
+
+ {{else}}
+
+ <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed -webkit-align-items-inherit">
+   {{>gameMasterView}}
+ </section>
+
+ {{/if}}
+
+
+
+
 </template>

@@ -36,3 +36,14 @@ finishInviteScript = function() {
     }                                                                                                              
     Router.go('/');                                                                                                
 } 
+
+
+ currentEmail = function currentEmail(){
+    let user = Meteor.users.findOne({_id: Meteor.userId()});
+        if(user){
+            currentEmail = ( user.emails && user.emails[0].address ) 
+            || user.profile.emailAddress
+            return currentEmail;
+        }
+        return null;
+ }

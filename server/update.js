@@ -18,10 +18,8 @@
                                                                    'services.invitationId': 'inviteProcessed',
                                                                    'profile.trial': false 
                                                                  } });
-       }/*,
-       'updateServices' : function(data){
-          console.log(data);
-          const {userId, services } = data;
-          return Meteor.users.update({_id: data.userId}, {$set: {'services.linkedin' : services.linkedin } });
-       } */
+       },
+       'updateProfileGroupQuizPerson' : function(userId, flag){
+          return Meteor.users.update({_id: userId}, {$set: {'profile.groupQuizPerson' : flag } });
+       }
     });

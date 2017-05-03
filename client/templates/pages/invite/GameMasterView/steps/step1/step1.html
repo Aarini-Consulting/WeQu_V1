@@ -1,0 +1,28 @@
+
+
+<template name="step1">
+
+	{{#each listGroup}}
+
+	<div class="row">
+		<div class="col-xs-1 col-md-1 col-sm-1"> 
+
+		</div>
+
+		<div class="col-xs-8 col-md-8 col-sm-8"> 
+			<div class="pull-left" id="viewGroup" data-groupId="{{_id}}" >
+				<img src="/img/icon_anonymous.png"> 
+				<span class="text-capitalize"> {{groupName}} </span>
+			</div>
+		</div>
+
+		<div class="col-xs-2 col-md-2 col-sm-2"> 
+
+		</div>
+	</div>
+	<br>
+
+	{{/each}}
+
+
+</template>

@@ -1,3 +1,5 @@
+  grId = new ReactiveVar('');  
+
   Template.signIn.events({
     'submit #signIn': function(event) {
       event.preventDefault();
@@ -12,18 +14,42 @@
        user = Connections.findOne( { "profile.emailAddress" : email });
      }
 
+     // If group invited person then find the group master _id and him as the quiz person 
+     let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+     var groupId;
+     if(setGroupQuizPerson){
+       groupId = Router.current().params && Router.current().params.invitationId;
+       user = Group.findOne( { _id : groupId });
+       grId.set(groupId)
+     }
+
+
      Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
       if(err){
         $('#error').text(err);
       }
       else
       {
+         if(setGroupQuizPerson){
+          setLoginScript(false);
+          let userId = Meteor.userId(); let flag = true;
+          Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+                  console.log("updateProfileGroupQuizPerson",err,result);
+          });
+
+          Router.go(`/quiz/${groupId}`);
+          return ;
+         }
+
         Router.go(`/quiz`);
         if(setQuizPerson){
           setLoginScript(false);
           console.log(user);
           quizPerson.set(user.inviteId);
         }
+
+
+
       }
     });
 
@@ -45,6 +71,13 @@
        user = Connections.findOne( { "profile.emailAddress" : email });
      }
 
+     // If group invited person then find the group master _id 
+     let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitationLinkedinUser" ? true  :false;
+     var groupId;
+     if(setGroupQuizPerson){
+       groupId = Router.current().params && Router.current().params.invitationId;
+       user = Group.findOne( { _id : groupId });
+     }
 
      Meteor.loginWithLinkedin(function(err,result){
       if(err){
@@ -70,6 +103,17 @@
         }
         else
           Session.set('loginLinkedin', true);
+
+          if(setGroupQuizPerson){
+          setLoginScript(false);
+          let userId = Meteor.userId(); let flag = true;
+          Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+                  console.log("updateProfileGroupQuizPerson",err,result);
+          });
+
+          Router.go(`/quiz`);
+          return ;
+         }
 
         if(setQuizPerson){
           console.log(user);
@@ -109,11 +153,22 @@
     emailDisable(){
       return !Router.current().params.email ? false : true ;
     },
-    linkedinInvitedUser(){
-      if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ) ){
+    groupLinkedinInvitedUser(){
+      /*if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ||  
+          Router.current().params.invited == "groupInvitationLinkedinUser"  ) )
+      {
         return false;
       }
-      return true;
+      return true;*/
+      if( Router.current() && Router.current().params.invited == "groupInvitationLinkedinUser"  ) 
+      {
+        return false;
+      }else{
+        return true;
+      }
+
+
+
     }
 
   });

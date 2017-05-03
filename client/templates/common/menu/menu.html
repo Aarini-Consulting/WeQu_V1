@@ -2,7 +2,19 @@
 <template name="menu">
   <div class="menuBar">
     <a href="/quiz" class="{{#if route 'quiz'}}t100{{else}}t50{{/if}}"><img src="/img/icon_vote.png"></a>
+    
+    {{#if isInRole 'GameMaster'}}
+  
+    {{#if normalView}}
+    <a href="/invite" class="{{#if route 'invite'}}t100{{else}}t50{{/if}}" id="changeView" ><img class="width30" src="/img/gameMaster/icon_contact_2.png"></a>
+    {{else}}
+    <a href="/invite" class="{{#if route 'invite'}}t100{{else}}t50{{/if}}" id="changeView" ><img class="width30" src="/img/gameMaster/icon_contact_1.png"></a>
+    {{/if}}
+    
+    {{else}}
     <a href="/invite" class="{{#if route 'invite'}}t100{{else}}t50{{/if}}"><img src="/img/icon_invite.png"></a>
+    {{/if}}
+    
     <a href="/feed" class="{{#if route 'feed'}}t100{{else}}t50{{/if}}"><img src="/img/icon_feed.png"></a>
     <a href="/profile" class="{{#if route 'profile'}}t100{{else}}t50{{/if}}"><img src="/img/icon_profile.png" ></a>
     <!-- <a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a> -->
