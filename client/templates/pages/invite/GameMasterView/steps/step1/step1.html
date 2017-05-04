@@ -2,6 +2,10 @@
 
 <template name="step1">
 
+    {{#if groupCount}}
+
+    {{createGroup3}}
+
 	{{#each listGroup}}
 
 	<div class="row">
@@ -23,6 +27,14 @@
 	<br>
 
 	{{/each}}
+
+	{{else}}
+
+	<div class="emptymessage"><img class="image-6" src="/img/avatar_group_2.png">
+    	<div class="emptytext">Hey, there is nobody here</div><a class="invitebttn w-button" id="createGroup">create a group</a>
+    </div>
+
+	{{/if}}
 
 
 </template>

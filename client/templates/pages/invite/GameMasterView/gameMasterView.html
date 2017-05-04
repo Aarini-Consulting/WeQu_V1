@@ -1,30 +1,30 @@
 
 <template name="gameMasterView">
+  
+  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
 
 	{{#if equals step "step1"}} <!-- Game Master 2 --> 
 
-	{{>createGroup}}
 	{{>step1}}
 
 	{{/if}}
 
 	{{#if equals step "step2"}} <!-- Game Master 3 -->
 
-	{{>createGroup2}}
+	{{>createGroup}}
 	{{>step2 info=info}}
 
 	{{/if}}
 
 	{{#if equals step "step3"}} <!-- Game Master 4 -->
 
-	{{>createGroup2}}
 	{{>step3 info=info}}
 
 	{{/if}}
 
 
 	{{#if equals step "step4"}} <!-- Game Master 4 copy -->
-	{{>createGroup2}}
+	
 	{{>step4}}
 
 	{{/if}}
@@ -77,6 +77,6 @@
 		</div>
 	</div>
 	{{/if}}
-	
+	</section>
 
 </template>

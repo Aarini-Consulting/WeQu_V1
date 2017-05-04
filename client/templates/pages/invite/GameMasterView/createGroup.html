@@ -1,15 +1,13 @@
 
 <template name="createGroup">
 
-	<div class="row margonTop20">
-		<div class="col-xs-1 col-md-1 col-sm-1"> 
+	<div class="screentitlewrapper w-clearfix">
+		<div class="screentitlebttn">
+			<a class="w-clearfix w-inline-block" id="previous"><img class="image-7" src="/img/arrow_white.png">
+			</a>
 		</div>
-		<div class="col-xs-6 col-md-6 col-sm-6"> 
-			<div class="pull-left"> <b> Create group </b> </div>
-		</div>
-		
-		<div class="col-xs-4 col-md-4 col-sm-4"> 
-			<img class="width40" id="createGroup" src="/img/gameMaster/Invite_Plus_black.png">
+		<div class="screentitle w-clearfix">
+			<div class="title">Create a new group</div>
 		</div>
 	</div>
 
@@ -20,24 +18,33 @@
 
 <template name="createGroup2">
 
-	<div class="row margonTop20">
-
-		<div class="col-xs-1 col-md-1 col-sm-1"> 
-		</div>
-		<div class="col-xs-10 col-md-10 col-sm-10">
-			<div class="pull-left"> 
-				<img src="/img/back.png" id="previous" > &nbsp; &nbsp;
-				{{#if groupName}} {{groupName}}
-				Project group <div class="text-capitalize"> {{groupName}} </div>
-				{{else}}
-				<b> Create new group </b>
-				{{/if}}
+	<div class="contentwrapper w-clearfix">
+		<div class="screentitlewrapper w-clearfix">
+			<div class="screentitle">
+				<div class="title">Add Group</div>
+			</div>
+			<div class="screentitlebttn">
+				<a class="w-inline-block" id="previous"><img class="image-4" src="/img/Invite_Plus_white.png">
+				</a>
 			</div>
 		</div>
-		<div class="col-xs-1 col-md-1 col-sm-1"> 
-		</div>
+		<ul class="friendlist w-list-unstyled">
+			<li class="list-item w-clearfix">
+				<div class="avatawrapper">
+					<a class="w-inline-block" href="#"><img class="image-5" src="/img/avatar_group_2.png">
+					</a>
+				</div>
+				<div class="name w-clearfix">
+					{{#if groupName}}
+					<div class="contactname">{{groupName}}</div>
+					{{else}}
+					<div class="contactname">Group name</div>
+					{{/if}}
+				</div>
+			</li>
+			<li></li>
+		</ul>
 	</div>
 
-	<hr class="width">
 
 </template>

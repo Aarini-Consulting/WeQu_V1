@@ -51,7 +51,7 @@ Template.invite.created = function () {
 
     Template.invite.events({
 
-    "click .formbttn" : function (event, template) {
+    "click #sendInvite" : function (event, template) {
         console.log("event");
         event.preventDefault();
         inviteStatus.set('sending');
