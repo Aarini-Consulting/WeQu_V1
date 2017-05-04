@@ -13,10 +13,10 @@
   <div class="contentwrapper invite">
     <div class="inviteform w-form">
       <form class="inviteformstyle" data-name="Email Form" id="email-form" name="email-form">
-        <input class="formstyle w-input" data-name="Name" id="name" maxlength="256" name="name" placeholder="name" type="text">
-        <input class="formstyle w-input" data-name="Email" id="email" maxlength="256" name="email" placeholder="email address" required="required" type="email">
+        <input class="formstyle w-input" data-name="Name" id="name" maxlength="256" name="name" placeholder="name" type="text" required>
+        <input class="formstyle w-input" data-name="Email" id="email" maxlength="256" name="email" placeholder="email address" required type="email">
         <div class="formradio w-radio">
-          <input class="w-radio-input" data-name="gender" id="male" name="gender" required="required" type="radio" value="male">
+          <input class="w-radio-input selected" data-name="gender" id="male" name="gender" required="required" type="radio" value="male">
           <label class="w-form-label" for="male">male</label>
         </div>
         <div class="formradio w-radio">
@@ -31,6 +31,20 @@
       <div class="w-form-fail">
         <div>Oops! Something went wrong while submitting the form</div>
       </div>
+      
+      {{#case inviteStatus='sending'}}
+      <span class="sendingStatus"><img src="/img/status_sending.png">sending...</span>
+      {{/case}}
+      {{#case inviteStatus='sent'}}
+      <span class="sendingStatus"><img src="/img/status_sent.png">sent!</span>
+      {{/case}}
+      {{#case inviteStatus='error'}}
+      <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
+      {{/case}}
+      {{#case inviteStatus='alreadyInvited'}}
+      <span class="sendingStatus"><img src="/img/status_error.png">Already Invited</span>
+      {{/case}}  
+
     </div>
   </div>
   </section>

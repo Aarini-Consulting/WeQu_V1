@@ -39,9 +39,11 @@ Template.invite.created = function () {
         let count= Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
                                       {email : Meteor.user().emails && Meteor.user().emails[0].address},
                                       {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
-                                     ).count() < 0;
-        console.log(count);
-        return count;
+                                     ).count() > 0;
+        if(step.get() != 'invitebttn' ){
+         return count;
+        }
+        return false;
        }
     })
 
@@ -49,7 +51,8 @@ Template.invite.created = function () {
 
     Template.invite.events({
 
-     "submit form" : function (event, template) {
+    "click .formbttn" : function (event, template) {
+        console.log("event");
         event.preventDefault();
         inviteStatus.set('sending');
         var email = template.$('input[name=email]').val();
@@ -80,12 +83,12 @@ Template.invite.created = function () {
                         inviteStatus.set('error');
                         return;
                     }
-
                     template.$('input[name=name]').val('')
                     template.$('input[name=email]').val('');
                     inviteStatus.set('sent');
 
                     setInterval(function () {
+                        step.set('default');
                         return inviteStatus.set('default');
                     }, 3000);
                         quizPerson.set(userId);
@@ -115,7 +118,7 @@ Template.invite.created = function () {
         template.gender.set('Female');
     },
 
-    "click .invitebttn" : function(event,template){
+    "click .invitebttn , click .w-inline-block" : function(event,template){
         event.preventDefault();
         step.set('invitebttn');
     }

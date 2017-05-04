@@ -7,81 +7,63 @@
 
     <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
 
-      {{#case inviteStatus='default'}}
-      <h3>Invite people to get<br> their feedback</h3>
-      {{/case}}
-      {{#case inviteStatus='sending'}}
-      <span class="sendingStatus"><img src="/img/status_sending.png">sending...</span>
-      {{/case}}
-      {{#case inviteStatus='sent'}}
-      <span class="sendingStatus"><img src="/img/status_sent.png">sent!</span>
-      {{/case}}
-      {{#case inviteStatus='error'}}
-      <span class="sendingStatus"><img src="/img/status_error.png">error sending email</span>
-      {{/case}}
-      {{#case inviteStatus='alreadyInvited'}}
-      <span class="sendingStatus"><img src="/img/status_error.png">Already Invited</span>
-      {{/case}}    
-
-      <div>
-        <form>
-          <input name="name" placeholder="name" id="email" required />
-          <input name="email" type="email" id="email" value="" required placeholder="email" autocapitalize="off" autocorrect="off"/>
-          
-
-          <div id="outer">
-           <div class="row">
-             <div class="col-md-6 col-sm-6">
-              <div class="inner"><button type="button" id="male" class="gender selected">Male</button></div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-              <div class="inner"><button type="button" id="female" class="gender">Female</button></div>
-            </div>
+      <div class="contentwrapper w-clearfix">
+        <div class="screentitlewrapper w-clearfix">
+          <div class="screentitle">
+            <div class="title">Add Contact</div>
+          </div>
+          <div class="screentitlebttn">
+          <a class="w-inline-block"><img class="image-4" src="/img/Invite_Plus_white.png">
+            </a>
           </div>
         </div>
+        <ul class="friendlist w-list-unstyled">
+          <li class="list-item w-clearfix">
+            {{#each users}}
+            <div class="avatawrapper">
+             {{#if profile.pictureUrl}}
+             <a class="w-inline-block" href="#"><img class="image-5" src={{profile.pictureUrl}}> </a>
+             {{else}} 
+             <a class="w-inline-block" href="#"><img class="image-5" src="/img/avatar.png"> </a>
+             {{/if}}
+           </div>
+           <div class="name w-clearfix">
+            <div class="contactname">{{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}
+             {{#if profile.trialMember}} 
+             <span class="dots"> 
+               <span class="dot dot-danger">  </span> 
+             </span>
+             {{/if}}
+           </div>
+         </div>
+         {{/each}}
+       </li>
+       <li></li>
+     </ul>
+   </div>  
 
-        <button type="submit" id="invite">Invite</button>
-      </form>
-    </div>
+ </section>
 
-    {{#each users}}
-    <div class="friend">
-      {{#if profile.pictureUrl}}
-      <img src="{{profile.pictureUrl}}" class="avatarSmall"><br>
-      {{else}}
-      <img src="/img/avatar.png" class="avatarSmall"> 
-      {{/if}}
-      {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}
-      {{#if profile.trialMember}} 
-      <span class="dots"> 
-       <span class="dot dot-danger">  </span> 
-     </span>
-     {{/if}}
-   </div>
-   {{/each}}
+ {{else}}  
 
-   </section>
-  
-  {{else}}  
+ {{#case step='default'}}
 
-  {{#case step='default'}}
+ {{>groupEmpty}}
 
-  {{>groupEmpty}}
+ {{/case}}
 
-  {{/case}}
+ {{#case step='invitebttn'}}
 
-  {{#case step='invitebttn'}}
+ {{>invitebttn}}
 
-  {{>invitebttn}}
+ {{/case}}
 
-  {{/case}}
-  
-  {{/if}}
+ {{/if}}
  
 
  {{else}}
 
-   {{>gameMasterView}}
+ {{>gameMasterView}}
 
  {{/if}}
 
