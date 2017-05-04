@@ -1,5 +1,6 @@
 
 inviteStatus = new ReactiveVar('default');
+step = new ReactiveVar('default');
 
 Template.invite.created = function () {
         this.gender = new ReactiveVar('Male'); // Setting default to male , since in UI default value is male
@@ -114,9 +115,9 @@ Template.invite.created = function () {
         template.gender.set('Female');
     },
 
-    "click #invitebttn" : function(event,template){
+    "click .invitebttn" : function(event,template){
         event.preventDefault();
-        template.step.set('invitebttn');
+        step.set('invitebttn');
     }
     
 })
