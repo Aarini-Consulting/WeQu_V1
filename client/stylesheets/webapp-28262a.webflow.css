@@ -489,7 +489,196 @@ html.w-mod-js *[data-ix="loginbox"] {
 }
 
 
+/**************** invitebttn **********************/
+.screentitlewrapper {
+  width: 100%;
+  height: 90px;
+  margin-top: 0px;
+  padding-top: 20px;
+  float: left;
+  clear: none;
+}
+
+.screentitlewrapper.grouptitle {
+  float: none;
+}
+
+.screentitlebttn {
+  position: static;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: block;
+  overflow: hidden;
+  width: 60px;
+  margin-top: 4px;
+  padding-left: 20px;
+  float: left;
+  clear: none;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  text-align: center;
+}
+
+.image-7 {
+  padding-bottom: 0px;
+}
+
+.screentitle {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: inline-block;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 0px;
+  float: left;
+  clear: none;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-size: 18px;
+}
+
+.contentwrapper {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 0px;
+  padding-left: 50px;
+}
+
+.contentwrapper.invite {
+  width: 90%;
+  padding-left: 0px;
+}
 
 
+@media (max-width: 991px) {
+  .contentwrapper {
+    width: 100%;
+  }
+  .invitebttn {
+    width: 70%;
+  }
+}
 
+@media (max-width: 767px) {
+  .body {
+    overflow: hidden;
+    height: 100%;
+  }
+  .screentitlewrapper {
+    height: 65px;
+  }
+  .title {
+    padding-left: 5px;
+    float: left;
+    font-size: 18px;
+  }
+  .screentitle {
+    position: relative;
+    width: 80%;
+    float: left;
+  }
+  .screentitlebttn {
+    overflow: visible;
+  }
+  .image-4 {
+    width: 25px;
+  }
+  .guidetext {
+    font-size: 12px;
+  }
+  .contentwrapper {
+    padding-right: 0px;
+    padding-left: 20px;
+  }
+  .contentwrapper.invite {
+    width: 95%;
+  }
+  .image-5 {
+    width: 50px;
+  }
+  .contactname {
+    font-size: 16px;
+  }
+  .name {
+    height: 50px;
+  }
+  .avatawrapper {
+    padding-right: 10px;
+  }
+  .image-6 {
+    width: 180px;
+  }
+  .invitebttn {
+    width: 90%;
+  }
+  .image-7 {
+    width: 20px;
+    padding-top: 6px;
+    float: left;
+  }
+}
 
+.formstyle {
+  height: 50px;
+  border-style: solid;
+  border-width: 0px 0px 1px;
+  border-color: #000 #000 #fff;
+  background-color: transparent;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+}
+
+.formradio {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+}
+
+.invitebttn.formbttn {
+  width: 100%;
+}
+
+.invitebttn {
+  position: static;
+  display: block;
+  overflow: visible;
+  width: 50%;
+  height: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  float: none;
+  clear: none;
+  border: 2px solid #fff;
+  border-radius: 500px;
+  background-color: transparent;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
