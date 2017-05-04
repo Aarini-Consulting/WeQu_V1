@@ -2,8 +2,6 @@
     {{>menu normalView=normalView}} 
 
     {{#if normalView}}
-    
-    {{#if usersCount}}
 
     <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
 
@@ -60,56 +58,14 @@
    </div>
    {{/each}}
 
-   </section>
-  
-  {{else}}  
+ </section>
 
-  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
-   <div class="emptymessage"><img class="image-6" src="/img/avatar.png">
-    <div class="emptytext">Hey, there is nobody here
-      <br>Invite your teammates to learn how they see you</div><a class="invitebttn w-button">invite</a>
-  </div>
-  </section>
-
-  <div class="screentitlewrapper w-clearfix">
-    <div class="screentitlebttn">
-      <a class="w-clearfix w-inline-block" href="index.html"><img class="image-7" src="/img/arrow_white.png">
-      </a>
-    </div>
-    <div class="screentitle w-clearfix">
-      <div class="title">Invite teammate</div>
-    </div>
-  </div>
-  <div class="contentwrapper invite">
-    <div class="inviteform w-form">
-      <form class="inviteformstyle" data-name="Email Form" id="email-form" name="email-form">
-        <input class="formstyle w-input" data-name="Name" id="name" maxlength="256" name="name" placeholder="name" type="text">
-        <input class="formstyle w-input" data-name="Email" id="email" maxlength="256" name="email" placeholder="email address" required="required" type="email">
-        <div class="formradio w-radio">
-          <input class="w-radio-input" data-name="gender" id="male" name="gender" required="required" type="radio" value="male">
-          <label class="w-form-label" for="male">male</label>
-        </div>
-        <div class="formradio w-radio">
-          <input class="w-radio-input" data-name="gender" id="male" name="gender" required="required" type="radio" value="male">
-          <label class="w-form-label" for="male">female</label>
-        </div>
-        <input class="formbttn invitebttn w-button" data-wait="Please wait..." type="submit" value="send invitation">
-      </form>
-      <div class="w-form-done">
-        <div>Thank you! Your submission has been received!</div>
-      </div>
-      <div class="w-form-fail">
-        <div>Oops! Something went wrong while submitting the form</div>
-      </div>
-    </div>
-  </div>
-  
-  {{/if}}
- 
 
  {{else}}
 
+ <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed -webkit-align-items-inherit">
    {{>gameMasterView}}
+ </section>
 
  {{/if}}
 
