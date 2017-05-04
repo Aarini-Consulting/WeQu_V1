@@ -5,7 +5,7 @@
     
     {{#if usersCount}}
 
-    <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
+    <section class="gradient{{currentUser.profile.gradient}} whiteText feed">
 
       <div class="contentwrapper w-clearfix">
         <div class="screentitlewrapper w-clearfix">
@@ -20,14 +20,14 @@
         <ul class="friendlist w-list-unstyled">
           <li class="list-item w-clearfix">
             {{#each users}}
-            <div class="avatawrapper">
+            <div class="avatawrapper padding10">
              {{#if profile.pictureUrl}}
-             <a class="w-inline-block" href="#"><img class="image-5" src={{profile.pictureUrl}}> </a>
+             <a class="font-white" href="#"><img class="image-5" src={{profile.pictureUrl}}> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</a>
              {{else}} 
-             <a class="w-inline-block" href="#"><img class="image-5" src="/img/avatar.png"> </a>
+             <a class="font-white" href="#"><img class="image-5" src="/img/avatar.png"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</a>
              {{/if}}
             </div>
-            <div class="name w-clearfix">
+            <!-- <div class="name w-clearfix">
             <div class="contactname">{{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}
              {{#if profile.trialMember}} 
              <span class="dots"> 
@@ -35,7 +35,7 @@
              </span>
              {{/if}}
             </div>
-           </div>
+           </div> -->
           {{/each}}
          </li>
          <li></li>

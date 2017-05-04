@@ -141,6 +141,9 @@
 	margin-bottom: 30px;
 }
 
+.margin10{
+    margin-top: 10px;
+}
 /* feed */
 .white{
 	color: white;
@@ -410,6 +413,10 @@ button.close{
 	font-size: smaller;
 }
 
+.font-text-20{
+	font-size: 20px;
+}
+
 
 .loginLinkedin img {
 	width: 20px !important;
@@ -458,3 +465,10 @@ button.close{
 .loginbox{
 	height:auto !important;
 }
+
+.padding10{
+	padding-top: 10px;
+}
+
+    
+
