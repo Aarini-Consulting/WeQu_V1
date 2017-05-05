@@ -5,8 +5,7 @@ Template.step1.helpers({
 		return data;
 	},
 	groupCount(){
-		let data =  Group.find({creatorId: Meteor.userId()}).count()<=1;
-		console.log(data);
+		let data =  Group.find({creatorId: Meteor.userId()}).count()==0 ? false : true;
 		return data;
 	}
 });
