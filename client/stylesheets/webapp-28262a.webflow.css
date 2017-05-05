@@ -513,6 +513,7 @@ html.w-mod-js *[data-ix="loginbox"] {
   background-color: transparent;
   font-family: Raleway, sans-serif;
   color: #fff;
+  text-align: left;
 }
 
 
@@ -559,17 +560,18 @@ html.w-mod-js *[data-ix="loginbox"] {
 }
 
 /**************** create group **********************/
-.screentitlewrapper {
-  width: 100%;
-  height: 90px;
-  margin-top: 0px;
-  padding-top: 20px;
-  float: left;
-  clear: none;
-}
+
 
 .gender{
   width:20px !important;
+}
+
+.groupformtext {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-family: Raleway, sans-serif;
+  text-align: left;
+  font-size: large;
 }
 
 @media (max-width: 991px) {
@@ -707,6 +709,18 @@ html.w-mod-js *[data-ix="loginbox"] {
     background-position: 50% 50%;
     background-size: 500px;
   }
+   .contentwrapper {
+    width: 100%;
+    margin-top: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .contentwrapper.invite {
+    width: 90%;
+    padding-right: 0px;
+  }
+
+
 }
 
 

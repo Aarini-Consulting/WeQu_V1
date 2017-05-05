@@ -17,7 +17,8 @@
 
         "click #changeView" : function(event,template){
         if (normalView.get()){
-          normalView.set(false);          
+          normalView.set(false);  
+          step.set("step1");        
         }
         else{
           normalView.set(true);        

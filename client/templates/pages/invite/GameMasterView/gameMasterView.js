@@ -39,6 +39,11 @@ Template.gameMasterView.helpers({
 	},
 	info(){
 		return info.get();
+	},
+	groupCount(){
+		let data =  Group.find({creatorId: Meteor.userId()}).count()<=1;
+		console.log(data);
+		return data;
 	}
 
 });
@@ -58,6 +63,11 @@ Template.gameMasterView.events({
         //var emails = template.$('input[name=emails]').val();
         var list_email = $('#list_email').val(); 
         var arr_emails = list_email //.split(',');
+
+        if(!groupName){
+          info.set("groupName is empty");
+          return false;
+        }
 
         if(arr_emails.length <2){
         	info.set("Please enter atleast two group members ");
@@ -114,6 +124,10 @@ Template.gameMasterView.events({
     			template.step.set("step1");	
     		}
     	}
-    } 
+    },
+
+    "keypress #groupName" : function(event,template){
+    	info.set('');
+    }
 
  });

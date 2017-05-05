@@ -470,5 +470,13 @@ button.close{
 	padding-top: 10px;
 }
 
-    
+.select2-container--default .select2-search--inline .select2-search__field{
+	text-align: left;
+	font-size: small;
+}    
+
+.select2-container{
+	font-size: medium !important;
+	border: 0px 0px 1px !important;
+}
 
