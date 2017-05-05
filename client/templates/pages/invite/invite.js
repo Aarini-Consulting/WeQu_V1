@@ -31,7 +31,10 @@ step = new ReactiveVar('default');
                                       {email : Meteor.user().emails && Meteor.user().emails[0].address},
                                       {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
                                      ).count() > 0;
-         return count;
+        if(step.get() != 'invitebttn'){
+          return count; 
+        } 
+        return true;
        }
     })
 
