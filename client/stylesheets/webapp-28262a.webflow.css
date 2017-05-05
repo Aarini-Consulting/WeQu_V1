@@ -574,6 +574,49 @@ html.w-mod-js *[data-ix="loginbox"] {
   font-size: large;
 }
 
+.title {
+  display: inline-block;
+  padding-left: 13px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.friendlist {
+  margin-top: 0px;
+  float: left;
+  clear: left;
+}
+
+.avatawrapper {
+  padding-right: 30px;
+  float: left;
+}
+
+
+.contactname {
+  display: block;
+  float: left;
+  clear: left;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-size: 25px;
+}
+
+
+
 @media (max-width: 991px) {
   .bgimage {
     background-image: url('/img/assets/Background_white20.png');
@@ -680,6 +723,9 @@ html.w-mod-js *[data-ix="loginbox"] {
     padding-top: 6px;
     float: left;
   }
+   .avatawrapper {
+    padding-right: 10px;
+  }
 }
 
 @media (max-width: 479px) {
@@ -718,6 +764,13 @@ html.w-mod-js *[data-ix="loginbox"] {
   .contentwrapper.invite {
     width: 90%;
     padding-right: 0px;
+  }
+  .screentitlewrapper {
+    height: 65px;
+  }
+  .screentitlebttn {
+    width: 40px;
+    padding-left: 10px;
   }
 
 

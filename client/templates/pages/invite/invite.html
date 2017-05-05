@@ -1,6 +1,6 @@
   <template name="invite">
     {{>menu normalView=normalView}} 
-    
+
     {{#if normalView}}
     
     {{#if usersCount}}
@@ -22,9 +22,9 @@
             {{#each users}}
             <div class="avatawrapper padding10">
              {{#if profile.pictureUrl}}
-             <a class="font-white"><img class="image-5" src={{profile.pictureUrl}}> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</a>
+             <span class="font-white"><img class="image-5" src={{profile.pictureUrl}}> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
              {{else}} 
-             <a class="font-white"><img class="image-5" src="/img/avatar.png"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</a>
+             <span class="font-white"><img class="image-5" src="/img/avatar.png"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
              {{/if}}
             </div>
             <!-- <div class="name w-clearfix">

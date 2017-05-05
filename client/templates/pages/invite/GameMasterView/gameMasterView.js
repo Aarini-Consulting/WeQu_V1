@@ -39,11 +39,6 @@ Template.gameMasterView.helpers({
 	},
 	info(){
 		return info.get();
-	},
-	groupCount(){
-		let data =  Group.find({creatorId: Meteor.userId()}).count()<=1;
-		console.log(data);
-		return data;
 	}
 
 });

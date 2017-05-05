@@ -2,37 +2,31 @@
 
 <template name="step1">
 
-    {{#if groupCount}}
+	{{#if groupCount}}
 
-    {{createGroup3}}
+	{{>createGroup2}}
 
-	{{#each listGroup}}
+	<div class="contentwrapper w-clearfix">
+		{{#each listGroup}}
+		<ul class="friendlist w-list-unstyled">
+			<li class="list-item w-clearfix">
+				<div class="avatawrapper">
+					<a class="w-inline-block"><img class="image-5" src="/img/avatar_group_2.png">
+					</a>
+					<span id="viewGroup" data-groupId="{{_id}}">{{groupName}}</span>
+				</div>
+			</li>
+			<li></li>
+		</ul>
+		{{/each}}
 
-	<div class="row">
-		<div class="col-xs-1 col-md-1 col-sm-1"> 
-
-		</div>
-
-		<div class="col-xs-8 col-md-8 col-sm-8"> 
-			<div class="pull-left" id="viewGroup" data-groupId="{{_id}}" >
-				<img src="/img/icon_anonymous.png"> 
-				<span class="text-capitalize"> {{groupName}} </span>
-			</div>
-		</div>
-
-		<div class="col-xs-2 col-md-2 col-sm-2"> 
-
-		</div>
 	</div>
-	<br>
-
-	{{/each}}
 
 	{{else}}
 
 	<div class="emptymessage"><img class="image-6" src="/img/avatar_group_2.png">
-    	<div class="emptytext">Hey, there is nobody here</div><a class="invitebttn w-button" id="createGroup">create a group</a>
-    </div>
+		<div class="emptytext">Hey, there is nobody here</div><a class="invitebttn w-button" id="createGroup">create a group</a>
+	</div>
 
 	{{/if}}
 
