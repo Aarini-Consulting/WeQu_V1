@@ -46,7 +46,7 @@ Template.gameMasterView.helpers({
 
 Template.gameMasterView.events({
 
-	"click #createGroup" : function(event,template){
+	"click #createGroup ,click #next" : function(event,template){
 		event.preventDefault();
 		template.step.set("step2");
 	},
