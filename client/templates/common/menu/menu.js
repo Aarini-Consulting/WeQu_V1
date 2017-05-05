@@ -1,3 +1,5 @@
+      normalView = new ReactiveVar(true);
+      
       Template.menu.created = function () {
         
       }
@@ -18,11 +20,13 @@
         "click #changeView" : function(event,template){
         if (normalView.get()){
           normalView.set(false);  
-          step.set("step1");        
+          step.set('default');
         }
         else{
           normalView.set(true);        
+          step.set('default');
         }
+        
         /*Meteor.call('addRoleGameMaster', Meteor.userId() , function (err, result) {
         }); */
       }

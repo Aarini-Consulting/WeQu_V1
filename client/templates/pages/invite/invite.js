@@ -2,11 +2,6 @@
 inviteStatus = new ReactiveVar('default');
 step = new ReactiveVar('default');
 
-Template.invite.created = function () {
-        normalView = true;
-        normalView = new ReactiveVar(normalView);
-}
-
     Template.invite.helpers({
         users(){// TODO : Re-write this logic .
             // { $or : [ {inviteId:Meteor.userId()} , {email : Meteor.user().emails && Meteor.user().emails[0].address}   ] }
@@ -30,18 +25,13 @@ Template.invite.created = function () {
                                      });
 
         },
-       normalView(){
-          return normalView.get(); 
-       },
+   
        usersCount(){
         let count= Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
                                       {email : Meteor.user().emails && Meteor.user().emails[0].address},
                                       {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
                                      ).count() > 0;
-        if(step.get() != 'invitebttn' ){
          return count;
-        }
-        return false;
        }
     })
 

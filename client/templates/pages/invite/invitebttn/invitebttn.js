@@ -1,7 +1,5 @@
 
 Template.invitebttn.created = function () {
-        normalView = true;
-        normalView = new ReactiveVar(normalView);
         this.gender = new ReactiveVar('Male'); // Setting default to male , since in UI default value is male
 }
 
