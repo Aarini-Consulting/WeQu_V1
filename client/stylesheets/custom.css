@@ -500,3 +500,8 @@ button.close{
 .select2-container--default:focus .select2-selection--multiple:focus{
 	 border-bottom: 2px solid #fff !important;
 }
+
+
+.gradientBlack{
+	background-color: black;
+}
