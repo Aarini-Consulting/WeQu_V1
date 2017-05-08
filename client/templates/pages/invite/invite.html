@@ -37,8 +37,8 @@
               {{#each users}}
               <div class="row">
               <div class="avatawrapper padding10">
-               {{#if profile.pictureUrl}} 
-               <span class="font-white"><img class="image-5 img-circle" src="{{profile.pictureUrl}}"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
+               {{#if services.linkedin.pictureUrl}} 
+               <span class="font-white"><img class="image-5 img-circle" src="{{services.linkedin.pictureUrl}}"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
                {{else}} 
                <span class="font-white"><img class="image-5" src="/img/avatar.png"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
                {{/if}}

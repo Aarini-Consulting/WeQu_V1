@@ -19,7 +19,7 @@ step = new ReactiveVar('default');
                                                 doc.invitedPerson = true;
                                                 doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
                                                }
-                                               //console.log(doc);
+                                               doc.services = Meteor.users.findOne({_id: doc.inviteId }) && (Meteor.users.findOne({_id: doc.inviteId }).services);
                                                return doc;
                                            }
                                      });
