@@ -1,58 +1,63 @@
 
 <template name="gameMasterView">
-  
-  <section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
 
-	{{#if equals step "step1"}} <!-- Game Master 2 --> 
+	<section class="gradient{{currentUser.profile.gradient}} whiteText alignCenter feed">
 
-	{{>step1}}
+		{{#if equals step "step1"}} <!-- Game Master 2 --> 
 
-	{{/if}}
+		{{>step1}}
 
-	{{#if equals step "step2"}} <!-- Game Master 3 -->
+		{{/if}}
 
-	{{>createGroup}}
-	{{>step2 info=info}}
+		{{#if equals step "step2"}} <!-- Game Master 3 -->
 
-	{{/if}}
+		{{>createGroup}}
+		{{>step2 info=info}}
 
-	{{#if equals step "step3"}} <!-- Game Master 4 -->
+		{{/if}}
 
-	{{>step3 info=info}}
+		{{#if equals step "step3"}} <!-- Game Master 4 -->
 
-	{{/if}}
+		{{>step3 info=info}}
 
-
-	{{#if equals step "step4"}} <!-- Game Master 4 copy -->
-	
-	{{>step4}}
-
-	{{/if}}
+		{{/if}}
 
 
-	{{#if equals step "viewGroup"}}
-	
-	<div class="screentitlebttn">
-      <a id="back"><img class="image-4" src="/img/Invite_Plus_white.png">
-      </a>
-    </div>
+		{{#if equals step "step4"}} <!-- Game Master 4 copy -->
 
-	{{#each groupMembers}}
+		{{>step4}}
 
-	{{#each emails}}
-		
+		{{/if}}
+
+
+		{{#if equals step "viewGroup"}}
+
+		<div class="contentwrapper">
+
 			<div class="text-left">
+				<a id="back"><img class="image-4" src="/img/Invite_Plus_white.png">
+				</a>
+			</div>
+			<br>
+
+			{{#each groupMembers}}
+
+			{{#each emails}}
+
+			<div class="row text-left">
 				<img src="/img/icon_anonymous.png">
 				
 				<span> {{this}} </span>
 				
-			</div>
-	{{/each}}
-	{{/each}}
-	<br>
-	<div class="row">
-		<div class="col-xs-12 col-md-12 col-sm-12"> 
-			{{#each groupMembers}}
+			</div> <br>
+			{{/each}}
+			{{/each}}
+		</div>
+
+		<br>
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12"> 
+				{{#each groupMembers}}
 
 		<!--	{{#each emails}}
 			<div class="row">
@@ -73,6 +78,6 @@
 		</div>
 	</div>
 	{{/if}}
-	</section>
+</section>
 
 </template>
