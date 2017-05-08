@@ -45,7 +45,7 @@ Template.invitebttn.events({
                     template.$('input[name=email]').val('');
                     inviteStatus.set('sent');
 
-                    setInterval(function () {
+                    setTimeout(function(){
                         step.set('default');
                         return inviteStatus.set('default');
                     }, 3000);
