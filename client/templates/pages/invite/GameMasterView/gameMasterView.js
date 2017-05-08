@@ -51,11 +51,9 @@ Template.gameMasterView.events({
 		template.step.set("step2");
 	},
 
-	"click #submitSend" : function(event,template){
+	"submit #send" : function(event,template){
 		event.preventDefault();
-		console.log(event);
 		var groupName =  template.find('#groupName').value;
-        //var emails = template.$('input[name=emails]').val();
         var list_email = $('#list_email').val(); 
         var arr_emails = list_email //.split(',');
 

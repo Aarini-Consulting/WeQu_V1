@@ -1,6 +1,6 @@
 Template.step2.rendered = function () {
     
-    $(".tags").select2({tags: true, width: '100%', placeholder: 'email addresses',  
+    $(".tags").select2({tags: true, width: '100%', placeholder: ' email addresses',  
     	createTag: function(term, data) {
     		var value = term.term;
     		if(validateEmail(value)) {
