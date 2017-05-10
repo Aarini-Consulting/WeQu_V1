@@ -144,6 +144,11 @@
 .margin10{
     margin-top: 10px;
 }
+
+.marginTop5{
+	margin-top: 5px; 
+}
+
 /* feed */
 .white{
 	color: white;
@@ -504,4 +509,8 @@ button.close{
 
 .gradientBlack{
 	background-color: black;
+}
+
+input[type="radio"]{
+	width: initial;
 }

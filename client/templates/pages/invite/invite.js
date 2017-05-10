@@ -18,8 +18,8 @@ step = new ReactiveVar('default');
                                                if(invitedPerson || invitedPerson2){
                                                 doc.invitedPerson = true;
                                                 doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
-                                               }
-                                               doc.services = Meteor.users.findOne({_id: doc.inviteId }) && (Meteor.users.findOne({_id: doc.inviteId }).services);
+                                              }
+                                               doc.services = Meteor.users.findOne({_id: doc.userId }) && (Meteor.users.findOne({_id: doc.userId }).services);
                                                return doc;
                                            }
                                      });
