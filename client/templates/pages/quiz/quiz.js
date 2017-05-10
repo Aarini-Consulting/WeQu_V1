@@ -222,8 +222,8 @@
               // Navigate to the profile of the person for whom the login user has provided a feeback
               email = currentEmail(quizPerson.get());
               let oldUser2 = Connections.findOne( { $and : [   {"email":email},{"userId": quizPerson.get() } ] } );
-              exists = !oldUser ? false : true;
-              feedbackData = Feedback.find({from  : id, to: Meteor.userId()}) ;
+              exists = !oldUser2 ? false : true;
+              feedbackData = Feedback.find({from  : Meteor.userId(), to: id}) ;
               count = feedbackData.count();
               condition = count > 2 ? false : true;
               if(exists && condition){
