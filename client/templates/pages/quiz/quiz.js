@@ -199,7 +199,7 @@
                 }
 
             // After reaching the last question of the set 
-            // Display the next person , instead of starting question set 4/4
+            // Display the next person , instead of starting question set 4/4          
             
             if(result)
             {
@@ -217,7 +217,18 @@
               // Only for the first time navigate
               if(exists && condition){
                Router.go(`/existingUserAfterQuiz/${id}`);
-             }
+              }
+
+              // Navigate to the profile of the person for whom the login user has provided a feeback
+              email = currentEmail(quizPerson.get());
+              let oldUser2 = Connections.findOne( { $and : [   {"email":email},{"userId": quizPerson.get() } ] } );
+              exists = !oldUser ? false : true;
+              feedbackData = Feedback.find({from  : id, to: Meteor.userId()}) ;
+              count = feedbackData.count();
+              condition = count > 2 ? false : true;
+              if(exists && condition){
+               Router.go(`/existingUserAfterQuiz/${id}`);
+              }             
 
              if(template.data.nextPerson == true){
               var friends = template.data.friends;
