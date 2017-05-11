@@ -205,7 +205,7 @@
             {
               var id = quizPerson.get();
 
-              let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": quizPerson.get() } ] } );
+             /* let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": quizPerson.get() } ] } );
               let exists = !oldUser ? false : true;
               var count, condition;
               let feedbackData = Feedback.find({from  : Meteor.userId(), to: id}) ;
@@ -216,7 +216,7 @@
 
               // Only for the first time navigate
               if(exists && condition){
-               Router.go(`/existingUserAfterQuiz/${id}`);
+               Router.go(`/userAfterQuiz/${id}`);
               }
 
               // Navigate to the profile of the person for whom the login user has provided a feeback
@@ -227,8 +227,16 @@
               count = feedbackData.count();
               condition = count > 2 ? false : true;
               if(exists && condition){
-               Router.go(`/existingUserAfterQuiz/${id}`);
-              }             
+               Router.go(`/userAfterQuiz/${id}`);
+              }     
+            */        
+
+             // Navigate to profile page , Applicable to all the users and all the times
+             
+             if(id == Meteor.userId())
+             Router.go(`/scriptLoginAfterQuiz`);
+             else
+             Router.go(`/userAfterQuiz/${id}`);
 
              if(template.data.nextPerson == true){
               var friends = template.data.friends;

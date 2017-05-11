@@ -1,7 +1,7 @@
 
 <template name="menu">
   <div class="menuBar">
-    <a href="/quiz" class="{{#if route 'quiz'}}t100{{else}}t50{{/if}}"><img src="/img/icon_vote.png"></a>
+    <a href="/quiz" class="{{#if route 'quiz'}}t100{{else}}t50{{/if}}" id="quiz"><img src="/img/icon_vote.png"></a>
     
     {{#if isInRole 'GameMaster'}}
   
