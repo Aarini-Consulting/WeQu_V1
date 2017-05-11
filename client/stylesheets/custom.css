@@ -514,3 +514,7 @@ button.close{
 input[type="radio"]{
 	width: initial;
 }
+
+.navColor{
+	background: blue;
+}
