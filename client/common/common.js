@@ -38,8 +38,16 @@ finishInviteScript = function() {
 } 
 
 
- currentEmail = function currentEmail(){
-    let user = Meteor.users.findOne({_id: Meteor.userId()});
+ currentEmail = function currentEmail(id){
+    let user;
+    if(id){
+     user = Meteor.users.findOne({_id: id});  
+    }
+    else
+    {
+      user = Meteor.users.findOne({_id: Meteor.userId()});  
+    }
+    
         if(user){
             currentEmail = ( user.emails && user.emails[0].address ) 
             || user.profile.emailAddress

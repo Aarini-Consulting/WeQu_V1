@@ -199,13 +199,13 @@
                 }
 
             // After reaching the last question of the set 
-            // Display the next person , instead of starting question set 4/4
+            // Display the next person , instead of starting question set 4/4          
             
             if(result)
             {
               var id = quizPerson.get();
 
-              let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": quizPerson.get() } ] } );
+             /* let oldUser = Connections.findOne( { $and : [   {"email":email},{"inviteId": quizPerson.get() } ] } );
               let exists = !oldUser ? false : true;
               var count, condition;
               let feedbackData = Feedback.find({from  : Meteor.userId(), to: id}) ;
@@ -216,8 +216,27 @@
 
               // Only for the first time navigate
               if(exists && condition){
-               Router.go(`/existingUserAfterQuiz/${id}`);
-             }
+               Router.go(`/userAfterQuiz/${id}`);
+              }
+
+              // Navigate to the profile of the person for whom the login user has provided a feeback
+              email = currentEmail(quizPerson.get());
+              let oldUser2 = Connections.findOne( { $and : [   {"email":email},{"userId": quizPerson.get() } ] } );
+              exists = !oldUser2 ? false : true;
+              feedbackData = Feedback.find({from  : Meteor.userId(), to: id}) ;
+              count = feedbackData.count();
+              condition = count > 2 ? false : true;
+              if(exists && condition){
+               Router.go(`/userAfterQuiz/${id}`);
+              }     
+            */        
+
+             // Navigate to profile page , Applicable to all the users and all the times
+             
+             if(id == Meteor.userId())
+             Router.go(`/scriptLoginAfterQuiz`);
+             else
+             Router.go(`/userAfterQuiz/${id}`);
 
              if(template.data.nextPerson == true){
               var friends = template.data.friends;

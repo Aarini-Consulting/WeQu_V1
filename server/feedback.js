@@ -19,7 +19,7 @@
             }
             
             let a = Feedback.insert({from: fb.from, to: fb.to, qset: qset, done : false});
-            console.log(qset , a , fb);
+            // console.log(qset , a , fb);
 
             return true;
         }
