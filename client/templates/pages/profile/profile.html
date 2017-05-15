@@ -1,36 +1,38 @@
 <template name="profile">
   <section class="feed">
 
-  {{#if inScript}}
+    {{#if inScript}}
 
-  <section class="bgGrey ptb_h1">
-    <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
-    <div><b>{{username profile}}</b></div>
-  </section>
-  <section class="ptb_h1">
-    <img src="/img/icon_overview.png" class="titleIcon">
-    <h3>Your We-Quality Overview</h3>
-    <h5>Your profile based on the questions<br> you answered about yourself</h5>
-    <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills.png'); background-size: cover;">
-      {{> radar score=myscore color="white" outline="#E96956"}}
-    </svg>
-    <div class="radarAgenda">
-      <div><img src="/img/myradar.png"></div>
-      <div><img src="/img/othersradar.png" class="t50"></div>
-    </div>
-  </section>
-  <section class="bgGrey ptb_h1">
-    <img src="/img/icon_top3.png" class="titleIcon">
-    <h3>Your 3 strengths</h3>
-    {{> threeSkills data=top3}}
-    <h3>Skills you could work out</h3>
-    {{> threeSkills data=weak3}}
-  </section>
-  <section class="ptb_h1">
-    <img src="/img/icon_mirror.png" class="titleIcon">
-    <h3>Use WeQu to find out how others see you</h3>
-    <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
-  </section>
+    <section class="bgGrey ptb_h1">
+      <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
+      <div><b>{{username profile}}</b></div>
+    </section>
+    <section class="ptb_h1">
+      <img src="/img/icon_overview.png" class="titleIcon">
+      <h3>Your We-Quality Overview</h3>
+      <h5>Your profile based on the questions<br> you answered about yourself</h5>
+      {{#with displayRadar}}
+      <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills.png'); background-size: cover;">
+        {{> radar score=myscore color="white" outline="#E96956"}}
+      </svg>
+      {{/with}}
+      <div class="radarAgenda">
+        <div><img src="/img/myradar.png"></div>
+        <div><img src="/img/othersradar.png" class="t50"></div>
+      </div>
+    </section>
+    <section class="bgGrey ptb_h1">
+      <img src="/img/icon_top3.png" class="titleIcon">
+      <h3>Your 3 strengths</h3>
+      {{> threeSkills data=top3}}
+      <h3>Skills you could work out</h3>
+      {{> threeSkills data=weak3}}
+    </section>
+    <section class="ptb_h1">
+      <img src="/img/icon_mirror.png" class="titleIcon">
+      <h3>Use WeQu to find out how others see you</h3>
+      <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
+    </section>
       <!--<section class="bgGrey ptb_h1">
         <img src="/img/icon_track.png" class="titleIcon">
         <h3>Track your soft skills</h3>
@@ -46,28 +48,41 @@
         <img src="/img/icon_overview.png" class="titleIcon">
         <h3>Your We-Quality Scores</h3>
         <h5></h5>
+        
         <svg height="300" width="300" style="zmin-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
           {{> radar score=myscore color="white" outline="#E96956"}}
           {{> radar score=otherscore color="#E96956" outline="white"}}
         </svg>
-        <div class="radarAgenda">
-          <div><img src="/img/myradar.png"></div>
-          <div><img src="/img/othersradar.png" class="t50"></div>
-        </div>
-      </section>
-      <section class="bgGrey ptb_h1">
-        <img src="/img/icon_top3.png" class="titleIcon">
-        <h3>Your top 3 strengths</h3>
-        <h5></h5>
-        {{> threeSkills data=top3}}
-        <h3>Your 3 weaknesses</h3>
-        {{> threeSkills data=weak3}}
+        
+        <section class="vote">
+          <section class="person">
+            <div class="navColor">
+             <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img src="/img/left.png" class="nav">Prev</a>
+           </div>
+           <div class="navColor">
+            <a id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img src="/img/right.png" class="nav">Next</a>
+          </div>
+        </section>
       </section>
 
-      {{/if}}
-
-      {{> marketingVideo}}
-
+      <div class="radarAgenda">
+        <div><img src="/img/myradar.png"></div>
+        <div><img src="/img/othersradar.png" class="t50"></div>
+      </div>
+    </section>
+    <section class="bgGrey ptb_h1">
+      <img src="/img/icon_top3.png" class="titleIcon">
+      <h3>Your top 3 strengths</h3>
+      <h5></h5>
+      {{> threeSkills data=top3}}
+      <h3>Your 3 weaknesses</h3>
+      {{> threeSkills data=weak3}}
     </section>
 
-  </template>
+    {{/if}}
+
+    {{> marketingVideo}}
+
+  </section>
+
+</template>

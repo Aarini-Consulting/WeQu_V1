@@ -4,8 +4,16 @@ Template.radar.onCreated(function(){
 	  self.autorun(function() {
 	    self.subscribe("feedback");
 	  });
-
-	   if(this.data.score){
-       	this.data.points = dataForRadar(this.data.score);
-       }
 })
+
+Template.radar.helpers({
+	points: function () {
+		let score = Template.instance().data.score;
+		if(score){
+			points = dataForRadar(score);
+			return points;
+		}	
+		return null
+	
+	}
+});
