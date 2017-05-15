@@ -10,7 +10,10 @@
       if(idx >= 0 && idx < friends.length - 1){
         userId =  friends[idx + 1] ;
         quizPerson.set(friends[idx + 1]);
-        Router.go(`/profile/user/${userId}`); 
+        if(userId == Meteor.userId())
+          Router.go(`/profile`); 
+        else
+          Router.go(`/profile/user/${userId}`); 
       }
     },
     "click #prevPerson" : function(event, template){
@@ -20,8 +23,10 @@
       if(idx >= 1 && idx < friends.length){
         userId =  friends[idx - 1] ;
         quizPerson.set(friends[idx - 1]);
-        Router.go(`/profile/user/${userId}`); 
-        
+        if(userId == Meteor.userId())
+          Router.go(`/profile`);
+        else
+          Router.go(`/profile/user/${userId}`); 
       }
     }
   });
@@ -31,18 +36,18 @@
   		return Meteor.user().profile;
   	},
     displayRadar(){
-        
-            let data = Template.instance().result.get();
-            if(data){
-              console.log(data);
-              return data;
-           }        
-          return null;
+      
+      let data = Template.instance().result.get();
+      if(data){
+        console.log(data);
+        return data;
+      }        
+      return null;
     }
   })
 
   Template.profile.created = function () {
-      this.result = new ReactiveVar();    
+    this.result = new ReactiveVar();    
   };
 
 
