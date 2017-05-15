@@ -17,6 +17,7 @@ Template.userAfterQuiz.helpers({
         "click #next" : function (event,template) {
             setLoginScript(false);
             let userId =  template.userId.get();
+            quizPerson.set(userId);
             return Router.go(`/profile/user/${userId}`);
         }
     });
