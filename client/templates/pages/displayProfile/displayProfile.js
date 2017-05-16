@@ -1,8 +1,4 @@
-  Template['profile'].events({
-    "click #finish" : function(){
-      setLoginScript('invite');
-      Router.go('/profile');
-    },
+  Template['displayProfile'].events({
     "click #nextPerson" : function(event, template){
       event.preventDefault();
       var friends = template.data.friends;
@@ -10,12 +6,14 @@
       if(idx >= 0 && idx < friends.length - 1){
         userId =  friends[idx + 1] ;
         quizPerson.set(friends[idx + 1]);
+        
         if(userId == Meteor.userId())
-          Router.go(`/profile`); 
+          Router.go(`/profile`);   
         else
           Router.go(`/profile/user/${userId}`); 
       }
     },
+    
     "click #prevPerson" : function(event, template){
       event.preventDefault();
       var friends = template.data.friends;
@@ -23,35 +21,35 @@
       if(idx >= 1 && idx < friends.length){
         userId =  friends[idx - 1] ;
         quizPerson.set(friends[idx - 1]);
+
         if(userId == Meteor.userId())
-          Router.go(`/profile`);
+          Router.go(`/profile`); 
         else
           Router.go(`/profile/user/${userId}`); 
+
       }
     }
+
   });
 
-  Template.profile.helpers({
-  	profile(){
-  		return Meteor.user().profile;
-  	},
+  Template.displayProfile.created = function () {
+    this.result = new ReactiveVar();    
+  };
+
+  Template.displayProfile.helpers({
+
     displayRadar(){
-      
+
       let data = Template.instance().result.get();
       if(data){
-        console.log(data);
         return data;
       }        
       return null;
     }
-  })
-
-  Template.profile.created = function () {
-    this.result = new ReactiveVar();    
-  };
+  });
 
 
-  Template.profile.rendered = function () {
+  Template.displayProfile.rendered = function () {
 
     let template = Template.instance();
 

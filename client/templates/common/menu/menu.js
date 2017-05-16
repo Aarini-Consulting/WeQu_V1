@@ -16,6 +16,9 @@
           Router.go('/profile');
         },
 
+        "click #quiz" : function(){
+          quizPerson.set(Meteor.userId());
+        },
 
         "click #changeView" : function(event,template){
         if (normalView.get()){
