@@ -22,6 +22,34 @@
                 var validAnswers = _.filter(qset, function(question) { return question.answer });
                 data.otherscore = calculateScore(qset);
                 data.enoughData = (validAnswers.length > 30);
+
+                //Profile should have carousal to navigate to other users profile
+
+
+                //Temporary ------- Sorting not works because of this
+               
+                var feedbacks = Feedback.find().fetch();
+                var friends =  _.chain(feedbacks).map(function(feedback){
+                    return [feedback.from, feedback.to];
+                }).flatten().uniq().sortBy().value();
+
+                friends = Meteor.users.find( {_id : {$in : friends}},{ profile : 1}).map(function(user){
+                                          return user._id;
+                                      });
+                data.friends = friends;
+                // Temporary Ends -----------
+
+                if(friends.indexOf(quizPerson.get()) < 0) {
+                    quizPerson.set(friends[0]);
+                }
+
+
+
+                var user = Meteor.users.findOne({_id : userId});
+                if(user) data.person = user.profile;
+                data.nextPerson = (friends.indexOf(quizPerson.get()) < friends.length - 1);
+                data.prevPerson = (friends.indexOf(quizPerson.get()) > 0);
+
                 _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch()))  
                 this.render('displayProfile', { data : data});  
             }
@@ -95,6 +123,33 @@
             var validAnswers = _.filter(qset, function(question) { return question.answer });
             data.otherscore = calculateScore(qset);
             data.enoughData = (validAnswers.length > 30);
+
+            //Profile should have carousal to navigate to other users profile
+
+                //Temporary ------- Sorting not works because of this
+               
+                var feedbacks = Feedback.find().fetch();
+                var friends =  _.chain(feedbacks).map(function(feedback){
+                    return [feedback.from, feedback.to];
+                }).flatten().uniq().sortBy().value();
+
+                friends = Meteor.users.find( {_id : {$in : friends}},{ profile : 1}).map(function(user){
+                                          return user._id;
+                                      });
+                data.friends = friends;
+                // Temporary Ends -----------
+
+                if(friends.indexOf(quizPerson.get()) < 0) {
+                    quizPerson.set(friends[0]);
+                }
+
+
+
+                var user = Meteor.users.findOne({_id : Meteor.userId()});
+                if(user) data.person = user.profile;
+                data.nextPerson = (friends.indexOf(quizPerson.get()) < friends.length - 1);
+                data.prevPerson = (friends.indexOf(quizPerson.get()) > 0);
+
 
             _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
             this.render('profile', { data : data});

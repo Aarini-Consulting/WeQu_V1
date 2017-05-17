@@ -12,6 +12,7 @@ Template['scriptLoginAfterQuiz'].events({
             {
                setLoginScript('profile');
             }
+            quizPerson.set(Meteor.userId());
             Router.go('/profile'); 
            
         }
