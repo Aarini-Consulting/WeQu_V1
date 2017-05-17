@@ -23,6 +23,7 @@
     </section>
     <section class="bgGrey ptb_h1">
      {{> navigateButton}}
+     {{> profileQuestionInfo}}
       <img src="/img/icon_top3.png" class="titleIcon">
       <h3>Your 3 strengths</h3>
       {{> threeSkills data=top3}}
@@ -30,7 +31,7 @@
       {{> threeSkills data=weak3}}
     </section>
     <section class="ptb_h1">
-    {{> profileQuestionInfo}}
+    
       <img src="/img/icon_mirror.png" class="titleIcon">
       <h3>Use WeQu to find out how others see you</h3>
       <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
@@ -55,6 +56,11 @@
           {{> radar score=myscore color="white" outline="#E96956"}}
           {{> radar score=otherscore color="#E96956" outline="white"}}
         </svg>
+
+        <div class="radarAgenda">
+        <div><img src="/img/myradar.png"></div>
+        <div><img src="/img/othersradar.png" class="t50"></div>
+        </div>
         
         <section class="vote">
           <section class="person">
@@ -79,10 +85,7 @@
       </section>
 
 
-      <div class="radarAgenda">
-        <div><img src="/img/myradar.png"></div>
-        <div><img src="/img/othersradar.png" class="t50"></div>
-      </div>
+      
     </section>
 
     {{/if}}

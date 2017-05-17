@@ -25,7 +25,7 @@ Template.profileQuestionInfo.helpers({
       var a = Feedback.findOne({to: Meteor.userId(), done:false, from: { '$ne': Meteor.userId() } });
       var idx = 0;
       if(a){
-       _.find(a.qset, function (question) {
+       count2 = _.find(a.qset, function (question) {
         idx++;
         return !_.has(question, 'answer');
        });
