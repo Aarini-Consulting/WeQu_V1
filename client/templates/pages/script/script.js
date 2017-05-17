@@ -1,19 +1,19 @@
 Template['scriptLoginAfterQuiz'].events({
         "click #next" : function () {
-
-            //let userId = Router.current().params.userId;
+            
             let email = Meteor.user().profile.emailAddress || Meteor.user().emails[0].address;
             let oldUser = Connections.findOne(  {"email":email} );
             let exists = !oldUser ? false : true;
-            //console.log(exists);
-            if(exists){
+            let condition = getLoginScript() == false ; // Already activated then do nothing
+            if(exists || condition){
               setLoginScript(false); // Invited user then activate the profile .
             }
             else
             {
-                setLoginScript('profile');
+               setLoginScript('profile');
             }
-           Router.go('/profile');
+            Router.go('/profile'); 
+           
         }
     });
 
