@@ -93,12 +93,12 @@
                 var gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
 
                 if (gender_result  == 'Male'){
-                  qset = genInitialQuestionSet(name, qdata.type1he, 10);
+                  qset = genInitialQuestionSet(name, qdata.type1he, 12);
                 } else if (gender_result  == 'Female') {
-                  qset = genInitialQuestionSet(name, qdata.type1she, 10);
+                  qset = genInitialQuestionSet(name, qdata.type1she, 12);
                 }
                 else{
-                  qset = genInitialQuestionSet(name, qdata.type1he, 10);
+                  qset = genInitialQuestionSet(name, qdata.type1he, 12);
                 }
                 var _id = Random.secret();
                 if(!qset){
