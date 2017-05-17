@@ -24,24 +24,24 @@ Meteor.methods({
            var gender_result1 = user1.profile && user1.profile.gender ? user1.profile.gender : "He"
 
            if (gender_result1  == 'Male'){
-            qset1 = genInitialQuestionSet(name1, qdata.type1he, 10);
+            qset1 = genInitialQuestionSet(name1, qdata.type1he, 12);
           } else if (gender_result1  == 'Female') {
-            qset1 = genInitialQuestionSet(name1, qdata.type1she, 10);
+            qset1 = genInitialQuestionSet(name1, qdata.type1she, 12);
           }
           else{
-            qset1 = genInitialQuestionSet(name1, qdata.type1he, 10);
+            qset1 = genInitialQuestionSet(name1, qdata.type1he, 12);
           }
 
           var name2 = getUserName(user2.profile);
            var gender_result2 = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
 
            if (gender_result2  == 'Male'){
-            qset2 = genInitialQuestionSet(name2, qdata.type1he, 10);
+            qset2 = genInitialQuestionSet(name2, qdata.type1he, 12);
           } else if (gender_result2  == 'Female') {
-            qset2 = genInitialQuestionSet(name2, qdata.type1she, 10);
+            qset2 = genInitialQuestionSet(name2, qdata.type1she, 12);
           }
           else{
-            qset2 = genInitialQuestionSet(name2, qdata.type1he, 10);
+            qset2 = genInitialQuestionSet(name2, qdata.type1he, 12);
           }
 
           var _id = Random.secret();
