@@ -3,36 +3,53 @@ Template.profileQuestionInfo.helpers({
 
   questionIAnswered(){
 
-      let count = Feedback.find({from: Meteor.userId(), to: Meteor.userId(),done:true}).count();
-      count = count*12;
-      var a = Feedback.findOne({from: Meteor.userId(), to: Meteor.userId(), done:false});
-      var idx = 0;
-      if(a){
+    let count = Feedback.find({from: Meteor.userId(), to: Meteor.userId(),done:true}).count();
+    count = count*12;
+    var a = Feedback.findOne({from: Meteor.userId(), to: Meteor.userId(), done:false});
+    var idx = 0;
+    if(a){
       _.find(a.qset, function (question) {
         idx++;
         return !_.has(question, 'answer');
-       });
-       idx--;
-      }
-      
-      idx = idx+count;
-      return idx;
-    },
-
-    questionInviteesAnswered(){
-      let count = Feedback.find({to: Meteor.userId(),done:true, from: { '$ne': Meteor.userId() }}).count();
-      count = count*12;
-      var a = Feedback.findOne({to: Meteor.userId(), done:false, from: { '$ne': Meteor.userId() } });
-      var idx = 0;
-      if(a){
-       count2 = _.find(a.qset, function (question) {
-        idx++;
-        return !_.has(question, 'answer');
-       });
+      });
       idx--;
-      }
-      idx = idx+count;
-      return idx;
     }
+
+    idx = idx+count;
+    return idx;
+  },
+
+  questionInviteesAnswered(){
+    let b = Feedback.find({to: Meteor.userId(),done:true, from: { '$ne': Meteor.userId() }})
+    var count=0;
+
+    // Below blocks can be merged together
+
+    if(b.count()>0){
+      b.forEach(function (data) {
+       qset = data.qset;
+       qset.forEach(function (dat) {
+        if(!isNaN(dat.answer)  && !!dat.answer){
+          count++;
+        }
+      });
+     });
+    }
+
+
+    var a = Feedback.findOne({to: Meteor.userId(), done:false, from: { '$ne': Meteor.userId() } });
+    var idx = 0;
+    if(a){
+      qset = a.qset;
+      qset.forEach(function (data) {
+        if(!isNaN(data.answer)  && !!data.answer){
+          idx++;
+        }
+      });
+    }
+
+    idx = idx+count;
+    return idx;
+  }
 
 });
