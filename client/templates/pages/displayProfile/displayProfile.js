@@ -55,6 +55,10 @@
 
     Meteor.subscribe('feedback');
 
+    if(Router.current().params.userId){
+      quizPerson.set(Router.current().params.userId);
+    }
+
     //Re-write as a function - Re-use it
 
     Tracker.autorun(function () {
