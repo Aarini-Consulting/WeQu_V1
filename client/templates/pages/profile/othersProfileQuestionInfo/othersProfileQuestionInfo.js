@@ -1,3 +1,12 @@
+
+Template.othersProfileQuestionInfo.onCreated(function() {
+	var self = this;
+	self.autorun(function() {
+		self.subscribe("feedback","allData");
+	});
+});
+
+
 Template.othersProfileQuestionInfo.helpers({
 	questionHimselfAnswered() {
 	let userId = quizPerson.get();	
@@ -54,7 +63,7 @@ Template.othersProfileQuestionInfo.helpers({
 	    }
 
 
-	    var a = Feedback.findOne({to: userId, done:false, from: { '$ne': Meteor.userId() } });
+	    var a = Feedback.findOne({to: userId, done:false, from: { $nin: [ userId , Meteor.userId() ] } });
 	    var idx = 0;
 	    if(a){
 	      qset = a.qset;
@@ -66,6 +75,7 @@ Template.othersProfileQuestionInfo.helpers({
 	    }
 
 	    idx = idx+count;
-	    return idx;
+	    //return idx;
+	    return null;
 	}
 });
