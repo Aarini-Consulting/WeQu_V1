@@ -22,12 +22,12 @@
         Router.go('/script-invitation');
        } else if(getLoginScript()) {
         Router.go('/script-login')
-       }
+       } 
        return this.next();
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
                  'userAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy',
-                 '/quiz/:_id?'
+                 '/quiz/:_id?','/quiz'
                 ] });
 
     route = new ReactiveVar("quiz");
