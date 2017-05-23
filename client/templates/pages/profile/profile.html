@@ -7,6 +7,7 @@
       <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
       <div><b>{{username profile}}</b></div>
     </section>
+
     <section class="ptb_h1">
       <img src="/img/icon_overview.png" class="titleIcon">
       <h3>Your We-Quality Overview</h3>
@@ -21,6 +22,7 @@
         <div><img src="/img/othersradar.png" class="t50"></div>
       </div>
     </section>
+
     <section class="bgGrey ptb_h1">
      {{> navigateButton}}
      {{> profileQuestionInfo}}
@@ -47,9 +49,39 @@
       {{else}}
       {{> menuProfile}}
 
+      <div class="sectionname">
+        <div class="profilename w-container">
+          <div class="left profileclick"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
+          </div>
+          <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+            <div class="fontprofilename fontreleway">YOU-PROFILE</div>
+          </div>
+          <div class="profileclick right"><img class="profilearrow" height="80" src="/img/arrowRight.png">
+          </div>
+        </div>
+      </div>
+
+      <div class="sectionprogress">
+        <div class="row w-row">
+          <div class="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span class="fontmyself fontreleway progressnumber" href="#">12</span>
+            <div class="fontprogress fontreleway fontwidthmobile small">Answers by myself</div>
+          </div>
+          <div class="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span class="fontothers fontreleway progressnumber" href="#">0</span>
+          <div class="fontprogress fontreleway small">Answers by your teammates
+              <br>(Answers by USERNAME)</div>
+            </div>
+            <div class="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span class="font2 fontothers fontreleway progressnumber" href="#">0</span>
+              <div class="fontprogress fontreleway small">(Answers by others)</div>
+            </div>
+          </div>
+          <div class="progressdesdiv">
+            <div class="fontprogressdes fontreleway small">Below&nbsp;information is being generated based on the inputs from myself and your teammates</div>
+          </div>
+        </div>
+
       <section class="ptb_h1">
         <img src="/img/icon_overview.png" class="titleIcon">
-        <h3>Your We-Quality Scores</h3>
+        <h3>Comparisons</h3>
         <h5></h5>
         
         <svg height="300" width="300" style="zmin-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">

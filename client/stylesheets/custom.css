@@ -518,3 +518,16 @@ input[type="radio"]{
 .navColor{
 	background: blue;
 }
+
+/* over-riding wequ-profile */
+.sectionname{
+	width: 100% !important;
+}
+
+.sectionprogress{
+	width: 100% !important;
+}
+
+.small{
+	font-size: small;
+}
