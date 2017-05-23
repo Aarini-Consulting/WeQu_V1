@@ -232,11 +232,15 @@
             */        
 
              // Navigate to profile page , Applicable to all the users and all the times
+
+             // not during while answering the invited person first time
              
-             if(id == Meteor.userId())
-             Router.go(`/scriptLoginAfterQuiz`);
-             else
-             Router.go(`/userAfterQuiz/${id}`);
+             if(id){
+               if(id == Meteor.userId())
+               Router.go(`/scriptLoginAfterQuiz`);
+               else
+               Router.go(`/userAfterQuiz/${id}`);
+             }
 
              if(template.data.nextPerson == true){
               var friends = template.data.friends;
