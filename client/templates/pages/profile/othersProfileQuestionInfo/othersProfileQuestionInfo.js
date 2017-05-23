@@ -46,7 +46,7 @@ Template.othersProfileQuestionInfo.helpers({
 	questionInviteesAnsweredHim(){
 
 		let userId = quizPerson.get();
-		let b = Feedback.find({to: userId,done:true, from: { '$ne': Meteor.userId() }})
+		let b = Feedback.find({to: userId,done:true, from: { '$ne': userId }})
 	    var count=0;
 
 	    // Below blocks can be merged together
@@ -75,7 +75,6 @@ Template.othersProfileQuestionInfo.helpers({
 	    }
 
 	    idx = idx+count;
-	    //return idx;
-	    return null;
+	    return idx;
 	}
 });
