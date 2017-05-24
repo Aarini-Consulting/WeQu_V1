@@ -3,17 +3,7 @@
 
     {{#if inScript}}
 
-    <div class="sectionname">
-      <div class="profilename w-container">
-        <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
-        </div>
-        <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
-          <div class="fontprofilename fontreleway">YOU-PROFILE</div>
-        </div>
-        <div class="profileclick right" id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowRight.png">
-        </div>
-      </div>
-    </div>
+    {{> sectionName}}
 
     {{> profileQuestionInfo}}  
     
@@ -26,10 +16,7 @@
         {{> radar score=myscore color="white" outline="#E96956"}}
       </svg>
 
-      <div class="radarAgenda">
-        <div><img src="/img/myradar.png"></div>
-        <div><img src="/img/othersradar.png" class="t50"></div>
-      </div>
+      {{> radarAgenda}}
     </section>
 
     <section class="bgGrey ptb_h1">
@@ -56,17 +43,7 @@
 
     <!-- {{> menuProfile}} -->
 
-    <div class="sectionname">
-      <div class="profilename w-container">
-        <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
-        </div>
-        <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
-          <div class="fontprofilename fontreleway">YOU-PROFILE</div>
-        </div>
-        <div class="profileclick right" id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowRight.png">
-        </div>
-      </div>
-    </div>
+    {{> sectionName}}
 
     {{> profileQuestionInfo}}     
 
@@ -80,10 +57,7 @@
         {{> radar score=otherscore color="#E96956" outline="white"}}
       </svg>
 
-      <div class="radarAgenda">
-        <div><img src="/img/myradar.png"></div>
-        <div><img src="/img/othersradar.png" class="t50"></div>
-      </div>
+      {{> radarAgenda}}
 
       <section class="bgGrey ptb_h1">
 
