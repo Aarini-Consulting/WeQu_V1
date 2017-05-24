@@ -1,4 +1,11 @@
 
+Template.profileQuestionInfo.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    self.subscribe("feedback","allData");
+  });
+});
+
 Template.profileQuestionInfo.helpers({
 
   questionIAnswered(){
