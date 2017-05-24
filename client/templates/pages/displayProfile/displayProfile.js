@@ -1,3 +1,5 @@
+  import '/imports/startup/client/wequ-profile.webflow.css';
+
   Template['displayProfile'].events({
     "click #nextPerson" : function(event, template){
       event.preventDefault();
