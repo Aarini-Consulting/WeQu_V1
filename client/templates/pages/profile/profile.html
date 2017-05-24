@@ -3,12 +3,20 @@
 
     {{#if inScript}}
 
-    <section class="bgGrey ptb_h1">
-      <img src="{{currentUser.profile.pictureUrl}}" class="avatar">
-      <div><b>{{username profile}}</b></div>
-    </section>
+    <div class="sectionname">
+      <div class="profilename w-container">
+        <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
+        </div>
+        <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+          <div class="fontprofilename fontreleway">YOU-PROFILE</div>
+        </div>
+        <div class="profileclick right" id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowRight.png">
+        </div>
+      </div>
+    </div>
 
-
+    {{> profileQuestionInfo}}  
+    
     <section class="ptb_h1">
       <img src="/img/icon_overview.png" class="titleIcon">
       <h3>Your We-Quality Overview</h3>
@@ -17,76 +25,68 @@
       <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills.png'); background-size: cover;">
         {{> radar score=myscore color="white" outline="#E96956"}}
       </svg>
-     
+
       <div class="radarAgenda">
         <div><img src="/img/myradar.png"></div>
         <div><img src="/img/othersradar.png" class="t50"></div>
       </div>
     </section>
 
-    {{> profileQuestionInfo}}
-
     <section class="bgGrey ptb_h1">
-          
+
       <img src="/img/icon_top3.png" class="titleIcon">
       <h3>Your 3 strengths</h3>
       {{> threeSkills data=top3}}
       <h3>Skills you could work out</h3>
       {{> threeSkills data=weak3}}
     </section>
-       
+
 
     <section class="ptb_h1">
-    
+
       <img src="/img/icon_mirror.png" class="titleIcon">
       <h3>Use WeQu to find out how others see you</h3>
       <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
     </section>
-      <div class="divbttn" id="finish"><a class="fontbttn profilebttn w-button">invite my teammates to learn how they see me</a>
+    <div class="divbttn" id="finish"><a class="fontbttn profilebttn w-button">invite my teammates to learn how they see me</a>
     </div>
     {{> navigateButton}}
-      <!--<section class="bgGrey ptb_h1">
-        <img src="/img/icon_track.png" class="titleIcon">
-        <h3>Track your soft skills</h3>
-        <h5>Gain insights on your skills with an extra depth</h5>
-        {{> skillsPreview}}
-      </section>-->
-      
 
-      {{else}}
-      {{> menuProfile}}
+    {{else}}
 
-      <div class="sectionname">
-        <div class="profilename w-container">
-          <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
-          </div>
-          <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
-            <div class="fontprofilename fontreleway">YOU-PROFILE</div>
-          </div>
-          <div class="profileclick right" id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowRight.png">
-          </div>
+    <!-- {{> menuProfile}} -->
+
+    <div class="sectionname">
+      <div class="profilename w-container">
+        <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
+        </div>
+        <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+          <div class="fontprofilename fontreleway">YOU-PROFILE</div>
+        </div>
+        <div class="profileclick right" id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowRight.png">
         </div>
       </div>
+    </div>
 
-      {{> profileQuestionInfo}}     
+    {{> profileQuestionInfo}}     
 
-      <section class="ptb_h1">
-        <img src="/img/icon_overview.png" class="titleIcon">
-        <h3>Comparisons</h3>
-        <h5></h5>
-        
-        <svg height="300" width="300" style="zmin-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
-          {{> radar score=myscore color="white" outline="#E96956"}}
-          {{> radar score=otherscore color="#E96956" outline="white"}}
-        </svg>
+    <section class="ptb_h1">
+      <img src="/img/icon_overview.png" class="titleIcon">
+      <h3>Comparisons</h3>
+      <h5></h5>
 
-        <div class="radarAgenda">
+      <svg height="300" width="300" style="zmin-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
+        {{> radar score=myscore color="white" outline="#E96956"}}
+        {{> radar score=otherscore color="#E96956" outline="white"}}
+      </svg>
+
+      <div class="radarAgenda">
         <div><img src="/img/myradar.png"></div>
         <div><img src="/img/othersradar.png" class="t50"></div>
-        </div>
-        
+      </div>
+
       <section class="bgGrey ptb_h1">
-           
+
         <img src="/img/icon_top3.png" class="titleIcon">
         <h3>Your top 3 strengths</h3>
         <h5></h5>
