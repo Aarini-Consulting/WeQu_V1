@@ -1,4 +1,11 @@
 
+/*Template.profileQuestionInfo.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    self.subscribe("feedback","allData");
+  });
+});*/
+
 Template.profileQuestionInfo.helpers({
 
   questionIAnswered(){
@@ -23,8 +30,6 @@ Template.profileQuestionInfo.helpers({
     let b = Feedback.find({to: Meteor.userId(),done:true, from: { '$ne': Meteor.userId() }})
     var count=0;
 
-    // Below blocks can be merged together
-
     if(b.count()>0){
       b.forEach(function (data) {
        qset = data.qset;
@@ -36,8 +41,7 @@ Template.profileQuestionInfo.helpers({
      });
     }
 
-
-    var a = Feedback.findOne({to: Meteor.userId(), done:false, from: { '$ne': Meteor.userId() } });
+    /*var a = Feedback.findOne({to: Meteor.userId(), done:false, from: { '$ne': Meteor.userId() } });
     var idx = 0;
     if(a){
       qset = a.qset;
@@ -46,6 +50,20 @@ Template.profileQuestionInfo.helpers({
           idx++;
         }
       });
+    }*/
+
+    let a = Feedback.find({to: Meteor.userId(), done:false, from: { '$ne': Meteor.userId() } });
+    var idx=0;
+
+    if(a.count()>0){
+      a.forEach(function (data) {
+       qset = data.qset;
+       qset.forEach(function (dat) {
+        if(!isNaN(dat.answer)  && !!dat.answer){
+          idx++;
+        }
+      });
+     });
     }
 
     idx = idx+count;
