@@ -1,10 +1,21 @@
  <template name="threeSkills">
-    <ul class="maxContainer">
+    <!-- <ul class="maxContainer">
       {{#each data}}
       <li class="max">
         <img src="/img/skills/{{skill}}.png">
         {{text}}
       </li>
       {{/each}}
-    </ul>
+    </ul> -->
+    
+    <div class="columtop w-row">
+     {{#each data}}
+      <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack" data-ix="skillls">
+        <div class="skillblock"><img class="iconskill" src="/img/skills/{{skill}}.png">
+          <div class="fontreleway skillname">{{text}}</div>
+        </div>
+      </div>
+    {{/each}}
+    </div>
+
   </template>

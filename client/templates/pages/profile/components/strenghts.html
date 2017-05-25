@@ -1,13 +1,21 @@
 
 <template name="strengths">
 
-	<section class="bgGrey ptb_h1">
+	<div class="sectiongreybg sectionprofile">
 
-		<img src="/img/icon_top3.png" class="titleIcon">
-		<h3>Your top 3 strengths</h3>
-		<h5></h5>
+		<div class="titlesection w-container"><img class="iconwrapper" src="/img/iconSkills.png">
+			<div class="fontreleway fonttitle">My MORE TRUE Skills</div>
+		</div>
+
 		{{> threeSkills data=top3}}
-		<h3>Your 3 weaknesses</h3>
+		<div class="fontreleway fonttitle">My LESS TRUE Skills</div>
 		{{> threeSkills data=weak3}}
-	</section>
+
+		<p class="fontreleway paratopskills">These skills are selected based on the questions you and your teammates have answered about you.
+			<br>The more questions you get, the more accurate your profile becomes.</p>
+
+			{{> navigateButton}}
+
+		</div>
+
 </template>
