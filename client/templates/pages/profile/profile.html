@@ -1,79 +1,19 @@
 <template name="profile">
   <section class="feed">
 
-    {{#if inScript}}
-
     {{> sectionName}}
 
     {{> profileQuestionInfo}}  
     
-    <section class="ptb_h1">
-      <img src="/img/icon_overview.png" class="titleIcon">
-      <h3>Your We-Quality Overview</h3>
-      <h5>Your profile based on the questions<br> you answered about yourself</h5>
-      
-      <svg height="300" width="300" style="min-height:300px; background-image:url('/img/skills.png'); background-size: cover;">
-        {{> radar score=myscore color="white" outline="#E96956"}}
-      </svg>
+    {{> radarComparison}}
 
-      {{> radarAgenda}}
-    </section>
-
-    <section class="bgGrey ptb_h1">
-
-      <img src="/img/icon_top3.png" class="titleIcon">
-      <h3>Your 3 strengths</h3>
-      {{> threeSkills data=top3}}
-      <h3>Skills you could work out</h3>
-      {{> threeSkills data=weak3}}
-    </section>
-
-
-    <section class="ptb_h1">
-
-      <img src="/img/icon_mirror.png" class="titleIcon">
-      <h3>Use WeQu to find out how others see you</h3>
-      <h3>Invite your friends and colleagues to give <br>you feedback. They are the helpful mirrors <br>you have in your life. </h3>
-    </section>
-    <div class="divbttn" id="finish"><a class="fontbttn profilebttn w-button">invite my teammates to learn how they see me</a>
-    </div>
-    {{> navigateButton}}
-
-    {{else}}
-
-    <!-- {{> menuProfile}} -->
-
-    {{> sectionName}}
-
-    {{> profileQuestionInfo}}     
-
-    <section class="ptb_h1">
-      <img src="/img/icon_overview.png" class="titleIcon">
-      <h3>Comparisons</h3>
-      <h5></h5>
-
-      <svg height="300" width="300" style="zmin-height:300px; background-image:url('/img/skills2.png'); background-size: cover;">
-        {{> radar score=myscore color="white" outline="#E96956"}}
-        {{> radar score=otherscore color="#E96956" outline="white"}}
-      </svg>
-
-      {{> radarAgenda}}
-
-      <section class="bgGrey ptb_h1">
-
-        <img src="/img/icon_top3.png" class="titleIcon">
-        <h3>Your top 3 strengths</h3>
-        <h5></h5>
-        {{> threeSkills data=top3}}
-        <h3>Your 3 weaknesses</h3>
-        {{> threeSkills data=weak3}}
-      </section>
-      {{> navigateButton}}
-
-      
-    </section>
-
+    {{#if inScript}}
+     {{> inviteTeammates}}
     {{/if}}
+
+    {{> strengths}}
+  
+    {{> navigateButton}}
 
     {{> marketingVideo}}
 
