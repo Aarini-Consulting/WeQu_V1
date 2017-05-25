@@ -531,3 +531,12 @@ input[type="radio"]{
 .small{
 	font-size: small;
 }
+
+.webflow-row{
+ margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
+}
