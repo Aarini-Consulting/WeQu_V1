@@ -1,13 +1,31 @@
 <template name="othersProfileQuestionInfo">
 	
-  <div> 
+ <!-- <div> 
 	  Questions Himself answered {{questionHimselfAnswered}} <br>
 
 	  Questions I answered for Him/Her {{questionIAnsweredHim}} <br>
 
 	  Questions other invitees answered for Him {{questionInviteesAnsweredHim}} <br>
 
-  </div>
+  </div> -->
+
+  <div class="sectionprogress">
+        <div class="row w-row">
+          <div class="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span class="fontmyself fontreleway progressnumber" href="#">{{questionHimselfAnswered}}</span>
+            <div class="fontprogress fontreleway fontwidthmobile small">Answers by myself</div>
+          </div>
+          <div class="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span class="fontothers fontreleway progressnumber" href="#">{{questionIAnsweredHim}}</span>
+          <div class="fontprogress fontreleway small">Answers by your teammates
+              <br>(Answers by {{username profile}})</div>
+            </div>
+            <div class="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span class="font2 fontothers fontreleway progressnumber" href="#">{{questionInviteesAnsweredHim}}</span>
+              <div class="fontprogress fontreleway small">(Answers by others)</div>
+            </div>
+          </div>
+          <div class="progressdesdiv">
+            <div class="fontprogressdes fontreleway small">Below&nbsp;information is being generated based on the inputs from myself and your teammates</div>
+          </div>
+        </div>
 
 </template>
 

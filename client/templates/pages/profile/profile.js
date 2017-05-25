@@ -1,3 +1,5 @@
+  import '/imports/startup/client/wequ-profile.webflow.css';
+
   Template['profile'].events({
     "click #finish" : function(){
       setLoginScript('invite');

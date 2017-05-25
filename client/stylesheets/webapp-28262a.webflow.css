@@ -44,9 +44,9 @@
   background-attachment: fixed;
 }
 
-.loginbox {
+/*.loginbox {
   display: block;
-  /*padding: 30px;*/
+ 
   padding:20px;
   border-radius: 10px;
   background-image: -webkit-linear-gradient(270deg, #fff, #fff);
@@ -57,7 +57,7 @@
 .loginbox {
   position: fixed;
   left: 0px;
-  /*top: 50px;*/
+  
   top:30px;
   right: 0px;
   display: block;
@@ -69,7 +69,62 @@
   background-image: -webkit-linear-gradient(270deg, #fff, #fff);
   background-image: linear-gradient(180deg, #fff, #fff);
   box-shadow: 0 0 10px 2px #b8b8b8;
+}*/
+
+.loginbox {
+  display: block;
+  position: fixed;
+  padding: 20px;
+  left: 0px;
+ /* top: 50px;*/
+  top:30px;
+  right: 0px;
+  display: block;
+  width: 400px;
+  height: 510px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 2px;
+  background-image: -webkit-linear-gradient(270deg, #fff, #fff);
+  background-image: linear-gradient(180deg, #fff, #fff);
+  box-shadow: 0 0 10px 2px #b8b8b8;
+
+  /** added for animation **/
+  -webkit-animation-name: zoomIn;
+  animation-name: zoomIn;
+  -webkit-animation-duration: 400ms;
+  animation-duration: 300ms ease;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
+
+@-webkit-keyframes zoomIn {
+    0% {
+    opacity: 0;
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    100%{
+      opacity: 1;
+      -webkit-transform: scale3d(1,1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes zoomIn {
+    0% {
+    opacity: 0;
+    /*-webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);*/
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+    }
+    100%{
+      opacity: 1;
+      -webkit-transform: scale3d(1,1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  } 
 
 .loginbox.signupbox {
   height: 530px;
