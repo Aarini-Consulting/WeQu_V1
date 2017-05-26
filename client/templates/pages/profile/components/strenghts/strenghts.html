@@ -4,11 +4,11 @@
 	<div class="sectiongreybg sectionprofile">
 
 		<div class="titlesection w-container"><img class="iconwrapper" src="/img/iconSkills.png">
-			<div class="fontreleway fonttitle">My MORE TRUE Skills</div>
+			<div class="fontreleway fonttitle">{{userType}} MORE TRUE Skills</div>
 		</div>
 
 		{{> threeSkills data=top3}}
-		<div class="fontreleway fonttitle">My LESS TRUE Skills</div>
+		<div class="fontreleway fonttitle">{{userType}} LESS TRUE Skills</div>
 		{{> threeSkills data=weak3}}
 
 		<p class="fontreleway paratopskills">These skills are selected based on the questions you and your teammates have answered about you.

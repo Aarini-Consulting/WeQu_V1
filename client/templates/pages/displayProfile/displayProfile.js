@@ -35,7 +35,7 @@
   });
 
   Template.displayProfile.created = function () {
-    this.result = new ReactiveVar();    
+    this.result = new ReactiveVar();  
   };
 
   Template.displayProfile.helpers({
