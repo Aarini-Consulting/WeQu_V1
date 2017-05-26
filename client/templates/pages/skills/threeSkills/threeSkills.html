@@ -11,8 +11,11 @@
     <div class="columtop w-row">
      {{#each data}}
       <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack" data-ix="skillls">
-        <div class="skillblock"><img class="iconskill" src="/img/skills/{{skill}}.png">
-          <div class="fontreleway skillname">{{text}}</div>
+        <div class="skillblock">
+          <img class="iconskill" src="/img/skills/{{skill}}.png" data-toggle="popover"  data-trigger="hover" data-content="Some content">
+          <div class="fontreleway skillname">
+           <a class="colorNone" data-toggle="popover"  data-trigger="hover" data-content="Some content">{{text}}</a>
+          </div>
         </div>
       </div>
     {{/each}}
