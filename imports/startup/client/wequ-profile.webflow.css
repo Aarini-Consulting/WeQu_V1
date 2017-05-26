@@ -10,14 +10,14 @@
   background-image: linear-gradient(180deg, rgba(44, 44, 44, .99), rgba(44, 44, 44, .99));
 }
 
-.sectionname {
+/*.sectionname {
   padding-bottom: 10px;
   background-image: url('../img/Background_white20.png');
   background-position: 50% -61px;
   background-size: 1200px;
   box-shadow: none;
   text-align: center;
-}
+}*/
 
 .profilename {
   display: block;
