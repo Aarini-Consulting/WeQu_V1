@@ -7,8 +7,10 @@
         }
       else
         {
-          let user = Meteor.users.findOne({_id: quizPerson.get()})
-          return getUserName(user.profile);
+          let user = Meteor.users.findOne({_id: quizPerson.get()});
+          if(user){
+            return getUserName(user.profile);
+          }
         }
     }
   });

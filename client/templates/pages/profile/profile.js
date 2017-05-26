@@ -2,8 +2,8 @@
 
   Template['profile'].events({
     "click #finish" : function(){
-      setLoginScript('invite');
-      Router.go('/profile');
+      //setLoginScript('invite');
+      Router.go('/invite');
     },
     "click #nextPerson" : function(event, template){
       event.preventDefault();
