@@ -11,5 +11,17 @@ Template.strengths.helpers({
             return getUserName(user.profile);
           }
         }
+    },
+    topWeak(){
+      let userId = Router.current() && Router.current().params.userId;
+      if(!userId){
+        return true;
+      }
+      let data = calculateTopWeak(Feedback.find({to: userId }).fetch());
+      if(data){
+        let condition =  data.top3.length>0 && data.weak3.length>0 ;
+        console.log(condition);
+        return condition;
+      }
     }
 });

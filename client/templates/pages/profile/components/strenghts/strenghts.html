@@ -1,7 +1,15 @@
 
 <template name="strengths">
 
-	<div class="sectiongreybg sectionprofile">
+	  {{#unless topWeak}}
+
+	  <div class="sectiongreybg sectionprofile">
+	     <center> There is no information about {{userType}} </center>
+	  </div>
+
+	  {{else}}
+
+	  <div class="sectiongreybg sectionprofile">
 
 		<div class="titlesection w-container"><img class="iconwrapper" src="/img/iconSkills.png">
 			<div class="fontreleway fonttitle">{{userType}} MORE TRUE Skills</div>
@@ -15,5 +23,7 @@
 			<br>The more questions you get, the more accurate your profile becomes.</p>
 
 		</div>
+
+	   {{/unless}}
 
 </template>
