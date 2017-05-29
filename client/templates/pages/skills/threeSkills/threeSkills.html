@@ -3,11 +3,11 @@
    {{#each data}}
    <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack" data-ix="skillls">
     <div class="skillblock">
-      {{#unless swapDescription}}
-      <img class="iconskill swapDescription" src="/img/skills/{{skill}}.png">
-      {{else}}
-      <div class="swapDescription" style="color: {{color}} ;"> {{description}} </div>
-      {{/unless}}
+      
+      <img class="iconskill swapDescription1 swap1{{skill}} active" data-skill={{skill}} style="display: none;" src="/img/skills/{{skill}}.png">
+      
+      <div class="swapDescription2 swap2{{skill}}" data-skill={{skill}} style="color: {{color}}; display: none;" > {{description}} </div>
+      
       <div class="fontreleway skillname">{{text}}</div>
     </div>
   </div>
@@ -15,3 +15,5 @@
 </div>
 
 </template>
+
+<!-- style="color: {{color}}; display: none;" -->

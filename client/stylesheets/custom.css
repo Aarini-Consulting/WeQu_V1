@@ -554,3 +554,7 @@ input[type="radio"]{
 .colorNone{
 	color: black;
 }
+
+.active{
+	display: block !important;
+}
