@@ -17,7 +17,12 @@
     </div>
     {{/each}}
     {{/each}}
+    
+    {{#if isExpand}}
+    <div class="arrow"> Expand the Section .... </div>
+    {{else}}
+    <div class="arrow"> Contract the Section .... </div>
+    {{/if}}
 
-    <div class="arrow"> Arrow here .... </div>
   </template>
 

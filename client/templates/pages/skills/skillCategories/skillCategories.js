@@ -10,6 +10,11 @@ Template.skillCategories.created = function () {
 };
 
 Template.skillCategories.helpers({
+
+	isExpand(){
+		return Template.instance().expand.get();
+	},
+
 	data() {
 		
              // Replacing userId with custom Id
@@ -29,7 +34,7 @@ Template.skillCategories.helpers({
             var otherscore = calculateScore(joinedQset, true);
             data.enoughData = (validAnswers.length > 9);
 
-            let count = Template.instance().expand.get() ? 10 : 5;
+            let count = Template.instance().expand.get() ? 3 : 0;
             var i=0;
             console.log(count);
             let categories = {};
@@ -46,11 +51,8 @@ Template.skillCategories.helpers({
 	                    })
 	                  }
              })
-
-			// Reduce the array to specified count ...              
-
+             categories.splice(0,count);
              data.categories = categories;
-             console.log(data);
              return data;
 		    }
        }
@@ -60,6 +62,9 @@ Template.skillCategories.helpers({
 Template.skillCategories.events({
 	'click .arrow': function (event,template) {
 		event.preventDefault();
-		template.expand.set(false);
+		if(template.expand.get())
+		  template.expand.set(false);	
+		else
+	      template.expand.set(true);
 	}
 });
