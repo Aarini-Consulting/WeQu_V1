@@ -1,17 +1,26 @@
 <template name="skillSet">
-
 	
   <div class="sectionprofile sectionskills">
     <div class="titlesection w-container"><img class="iconwrapper" src="/img/icon24.png">
       <div class="fontreleway fonttitle">My Character Skill Set</div>
     </div>
+    {{#if sectionEmpty.isTrue}}
     <div class="skillcovergrey"></div>
+	{{else}}
+	<div> Show the full profile , since 3 members invited </div>
+	
+	{{> profileSkills}}
+
+    {{/if}}
  </div>
 
+ {{#if sectionEmpty.isTrue}}
  <div class="sectionempty">
     <p class="fontreleway paraskillset paratopskills">Expand your self knowledge by unlocking your character skills from honest to listening to resilient.
-      <br>In order to generate a reliable view, it requires inputs from at least three teammates of you.</p><a class="_24skillsbttn fontbttn profilebttn w-button" href="#">invite three more teammates to view my complete skill set</a>
+      <br>In order to generate a reliable view, it requires inputs from at least three teammates of you.</p>
+      <a class="_24skillsbttn fontbttn profilebttn w-button" href="/invite">invite {{sectionEmpty.count}} more teammates to view my complete skill set</a>
  </div>
+ {{/if}}
 
 </template>
 
