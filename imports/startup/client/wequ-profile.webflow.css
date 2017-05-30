@@ -545,6 +545,7 @@
   background-image: url('../img/bg_dark.001.jpeg');
   background-position: 0px 0px;
   background-size: cover;
+  width:100% !important;
 }
 
 .block-social {

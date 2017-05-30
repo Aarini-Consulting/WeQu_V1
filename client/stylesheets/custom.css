@@ -558,3 +558,7 @@ input[type="radio"]{
 .active{
 	display: block !important;
 }
+
+.section-social {
+	width: 100%;
+}

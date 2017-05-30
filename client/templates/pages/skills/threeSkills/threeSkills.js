@@ -14,21 +14,20 @@ Template.threeSkills.created = function () {
 Template.threeSkills.events({
 	'click .swapDescription1': function (event,template) {
 		event.preventDefault();
-        
-        $(event.currentTarget).toggleClass('active');
-        let skill = $(event.currentTarget).attr('data-skill');
-        let c = ".swap2"+skill;
-        console.log(c);
-        $(c).toggleClass('active');
-			
+		
+		$(event.currentTarget).toggleClass('active');
+		let skill = $(event.currentTarget).attr('data-skill');
+		let c = ".swap2"+skill;
+		$(c).toggleClass('active');
+		
 	},
 	'click .swapDescription2': function (event,template) {
 		event.preventDefault();
-        
-        $(event.currentTarget).toggleClass('active');
-        let skill = $(event.currentTarget).attr('data-skill');
-        let c = ".swap1"+skill;
-        $(c).toggleClass('active');
-			
+		
+		$(event.currentTarget).toggleClass('active');
+		let skill = $(event.currentTarget).attr('data-skill');
+		let c = ".swap1"+skill;
+		$(c).toggleClass('active');
+		
 	}
 });
