@@ -18,7 +18,7 @@ Template.skillSet.helpers({
         }
 
 		return {
-			isTrue: count <2,
+			isTrue: count <3,
 			count : countAlpha
 		}
 	}
