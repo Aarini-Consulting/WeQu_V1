@@ -28,7 +28,10 @@
 
                 //Temporary ------- Sorting not works because of this
                
-                var feedbacks = Feedback.find().fetch();
+                // TODO : Verify this logic ...
+                //var feedbacks = Feedback.find().fetch();
+                var feedbacks = Feedback.find({$or : [ {from : Meteor.userId()}, {to : Meteor.userId()} ]}).fetch();
+
                 var friends =  _.chain(feedbacks).map(function(feedback){
                     return [feedback.from, feedback.to];
                 }).flatten().uniq().sortBy().value();
