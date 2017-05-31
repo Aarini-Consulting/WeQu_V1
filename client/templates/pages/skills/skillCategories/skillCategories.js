@@ -34,7 +34,7 @@ Template.skillCategories.helpers({
             var otherscore = calculateScore(joinedQset, true);
             data.enoughData = (validAnswers.length > 9);
 
-            let count = Template.instance().expand.get() ? 3 : 0;
+            let count = Template.instance().expand.get()==true ? 3 : 0;
             var i=0;
             console.log(count);
             let categories = {};
