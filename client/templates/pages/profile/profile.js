@@ -37,7 +37,7 @@
            
            var scroll = template.firstNode.scrollTop;
            
-          if (scroll >= 50) {
+          if (scroll >= 300) {
             $("#sectionprogress").addClass('fix-search');
           } else {
             $("#sectionprogress").removeClass("fix-search");
