@@ -1,5 +1,5 @@
 <template name="displayProfile">
-  <section class="feed">
+  <section class="feed" id="feed">
 
     {{#if inScript}}
 
@@ -19,6 +19,9 @@
         </div>
       </div>
       {{> othersProfileQuestionInfo}}
+
+      {{> profileQuestionInfoText}}
+      
       {{> navigateButton}}
       
     </section>
@@ -31,6 +34,8 @@
     {{> sectionName2}}
 
     {{> othersProfileQuestionInfo}}
+    
+    {{> profileQuestionInfoText}}
 
     <section class="ptb_h1">
       <img src="/img/icon_overview.png" class="titleIcon">

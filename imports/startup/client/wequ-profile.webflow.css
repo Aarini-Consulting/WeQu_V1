@@ -506,13 +506,24 @@
   background-color: #f1f0f0;
 }
 
-.progressdesdiv {
+/*.progressdesdiv {
   display: block;
   width: 100%;
   height: 30px;
   margin-right: auto;
   margin-left: auto;
   padding-top: 5px;
+  background-color: transparent;
+  box-shadow: none;
+}*/
+
+.progressdesdiv {
+  display: block;
+  width: 100%;
+  height: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 7px;
   background-color: transparent;
   box-shadow: none;
 }

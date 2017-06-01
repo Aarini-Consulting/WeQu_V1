@@ -530,9 +530,25 @@ input[type="radio"]{
  width: 100% !important;
 }
 
-.sectionprogress{
+/*.sectionprogress{
 	width: 100% !important;
+}*/
+
+/** #69 - Scroll - **/
+
+.sectionprogress {
+    width: 100% !important;
+    position: absolute;
+    top: 310px;
+    left: 10px;
+    right: 20px;
 }
+
+.fix-search {
+    position: fixed;
+    top: 1px;
+}
+/** #69 - Scroll - **/
 
 .small{
 	font-size: small;
