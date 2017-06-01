@@ -16,10 +16,23 @@ Template.skillSet.helpers({
         if(count2==3){
         	countAlpha = "THREE"
         }
-
+    let bool = quizPerson.get() == Meteor.userId()  && count <3;
 		return {
-			isTrue: count <3,
+			isTrue: bool,
 			count : countAlpha
 		}
-	}
+	},
+  userType() {
+      if(quizPerson.get() == Meteor.userId())
+        {
+          return "My"; 
+        }
+      else
+        {
+          let user = Meteor.users.findOne({_id: quizPerson.get()});
+          if(user){
+            return getUserName(user.profile);
+          }
+        }
+    }
 });

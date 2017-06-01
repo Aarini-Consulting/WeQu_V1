@@ -20,7 +20,6 @@ Template.strengths.helpers({
       let data = calculateTopWeak(Feedback.find({to: userId }).fetch());
       if(data){
         let condition =  data.top3.length>0 && data.weak3.length>0 ;
-        console.log(condition);
         return condition;
       }
     }
