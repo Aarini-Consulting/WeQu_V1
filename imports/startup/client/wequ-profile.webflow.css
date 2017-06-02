@@ -593,12 +593,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 @media (max-width: 991px) {
-  .sectionname {
+  /*.sectionname {
     background-image: url('../img/Background_white20.png');
     background-position: 50% 50%;
     background-size: 1100px;
     background-attachment: scroll;
-  }
+  } */
   .fontreleway.paratopskills {
     width: 90%;
   }
@@ -625,12 +625,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     overflow: auto;
     height: 100%;
   }
-  .sectionname {
+  /*.sectionname {
     background-position: 0px 0px;
     background-size: auto;
     background-repeat: repeat;
     background-attachment: scroll;
-  }
+  }*/
   .fontreleway.fonttitle.fontwhite {
     display: block;
     width: 70%;
