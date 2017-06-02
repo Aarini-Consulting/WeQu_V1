@@ -546,7 +546,7 @@ input[type="radio"]{
 
 .fix-search {
     position: fixed;
-    top: 1px;
+    top: 0px;
 }
 /** #69 - Scroll - **/
 
