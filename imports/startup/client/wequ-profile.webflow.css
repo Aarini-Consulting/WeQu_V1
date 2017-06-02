@@ -472,8 +472,8 @@
 .skillcovergrey {
   height: 360px;
   margin-top: 30px;
-  background-image: -webkit-linear-gradient(90deg, #f1f0f0, transparent), url('../img/Screen-Shot-2017-05-09-at-16.22.56.png');
-  background-image: linear-gradient(0deg, #f1f0f0, transparent), url('../img/Screen-Shot-2017-05-09-at-16.22.56.png');
+  background-image: -webkit-linear-gradient(90deg, #f1f0f0, transparent), url('/img/Screen-Shot-2017-05-09-at-16.22.56.png');
+  background-image: linear-gradient(0deg, #f1f0f0, transparent), url('/img/Screen-Shot-2017-05-09-at-16.22.56.png');
   background-position: 0px 0px, 50% 0px;
   background-size: auto, 80%;
   background-repeat: repeat, repeat-y;
