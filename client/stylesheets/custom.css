@@ -588,3 +588,7 @@ input[type="radio"]{
   background-repeat: repeat, repeat-y;
   background-attachment: scroll, fixed;
 }
+
+.swapDescription2{
+	height: 110px;
+}
