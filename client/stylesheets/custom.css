@@ -592,3 +592,19 @@ input[type="radio"]{
 .swapDescription2{
 	height: 110px;
 }
+
+
+.arrowbttn:hover {
+  	background-color: #8a8a8a !important;
+}
+
+.arrowbttn{
+	width: 50px !important;
+	height: 100px !important;
+	background-color: white !important;
+}
+
+
+.arrow2{
+	margin-top: 17px;
+}
