@@ -1,0 +1,19 @@
+ <template name="threeSkills">
+  <div class="columtop w-row">
+   {{#each data}}
+   <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack" data-ix="skillls">
+    <div class="skillblock">
+      
+      <img class="iconskill swapDescription1 swap1{{skill}} active" data-skill={{skill}} style="display: none;" src="/img/skills/{{skill}}.png">
+      
+      <div class="swapDescription2 swap2{{skill}}" data-skill={{skill}} style="color: {{color}}; display: none;" > 
+         <div class="fontreleway skillname" style="color: {{color}};"> <b> {{description}} </b> </div>
+      </div>
+      
+      <div class="fontreleway skillname">{{text}}</div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+</template>

@@ -54,7 +54,8 @@
 }
 
 .skillElement .title{
-	width: 30% !important;
+	/*width: 30% !important;*/
+	width: 40% !important;
 }
 
 
@@ -517,4 +518,105 @@ input[type="radio"]{
 
 .navColor{
 	background: blue;
+}
+
+/* over-riding wequ-profile */
+.sectionname{
+	padding-bottom: 10px;
+  background-image: url('../img/Background_white20.png');
+  background-position: 50% -61px;
+  background-size: 1200px;
+  box-shadow: none;
+  text-align: center;
+ width: 100% !important;
+}
+
+/*.sectionprogress{
+	width: 100% !important;
+}*/
+
+/** #69 - Scroll - **/
+
+.sectionprogress {
+    width: 100% !important;
+    /*position: absolute;*/
+    top: 310px;
+    /*left: 10px;*/
+    left:0px;
+    right: 20px;
+}
+
+.fix-search {
+    position: fixed;
+    top: 0px;
+    z-index: 6;
+}
+/** #69 - Scroll - **/
+
+.small{
+	font-size: small;
+}
+
+.webflow-row{
+ margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
+}
+
+.paddingTopInverse45{
+	padding-top: 0px!important;
+}
+
+.colorNone{
+	color: black;
+}
+
+.active{
+	display: block !important;
+}
+
+.section-social {
+	width: 100%;
+}
+
+
+.skillcovergrey2 {
+  height: 360px;
+  margin-top: 30px;
+  background-position: 0px 0px, 50% 0px;
+  background-size: auto, 80%;
+  background-repeat: repeat, repeat-y;
+  background-attachment: scroll, fixed;
+}
+
+.swapDescription2{
+	height: 110px;
+	padding-top: 40px;
+}
+
+
+.arrowbttn:hover {
+  	background-color: #8a8a8a !important;
+}
+
+.arrowbttn{
+	/*width: 50px !important;
+	height: 100px !important;*/
+	width: 45px !important;
+	height: 75px !important;
+	background-color: white !important;
+}
+
+
+.arrow2{
+	/*margin-top: 17px;*/
+	margin-top: 10px;
+}
+
+.paddingZero{
+	padding-top: 5px !important;
+	padding-bottom: 20px !important;
 }

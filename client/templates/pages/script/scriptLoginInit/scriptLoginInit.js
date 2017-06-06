@@ -9,6 +9,7 @@
             setLoginScript('quiz');
         });        
       }
+      setLoginScript('quiz');
 
   });
 

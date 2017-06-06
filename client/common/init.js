@@ -10,7 +10,7 @@ Meteor.startup(function() {
           wf.async = 'true';
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(wf, s);
-          console.log("async fonts loaded", WebFontConfig);
+         // console.log("async fonts loaded", WebFontConfig);
         })();   
 
 

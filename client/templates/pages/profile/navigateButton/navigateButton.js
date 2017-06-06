@@ -1,4 +1,19 @@
   
+  Template.navigateButton.helpers({
+    userType: function () {
+      if(quizPerson.get() == Meteor.userId())
+        {
+          return "myself"; 
+        }
+      else
+        {
+          let user = Meteor.users.findOne({_id: quizPerson.get()});
+          if(user){
+            return getUserName(user.profile);
+          }
+        }
+    }
+  });
 
   Template.navigateButton.events({
     "click #specificUser" : function(event){

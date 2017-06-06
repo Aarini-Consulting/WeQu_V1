@@ -205,7 +205,7 @@
 
 
     Router.route('/invite', function () {
-      this.layout('ScriptLayout');
+      //this.layout('ScriptLayout');
       switch(getLoginScript()) {
           case 'finish':
           this.render('scriptLoginFinish');
@@ -219,7 +219,7 @@
         this.render('loading');
         return;
     }
-    this.render('invite');   
+    return this.render('invite');   
     }, { 'name': '/invite' }); 
 
 

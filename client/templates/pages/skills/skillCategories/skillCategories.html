@@ -1,21 +1,47 @@
 
-  <template name="skillCategories">
-    {{#each categories}}
+<template name="skillCategories">
 
+  <div class="row">
 
-    <div class="skillElement">
-      <div class="title"><b class="h5">{{name}}</b></div>
-      <div class="underBar" style="width:60%; visibility: hidden;"></div>
-    </div>
-    {{#each skills}}
-    <div class="skillElement">
-      <div class="title">{{name}}</div>
-      <div class="underBar" style="width:60%">
-        <div class="bar {{category}}" style="width:{{value}}%"></div>
+    <div class="col-md-1 col-sm-1 col-xs-1"></div> 
+
+    <div class="col-md-10 col-sm-10 col-xs-10">
+
+      {{#each data.categories}}
+
+      <div class="skillElement">
+        <div class="title"><b class="h5">{{name}}</b></div>
+        <div class="underBar" style="width:60%; visibility: hidden;"></div>
       </div>
-      <div class="score">{{scored}}/{{total}}</div>
+      {{#each skills}}
+      <div class="skillElement">
+        <div class="title">{{name}}</div>
+        <div class="underBar" style="width:60%">
+          <div class="bar {{category}}" style="width:{{value}}%"></div>
+        </div>
+        <div class="score">{{scored}}/{{total}}</div>
+      </div>
+      {{/each}}
+      {{/each}}
+
+    </div> 
+
+    <div class="col-md-1 col-sm-1 col-xs-1"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+      <div class="sectionprofile sectiongreybgGradient arrow paddingZero" id="outer">
+        <a class="fontbttn  arrowbttn profilebttn w-button" id="specificUser">
+          <center>
+            <div class="arrow2">  <img src="/img/icon_updown.png"> </div>
+          </center>
+        </a>
+      </div>
+
     </div>
-    {{/each}}
-    {{/each}}
-  </template>
+  </div>
+
+</template>
 

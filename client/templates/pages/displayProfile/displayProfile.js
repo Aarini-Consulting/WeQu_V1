@@ -1,3 +1,5 @@
+  import '/imports/startup/client/wequ-profile.webflow.css';
+
   Template['displayProfile'].events({
     "click #nextPerson" : function(event, template){
       event.preventDefault();
@@ -28,12 +30,24 @@
           Router.go(`/profile/user/${userId}`); 
 
       }
-    }
+    },
+
+    /** #69 -scroll static fix content **/
+    "scroll #feed" : function(event,template){
+           
+           var scroll = template.firstNode.scrollTop;
+           
+          if (scroll >= 300) {
+            $("#sectionprogress").addClass('fix-search');
+          } else {
+            $("#sectionprogress").removeClass("fix-search");
+           }
+     } 
 
   });
 
   Template.displayProfile.created = function () {
-    this.result = new ReactiveVar();    
+    this.result = new ReactiveVar();  
   };
 
   Template.displayProfile.helpers({
