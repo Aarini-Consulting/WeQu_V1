@@ -62,9 +62,13 @@ Template.skillCategories.helpers({
 Template.skillCategories.events({
 	'click .arrow': function (event,template) {
 		event.preventDefault();
-		if(template.expand.get())
+		if(template.expand.get()){
 		  template.expand.set(false);	
-		else
+		}
+		else{
+		  $("#feed").scrollTop($("#sectionskills")[0].scrollHeight);
+		 /* $("#feed").scrollTop($('#sectionskills').height());	*/
 	      template.expand.set(true);
+		}
 	}
 });
