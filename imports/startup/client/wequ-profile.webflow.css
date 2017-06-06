@@ -192,6 +192,7 @@
 
 .sectionprofile.sectiongreybgGradient {
   background-image: linear-gradient(0deg, #f1f0f0, transparent);
+  background-image: -webkit-linear-gradient(0deg, #f1f0f0, transparent);
 }
 
 
