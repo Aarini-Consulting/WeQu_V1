@@ -186,9 +186,14 @@
 }
 
 .sectionprofile.sectiongreybg {
-  /*background-color: #f1f0f0;*/
+  background-color: #f1f0f0;
+  
+}
+
+.sectionprofile.sectiongreybgGradient {
   background-image: linear-gradient(0deg, #f1f0f0, transparent);
 }
+
 
 .sectionprofile.section-share {
   display: none;
