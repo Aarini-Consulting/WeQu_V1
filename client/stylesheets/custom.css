@@ -540,7 +540,8 @@ input[type="radio"]{
     width: 100% !important;
     /*position: absolute;*/
     top: 310px;
-    left: 10px;
+    /*left: 10px;*/
+    left:0px;
     right: 20px;
 }
 
@@ -600,8 +601,10 @@ input[type="radio"]{
 }
 
 .arrowbttn{
-	width: 50px !important;
-	height: 100px !important;
+	/*width: 50px !important;
+	height: 100px !important;*/
+	width: 45px !important;
+	height: 75px !important;
 	background-color: white !important;
 }
 
