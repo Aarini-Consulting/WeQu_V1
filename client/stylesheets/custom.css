@@ -608,3 +608,8 @@ input[type="radio"]{
 .arrow2{
 	margin-top: 17px;
 }
+
+.paddingZero{
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
