@@ -13,7 +13,7 @@
     
 
     <!-- {{#if inScript}} -->
-     {{> inviteTeammates}}
+    {{> inviteTeammates}}
     <!-- {{/if}} -->
 
     {{> strengths}}   
@@ -22,12 +22,16 @@
 
     {{> skillSet}} 
 
+    <div id="fb-root"></div>
+
+    <div class="fb-share-button" data-href="http://app.wequ.co/profile/user/{{userId}}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fapp.wequ.co&amp;src=sdkpreparse">Share</a></div>
+
     {{> sectionprofile}}
 
-    <!-- {{> sectionSocial}}
+    <!-- {{> sectionSocial}} https://app.wequ.co/user/skills/{{userId}}
 
     {{> sectionShare}} -->
 
-  </section>
+</section>
 
 </template>

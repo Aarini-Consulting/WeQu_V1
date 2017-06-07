@@ -42,13 +42,33 @@
           } else {
             $("#sectionprogress").removeClass("fix-search");
            }
-     } 
+     },
+
+    "click .fb-share-button" : function(event, template){ 
+      
+      /* event.preventDefault();
+
+      let userId = Meteor.userId();
+       FB.ui({
+          method: 'share',
+          display: 'popup',
+          href: `https://app.wequ.co`,
+      }, function(response){}); */
+
+   }
+
+
+
   });
 
   Template.profile.helpers({
   	profile(){
   		return Meteor.user().profile;
   	},
+
+    userId(){
+      return Meteor.userId();
+    },
     displayRadar(){
       
       let data = Template.instance().result.get();
