@@ -18,15 +18,15 @@ dataForRadar =  function dataForRadar(score) {
         'TEAMWORK',
         'LEADERSHIP',
         'PROBLEM_SOLVING'
-    ], function (key) {
-        var len = score[key];
-        var angle = Math.PI * 0.5 + i * (2 * Math.PI / vertices);
-        i = 1 + i;
-        return [
+        ], function (key) {
+            var len = score[key];
+            var angle = Math.PI * 0.5 + i * (2 * Math.PI / vertices);
+            i = 1 + i;
+            return [
             key,
             Math.round(center + Math.cos(angle) * radius * len) + ',' + Math.round(center + Math.sin(angle) * radius * len)
-        ];
-    }));
+            ];
+        }));
 };
 
 
@@ -38,20 +38,20 @@ finishInviteScript = function() {
 } 
 
 
- currentEmail = function currentEmail(id){
+currentEmail = function currentEmail(id){
     let user;
     if(id){
-     user = Meteor.users.findOne({_id: id});  
-    }
-    else
-    {
+       user = Meteor.users.findOne({_id: id});  
+   }
+   else
+   {
       user = Meteor.users.findOne({_id: Meteor.userId()});  
-    }
-    
-        if(user){
-            currentEmail = ( user.emails && user.emails[0].address ) 
-            || user.profile.emailAddress
-            return currentEmail;
-        }
-        return null;
- }
+  }
+  
+  if(user){
+    currentEmail = ( user.emails && user.emails[0].address ) 
+    || user.profile.emailAddress
+    return currentEmail;
+}
+return null;
+}
