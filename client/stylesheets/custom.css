@@ -625,3 +625,7 @@ input[type="radio"]{
 	background-color: #f1f0f0;
 	width: 100% ;
 }
+
+.publicUser{
+	overflow: scroll;
+}
