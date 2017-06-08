@@ -780,8 +780,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     width: 90%;
   }
   .skillcovergrey {
-     background-image: url('/img/Screen-Shot-2017-05-09-at-16.22.56.png');
- 
     background-size: auto, 100% 220px;
     background-attachment: scroll, fixed;
     -webkit-filter: blur(1px);
