@@ -1,0 +1,28 @@
+<template name="shareFB">
+
+	<div class="sectiongreybg2">
+
+		<div class="share-sectipn titlesection w-container"><img class="iconwrapper" src="/img/iconShare.png">
+			<div class="fontreleway fonttitle">Share Your Skills Via</div>
+		</div>
+
+		<div>
+			<div class="row-3 w-row">
+				<div class="w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6">
+					<a class="w-inline-block" data-href="http://app.wequ.co/profile/user/{{userId}}" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fapp.wequ.co&amp;src=sdkpreparse" target="_blank"><img class="share-icon" src="/img/fb-art.png">
+					</a> 
+					
+					<div class="fb-share-button" data-href="http://app.wequ.co/profile/user/{{userId}}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fapp.wequ.co&amp;src=sdkpreparse">Share</a></div>
+					
+				</div>
+				<div class="w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><img class="share-icon" sizes="(max-width: 479px) 45px, 50px" src="/img/twitter-logo-blue.png" srcset="img/twitter-logo-blue-p-500.png 500w, img/twitter-logo-blue.png 518w">
+				</div>
+			</div>
+		</div>
+
+			<div id="fb-root"></div>
+
+		
+	</div>
+
+</template>

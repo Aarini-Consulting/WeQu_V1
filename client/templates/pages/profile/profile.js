@@ -66,9 +66,6 @@
   		return Meteor.user().profile;
   	},
 
-    userId(){
-      return Meteor.userId();
-    },
     displayRadar(){
       
       let data = Template.instance().result.get();

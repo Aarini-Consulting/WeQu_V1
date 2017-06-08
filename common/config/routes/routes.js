@@ -15,7 +15,7 @@
 
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn/a', '/signUp',
     '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin','terms',
-    'privacyPolicy','/profile/user/:userId'
+    'privacyPolicy','/profile/publicUser/:userId'
     ] }); 
 
     Router.onBeforeAction(function () {
@@ -28,7 +28,7 @@
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
                  'userAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy',
-                 '/quiz/:_id?','/quiz','/profile/user/:userId'
+                 '/quiz/:_id?','/quiz','/profile/publicUser/:userId'
                 ] });
 
     route = new ReactiveVar("quiz");
