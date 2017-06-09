@@ -35,15 +35,21 @@
     /** #69 -scroll static fix content **/
     "scroll #feed" : function(event,template){
            
-           var scroll = template.firstNode.scrollTop;
-           
+       var scroll = template.firstNode.scrollTop;
+       
+       if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+          if (scroll >= 300) {
+            $("#sectionprogress").addClass('fix-searchIOS');
+          } else {
+            $("#sectionprogress").removeClass("fix-searchIOS");
+          }
+       }else{
           if (scroll >= 300) {
             $("#sectionprogress").addClass('fix-search');
-             $('.menuBar').addClass('hideMenu');
           } else {
             $("#sectionprogress").removeClass("fix-search");
-            $('.menuBar').removeClass('hideMenu');
-           }
+          }
+       }
      } 
   });
 

@@ -551,6 +551,12 @@ input[type="radio"]{
     top: 0px;
     z-index: 6;
 }
+
+.fix-searchIOS {
+    position: fixed;
+    top: 50px;
+    z-index: 6;
+}
 /** #69 - Scroll - **/
 
 .small{
@@ -622,6 +628,3 @@ input[type="radio"]{
 }
 
 
-.hideMenu{
-	visibility: hidden
-}
