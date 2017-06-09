@@ -39,8 +39,10 @@
            
           if (scroll >= 300) {
             $("#sectionprogress").addClass('fix-search');
+             $('.menuBar').fadeIn();
           } else {
             $("#sectionprogress").removeClass("fix-search");
+            
            }
      } 
   });
