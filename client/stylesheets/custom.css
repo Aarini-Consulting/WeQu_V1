@@ -630,3 +630,9 @@ input[type="radio"]{
 .publicUser{
 	overflow: scroll;
 }
+
+
+svg.radarwapper{
+	width: 426px !important;
+    height: 412px !important;
+}

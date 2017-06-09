@@ -14,7 +14,12 @@
   <div class="public-profile sectionprofile">
     <div class="titlesection w-container"><img class="iconwrapper" src="/img/iconRadar.png">
       <div class="fontreleway fonttitle">Overview</div>
-    </div><img class="radarwapper" sizes="(max-width: 479px) 100vw, 400px" src="/img/Radar.png" srcset="/img/Radar-p-500.png 500w, /img/Radar.png 630w">
+    </div>
+
+     <svg class="radarwapper" height="400" width="450" style="zmin-min-height:300px; background-image:url('/img/Radar.png'); background-size: cover;">
+			{{> radar score=data.myscore color="white" outline="#E96956"}}
+  	</svg>
+ 
     <div class="radaragenda w-row">
       <div class="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6">
         <div class="radariconwrapper w-clearfix"><img class="iconradar iconwrapper" src="/img/iconRadarMyself.png">
@@ -29,48 +34,16 @@
     </div>
   </div>
 
-
   <div class="sectiongreybg sectionprofile">
-    <div class="titlesection w-container"><img class="iconwrapper" src="/img/iconSkills.png">
-      <div class="fontreleway fonttitle">X's MORE TRUE Skills</div>
-    </div>
-    <div class="columtop w-row">
-      <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack" data-ix="skillls">
-        <div class="skillblock"><img class="iconskill" src="/img/connector.png">
-          <div class="fontreleway skillname">connector</div>
-        </div>
-      </div>
-      <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack">
-        <div class="skillblock"><img class="iconskill" src="/img/connector.png">
-          <div class="fontreleway skillname">connector</div>
-        </div>
-      </div>
-      <div class="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack">
-        <div class="skillblock"><img class="iconskill" src="/img/connector.png">
-          <div class="fontreleway skillname">connector</div>
-        </div>
-      </div>
-    </div>
-    <div class="fontreleway fonttitle">X's LESS TRUE Skills</div>
-    <div class="columtop w-row">
-      <div class="skillcolumn w-col w-col-4 w-col-small-small-stack w-col-tiny-tiny-stack">
-        <div class="skillblock"><img class="iconskill" src="/img/connector.png">
-          <div class="fontreleway skillname">connector</div>
-        </div>
-      </div>
-      <div class="skillcolumn w-col w-col-4 w-col-small-small-stack w-col-tiny-tiny-stack">
-        <div class="skillblock" data-ix="click-trigger-skill-icon"><img class="iconskill" src="/img/connector.png">
-          <div class="fontreleway skillname">connector</div>
-        </div>
-      </div>
-      <div class="skillcolumn w-col w-col-4 w-col-small-small-stack w-col-tiny-tiny-stack">
-        <div class="skillblock"><img class="iconskill" src="/img/connector.png">
-          <div class="fontreleway skillname">connector</div>
-        </div>
-      </div>
-    </div>
-  </div>
 
+		<div class="titlesection w-container"><img class="iconwrapper" src="/img/iconSkills.png">
+			<div class="fontreleway fonttitle">{{username profile}} MORE TRUE Skills</div>
+		</div>
+		{{> threeSkills data=data.top3}}
+		<div class="fontreleway fonttitle">{{username profile}} LESS TRUE Skills</div>
+		{{> threeSkills data=data.weak3}}
+
+  </div>
 
   <div class="section-social">
     <div class="fontreleway fonttitle public">Are You Dare To Know How the World Sees You?</div><a class="fontbttn profilebttn public w-button" href="#">It's your turn</a>
