@@ -39,10 +39,10 @@
            
           if (scroll >= 300) {
             $("#sectionprogress").addClass('fix-search');
-            
+             $('.menuBar').addClass('hideMenu');
           } else {
             $("#sectionprogress").removeClass("fix-search");
-            
+            $('.menuBar').removeClass('hideMenu');
            }
      } 
   });

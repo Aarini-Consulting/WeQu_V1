@@ -620,3 +620,8 @@ input[type="radio"]{
 	padding-top: 5px !important;
 	padding-bottom: 20px !important;
 }
+
+
+.hideMenu{
+	visibility: hidden
+}
