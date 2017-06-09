@@ -42,7 +42,7 @@
              $('.menuBar').fadeIn();
           } else {
             $("#sectionprogress").removeClass("fix-search");
-             $('.menuBar').fadeOut();
+            
            }
      } 
   });
