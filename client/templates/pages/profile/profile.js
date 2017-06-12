@@ -49,11 +49,20 @@
       event.preventDefault();
 
       let userId = Meteor.userId();
-       FB.ui({
+      /* FB.ui({
           method: 'share',
           display: 'popup',
           href: 'https://app.wequ.co',
       }, function(response){});
+*/
+
+        FB.ui({
+          method: 'share_open_graph',
+          action_type: 'og.likes',
+          action_properties: JSON.stringify({
+            object:'https://app.wequ.co',
+          })
+        }, function(response){});
 
    }
 
