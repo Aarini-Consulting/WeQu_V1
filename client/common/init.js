@@ -33,8 +33,6 @@ Meteor.startup(function() {
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
 
-
-
       sAlert.config({
         effect: 'genie',
         position: 'bottom',

@@ -46,14 +46,14 @@
 
     "click .fb-share-button" : function(event, template){ 
       
-     /* event.preventDefault();
+      event.preventDefault();
 
       let userId = Meteor.userId();
        FB.ui({
           method: 'share',
           display: 'popup',
           href: 'https://app.wequ.co',
-      }, function(response){}); */
+      }, function(response){});
 
    }
 
