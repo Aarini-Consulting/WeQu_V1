@@ -116,12 +116,7 @@ Template.registerHelper('formatDateTime', function (val) {
        return currentEmail();
     });
 
-    Template.registerHelper('pictureUrl', function () {
-      let userId = quizPerson.get() ? quizPerson.get() :  Meteor.userId();
-      var user = Meteor.users.findOne({_id : userId });
-      let url =  user && user.services.linkedin.pictureUrl;
-      if(url){
-        return url;  
-      }
-      return null;
+    Template.registerHelper('pictureUrl', function (data) {
+        console.log(data);
+      return getpictureUrl(data);
     });
