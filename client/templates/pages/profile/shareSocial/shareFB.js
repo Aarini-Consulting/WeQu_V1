@@ -15,5 +15,9 @@ Template.shareFB.helpers({
         let gender_result = gender == "male" ? 'He': 'She';
     	let tex = `Discover ${username}'s character skills. ${gender_result} is great at ${top}! URL @playWeQu`;
     	return tex;
+    },
+    url(){
+        let userId = Meteor.userId();
+        return `http://app-test.wequ.co/profile/publicUser/${userId}`
     }
 });
