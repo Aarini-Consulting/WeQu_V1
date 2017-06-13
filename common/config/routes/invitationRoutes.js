@@ -66,6 +66,7 @@
                 }
 
                 data.person = user.profile;
+                quizPerson.set(data.feedback.to);
                 this.render('quiz', { 'data': data });
                 return;
             }

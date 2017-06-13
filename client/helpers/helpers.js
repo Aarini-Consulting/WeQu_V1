@@ -119,7 +119,7 @@ Template.registerHelper('formatDateTime', function (val) {
     Template.registerHelper('pictureUrl', function () {
       let userId = quizPerson.get() ? quizPerson.get() :  Meteor.userId();
       var user = Meteor.users.findOne({_id : userId });
-      let url =  user.services.linkedin.pictureUrl;
+      let url =  user && user.services.linkedin.pictureUrl;
       if(url){
         return url;  
       }
