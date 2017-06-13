@@ -117,6 +117,5 @@ Template.registerHelper('formatDateTime', function (val) {
     });
 
     Template.registerHelper('pictureUrl', function (data) {
-        console.log(data);
       return getpictureUrl(data);
     });

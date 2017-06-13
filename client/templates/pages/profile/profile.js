@@ -48,15 +48,32 @@
             $("#sectionprogress").addClass('fix-search');
           } else {
             $("#sectionprogress").removeClass("fix-search");
+
           }
        }
-     } 
+     },
+
+    "click .fb-share-button" : function(event, template){ 
+      
+      event.preventDefault();
+
+      let userId = Meteor.userId();
+        FB.ui({
+          method: 'share_open_graph',
+          action_type: 'og.likes',
+          action_properties: JSON.stringify({
+            object:'https://app.wequ.co',
+          })
+        }, function(response){});
+
+   }
   });
 
   Template.profile.helpers({
   	profile(){
   		return Meteor.user().profile;
   	},
+
     displayRadar(){
       
       let data = Template.instance().result.get();

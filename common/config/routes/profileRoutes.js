@@ -205,7 +205,13 @@
 
     // Profile routing ends ..
 
+     Router.route('/profile/publicUser/:userId', function () {
+        
+        this.layout('ApplicationLayout');
 
+        return this.render('publicUser');
+
+    },{ 'name': '/profile/publicUser/:userId' });
 
 
 

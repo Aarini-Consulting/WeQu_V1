@@ -675,7 +675,302 @@ html.w-mod-js *[data-ix="loginbox"] {
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
 }
 
+
+.twitter {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.share-icon {
+  width: 50px;
+}
+
+.row-3 {
+  display: block;
+  padding: 22px;
+  text-align: center;
+}
+
+.sectionname {
+  margin-top: auto;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  background-image: url('/img/Background_white20.png');
+  background-position: 50% -61px;
+  background-size: 1200px;
+  box-shadow: none;
+  text-align: center;
+}
+
+.sectionname.public {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  z-index: 9999;
+  height: 150px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-image: url('/img/Background_white20.png'), -webkit-linear-gradient(270deg, #fff, #fff);
+  background-image: url('/img/Background_white20.png'), linear-gradient(180deg, #fff, #fff);
+  background-position: 50% 0px, 0px 0px;
+  background-size: cover, auto;
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, .2);
+}
+
+.profilename {
+  display: block;
+  padding-bottom: 0px;
+  text-align: center;
+}
+
+.profilefac {
+  position: static;
+  display: block;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  float: none;
+  clear: none;
+  text-align: center;
+}
+
+.fontreleway.fontprofilename {
+  display: inline-block;
+  float: none;
+  font-size: 25px;
+  line-height: 30px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.profilebttn.fontbttn.public:hover {
+  border-color: #fff;
+  background-color: #fff;
+  color: #44484f;
+}
+
+.profilebttn.fontbttn.public.powered-by {
+  height: 40px;
+  margin-top: 18px;
+  border-style: none;
+  border-width: 0px;
+  background-color: #cfcfcf;
+  color: #8b8b8b;
+  line-height: 25px;
+}
+
+.profilebttn.fontbttn.public.powered-by:hover {
+  border-style: none;
+  border-width: 0px;
+  background-color: #eee;
+}
+
+.profilebttn {
+  display: block;
+  width: 50%;
+  height: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  border: 2px solid #8a8a8a;
+  border-radius: 100px;
+  background-color: transparent;
+}
+.profilebttn.fontbttn {/*
+  -webkit-transition: background-color 400ms ease;
+  transition: background-color 400ms ease;
+  font-family: Raleway, sans-serif;
+  color: #8a8a8a;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;*/
+}
+.sectionprofile {
+  position: static;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 45px;
+  padding-bottom: 45px;
+  background-color: transparent;
+}
+.sectionprofile.public-profile {
+  margin-top: 80px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .45);
+}
+.titlesection {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+.radarwapper {
+  display: block;
+  width: 400px;
+  margin: 35px auto 50px;
+}
+.radariconwrapper {
+    display: block;
+    /* width: 270px; */
+    width: initial !important;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.iconwrapper {
+    display: block;
+    width: 20px;
+    margin-right: auto;
+    margin-bottom: 20px;
+    margin-left: auto;
+    float: none;
+    text-align: left;
+}
+.fontreleway.fontradar.fontradarleft {
+    width: 250px;
+    padding-left: 0px;
+}
+
+.radariconwrapper.teammate {
+    width: 270px; 
+}
+
+.iconwrapper.iconradar {
+  /*  position: static;
+    float: left;
+    clear: both; */
+}
+.iconwrapper {
+    display: block;
+    width: 20px;
+    margin-right: auto;
+    margin-bottom: 20px;
+    margin-left: auto;
+    float: none;
+    text-align: left;
+}
+
+.sectionprofile.sectiongreybg {
+    background-color: #f1f0f0;
+}
+.sectionprofile {
+    position: static;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    background-color: transparent;
+}
+.titlesection {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+.columtop {
+    display: block;
+    width: 80%;
+    margin-top: 35px;
+    margin-right: auto;
+    margin-left: auto;
+}
+html.w-mod-js *[data-ix="skillls"] {
+    display: none;
+    opacity: 0;
+    -webkit-transform: scale(0.9, 0.9);
+    -ms-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9);
+}
+.skillcolumn {
+    display: block;
+    text-align: center;
+}
+.columtop {
+    display: block;
+    width: 80%;
+    margin-top: 35px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.section-social {
+    height: auto;
+    padding-top: 60px;
+    background-image: url('/img/bg_dark.001.jpeg') !important;
+    background-position: 0px 0px;
+    background-size: cover;
+}
+.fontreleway.fonttitle.public {
+    margin-top: 0px;
+    color: #fff;
+}
+.fontreleway.fonttitle {
+    margin-top: 30px;
+    float: none;
+    color: #000;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.profilebttn.fontbttn.public {
+    width: 250px;
+    margin-top: 30px;
+    border-color: #cfcfcf;
+    color: #fff;
+}
+.fontreleway.fontradar.fontradarleft {
+    width: 250px;
+    padding-left: 0px;
+}
+.fontreleway.fontradar {
+    display: block;
+    width: 250px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 2px;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+
 @media (max-width: 991px) {
+  .sectionname {
+    background-image: url('/img/Background_white20.png');
+    background-position: 50% 50%;
+    background-size: 1100px;
+    background-attachment: scroll;
+  }
+  .sectionname.public {
+    background-image: url('/img/Background_white20.png'), -webkit-linear-gradient(270deg, null, null);
+    background-image: url('/img/Background_white20.png'), linear-gradient(180deg, null, null);
+    background-size: auto, auto;
+  }
+  .fontreleway.fontprofilename {
+    line-height: 30px;
+  }
+  .profilebttn.fontbttn {
+    width: 60%;
+  }
+  .radaragenda {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .radariconwrapper {
+    width: 200px;
+  }
+  .fontreleway.fontradar.fontradarleft {
+    width: 180px;
+  }
+  .radariconwrapper {
+    width: 200px;
+  }
+  .profilebttn.fontbttn {
+    width: 60%;
+  }
+  .fontreleway.fontradar.fontradarleft {
+    width: 180px;
+   }
   .bgimage {
     background-image: url('/img/assets/Background_white20.png');
     background-position: 50% 50%;
@@ -691,7 +986,7 @@ html.w-mod-js *[data-ix="loginbox"] {
   .footer {
     width: 100%;
     height: 120px;
-    background-image: url('../images/bg_dark.001.jpeg');
+    background-image: url('/img/bg_dark.001.jpeg');
     background-position: 50% 0px;
     background-size: cover;
   }
@@ -717,6 +1012,10 @@ html.w-mod-js *[data-ix="loginbox"] {
 }
 
 @media (max-width: 767px) {
+  .section-social {
+    background-position: 50% 0px;
+    background-size: auto;
+  }
   .loginbox {
     width: 100%;
     background-image: none;
@@ -787,6 +1086,10 @@ html.w-mod-js *[data-ix="loginbox"] {
 }
 
 @media (max-width: 479px) {
+  .section-social {
+    background-position: 50% 100%;
+    background-size: 900px;
+  }
   .loginbox {
     position: fixed;
     top: 30px;
@@ -833,7 +1136,3 @@ html.w-mod-js *[data-ix="loginbox"] {
 
 
 }
-
-
-
-
