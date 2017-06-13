@@ -204,7 +204,7 @@
     });
     DocHead.addMeta({
       property: "og:image", 
-      content: "http://placehold.it/1200x630"
+      content: "https://app.wequ.co/img/assets/WEQU_LOGO_NEW.png"
     });
   } });
 
