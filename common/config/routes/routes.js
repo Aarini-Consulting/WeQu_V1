@@ -189,7 +189,7 @@
     }, {
   name: 'home',
   onAfterAction: function () {
-    DocHead.setTitle('Welcome home');
+ /*   DocHead.setTitle('Welcome home');
     DocHead.addMeta({
       name: "description", 
       content: "Site description"
@@ -205,7 +205,7 @@
     DocHead.addMeta({
       property: "og:image", 
       content: "https://app.wequ.co/img/assets/WEQU_LOGO_NEW.png"
-    });
+    });  */
   } });
 
     // TODO : Improve with passing as query insteas params
