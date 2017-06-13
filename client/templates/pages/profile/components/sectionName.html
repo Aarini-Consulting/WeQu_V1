@@ -4,8 +4,14 @@
       <div class="profilename w-container">
         <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
         </div>
-        <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
-          
+
+        <div class="profilefac">
+         {{#if pictureUrl}}
+         <img class="avatarprofile" src="{{pictureUrl}}">
+         {{else}}
+         <img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+         {{/if}} 
+
           <div class="fontprofilename fontreleway">{{username profile}} 
             {{#unless inScript}}
              {{> settingsIcon}}
@@ -26,7 +32,12 @@
       <div class="profilename w-container">
         <div class="left profileclick" id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}"><img class="profilearrow" height="80" src="/img/arrowLeft.png">
         </div>
-        <div class="profilefac"><img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+        <div class="profilefac">
+          {{#if pictureUrl}}
+         <img class="avatarprofile" src="{{pictureUrl}}">
+         {{else}}
+         <img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+         {{/if}} 
           
           <div class="fontprofilename fontreleway">{{username profile}} 
           </div>

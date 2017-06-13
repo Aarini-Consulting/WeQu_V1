@@ -115,3 +115,13 @@ Template.registerHelper('formatDateTime', function (val) {
     Template.registerHelper('currentUserEmail', function () {
        return currentEmail();
     });
+
+    Template.registerHelper('pictureUrl', function () {
+      let userId = quizPerson.get() ? quizPerson.get() :  Meteor.userId();
+      var user = Meteor.users.findOne({_id : userId });
+      let url =  user.services.linkedin.pictureUrl;
+      if(url){
+        return url;  
+      }
+      return null;
+    });
