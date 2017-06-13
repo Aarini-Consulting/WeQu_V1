@@ -62,7 +62,7 @@
           method: 'share_open_graph',
           action_type: 'og.likes',
           action_properties: JSON.stringify({
-            object:`http://app.wequ.co/profile/user/${userId}`,
+            object:`http://app-test.wequ.co/profile/user/${userId}`,
           })
         }, function(response){});
 
