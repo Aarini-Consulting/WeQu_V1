@@ -69,7 +69,7 @@
         FB.ui({
           method: 'share',
            mobile_iframe: true,
-          href: 'http://app-test.wequ.co/profile/publicUser/${userId}',
+          href: `http://app-test.wequ.co/profile/publicUser/${userId}`,
         }, function(response){});
 
    }

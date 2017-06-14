@@ -209,7 +209,14 @@
         
         this.layout('ApplicationLayout');
 
-        return this.render('publicUser');
+        this.wait(Meteor.subscribe('feedback'));
+
+        if(this.ready()){
+           return this.render('publicUser');   
+        }
+        else{
+            this.render('loading');
+        }
 
     },{ 'name': '/profile/publicUser/:userId' });
 
