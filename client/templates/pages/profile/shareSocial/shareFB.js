@@ -12,7 +12,7 @@ Template.shareFB.helpers({
     	if(data){
         	top =  data.top3[0] && data.top3[0].skill;
         }
-        let gender_result = gender == "male" ? 'He': 'She';
+        let gender_result = gender == "Male" ? 'He': 'She';
     	let tex = `Discover ${username}'s character skills. ${gender_result} is great at ${top}! URL @playWeQu`;
     	return tex;
     },

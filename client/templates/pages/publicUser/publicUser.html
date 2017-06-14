@@ -16,12 +16,14 @@
       <div class="fontreleway fonttitle">Overview</div>
     </div>
 
-     <svg class="radarwapper" height="300" width="300" style="zmin-height:300px;background-image:url('/img/skills2.png'); background-size: cover;">
+    <center>
+     <svg height="300" width="300" style="zmin-height:300px;background-image:url('/img/skills2.png'); background-size: cover;">
 			{{> radar score=data.myscore color="white" outline="#E96956"}}
   	</svg>
- 
-    <div class="radaragenda w-row">
-      <div class="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6">
+    </center>
+
+    <!-- <div class="radaragenda w-row">
+     <div class="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6">
         <div class="radariconwrapper w-clearfix"><img class="iconradar iconwrapper" src="/img/iconRadarMyself.png">
           <div class="fontradar fontradarleft fontreleway">How {{username profile}} see himself</div>
         </div>
@@ -31,7 +33,24 @@
           <div class="fontradar fontreleway">How others see {{username profile}}</div>
         </div>
       </div>
+    </div> -->
+
+     <div class="radaragenda row">
+     <div class="col-md-2 col-sm-2 col-xs-0">
+     </div>
+     <div class="col-md-4 col-sm-4 col-xs-6">
+        <div class="radariconwrapper w-clearfix"><img class="iconradar iconwrapper" src="/img/iconRadarMyself.png">
+          <div class="fontradar fontradarleft fontreleway">How {{username profile}} see himself</div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-4 col-xs-6">
+        <div class="radariconwrapper teammate w-clearfix"><img class="iconradar iconwrapper" src="/img/iconRadarOthers.png">
+          <div class="fontradar fontreleway">How others see {{username profile}}</div>
+        </div>
+      </div>
     </div>
+
   </div>
 
   <div class="sectiongreybg sectionprofile">
