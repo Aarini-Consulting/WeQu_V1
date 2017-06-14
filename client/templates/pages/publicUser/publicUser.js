@@ -1,3 +1,10 @@
+Template.publicUser.onCreated(function(){
+	  var self = this;
+	  self.autorun(function() {
+	    self.subscribe("feedback");
+	  });
+})
+
 
 Template.publicUser.helpers({
 	profile() {
