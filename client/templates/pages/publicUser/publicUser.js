@@ -23,7 +23,7 @@ Template.publicUser.helpers({
 		if(user){
 
 			let userId = user._id;
-			var myfeedback = Feedback.find({ 'from': userId, 'to' : Meteor.userId() }).fetch();
+			var myfeedback = Feedback.find({ 'from': userId, 'to' : userId }).fetch();
 			var data = { profile : user.profile };
 			data.userId = userId;
 			data.myscore = calculateScore(joinFeedbacks(myfeedback));
@@ -33,7 +33,7 @@ Template.publicUser.helpers({
 			data.otherscore = calculateScore(qset);
 			data.enoughData = (validAnswers.length > 30);
 
-                //var feedbacks = Feedback.find().fetch();
+               //var feedbacks = Feedback.find().fetch();
                 var feedbacks = Feedback.find({$or : [ {from : Meteor.userId()}, {to : Meteor.userId()} ]}).fetch();
 
                 var friends =  _.chain(feedbacks).map(function(feedback){
@@ -54,7 +54,6 @@ Template.publicUser.helpers({
                 data.prevPerson = (friends.indexOf(quizPerson.get()) > 0);
 
                 _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch()));
-                console.log(data);
 
                 return data; 
             }
