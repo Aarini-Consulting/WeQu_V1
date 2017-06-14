@@ -1,7 +1,7 @@
 Template.publicUser.onCreated(function(){
 	  var self = this;
 	  self.autorun(function() {
-	    self.subscribe("feedback");
+	    self.subscribe("feedback","allData");
 	  });
 })
 
