@@ -209,7 +209,7 @@
         
         this.layout('ApplicationLayout');
 
-        this.wait(Meteor.subscribe('feedback'));
+        this.wait(Meteor.subscribe('feedback'),  Accounts.loginServicesConfigured());
 
         if(this.ready()){
            return this.render('publicUser');   
