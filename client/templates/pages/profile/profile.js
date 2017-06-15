@@ -52,26 +52,17 @@
           }
        }
      },
-
+     //TODO : Move it to shareSocial.js 
     "click .fb-share-button" : function(event, template){ 
       
       event.preventDefault();
 
       let userId = Meteor.userId();
-        /*FB.ui({
-          method: 'share_open_graph',
-          action_type: 'og.likes',
-          action_properties: JSON.stringify({
-            object:`http://app-test.wequ.co/profile/publicUser/${userId}`,
-          })
-        }, function(response){});*/
-
         FB.ui({
           method: 'share',
            mobile_iframe: true,
           href: `http://app-test.wequ.co/profile/publicUser/${userId}`,
         }, function(response){});
-
    }
   });
 
