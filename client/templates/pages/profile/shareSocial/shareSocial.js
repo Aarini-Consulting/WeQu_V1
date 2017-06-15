@@ -13,11 +13,14 @@ Template.shareSocial.helpers({
         	top =  data.top3[0] && data.top3[0].skill;
         }
         let gender_result = gender == "Male" ? 'his': 'her';
-    	let tex = `Discover ${username}’s character skills. ${top} is one of ${gender_result}  best quality! http://app-test.wequ.co/profile/publicUser/${userId} Powered by @playWeQu` ;
-        let linkTex = `Discover ${username}’s character skills. ${top} is one of ${gender_result}  best quality! Learn more about ${username} http://app-test.wequ.co/profile/publicUser/${userId} Powered by WeQu`;
+        let url = `http://app-test.wequ.co/profile/publicUser/${userId}`;
+    	let tex = `Discover ${username}’s character skills. ${top} is one of ${gender_result}  best quality! ${url} Powered by @playWeQu` ;
+        let linkTitle = `Discover ${username}’s character skills` ;
+        let linkSummary = ` ${top} is one of ${gender_result} best quality! Learn more about ${username} ${url} Powered by WeQu`;
     	let dat = {
             tex:tex,
-            linkTex : linkTex
+            linkTitle:linkTitle,
+            linkSummary : linkSummary
         }
         return dat;
     },
