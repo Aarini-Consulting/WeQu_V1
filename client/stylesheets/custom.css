@@ -642,3 +642,25 @@ svg.radarwapper{
 	width: 426px !important;
     height: 412px !important;
 }
+
+.fontLegend{
+	font-size: 16px;
+	padding-left: 2px;
+}
+
+@media (max-width: 479px) {
+	.fontLegend{
+		margin-top: 10px;
+		font-size: 8px;
+	}
+}
+
+@media (min-width: 479px) {
+	.marginRight20{
+		margin-right: 20px !important;
+	}
+}
+
+.marginleft20{
+	margin-left: 5% !important;
+}
