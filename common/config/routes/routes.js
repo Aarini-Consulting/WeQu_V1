@@ -14,7 +14,8 @@
         Meteor.userId() ? this.next() : this.render('login');
 
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn/a', '/signUp',
-    '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin','terms','privacyPolicy'
+    '/RecoverPassword', '/verify-email:token','/reset-password/:token','adminUser','adminLogin','terms',
+    'privacyPolicy','/profile/publicUser/:userId'
     ] }); 
 
     Router.onBeforeAction(function () {
@@ -27,7 +28,7 @@
     }, { 'except': [ '/script-login', '/admin', '/script-invitation', '/invitation/:_id', '/invite',
                  '/RecoverPassword', '/verify-email:token','/signUp','adminLogin','adminUser','/feed','/settings',
                  'userAfterQuiz/:_id', '/scriptLoginAfterQuiz/:userId?','terms','privacyPolicy',
-                 '/quiz/:_id?','/quiz'
+                 '/quiz/:_id?','/quiz','/profile/publicUser/:userId'
                 ] });
 
     route = new ReactiveVar("quiz");
@@ -183,8 +184,29 @@
         name: 'signIn' });
 
     Router.route('/', function () {
+
         return this.render('signIn');
+    }, {
+  name: 'home',
+  onAfterAction: function () {
+ /*   DocHead.setTitle('Welcome home');
+    DocHead.addMeta({
+      name: "description", 
+      content: "Site description"
     });
+    DocHead.addMeta({
+      property: "og:title", 
+      content: "Facebook title"
+    });
+    DocHead.addMeta({
+      property: "og:description", 
+      content: "Facebook description"
+    });
+    DocHead.addMeta({
+      property: "og:image", 
+      content: "https://app.wequ.co/img/assets/WEQU_LOGO_NEW.png"
+    });  */
+  } });
 
     // TODO : Improve with passing as query insteas params
 

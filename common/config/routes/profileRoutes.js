@@ -205,7 +205,20 @@
 
     // Profile routing ends ..
 
+     Router.route('/profile/publicUser/:userId', function () {
+        
+        this.layout('ApplicationLayout');
 
+        this.wait(Meteor.subscribe('feedback',"allData"),  Accounts.loginServicesConfigured());
+
+        if(this.ready()){
+           return this.render('publicUser');   
+        }
+        else{
+            this.render('loading');
+        }
+
+    },{ 'name': '/profile/publicUser/:userId' });
 
 
 

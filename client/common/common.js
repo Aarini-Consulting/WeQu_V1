@@ -55,3 +55,25 @@ currentEmail = function currentEmail(id){
 }
 return null;
 }
+
+getpictureUrl = function(data){
+      let qp = quizPerson.get()
+      if(data){
+        qp = data;
+      }
+      
+      let userId = qp ? qp :  Meteor.userId();
+      var user = Meteor.users.findOne({_id : userId });
+      let url =  user && ( user.services && user.services.linkedin
+                      && user.services.linkedin.pictureUrl );
+      if(url){
+        return url;  
+      }
+      return null;    
+}
+
+//ES6 Function
+// Not really used anywhere
+capitalizeFirstLetter = (string) => {
+       return string.charAt(0).toUpperCase() + string.slice(1);
+}

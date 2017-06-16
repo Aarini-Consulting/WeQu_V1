@@ -115,3 +115,7 @@ Template.registerHelper('formatDateTime', function (val) {
     Template.registerHelper('currentUserEmail', function () {
        return currentEmail();
     });
+
+    Template.registerHelper('pictureUrl', function (data) {
+      return getpictureUrl(data);
+    });

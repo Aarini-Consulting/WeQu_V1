@@ -9,8 +9,8 @@
         <div>
           {{#if feedback}} {{feedback.groupName}}  {{/if}}
         </div>
-        {{#if person.pictureUrl}}
-        <img src="{{person.pictureUrl}}" class="avatar" id="specificUser" data-filter-id="{{userId}}">
+        {{#if pictureUrl to}}
+        <img src="{{pictureUrl to}}" class="avatar" id="specificUser" data-filter-id="{{userId}}">
         {{else}}
         <img src="/img/avatar.png" class="avatar" id="specificUser" data-filter-id="{{userId}}">
         {{/if}}

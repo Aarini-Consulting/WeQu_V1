@@ -28,4 +28,3 @@ Router.route('/privacyPolicy', function () {
     this.render('privacyPolicy');
 
 });
- 
