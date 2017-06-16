@@ -3,7 +3,9 @@
 
     "domain": {
       "url": "http://app.wequ.tech",
-      "int": "http://app.wequ.co"
+      "int": "http://app.wequ.co",
+      "development": "http://app-test.wequ.co",
+      "local": "localhost:3000"
     },
     "verifyEmail": true
   },
