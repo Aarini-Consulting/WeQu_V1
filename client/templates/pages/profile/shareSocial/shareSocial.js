@@ -23,9 +23,9 @@ Template.shareSocial.helpers({
             domain = Meteor.settings.public.domain.development;
         }
         let url = `${domain}/profile/publicUser/${userId}`;
-    	let tex = `Discover ${username}’s character skills. #${top} is one of ${gender_result} best quality! ${url} Powered by @playWeQu` ;
+    	let tex = `Discover ${username}’s character skills.+%23${top} is one of ${gender_result} best quality! ${url} Powered by @playWeQu` ;
         let linkTitle = `Discover ${username}’s character skills` ;
-        let linkSummary = ` ${top} is one of ${gender_result} best quality! Learn more about ${username} ${url} Powered by WeQu`;
+        let linkSummary = `%23${top} is one of ${gender_result} best quality! Learn more about ${username} ${url} Powered by WeQu`;
     	let dat = {
             url:url,
             tex:tex,
