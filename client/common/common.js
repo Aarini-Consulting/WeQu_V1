@@ -71,3 +71,8 @@ getpictureUrl = function(data){
       }
       return null;    
 }
+
+//ES6 Function
+capitalizeFirstLetter = (string) => {
+       return string.charAt(0).toUpperCase() + string.slice(1);
+}
