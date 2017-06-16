@@ -14,20 +14,25 @@ Template.shareSocial.helpers({
         }
         top = capitalizeFirstLetter(top);
         let gender_result = gender == "Male" ? 'his': 'her';
-        let url = `http://app-test.wequ.co/profile/publicUser/${userId}`;
+
+        let domain ;
+        if(Meteor.isDevelopment){
+            domain = Meteor.settings.public.domain.local;
+        }
+        if(Meteor.isProduction){
+            domain = Meteor.settings.public.domain.development;
+        }
+        let url = `${domain}/profile/publicUser/${userId}`;
     	let tex = `Discover ${username}’s character skills. ${top} is one of ${gender_result}  best quality! ${url} Powered by @playWeQu` ;
         let linkTitle = `Discover ${username}’s character skills` ;
-        let linkSummary = ` ${top} is one of ${gender_result} best quality! &#xA; Learn more about ${username} ${url} Powered by WeQu`;
+        let linkSummary = ` ${top} is one of ${gender_result} best quality! Learn more about ${username} ${url} Powered by WeQu`;
     	let dat = {
+            url:url,
             tex:tex,
             linkTitle:linkTitle,
             linkSummary : linkSummary
         }
         return dat;
-    },
-    url(){
-        let userId = Meteor.userId();
-        return `http://app-test.wequ.co/profile/publicUser/${userId}`
     }
 
 });
