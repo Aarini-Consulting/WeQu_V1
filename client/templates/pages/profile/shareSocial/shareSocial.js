@@ -10,9 +10,9 @@ Template.shareSocial.helpers({
     	let userId = quizPerson.get();
 	    let data = calculateTopWeak(Feedback.find({to: userId }).fetch());
     	if(data){
-        	top =  data.top3[0] && data.top3[0].skill;
+        	top =  data.top3[0] && data.top3[0].text;
         }
-        top = capitalizeFirstLetter(top);
+        //top = capitalizeFirstLetter(top);
         let gender_result = gender == "Male" ? 'his': 'her';
 
         let domain ;

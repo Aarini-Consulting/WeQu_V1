@@ -73,6 +73,7 @@ getpictureUrl = function(data){
 }
 
 //ES6 Function
+// Not really used anywhere
 capitalizeFirstLetter = (string) => {
        return string.charAt(0).toUpperCase() + string.slice(1);
 }
