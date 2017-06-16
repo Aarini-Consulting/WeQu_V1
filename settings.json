@@ -4,7 +4,7 @@
     "domain": {
       "url": "http://app.wequ.tech",
       "int": "http://app.wequ.co",
-      "development": "http://app-test.wequ.co",
+      "development": "http://app.wequ.co",
       "local": "localhost:3000"
     },
     "verifyEmail": true
