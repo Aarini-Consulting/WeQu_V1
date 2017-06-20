@@ -119,7 +119,3 @@ Template.registerHelper('formatDateTime', function (val) {
     Template.registerHelper('pictureUrl', function (data) {
       return getpictureUrl(data);
     });
-
-    Template.registerHelper('isInGameMasterRole', function (userId) {
-      return Roles.userIsInRole(userId) == true;
-    });

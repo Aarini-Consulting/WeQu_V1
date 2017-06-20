@@ -62,6 +62,7 @@ Template.adminUser.helpers({
                     //picture
                  //   let data = ProfilePicture.findOne({_id: doc.profile.profilePicture});
                  //   doc.picture = data && data.url();
+                 doc.gameMaster =  Roles.userIsInRole(doc._id,'GameMaster') == true;
                  return doc;
                }
              });
@@ -96,5 +97,5 @@ Template.adminUser.events({
       Modal.show('adminViewUserProfile', {userId:userId } ); // Adding Master Admin functionality to view user's profile.
     }
    }
-   
+
 });
