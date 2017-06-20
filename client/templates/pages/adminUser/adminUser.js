@@ -81,13 +81,20 @@ Template.adminUser.events({
     Router.go('/adminLogin');
   },
 
-  "click #user" : function(event,template){
+  "click .switch" : function(event,template){
     event.preventDefault();
+    let userId = $(event.currentTarget).attr('data-userId');
+    Meteor.call('addRoleGameMaster', userId , function (err, result) {
+   });
+  },
+
+  "click #user" : function(event,template){
+    //event.preventDefault();
     let userId = $(event.currentTarget).attr('data-userId');
     if(userId != Meteor.userId())
     {
       Modal.show('adminViewUserProfile', {userId:userId } ); // Adding Master Admin functionality to view user's profile.
     }
    }
-
+   
 });

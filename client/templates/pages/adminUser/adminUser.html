@@ -32,7 +32,20 @@
 							</thead>
 							<tbody class="no-border-x">
 								{{#each listusers}}
+								
+
+								  	<!-- Rounded switch -->
+									<label data-userId="{{_id}}" class="switch">
+									{{#if isInGameMasterRole _id}}
+									  <input type="checkbox" checked>
+									{{else}}
+									  <input type="checkbox">
+									{{/if}}
+									  <div class="slider round"></div>
+									</label>								
+
 								<tr id="user" data-userId="{{_id}}">
+
 
 									<td>{{#if status.online}}
 										<span class="badge badge-success">&nbsp;</span>
@@ -54,6 +67,8 @@
 
 										</div>
 									</td>
+
+
 									<td>
 
 
