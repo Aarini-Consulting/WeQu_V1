@@ -62,6 +62,10 @@ Meteor.startup(function () {
         user.profile.firstName = options.firstName;
         user.profile.lastName = options.lastName;
 
+        if(options.userType){
+            user.profile.userType = options.userType;
+        }
+
         if(options.trialMember){
             user.profile.trialMember = options.trialMember;
             user.profile.trial = options.trial; // account created by user then set to false

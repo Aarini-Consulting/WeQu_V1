@@ -2,7 +2,7 @@
 
 	<!-- Menubar not properly positioned , temporairly setting position via css -->
 	<!-- TODO : Use proper bootstrap instead -->
-	<div class="menuBar margin-top">
+	<div class="menuBar">
 		<a href="#" id="logout" class="{{#if loggedIn}}hidden{{/if}}"> <img class="lg-icon" src="/img/login_button_deactive.png" ></a>
 	</div>
 
@@ -81,7 +81,13 @@
 
 										<span class="badge badge-info">
 											{{#if emails}} Wequ {{else}} Linked In {{/if}}
+											
 										</span>
+										{{#if profile.userType}}
+										<span class="badge badge-info">
+										 {{profile.userType}}
+										</span>
+										 {{/if}}
 
 										{{#if this.roles}}
 										<span class="badge badge-info">
@@ -125,5 +131,8 @@
 		</div>
 	</div>
 
+	<center>
+	<button> <a href="/adminAccountCreation"> Create test account  </a> </button>
+	</center>
 
 </template>

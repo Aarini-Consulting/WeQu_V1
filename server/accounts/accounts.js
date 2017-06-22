@@ -9,7 +9,8 @@ Meteor.methods({
 			email: data.registerEmail,
 			password: data.registerPassword,
 			firstName: data.firstName,
-			lastName: data.lastName
+			lastName: data.lastName,
+			userType: data && data.userType
 		}); 
 
 		if(!verify){

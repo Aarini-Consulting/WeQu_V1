@@ -49,6 +49,10 @@ npm-bcrypt
 
 momentjs:moment
 wizonesolutions:moment-duration-format
+cfs:standard-packages
+cfs:gridfs 
+cfs:s3
+cfs:filesystem
 
 alanning:roles
 mizzao:user-status 
