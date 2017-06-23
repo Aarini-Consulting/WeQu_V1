@@ -484,7 +484,7 @@
   background-position: 0px 0px, 50% 0px;
   background-size: auto, 80%;
   background-repeat: repeat, repeat-y;
-  background-attachment: scroll, fixed;
+  background-attachment: scroll;
   -webkit-filter: blur(2px);
   filter: blur(2px);
 }
