@@ -52,8 +52,8 @@
           }
        }
      },
-     //TODO : Move it to shareSocial.js 
-    "click .fb-share-button" : function(event, template){ 
+     //TODO : Move it to shareSocial.js // fb-share-button
+    "click .fb-xfbml-parse-ignore" : function(event, template){ 
       
       event.preventDefault();
 
