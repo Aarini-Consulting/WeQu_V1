@@ -5,13 +5,15 @@ Template['scriptLoginAfterQuiz'].events({
             let oldUser = Connections.findOne(  {"email":email} );
             let exists = !oldUser ? false : true;
             let condition = getLoginScript() == false ; // Already activated then do nothing
-            if(exists || condition){
+           /* if(exists || condition){
               setLoginScript(false); // Invited user then activate the profile .
             }
             else
             {
                setLoginScript('profile');
-            }
+            }*/
+
+            setLoginScript(false); // #73ActivateProfileDefault
             quizPerson.set(Meteor.userId());
             Router.go('/profile'); 
            
