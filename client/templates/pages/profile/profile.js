@@ -61,7 +61,7 @@
         FB.ui({
           method: 'share',
            mobile_iframe: true,
-          href: `http://app-test.wequ.co/profile/publicUser/${userId}`,
+          href: `https://app.wequ.co/profile/publicUser/${userId}`,
         }, function(response){});
    }
   });
