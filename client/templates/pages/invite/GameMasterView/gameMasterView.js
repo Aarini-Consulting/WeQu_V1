@@ -1,3 +1,5 @@
+import '/imports/startup/client/group-members-profile-view.webflow.css';
+
 Template.gameMasterView.onCreated(function(){
 	  var self = this;
 	  self.autorun(function() {
