@@ -127,7 +127,20 @@ Meteor.methods({
 
     },
     addRoleGameMaster(userId){
-      Roles.addUsersToRoles(userId, "GameMaster" );
+
+
+      if(!Roles.userIsInRole(Meteor.userId(),'admin')){
+        throw (new Meteor.Error("Not allowed to assigned roles"));
+      }
+
+      if ( Roles.userIsInRole( userId, 'GameMaster' ) ) {
+        return Roles.removeUsersFromRoles( userId, 'GameMaster');
+      } else {
+        return Roles.addUsersToRoles(userId, "GameMaster" );
+      }
+      
       return false;
-    }
+    },
+
+    
 })
