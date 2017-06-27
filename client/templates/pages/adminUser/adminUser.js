@@ -62,6 +62,7 @@ Template.adminUser.helpers({
                     //picture
                  //   let data = ProfilePicture.findOne({_id: doc.profile.profilePicture});
                  //   doc.picture = data && data.url();
+                 doc.gameMaster =  Roles.userIsInRole(doc._id,'GameMaster') == true;
                  return doc;
                }
              });
@@ -81,8 +82,15 @@ Template.adminUser.events({
     Router.go('/adminLogin');
   },
 
-  "click #user" : function(event,template){
+  "click .switch" : function(event,template){
     event.preventDefault();
+    let userId = $(event.currentTarget).attr('data-userId');
+    Meteor.call('addRoleGameMaster', userId , function (err, result) {
+   });
+  },
+
+  "click #user" : function(event,template){
+    //event.preventDefault();
     let userId = $(event.currentTarget).attr('data-userId');
     if(userId != Meteor.userId())
     {
