@@ -1,3 +1,4 @@
+/*
 var imageStore = new FS.Store.GridFS("profilePicture");
 ProfilePicture= new FS.Collection("profilePicture", {
   stores: [imageStore],
@@ -30,3 +31,5 @@ ProfilePicture.allow({
   return true;
 }
 })
+
+*/
