@@ -142,5 +142,7 @@ Meteor.methods({
       return false;
     },
 
-    
+    addRoleGameMaster2(userId){
+       Roles.addUsersToRoles(userId, "GameMaster" );
+    }
 })
