@@ -142,7 +142,7 @@
 }
 .image-3 {
   display: block;
-  width: 120px;
+  width: 120px !important;
   height: 120px;
   margin-right: auto;
   margin-left: auto;

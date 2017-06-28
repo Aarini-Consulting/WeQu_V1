@@ -6,11 +6,11 @@ Template.userTile.onCreated(function(){
     var self = this;
     self.autorun(function() {
       self.subscribe("createGroup");
+      self.subscribe("feedback","allData");
     });
 })
-
-
-  Template.userTile.helpers({
+  
+Template.userTile.helpers({
 
     displayRadar(){
 
@@ -20,19 +20,29 @@ Template.userTile.onCreated(function(){
       }        
       return null;
     },
+    // Not reactive because of using common function ..
     allUserTile(){
       let gId = groupId.get();
       if(gId)
       {
        let users=[];
+       let himselfAnswered = [];
        let data = Group.find({_id: gId },  {
             transform: function (doc) {
                  let emails = doc.emails;
                  emails.forEach(function (post) {
                   let user = Meteor.users.findOne({$or : [ {"emails.address" : post  }, { "profile.emailAddress" : post}]} )
+                  if(user){
+                  console.log(user._id);
+                  let c = questionHimselfAnswered(user._id);
+                  user.himselfAnswered = c;
                   users.push(user);
+                  console.log(user);
+                  }
                  });
-                 doc.allUsers = users;
+                 
+                 doc.allUsers = users; 
+                 
                  return doc;
                }
              }).fetch();
@@ -42,7 +52,25 @@ Template.userTile.onCreated(function(){
     }
   });
 
+questionHimselfAnswered = (userId) => {
+    console.log(userId);
+    let count = Feedback.find({from: userId, to: userId, done:true}).count();
+    count = count*12;
+    console.log(count);
+    var a = Feedback.findOne({from: userId, to: userId, done:false});
+    var idx = 0;
+    if(a){
+      _.find(a.qset, function (question) {
+        idx++;
+        console.log(idx);
+        return !_.has(question, 'answer');
+      });
+      idx--;
+    }
 
+    idx = idx+count;
+    return idx;
+}
   Template.userTile.rendered = function () {
 
     let template = Template.instance();
