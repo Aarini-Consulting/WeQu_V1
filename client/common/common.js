@@ -61,7 +61,7 @@ getpictureUrl = function(data){
   if(data){
     qp = data;
   }
-  
+
   let userId = qp ? qp :  Meteor.userId();
   var user = Meteor.users.findOne({_id : userId });
   let url =  user && ( user.services && user.services.linkedin
@@ -87,7 +87,6 @@ questionHimselfAnswered = (userId) => {
   if(a){
     _.find(a.qset, function (question) {
       idx++;
-      console.log(idx);
       return !_.has(question, 'answer');
     });
     idx--;
@@ -95,4 +94,100 @@ questionHimselfAnswered = (userId) => {
 
   idx = idx+count;
   return idx;
+}
+
+
+questionInviteesAnsweredHim = (userId) => {
+
+  let b = Feedback.find({to: userId,done:true, from: { $nin: [ userId , Meteor.userId() ] }  })
+  var count=0;
+  if(b.count()>0){
+    b.forEach(function (data) {
+      qset = data.qset;
+      qset.forEach(function (dat) {
+        if(!isNaN(dat.answer)  && !!dat.answer){
+          count++;
+        }
+      });
+    });
+  }
+  var a = Feedback.findOne({to: userId, done:false, from: { $nin: [ userId , Meteor.userId() ] } });
+  var idx = 0;
+  if(a){
+    qset = a.qset;
+    qset.forEach(function (data) {
+      if(!isNaN(data.answer)  && !!data.answer){
+        idx++;
+      }
+    });
+  }
+
+  idx = idx+count;
+  return idx;
+}
+
+
+displayRadar = (userId) => {
+
+  let user = Meteor.users.findOne({_id : userId});
+  if(user){
+
+    let userId = user._id;
+    var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
+    var data = { profile : user.profile };
+    data.myscore = calculateScore(joinFeedbacks(myfeedback));
+
+    var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+    var qset = joinFeedbacks(otherFeedback);
+
+    var validAnswers = _.filter(qset, function(question) { return question.answer });
+    data.otherscore = calculateScore(qset);
+    data.enoughData = (validAnswers.length > 30);
+
+    _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch()));
+
+    return data;
+  }
+
+
+  return null;
+
+}
+
+
+displaySkills = (userId) =>{
+
+  let user = Meteor.users.findOne({_id : userId});
+  if(user){
+
+    let userId = user._id;
+    var myfeedback = Feedback.find({ 'from': userId, 'to' : userId }).fetch();
+    var data = { profile : user.profile };
+    data.userId = userId;
+    data.myscore = calculateScore(joinFeedbacks(myfeedback));
+    var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+    var qset = joinFeedbacks(otherFeedback);
+    var validAnswers = _.filter(qset, function(question) { return question.answer });
+    var otherscore = calculateScore(qset,true);
+    data.enoughData = (validAnswers.length > 9);
+
+    data.categories = _.map(_.keys(framework), function(category) {
+      return {
+        name : i18n[category],
+        category : category,
+        skills : _.map(framework[category], function(skill){
+          var data = {name : i18n[skill], value: 0, scored: otherscore.scored[skill], total: otherscore.total[skill], skill: skill, category: category }
+          if(otherscore.total[skill] > 0) {
+            data.value = Math.round(otherscore.scored[skill] * 100 / otherscore.total[skill]);
+          }
+          return data;
+        })
+      }
+    })
+    _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch()))  
+
+    return data; 
+  }
+
+  return null;
 }

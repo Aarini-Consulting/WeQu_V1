@@ -20,22 +20,33 @@ Template.userTile.helpers({
       }        
       return null;
     },
-    // Not reactive because of using common function ..
+    // Not reactive because of using common functions ..
     allUserTile(){
       let gId = groupId.get();
       if(gId)
       {
        let users=[];
        let himselfAnswered = [];
+       let user,userId,email,q1=0,q2=0;
+       let dr, tw;
+
        let data = Group.find({_id: gId },  {
             transform: function (doc) {
-                 let emails = doc.emails;
+                 emails = doc.emails;
                  emails.forEach(function (post) {
-                  let user = Meteor.users.findOne({$or : [ {"emails.address" : post  }, { "profile.emailAddress" : post}]} )
-                  if(user){
-                  console.log(user._id);
-                  let c = questionHimselfAnswered(user._id);
-                  user.himselfAnswered = c;
+                 user = Meteor.users.findOne({$or : [ {"emails.address" : post  }, { "profile.emailAddress" : post}]} )
+                 if(user){
+                  userId = user._id;
+                  q1 = questionHimselfAnswered(userId);
+                  user.himselfAnswered = q1;
+                  q2 = questionInviteesAnsweredHim(userId);
+                  user.inviteesAnsweredHim =q2;
+                  dr = displayRadar(userId);
+                  user.radarData = dr;
+                  ds = displaySkills(userId);
+                  user.skillsData = ds;
+                  tw = calculateTopWeak(Feedback.find({to: userId }).fetch());
+                  user.topWeak = tw;
                   users.push(user);
                   console.log(user);
                   }
