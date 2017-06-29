@@ -28,7 +28,7 @@ Template.userTile.helpers({
        let users=[];
        let himselfAnswered = [];
        let user,userId,email,q1=0,q2=0;
-       let dr, tw;
+       let dr, tw, twEnough;
 
        let data = Group.find({_id: gId },  {
             transform: function (doc) {
@@ -46,7 +46,11 @@ Template.userTile.helpers({
                   ds = displaySkills(userId);
                   user.skillsData = ds;
                   tw = calculateTopWeak(Feedback.find({to: userId }).fetch());
+                  if(tw) {
+                    twEnough = tw.top3.length>0 && tw.weak3.length>0 ;
+                  } 
                   user.topWeak = tw;
+                  user.topWeakEnough = twEnough;
                   users.push(user);
                   console.log(user);
                   }

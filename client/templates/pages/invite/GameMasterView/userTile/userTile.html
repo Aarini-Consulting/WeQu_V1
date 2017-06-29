@@ -43,16 +43,26 @@
           <img class="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcset="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"><img class="title-icon" src="/img/iconSkills.png" width="12">
           -->
 
+          {{#unless topWeakEnough}}
+
+          <div class="sectiongreybg sectionprofile font-tile font-title-title">
+             <center> There is no information about {{username profile}} </center>
+          </div>
+
+          {{else}}
           <div class="font-tile font-title-title">MORE TRUE Skills</div>
           {{> threeSkillsGameView data=topWeak.top3}}
 
            <div class="font-tile font-title-title">LESS TRUE Skills</div>
           {{> threeSkillsGameView data=topWeak.weak3}}
-
+          {{/unless}}
         </div>
         
         <div class="title-skillgraph"><img class="title-icon" src="/img/icon24.png" width="12">
           <div class="font-tile font-title-title">Character Skills</div>
+
+          {{> profileSkillsGameView data=skillsData}}
+
         </div>
       </div>
     </div>
