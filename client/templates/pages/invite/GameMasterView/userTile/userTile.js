@@ -64,6 +64,15 @@ Template.userTile.helpers({
        console.log(data);
        return data;
       }
+    },
+    groupMembers(){
+      let gId = groupId.get();
+      if(gId)
+      {
+       let data = Group.find({_id: gId }).fetch();
+       return data;
+      }
+      //return null;
     }
   });
 

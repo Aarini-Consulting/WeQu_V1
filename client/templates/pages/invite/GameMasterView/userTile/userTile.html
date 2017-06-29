@@ -70,6 +70,81 @@
     {{/each}}
 
     {{/each}}
+
+    {{#each groupMembers}}
+         {{#each arr_emails_notExisting}}
+
+        <div class="column-3 w-clearfix w-col w-col-4 w-col-stack">
+          <div class="profile-tile-wrapper w-clearfix">
+            <div class="tile-name w-clearfix">
+              <a class="tile-nav-arrow w-hidden-main w-hidden-medium w-inline-block"><img class="w-hidden-main w-hidden-medium" src="/img/arrowLeft.png" width="10">
+              </a>
+              <div class="font-tile-name">{{this}}</div>
+              <a class="tile-arrow-right tile-nav-arrow w-clearfix w-hidden-main w-hidden-medium w-inline-block"><img class="image-11 w-hidden-main w-hidden-medium" src="/img/arrowRight.png" width="10">
+              </a>
+              <div class="name-stat">
+                <div class="w-row">
+                  <div class="column-2 w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6">
+                    <div class="font-number-username font-tile">0</div>
+                    <div class="tile-name-stat-number">
+                      <div class="font-byusername font-title">By Username</div>
+                    </div>
+                  </div>
+                  <div class="w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6">
+                    <div class="font-by-teammates font-number-username font-tile">0</div>
+                    <div class="font-title">By teammates</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tile-radar"><img class="title-icon" src="/img/iconRadar.png">
+              <div class="font-tile font-title-title">Comparisons</div><img class="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcset="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"><img class="title-icon" src="/img/iconSkills.png" width="12">
+              <div class="font-tile font-title-title">MORE TRUE Skills</div>
+              <div class="row-2 w-row">
+                <div class="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
+                  <div class="title-skillicon-div"><img class="title-skill-icon" src="/img/connector.png">
+                    <div class="font-skillicon font-tile">skill name</div>
+                  </div>
+                </div>
+                <div class="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
+                  <div class="title-skillicon-div"><img class="title-skill-icon" src="/img/creative.png">
+                    <div class="font-skillicon font-tile">skill name</div>
+                  </div>
+                </div>
+                <div class="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
+                  <div class="title-skillicon-div"><img class="title-skill-icon" src="/img/doer.png">
+                    <div class="font-skillicon font-tile">skill name</div>
+                  </div>
+                </div>
+              </div>
+              <div class="font-tile font-title-title">LESS TRUE Skills</div>
+              <div class="w-row">
+                <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                  <div class="title-skillicon-div"><img class="title-skill-icon" src="/img/connector.png">
+                    <div class="font-skillicon font-tile">skill name</div>
+                  </div>
+                </div>
+                <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                  <div class="title-skillicon-div"><img class="title-skill-icon" src="/img/creative.png">
+                    <div class="font-skillicon font-tile">skill name</div>
+                  </div>
+                </div>
+                <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                  <div class="title-skillicon-div"><img class="title-skill-icon" src="/img/doer.png">
+                    <div class="font-skillicon font-tile">skill name</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="title-skillgraph"><img class="title-icon" src="/img/icon24.png" width="12">
+              <div class="font-tile font-title-title">Character Skills</div>
+            </div>
+          </div>
+        </div>
+
+        {{/each}}
+    {{/each}}
+    
     <div class="column-4 w-col w-col-4 w-col-stack"></div>
     <div class="column-5 w-col w-col-4 w-col-stack"></div>
   </div>

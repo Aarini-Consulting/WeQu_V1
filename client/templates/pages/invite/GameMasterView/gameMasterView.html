@@ -33,26 +33,16 @@
 		{{#if equals step "viewGroup"}}
 
 		<div class="contentwrapper">
-		  <div class="text-left">	
-		    <a id="ok"><img src="/img/arrow_white.png">
-			</a> &nbsp;
-			{{groupName}}
-		  </div>
-		  <br>
-
-		  {{#each groupMembers}}
-			{{#each emails}}
-				<div class="row text-left">
-					<img class="image-5 img-circle" src="/img/avatar.png">
-					<span> {{this}} </span>
-				</div> <br>
-			{{/each}}
-		  {{/each}}
-
+			<div class="text-left">	
+				<a id="ok"><img src="/img/arrow_white.png">
+				</a> &nbsp;
+				{{groupName}}
+			</div>
+			<br>
 		</div>
 		<br>
 		
-		{{>userTile}}		
+		{{>userTile}}
 		
 		{{/if}}
 	</section>
