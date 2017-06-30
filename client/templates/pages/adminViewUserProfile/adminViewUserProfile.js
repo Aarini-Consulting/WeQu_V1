@@ -61,7 +61,7 @@ displaySkills(){
               var qset = joinFeedbacks(otherFeedback);
               var validAnswers = _.filter(qset, function(question) { return question.answer });
               var otherscore = calculateScore(qset,true);
-              data.enoughData = (validAnswers.length > 9);
+              data.enoughData = (validAnswers.length > 1);
 
               data.categories = _.map(_.keys(framework), function(category) {
                return {

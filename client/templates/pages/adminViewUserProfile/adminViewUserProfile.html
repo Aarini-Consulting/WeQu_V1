@@ -57,19 +57,16 @@
                         </div>
                      </div>
 
-                    <div class="sectionprofile sectionskills" id="sectionskills">
-                      <div class="titlesection w-container"><img class="iconwrapper" src="/img/icon24.png">
-                        <div class="fontreleway fonttitle">{{username profile}} Character Skill Set</div>
-                      </div>
-                    </div>
+                    <div class="row">
                     {{#with displaySkills}}
-                        {{#if enoughData}}
+                        {{#if enoughData}}  
                           {{> skillCategories2 data=categories}}
                         {{else}}
                         {{> skillsPreview}}
-                    {{/if}}
+                        {{/if}}
                       
                     {{/with}}
+                    </div>
                     
                 </div>
 
