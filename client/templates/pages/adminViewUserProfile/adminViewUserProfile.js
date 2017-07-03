@@ -57,7 +57,8 @@ displaySkills(){
               var data = { profile : user.profile };
               data.userId = userId;
               data.myscore = calculateScore(joinFeedbacks(myfeedback));
-              var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+             // var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+              var otherFeedback = Feedback.find({'to' : userId }).fetch();
               var qset = joinFeedbacks(otherFeedback);
               var validAnswers = _.filter(qset, function(question) { return question.answer });
               var otherscore = calculateScore(qset,true);
