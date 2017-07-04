@@ -1,3 +1,5 @@
+import '/imports/startup/client/group-members-profile-view.webflow.css';
+
 Template.gameMasterView.onCreated(function(){
 	  var self = this;
 	  self.autorun(function() {
@@ -6,29 +8,31 @@ Template.gameMasterView.onCreated(function(){
 })
 
 info = new ReactiveVar('');  
+groupId = new ReactiveVar('');
 
 Template.gameMasterView.created = function () {
 	this.step = new ReactiveVar("step1"); 
-	this.groupId = new ReactiveVar();
+	
 	this.groupName = new ReactiveVar();
 	//this.info = new ReactiveVar('');
 }
 
 Template.gameMasterView.helpers({
 	groupMembers(){
-		let groupId = Template.instance().groupId.get();
-		if(groupId)
+		let gId = groupId.get();
+		if(gId)
 		{
-		 let data = Group.find({_id: groupId }).fetch();
+		 let data = Group.find({_id: gId }).fetch();
 		 return data;
 		}
 		//return null;
 	},
 
 	groupName(){
-		let groupId = Template.instance().groupId.get();
+		let gId = groupId.get();
+		if(gId)
 		{
-		 let data = Group.findOne({_id: groupId }).groupName;
+		 let data = Group.findOne({_id: gId }).groupName;
 		 return data;
 		}
 		return null;
@@ -95,9 +99,9 @@ Template.gameMasterView.events({
     },
 
     "click #viewGroup" : function (event, template) {
-    	let groupId =  $(event.currentTarget).attr('data-groupId');
+    	let gId =  $(event.currentTarget).attr('data-groupId');
     	template.step.set("viewGroup"); 
-     	template.groupId.set(groupId);
+     	groupId.set(gId);
      },
 
     "click #previous" : function(event,template){

@@ -236,7 +236,8 @@
       }
 
       route.set('invite');
-      this.wait(Meteor.subscribe('feedback'),Meteor.subscribe('connections'),Accounts.loginServicesConfigured());
+      this.wait(Meteor.subscribe('connections'), Meteor.subscribe("feedback","allData"),
+                Accounts.loginServicesConfigured());
       if (!this.ready()){
         this.render('loading');
         return;

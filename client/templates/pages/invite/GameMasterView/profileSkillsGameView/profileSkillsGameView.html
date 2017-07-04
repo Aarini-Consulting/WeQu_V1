@@ -1,0 +1,29 @@
+ 
+ <template name="profileSkillsGameView">
+
+ <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+      {{#each data.categories}}
+
+      <div class="skillElement">
+        <div class="title font-title"><b class="h5">{{name}}</b></div>
+        <div class="underBar" style="width:20%; visibility: hidden;"></div>
+      </div>
+      {{#each skills}}
+      <div class="skillElement">
+        <div class="title font-title" style="width:10%;">
+         <small> <small> {{name}} </small> </small> </div>
+        <div class="underBar" style="width:30%">
+          <div class="bar {{category}}" style="width:{{value}}%"></div>
+        </div>
+        <div class="score font-title">{{scored}}/{{total}}</div>
+      </div>
+      {{/each}}
+      {{/each}}
+
+    </div> 
+    
+  </div>
+</template>
