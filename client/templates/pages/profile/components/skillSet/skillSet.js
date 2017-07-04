@@ -14,12 +14,19 @@ Template.skillSet.helpers({
                                      ).count();
     let email = ( Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address ) || ( Meteor.user()  && Meteor.user().profile.emailAddress) ;
     let g, gCount, count3=0 ;
-    g = Group.find({creatorId:Meteor.userId()}).fetch();
-    gCount = Group.find({creatorId:Meteor.userId()}).count();
+    let allEmails = [];
+    g = Group.find({emails:email}).fetch();
+    gCount = Group.find({emails:email}).count();
     if(gCount>0){
       g.forEach(function (data) {
-        count3+= data.emails.length;
+         data.emails.forEach(function (d) {
+           allEmails.push(d);
+         });
+        
+        //count3+= data.emails.length;
       });
+      allEmails = [...new Set(allEmails)];
+      count3 = allEmails.length;
     }
     let countAlpha="", i= 3;
     let count2= i-count-count3 ;
