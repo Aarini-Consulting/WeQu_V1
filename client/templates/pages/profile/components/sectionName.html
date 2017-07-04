@@ -9,7 +9,11 @@
          {{#if pictureUrl}}
          <img class="avatarprofile" src="{{pictureUrl}}">
          {{else}}
-         <img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+         {{#if profile.userType}}
+        <img class="avatarprofile" src="/img/profile/QueenMaxima.jpg">
+        {{else}}
+        <img src="/img/avatar.png" class="avatarprofile" id="specificUser" data-filter-id="{{userId}}">
+        {{/if}}
          {{/if}} 
 
           <div class="fontprofilename fontreleway">{{username profile}} 
@@ -36,7 +40,11 @@
           {{#if pictureUrl}}
          <img class="avatarprofile" src="{{pictureUrl}}">
          {{else}}
-         <img class="avatarprofile" src="/img/Avatar_BnW_noOutline.png">
+         {{#if profile.userType}}
+        <img class="avatarprofile" src="/img/profile/QueenMaxima.jpg">
+        {{else}}
+        <img src="/img/avatar.png" class="avatar" id="specificUser" data-filter-id="{{userId}}">
+        {{/if}}
          {{/if}} 
           
           <div class="fontprofilename fontreleway">{{username profile}} 

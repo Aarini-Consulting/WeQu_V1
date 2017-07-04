@@ -12,7 +12,11 @@
         {{#if pictureUrl to}}
         <img src="{{pictureUrl to}}" class="avatar" id="specificUser" data-filter-id="{{userId}}">
         {{else}}
+        {{#if person.userType}}
+        <img class="avatarprofile" src="/img/profile/QueenMaxima.jpg">
+        {{else}}
         <img src="/img/avatar.png" class="avatar" id="specificUser" data-filter-id="{{userId}}">
+        {{/if}}
         {{/if}}
         <br>
         {{username person}}
