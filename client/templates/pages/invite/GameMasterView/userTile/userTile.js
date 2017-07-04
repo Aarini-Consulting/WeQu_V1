@@ -1,5 +1,6 @@
 Template.userTile.created = function () {
     this.result = new ReactiveVar();  
+    this.innerWidth = new ReactiveVar(window.innerWidth);
 };
 
 Template.userTile.onCreated(function(){
@@ -9,6 +10,8 @@ Template.userTile.onCreated(function(){
       self.subscribe("feedback","allData");
     });
 })
+
+ 
   
 Template.userTile.helpers({
 
@@ -29,6 +32,14 @@ Template.userTile.helpers({
        let himselfAnswered = [];
        let user,userId,email,q1=0,q2=0;
        let dr, tw, twEnough;
+       var isMobileView = Template.instance().innerWidth.get() <767;
+
+       let i=0;
+       if(isMobileView){
+
+        // TODO : Declare Reactive variable for swapping user tile
+        // and pass the i value 
+       }
 
        let data = Group.find({_id: gId },  {
             transform: function (doc) {
@@ -52,10 +63,17 @@ Template.userTile.helpers({
                   user.topWeak = tw;
                   user.topWeakEnough = twEnough;
                   users.push(user);
-                  console.log(user);
+                  //console.log(users);
                   }
+                  else if(isMobileView) {
+                    users.push(post);
+                  }
+
                  });
                  
+                 if(isMobileView){
+                  users = users.slice( i, ++i);
+                 }
                  doc.allUsers = users; 
                  
                  return doc;
@@ -67,12 +85,13 @@ Template.userTile.helpers({
     },
     groupMembers(){
       let gId = groupId.get();
-      if(gId)
+      var isMobileView = Template.instance().innerWidth.get() <767;
+      if(gId && !isMobileView)
       {
        let data = Group.find({_id: gId }).fetch();
        return data;
       }
-      //return null;
+      return null;
     }
   });
 
@@ -97,7 +116,7 @@ questionHimselfAnswered = (userId) => {
 }
   Template.userTile.rendered = function () {
 
-    let template = Template.instance();
+    var template = Template.instance();
 
     Meteor.subscribe('feedback');
 
@@ -108,6 +127,10 @@ questionHimselfAnswered = (userId) => {
     //Re-write as a function - Re-use it
 
     Tracker.autorun(function () {
+
+      $(window).resize(function() {
+         template.innerWidth.set(window.innerWidth);
+      });
 
       let handle = Meteor.subscribe('feedback');
 
