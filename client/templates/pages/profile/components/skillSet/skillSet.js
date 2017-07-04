@@ -13,9 +13,14 @@ Template.skillSet.helpers({
                                       {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
                                      ).count();
     let email = ( Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address ) || ( Meteor.user()  && Meteor.user().profile.emailAddress) ;
-    let count3 ;
-    count3 = Group.find({"emails":email}).count();
-
+    let g, gCount, count3=0 ;
+    g = Group.find({creatorId:Meteor.userId()}).fetch();
+    gCount = Group.find({creatorId:Meteor.userId()}).count();
+    if(gCount>0){
+      g.forEach(function (data) {
+        count3+= data.emails.length;
+      });
+    }
     let countAlpha="", i= 3;
     let count2= i-count-count3 ;
     if(count2==1){
