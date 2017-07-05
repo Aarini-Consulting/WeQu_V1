@@ -648,6 +648,10 @@ svg.radarwapper{
 	padding-left: 2px;
 }
 
+.title.font-title.font18{
+	font-size: small;
+}
+
 @media (min-width: 990px) {
 	.font18{
 		font-size: 18px;
