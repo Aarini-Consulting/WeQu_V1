@@ -1,4 +1,4 @@
-  Router.route('/invitation/:_id', function () {      
+  Router.route('/invitation/:_id', function () {  
 
         this.layout('ScriptLayout');
 
