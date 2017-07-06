@@ -183,8 +183,18 @@
 	margin-left: 10px;
 }
 
+.marginleft10P{
+	margin-left: 10% !important;
+}
+
 .font-small{
 	font-size: large;
+}
+
+.tile-name{
+	position: sticky;
+	z-index: 6;
+	overflow: visible !important;
 }
 
 
