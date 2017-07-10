@@ -192,8 +192,8 @@
 }
 
 .tile-name{
-	position: sticky;
-	z-index: 6;
+	position: sticky !important;
+	z-index: 6 !important;
 	overflow: visible !important;
 }
 
