@@ -1,5 +1,7 @@
 Template.userTile.created = function () {
     this.result = new ReactiveVar();  
+    this.innerWidth = new ReactiveVar(window.innerWidth);
+    this.i = new ReactiveVar(0);
 };
 
 Template.userTile.onCreated(function(){
@@ -9,6 +11,8 @@ Template.userTile.onCreated(function(){
       self.subscribe("feedback","allData");
     });
 })
+
+ 
   
 Template.userTile.helpers({
 
@@ -25,10 +29,13 @@ Template.userTile.helpers({
       let gId = groupId.get();
       if(gId)
       {
-       let users=[];
+       var users=[];
        let himselfAnswered = [];
-       let user,userId,email,q1=0,q2=0;
+       let user ,userId,email,q1=0,q2=0;
        let dr, tw, twEnough;
+       var isMobileView = Template.instance().innerWidth.get() <767;
+       var t=[]; var w=[];
+       let i=Template.instance().i.get();
 
        let data = Group.find({_id: gId },  {
             transform: function (doc) {
@@ -51,28 +58,30 @@ Template.userTile.helpers({
                   } 
                   user.topWeak = tw;
                   user.topWeakEnough = twEnough;
+                  user.existingUserType = true;
                   users.push(user);
-                  console.log(user);
+                  }
+                  else {
+                    users.push(post);
                   }
                  });
-                 
+
+                 if(isMobileView){
+                  if(i == doc.emails.length){
+                    Template.instance().i.set(0);
+                  }
+                  if(i == -1 ){
+                   Template.instance().i.set(doc.emails.length-1);
+                  }
+
+                  users = users.slice( i, ++i);
+                 }
                  doc.allUsers = users; 
-                 
                  return doc;
                }
              }).fetch();
-       console.log(data);
        return data;
       }
-    },
-    groupMembers(){
-      let gId = groupId.get();
-      if(gId)
-      {
-       let data = Group.find({_id: gId }).fetch();
-       return data;
-      }
-      //return null;
     }
   });
 
@@ -97,7 +106,7 @@ questionHimselfAnswered = (userId) => {
 }
   Template.userTile.rendered = function () {
 
-    let template = Template.instance();
+    var template = Template.instance();
 
     Meteor.subscribe('feedback');
 
@@ -108,6 +117,10 @@ questionHimselfAnswered = (userId) => {
     //Re-write as a function - Re-use it
 
     Tracker.autorun(function () {
+
+      $(window).resize(function() {
+         template.innerWidth.set(window.innerWidth);
+      });
 
       let handle = Meteor.subscribe('feedback');
 
@@ -167,3 +180,23 @@ questionHimselfAnswered = (userId) => {
 
   }
 
+
+Template.userTile.events({
+  'click .tile-arrow-right': function (event,template) {
+    event.preventDefault();
+    let i = template.i.get();
+    i++;
+    template.i.set(i);
+  },
+  'click .tile-arrow-left': function (event,template) {
+    event.preventDefault();
+    let i = template.i.get();
+    let data = Group.findOne({_id: groupId.get() });
+    let count = data && data.emails.length;
+    i--;
+    if(i==-1){
+      i = count-1;
+    }
+    template.i.set(i);
+  }
+});
