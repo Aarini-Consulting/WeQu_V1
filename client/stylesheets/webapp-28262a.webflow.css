@@ -636,6 +636,22 @@ html.w-mod-js *[data-ix="loginbox"] {
   font-weight: 500;
 }
 
+.titleGr {
+    display: inline-block;
+    padding-left: 13px;
+    font-size: 30px;
+    font-weight: 500;
+    position: relative;
+    bottom: 8px;
+}
+
+.contactName{
+    position: relative;
+    top: 6px;
+    color: #fff;
+    font-size: 25px;
+}
+
 .friendlist {
   margin-top: 0px;
   float: left;
@@ -1009,6 +1025,7 @@ html.w-mod-js *[data-ix="skillls"] {
   .invitebttn {
     width: 70%;
   }
+
 }
 
 @media (max-width: 767px) {
@@ -1036,6 +1053,15 @@ html.w-mod-js *[data-ix="skillls"] {
     float: left;
     font-size: 18px;
   }
+
+  .titleGr {
+    padding-left: 5px;
+    float: left;
+    font-size: 18px;
+    position: relative;
+    bottom: 4px;
+}
+
   .screentitle {
     position: relative;
     width: 80%;
@@ -1058,9 +1084,9 @@ html.w-mod-js *[data-ix="skillls"] {
     width: 95%;
   }
   .image-5 {
-    width: 50px;
+    width: 70px !important;
   }
-  .contactname {
+  .contactName {
     font-size: 16px;
   }
   .name {
@@ -1132,6 +1158,10 @@ html.w-mod-js *[data-ix="skillls"] {
   .screentitlebttn {
     width: 40px;
     padding-left: 10px;
+  }
+
+  .image-5 {
+    width: 50px !important;
   }
 
 
