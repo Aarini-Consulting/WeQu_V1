@@ -41,9 +41,9 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="avatawrapper padding10">
                {{#if services.linkedin.pictureUrl}} 
-               <span class="font-white"><img class="image-5 img-circle" src="{{services.linkedin.pictureUrl}}"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
+               <img class="image-5 img-circle" src="{{services.linkedin.pictureUrl}}"> <span class="font-white contactName"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
                {{else}} 
-               <span class="font-white"><img class="image-5" src="/img/avatar.png"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
+               <img class="image-5" src="/img/avatar.png"> <span class="font-white contactName"> {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}</span>
                {{/if}}
               </div>
               </div>
