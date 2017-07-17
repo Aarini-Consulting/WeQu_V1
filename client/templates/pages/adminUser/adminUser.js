@@ -118,11 +118,9 @@ Template.adminUser.events({
   "click #view1" : function(event,template){
     event.preventDefault();
     template.swapView.set(false);
-    console.log(template.swapView.get());
    },
   "click #view2" : function(event,template){
     event.preventDefault();
     template.swapView.set(true);
-    console.log(template.swapView.get());
    }
 });

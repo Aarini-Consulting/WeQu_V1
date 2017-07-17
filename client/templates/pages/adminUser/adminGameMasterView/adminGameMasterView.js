@@ -23,14 +23,13 @@ Template.adminGameMasterView.helpers({
 
 	groupListUsers(){
 
-		var c;
+		var c=0;
 		var g, gCount, count3=0 ;
 
 		let data = Meteor.users.find({},
 		{
 			transform: function (doc) {
 				doc.gameMaster =  Roles.userIsInRole(doc._id,'GameMaster') == true;
-				
 			    g = Group.find({creatorId:doc._id}).fetch();
 			    gCount = Group.find({creatorId:doc._id}).count();
 				doc.groupsCount = 0;
@@ -46,6 +45,11 @@ Template.adminGameMasterView.helpers({
 				return doc;
 			}
 		});
+		
+		data.fetch().forEach(function (data) {
+			c = data.gameMaster == true ? ++c : c ; 
+		});
+		Template.instance().count.set(c);
 		return data;
 	}	
 });
