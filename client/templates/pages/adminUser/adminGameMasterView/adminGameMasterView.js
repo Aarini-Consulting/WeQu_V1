@@ -40,9 +40,11 @@ Template.adminGameMasterView.helpers({
 					count3 = 0;
 					allEmails = [];
 					g.forEach(function (data) {
-						data.arr_emails_existing.forEach(function (d) {
-				           allEmails.push(d);
-				        });
+						if(data && data.arr_emails_existing){
+							data.arr_emails_existing.forEach(function (d) {
+					           allEmails.push(d);
+					        });
+					   }
 				    });
 				    allEmails = [...new Set(allEmails)];
       				count3 = allEmails.length;
