@@ -12,6 +12,7 @@ Template.adminUser.onCreated(function() {
 Template.adminUser.created = function () {
 
 	this.search = new ReactiveVar(0);
+  this.swapView = new ReactiveVar(false);
 
 	let template = Template.instance();
 
@@ -67,6 +68,22 @@ Template.adminUser.helpers({
                }
              });
         },
+
+     groupListUsers(){
+
+        return Meteor.users.find({},
+           {
+            transform: function (doc) {
+                 doc.gameMaster =  Roles.userIsInRole(doc._id,'GameMaster') == true;
+                 return doc;
+               }
+             });
+      },
+
+      swapView(){
+        return  Template.instance().swapView.get(); 
+      },
+
         route: function(status) {
          return status == route.get();
        },
@@ -96,6 +113,13 @@ Template.adminUser.events({
     {
       Modal.show('adminViewUserProfile', {userId:userId } ); // Adding Master Admin functionality to view user's profile.
     }
+   },
+
+  "click #view" : function(event,template){
+    event.preventDefault();
+    let view = template.swapView.get();
+    console.log(view);
+    template.swapView.set(!view);
    }
 
 });
