@@ -25,6 +25,7 @@ Template.adminGameMasterView.helpers({
 
 		var c=0;
 		var g, gCount, count3=0 ;
+		var allEmails = [];
 
 		let data = Meteor.users.find({},
 		{
@@ -36,11 +37,15 @@ Template.adminGameMasterView.helpers({
 				doc.usersCount = 0;
 			    if(gCount>0){
 					doc.groupsCount = gCount;
+					count3 = 0;
+					allEmails = [];
 					g.forEach(function (data) {
-						if(data && data.arr_emails_existing){
-						 count3+= data.arr_emails_existing.length;	
-						}
+						data.arr_emails_existing.forEach(function (d) {
+				           allEmails.push(d);
+				        });
 				    });
+				    allEmails = [...new Set(allEmails)];
+      				count3 = allEmails.length;
 					doc.usersCount = count3;
 			    }
 			    
