@@ -37,7 +37,9 @@ Template.adminGameMasterView.helpers({
 			    if(gCount>0){
 					doc.groupsCount = gCount;
 					g.forEach(function (data) {
-				        count3+= data && data.arr_emails_existing.length;
+						if(data && data.arr_emails_existing){
+						 count3+= arr_emails_existing.length;	
+						}
 				    });
 					doc.usersCount = count3;
 			    }
