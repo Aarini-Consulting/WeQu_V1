@@ -11,18 +11,29 @@ Template.adminGameMasterView.helpers({
 
 	groupListUsers(){
 
-		let count = Template.instance().count.get();
+		var c;
+		var g, gCount, count3=0 ;
 
-		return Meteor.users.find({},
+		let data = Meteor.users.find({},
 		{
 			transform: function (doc) {
 				doc.gameMaster =  Roles.userIsInRole(doc._id,'GameMaster') == true;
-				if(doc.gameMaster){
-					count++;
-				}
+				
+			    g = Group.find({creatorId:doc._id}).fetch();
+			    gCount = Group.find({creatorId:doc._id}).count();
+				doc.groupsCount = 0;
+				doc.usersCount = 0;
+			    if(gCount>0){
+					doc.groupsCount = gCount;
+					g.forEach(function (data) {
+				        count3+= data.arr_emails_existing.length;
+				    });
+					doc.usersCount = count3;
+			    }
 				return doc;
 			}
 		});
+		return data;
 	}	
 });
 

@@ -12,7 +12,7 @@ Template.adminUser.onCreated(function() {
 Template.adminUser.created = function () {
 
 	this.search = new ReactiveVar(0);
-  this.swapView = new ReactiveVar(false);
+  this.swapView = new ReactiveVar(true);
 
 	let template = Template.instance();
 
