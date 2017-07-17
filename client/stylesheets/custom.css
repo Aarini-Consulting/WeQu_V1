@@ -692,3 +692,11 @@ svg.radarwapper{
 .twitter{
 	margin-top: -2.5% !important;
 }
+
+.active2{
+	background: #ccc;
+}
+
+div.tab button:hover {
+    background-color: lightblue;
+}

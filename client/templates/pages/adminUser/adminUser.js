@@ -115,11 +115,14 @@ Template.adminUser.events({
     }
    },
 
-  "click #view" : function(event,template){
+  "click #view1" : function(event,template){
     event.preventDefault();
-    let view = template.swapView.get();
-    console.log(view);
-    template.swapView.set(!view);
+    template.swapView.set(false);
+    console.log(template.swapView.get());
+   },
+  "click #view2" : function(event,template){
+    event.preventDefault();
+    template.swapView.set(true);
+    console.log(template.swapView.get());
    }
-
 });

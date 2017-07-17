@@ -10,7 +10,23 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 
 			<center> Welcome to the admin Dashboard </center>
-			<div id="view"> Swap the view </div>
+			<div class="tab row">
+			 <div class="col-md-4 col-sm-4 col-xs-4">
+			  {{#if swapView}}
+			  <button class="tablinks active2" id="view1">Acc</button>
+			  {{else}}
+			  <button class="tablinks" id="view1">Acc</button>
+			  {{/if}}
+			  </div>
+			  <div class="col-md-4 col-sm-4 col-xs-4">
+			  {{#unless swapView}}
+			  <button class="tablinks active2" id="view2">GameMaster</button>
+			  {{else}}
+			  <button class="tablinks" id="view2">GameMaster</button>
+			  {{/unless}}
+			  </div>
+			  <div class="col-md-4 col-sm-4 col-xs-4"> </div>
+			</div>
 			{{#if swapView}}
 				{{>adminGameMasterView}}
 			{{else}}
