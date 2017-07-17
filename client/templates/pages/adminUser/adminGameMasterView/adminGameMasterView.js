@@ -1,6 +1,18 @@
 Template.adminGameMasterView.created = function () {
 	this.count = new ReactiveVar(0);
+	var self = this;
+	self.autorun(function() {
+		self.subscribe("connections");
+		self.subscribe("group");
+		self.subscribe("feedback","allData");
+		self.subscribe("usersInfo");  
+	});
 }
+
+Template.adminGameMasterView.onCreated(function() {
+	
+});
+
 
 Template.adminGameMasterView.helpers({
 
@@ -30,6 +42,7 @@ Template.adminGameMasterView.helpers({
 				    });
 					doc.usersCount = count3;
 			    }
+			    
 				return doc;
 			}
 		});
