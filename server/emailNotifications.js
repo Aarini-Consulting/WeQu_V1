@@ -6,7 +6,7 @@ Meteor.methods({
         this.unblock();
         
         Email.send({
-            from: 'WeQu <info@wequ.co>',
+            from: 'WeQu <postmaster@wequ.co>',
             to: to,
             subject: subject,
             html: body
