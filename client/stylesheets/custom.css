@@ -537,7 +537,7 @@ input[type="radio"]{
 /* over-riding wequ-profile */
 .sectionname{
 	padding-bottom: 10px;
-  background-image: url('../img/Background_white20.png');
+  background-image: url('/img/Background_white20.png');
   background-position: 50% -61px;
   background-size: 1200px;
   box-shadow: none;
