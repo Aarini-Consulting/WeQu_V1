@@ -80,10 +80,10 @@
        
        // For Testing Purpose , so un comment this 
 
-       /* setTimeout(function(){
+        setTimeout(function(){
             finishInviteScript();
         }, 5000)
-       */
+       
  
 
     }, { 'name': '/script-invitation' });
