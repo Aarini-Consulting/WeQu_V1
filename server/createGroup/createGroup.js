@@ -22,7 +22,7 @@
         link = `signUp/groupInvitation/${arr_emails[i]}/${groupId}`
       }
 
-      var subject = `Inviting for group joining ${groupName}` ;
+      var subject = `[WeQu] Inviting for joining ${groupName}` ;
       var message = `Please join the group by clicking the invitation link ${link}`
 
       var emailData = {
@@ -53,7 +53,6 @@
     'genGroupQuestionSet' : function (arr_emails , groupId , groupName) {
 
     // Creating questions for Group members (Existing Users)
-
     var i , j , user , user2 , arr_emails_notExisting = [] , arr_emails_existing =[];
 
       //try{
