@@ -1,11 +1,12 @@
   grId = new ReactiveVar('');  
+  invitationSerId = new ReactiveVar('');  
 
   Template.signIn.events({
     'submit #signIn': function(event) {
       event.preventDefault();
 
       let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
-
+      invitationSerId.set(Router.current().params.invitationId);
       // If invited person then find that persons _id and set the quiz person .
       var email, user;
       if(setQuizPerson)
@@ -46,6 +47,7 @@
           setLoginScript(false);
           console.log(user);
           quizPerson.set(user.inviteId);
+         //invitationServiceId.set(Router.current().params.invitedId);
         }
 
 
@@ -65,6 +67,8 @@
 
       // If invited person then find that persons _id and set the quiz person .
       var email, user;
+
+      invitationSerId.set(Router.current().params.invitationId);
       if(setQuizPerson)
       {
        email = Router.current().params && Router.current().params.email;

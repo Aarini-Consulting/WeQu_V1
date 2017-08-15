@@ -16,9 +16,11 @@ Template.feed.helpers({
          
          // TODO :  USE the above logic .
 
-         data = Feeds.find({},{sort: {createdAt: -1} });
-
- 	     let data2 = [];
+         //data = Feeds.find({},{sort: {createdAt: -1} });
+		 let userId = Meteor.userId(); 
+		 data = Feeds.find({$or:[{"id":userId},{"inviteId":userId}]},{sort: {createdAt: -1} })		   
+		  
+		 let data2 = [];
  	     let i=0;
 		 data.forEach(function (doc) {
 		 	 doc.userInfo = Meteor.users.findOne({_id: doc.inviteId});

@@ -178,7 +178,7 @@
     Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
 
         this.layout('commonLayout');
-
+        Session.setPersistent('invitation-id', this.params.invitationId);
         return this.render('signIn');
     } ,{
         name: 'signIn' });
@@ -211,9 +211,9 @@
     // TODO : Improve with passing as query insteas params
 
     Router.route('/signUp/:invited?/:email?/:invitationId?', function () {
-        var id = this.params._id;
+        var id = this.params.invitationId;
         var query = this.params.query;
-
+        Session.setPersistent('invitation-id', id);
         //console.log(id,query);
         return this.render('signUp');
     } ,{
