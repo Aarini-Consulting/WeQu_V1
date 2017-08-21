@@ -1,4 +1,5 @@
-  Router.route('/invitation/:_id', function () {  
+invitationServiceId = new ReactiveVar('');  
+Router.route('/invitation/:_id', function () {  
 
         this.layout('ScriptLayout');
 
@@ -67,6 +68,7 @@
 
                 data.person = user.profile;
                 data.to = data.feedback.to;
+                data.invitationId = invitationId;
                 this.render('quiz', { 'data': data });
                 return;
             }

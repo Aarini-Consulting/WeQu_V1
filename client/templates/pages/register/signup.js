@@ -1,3 +1,4 @@
+ 
 Template.signUp.events({
 
   'click #signIn': function (event) {
@@ -150,6 +151,7 @@ Template.signUp.events({
                           });
                       }
                       Router.go('/quiz');
+                      
                     }
                   });
         }
@@ -196,6 +198,7 @@ Template.signUp.events({
 
 
             Router.go('/quiz');
+            
           }
         });
 

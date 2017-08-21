@@ -64,7 +64,7 @@
       var buttonType = event.target.getAttribute('class');
 
       var skill = event.target.getAttribute('data-skill');
-
+      
       if(buttonType == 'answer') {
         question.answer = event.target.getAttribute('id');
         question.written = false;
@@ -99,8 +99,11 @@
           }
 
              // Case :  Existing invited user tries to answer about his invited person . Insert only one time .
+             var invitationId = Session.get('invitation-id')==undefined?invitationSerId.get():Session.get('invitation-id');
              var email = ( Meteor.user().emails && Meteor.user().emails[0].address )|| Meteor.user().profile.emailAddress ;
-             var existingInvitedUser =  Connections.findOne( { "profile.emailAddress" : email },{userId: Meteor.userId() });
+             //var existingInvitedUser =  Connections.findOne( { "profile.emailAddress" : email },{userId: Meteor.userId() },{"services.invitationId":invitationId});
+             var existingInvitedUser =  Connections.findOne({"services.invitationId":invitationId});
+             
              if(existingInvitedUser){
               let username = getUserName(Meteor.user().profile);
               let inviteId = existingInvitedUser.inviteId;
@@ -110,19 +113,21 @@
                 console.log("updateTrialUser", err, result);
               });
 
-
-              if( feedback.to === inviteId && feedback.from === Meteor.userId()  ){
-                let data = { inviteId : inviteId,
-                  type : 0,
-                  statement1: `Congrats. ${username} accepts your invitation. Give him some feedback!`
-                }
-
-                Meteor.call('addFeedType0', data, function (err, result) {
-                  if(err)
-                  {
-                    console.log(err);
+              let count= Feeds.find({ $and:[{"inviteId":inviteId},{"id":Meteor.userId()},{"type":0}]}).count();
+              if(count <= 0){
+                if( feedback.to === inviteId && feedback.from === Meteor.userId()  ){
+                  let data = { inviteId : inviteId,
+                    type : 0,
+                    statement1: `Congrats. ${username} accepts your invitation. Give him some feedback!`
                   }
-                });
+
+                  Meteor.call('addFeedType0', data, function (err, result) {
+                    if(err)
+                    {
+                      console.log(err);
+                    }
+                  });
+                }  
               }  
             }          
 
