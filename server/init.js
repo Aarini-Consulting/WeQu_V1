@@ -1,6 +1,8 @@
 
 Meteor.startup(function () {
 
+   //process.env.MONGO_URL="mongodb://WeQuAdmin:Saffr0n@86@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-01-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-02-tdmtm.mongodb.net:27017/admin?replicaSet=WeQu-Feedback-App-shard-0&ssl=true";
+
    // Linked in configuration
    var clientId,secret;
     if(Meteor.isDevelopment)

@@ -177,8 +177,9 @@
 
     Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
 
-        this.layout('commonLayout');
+        //this.layout('commonLayout');
         Session.setPersistent('invitation-id', this.params.invitationId);
+        
         return this.render('signIn');
     } ,{
         name: 'signIn' });
