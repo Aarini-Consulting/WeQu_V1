@@ -3,7 +3,7 @@
  		event.preventDefault();
 
  		var setQuizPerson = this.setQuizPerson;
- 		let email = event.target.loginEmail.value;
+ 		let email = event.target.loginEmail.value.toLowerCase();
  		let password = event.target.loginPassword.value;
 
  		Meteor.loginWithPassword(email,password, function (err) {

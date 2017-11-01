@@ -85,7 +85,7 @@ Template.signUp.events({
 
    event.preventDefault();
 
-   let registerEmail = event.target.registerEmail.value;
+   let registerEmail = event.target.registerEmail.value.toLowerCase();
    let registerPassword =  event.target.registerPassword.value;
    let firstName =   event.target.firstName.value;
    let lastName =  event.target.lastName.value;

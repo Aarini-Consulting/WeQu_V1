@@ -25,7 +25,7 @@
      }
 
 
-     Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
+     Meteor.loginWithPassword(event.target.loginEmail.value.toLowerCase(), event.target.loginPassword.value, function (err) {
       if(err){
         $('#error').text(err);
       }
