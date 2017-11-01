@@ -2,7 +2,7 @@ Template.step2.rendered = function () {
     
     $(".tags").select2({tags: true, width: '100%', placeholder: ' email addresses',  
     	createTag: function(term, data) {
-    		var value = term.term;
+    		var value = term.term.toLowerCase();
     		if(validateEmail(value)) {
                 info.set('');
                 return {

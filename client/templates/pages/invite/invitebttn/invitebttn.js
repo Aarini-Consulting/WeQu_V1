@@ -13,7 +13,7 @@ Template.invitebttn.events({
 	"submit form" : function (event, template) {
         event.preventDefault();
         inviteStatus.set('sending');
-        var email = template.$('input[name=email]').val();
+        var email = template.$('input[name=email]').val().toLowerCase();
         var name = template.$('input[name=name]').val();
 
         var gender = template.gender.get(); //template.find('#gender').value;
