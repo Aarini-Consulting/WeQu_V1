@@ -173,14 +173,16 @@
     Tracker.autorun(function () {
         
         if(getLoginScript() == false && Meteor.user()!=undefined ){
-          let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
-          let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+          let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" || "linkedinInvited" ? true  :false;
+          let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" || "groupInvitationLinkedinUser" ? true  :false;
          
          if(setQuizPerson){
           email = Router.current().params && Router.current().params.email;
           user = Connections.findOne( { "profile.emailAddress" : email });
           Router.go('/quiz');
-          quizPerson.set(user.inviteId);
+          //TODO : Linked in user invite id not exists , check why
+          if(user && user.invited){ quizPerson.set(user.inviteId); }
+          
          }
 
          if(setGroupQuizPerson){
