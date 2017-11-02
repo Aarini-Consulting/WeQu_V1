@@ -177,9 +177,8 @@
 
     Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
         route.set("signIn");
-        this.wait(Accounts.loginServicesConfigured());
+        this.wait(Accounts.loginServicesConfigured(), Meteor.subscribe('group')   );
         if(this.ready()){
-            console.log(Meteor.user());
            return this.render('signIn');
         }
         else{

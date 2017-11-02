@@ -173,8 +173,10 @@
     Tracker.autorun(function () {
         
         if(getLoginScript() == false && Meteor.user()!=undefined ){
-          let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" || "linkedinInvited" ? true  :false;
-          let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" || "groupInvitationLinkedinUser" ? true  :false;
+          let setQuizPerson = Router.current().params && 
+          (Router.current().params.invited == "invited" || Router.current().params.invited == "linkedinInvited") ? true  :false;
+          let setGroupQuizPerson = Router.current().params &&
+          (Router.current().params.invited == "groupInvitation" || Router.current().params.invited == "groupInvitationLinkedinUser") ? true  :false;
          
          if(setQuizPerson){
           email = Router.current().params && Router.current().params.email;
@@ -186,7 +188,8 @@
 
          if(setGroupQuizPerson){
           let groupId = Router.current().params && Router.current().params.invitationId;
-          Router.go(`/quiz/${groupId}`);
+          if(groupId){ Router.go(`/quiz/${groupId}`); }
+          
          }
         }
 
