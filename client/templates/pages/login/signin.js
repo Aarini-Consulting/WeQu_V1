@@ -180,8 +180,7 @@
           email = Router.current().params && Router.current().params.email;
           user = Connections.findOne( { "profile.emailAddress" : email });
           Router.go('/quiz');
-          //TODO : Linked in user invite id not exists , check why
-          if(user && user.invited){ quizPerson.set(user.inviteId); }
+          //if(user && user.invited){ quizPerson.set(user.inviteId); }
           
          }
 
