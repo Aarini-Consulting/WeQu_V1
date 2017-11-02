@@ -63,7 +63,7 @@ Meteor.startup(function () {
 
           if(exists){
           // Normal User tries to signup with existing linked in id - Prevent Bug #3
-          throw new Meteor.Error( user, "Error: User already exists in linkedin ");            
+          throw new Meteor.Error( user, "Error: Email already exists ");            
           }
 
         }

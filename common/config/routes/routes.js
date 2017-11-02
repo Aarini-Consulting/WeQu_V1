@@ -176,38 +176,22 @@
 
 
     Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
-
-        //this.layout('commonLayout');
+        route.set("signIn");
+        this.wait(Accounts.loginServicesConfigured());
+        if(this.ready()){
+            console.log(Meteor.user());
+           return this.render('signIn');
+        }
+        else{
+            this.render('loading');
+        }
         Session.setPersistent('invitation-id', this.params.invitationId);
-        
-        return this.render('signIn');
-    } ,{
-        name: 'signIn' });
+               
+    } ,{ name: 'signIn' });
 
     Router.route('/', function () {
-
         return this.render('signIn');
-    }, {
-  name: 'home',
-  onAfterAction: function () {
- /*   DocHead.setTitle('Welcome home');
-    DocHead.addMeta({
-      name: "description", 
-      content: "Site description"
-    });
-    DocHead.addMeta({
-      property: "og:title", 
-      content: "Facebook title"
-    });
-    DocHead.addMeta({
-      property: "og:description", 
-      content: "Facebook description"
-    });
-    DocHead.addMeta({
-      property: "og:image", 
-      content: "https://app.wequ.co/img/assets/WEQU_LOGO_NEW.png"
-    });  */
-  } });
+    }, { name: 'home'});
 
     // TODO : Improve with passing as query insteas params
 
