@@ -193,16 +193,21 @@
         return this.render('signIn');
     }, { name: 'home'});
 
-    // TODO : Improve with passing as query insteas params
-
     Router.route('/signUp/:invited?/:email?/:invitationId?', function () {
         var id = this.params.invitationId;
         var query = this.params.query;
         Session.setPersistent('invitation-id', id);
-        //console.log(id,query);
-        return this.render('signUp');
-    } ,{
-        name: '/signUp' });
+        route.set("signIn");
+        
+        this.wait(Accounts.loginServicesConfigured());
+        
+        if(this.ready()){
+          return this.render('signUp');
+        }
+        else{
+            this.render('loading');
+        }
+    } , { name: '/signUp' });
 
     Router.route('/feed', function () {
         route.set('feed')
