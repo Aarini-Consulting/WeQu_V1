@@ -196,9 +196,8 @@
         var id = this.params.invitationId;
         var query = this.params.query;
         Session.setPersistent('invitation-id', id);
-        route.set("signIn");
         
-        this.wait(Accounts.loginServicesConfigured());
+        //this.wait(Accounts.loginServicesConfigured());
         
         if(this.ready()){
           return this.render('signUp');
