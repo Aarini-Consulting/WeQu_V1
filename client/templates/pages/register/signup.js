@@ -85,7 +85,7 @@ Template.signUp.events({
 
    event.preventDefault();
 
-   let registerEmail = event.target.registerEmail.value;
+   let registerEmail = event.target.registerEmail.value.toLowerCase();
    let registerPassword =  event.target.registerPassword.value;
    let firstName =   event.target.firstName.value;
    let lastName =  event.target.lastName.value;
@@ -229,6 +229,28 @@ Template.signUp.events({
 Template.signUp.rendered = function(){
   $('.menuBar').hide();
   Session.clear('invite');
+
+   Tracker.autorun(function () {
+        
+        if(getLoginScript() == false && Meteor.user()!=undefined ){
+          let setQuizPerson = Router.current().params && Router.current().params.invited == "invited" ? true  :false;
+          let setGroupQuizPerson = Router.current().params && Router.current().params.invited == "groupInvitation" ? true  :false;
+         
+         if(setQuizPerson){
+          email = Router.current().params && Router.current().params.email;
+          user = Connections.findOne( { "profile.emailAddress" : email });
+          Router.go('/quiz');
+          quizPerson.set(user.inviteId);
+         }
+
+         if(setGroupQuizPerson){
+          let groupId = Router.current().params && Router.current().params.invitationId;
+          Router.go(`/quiz/${groupId}`);
+         }
+        }
+
+    });
+
 }
 
 
@@ -244,3 +266,7 @@ Template.signUp.helpers({
       return !Router.current().params.email ? false : true ;
      }
 });
+
+
+
+

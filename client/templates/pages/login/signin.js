@@ -25,35 +25,35 @@
      }
 
 
-     Meteor.loginWithPassword(event.target.loginEmail.value, event.target.loginPassword.value, function (err) {
+     Meteor.loginWithPassword(event.target.loginEmail.value.toLowerCase(), event.target.loginPassword.value, function (err) {
       if(err){
         $('#error').text(err);
       }
       else
       {
-         if(setGroupQuizPerson){
-          setLoginScript(false);
-          let userId = Meteor.userId(); let flag = true;
-          Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
-                  console.log("updateProfileGroupQuizPerson",err,result);
-          });
+       if(setGroupQuizPerson){
+        setLoginScript(false);
+        let userId = Meteor.userId(); let flag = true;
+        Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+          console.log("updateProfileGroupQuizPerson",err,result);
+        });
 
-          Router.go(`/quiz/${groupId}`);
-          return ;
-         }
-
-        Router.go(`/quiz`);
-        if(setQuizPerson){
-          setLoginScript(false);
-          console.log(user);
-          quizPerson.set(user.inviteId);
-         //invitationServiceId.set(Router.current().params.invitedId);
-        }
-
-
-
+        Router.go(`/quiz/${groupId}`);
+        return ;
       }
-    });
+
+      Router.go(`/quiz`);
+      if(setQuizPerson){
+        setLoginScript(false);
+        console.log(user);
+        quizPerson.set(user.inviteId);
+         //invitationServiceId.set(Router.current().params.invitedId);
+       }
+
+
+
+     }
+   });
 
 
    },
@@ -108,16 +108,16 @@
         else
           Session.set('loginLinkedin', true);
 
-          if(setGroupQuizPerson){
+        if(setGroupQuizPerson){
           setLoginScript(false);
           let userId = Meteor.userId(); let flag = true;
           Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
-                  console.log("updateProfileGroupQuizPerson",err,result);
+            console.log("updateProfileGroupQuizPerson",err,result);
           });
 
           Router.go(`/quiz`);
           return ;
-         }
+        }
 
         if(setQuizPerson){
           console.log(user);
@@ -129,20 +129,21 @@
           try{
                 if(Meteor.user() && Meteor.user().services){ // production issue ..
 
-                      const {firstName, lastName}  = Meteor.user().services.linkedin;
-                      Meteor.users.update({_id: Meteor.userId()},
-                        {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
-               }
-             }
-         catch(e){
-                  console.log(e);
-               }
-         }, 1000);
+                  const {firstName, lastName}  = Meteor.user().services.linkedin;
+                  Meteor.users.update({_id: Meteor.userId()},
+                    {$set : { "profile.firstName": firstName, "profile.lastName": lastName }});
+                }
+              }
+              catch(e){
+                console.log(e);
+              }
+            }, 1000);
 
 
       })
    }
  });
+
   Template.signIn.helpers({
     signUpShow: function() {
       return Session.get('signUp');
@@ -158,21 +159,40 @@
       return !Router.current().params.email ? false : true ;
     },
     groupLinkedinInvitedUser(){
-      /*if( Router.current() && ( Router.current().params.invited == "linkedinInvited" ||  
-          Router.current().params.invited == "groupInvitationLinkedinUser"  ) )
-      {
-        return false;
-      }
-      return true;*/
       if( Router.current() && Router.current().params.invited == "groupInvitationLinkedinUser"  ) 
-      {
         return false;
-      }else{
+      else
         return true;
-      }
-
-
-
     }
 
   });
+
+
+  Template.signIn.rendered = function () {
+
+    Tracker.autorun(function () {
+        
+        if(getLoginScript() == false && Meteor.user()!=undefined ){
+          let setQuizPerson = Router.current().params && 
+          (Router.current().params.invited == "invited" || Router.current().params.invited == "linkedinInvited") ? true  :false;
+          let setGroupQuizPerson = Router.current().params &&
+          (Router.current().params.invited == "groupInvitation" || Router.current().params.invited == "groupInvitationLinkedinUser") ? true  :false;
+         
+         if(setQuizPerson){
+          email = Router.current().params && Router.current().params.email;
+          user = Connections.findOne( { "profile.emailAddress" : email });
+          Router.go('/quiz');
+          //if(user && user.invited){ quizPerson.set(user.inviteId); }
+          
+         }
+
+         if(setGroupQuizPerson){
+          let groupId = Router.current().params && Router.current().params.invitationId;
+          if(groupId){ Router.go(`/quiz/${groupId}`); }
+          
+         }
+        }
+
+    });
+
+  };
