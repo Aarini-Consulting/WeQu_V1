@@ -225,12 +225,14 @@
 
       route.set('invite');
       this.wait(Meteor.subscribe('connections'), Meteor.subscribe("feedback","allData"),
-                Accounts.loginServicesConfigured());
-      if (!this.ready()){
+                Accounts.loginServicesConfigured(), Meteor.subscribe('group')  );
+      if (this.ready()){
+        this.render('invite');   
+      }
+      else{
         this.render('loading');
-        return;
-    }
-    return this.render('invite');   
+       }
+    
     }, { 'name': '/invite' }); 
 
 
