@@ -176,48 +176,36 @@
 
 
     Router.route('/signIn/:invited?/:email?/:invitationId?', function () {
-
-        this.layout('commonLayout');
+        route.set("signIn");
+        this.wait(Accounts.loginServicesConfigured(), Meteor.subscribe('group')   );
+        if(this.ready()){
+           return this.render('signIn');
+        }
+        else{
+            this.render('loading');
+        }
         Session.setPersistent('invitation-id', this.params.invitationId);
-        return this.render('signIn');
-    } ,{
-        name: 'signIn' });
+               
+    } ,{ name: 'signIn' });
 
     Router.route('/', function () {
-
         return this.render('signIn');
-    }, {
-  name: 'home',
-  onAfterAction: function () {
- /*   DocHead.setTitle('Welcome home');
-    DocHead.addMeta({
-      name: "description", 
-      content: "Site description"
-    });
-    DocHead.addMeta({
-      property: "og:title", 
-      content: "Facebook title"
-    });
-    DocHead.addMeta({
-      property: "og:description", 
-      content: "Facebook description"
-    });
-    DocHead.addMeta({
-      property: "og:image", 
-      content: "https://app.wequ.co/img/assets/WEQU_LOGO_NEW.png"
-    });  */
-  } });
-
-    // TODO : Improve with passing as query insteas params
+    }, { name: 'home'});
 
     Router.route('/signUp/:invited?/:email?/:invitationId?', function () {
         var id = this.params.invitationId;
         var query = this.params.query;
         Session.setPersistent('invitation-id', id);
-        //console.log(id,query);
-        return this.render('signUp');
-    } ,{
-        name: '/signUp' });
+        
+        //this.wait(Accounts.loginServicesConfigured());
+        
+        if(this.ready()){
+          return this.render('signUp');
+        }
+        else{
+            this.render('loading');
+        }
+    } , { name: '/signUp' });
 
     Router.route('/feed', function () {
         route.set('feed')
@@ -237,12 +225,14 @@
 
       route.set('invite');
       this.wait(Meteor.subscribe('connections'), Meteor.subscribe("feedback","allData"),
-                Accounts.loginServicesConfigured());
-      if (!this.ready()){
+                Accounts.loginServicesConfigured(), Meteor.subscribe('group')  );
+      if (this.ready()){
+        this.render('invite');   
+      }
+      else{
         this.render('loading');
-        return;
-    }
-    return this.render('invite');   
+       }
+    
     }, { 'name': '/invite' }); 
 
 

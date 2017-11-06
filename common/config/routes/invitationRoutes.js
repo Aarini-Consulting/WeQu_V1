@@ -10,7 +10,8 @@ Router.route('/invitation/:_id', function () {
         }
         var feedback = Feedback.findOne({_id : this.params._id});
         if(feedback && feedback.done) {
-            Router.go('/')
+            Router.go('/quiz');
+            //Router.go('/')
             return;
         }
         Session.setPersistent('invitation-id', this.params._id);
@@ -82,7 +83,7 @@ Router.route('/invitation/:_id', function () {
        
        // For Testing Purpose , so un comment this 
 
-        setTimeout(function(){
+       setTimeout(function(){
             finishInviteScript();
         }, 5000)
        
@@ -92,7 +93,7 @@ Router.route('/invitation/:_id', function () {
 
     function finishInviteScript(){
         if(Session.get('invite')) {
-            Session.clear('invite');
+          //  Session.clear('invite');
         }
-        Router.go('/');
+        //Router.go('/');
     }

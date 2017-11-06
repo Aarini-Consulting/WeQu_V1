@@ -80,6 +80,7 @@ Template.userTile.helpers({
                  return doc;
                }
              }).fetch();
+       console.log(data);
        return data;
       }
     }

@@ -1,6 +1,8 @@
 
 Meteor.startup(function () {
 
+   //process.env.MONGO_URL="mongodb://WeQuAdmin:Saffr0n@86@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-01-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-02-tdmtm.mongodb.net:27017/admin?replicaSet=WeQu-Feedback-App-shard-0&ssl=true";
+
    // Linked in configuration
    var clientId,secret;
     if(Meteor.isDevelopment)
@@ -27,11 +29,15 @@ Meteor.startup(function () {
         // TODO : On invited user onboarding , if his email id , already registered with the system .
         // Then copy the services object , update in existing account.
 
+        
+        
+
         if(user.services && user.services.linkedin && user.services.linkedin.emailAddress )
         {
           let email = user.services.linkedin.emailAddress;
           let existingUser = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email  }]});
           let exists = !existingUser ? false  :true ;
+
           if(exists){
             let linkedin = user.services.linkedin ;
            // user.services.linkedin = ""; // Doing this to avoid --- Duplicate id exists --- 
@@ -48,6 +54,18 @@ Meteor.startup(function () {
             // return false;
              throw new Meteor.Error( user, "Error: User validation failed [403]");
           }
+        }
+        else {
+          let email = `^${user.emails[0].address}$`;
+          let existingUser = Meteor.users.findOne({ "profile.emailAddress" : {'$regex' :email,$options:'i'}});
+
+          let exists = !existingUser ? false  :true ;
+
+          if(exists){
+          // Normal User tries to signup with existing linked in id - Prevent Bug #3
+          throw new Meteor.Error( user, "Error: Email already exists ");            
+          }
+
         }
 
       return true;

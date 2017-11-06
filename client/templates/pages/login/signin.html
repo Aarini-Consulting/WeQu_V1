@@ -1,5 +1,5 @@
 	<template name="signIn">
-
+		
 		{{#if signUpShow}}
 		{{>signUp}}
 		{{else}}
@@ -16,7 +16,7 @@
 			        <div style="visibility:{{#if groupLinkedinInvitedUser}}visible{{else}}hidden{{/if}}" class="w-form">
 
 			          <form class="loginemail" data-name="Email Form" id="signIn" name="email-form">
-			            <input class="emailfield w-input" maxlength="256" name="loginEmail" placeholder="email address" type="email" value="{{invitedEmail}}" disabled={{emailDisable}} required>
+			            <input class="emailfield w-input" maxlength="256" name="loginEmail" placeholder="email address" type="email" value="{{invitedEmail}}" disabled={{emailDisable}} required style="text-transform:lowercase" >
 			            <input class="emailfield w-input" maxlength="256" name="loginPassword" placeholder="password" required="required" type="password">
 			            <a class="linktext" href="/RecoverPassword">Forgotten password?</a>
 			            <input class="submit-button w-button" data-wait="Please wait..." type="submit" value="Log In With Email">
