@@ -91,13 +91,14 @@
 
     let template = Template.instance();
 
-    Meteor.subscribe('feedback');
+    //Meteor.subscribe('feedback');
 
     quizPerson.set(Meteor.userId());
 
     //Re-write as a function - Re-use it
 
-    Tracker.autorun(function () {
+    
+      Tracker.autorun(function () {
 
       let handle = Meteor.subscribe('feedback');
 
@@ -153,7 +154,9 @@
               }
 
             }
-          });
+      });
+
+    
 
   }
 
