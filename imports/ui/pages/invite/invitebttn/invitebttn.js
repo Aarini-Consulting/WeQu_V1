@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import './invitebttn.html';
 
 Template.invitebttn.created = function () {
         this.gender = new ReactiveVar('Male'); // Setting default to male , since in UI default value is male

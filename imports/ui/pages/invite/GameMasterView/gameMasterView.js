@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import './gameMasterView.html';
 import '/imports/startup/client/group-members-profile-view.webflow.css';
 
 Template.gameMasterView.onCreated(function(){

@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 import './invite.html';
 import './groupEmpty.html';
 
+import '/imports/ui/pages/invite/invitebttn/invitebttn.js';
+
 inviteStatus = new ReactiveVar('default');
 step = new ReactiveVar('default');
 
@@ -51,7 +53,7 @@ Template.invite.events({
 
     "click .step-invitebttn , click .w-inline-block" : function(event,template){
         event.preventDefault();
-        step.set('invitebttn'); 
+        step.set('invitebttn');
     }
 
 });
