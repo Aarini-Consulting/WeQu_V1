@@ -77,6 +77,7 @@
         friends.splice (feedbacksCount ,0, Meteor.userId()); // 2. Myself
 
         if(friends.length == 0) {
+          import '/imports/ui/pages/quiz/quizNothing.html';
           this.render('quizNothing');
           return;
         }
@@ -112,5 +113,6 @@
         data.nextPerson = (friends.indexOf(quizPerson.get()) < friends.length - 1);
         data.prevPerson = (friends.indexOf(quizPerson.get()) > 0)
 
+        import '/imports/ui/pages/quiz/quiz.js';
         this.render('quiz', {data : data});
       }, { 'name': '/quiz/:groupId' });

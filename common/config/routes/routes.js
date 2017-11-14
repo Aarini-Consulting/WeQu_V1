@@ -1,5 +1,7 @@
     //All the routes are configured here
 
+    
+
     Router.configure({
         layoutTemplate: 'ScriptLayout',
         notFoundTemplate: 'notFoundLayout'
@@ -11,6 +13,7 @@
         );
 
     Router.onBeforeAction(function () {
+        import '/imports/ui/pages/login/login.js';
         Meteor.userId() ? this.next() : this.render('login');
 
     }, { 'except': [ '/invitation/:_id', '/script-invitation', '/admin', '/signIn/a', '/signUp',
@@ -79,11 +82,13 @@
 
                     if(condition)
                     {
+                        import '/imports/ui/pages/script/scriptLoginInit/scriptLoginInit.js'; 
                         this.render('scriptLoginInit');
                         break;
                     }
                     else
                     {
+                        import '/imports/ui/pages/accounts/emailVerified/emailVerified.js';
                         this.render('emailVerified');
                         break;
                     }
@@ -98,11 +103,12 @@
                     var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
                     if(!myfeedback) {
                         //TODO : Making this temporarily .. to avoid scriptFail
-
+                        import '/imports/ui/pages/script/scriptLoginInit/scriptLoginInit.js';
                         this.render('scriptLoginInit');
                         //this.render('scriptLoginFail');
                         return;
                     }
+                    import '/imports/ui/pages/quiz/quiz.js';
                     this.render('quiz', {
                         'data': {
                             'feedback': myfeedback,
@@ -137,6 +143,7 @@
                             data.enoughData = (validAnswers.length > 30);
                         }
                         _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
+                        import '/imports/ui/pages/profile/profile.js';
                         this.render('profile', { data : data});
                     }
 
@@ -149,6 +156,7 @@
                 Router.go(`/scriptLoginAfterQuiz/${userId}`);
                 break;
                 case 'invite' :
+                import '/imports/ui/pages/invite/invite.js';
                 this.render('invite');
                 break;
                 case 'finish':
@@ -162,12 +170,14 @@
     Router.route('/verify-email/:token', function () {
 
      this.layout('ScriptLayout');
-
+    
+     import '/imports/ui/pages/accounts/verifyEmail/verifyEmail.js';
      this.render('verifyEmail');
 
  }, { 'name': '/verify-email:token' });
 
     Router.route('/admin', function () {
+        import '/imports/ui/pages/admin/admin.js';
         this.layout('ApplicationLayout');
         return this.render('admin');
     }, { 'name': '/admin' });
@@ -179,7 +189,8 @@
         route.set("signIn");
         this.wait(Accounts.loginServicesConfigured(), Meteor.subscribe('group')   );
         if(this.ready()){
-           return this.render('signIn');
+            import '/imports/ui/pages/login/signin.js';
+            return this.render('signIn');
         }
         else{
             this.render('loading');
@@ -189,6 +200,7 @@
     } ,{ name: 'signIn' });
 
     Router.route('/', function () {
+        import '/imports/ui/pages/login/signin.js';
         return this.render('signIn');
     }, { name: 'home'});
 
@@ -200,7 +212,8 @@
         //this.wait(Accounts.loginServicesConfigured());
         
         if(this.ready()){
-          return this.render('signUp');
+            import '/imports/ui/pages/register/signup.js';
+            return this.render('signUp');
         }
         else{
             this.render('loading');
@@ -210,6 +223,8 @@
     Router.route('/feed', function () {
         route.set('feed')
         this.layout('ApplicationLayout');
+
+        import '/imports/ui/pages/feed/feed.js';
         return this.render('feed');
     }, { 'name': '/feed'});
 
@@ -227,6 +242,7 @@
       this.wait(Meteor.subscribe('connections'), Meteor.subscribe("feedback","allData"),
                 Accounts.loginServicesConfigured(), Meteor.subscribe('group')  );
       if (this.ready()){
+        import '/imports/ui/pages/invite/invite.js';
         this.render('invite');   
       }
       else{
@@ -237,7 +253,7 @@
 
 
     Router.route('/RecoverPassword', function () {
-
+        import '/imports/ui/pages/accounts/RecoverPassword/RecoverPassword.js';
         return this.render('RecoverPassword');
     }, { 'name': '/RecoverPassword' });
 
@@ -300,6 +316,7 @@
 
     function checkAdminLoggedIn(context,redirect){
       if (!Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+        import '/imports/ui/pages/adminUser/adminUser.js';
         this.render('/adminLogin');
     } else {
         this.next();

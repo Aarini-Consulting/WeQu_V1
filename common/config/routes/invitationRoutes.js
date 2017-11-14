@@ -41,6 +41,7 @@ Router.route('/invitation/:_id', function () {
 
         switch(Session.get('invite')) {
             case 'init': {
+                import '/imports/ui/pages/script/scriptInviteInit/scriptInviteInit.js';
                 this.render("scriptInviteInit")
                 return;
             }
@@ -70,10 +71,12 @@ Router.route('/invitation/:_id', function () {
                 data.person = user.profile;
                 data.to = data.feedback.to;
                 data.invitationId = invitationId;
+                import '/imports/ui/pages/quiz/quiz.js';
                 this.render('quiz', { 'data': data });
                 return;
             }
             case 'filldata':{
+                import '/imports/ui/pages/script/scriptInvitationFillData/scriptInvitationFillData.js';
                 this.render('scriptInvitationFillData');
                 return;
             }
