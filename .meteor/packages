@@ -5,7 +5,6 @@
 # but you can also edit it by hand.
 
 pauli:accounts-linkedin
-iron:router
 accounts-ui@1.1.9
 reactive-var@1.0.11
 fourseven:scss
@@ -56,3 +55,4 @@ wizonesolutions:moment-duration-format
 
 alanning:roles
 mizzao:user-status 
+react-meteor-data
