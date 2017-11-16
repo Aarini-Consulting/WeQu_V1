@@ -1,8 +1,10 @@
 /* eslint-disable max-len */
 
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import {
+  Redirect,
+  Switch,
   BrowserRouter,
   Route,
   Link,
@@ -17,70 +19,53 @@ import Login from '/imports/ui/pages/Login';
 
 const history = createBrowserHistory();
 
-const authenticate = (nextState, replace) => {
-  if (!Meteor.loggingIn() && !Meteor.userId()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname },
-    });
+//container component to check user's login status
+//if not logged in, redirect to home
+const CheckLogin = class CheckLogin extends React.Component {
+  
+  constructor(props) {
+    super(props);
   }
-};
 
-const App = class App extends React.Component {
-  
-    constructor(props) {
-      super(props);
-
-      this.state={
-        languageLoaded:true,
-      }
-    }
-
-    componentWillMount(){
-      // var locale = 'nl-NL';
-      // if(i18n.getLocale() != locale){
-      //   i18n.setLocale(locale).then(() => {
-      //     this.setState({
-      //       languageLoaded:true
-      //     });
-      //   });
-      // }
-      // else if(i18n.getLocale() == locale && this.state.languageLoaded == false){
-      //   this.setState({
-      //     languageLoaded:true
-      //   });
-      // }
-    }
-  
-    render() {
-      if(this.state.languageLoaded){
-        return (
-          <div>
-          { /* Place to put layout codes here */ }
-          <Switch history={history}>
-          <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } />
-          <Route name="login" path="/login" component={ Login } />
-          </Switch>
-          </div>
-        );
-      }
-      else{
-        return (
-          <div>
-            loading
-          </div>
-        );
-      }
+  render() {
+    if(!Meteor.loggingIn() && !Meteor.userId()){
+      Session.set( "loginRedirect", this.props.location.pathname);
+      return(
+        <Redirect to="/login"/>
+      ); 
+    }else{
+      return (
+        this.props.childComponent
+      );
     }
   }
+}
+
+// const authenticate = (nextState, replace) => {
+//   if (!Meteor.loggingIn() && !Meteor.userId()) {
+//     // Session.set( "loginRedirect", nextState.location.pathname );
+//     replace({
+//       pathname: '/login',
+//       state: { nextPathname: nextState.location.pathname },
+//     });
+//   }
+// };
+
+const App = () => (
+  <Switch history={history}>
+      {/* <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } /> */}
+      <Route path='/script-login' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
+      <Route name="login" path="/login" component={ Login } />
+  </Switch>
+)
 
 Meteor.startup(()=> {
   $(document).ready(()=>{
-    render((
+    ReactDOM.render((
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    ), document.getElementById('root'));   
+    ), document.getElementById('react-root'));   
   })                                                                                               
 });    
    
