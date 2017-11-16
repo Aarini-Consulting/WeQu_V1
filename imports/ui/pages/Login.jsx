@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 
 class Login extends React.Component {
@@ -123,8 +123,7 @@ class Login extends React.Component {
                             </form>
                             <div id="error" className="errormsg"></div>
                             </div>
-
-                            <a id="sign-up" className="loginBtn" href="#">Sign Up</a>
+                            <Link to="/signUp" id="sign-up" className="loginBtn">Sign Up</Link>
                         </div>
                         </div>
                     </div>

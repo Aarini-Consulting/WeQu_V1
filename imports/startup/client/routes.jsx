@@ -16,6 +16,9 @@ import { Meteor } from 'meteor/meteor';
 
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
 import Login from '/imports/ui/pages/Login';
+import SignUp from '/imports/ui/pages/SignUp';
+import Terms from '/imports/ui/pages/Terms';
+import PrivacyPolicy from '/imports/ui/pages/PrivacyPolicy';
 
 const history = createBrowserHistory();
 
@@ -54,8 +57,11 @@ const CheckLogin = class CheckLogin extends React.Component {
 const App = () => (
   <Switch history={history}>
       {/* <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } /> */}
-      <Route path='/script-login' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
-      <Route name="login" path="/login" component={ Login } />
+      <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
+      <Route path='/login' component={ Login } />
+      <Route path='/signUp' component={SignUp}/>
+      <Route path='/terms' component={Terms}/>
+      <Route path='/privacy' component={PrivacyPolicy}/>
   </Switch>
 )
 
