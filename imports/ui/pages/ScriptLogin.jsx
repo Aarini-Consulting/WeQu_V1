@@ -19,20 +19,20 @@ class ScriptLogin extends React.Component {
         if(this.props.feedback && this.props.feedback.done){
             showMenu = this.props.feedback.done;
         }
-        if(this.props.user && this.props.user.profile && this.props.user.profile.loginScript){
-            switch(this.props.user.profile.loginScript) {
+        if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript){
+            switch(this.props.currentUser.profile.loginScript) {
                 case 'init': {
                     var condition = true;
     
                     // TODO : Need more robust condition here
     
-                    if(this.props.user && this.props.user.services && this.props.user.services.linkedin != undefined)
+                    if(this.props.currentUser && this.props.currentUser.services && this.props.currentUser.services.linkedin != undefined)
                     {
                         condition = true;
                     }
                     else if(Meteor.settings.public.verifyEmail)
                     {
-                        condition = this.props.user && this.props.user.emails && this.props.user.emails[0].verified;
+                        condition = this.props.currentUser && this.props.currentUser.emails && this.props.currentUser.emails[0].verified;
                     }
     
                     console.log(condition);
@@ -80,7 +80,7 @@ class ScriptLogin extends React.Component {
                     //     this.render('scriptLoginFail');
                     //     return;
                     // }
-                        var data = { profile : this.props.user.profile };
+                        var data = { profile : this.props.currentUser.profile };
                         data.myscore = calculateScore(joinFeedbacks(this.props.feedback));
     
                         var otherFeedback = this.props.feedbacks
@@ -142,7 +142,7 @@ export default withTracker((props) => {
     dataReady = handle.ready();
      
     return {
-        user: Meteor.user(),
+        currentUser: Meteor.user(),
         feedbacks: Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId()}).fetch(),
         feedback: Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId()}),
         dataReady:dataReady,
