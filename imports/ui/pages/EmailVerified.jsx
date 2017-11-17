@@ -12,6 +12,18 @@ class EmailVerified extends React.Component {
   	}
   }
 
+  logout(){
+    if(Meteor.userId()){
+      Meteor.logout((error)=>{
+        if(error){
+          console.log(error);
+        }
+      });
+    }else{
+      this.props.history.replace('/sign-up');
+    }
+  }
+
   sendVerificationLink(event){
     event.preventDefault();
     if(Meteor.userId() && !this.state.sending){
@@ -34,18 +46,25 @@ class EmailVerified extends React.Component {
   }
   
   render() {
-    if(Meteor.userId()){
       return (
-        <section className={"gradient" + (this.props.currentUser.profile.gradient ? '' : currentUser.profile.gradient) + "whiteText alignCenter feed"}>
+        <section className={"gradient" + (this.props.currentUser && this.props.currentUser.profile.gradient ? '' : currentUser.profile.gradient) + "whiteText alignCenter feed"}>
           <br/> <br/>
           
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
-              <p className="alert alert-warning">You need to verify your email address before using wequ.
+              <div className="alert alert-warning">You need to verify your email address before using wequ.
                 <br/>
                 <a className="resend-verification-link" onClick ={this.sendVerificationLink.bind(this)}>Resend verification link</a>
                 <br/>
-              </p>
+                {Meteor.userId() &&
+                <div>
+                <br/>
+                <p>Have you placed the wrong email address?</p>
+                <a onClick ={this.logout.bind(this)}>Click Here to register again</a>
+                </div>
+                }
+                
+              </div>
             </div>
   
             <div id="error"></div>
@@ -54,10 +73,6 @@ class EmailVerified extends React.Component {
   
         </section>
       );
-    }else{
-      return null;
-    }
-    
   }
 }
 

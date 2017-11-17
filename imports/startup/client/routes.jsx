@@ -21,6 +21,7 @@ import SignUp from '/imports/ui/pages/SignUp';
 import Terms from '/imports/ui/pages/Terms';
 import PrivacyPolicy from '/imports/ui/pages/PrivacyPolicy';
 import NotFound from '/imports/ui/pages/NotFound';
+import VerifyEmail from '/imports/ui/pages/VerifyEmail';
 
 const history = createBrowserHistory();
 
@@ -82,6 +83,7 @@ const App = () => (
       <Route path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route path='/terms' component={Terms}/>
       <Route path='/privacy' component={PrivacyPolicy}/>
+      <Route exact path='/verify-email/:token' component={VerifyEmail} />
       <Route path="*" component={NotFound}/>
   </Switch>
 )
