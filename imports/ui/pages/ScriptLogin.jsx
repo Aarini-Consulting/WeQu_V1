@@ -39,7 +39,7 @@ class ScriptLogin extends React.Component {
     
                     if(condition)
                     {
-                        return (<ScriptLoginInit/>);
+                        return (<ScriptLoginInit feedback={this.props.feedback} myfeedback={this.props.myfeedback}/>);
                     }
                     else
                     {
@@ -50,23 +50,7 @@ class ScriptLogin extends React.Component {
     
                 }
                 case 'quiz': {
-        
-                    // var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
-                    // if(!myfeedback) {
-                    //     //TODO : Making this temporarily .. to avoid scriptFail
-                    //     import '/imports/ui/pages/script/scriptLoginInit/scriptLoginInit.js';
-                    //     this.render('scriptLoginInit');
-                    //     //this.render('scriptLoginFail');
-                    //     return;
-                    // }
-                    // import '/imports/ui/pages/quiz/quiz.js';
-                    // this.render('quiz', {
-                    //     'data': {
-                    //         'feedback': myfeedback,
-                    //         'person': Meteor.user().profile
-                    //     }
-                    // })
-                    return (<Quiz/>);
+                    return (<Quiz feedback={this.props.myfeedback} currentUser={this.props.currentUser}/>);
                     break;
                 }
                 case 'profile' : {
@@ -145,6 +129,7 @@ export default withTracker((props) => {
         currentUser: Meteor.user(),
         feedbacks: Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId()}).fetch(),
         feedback: Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId()}),
+        myfeedback: Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }),
         dataReady:dataReady,
         handler:handle,
     };
