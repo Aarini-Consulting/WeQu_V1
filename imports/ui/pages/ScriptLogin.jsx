@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router';
 
-import Loading from './Loading';
+import Loading from './loading/Loading';
 import ScriptLoginInit from './ScriptLoginInit'; 
-import EmailVerified from './EmailVerified'; 
+import EmailVerified from './accounts/EmailVerified'; 
 import Quiz from './Quiz'; 
 import Profile from './Profile'; 
 import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 

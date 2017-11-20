@@ -15,13 +15,16 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { Meteor } from 'meteor/meteor';
 
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
-import Login from '/imports/ui/pages/Login';
-import RecoverPassword from '/imports/ui/pages/RecoverPassword';
-import SignUp from '/imports/ui/pages/SignUp';
-import Terms from '/imports/ui/pages/Terms';
-import PrivacyPolicy from '/imports/ui/pages/PrivacyPolicy';
 import NotFound from '/imports/ui/pages/NotFound';
-import VerifyEmail from '/imports/ui/pages/VerifyEmail';
+
+import Login from '/imports/ui/pages/accounts/Login';
+import RecoverPassword from '/imports/ui/pages/accounts/RecoverPassword';
+import SignUp from '/imports/ui/pages/accounts/SignUp';
+import VerifyEmail from '/imports/ui/pages/accounts/VerifyEmail';
+
+import Terms from '/imports/ui/pages/legal/Terms';
+import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
+
 
 const history = createBrowserHistory();
 
