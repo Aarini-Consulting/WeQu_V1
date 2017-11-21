@@ -1,6 +1,19 @@
 import React from 'react';
 
 export default class Quiz extends React.Component {
+  componentDidMount(){
+    if( this.props.currentUser && this.props.currentUser.profile.loginScript == 'init'){
+            if(this.props.currentUser && !this.props.feedback){
+                Meteor.call('gen-question-set', Meteor.userId(), function (err, result) {
+                  if(err){
+                    console.log('gen-question-set', err, result);
+                  }else{
+                    setLoginScript('quiz');
+                  }
+              });        
+            }
+    }
+  }
   render() {
     console.log(this.props.feedback);
     return (

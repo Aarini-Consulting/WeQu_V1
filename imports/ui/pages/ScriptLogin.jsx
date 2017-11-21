@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router';
 
 import Loading from './loading/Loading';
-import ScriptLoginInit from './ScriptLoginInit'; 
+// import ScriptLoginInit from './ScriptLoginInit'; 
 import EmailVerified from './accounts/EmailVerified'; 
 import Quiz from './Quiz'; 
 import Profile from './Profile'; 
@@ -39,7 +39,7 @@ class ScriptLogin extends React.Component {
     
                     if(condition)
                     {
-                        return (<ScriptLoginInit feedback={this.props.feedback} myfeedback={this.props.myfeedback}/>);
+                        return (<Quiz feedback={this.props.feedback} myfeedback={this.props.myfeedback} currentUser={this.props.currentUser}/>);
                     }
                     else
                     {
@@ -50,49 +50,14 @@ class ScriptLogin extends React.Component {
     
                 }
                 case 'quiz': {
-                    return (<Quiz feedback={this.props.myfeedback} currentUser={this.props.currentUser}/>);
+                    return (<Quiz feedback={this.props.feedback} myfeedback={this.props.myfeedback} currentUser={this.props.currentUser}/>);
                     break;
                 }
-                case 'profile' : {
-                    // this.wait(Meteor.subscribe('feedback'),     Accounts.loginServicesConfigured());
-                    // if(!this.ready()) {
-                    //     this.render("loading");
-                    //     return
-                    // }
-                    // var myfeedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: true});
-                    // if(!myfeedback) {  
-                    //     this.render('scriptLoginFail');
-                    //     return;
-                    // }
-                        var data = { profile : this.props.currentUser.profile };
-                        data.myscore = calculateScore(joinFeedbacks(this.props.feedback));
-    
-                        var otherFeedback = this.props.feedbacks
-                        if(otherFeedback) {
-                            var qset = joinFeedbacks(otherFeedback);
-    
-                            var validAnswers = _.filter(qset, function(question) { return question.answer });
-                            data.otherscore = calculateScore(qset);
-    
-                            data.enoughData = (validAnswers.length > 30);
-                        }
-                        _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()));
-    
-                        // import '/imports/ui/pages/profile/profile.js';
-                        // this.render('profile', { data : data});
-                        return (<Profile data={data}/>)
-    
-                    break;
-                }
-    
                 case 'after-quiz' :
                 //this.render('scriptLoginAfterQuiz');
                 var userId = Meteor.userId();
                 // <Redirect to={"/scriptLoginAfterQuiz/" + userId}/>
                 return (<ScriptLoginAfterQuiz/>)
-                break;
-                case 'invite' :
-                return (<Invite data={data}/>)
                 break;
                 case 'finish':
                 return (<ScriptLoginFinish/>)
