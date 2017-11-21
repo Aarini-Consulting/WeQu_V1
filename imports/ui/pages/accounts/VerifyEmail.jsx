@@ -27,7 +27,8 @@ class EmailVerify extends React.Component {
   }
 
   verifyEmail(token){
-    if(!this.state.verifying){
+    var verified = this.props.currentUser && this.props.currentUser.emails[0].verified;
+    if(!this.state.verifying && !verified){
       this.setState({
           verifying: true,
         });

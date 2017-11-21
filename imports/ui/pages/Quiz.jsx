@@ -1,6 +1,15 @@
 import React from 'react';
 
 export default class Quiz extends React.Component {
+  constructor(props){
+      super(props);
+      this.state={
+        currentQuestion:undefined,
+        currentQuestionIndex:-1,
+        questionTotal:0
+      }
+  }
+
   componentDidMount(){
     if( this.props.currentUser && this.props.currentUser.profile.loginScript == 'init'){
             if(this.props.currentUser && !this.props.feedback){
@@ -12,8 +21,53 @@ export default class Quiz extends React.Component {
                   }
               });        
             }
+    }else if(this.props.feedback){
+      this.getCurrentQuestion();
     }
   }
+
+  componentWillReceiveProps(nextProps, nextState){
+    if(nextProps.feedback){
+      this.getCurrentQuestion();
+    }
+  }
+
+  getCurrentQuestion(){
+    //find question from qset that don't have answer yet
+    this.props.feedback.qset.find((question, index, qset)=>{
+      if(!question.answer){
+        this.setState({
+          currentQuestion: question,
+          currentQuestionIndex:index,
+          questionTotal:qset.length
+        });
+        return !question.answer;
+      }else{
+        return false;
+      }
+      
+    })
+  }
+
+  renderAnswerList(answers) {
+    return answers.map((answer) => {
+      return (
+        <li className="answer" key={answer._id} id={answer._id} data-skill={answer.skill} onClick={this.answerQuestion.bind(this, answer)}>{answer.text}</li>
+      );
+    });
+  }
+
+  answerQuestion(answer, event){
+    event.preventDefault();
+    console.log(answer);
+  }
+  
+  skip(question,index,event){
+    event.preventDefault();
+    console.log(question);
+    console.log(index);
+  } 
+
   render() {
     console.log(this.props.feedback);
     return (
@@ -46,28 +100,21 @@ export default class Quiz extends React.Component {
           </div> */}
         </section>
         
-        {this.props.feedback &&
+        {this.props.feedback && this.state.currentQuestion &&
         <section>
-          {/* {{#if writtenFeedback}}
           <div className="question">
-            Why do you think so?
-          </div>
-          <textarea rows="3" style="width:100%">Wrote your feedback here</textarea> */}
-
-          {/* <div className="question">
-            <h2>{{question.text}}</h2>
+            <h2>{this.state.currentQuestion.text}</h2>
           </div>
           <ul className="answers">
-            {{#each question.answers}}
-            <li className="answer" id="{{_id}}" data-skill="{{skill}}" >{{text}}</li>
-            {{/each}}
+            {this.renderAnswerList(this.state.currentQuestion.answers)}
           </ul>
           <div className="statusBar">
-            <div>Question {{questionNum}} of {{questionsTotal}}</div>
-            {{#unless self}}
-            <div><a href="" className="skip">Skip this question</a></div>
-            {{/unless}}
-          </div> */}
+            <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
+            {//if not question to self, allow to skip
+              !this.props.feedback.from == this.props.feedback.to &&
+              <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
+            }
+          </div>
         </section>
         }
 
