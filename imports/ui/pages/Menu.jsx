@@ -3,30 +3,32 @@ import { Link } from 'react-router-dom';
 
 export default class Menu extends React.Component {
   render() {
+    var pathname = this.props.location.pathname;
     return (
         <div className="menuBar">
-            <a href="/quiz" className={route == 'quiz' ? 't100' : 't50'} id="quiz">
+            <Link to="/quiz" className={pathname == 'quiz' ? 't100' : 't50'} id="quiz">
             <img src="/img/icon_vote.png"/>
-            </a>
-            {isInRole == 'GameMaster'
+            </Link>
+            {Roles.userIsInRole( Meteor.userId(), 'GameMaster' )
             ? 
                 normalView 
                 ?
-                    <a href="/invite" className={route == 'invite' ? 't100' : 't50'} id="changeView" >
+                    <Link to="/invite" className={pathname == 'invite' ? 't100' : 't50'} id="changeView">
                     <img className="width30" src="/img/gameMaster/icon_contact_2.png"/>
-                    </a>
+                    </Link>
                 :
-                    <a href="/invite" className={route == 'invite' ? 't100' : 't50'} id="changeView" >
+                    <Link to="/invite" className={pathname == 'invite' ? 't100' : 't50'} id="changeView">
                     <img className="width30" src="/img/gameMaster/icon_contact_1.png"/>
-                    </a>
+                    </Link>
             :
-                <a href="/invite" className={route ==  'invite' ? 't100' : 't50'}>
+                <Link to="/invite" className={pathname == 'invite' ? 't100' : 't50'}>
                 <img src="/img/icon_invite.png"/>
-                </a>
+                </Link>
+                
             }
-
-            <a href="/feed" className={route == 'feed' ? 't100' : 't50'}><img src="/img/icon_feed.png"/></a>
-            <a href="/profile" className={route  == 'profile' ? 't100' : 't50'}><img src="/img/icon_profile.png"/></a>
+            <Link to="/profile" className={pathname == 'profile' ? 't100' : 't50'}>
+                <img src="/img/icon_profile.png"/>
+            </Link>
             {/* <a href="#" id="logout" className="{{#if loggedIn}}hidden{{/if}}"> <img className="lg-icon" src="/img/login_button_deactive.png"/></a>
             <a href="/admin">A</a> */}
         </div>

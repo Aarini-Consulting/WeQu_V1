@@ -10,15 +10,9 @@ import Quiz from './Quiz';
 import Profile from './Profile'; 
 import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
 import Invite from './Invite';
-import ScriptLoginFinish from './ScriptLoginFinish';  
 
 class ScriptLogin extends React.Component {
   render() {
-      if(this.props.dataReady){
-        var showMenu = false;
-        if(this.props.feedback && this.props.feedback.done){
-            showMenu = this.props.feedback.done;
-        }
         if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript){
             switch(this.props.currentUser.profile.loginScript) {
                 case 'init': {
@@ -39,7 +33,7 @@ class ScriptLogin extends React.Component {
     
                     if(condition)
                     {
-                        return (<Quiz feedback={this.props.feedback} myfeedback={this.props.myfeedback} currentUser={this.props.currentUser}/>);
+                        return (<Quiz/>);
                     }
                     else
                     {
@@ -50,18 +44,15 @@ class ScriptLogin extends React.Component {
     
                 }
                 case 'quiz': {
-                    return (<Quiz feedback={this.props.feedback} myfeedback={this.props.myfeedback} currentUser={this.props.currentUser}/>);
+                    return (<Quiz/>);
                     break;
                 }
                 case 'after-quiz' :
-                //this.render('scriptLoginAfterQuiz');
-                var userId = Meteor.userId();
-                // <Redirect to={"/scriptLoginAfterQuiz/" + userId}/>
-                return (<ScriptLoginAfterQuiz/>)
-                break;
+                    return (<ScriptLoginAfterQuiz location={this.props.location} history={this.props.history}/>)
+                    break;
                 case 'finish':
-                return (<ScriptLoginFinish/>)
-                break
+                    return (<Redirect to={"/quiz"}/>);
+                    break;
                 default:
                 return null;
                 break;
@@ -72,30 +63,12 @@ class ScriptLogin extends React.Component {
                 <Redirect to={"/login"}/>
             );
         }
-        
-      }else{
-          return(
-            <Loading/>
-          );
-      }
   }
 }
 
 export default withTracker((props) => {
-    var dataReady;
-    var handle = Meteor.subscribe('feedback', props.secret, {
-        onError: function (error) {
-                console.log(error);
-            }
-        });
-    dataReady = handle.ready();
-     
     return {
-        currentUser: Meteor.user(),
-        feedbacks: Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId()}).fetch(),
-        feedback: Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId()}),
-        myfeedback: Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }),
-        dataReady:dataReady,
-        handler:handle,
+        currentUser: Meteor.user()
     };
   })(ScriptLogin);
+
