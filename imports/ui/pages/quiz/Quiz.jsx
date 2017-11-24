@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Loading from './loading/Loading';
+import Loading from '/imports/ui/pages/loading/Loading';
 
 class Quiz extends React.Component {
   constructor(props){

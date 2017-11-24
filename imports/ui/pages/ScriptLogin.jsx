@@ -6,10 +6,10 @@ import { Link, Redirect } from 'react-router';
 import Loading from './loading/Loading';
 // import ScriptLoginInit from './ScriptLoginInit'; 
 import EmailVerified from './accounts/EmailVerified'; 
-import Quiz from './Quiz'; 
-import Profile from './Profile'; 
+import Quiz from './quiz/Quiz'; 
+import Profile from './profile/Profile'; 
 import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
-import Invite from './Invite';
+import Invite from './invite/Invite';
 
 class ScriptLogin extends React.Component {
   render() {
