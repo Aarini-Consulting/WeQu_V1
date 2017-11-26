@@ -54,13 +54,15 @@ class ScriptLogin extends React.Component {
                     return (<Redirect to={"/quiz"}/>);
                     break;
                 default:
-                return null;
+                return(
+                    <Redirect to={"/login"}/>
+                );
                 break;
             }
         }
         else{
             return(
-                <Redirect to={"/login"}/>
+                <Loading/>
             );
         }
   }

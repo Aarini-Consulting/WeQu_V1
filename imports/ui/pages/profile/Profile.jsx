@@ -3,11 +3,14 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router';
 
+import Loading from '/imports/ui/pages/loading/Loading';
 import Radar from './Radar';
 import Strength from './Strength';
 import ShareProfile from './ShareProfile';
 import SkillSet from './SkillSet';
 import SectionProfile from './SectionProfile';
+
+import '/imports/startup/client/wequ-profile.webflow.css';
 
 class Profile extends React.Component {
   render() {
@@ -66,14 +69,16 @@ class Profile extends React.Component {
 
         <ShareProfile/>
 
-        <SkillSet/>
+        {/* <SkillSet/> */}
 
         <SectionProfile/>
       </section>
       );
     }
     else{
-        return null;
+        return(
+          <Loading/>
+        );
     }
   }
 }

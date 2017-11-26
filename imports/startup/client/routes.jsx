@@ -16,7 +16,7 @@ import { Meteor } from 'meteor/meteor';
 
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
 import QuizPage from '/imports/ui/pages/quiz/QuizPage';
-import Profile from '/imports/ui/pages/profile/Profile';
+import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
 import NotFound from '/imports/ui/pages/NotFound';
 
 import Login from '/imports/ui/pages/accounts/Login';
@@ -59,7 +59,7 @@ const CheckNotLoggedIn = class CheckNotLoggedIn extends React.Component {
   render() {
     if(Meteor.userId()){
       return(
-        <NotFound/>
+        <Redirect to="/"/>
       ); 
     }else{
       return (
@@ -84,7 +84,7 @@ const App = () => (
       {/* <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } /> */}
       <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
       <Route exact path='/quiz' render={(props) => (<CheckLogin childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile' render={(props) => (<CheckLogin childComponent={<Profile {...props}/>} {...props}/>)} />
+      <Route exact path='/profile' render={(props) => (<CheckLogin childComponent={<ProfilePage {...props}/>} {...props}/>)} />
       <Route path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
       <Route path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
