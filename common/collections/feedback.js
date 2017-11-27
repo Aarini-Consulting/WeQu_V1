@@ -26,7 +26,3 @@ FeedbackSchema = new SimpleSchema({
 })
 
 //Feedback.attachSchema(FeedbackSchema);
-
-if (Meteor.isClient) {
-    // Meteor.subscribe("feedback");
-}

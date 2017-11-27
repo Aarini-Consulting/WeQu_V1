@@ -168,7 +168,7 @@ class Quiz extends React.Component {
 
 export default withTracker((props) => {
   var dataReady;
-  var handle = Meteor.subscribe('feedback', props.secret, {
+  var handle = Meteor.subscribe('feedback', {
       onError: function (error) {
               console.log(error);
           }

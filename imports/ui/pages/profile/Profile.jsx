@@ -69,7 +69,7 @@ class Profile extends React.Component {
 
         <ShareProfile/>
 
-        {/* <SkillSet/> */}
+        <SkillSet quizPerson={Meteor.userId()}/>
 
         <SectionProfile/>
       </section>
