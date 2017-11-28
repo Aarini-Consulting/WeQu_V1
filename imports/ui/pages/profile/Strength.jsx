@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router';
 
-import Loading from '/imports/ui/pages/loading/Loading';
+import Loading2 from '/imports/ui/pages/loading/Loading2';
 
 class Strength extends React.Component {
   constructor(props){
@@ -79,14 +79,20 @@ class Strength extends React.Component {
             </p>
 
             <div className="sectionprofile sectiongreybg paddingTopInverse45" id="outer">
-            <a className="fontbttn profilebttn w-button" id="specificUser">Answer more questions about {this.props.userType2}</a>
+            <a className="fontbttn profilebttn w-button" id="specificUser">
+            
+            {this.props.quizPerson == Meteor.userId()
+            ? "Answer more questions about " + this.props.userType2
+            : "Answer more question about " + this.props.userType
+            }
+            </a>
             </div>
         </div>
       );
     }
     else{
       return(
-        <Loading/>
+        <Loading2/>
       );
     }
   }
@@ -124,7 +130,6 @@ export default withTracker((props) => {
   }
   return {
     data:data,
-    currentUser: Meteor.user(),
     userType:userType,
     userType2:userType2,
     dataReady:dataReady

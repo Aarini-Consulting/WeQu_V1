@@ -3,19 +3,19 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router';
 
-class Radar extends React.Component {
+import Loading2 from '/imports/ui/pages/loading/Loading2';
+
+export default class Radar extends React.Component {
   render() {
     return (
-        <div>
-            hello from profile
-        </div>
+      <polygon 
+      points={
+        this.props.points.VIRTUE +" "+ this.props.points.SELF_MANAGEMENT +" "+ 
+        this.props.points.COMMUNICATION +" "+ this.props.points.TEAMWORK +" "+ 
+        this.props.points.LEADERSHIP +" "+ this.props.points.PROBLEM_SOLVING
+      }
+      fill={this.props.color} fillOpacity="0.5" stroke={this.props.outline} strokeWidth="1" />
     );
   }
 }
-
-export default withTracker((props) => {
-  return {
-      currentUser: Meteor.user()
-  };
-})(Radar);
 

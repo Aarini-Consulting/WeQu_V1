@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link, Redirect } from 'react-router';
 
-import Loading from '/imports/ui/pages/loading/Loading';
+import Loading2 from '/imports/ui/pages/loading/Loading2';
 
 class SkillCategories extends React.Component {
   constructor(props){
@@ -127,7 +127,7 @@ class SkillCategories extends React.Component {
       );
     }else{
       return(
-        <Loading/>
+        <Loading2/>
       );
     }
     
