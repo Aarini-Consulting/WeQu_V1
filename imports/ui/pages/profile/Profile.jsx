@@ -65,7 +65,7 @@ class Profile extends React.Component {
           </a>
 	      </div>
 
-        <Strength/>
+        <Strength quizPerson={Meteor.userId()}/>
 
         <ShareProfile/>
 
