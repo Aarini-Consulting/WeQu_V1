@@ -51,7 +51,7 @@ class SkillSet extends React.Component {
   render() {
     if(this.props.dataReady){
       return (
-          <div>
+          <div className="width-100">
             <div className="sectionprofile sectionskills" id="sectionskills">
             <div className="titlesection w-container"><img className="iconwrapper" src="/img/icon24.png"/>
               <div className="fontreleway fonttitle">{this.props.userType} Character Skill Set</div>

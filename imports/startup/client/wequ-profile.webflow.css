@@ -4,6 +4,10 @@
   color: #fdf8f8;
 }
 
+.width-100{
+  width:100%;
+}
+
 .menubar {
   height: 55px;
   background-image: -webkit-linear-gradient(270deg, rgba(44, 44, 44, .99), rgba(44, 44, 44, .99));
