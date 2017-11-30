@@ -27,33 +27,39 @@ class InvitePage extends React.Component {
   }
 
   renderFriendList(){
-      console.log(this.props.users.fetch());
-    // return this.props.users.map((user) => {
-    //     return (
-    //         <div className="row" key={user.userId}>
-    //             <div className="col-md-12 col-sm-12 col-xs-12">
-    //             <div className="avatawrapper padding10">
-    //                 {user.services.linkedin.pictureUrl
-    //                 ?
-    //                 <div>
-    //                 <img className="image-5 img-circle" src="{{services.linkedin.pictureUrl}}"/> 
-    //                 <span className="font-white contactName"> 
-    //                 {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}
-    //                 </span>
-    //                 </div>
-    //                 :    
-    //                 <div>
-    //                 <img className="image-5" src="/img/avatar.png"> 
-    //                 <span className="font-white contactName"/> 
-    //                 {{username profile}} {{#if invitedPerson}} ( Invited You ) {{/if}}
-    //                 </span>
-    //                 </div>
-    //                 } 
-    //             </div>
-    //             </div>
-    //         </div>
-    //     );
-    //   });
+      console.log(this.props.users);
+    return this.props.users.map((user) => {
+        return (
+            <div className="row" key={user._id}>
+                <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="avatawrapper padding10">
+                    {user.services && user.services.linkedin && user.services.linkedin.pictureUrl
+                    ?
+                    <div>
+                    <img className="image-5 img-circle" src={user.services.linkedin.pictureUrl}/> 
+                    <span className="font-white contactName"> 
+                    {user.invitedPerson 
+                        ? user.username + " " + "( Invited You )" 
+                        : user.username
+                    }
+                    </span>
+                    </div>
+                    :    
+                    <div>
+                    <img className="image-5" src="/img/avatar.png"/> 
+                    <span className="font-white contactName"> 
+                    {user.invitedPerson 
+                        ? user.username + " " + "( Invited You )" 
+                        : user.username
+                    }
+                    </span>
+                    </div>
+                    } 
+                </div>
+                </div>
+            </div>
+        );
+      });
   }
 
   render() {
@@ -139,7 +145,7 @@ export default withTracker((props) => {
                     
                         return doc;
                     }
-            });
+            }).fetch();
       dataReady = true;
     }
     return {
