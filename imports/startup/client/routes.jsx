@@ -17,6 +17,7 @@ import { Meteor } from 'meteor/meteor';
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
 import QuizPage from '/imports/ui/pages/quiz/QuizPage';
 import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
+import InvitePage from '/imports/ui/pages/invite/InvitePage';
 import NotFound from '/imports/ui/pages/NotFound';
 
 import Login from '/imports/ui/pages/accounts/Login';
@@ -85,6 +86,7 @@ const App = () => (
       <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
       <Route exact path='/quiz' render={(props) => (<CheckLogin childComponent={<QuizPage {...props}/>} {...props}/>)} />
       <Route exact path='/profile' render={(props) => (<CheckLogin childComponent={<ProfilePage {...props}/>} {...props}/>)} />
+      <Route exact path='/invite' render={(props) => (<CheckLogin childComponent={<InvitePage {...props}/>} {...props}/>)} />
       <Route path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
       <Route path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
