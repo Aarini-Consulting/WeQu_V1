@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
 
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 
@@ -12,10 +11,10 @@ class SectionProgress extends React.Component {
             return (
                 <div className="sectionprogress" id="sectionprogress">
                     <div className="row w-row webflow-row">
-                        <div className="columprogress w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><span className="fontmyself fontreleway progressnumber" href="#">{this.props.myAnsweredQuestionSet}</span>
+                        <div className="columprogress w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><span className="fontmyself fontreleway progressnumber">{this.props.myAnsweredQuestionSet}</span>
                         <div className="fontprogress fontreleway fontwidthmobile small">Answers by myself</div>
                         </div>
-                        <div className="w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><span className="font2 fontothers fontreleway progressnumber" href="#">{this.props.inviteesMyAnsweredQuestionSet}</span>
+                        <div className="w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><span className="font2 fontothers fontreleway progressnumber">{this.props.inviteesMyAnsweredQuestionSet}</span>
                         <div className="fontprogress fontreleway small">Answers by others</div>
                         </div>
                     </div>
@@ -25,13 +24,13 @@ class SectionProgress extends React.Component {
             return(
             <div className="sectionprogress" id="sectionprogress">
                 <div className="row w-row webflow-row">
-                <div className="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="fontmyself fontreleway progressnumber" href="#">{this.props.quizPersonAnsweredQuestionSet}</span>
+                <div className="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="fontmyself fontreleway progressnumber">{this.props.quizPersonAnsweredQuestionSet}</span>
                     <div className="fontprogress fontreleway fontwidthmobile small">Answers by {}</div>
                 </div>
-                <div className="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="fontothers fontreleway progressnumber" href="#">{this.props.myQuizPersonAnsweredQuestionSet}</span>
+                <div className="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="fontothers fontreleway progressnumber">{this.props.myQuizPersonAnsweredQuestionSet}</span>
                     <div className="fontprogress fontreleway small">Answers by myself</div>
                 </div>
-                <div className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="font2 fontothers fontreleway progressnumber" href="#">{this.props.inviteesQuizPersonAnsweredQuestionSet}</span>
+                <div className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="font2 fontothers fontreleway progressnumber">{this.props.inviteesQuizPersonAnsweredQuestionSet}</span>
                     <div className="fontprogress fontreleway small">Answers by others</div>
                 </div>
                 </div>

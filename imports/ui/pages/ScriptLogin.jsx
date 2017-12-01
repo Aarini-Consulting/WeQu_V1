@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 
 import Loading from './loading/Loading';
 // import ScriptLoginInit from './ScriptLoginInit'; 

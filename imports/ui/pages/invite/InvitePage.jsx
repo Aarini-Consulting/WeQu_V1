@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
@@ -13,12 +13,10 @@ class InvitePage extends React.Component {
       super(props);
       this.state={
         showInvite:false,
-        inviteStatus:false
       }
   }
 
   componentWillReceiveProps(nextProps){
-      console.log(nextProps.count);
     if((nextProps.count && nextProps.count < 1)){
       this.setState({
         showInvite: true,
@@ -27,10 +25,10 @@ class InvitePage extends React.Component {
   }
 
   renderFriendList(){
-      console.log(this.props.users);
     return this.props.users.map((user) => {
         return (
-            <div className="row" key={user._id}>
+            <Link  key={user._id} to={`/quiz/${user.userId}`}>
+            <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="avatawrapper padding10">
                     {user.services && user.services.linkedin && user.services.linkedin.pictureUrl
@@ -57,18 +55,39 @@ class InvitePage extends React.Component {
                     } 
                 </div>
                 </div>
-            </div>
+                </div>
+            </Link>
         );
       });
   }
 
+  showInvite(bool){
+    this.setState({
+      showInvite: bool,
+    });
+  }
+
   render() {
     if(this.props.dataReady){
-      if(this.state.showInvite){
+      if((this.props.count != undefined && this.props.count < 1) && !this.state.showInvite ){
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <Invite/>
+            <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText alignCenter feed"}>
+              <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
+                <div className="emptytext">Hey, there is nobody here
+                  <br/>Invite your teammates to learn how they see you</div>
+                  <a className="invitebttn w-button step-invitebttn" onClick={this.showInvite.bind(this)}>invite</a>
+              </div>
+            </section>
+          </div>
+        );
+      }
+      else if(this.state.showInvite){
+        return (
+          <div className="fillHeight">
+            <Menu location={this.props.location} history={this.props.history}/>
+            <Invite showInvite={this.showInvite.bind(this, false)}/>
           </div>
         );
       }else{
@@ -82,7 +101,7 @@ class InvitePage extends React.Component {
                     <div className="title">Add Contact</div>
                     </div>
                     <div className="screentitlebttn">
-                    <a className="w-inline-block marginTop5"><img src="/img/Invite_Plus_white.png"/>
+                    <a className="w-inline-block marginTop5" onClick={this.showInvite.bind(this, true)}><img src="/img/Invite_Plus_white.png"/>
                     </a>
                     </div>
                 </div>
@@ -104,7 +123,10 @@ class InvitePage extends React.Component {
       }
     }else{
       return(
-        <Loading/>
+        <div className="fillHeight">
+          <Menu location={this.props.location} history={this.props.history}/>
+          <Loading/>
+        </div>
       );
     }
     

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
 
 class ShareProfile extends React.Component {
   render() {

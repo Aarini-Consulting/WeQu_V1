@@ -38,7 +38,6 @@ class Quiz extends React.Component {
   }
 
   getCurrentQuestion(props){
-    console.log(props.feedback);
     //find question from qset that don't have answer yet
     props.feedback.qset.find((question, index, qset)=>{
       if(!question.answer){
@@ -65,8 +64,6 @@ class Quiz extends React.Component {
 
   answerQuestion(answer, event){
     event.preventDefault();
-    console.log(answer);
-    console.log(this.state.currentQuestion);
     var feedback = this.props.feedback;
     var question = this.state.currentQuestion;
     var index = this.state.currentQuestionIndex;
@@ -77,8 +74,6 @@ class Quiz extends React.Component {
     var next = feedback.qset.find((question, index, qset)=>{
       return !question.answer;
     })
-
-    console.log(next);
 
     if(!next && !feedback.done){
       feedback.done = true;
@@ -168,17 +163,28 @@ class Quiz extends React.Component {
 
 export default withTracker((props) => {
   var dataReady;
+  var feedback;
   var handle = Meteor.subscribe('feedback', {
       onError: function (error) {
               console.log(error);
           }
       });
-  dataReady = handle.ready();
+  
+
+  if(handle.ready()){
+    if(props.quizPerson){
+      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizPerson, done: false });
+    }else{
+      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
+    }
+    
+    dataReady = true;
+  }
    
   return {
       currentUser: Meteor.user(),
       feedbacks: Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId()}).fetch(),
-      feedback: Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }),
+      feedback: feedback,
       dataReady:dataReady,
   };
 })(Quiz);

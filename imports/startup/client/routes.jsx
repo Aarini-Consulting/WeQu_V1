@@ -85,6 +85,7 @@ const App = () => (
       {/* <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } /> */}
       <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
       <Route exact path='/quiz' render={(props) => (<CheckLogin childComponent={<QuizPage {...props}/>} {...props}/>)} />
+      <Route exact path='/quiz/:uid' render={(props) => (<CheckLogin childComponent={<QuizPage {...props}/>} {...props}/>)} />
       <Route exact path='/profile' render={(props) => (<CheckLogin childComponent={<ProfilePage {...props}/>} {...props}/>)} />
       <Route exact path='/invite' render={(props) => (<CheckLogin childComponent={<InvitePage {...props}/>} {...props}/>)} />
       <Route path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />

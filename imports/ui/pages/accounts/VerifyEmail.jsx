@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Accounts } from 'meteor/accounts-base'

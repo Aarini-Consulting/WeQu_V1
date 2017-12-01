@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
 
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 

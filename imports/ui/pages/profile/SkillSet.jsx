@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 import SkillCategories from './SkillCategories';
@@ -71,7 +71,9 @@ class SkillSet extends React.Component {
             <div className="sectionempty">
               <p className="fontreleway paraskillset paratopskills">Expand your self knowledge by unlocking your character skills from honest to listening to resilient.
                 <br/>In order to generate a reliable view, it requires inputs from at least three teammates of you.</p>
-                <a className="_24skillsbttn fontbttn profilebttn w-button" href="/invite">invite {this.state.count} more teammates to view my complete skill set</a>
+                <Link className="_24skillsbttn fontbttn profilebttn w-button" to="/invite">
+                Invite {this.state.count} more teammates to view my complete skill set
+                </Link>
             </div>
           }
           </div>

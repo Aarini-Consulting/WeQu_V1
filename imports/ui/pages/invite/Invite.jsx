@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Link, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
@@ -11,23 +12,10 @@ class Invite extends React.Component {
   constructor(props){
       super(props);
       this.state={
-        showInvite:false,
-        inviteStatus:false
+        inviteStatus:false,
+        inviteSuccess:false,
+        inviteLastSuccess:undefined
       }
-  }
-
-  showInvite(){
-    this.setState({
-      showInvite: true,
-    });
-  }
-
-  componentWillReceiveProps(nextProps){
-    if((nextProps.count && nextProps.count > 0)){
-      this.setState({
-        showInvite: true,
-      });
-    }
   }
 
   handleSubmit (event) {
@@ -56,20 +44,48 @@ class Invite extends React.Component {
       }else{
         this.setState({
           inviteStatus: 'sent',
+          inviteSuccess:true,
+          inviteLastSuccess: userId
         });
       }
     });
 }
 
+handleBackArrowClick(){
+  if(this.props.count && this.props.count > 0){
+    this.props.showInvite(false);
+  }
+}
+
   render() {
     if(this.props.dataReady){
-      if(this.state.showInvite){
+      if(this.state.inviteSuccess){
+        return (
+          <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText alignCenter"}>
+              <h2 style={{width:65+'%'}}>
+              Well done!<br/>
+              <Link to={`/quiz/${this.state.inviteLastSuccess}`}>Now Answer more question about this person</Link>
+              
+              </h2>
+              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+  
+              <h2 style={{width:65+'%'}}>
+              <a onClick={this.handleBackArrowClick.bind(this)}>Maybe later...</a>
+              </h2>
+          </section>
+        )
+      }
+      else{
         return (
             <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText feed"}>
               <div className="screentitlewrapper w-clearfix">
-                {/* <div className="screentitlebttn back">
-                  <a className="w-clearfix w-inline-block"><img className="image-7" src="/img/arrow_white.png"/></a>
-                </div> */}
+                <div className="screentitlebttn back">
+                  {this.props.count != undefined && this.props.count > 0 &&
+                    <a className="w-clearfix w-inline-block" onClick={this.handleBackArrowClick.bind(this)}>
+                    <img className="image-7" src="/img/arrow_white.png"/>
+                    </a>
+                  }
+                </div>
                 <div className="screentitle w-clearfix">
                   <div className="titleGr">Invite teammate</div>
                 </div>
@@ -102,16 +118,6 @@ class Invite extends React.Component {
                   <span className="sendingStatus"><img src="/img/status_error.png"/>Already Invited</span>
                 }
                 </div>
-              </div>
-            </section>
-        );
-      }else{
-        return (
-            <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText alignCenter feed"}>
-              <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
-                <div className="emptytext">Hey, there is nobody here
-                  <br/>Invite your teammates to learn how they see you</div>
-                  <a className="invitebttn w-button step-invitebttn" onClick={this.showInvite.bind(this)}>invite</a>
               </div>
             </section>
         );
