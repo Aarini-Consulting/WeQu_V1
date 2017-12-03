@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
@@ -10,7 +11,8 @@ class Quiz extends React.Component {
       this.state={
         currentQuestion:undefined,
         currentQuestionIndex:-1,
-        questionTotal:0
+        questionTotal:0,
+        showSummary:false
       }
   }
 
@@ -31,7 +33,7 @@ class Quiz extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextState){
+  componentWillReceiveProps(nextProps){
     if(nextProps.feedback){
       this.getCurrentQuestion(nextProps);
     }
@@ -77,6 +79,13 @@ class Quiz extends React.Component {
 
     if(!next && !feedback.done){
       feedback.done = true;
+      if(this.props.currentUser.profile.loginScript == 'finish'){
+        this.setState({
+          showSummary: true,
+        });
+      }
+      
+      // console.log(feedback);
     }
 
     if(answer.skill == "genderId")
@@ -88,7 +97,10 @@ class Quiz extends React.Component {
     Meteor.call('feedback.answer.question.self', feedback , (err, result) => {
       if(err){
         console.log(err);
-      }else if(feedback.done){
+        this.setState({
+          showSummary: false,
+        });
+      }else if(this.props.currentUser.profile.loginScript != 'finish' && feedback.done){
         setLoginScript('after-quiz');
       }
     });
@@ -102,56 +114,74 @@ class Quiz extends React.Component {
 
   render() {
     if(this.props.dataReady){
-      return (
-        <section className={"vote gradient" + (this.props.currentUser.profile.gradient ? this.props.currentUser.profile.gradient : '')}>
-          <section className="person">
-            {/* <div>
-              <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}">
-              <img src="/img/left.png" className="nav"/>
-              </a>
-            </div> */}
-            <div className="h4" id="specificUser" data-filter-id={this.props.currentUser._id}>
-              <div>
-                {this.props.feedback 
-                ?
-                  this.props.feedback.groupName
-                :
-                  ''
+      if(this.state.showSummary){
+        return (
+          <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
+            <h2 style={{width:65+'%'}}>
+            Well done!<br/>
+            <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
+            </h2>
+            {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+
+            <h2 style={{width:65+'%'}}>
+            <Link to="/invite">Invite other people</Link>
+            </h2>
+            {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+        </section>
+        );
+      }
+      else{
+        return (
+          <section className={"vote gradient" + (this.props.currentUser.profile.gradient ? this.props.currentUser.profile.gradient : '')}>
+            <section className="person">
+              {/* <div>
+                <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}">
+                <img src="/img/left.png" className="nav"/>
+                </a>
+              </div> */}
+              <div className="h4" id="specificUser" data-filter-id={this.props.currentUser._id}>
+                <div>
+                  {this.props.feedback 
+                  ?
+                    this.props.feedback.groupName
+                  :
+                    ''
+                  }
+                </div>
+                {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
+                <img src="/img/avatar.png" className="avatar" id="specificUser" data-filter-id={this.props.currentUser._id}/>
+      
+                <br/>
+                {this.props.username }
+              </div>
+              {/* <div>
+                <a id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}">
+                <img src="/img/right.png" className="nav"/>
+                </a>
+              </div> */}
+            </section>
+            
+            {this.props.feedback && this.state.currentQuestion &&
+            <section>
+              <div className="question">
+                <h2>{this.state.currentQuestion.text}</h2>
+              </div>
+              <ul className="answers">
+                {this.renderAnswerList(this.state.currentQuestion.answers)}
+              </ul>
+              <div className="statusBar">
+                <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
+                {//if not question to self, allow to skip
+                  !this.props.feedback.from == this.props.feedback.to &&
+                  <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
                 }
               </div>
-              {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
-              <img src="/img/avatar.png" className="avatar" id="specificUser" data-filter-id={this.props.currentUser._id}/>
+            </section>
+            }
     
-              <br/>
-              {this.props.currentUser.profile.firstName +' '+  this.props.currentUser.profile.lastName }
-            </div>
-            {/* <div>
-              <a id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}">
-              <img src="/img/right.png" className="nav"/>
-              </a>
-            </div> */}
           </section>
-          
-          {this.props.feedback && this.state.currentQuestion &&
-          <section>
-            <div className="question">
-              <h2>{this.state.currentQuestion.text}</h2>
-            </div>
-            <ul className="answers">
-              {this.renderAnswerList(this.state.currentQuestion.answers)}
-            </ul>
-            <div className="statusBar">
-              <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
-              {//if not question to self, allow to skip
-                !this.props.feedback.from == this.props.feedback.to &&
-                <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
-              }
-            </div>
-          </section>
-          }
-  
-        </section>
-      );
+        );
+      }
     }else{
       return(
         <Loading/>
@@ -164,6 +194,7 @@ class Quiz extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var feedback;
+  var username;
   var handle = Meteor.subscribe('feedback', {
       onError: function (error) {
               console.log(error);
@@ -171,11 +202,14 @@ export default withTracker((props) => {
       });
   
 
-  if(handle.ready()){
-    if(props.quizPerson){
-      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizPerson, done: false });
+  if( Meteor.user() && handle.ready()){
+    if(props.quizUser){
+      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
+      username = getUserName(props.quizUser.profile);
+      
     }else{
       feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
+      username =  getUserName(Meteor.user().profile);
     }
     
     dataReady = true;
@@ -183,6 +217,7 @@ export default withTracker((props) => {
    
   return {
       currentUser: Meteor.user(),
+      username: username,
       feedbacks: Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId()}).fetch(),
       feedback: feedback,
       dataReady:dataReady,

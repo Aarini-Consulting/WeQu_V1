@@ -32,12 +32,12 @@ class RadarComparison extends React.Component {
             <div className="radarAgenda">
               <div><img src="/img/Diamond_Myself.png"/>
                 <span className="marginleft10 font-small">  
-                  How <span className="text-capitalize"> {this.props.quizUser.profile.firstName + " " + this.props.quizUser.profile.lastName} </span> sees me  
+                  How <span className="text-capitalize"> {getUserName(this.props.quizUser.profile)}</span> sees me  
                 </span>
               </div>
               <div><img src="/img/Diamond_Others.png" className="t50"/>
                 <span className="marginleft10 font-small">
-                  How I see <span className="text-capitalize"> {this.props.quizUser.profile.firstName + " " + this.props.quizUser.profile.lastName} </span> 
+                  How I see <span className="text-capitalize">{getUserName(this.props.quizUser.profile)}</span> 
                 </span> 
               </div>
             </div>

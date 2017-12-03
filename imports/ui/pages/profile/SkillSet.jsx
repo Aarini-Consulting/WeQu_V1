@@ -120,7 +120,7 @@ export default withTracker((props) => {
         {
           let user = Meteor.users.findOne({_id: props.quizPerson});
           if(user){
-            userType = (user.profile.firstName +" "+user.profile.lastName);
+            userType = getUserName(user.profile);
           }
         }
       dataReady = true;

@@ -30,8 +30,6 @@ class LoginAfterQuiz extends React.Component {
   componentWillUnmount(){
     setLoginScript('finish');
   }
-
-
 }
 
 export default withTracker((props) => {

@@ -11,13 +11,11 @@ import Quiz from './Quiz';
 class QuizPage extends React.Component {
   render() {
     if(this.props.dataReady){
-      console.log(this.props.match.params.uid);
-      console.log(this.props.quizUser);
       if(!this.props.match.params.uid ||(this.props.match.params.uid && this.props.quizUser)){
         return (
           <div className="fillHeight">
           <Menu location={this.props.location} history={this.props.history}/>
-          <Quiz quizPerson={this.props.match.params.uid}/>
+          <Quiz quizUser={this.props.quizUser}/>
           </div>
         );
       }else{

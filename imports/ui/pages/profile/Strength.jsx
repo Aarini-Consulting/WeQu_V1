@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 
@@ -54,11 +55,13 @@ class Strength extends React.Component {
 
   render() {
     if(this.props.dataReady){
+      console.log(this.props.userType);
       return (
         <div className="sectiongreybg sectionprofile">
-        {/* <div className="sectiongreybg sectionprofile">
-          <center> There is no information about {{userType}} </center>
-        </div> */}
+        {this.props.data && this.props.data.top3 && this.props.data.weak3
+        && this.props.data.top3.length > 0 && this.props.data.weak3.length > 0 
+          ?
+          <div>
             <div className="titlesection w-container"><img className="iconwrapper" src="/img/iconSkills.png"/>
             <div className="fontreleway fonttitle">{this.props.userType} MORE TRUE Skills</div>
             </div>
@@ -76,15 +79,23 @@ class Strength extends React.Component {
             <p className="fontreleway paratopskills">These skills are selected based on the questions you and your teammates have answered about you.
             <br/>The more questions you answered, the more accurate your profile becomes.
             </p>
+          </div>
+          :
+          <div className="sectiongreybg sectionprofile font-tile font-title-title font18">
+              <center> There is no information about {this.props.userType} </center>
+          </div>
+        }
+      
+           
 
             <div className="sectionprofile sectiongreybg paddingTopInverse45" id="outer">
-            <a className="fontbttn profilebttn w-button" id="specificUser">
+            <Link className="fontbttn profilebttn w-button" id="specificUser" to={"/quiz/" + (this.props.quizPerson != Meteor.userId() && this.props.quizPerson)}>
             
             {this.props.quizPerson == Meteor.userId()
             ? "Answer more questions about " + this.props.userType2
             : "Answer more question about " + this.props.userType
             }
-            </a>
+            </Link>
             </div>
         </div>
       );
@@ -121,7 +132,7 @@ export default withTracker((props) => {
       {
         let user = Meteor.users.findOne({_id: props.quizPerson});
         if(user){
-          userType = (user.profile.firstName +" "+user.profile.lastName);
+          userType = getUserName(user.profile);
           userType2 = userType;
         }
       }
