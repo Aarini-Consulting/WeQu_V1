@@ -14,7 +14,9 @@ class Invite extends React.Component {
       this.state={
         inviteStatus:false,
         inviteSuccess:false,
-        inviteLastSuccess:undefined
+        inviteLastSuccess:undefined,
+        inviteLastEmail:undefined,
+        inviteLastUsername:undefined
       }
   }
 
@@ -33,6 +35,8 @@ class Invite extends React.Component {
 
     this.setState({
       inviteStatus: 'sending',
+      inviteLastEmail: email,
+      inviteLastUsername:name
     });
 
     Meteor.call('invite', name, email, gender, (err, userId) => {
@@ -61,18 +65,24 @@ handleBackArrowClick(){
     if(this.props.dataReady){
       if(this.state.inviteSuccess){
         return (
-          <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText alignCenter"}>
-              <h2 style={{width:65+'%'}}>
-              Well done!<br/>
-              <Link to={`/quiz/${this.state.inviteLastSuccess}`}>Now Answer more question about this person</Link>
-              
-              </h2>
-              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-  
-              <h2 style={{width:65+'%'}}>
-              <a onClick={this.handleBackArrowClick.bind(this)}>Maybe later...</a>
-              </h2>
-          </section>
+          <div className="fillHeight flex-start">
+            <div className="invitation-after"><img src="/img/avatar.png" className="invitation-face"/>
+                <div className="fontreleway fontinvit-option">
+                Invitation to {this.state.inviteLastEmail} is sent! 
+                <br/>
+                Choose one of following two options
+                </div>
+            </div>
+            <div className="footersummary w-clearfix">
+                <div className="footer-flex-container">
+                <div className="bttn-area-summary">
+                <Link className="fontreleway fontbttnsummary" to={`/quiz/${this.state.inviteLastSuccess}`}>Load questions about {this.state.inviteLastUsername}</Link>
+                </div>
+                <div className="bttn-area-summary _2">
+                <a className="fontreleway fontbttnsummary" onClick={this.handleBackArrowClick.bind(this)}>Go back to the list</a></div>
+                </div>
+            </div>
+          </div>
         )
       }
       else{

@@ -109,6 +109,13 @@ h3 + h5 {
   width: 100% /* needed for Firefox */
 }
 
+.fillHeight.flex-start{
+  -moz-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
 button, .button {
   width: 80%;
   padding: 18px 0;
