@@ -10,11 +10,13 @@
 
            var fb = Feedback.find({$or : [ {from : this.userId}, {to : this.userId} ]});
            var users; 
-            if(data == "allData"){    
+           //**************  Commenting out to check the data load , public user profile page is related to this *****
+           // --------------  Verify this before moving to production ----------------
+           /* if(data == "allData"){    
               fb = Feedback.find({});
               users = Meteor.users.find({}, {profile : 1})
               return [fb, users];
-            }
+            }*/
             users = Meteor.users.find({}, {profile : 1})
             return [fb, users];
         });
