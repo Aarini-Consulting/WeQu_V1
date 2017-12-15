@@ -30,6 +30,7 @@
                
                 // TODO : Verify this logic ...
                 //var feedbacks = Feedback.find().fetch();
+                console.log( Feedback.find().count());
                 var feedbacks = Feedback.find({$or : [ {from : Meteor.userId()}, {to : Meteor.userId()} ]}).fetch();
 
                 var friends =  _.chain(feedbacks).map(function(feedback){
