@@ -1,12 +1,3 @@
-
-Template.othersProfileQuestionInfo.onCreated(function() {
-	var self = this;
-	self.autorun(function() {
-	//	self.subscribe("feedback","allData");
-	});
-});
-
-
 Template.othersProfileQuestionInfo.helpers({
 	questionHimselfAnswered() {
 
