@@ -21,38 +21,39 @@ class InviteGroup extends React.Component {
         value:undefined,
         inviteStatus:false,
         inviteSuccess:false,
-        inviteLastSuccess:undefined,
-        inviteLastEmail:undefined,
-        inviteLastUsername:undefined
       }
   }
 
   handleSubmit (event) {
     event.preventDefault();
-    
-    // var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
-    // var name = ReactDOM.findDOMNode(this.refs.name).value.trim();
+    var groupName = ReactDOM.findDOMNode(this.refs.groupName).value.trim();
+    if(groupName && this.state.value){
+      var emailsArray = this.state.value.split(",");
 
-    // this.setState({
-    //   inviteStatus: 'sending',
-    //   inviteLastEmail: email,
-    //   inviteLastUsername:name
-    // });
+      this.setState({
+        inviteStatus: 'sending',
+      });
+  
+      Meteor.call('createGroup', groupName, emailsArray , (err, res) => {
+        if(res){
+          this.setState({
+              inviteStatus: 'sent',
+              inviteSuccess:emailsArray.length,
+            });
+          }
+          if(err)
+          {
+            this.setState({
+              inviteStatus: 'error',
+            });
+          }     
+      }); 
+    }
+}
 
-    // Meteor.call('invite', name, email, (err, userId) => {
-    //   if(err){
-    //       console.log("error", err);
-    //       this.setState({
-    //         inviteStatus: 'error',
-    //       });
-    //   }else{
-    //     this.setState({
-    //       inviteStatus: 'sent',
-    //       inviteSuccess:true,
-    //       inviteLastSuccess: userId
-    //     });
-    //   }
-    // });
+isOptionUnique(prop) {
+  const { option, options, valueKey, labelKey } = prop;
+  return !options.find(opt => option[valueKey].toString().toLowerCase() === opt[valueKey].toString().toLowerCase())
 }
 
 handleSelectChange (value) {
@@ -64,7 +65,6 @@ handleSelectChange (value) {
         this.setState({
             lastValue: lastValue,
             value: value,
-            options: this.state.options.concat([ { label: lastValue, value: lastValue }])
         });
     }else{
         this.setState({
@@ -83,33 +83,18 @@ handleSelectChange (value) {
 
     render() {
     if(this.props.dataReady){
-      if(this.state.inviteSuccess){
+      if(this.state.inviteSuccess &&  this.state.inviteSuccess > 0){
         return (
           <div className="fillHeight flex-start">
+          <section className="groupbg whiteText alignCenter feed">
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext">Awesome!
-                <br/>Your invitation is sent to {666} people
+                <br/>Your invitation is sent to {this.state.inviteSuccess} people
                 <br/>When they sign up, you can view their profiles
                 </div>
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>
-
-            {/* <div className="invitation-after"><img src="/img/avatar.png" className="invitation-face"/>
-                <div className="fontreleway fontinvit-option">
-                Invitation to {this.state.inviteLastEmail} is sent! 
-                <br/>
-                Choose one of following two options
-                </div>
-            </div>
-            <div className="footersummary w-clearfix">
-                <div className="footer-flex-container">
-                <div className="bttn-area-summary">
-                <Link className="fontreleway fontbttnsummary" to={`/quiz/${this.state.inviteLastSuccess}`}>Load questions about {this.state.inviteLastUsername}</Link>
-                </div>
-                <div className="bttn-area-summary _2">
-                <a className="fontreleway fontbttnsummary" onClick={this.handleBackArrowClick.bind(this)}>Go back to the list</a></div>
-                </div>
-            </div> */}
+            </section>
           </div>
         )
       }
@@ -132,14 +117,12 @@ handleSelectChange (value) {
 
                 
                 <div className="inviteform w-form">
-                    <form className="groupform inviteformstyle" data-name="Email Form" id="send" name="email-form">
-                        <input className="formstyle w-input" data-name="Name" id="groupName" maxLength="256" name="name" placeholder="group name" type="text" required/>
-                        {/* <select id="list_email" multiple="" className="tags formstyle w-input" parsley-trigger="change" required="" tabIndex="395">
-                        </select> */}
+                    <form onSubmit={this.handleSubmit.bind(this)} className="groupform inviteformstyle" data-name="Email Form" id="send" name="email-form">
+                        <input className="formstyle w-input" data-name="Name" id="groupName" ref="groupName" maxLength="256" name="name" placeholder="group name" type="text" required/>
                         <Creatable
                             closeOnSelect={true}
                             disabled={false}
-                            multi
+                            multi={true}
                             onChange={this.handleSelectChange.bind(this)}
                             options={this.state.options}
                             placeholder="Email addresses"
@@ -147,6 +130,8 @@ handleSelectChange (value) {
                             rtl={false}
                             simpleValue
                             value={this.state.value}
+                            required={true}
+                            isOptionUnique={this.isOptionUnique}
                         />
                         <div className="groupformtext">
                         Press Enter to add email address(es) <br/>
@@ -157,7 +142,6 @@ handleSelectChange (value) {
                         <button className="formbttn invitebttn w-button" id="submitSend" data-wait="Please wait..." type="submit">send invitation</button>
                     </form>
                     
-                    {/* <MultiSelect/> */}
                     {this.state.inviteStatus == 'sending' && 
                     <span className="sendingStatus"><img src="/img/status_sending.png"/>sending...</span>
                     }
@@ -167,22 +151,7 @@ handleSelectChange (value) {
                     {this.state.inviteStatus == 'error' &&
                         <span className="sendingStatus"><img src="/img/status_error.png"/>error sending email</span>
                     }
-                    {this.state.inviteStatus == 'alreadyInvited' &&
-                        <span className="sendingStatus"><img src="/img/status_error.png"/>Already Invited</span>
-                    }
                 </div>
-
-
-                {/* <div className="inviteform w-form">
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                  <input className="emailfield font-white w-input" data-name="Name" id="name" maxLength="256" name="name" ref="name" placeholder="name" type="text" required/>
-                  <input className="emailfield font-white w-input" data-name="Email" id="email" maxLength="256" name="email" ref="email" placeholder="email address" required type="email" style={{textTransform:"lowercase"}}/>
-                    
-                  <button className="formbttn invitebttn w-button" id="sendInvite" data-wait="Please wait..." type="submit"> send invitation</button>
-                </form>
-              
-                
-                </div> */}
               </div>
             </section>
         );
@@ -199,16 +168,13 @@ handleSelectChange (value) {
 export default withTracker((props) => {
   var dataReady;
   var count;
-  var handle = Meteor.subscribe('connections', {
+  var handle = Meteor.subscribe('group', {
     onError: function (error) {
           console.log(error);
       }
   });
   if(Meteor.user() && handle.ready()){
-    count = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-      {email : Meteor.user().emails && Meteor.user().emails[0].address},
-      {email : Meteor.user().profile && Meteor.user().profile.emailAddress} ] }                                                       
-    ).count();
+    count =  Group.find({creatorId: Meteor.userId()}).count();
     dataReady = true;
   }
   return {

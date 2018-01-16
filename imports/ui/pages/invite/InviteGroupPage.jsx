@@ -24,39 +24,22 @@ class InviteGroupPage extends React.Component {
     }
   }
 
-  renderFriendList(){
-    return this.props.users.map((user) => {
+  renderGroupList(){
+    return this.props.groups.map((group) => {
         return (
-            <Link  key={user._id} to={`/quiz/${user.userId}`}>
-            <div className="row">
-                <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="avatawrapper padding10">
-                    {user.services && user.services.linkedin && user.services.linkedin.pictureUrl
-                    ?
-                    <div>
-                    <img className="image-5 img-circle" src={user.services.linkedin.pictureUrl}/> 
-                    <span className="font-white contactName"> 
-                    {user.invitedPerson 
-                        ? user.username + " " + "( Invited You )" 
-                        : user.username
-                    }
-                    </span>
-                    </div>
-                    :    
-                    <div>
-                    <img className="image-5" src="/img/avatar.png"/> 
-                    <span className="font-white contactName"> 
-                    {user.invitedPerson 
-                        ? user.username + " " + "( Invited You )" 
-                        : user.username
-                    }
-                    </span>
-                    </div>
-                    } 
-                </div>
-                </div>
-                </div>
-            </Link>
+          <ul key={group._id} className="friendlist w-list-unstyled">
+            <li className="list-item w-clearfix">
+            <div  className="avatawrapper">
+              <a className="w-inline-block"><img className="image-5" src="/img/avatar_group_2.png"/>
+              </a>
+              <span id="viewGroup" className="contactName">{group.groupName}</span>
+            </div>
+            </li>
+            <li></li>
+          </ul>
+            // <Link  key={group._id} to={`/quiz/${user.userId}`}>
+            
+            // </Link>
         );
       });
   }
@@ -69,7 +52,7 @@ class InviteGroupPage extends React.Component {
 
   render() {
     if(this.props.dataReady){
-      if((this.props.count != undefined && this.props.count < 1) && !this.state.showInviteGroup ){
+      if((this.props.groups && this.props.groups.length < 1) && !this.state.showInviteGroup ){
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
@@ -105,15 +88,8 @@ class InviteGroupPage extends React.Component {
                     </a>
                     </div>
                 </div>
-                
-                <ul className="friendlist w-list-unstyled">
 
-                    <li className="list-item w-clearfix">
-                    
-                    {this.renderFriendList()}
-                </li>
-                <li></li>
-                </ul>
+                {this.renderGroupList()}
             
                 </div>  
 
@@ -135,45 +111,18 @@ class InviteGroupPage extends React.Component {
 
 export default withTracker((props) => {
     var dataReady;
-    var count;
-    var users;
-    var handle = Meteor.subscribe('connections', {
+    var groups;
+    var handle = Meteor.subscribe('group', {
       onError: function (error) {
             console.log(error);
         }
     });
     if(Meteor.user() && handle.ready()){
-        count = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-            {email : Meteor.user().emails && Meteor.user().emails[0].address},
-            {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
-          ).count();
-        users = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-            {email : Meteor.user().emails && Meteor.user().emails[0].address},
-            {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] } ,
-            {
-                    transform: function (doc)
-                    {
-                        let invitedPerson = doc.email ==(Meteor.user().emails && Meteor.user().emails[0].address);
-                        // Linked in login
-                        let invitedPerson2 = doc.email == (Meteor.user().profile && Meteor.user().profile.emailAddress);
-                        doc.invitedPerson = false;
-                        doc.services = Meteor.users.findOne({_id: doc.userId }) && (Meteor.users.findOne({_id: doc.userId }).services);
-                        if(invitedPerson || invitedPerson2){
-                        doc.invitedPerson = true;
-                        doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
-                        doc.services = Meteor.users.findOne({_id: doc.inviteId }) && (Meteor.users.findOne({_id: doc.inviteId }).services);
-                    }
-
-                    
-                        return doc;
-                    }
-            }).fetch();
+      groups = Group.find({creatorId: Meteor.userId()});
       dataReady = true;
     }
     return {
-        count: count,
-
-        users : users,
+        groups : groups,
         currentUser: Meteor.user(),
         dataReady:dataReady
     };
