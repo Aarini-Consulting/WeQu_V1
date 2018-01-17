@@ -111,17 +111,19 @@ class SkillCategories extends React.Component {
                 <div className="col-md-1 col-sm-1 col-xs-1"></div>
             </div>
 
-            <div className="row">
-                <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="sectionprofile sectiongreybgGradient arrow paddingZero" id="outer">
-                    <a className="fontbttn  arrowbttn profilebttn w-button" id="specificUser" onClick={this.expand.bind(this)}>
-                    <center>
-                        <div className="arrow2">  <img src="/img/icon_updown.png"/> </div>
-                    </center>
-                    </a>
+            {this.state.data && this.state.data.categories && this.state.data.categories.length > 0 &&
+                <div className="row">
+                    <div className="col-md-12 col-sm-12 col-xs-12">
+                    <div className="sectionprofile sectiongreybgGradient arrow paddingZero" id="outer">
+                        <a className="fontbttn  arrowbttn profilebttn w-button" id="specificUser" onClick={this.expand.bind(this)}>
+                        <center>
+                            <div className="arrow2">  <img src="/img/icon_updown.png"/> </div>
+                        </center>
+                        </a>
+                    </div>
+                    </div>
                 </div>
-                </div>
-            </div>
+            }
         </div>
       );
     }else{

@@ -27,19 +27,18 @@ class InviteGroupPage extends React.Component {
   renderGroupList(){
     return this.props.groups.map((group) => {
         return (
-          <ul key={group._id} className="friendlist w-list-unstyled">
+          <Link  key={group._id} to={`/group/${group._id}`}>
+            <ul className="friendlist w-list-unstyled">
             <li className="list-item w-clearfix">
             <div  className="avatawrapper">
-              <a className="w-inline-block"><img className="image-5" src="/img/avatar_group_2.png"/>
-              </a>
+              <div className="w-inline-block"><img className="image-5" src="/img/avatar_group_2.png"/>
+              </div>
               <span id="viewGroup" className="contactName">{group.groupName}</span>
             </div>
             </li>
             <li></li>
           </ul>
-            // <Link  key={group._id} to={`/quiz/${user.userId}`}>
-            
-            // </Link>
+          </Link>
         );
       });
   }
@@ -118,7 +117,7 @@ export default withTracker((props) => {
         }
     });
     if(Meteor.user() && handle.ready()){
-      groups = Group.find({creatorId: Meteor.userId()});
+      groups = Group.find({creatorId: Meteor.userId()}).fetch();
       dataReady = true;
     }
     return {
