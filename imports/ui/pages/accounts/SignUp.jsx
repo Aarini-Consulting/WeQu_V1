@@ -5,47 +5,85 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
 	constructor(props){
 			super(props);
 			this.state={
 				showLoading:false,
 			}
 	}
-			handleSubmit(event){
-				event.preventDefault();
-				this.setState({
-					showLoading: true,
-				});
-				var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
-				var lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
-				var registerEmail = ReactDOM.findDOMNode(this.refs.registerEmail).value.trim();
-				var registerPassword = ReactDOM.findDOMNode(this.refs.registerPassword).value.trim();
 
-				let data = {registerEmail:registerEmail, registerPassword:registerPassword, firstName: firstName, lastName:lastName}
-				Meteor.call('createAccount', data, (err, result) => {
+	normalSignup(){
+		this.setState({
+			showLoading: true,
+		});
+
+		let data = {registerEmail:data.registerEmail, registerPassword:data.registerPassword, firstName: data.firstName, lastName:data.lastName}
+		Meteor.call('createAccount', data, (err, result) => {
+			this.setState({
+				showLoading: false,
+			});
+
+			if (err){
+				console.log(err);
+				$('#error').text(err.message);
+			}
+			else if(result){
+				Meteor.loginWithToken(result.token,(err)=>{
+					if(err){
+						console.log(err);
+						$('#error').text(err.message);
+					}else{
+						this.props.history.replace('/');
+					}
+				}); 
+			}else{
+				$('#error').text("unknown error");
+			}
+		});
+	}
+	
+	handleSubmit(event){
+		event.preventDefault();
+		var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+		var lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
+		var registerEmail = ReactDOM.findDOMNode(this.refs.registerEmail).value.trim();
+		var registerPassword = ReactDOM.findDOMNode(this.refs.registerPassword).value.trim();
+
+		let data =  {userId: this.props.user._id, firstName: firstName , lastName: lastName, 
+			registerEmail:registerEmail, registerPassword:registerPassword }
+			
+		if(this.props.user){
+			this.setState({
+				showLoading: true,
+			});
+
+			Meteor.call('signUpInvited', data , (err, result) => {
+				if(err){
+					console.log(err)
 					this.setState({
 						showLoading: false,
 					});
+				}else{
+					Meteor.loginWithPassword(registerEmail, registerPassword , (err) => {
+						if(err){
+							console.log(err);
+							$('#error').text(err.message);
+							this.setState({
+								showLoading: false,
+							});
+						}else{
+							this.props.history.replace('/');
+						}
+					  });
+				}
+			});
 
-					if (err){
-						console.log(err);
-						$('#error').text(err.message);
-					}
-					else if(result){
-						Meteor.loginWithToken(result.token,(err)=>{
-							if(err){
-								console.log(err);
-								$('#error').text(err.message);
-							}else{
-								this.props.history.replace('/');
-							}
-						}); 
-					}else{
-						$('#error').text("unknown error");
-					}
-				});
+		}else{
+			this.normalSignup(data);
 		}
+		
+	}
     render() {
 			if(this.state.showLoading){
 				return(
@@ -80,3 +118,15 @@ export default class SignUp extends React.Component {
 			}
     }
 }
+
+export default withTracker((props) => {
+	var user;
+	if(props.match.params.id){
+		user = Meteor.users.findOne({_id : props.match.params.id});
+	}
+	 
+	return {
+		user: user,
+	};
+  })(SignUp);
+  

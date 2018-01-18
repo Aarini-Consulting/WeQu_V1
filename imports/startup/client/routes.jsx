@@ -22,6 +22,7 @@ import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
 import InvitePage from '/imports/ui/pages/invite/InvitePage';
 import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
+import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import NotFound from '/imports/ui/pages/NotFound';
 
 import Test from '/imports/ui/pages/test';
@@ -98,9 +99,11 @@ const App = () => (
       <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} />
       <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
+      <Route path='/invitation/:id' component={InviteLanding}/>
       <Route path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
       <Route path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
+      <Route path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route path='/terms' component={Terms}/>
       <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />

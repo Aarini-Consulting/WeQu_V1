@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
+import InviteLandingSuccess from '/imports/ui/pages/invitationLanding/InviteLandingSuccess';
 
 class Quiz extends React.Component {
   constructor(props){
@@ -50,6 +51,9 @@ class Quiz extends React.Component {
         });
         return !question.answer;
       }else{
+        this.setState({
+          showSummary: false,
+        });
         return false;
       }
       
@@ -115,31 +119,37 @@ class Quiz extends React.Component {
   render() {
     if(this.props.dataReady){
       if(this.state.showSummary){
-        return (
-          <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
-            <h2 style={{width:65+'%'}}>
-            Well done!<br/>
-            <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
-            </h2>
-            {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-
-            <h2 style={{width:65+'%'}}>
-            <Link to="/invite">Invite other people</Link>
-            </h2>
-            {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-        </section>
-        );
+        if(this.props.inviteLanding){
+          return (
+            <InviteLandingSuccess feedback={this.props.feedback} quizUser={this.props.quizUser}/>
+          );
+        }else{
+          return (
+            <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
+              <h2 style={{width:65+'%'}}>
+              Well done!<br/>
+              <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
+              </h2>
+              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+  
+              <h2 style={{width:65+'%'}}>
+              <Link to="/invite">Invite other people</Link>
+              </h2>
+              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+          </section>
+          );
+        }
       }
       else{
         return (
-          <section className={"vote gradient" + (this.props.currentUser.profile.gradient ? this.props.currentUser.profile.gradient : '')}>
+          <section className={"vote gradient" + ( (this.props.currentUser && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
               {/* <div>
                 <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}">
                 <img src="/img/left.png" className="nav"/>
                 </a>
               </div> */}
-              <div className="h4" id="specificUser" data-filter-id={this.props.currentUser._id}>
+              <div className="h4" id="specificUser">
                 <div>
                   {this.props.feedback 
                   ?
@@ -149,7 +159,7 @@ class Quiz extends React.Component {
                   }
                 </div>
                 {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
-                <img src="/img/avatar.png" className="avatar" id="specificUser" data-filter-id={this.props.currentUser._id}/>
+                <img src="/img/avatar.png" className="avatar" id="specificUser"/>
       
                 <br/>
                 {this.props.username }
@@ -172,7 +182,7 @@ class Quiz extends React.Component {
               <div className="statusBar">
                 <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
                 {//if not question to self, allow to skip
-                  !this.props.feedback.from == this.props.feedback.to &&
+                  !(this.props.feedback.from == this.props.feedback.to) &&
                   <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
                 }
               </div>
@@ -201,9 +211,13 @@ export default withTracker((props) => {
           }
       });
   
-
-  if( Meteor.user() && handle.ready()){
-    if(props.quizUser){
+  if(handle.ready()){
+    
+    if(props.inviteLanding && props.feedback){
+      feedback = props.feedback;
+      username = getUserName(props.quizUser.profile);
+    }
+    else if(props.quizUser){
       feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
       username = getUserName(props.quizUser.profile);
       
