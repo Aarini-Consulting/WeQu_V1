@@ -12,17 +12,26 @@ class InviteLanding extends React.Component {
   render() {
     if(this.props.dataReady){
         if(this.props.quizUser && Meteor.userId() && Meteor.userId() != this.props.quizUser._id){
-            <div className="fillHeight">
-            <h1>This link is not meant for you</h1>
-            </div>
+            return(
+                <div className="fillHeight">
+                <h1>This link is not meant for you</h1>
+                </div>
+            )
+            
         }
-      if(this.props.quizUser && this.props.feedback && !this.props.feedback.done){
+      else if(this.props.quizUser && this.props.feedback){
         return (
           <div className="fillHeight">
           <Quiz quizUser={this.props.quizUser} feedback={this.props.feedback} inviteLanding={true}/>
           </div>
         );
-      }else{
+      }
+    //   else if(this.props.quizUser && this.props.feedback && this.props.feedback.done){
+    //     return(
+    //         <Redirect to={"/"}/>
+    //       );
+    //   }
+      else{
         return(
           <Redirect to={"/404"}/>
         );
@@ -47,10 +56,9 @@ export default withTracker((props) => {
 
   if(handleFeedback.ready()){
     var feedback = Feedback.findOne(props.match.params.id);
-    console.log(feedback);
     
-    if(feedback && !feedback.done){
-        quizUser = Meteor.users.findOne({_id : feedback.to});
+    if(feedback){
+        quizUser = Meteor.users.findOne({_id : feedback.from});
     }
     dataReady = true;
   }

@@ -36,14 +36,19 @@ class Quiz extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.feedback){
-      this.getCurrentQuestion(nextProps);
+      var current = this.getCurrentQuestion(nextProps)
+      if(this.props.inviteLanding && !current){
+        this.setState({
+          showSummary: true,
+        });
+      }
     }
   }
 
   getCurrentQuestion(props){
     //find question from qset that don't have answer yet
-    props.feedback.qset.find((question, index, qset)=>{
-      if(!question.answer){
+    return props.feedback.qset.find((question, index, qset)=>{
+      if(!question.answer && question.answer !== false){
         this.setState({
           currentQuestion: question,
           currentQuestionIndex:index,
@@ -74,7 +79,12 @@ class Quiz extends React.Component {
     var question = this.state.currentQuestion;
     var index = this.state.currentQuestionIndex;
 
-    question.answer = answer._id;
+   
+    if(answer){
+      question.answer = answer._id;
+    }else{
+      question.answer = false;
+    }
     feedback.qset[index] = question;
 
     var next = feedback.qset.find((question, index, qset)=>{
@@ -83,7 +93,7 @@ class Quiz extends React.Component {
 
     if(!next && !feedback.done){
       feedback.done = true;
-      if(this.props.currentUser.profile.loginScript == 'finish'){
+      if(this.props.inviteLanding || this.props.currentUser.profile.loginScript == 'finish'){
         this.setState({
           showSummary: true,
         });
@@ -92,7 +102,7 @@ class Quiz extends React.Component {
       // console.log(feedback);
     }
 
-    if(answer.skill == "genderId")
+    if(answer && answer.skill == "genderId")
     {
       Meteor.users.update({_id: Meteor.userId()},
         {$set : { "profile.gender": event.target.getAttribute('id') }});
@@ -104,16 +114,14 @@ class Quiz extends React.Component {
         this.setState({
           showSummary: false,
         });
-      }else if(this.props.currentUser.profile.loginScript != 'finish' && feedback.done){
+      }else if(this.props.currentUser && this.props.currentUser.profile.loginScript != 'finish' && feedback.done){
         setLoginScript('after-quiz');
       }
     });
   }
   
   skip(question,index,event){
-    event.preventDefault();
-    console.log(question);
-    console.log(index);
+    this.answerQuestion(null,event);
   } 
 
   render() {
@@ -142,7 +150,7 @@ class Quiz extends React.Component {
       }
       else{
         return (
-          <section className={"vote gradient" + ( (this.props.currentUser && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
+          <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
               {/* <div>
                 <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}">

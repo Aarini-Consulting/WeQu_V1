@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 
@@ -13,12 +14,11 @@ class SignUp extends React.Component {
 			}
 	}
 
-	normalSignup(){
+	normalSignup(data){
 		this.setState({
 			showLoading: true,
 		});
 
-		let data = {registerEmail:data.registerEmail, registerPassword:data.registerPassword, firstName: data.firstName, lastName:data.lastName}
 		Meteor.call('createAccount', data, (err, result) => {
 			this.setState({
 				showLoading: false,
@@ -50,7 +50,7 @@ class SignUp extends React.Component {
 		var registerEmail = ReactDOM.findDOMNode(this.refs.registerEmail).value.trim();
 		var registerPassword = ReactDOM.findDOMNode(this.refs.registerPassword).value.trim();
 
-		let data =  {userId: this.props.user._id, firstName: firstName , lastName: lastName, 
+		var data =  {userId: this.props.user && this.props.user._id, firstName: firstName , lastName: lastName, 
 			registerEmail:registerEmail, registerPassword:registerPassword }
 			
 		if(this.props.user){
@@ -91,41 +91,66 @@ class SignUp extends React.Component {
 							<Loading/>
 					</div>
 				);
-			}else{
-        return (
-            <div className="loginwraper">
-								<div className="loginbox signupbox">
-									<img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
-									<div className="formareaSignUp w-container">
-											{/* <a id="linkedinSignupbttn" className="linkedinbttn w-button" href="#">Sign Up With LinkedIn</a> */}
-											<div className="w-form">
-												<form className="loginemail" data-name="Email Form" name="email-form" onSubmit={this.handleSubmit.bind(this)}>
-													<input className="emailfield w-input" maxLength="256" ref="firstName" placeholder="first name" required="required" type="text"/>
-													<input className="emailfield w-input" maxLength="256" ref="lastName" placeholder="last name" required="required" type="text"/>
-													<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
-													required/>
-													<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder="password" required="required" type="password"/>
-													<div className="formtext">	By clicking Sign Up, you agree to our <Link to="/terms" id="terms">Terms</Link> and confirm that you have read our <Link to="/privacy" id="privacyPolicy">Privacy Policy</Link>.</div>
-													<input className="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up With Email"/>
-												</form>
-												<div id="error" className="errormsg"></div>
-												<Link to="/login" className="signup" id="signIn">Log In</Link>
-											</div>  
-										</div>
-									</div>
-						</div>
-				);
+			}
+			else if(this.props.dataReady){
+				if(this.props.user && !this.props.user.profile.trial){
+					return(<Redirect to="/"/>);
+				}
+				return (
+					<div className="loginwraper">
+										<div className="loginbox signupbox">
+											<img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
+											<div className="formareaSignUp w-container">
+													{/* <a id="linkedinSignupbttn" className="linkedinbttn w-button" href="#">Sign Up With LinkedIn</a> */}
+													<div className="w-form">
+														<form className="loginemail" data-name="Email Form" name="email-form" onSubmit={this.handleSubmit.bind(this)}>
+															<input className="emailfield w-input" maxLength="256" ref="firstName" placeholder="first name" required="required" type="text"/>
+															<input className="emailfield w-input" maxLength="256" ref="lastName" placeholder="last name" required="required" type="text"/>
+															{this.props.user 
+															?
+															<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+															defaultValue={this.props.user.emails[0].address} disabled={true} required/>
+															:
+															<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+															required/>
+															}
+															<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder="password" required="required" type="password"/>
+															<div className="formtext">	By clicking Sign Up, you agree to our <Link to="/terms" id="terms">Terms</Link> and confirm that you have read our <Link to="/privacy" id="privacyPolicy">Privacy Policy</Link>.</div>
+															<input className="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up With Email"/>
+														</form>
+														<div id="error" className="errormsg"></div>
+														<Link to="/login" className="signup" id="signIn">Log In</Link>
+													</div>  
+												</div>
+											</div>
+								</div>
+						);
+			}
+			else{
+				return(<Loading/>);
+				
 			}
     }
 }
 
 export default withTracker((props) => {
 	var user;
-	if(props.match.params.id){
-		user = Meteor.users.findOne({_id : props.match.params.id});
+	var dataReady;
+	var handle = Meteor.subscribe('users', {
+        onError: function (error) {
+                console.log(error);
+            }
+		});
+		
+	if(handle.ready()){
+		if(props.match.params.id){
+			user = Meteor.users.findOne({_id : props.match.params.id});
+		}
+		dataReady = true;
 	}
-	 
+	
 	return {
+		dataReady:dataReady,
 		user: user,
 	};
   })(SignUp);
