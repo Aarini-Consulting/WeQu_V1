@@ -12,15 +12,17 @@
 
      for (i = 0; i < arr_emails.length; i++) {
        user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i] }, { "profile.emailAddress" : arr_emails[i] }]} );
-       if (user) {
-        link = `signIn/groupInvitation/${arr_emails[i]}/${groupId}`;
-        if(user && user.services && user.services.linkedin){
-          link = `signIn/groupInvitationLinkedinUser/${arr_emails[i]}/${groupId}`;
-        }
-      }
-      else{
-        link = `signUp/groupInvitation/${arr_emails[i]}/${groupId}`
-      }
+      //  if (user) {
+      //   link = `signIn/groupInvitation/${arr_emails[i]}/${groupId}`;
+      //   if(user && user.services && user.services.linkedin){
+      //     link = `signIn/groupInvitationLinkedinUser/${arr_emails[i]}/${groupId}`;
+      //   }
+      // }
+      // else{
+      //   link = `signUp/groupInvitation/${arr_emails[i]}/${groupId}`
+      // }
+
+      link = `group-invitation/${arr_emails[i]}/${groupId}`
 
       var subject = `[WeQu] Inviting for joining ${groupName}` ;
       var message = `Please join the group by clicking the invitation link ${link}`

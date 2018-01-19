@@ -18,8 +18,14 @@ class SignUp extends React.Component {
 		this.setState({
 			showLoading: true,
 		});
+		var emailVerification = true;
+		//signing up from group invitation link
+		//set newly created account's email as verified
+		if(this.props.email){
+			emailVerification = false;
+		}
 
-		Meteor.call('createAccount', data, (err, result) => {
+		Meteor.call('createAccount', data, emailVerification, (err, result) => {
 			this.setState({
 				showLoading: false,
 			});
@@ -111,8 +117,13 @@ class SignUp extends React.Component {
 															<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
 															defaultValue={this.props.user.emails[0].address} disabled={true} required/>
 															:
-															<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
-															required/>
+																this.props.email 
+																?
+																<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+																defaultValue={this.props.email} disabled={true} required/>
+																:
+																<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+																required/>
 															}
 															<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder="password" required="required" type="password"/>
 															<div className="formtext">	By clicking Sign Up, you agree to our <Link to="/terms" id="terms">Terms</Link> and confirm that you have read our <Link to="/privacy" id="privacyPolicy">Privacy Policy</Link>.</div>
@@ -143,7 +154,7 @@ export default withTracker((props) => {
 		});
 		
 	if(handle.ready()){
-		if(props.match.params.id){
+		if(props.match && props.match.params && props.match.params.id){
 			user = Meteor.users.findOne({_id : props.match.params.id});
 		}
 		dataReady = true;

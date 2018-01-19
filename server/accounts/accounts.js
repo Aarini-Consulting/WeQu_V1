@@ -4,7 +4,7 @@
 
 Meteor.methods({
 
-	createAccount: function(data){
+	createAccount: function(data, emailVerification){
 		var userId = Accounts.createUser({
 			email: data.registerEmail,
 			password: data.registerPassword,
@@ -12,13 +12,13 @@ Meteor.methods({
 			lastName: data.lastName
 		}); 
 		if(userId) {
-			Meteor.call( 'sendVerificationLink', userId, ( error, response ) => {
-				if ( error ) {
-					console.log( error );
-				} else {
-					console.log( 'Welcome!', 'success' );
-				}
-			});
+			if(emailVerification){
+				Meteor.call( 'sendVerificationLink', userId);
+			}
+			else{
+				Meteor.call('verifiedTrue', userId);
+			}
+			
 	
 			var stampedLoginToken = Accounts._generateStampedLoginToken();
 			Accounts._insertLoginToken(userId, stampedLoginToken);
