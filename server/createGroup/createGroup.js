@@ -11,7 +11,7 @@
      var data, index , i , j , link; 
 
      for (i = 0; i < arr_emails.length; i++) {
-       user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i] }, { "profile.emailAddress" : arr_emails[i] }]} );
+      //  user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i] }, { "profile.emailAddress" : arr_emails[i] }]} );
       //  if (user) {
       //   link = `signIn/groupInvitation/${arr_emails[i]}/${groupId}`;
       //   if(user && user.services && user.services.linkedin){

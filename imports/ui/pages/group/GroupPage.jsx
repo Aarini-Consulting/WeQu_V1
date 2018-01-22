@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
+import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import UserTile from './UserTile';
 
@@ -17,6 +18,7 @@ class GroupPage extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
+        showInviteGroup:false,
       }
   }
 
@@ -28,35 +30,61 @@ class GroupPage extends React.Component {
       });
   }
 
+  showInviteGroup(bool){
+    this.setState({
+      showInviteGroup: bool,
+    });
+  }
+
   render() {
     if(this.props.dataReady){
-      return(
-        <div className="fillHeight">
+      if(this.state.showInviteGroup){
+        return (
+          <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section className="groupbg whiteText alignCenter feed">
-                <div className="contentwrapper">
-                    <div className="text-left">
-                        <a onClick={()=>{
-                            this.props.history.goBack();
-                        }}>
-                        <img src="/img/arrow_white.png"/>
+            <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)} addNewMemberOnly={true} group={this.props.group} />
+          </div>
+        );
+      }else{
+        return(
+          <div className="fillHeight">
+              <Menu location={this.props.location} history={this.props.history}/>
+              <section className="groupbg whiteText alignCenter feed">
+                  <div className="contentwrapper">
+                      <div className="text-left">
+                          <a onClick={()=>{
+                              this.props.history.goBack();
+                          }}>
+                          <img src="/img/arrow_white.png"/>
+                          </a>
+                          &nbsp;
+                          {this.props.group.groupName}
+                      </div>
+  
+                      <div className="screentitlewrapper w-clearfix">
+                        <div className="screentitle">
+                        <div className="title">Add new member</div>
+                        </div>
+                        <div className="screentitlebttn">
+                        <a className="w-inline-block marginTop5"  onClick={this.showInviteGroup.bind(this, true)}><img src="/img/Invite_Plus_white.png"/>
                         </a>
-                        &nbsp;
-                        {this.props.group.groupName}
+                        </div>
                     </div>
-                    <br/>
-                </div>
-                <br/>
-                <div className="tile-section">
-                    <div className="title-table w-row">
-                        {this.renderUserTiles()}
-                        <div className="column-4 w-col w-col-4 w-col-stack"></div>
-                        <div className="column-5 w-col w-col-4 w-col-stack"></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-      )
+                      <br/>
+                  </div>
+                  <br/>
+                  <div className="tile-section">
+                      <div className="title-table w-row">
+                          {this.renderUserTiles()}
+                          <div className="column-4 w-col w-col-4 w-col-stack"></div>
+                          <div className="column-5 w-col w-col-4 w-col-stack"></div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+        )
+      }
+      
     }else{
       return(
         <div className="fillHeight">

@@ -59,7 +59,7 @@ class InviteGroupPage extends React.Component {
               <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
                 <div className="emptytext">Hey, there is nobody here
                 </div>
-                  <a className="invitebttn w-button step-invitebttn" onClick={this.showInviteGroup.bind(this)}>Create a group</a>
+                  <a className="invitebttn w-button step-invitebttn" onClick={this.showInviteGroup.bind(this,true)}>Create a group</a>
               </div>
             </section>
           </div>
@@ -69,7 +69,7 @@ class InviteGroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <InviteGroup showInviteGroup={this.showInviteGroup.bind(this, false)}/>
+            <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)}/>
           </div>
         );
       }else{

@@ -24,8 +24,7 @@ class InviteGroup extends React.Component {
       }
   }
 
-  handleSubmit (event) {
-    event.preventDefault();
+  createGroup(){
     var groupName = ReactDOM.findDOMNode(this.refs.groupName).value.trim();
     if(groupName && this.state.value){
       var emailsArray = this.state.value.split(",");
@@ -49,35 +48,77 @@ class InviteGroup extends React.Component {
           }     
       }); 
     }
-}
+  }
 
-isOptionUnique(prop) {
-  const { option, options, valueKey, labelKey } = prop;
-  return !options.find(opt => option[valueKey].toString().toLowerCase() === opt[valueKey].toString().toLowerCase())
-}
-
-handleSelectChange (value) {
-    console.log('You\'ve selected:', value);
-    if(value && value.length > 0){
-        var valueArray = value.split(",");
-        var lastValue  = valueArray [valueArray.length-1];
-
-        this.setState({
-            lastValue: lastValue,
-            value: value,
-        });
-    }else{
-        this.setState({
-            lastValue: undefined,
-            value: undefined,
-            options: []
-        });
+  addMember(){
+      var emailsArray = this.state.value.split(",");
+      this.setState({
+        inviteStatus: 'sending',
+      });
     }
-}
+
+    handleSubmit (event) {
+      event.preventDefault();
+      if(this.props.addNewMemberOnly){
+
+      }else{
+        this.createGroup();
+      } 
+  }
+
+  toOptionsObject(email){
+    return {className: "Select-create-option-placeholder", label:email, value:email};
+  }
+
+  // componentDidMount(){
+  //   if(this.props.addNewMemberOnly && this.props.group){
+  //     var options = [];
+  //     this.props.group.emails.forEach((email) => {
+  //       options.push(this.toOptionsObject(email));
+  //     });
+  //     this.setState({
+  //       value: this.props.group.emails.join(),
+  //       lastValue: this.props.group.emails[this.props.group.emails.length-1],
+  //       options: options
+  //     });
+  //   }
+  // }
+
+  // componentWillReceiveProps(nextProps){
+  //   if(nextProps.addNewMemberOnly && nextProps.Group){
+  //     console.log("receiveprops");
+  //     console.log(nextProps.group);
+  //   }
+  // }
+
+
+  isOptionUnique(prop) {
+    const { option, options, valueKey, labelKey } = prop;
+    return !options.find(opt => option[valueKey].toString().toLowerCase() === opt[valueKey].toString().toLowerCase())
+  }
+
+  handleSelectChange (value) {
+      console.log('You\'ve selected:', value);
+      if(value && value.length > 0){
+          var valueArray = value.split(",");
+          var lastValue  = valueArray [valueArray.length-1];
+
+          this.setState({
+              lastValue: lastValue,
+              value: value,
+          });
+      }else{
+          this.setState({
+              lastValue: undefined,
+              value: undefined,
+              options: []
+          });
+      }
+  }
 
     handleBackArrowClick(){
-    if(this.props.count && this.props.count > 0){
-            this.props.showInviteGroup(false);
+    if(this.props.addNewMemberOnly || (this.props.count && this.props.count > 0)){
+            this.props.closeInviteGroup();
         }
     }
 
@@ -103,14 +144,19 @@ handleSelectChange (value) {
             <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText feed"}>
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
-                  {this.props.count != undefined && this.props.count > 0 &&
+                  {(this.props.addNewMemberOnly || (this.props.count != undefined && this.props.count > 0)) &&
                     <a className="w-clearfix w-inline-block" onClick={this.handleBackArrowClick.bind(this)}>
                     <img className="image-7" src="/img/arrow_white.png"/>
                     </a>
                   }
                 </div>
                 <div className="screentitle w-clearfix">
-                  <div className="titleGr">Create a new group</div>
+                  {this.props.addNewMemberOnly 
+                  ?
+                    <div className="titleGr">Invite more people</div>
+                  :
+                    <div className="titleGr">Create a new group</div>
+                  }
                 </div>
               </div>
               <div className="contentwrapper invite">
@@ -118,7 +164,9 @@ handleSelectChange (value) {
                 
                 <div className="inviteform w-form">
                     <form onSubmit={this.handleSubmit.bind(this)} className="groupform inviteformstyle" data-name="Email Form" id="send" name="email-form">
-                        <input className="formstyle w-input" data-name="Name" id="groupName" ref="groupName" maxLength="256" name="name" placeholder="group name" type="text" required/>
+                        {!this.props.addNewMemberOnly && 
+                          <input className="formstyle w-input" data-name="Name" id="groupName" ref="groupName" maxLength="256" name="name" placeholder="group name" type="text" required/>
+                        }
                         <Creatable
                             closeOnSelect={true}
                             disabled={false}
@@ -126,7 +174,7 @@ handleSelectChange (value) {
                             onChange={this.handleSelectChange.bind(this)}
                             options={this.state.options}
                             placeholder="Email addresses"
-                            removeSelected={true}
+                            removeSelected={false}
                             rtl={false}
                             simpleValue
                             value={this.state.value}

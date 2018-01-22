@@ -240,7 +240,6 @@ export default withTracker((props) => {
   return {
       currentUser: Meteor.user(),
       username: username,
-      feedbacks: Feedback.find({ 'from': Meteor.userId(), 'to' : Meteor.userId()}).fetch(),
       feedback: feedback,
       dataReady:dataReady,
   };
