@@ -216,12 +216,12 @@ class InviteGroup extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var count;
-  var handle = Meteor.subscribe('group', {
+  var handleGroup = Meteor.subscribe('group',{creatorId: Meteor.userId()},{}, {
     onError: function (error) {
           console.log(error);
       }
   });
-  if(Meteor.user() && handle.ready()){
+  if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
     dataReady = true;
   }

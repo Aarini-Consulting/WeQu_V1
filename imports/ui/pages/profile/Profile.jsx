@@ -146,7 +146,13 @@ export default withTracker((props) => {
   var users =[Meteor.userId()];
   var userProfiles;
   var dataReady;
-  var handle = Meteor.subscribe('connections', {
+  var handle = Meteor.subscribe('connections', 
+  { $or : [ {inviteId:Meteor.userId()} ,
+    {email : Meteor.user().emails && Meteor.user().emails[0].address},
+    {email : Meteor.user().profile && Meteor.user().profile.emailAddress}] 
+  },
+  {},
+  {
     onError: function (error) {
           console.log(error);
       }

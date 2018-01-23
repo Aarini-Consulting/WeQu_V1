@@ -113,14 +113,16 @@ export default withTracker((props) => {
   var userType;
   var userType2;
   var data;
-  var handle = Meteor.subscribe('feedback', {
-      onError: function (error) {
-              console.log(error);
-          }
-      });
+  var handleFeedback;
+
+  handleFeedback = Meteor.subscribe('feedback',{'to' : props.quizPerson},{}, {
+    onError: function (error) {
+          console.log(error);
+      }
+  });
  
 
-  if(Meteor.user() && handle.ready()){
+  if(handleFeedback.ready()){
     data = calculateTopWeak(Feedback.find({to: props.quizPerson }).fetch());
 
     if(props.quizPerson == Meteor.userId())

@@ -62,7 +62,7 @@ export default withTracker((props) => {
   var dataReady;
   var group;
   var quizUser;
-  var handleGroup = Meteor.subscribe('group', {
+  var handleGroup = Meteor.subscribe('group',{'_id' : props.match.params.id},{}, {
     onError: function (error) {
           console.log(error);
       }

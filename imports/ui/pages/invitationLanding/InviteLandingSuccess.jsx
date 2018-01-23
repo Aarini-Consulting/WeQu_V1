@@ -71,20 +71,9 @@ class InviteLandingSuccess extends React.Component {
 }
 
 export default withTracker((props) => {
-
-    var handleFeedback = Meteor.subscribe('feedback', {
-        onError: function (error) {
-              console.log(error);
-          }
-      });
-    var dataReady;
-    var senderUser;
-    var skillData;
-    if(handleFeedback.ready()){
-        senderUser = Meteor.users.findOne({_id : props.feedback.to});
-        skillData = calculateTopWeak([props.feedback]);
-        dataReady = true;
-    }
+    var senderUser = Meteor.users.findOne({_id : props.feedback.to});
+    var skillData = calculateTopWeak([props.feedback]);
+    var dataReady = true;
     
 
   return {

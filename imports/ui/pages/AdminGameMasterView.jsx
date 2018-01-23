@@ -161,13 +161,24 @@ export default withTracker((props) => {
     var dataReady;
     var listUsers;
     var groups;
-    let handle = Meteor.subscribe("users");
-    let handleGroup = Meteor.subscribe("group");
+    let handleGroup;
 
-    if(handle.ready() && handleGroup.ready()){
-        listUsers = Meteor.users.find({roles:{$elemMatch:{$eq:"GameMaster"}}}).fetch();
-        groups = Group.find({creatorId:{ $in: listUsers.map((user)=>{return user._id}) }}).fetch();
-        dataReady = true;
+    listUsers = Meteor.users.find({roles:{$elemMatch:{$eq:"GameMaster"}}}).fetch();
+
+    if(listUsers){
+        handleGroup = Meteor.subscribe('group',
+        {creatorId:{ $in: listUsers.map((user)=>{return user._id}) }},
+        {}, 
+        {
+            onError: function (error) {
+                    console.log(error);
+                }
+            });
+
+        if(handleGroup.ready()){
+            groups = Group.find({creatorId:{ $in: listUsers.map((user)=>{return user._id}) }}).fetch();
+            dataReady = true;
+        }
     }
     return {
         currentUser: Meteor.user(),

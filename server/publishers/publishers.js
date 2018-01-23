@@ -1,8 +1,15 @@
- Meteor.publish("connections", function(){
-            //if(this.userId) {
-                return Connections.find();                
-            //}
-            //this.ready();
+//  Meteor.publish("connections", function(){
+//             //if(this.userId) {
+//                 return Connections.find();                
+//             //}
+//             //this.ready();
+// });
+
+Meteor.publish("connections", function(selector, options){
+    //if(this.userId) {
+        return Connections.find(selector, options);                
+    //}
+    //this.ready();
 });
 
 

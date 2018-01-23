@@ -92,24 +92,35 @@ export default withTracker((props) => {
   var connections;
   var groups;
   var userType;
-  var handle = Meteor.subscribe('connections', {
+  var handle = Meteor.subscribe('connections', 
+    { $or : [ {inviteId:Meteor.userId()} ,
+      {email : Meteor.user().emails && Meteor.user().emails[0].address},
+      {email : Meteor.user().profile && Meteor.user().profile.emailAddress}] 
+    },
+    {},
+    {
       onError: function (error) {
               console.log(error);
           }
       });
       
-  var handleGroup = Meteor.subscribe('group', {
-    onError: function (error) {
-            console.log(error);
-        }
-    });
-    if(Meteor.user() && (handle.ready() && handleGroup.ready())){
-      connections = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-        {email : Meteor.user().emails && Meteor.user().emails[0].address},
-        {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
-      ).fetch();
+  var handleGroup;
 
-      let email = ( Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address ) || ( Meteor.user()  && Meteor.user().profile.emailAddress) ;
+  if(Meteor.user() && handle.ready()){
+    connections = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
+      {email : Meteor.user().emails && Meteor.user().emails[0].address},
+      {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
+    ).fetch();
+
+    let email = ( Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address ) || ( Meteor.user()  && Meteor.user().profile.emailAddress) ;
+    
+    handleGroup = Meteor.subscribe('group',{emails:email},{}, {
+      onError: function (error) {
+              console.log(error);
+          }
+      });
+
+    if(handleGroup.ready()){
       groups = Group.find({emails:email}).fetch();
 
       if(props.quizPerson == Meteor.userId())
@@ -125,7 +136,8 @@ export default withTracker((props) => {
         }
       dataReady = true;
     }
-  
+  }
+
 
   return {
       currentUser: Meteor.user(),

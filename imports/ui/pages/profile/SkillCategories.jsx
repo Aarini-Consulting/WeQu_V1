@@ -138,18 +138,21 @@ class SkillCategories extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var feedbacks;
-  var user;
-  var handle = Meteor.subscribe('feedback', {
-      onError: function (error) {
-              console.log(error);
-          }
-      });
-    if(Meteor.user() && handle.ready()){
-        let user = Meteor.users.findOne({_id : props.quizPerson});
-        feedbacks = Feedback.find({ 'to' : user._id }).fetch();
-        dataReady = true;
+  var handleFeedback
+
+    let user = Meteor.users.findOne({_id : props.quizPerson});
+    if(user){
+        handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
+            onError: function (error) {
+                    console.log(error);
+                }
+            });
+            
+        if(handleFeedback.ready()){
+            feedbacks = Feedback.find({ 'to' : user._id }).fetch();
+            dataReady = true;
+        }
     }
-  
 
   return {
       user: user,

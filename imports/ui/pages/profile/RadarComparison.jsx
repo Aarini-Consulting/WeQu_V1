@@ -68,29 +68,35 @@ export default withTracker((props) => {
     var myScore;
     var otherScore;
 
-    var handle = Meteor.subscribe('feedback', {
-        onError: function (error) {
-                console.log(error);
-            }
-        });
+    var handleFeedback;
+
     let user = Meteor.users.findOne({_id : props.quizPerson});
-    if(user && handle.ready()){
-  
+
+    if(user){
       let userId = user._id;
-      if(userId == Meteor.userId()){
-        var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
-        myScore = calculateScore(joinFeedbacks(myfeedback));
-      }else{
-        var myfeedback = Feedback.find({ 'from': userId , 'to' : Meteor.userId() }).fetch();
-        myScore = calculateScore(joinFeedbacks(myfeedback));
+
+      handleFeedback = Meteor.subscribe('feedback',{'from' : userId},{}, {
+        onError: function (error) {
+              console.log(error);
+          }
+      });
+
+      if(handleFeedback.ready()){
+        if(userId == Meteor.userId()){
+          var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
+          myScore = calculateScore(joinFeedbacks(myfeedback));
+        }else{
+          var myfeedback = Feedback.find({ 'from': userId , 'to' : Meteor.userId() }).fetch();
+          myScore = calculateScore(joinFeedbacks(myfeedback));
+        }
+        
+        var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+        var qset = joinFeedbacks(otherFeedback);
+    
+        var validAnswers = _.filter(qset, function(question) { return question.answer });
+        otherScore = calculateScore(qset);
+        dataReady = true;
       }
-      
-      var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
-      var qset = joinFeedbacks(otherFeedback);
-  
-      var validAnswers = _.filter(qset, function(question) { return question.answer });
-      otherScore = calculateScore(qset);
-      dataReady = true;
     }
   return {
       quizUser:user,

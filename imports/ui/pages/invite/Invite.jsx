@@ -144,12 +144,18 @@ handleBackArrowClick(){
 export default withTracker((props) => {
   var dataReady;
   var count;
-  var handle = Meteor.subscribe('connections', {
+  var handleConnections = Meteor.subscribe('connections',
+    { $or : [ {inviteId:Meteor.userId()} ,
+      {email : Meteor.user().emails && Meteor.user().emails[0].address},
+      {email : Meteor.user().profile && Meteor.user().profile.emailAddress}]
+    },
+    {},
+    {
     onError: function (error) {
           console.log(error);
       }
   });
-  if(Meteor.user() && handle.ready()){
+  if(handleConnections.ready()){
     count = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
       {email : Meteor.user().emails && Meteor.user().emails[0].address},
       {email : Meteor.user().profile && Meteor.user().profile.emailAddress} ] }                                                       

@@ -100,17 +100,18 @@ class GroupPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var group;
-  var handle = Meteor.subscribe('group', {
-    onError: function (error) {
-          console.log(error);
-      }
-  });
-  if(Meteor.user() && handle.ready()){
+  var handleGroup;
     if(props.match.params.id){
-        group = Group.findOne({_id : props.match.params.id});
-      }
-    dataReady = true;
-  }
+        handleGroup = Meteor.subscribe('group',{_id : props.match.params.id},{}, {
+          onError: function (error) {
+                console.log(error);
+            }
+        });
+        if(handleGroup.ready()){
+          group = Group.findOne({_id : props.match.params.id});
+          dataReady = true;
+        }
+    }
   return {
       group:group,
       currentUser: Meteor.user(),
