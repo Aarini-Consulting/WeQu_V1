@@ -213,27 +213,36 @@ export default withTracker((props) => {
   var dataReady;
   var feedback;
   var username;
-  var handle = Meteor.subscribe('feedback', {
+  var handle;
+    
+  if(props.inviteLanding && props.feedback){
+    feedback = props.feedback;
+    username = getUserName(props.quizUser.profile);
+  }
+  else if(props.quizUser){
+    handle = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false }, {}, {
       onError: function (error) {
               console.log(error);
           }
       });
+    
+  }else{
+    handle = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }, {}, {
+      onError: function (error) {
+              console.log(error);
+          }
+      });
+    
+  }
   
-  if(handle.ready()){
-    
-    if(props.inviteLanding && props.feedback){
-      feedback = props.feedback;
-      username = getUserName(props.quizUser.profile);
-    }
-    else if(props.quizUser){
-      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
-      username = getUserName(props.quizUser.profile);
-      
-    }else{
-      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
-      username =  getUserName(Meteor.user().profile);
-    }
-    
+  if(props.inviteLanding && props.feedback){
+    feedback = props.feedback;
+    username = getUserName(props.quizUser.profile);
+    dataReady = true;
+  }
+  else if(handle.ready()){
+    feedback = Feedback.findOne();
+    username =  getUserName(Meteor.user().profile);
     dataReady = true;
   }
    

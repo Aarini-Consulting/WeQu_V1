@@ -6,20 +6,24 @@
 });
 
 
- Meteor.publish('feedback', function (data) {
+//  Meteor.publish('feedback', function (data) {
 
-        //    var fb = Feedback.find({$or : [ {from : this.userId}, {to : this.userId} ]});
-        //    var users; 
-        //     if(data == "allData"){    
-        //       fb = Feedback.find({});
-        //       users = Meteor.users.find({}, {profile : 1})
-        //       return [fb, users];
-        //     }
-        //     users = Meteor.users.find({}, {profile : 1})
-        //     return [fb, users];
+//         //    var fb = Feedback.find({$or : [ {from : this.userId}, {to : this.userId} ]});
+//         //    var users; 
+//         //     if(data == "allData"){    
+//         //       fb = Feedback.find({});
+//         //       users = Meteor.users.find({}, {profile : 1})
+//         //       return [fb, users];
+//         //     }
+//         //     users = Meteor.users.find({}, {profile : 1})
+//         //     return [fb, users];
 
-            return Feedback.find();
-        });
+//             return Feedback.find();
+//         });
+
+Meteor.publish('feedback', function(selector, options) {
+    return Feedback.find(selector, options);
+    });
 
 
  Meteor.publish('invitation', function (id) {

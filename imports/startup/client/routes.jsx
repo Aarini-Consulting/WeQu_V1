@@ -26,7 +26,7 @@ import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
 import NotFound from '/imports/ui/pages/NotFound';
 
-import Test from '/imports/ui/pages/test';
+// import Test from '/imports/ui/pages/test';
 
 import Login from '/imports/ui/pages/accounts/Login';
 import RecoverPassword from '/imports/ui/pages/accounts/RecoverPassword';
@@ -110,7 +110,7 @@ const App = () => (
       <Route path='/terms' component={Terms}/>
       <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />
-      <Route path="/test" component={Test}/>
+      {/* <Route path="/test" component={Test}/> */}
       <Route path="/adminUser" component={AdminUser}/>
       <Route path="*" component={NotFound}/>
   </Switch>
