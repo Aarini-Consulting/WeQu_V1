@@ -13,52 +13,47 @@ import Invite from './invite/Invite';
 
 class ScriptLogin extends React.Component {
   render() {
-        if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript){
-            switch(this.props.currentUser.profile.loginScript) {
-                case 'init': {
-                    var condition = true;
-    
-                    // TODO : Need more robust condition here
-    
-                    if(this.props.currentUser && this.props.currentUser.services && this.props.currentUser.services.linkedin != undefined)
-                    {
-                        condition = true;
+        if(this.props.dataReady && this.props.currentUser.profile){
+                switch(this.props.currentUser.profile.loginScript) {
+                    case 'init': {
+                        var condition = true;
+        
+                        // TODO : Need more robust condition here
+        
+                        if(this.props.currentUser && this.props.currentUser.services && this.props.currentUser.services.linkedin != undefined)
+                        {
+                            condition = true;
+                        }
+                        else if(Meteor.settings.public.verifyEmail)
+                        {
+                            condition = this.props.currentUser && this.props.currentUser.emails && this.props.currentUser.emails[0].verified;
+                        }
+        
+                        console.log(condition);
+        
+                        if(condition)
+                        {
+                            return (<Quiz/>);
+                        }
+                        else
+                        {
+                            return (<EmailVerified/>);
+                            
+                        }
+                        break;
+        
                     }
-                    else if(Meteor.settings.public.verifyEmail)
-                    {
-                        condition = this.props.currentUser && this.props.currentUser.emails && this.props.currentUser.emails[0].verified;
-                    }
-    
-                    console.log(condition);
-    
-                    if(condition)
-                    {
+                    case 'quiz': {
                         return (<Quiz/>);
+                        break;
                     }
-                    else
-                    {
-                        return (<EmailVerified/>);
-                        
-                    }
-                    break;
-    
+                    case 'after-quiz' :
+                        return (<ScriptLoginAfterQuiz location={this.props.location} history={this.props.history}/>)
+                        break;
+                    default:
+                        return (<Redirect to={"/quiz"}/>);
+                        break;
                 }
-                case 'quiz': {
-                    return (<Quiz/>);
-                    break;
-                }
-                case 'after-quiz' :
-                    return (<ScriptLoginAfterQuiz location={this.props.location} history={this.props.history}/>)
-                    break;
-                case 'finish':
-                    return (<Redirect to={"/quiz"}/>);
-                    break;
-                default:
-                return(
-                    <Redirect to={"/login"}/>
-                );
-                break;
-            }
         }
         else{
             return(
@@ -69,7 +64,13 @@ class ScriptLogin extends React.Component {
 }
 
 export default withTracker((props) => {
+    var dataReady;
+
+    if(Meteor.user()){
+        dataReady = true;
+    }
     return {
+        dataReady:dataReady,
         currentUser: Meteor.user()
     };
   })(ScriptLogin);
