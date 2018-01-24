@@ -15,7 +15,7 @@ class SkillCategories extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.user)
+    if(nextProps.dataReady && nextProps.user && nextProps.feedbacks)
     {
         let userId = nextProps.user._id;
         var data = { userId:userId, profile : nextProps.user.profile };
@@ -26,7 +26,7 @@ class SkillCategories extends React.Component {
         
 
         var validAnswers = joinedQset.filter((q, index)=>{
-            return question.answer;
+            return q.answer;
         })
 
         var otherscore = calculateScore(joinedQset, true);
@@ -57,12 +57,17 @@ class SkillCategories extends React.Component {
     renderSkills(skills){
         return skills.map((skill) => {
             return (
-                <div className="skillElement" id={skill.category + " " +skill.name}>
+                <div className="skillElement" key={skill.category + " " +skill.name}>
                     <div className="title">{skill.name}</div>
                     <div className="underBar" style={{width:60+"%"}}>
                     <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
                     </div>
-                    <div className="score">{(skill.scored/skill.total)}</div>
+                    <div className="score">
+                    {skill.total <= 0 
+                    ?"0"
+                    :(skill.scored/skill.total)
+                    }
+                    </div>
                 </div>
             );
           });
@@ -70,18 +75,23 @@ class SkillCategories extends React.Component {
 
     renderCategories(){
         if(this.state.data && this.state.data.categories){
-            var categories = this.state.categories
-            if(this.state.expand){
-                categories = this.state.categories.splice(0,6);
+            var categories = this.state.data.categories
+            if(!this.state.expand){
+                categories = this.state.data.categories.slice(0,2);
             }
-
-            return categories.map((cat) => {
-                return (
-                    <div id={"skillset "+cat.name}>
-                        {this.renderSkills(cat.skills)}
-                    </div>
-                );
-              });
+            
+            if(categories){
+                return categories.map((cat) => {
+                    return (
+                        <div key={"skillset "+cat.name}>
+                            {this.renderSkills(cat.skills)}
+                        </div>
+                    );
+                  });
+            }else{
+                return(<h1>no data</h1>);
+            }
+            
         }
     }
         

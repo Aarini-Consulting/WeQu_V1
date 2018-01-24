@@ -152,11 +152,11 @@ class Quiz extends React.Component {
         return (
           <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
-              {/* <div>
-                <a id="prevPerson" style="visibility:{{#if prevPerson}}visible{{else}}hidden{{/if}}">
+              <div>
+                {/* <a id="prevPerson" style={{visibility:'hidden'}}>
                 <img src="/img/left.png" className="nav"/>
-                </a>
-              </div> */}
+                </a> */}
+              </div>
               <div className="h4" id="specificUser">
                 <div>
                   {this.props.feedback 
@@ -172,11 +172,11 @@ class Quiz extends React.Component {
                 <br/>
                 {this.props.username }
               </div>
-              {/* <div>
-                <a id="nextPerson" style="visibility:{{#if nextPerson}}visible{{else}}hidden{{/if}}">
+              <div>
+                {/* <a id="nextPerson" style={{visibility:'visible'}}>
                 <img src="/img/right.png" className="nav"/>
-                </a>
-              </div> */}
+                </a> */}
+              </div>
             </section>
             
             {this.props.feedback && this.state.currentQuestion &&
@@ -225,6 +225,7 @@ export default withTracker((props) => {
               console.log(error);
           }
       });
+    username = getUserName(props.quizUser.profile);
     
   }else{
     handle = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }, {}, {
@@ -232,17 +233,11 @@ export default withTracker((props) => {
               console.log(error);
           }
       });
-    
-  }
-  
-  if(props.inviteLanding && props.feedback){
-    feedback = props.feedback;
-    username = getUserName(props.quizUser.profile);
-    dataReady = true;
-  }
-  else if(handle.ready()){
-    feedback = Feedback.findOne();
     username =  getUserName(Meteor.user().profile);
+  }
+
+  if(handle.ready()){
+    feedback = Feedback.findOne();
     dataReady = true;
   }
    
