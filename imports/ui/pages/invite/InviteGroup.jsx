@@ -23,7 +23,8 @@ class InviteGroup extends React.Component {
         // value:undefined,
         inviteStatus:false,
         inviteSuccess:false,
-        inviteDatas:[{firstName:"testname", lastName:"lastName", email:"test@mail.com", gender:"male"}]
+        gender:"Male",
+        inviteDatas:[]
       }
   }
 
@@ -60,13 +61,14 @@ class InviteGroup extends React.Component {
       });
     }
 
-    handleSubmit (event) {
+  handleSubmit (event) {
       event.preventDefault();
-      if(this.props.addNewMemberOnly){
+      console.log(event);
+      // if(this.props.addNewMemberOnly){
 
-      }else{
-        this.createGroup();
-      } 
+      // }else{
+      //   this.createGroup();
+      // } 
   }
 
   // toOptionsObject(email){
@@ -125,6 +127,12 @@ class InviteGroup extends React.Component {
         }
     }
 
+    setGender(g){
+      this.setState({
+        gender: g,
+      });
+    }
+
     deleteField(index){
       var copyStateData = this.state.inviteDatas.slice();
       copyStateData.splice(index,1);
@@ -132,6 +140,20 @@ class InviteGroup extends React.Component {
         inviteDatas: copyStateData,
       });
     }
+
+    addField(){
+      var copyStateData = this.state.inviteDatas.slice();
+
+      var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+      var lastName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+      var email = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+
+      copyStateData.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
+      this.setState({
+        inviteDatas: copyStateData,
+      });
+    }
+
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
@@ -241,11 +263,11 @@ class InviteGroup extends React.Component {
                     </form> */}
 
 
-                    <form id="send" name="email-form" data-name="Email Form" className="inviteformstyle groupform">
+                    <form onSubmit={this.handleSubmit.bind(this)} name="email-form" data-name="Email Form" className="inviteformstyle groupform">
                         {!this.props.addNewMemberOnly && 
                           <div>
                           <div className="groupformtext">What is the name of this group?</div>
-                          <input type="text" id="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input"/>
+                          <input type="text" id="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" required/>
                           </div>
                         }
                       
@@ -258,16 +280,16 @@ class InviteGroup extends React.Component {
                       <ol className="w-list-unstyled">
                         <li className="w-clearfix">
                           <div className="font f_12"></div>
-                          <input type="text" className="formstyle formuser w-input fistName" maxLength="256" name="First-name-{{index}}" data-name="First Name {{index}}" placeholder="First name" id="First-name-{{index}}" required=""/>
-                          <input type="text" className="formstyle formuser w-input lastName " maxLength="256" name="Last-name-{{index}}" data-name="Last Name {{index}}" placeholder="Last name" id="Last-name-{{index}}" required=""/>
-                          <input type="email" className="formstyle formuser formemail w-input email" maxLength="256" name="Email-2" data-name="Email {{index}}" placeholder="Email address" id="Email-{{index}}" required=""/>
+                          <input type="text" className="formstyle formuser w-input fistName" maxLength="256" ref="firstName" name="First-name-{{index}}" data-name="First Name {{index}}" placeholder="First name" id="First-name-{{index}}" required=""/>
+                          <input type="text" className="formstyle formuser w-input lastName " maxLength="256" ref="lastName" name="Last-name-{{index}}" data-name="Last Name {{index}}" placeholder="Last name" id="Last-name-{{index}}" required=""/>
+                          <input type="email" className="formstyle formuser formemail w-input email" maxLength="256" ref="email" name="Email-2" data-name="Email {{index}}" placeholder="Email address" id="Email-{{index}}" required=""/>
                           <div className="bttngender w-clearfix">
-                            <div className="fontreleway fgenderbttn selected" id="m">Male</div>
+                            <div className={"fontreleway fgenderbttn " + (this.state.gender == "Male" ? "selected" : "")} id="m"  onClick ={this.setGender.bind(this,"Male")}>Male</div>
                           </div>
                           <div className="bttngender w-clearfix">
-                            <div className="fontreleway fgenderbttn" id="f">Female</div>
+                            <div className={"fontreleway fgenderbttn " + (this.state.gender == "Female" ? "selected" : "")} id="f" onClick ={this.setGender.bind(this,"Female")}>Female</div>
                           </div>
-                          <input type="submit" className="addDelete invitebttn bttnmembr bttnsaved w-button"/>
+                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr bttnsaved w-button"/>
                         </li>
                       </ol>
 
