@@ -212,38 +212,54 @@ class Quiz extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var feedback;
+  var connections;
   var username;
-  var handle;
+  var handleFeedback;
+  var handleConnections
+  var user;
     
   if(props.inviteLanding && props.feedback){
     feedback = props.feedback;
-    username = getUserName(props.quizUser.profile);
+    user = props.quizUser;
+
   }
   else if(props.quizUser){
-    handle = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false }, {}, {
+    handleFeedback = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false }, {}, {
       onError: function (error) {
               console.log(error);
           }
       });
-    username = getUserName(props.quizUser.profile);
+    user = props.quizUser;
     
   }else{
-    handle = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }, {}, {
+    handleFeedback = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }, {}, {
       onError: function (error) {
               console.log(error);
           }
       });
-    username =  getUserName(Meteor.user().profile);
+    user = Meteor.user();
   }
 
-  if(handle.ready()){
+  handleConnections = Meteor.subscribe('connections',
+    {inviteId:user._id},
+    {},
+    {
+    onError: function (error) {
+          console.log(error);
+      }
+  });
+
+  if(handleFeedback.ready() && handleConnections.ready()){
     feedback = Feedback.findOne();
+    connections = Connections.find().fetch();
+    username = getUserName(user.profile);
     dataReady = true;
   }
    
   return {
       currentUser: Meteor.user(),
       username: username,
+      connections:connections,
       feedback: feedback,
       dataReady:dataReady,
   };
