@@ -12,15 +12,18 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import MultiSelect from './MultiSelect';
 import '/imports/startup/client/react-select.css';
 
+import '/imports/startup/client/group-fbb2b1.webflow';
+
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
-        options:[],
-        lastValue:undefined,
-        value:undefined,
+        // options:[],
+        // lastValue:undefined,
+        // value:undefined,
         inviteStatus:false,
         inviteSuccess:false,
+        inviteDatas:[{firstName:"testname", lastName:"lastName", email:"test@mail.com", gender:"male"}]
       }
   }
 
@@ -51,7 +54,7 @@ class InviteGroup extends React.Component {
   }
 
   addMember(){
-      var emailsArray = this.state.value.split(",");
+      // var emailsArray = this.state.value.split(",");
       this.setState({
         inviteStatus: 'sending',
       });
@@ -66,9 +69,9 @@ class InviteGroup extends React.Component {
       } 
   }
 
-  toOptionsObject(email){
-    return {className: "Select-create-option-placeholder", label:email, value:email};
-  }
+  // toOptionsObject(email){
+  //   return {className: "Select-create-option-placeholder", label:email, value:email};
+  // }
 
   // componentDidMount(){
   //   if(this.props.addNewMemberOnly && this.props.group){
@@ -92,34 +95,83 @@ class InviteGroup extends React.Component {
   // }
 
 
-  isOptionUnique(prop) {
-    const { option, options, valueKey, labelKey } = prop;
-    return !options.find(opt => option[valueKey].toString().toLowerCase() === opt[valueKey].toString().toLowerCase())
-  }
+  // isOptionUnique(prop) {
+  //   const { option, options, valueKey, labelKey } = prop;
+  //   return !options.find(opt => option[valueKey].toString().toLowerCase() === opt[valueKey].toString().toLowerCase())
+  // }
 
-  handleSelectChange (value) {
-      console.log('You\'ve selected:', value);
-      if(value && value.length > 0){
-          var valueArray = value.split(",");
-          var lastValue  = valueArray [valueArray.length-1];
+  // handleSelectChange (value) {
+  //     console.log('You\'ve selected:', value);
+  //     if(value && value.length > 0){
+  //         var valueArray = value.split(",");
+  //         var lastValue  = valueArray [valueArray.length-1];
 
-          this.setState({
-              lastValue: lastValue,
-              value: value,
-          });
-      }else{
-          this.setState({
-              lastValue: undefined,
-              value: undefined,
-              options: []
-          });
-      }
-  }
+  //         this.setState({
+  //             lastValue: lastValue,
+  //             value: value,
+  //         });
+  //     }else{
+  //         this.setState({
+  //             lastValue: undefined,
+  //             value: undefined,
+  //             options: []
+  //         });
+  //     }
+  // }
 
     handleBackArrowClick(){
     if(this.props.addNewMemberOnly || (this.props.count && this.props.count > 0)){
             this.props.closeInviteGroup();
         }
+    }
+
+    deleteField(index){
+      var copyStateData = this.state.inviteDatas.slice();
+      copyStateData.splice(index,1);
+      this.setState({
+        inviteDatas: copyStateData,
+      });
+    }
+
+    renderFields(){
+      return this.state.inviteDatas.map((data, index) => {
+          return (
+            <tr key={data.email}>
+              <td>{data.firstName}</td>
+              <td>{data.lastName}</td>
+              <td>{data.email}</td>
+              <td>{data.gender}</td>
+              <td><input type="text" defaultValue="Delete" className="delete bttnmembr bttnsaved w-button" onClick ={this.deleteField.bind(this,index)}/></td>
+            </tr>
+          );
+        });
+    }
+
+    renderFieldTable(){
+      return (
+        <div className="row">
+        <div className="col-md-12 col-sm-12 col-xs-12">
+          <table className="table table-fw-widget">
+          
+            <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Email</th>
+              <th>Gender </th>
+              <th>press to delete</th>
+            </tr>
+            </thead>
+            
+            <tbody className="no-border-x">
+              {this.renderFields()}
+            </tbody>
+
+          </table>
+        </div>
+        </div>
+        
+      )
     }
 
     render() {
@@ -159,11 +211,9 @@ class InviteGroup extends React.Component {
                   }
                 </div>
               </div>
-              <div className="contentwrapper invite">
-
-                
+              <div className="contentwrapper invite">   
                 <div className="inviteform w-form">
-                    <form onSubmit={this.handleSubmit.bind(this)} className="groupform inviteformstyle" data-name="Email Form" id="send" name="email-form">
+                    {/* <form onSubmit={this.handleSubmit.bind(this)} className="groupform inviteformstyle" data-name="Email Form" id="send" name="email-form">
                         {!this.props.addNewMemberOnly && 
                           <input className="formstyle w-input" data-name="Name" id="groupName" ref="groupName" maxLength="256" name="name" placeholder="group name" type="text" required/>
                         }
@@ -188,8 +238,39 @@ class InviteGroup extends React.Component {
                         }
                         </div>
                         <button className="formbttn invitebttn w-button" id="submitSend" data-wait="Please wait..." type="submit">send invitation</button>
-                    </form>
-                    
+                    </form> */}
+
+
+                    <form id="send" name="email-form" data-name="Email Form" className="inviteformstyle groupform">
+                        {!this.props.addNewMemberOnly && 
+                          <div>
+                          <div className="groupformtext">What is the name of this group?</div>
+                          <input type="text" id="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input"/>
+                          </div>
+                        }
+                      
+                      <div className="groupformtext">Who should belong to this group?</div>
+
+                      
+                      {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
+                      
+
+                      <ol className="w-list-unstyled">
+                        <li className="w-clearfix">
+                          <div className="font f_12"></div>
+                          <input type="text" className="formstyle formuser w-input fistName" maxLength="256" name="First-name-{{index}}" data-name="First Name {{index}}" placeholder="First name" id="First-name-{{index}}" required=""/>
+                          <input type="text" className="formstyle formuser w-input lastName " maxLength="256" name="Last-name-{{index}}" data-name="Last Name {{index}}" placeholder="Last name" id="Last-name-{{index}}" required=""/>
+                          <input type="email" className="formstyle formuser formemail w-input email" maxLength="256" name="Email-2" data-name="Email {{index}}" placeholder="Email address" id="Email-{{index}}" required=""/>
+                          <div className="bttngender w-clearfix">
+                            <div className="fontreleway fgenderbttn selected" id="m">Male</div>
+                          </div>
+                          <div className="bttngender w-clearfix">
+                            <div className="fontreleway fgenderbttn" id="f">Female</div>
+                          </div>
+                          <input type="submit" className="addDelete invitebttn bttnmembr bttnsaved w-button"/>
+                        </li>
+                      </ol>
+
                     {this.state.inviteStatus == 'sending' && 
                     <span className="sendingStatus"><img src="/img/status_sending.png"/>sending...</span>
                     }
@@ -199,6 +280,11 @@ class InviteGroup extends React.Component {
                     {this.state.inviteStatus == 'error' &&
                         <span className="sendingStatus"><img src="/img/status_error.png"/>error sending email</span>
                     }
+                    <input type="submit" id="submitSend" className="invitebttn formbttn w-button"/>
+                    
+                    </form>
+                                  
+                    
                 </div>
               </div>
             </section>
