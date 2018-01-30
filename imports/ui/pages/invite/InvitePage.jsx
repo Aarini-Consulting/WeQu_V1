@@ -26,6 +26,7 @@ class InvitePage extends React.Component {
 
   renderFriendList(){
     return this.props.users.map((user) => {
+      console.log(user);
         return (
             <Link  key={user._id} to={`/quiz/${user.userId}`}>
             <div className="row">
@@ -150,12 +151,14 @@ export default withTracker((props) => {
     });
     if(Meteor.user() && handle.ready()){
         count = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-            {email : Meteor.user().emails && Meteor.user().emails[0].address},
-            {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
+          {$and : [ {creatorId: null},{email : Meteor.user().emails && Meteor.user().emails[0].address}]},
+          {$and : [ {creatorId: null},{email : Meteor.user().profile && Meteor.user().profile.emailAddress}]}   
+        ]}                                                       
           ).count();
         users = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-            {email : Meteor.user().emails && Meteor.user().emails[0].address},
-            {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] } ,
+            {$and : [ {creatorId: null},{email : Meteor.user().emails && Meteor.user().emails[0].address}]},
+            {$and : [ {creatorId: null},{email : Meteor.user().profile && Meteor.user().profile.emailAddress}]},
+            ]} ,
             {
                     transform: function (doc)
                     {
@@ -178,7 +181,6 @@ export default withTracker((props) => {
     }
     return {
         count: count,
-
         users : users,
         currentUser: Meteor.user(),
         dataReady:dataReady

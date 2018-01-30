@@ -21,7 +21,7 @@ class InviteGroupLanding extends React.Component {
             
         }
       else if(this.props.group && this.props.group.emails.indexOf(this.props.match.params.email) > -1){
-          if(this.props.quizUser){
+          if(this.props.quizUser && !this.props.quizUser.profile.trial){
               if(Meteor.userId()){
                 return (
                     <Redirect to={"/"}/>
@@ -35,7 +35,8 @@ class InviteGroupLanding extends React.Component {
           }
           else{
             return (
-                <SignUp history={this.props.history} email={this.props.match.params.email}/>
+                // <SignUp history={this.props.history} email={this.props.match.params.email}/>
+                <Redirect to={`/sign-up/${this.props.quizUser._id}`}/>
             );
           }
         

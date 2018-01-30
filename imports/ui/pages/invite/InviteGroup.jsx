@@ -21,6 +21,7 @@ class InviteGroup extends React.Component {
         // options:[],
         // lastValue:undefined,
         // value:undefined,
+        submitInvite:false,
         inviteStatus:false,
         inviteSuccess:false,
         gender:"Male",
@@ -29,15 +30,16 @@ class InviteGroup extends React.Component {
   }
 
   createGroup(){
+    console.log("createGroup")
     var groupName = ReactDOM.findDOMNode(this.refs.groupName).value.trim();
-    if(groupName && this.state.value){
-      var emailsArray = this.state.value.split(",");
+    if(groupName && this.state.inviteDatas && this.state.inviteDatas.length >= 2){
+      var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
       this.setState({
         inviteStatus: 'sending',
       });
   
-      Meteor.call('createGroup', groupName, emailsArray , (err, res) => {
+      Meteor.call('createGroup', groupName, this.state.inviteDatas, emailsArray , (err, res) => {
         if(res){
           this.setState({
               inviteStatus: 'sent',
@@ -48,10 +50,20 @@ class InviteGroup extends React.Component {
           {
             this.setState({
               inviteStatus: 'error',
+              info: 'error sending email',
             });
           }     
       }); 
+    }else if(this.state.inviteDatas && this.state.inviteDatas.length < 2){
+      this.setState({
+        inviteStatus: 'error',
+        info: 'Please enter atleast two group members',
+      });
     }
+
+    this.setState({
+      submitInvite:false,
+    });
   }
 
   addMember(){
@@ -64,62 +76,13 @@ class InviteGroup extends React.Component {
   handleSubmit (event) {
       event.preventDefault();
       console.log(event);
-      // if(this.props.addNewMemberOnly){
 
-      // }else{
-      //   this.createGroup();
-      // } 
+      if(this.state.submitInvite){
+        this.createGroup();
+      }else{
+        this.addField();
+      }
   }
-
-  // toOptionsObject(email){
-  //   return {className: "Select-create-option-placeholder", label:email, value:email};
-  // }
-
-  // componentDidMount(){
-  //   if(this.props.addNewMemberOnly && this.props.group){
-  //     var options = [];
-  //     this.props.group.emails.forEach((email) => {
-  //       options.push(this.toOptionsObject(email));
-  //     });
-  //     this.setState({
-  //       value: this.props.group.emails.join(),
-  //       lastValue: this.props.group.emails[this.props.group.emails.length-1],
-  //       options: options
-  //     });
-  //   }
-  // }
-
-  // componentWillReceiveProps(nextProps){
-  //   if(nextProps.addNewMemberOnly && nextProps.Group){
-  //     console.log("receiveprops");
-  //     console.log(nextProps.group);
-  //   }
-  // }
-
-
-  // isOptionUnique(prop) {
-  //   const { option, options, valueKey, labelKey } = prop;
-  //   return !options.find(opt => option[valueKey].toString().toLowerCase() === opt[valueKey].toString().toLowerCase())
-  // }
-
-  // handleSelectChange (value) {
-  //     console.log('You\'ve selected:', value);
-  //     if(value && value.length > 0){
-  //         var valueArray = value.split(",");
-  //         var lastValue  = valueArray [valueArray.length-1];
-
-  //         this.setState({
-  //             lastValue: lastValue,
-  //             value: value,
-  //         });
-  //     }else{
-  //         this.setState({
-  //             lastValue: undefined,
-  //             value: undefined,
-  //             options: []
-  //         });
-  //     }
-  // }
 
     handleBackArrowClick(){
     if(this.props.addNewMemberOnly || (this.props.count && this.props.count > 0)){
@@ -145,13 +108,25 @@ class InviteGroup extends React.Component {
       var copyStateData = this.state.inviteDatas.slice();
 
       var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
-      var lastName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
-      var email = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+      var lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
+      var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
 
-      copyStateData.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
-      this.setState({
-        inviteDatas: copyStateData,
-      });
+      if(email.toString().toLowerCase() == this.props.currentUser.emails[0].address.toString().toLowerCase()){
+        this.setState({
+          inviteStatus: 'error',
+          info: 'cannot invite yourself',
+        });
+      }else{
+        copyStateData.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
+        this.setState({
+          info:undefined,
+          inviteDatas: copyStateData,
+        });
+
+        ReactDOM.findDOMNode(this.refs.firstName).value="";
+        ReactDOM.findDOMNode(this.refs.lastName).value="";
+        ReactDOM.findDOMNode(this.refs.email).value="";
+      }
     }
 
 
@@ -195,6 +170,20 @@ class InviteGroup extends React.Component {
         
       )
     }
+
+    triggerSubmitInvite(){
+      console.log("trigger");
+      this.setState({
+        submitInvite: true,
+      },
+      ()=>{
+        //callback after setting submit invite as true
+        if(this.refs.form && this.refs.form.checkValidity()){
+          this.refs.form.dispatchEvent(new Event("submit",{ cancelable: true }));
+        }
+      });
+    }
+  
 
     render() {
     if(this.props.dataReady){
@@ -263,11 +252,11 @@ class InviteGroup extends React.Component {
                     </form> */}
 
 
-                    <form onSubmit={this.handleSubmit.bind(this)} name="email-form" data-name="Email Form" className="inviteformstyle groupform">
+                    <form ref="form" onSubmit={this.handleSubmit.bind(this)} name="email-form" data-name="Email Form" className="inviteformstyle groupform">
                         {!this.props.addNewMemberOnly && 
                           <div>
                           <div className="groupformtext">What is the name of this group?</div>
-                          <input type="text" id="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" required/>
+                          <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" required/>
                           </div>
                         }
                       
@@ -280,9 +269,9 @@ class InviteGroup extends React.Component {
                       <ol className="w-list-unstyled">
                         <li className="w-clearfix">
                           <div className="font f_12"></div>
-                          <input type="text" className="formstyle formuser w-input fistName" maxLength="256" ref="firstName" name="First-name-{{index}}" data-name="First Name {{index}}" placeholder="First name" id="First-name-{{index}}" required=""/>
-                          <input type="text" className="formstyle formuser w-input lastName " maxLength="256" ref="lastName" name="Last-name-{{index}}" data-name="Last Name {{index}}" placeholder="Last name" id="Last-name-{{index}}" required=""/>
-                          <input type="email" className="formstyle formuser formemail w-input email" maxLength="256" ref="email" name="Email-2" data-name="Email {{index}}" placeholder="Email address" id="Email-{{index}}" required=""/>
+                          <input type="text" className="formstyle formuser w-input fistName" maxLength="256" ref="firstName" placeholder="First name"  required={!this.state.submitInvite}/>
+                          <input type="text" className="formstyle formuser w-input lastName " maxLength="256" ref="lastName" placeholder="Last name" required={!this.state.submitInvite}/>
+                          <input type="email" className="formstyle formuser formemail w-input email" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={!this.state.submitInvite}/>
                           <div className="bttngender w-clearfix">
                             <div className={"fontreleway fgenderbttn " + (this.state.gender == "Male" ? "selected" : "")} id="m"  onClick ={this.setGender.bind(this,"Male")}>Male</div>
                           </div>
@@ -294,15 +283,28 @@ class InviteGroup extends React.Component {
                       </ol>
 
                     {this.state.inviteStatus == 'sending' && 
-                    <span className="sendingStatus"><img src="/img/status_sending.png"/>sending...</span>
+                    <span className="sendingStatus">
+                    <img src="/img/status_sending.png"/>sending...
+                    <br/><br/>
+                    </span>
                     }
                     {this.state.inviteStatus == 'sent' && 
-                        <span className="sendingStatus"><img src="/img/status_sent.png"/>sent!</span>
+                        <span className="sendingStatus">
+                        <img src="/img/status_sent.png"/>sent!
+                        <br/><br/>
+                        </span>
                     }
-                    {this.state.inviteStatus == 'error' &&
-                        <span className="sendingStatus"><img src="/img/status_error.png"/>error sending email</span>
+                    {this.state.inviteStatus == 'error' && 
+                        this.state.info &&
+                          <span className="sendingStatus">
+                          <img src="/img/status_error.png"/>{this.state.info}
+                          <br/><br/>
+                          </span>
+                          // :
+                          // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                     }
-                    <input type="submit" id="submitSend" className="invitebttn formbttn w-button"/>
+                    
+                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.triggerSubmitInvite.bind(this)}>submit</a>
                     
                     </form>
                                   
