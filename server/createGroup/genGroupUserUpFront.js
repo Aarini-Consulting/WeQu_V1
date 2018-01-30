@@ -2,15 +2,15 @@ Meteor.methods({
 
 	genGroupUserUpFront(arr_emails, data, groupName){
 
-		var copiedData = [];
-		data.forEach(function (user) {
-           index =  arr_emails.findIndex(x => x == user.email );
-           if(index!=-1){
-             copiedData.push(data[index]);
-           }
-        })
+		// var copiedData = [];
+		// data.forEach(function (user) {
+        //    index =  arr_emails.findIndex(x => x == user.email );
+        //    if(index!=-1){
+        //      copiedData.push(data[index]);
+        //    }
+        // })
 
-        data = copiedData;
+        // data = copiedData;
 
 		if(!arr_emails){
 			throw (new Meteor.Error("genGroupUserUpFront Failed")); 
@@ -39,6 +39,7 @@ Meteor.methods({
 				trialMember: true,
 				trial: true,
 				firstName: data[i].firstName,
+				lastName: data[i].lastName,
 				profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result }
 			});
 			// link = `group-invitation/${email}/${_id}`;   

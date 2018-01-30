@@ -63,7 +63,7 @@ class GroupPage extends React.Component {
   
                       <div className="screentitlewrapper w-clearfix">
                         <div className="screentitle">
-                        <div className="title">Add new member</div>
+                        <div className="title">edit group</div>
                         </div>
                         <div className="screentitlebttn">
                         <a className="w-inline-block marginTop5"  onClick={this.showInviteGroup.bind(this, true)}><img src="/img/Invite_Plus_white.png"/>

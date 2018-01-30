@@ -26,7 +26,6 @@ class InvitePage extends React.Component {
 
   renderFriendList(){
     return this.props.users.map((user) => {
-      console.log(user);
         return (
             <Link  key={user._id} to={`/quiz/${user.userId}`}>
             <div className="row">
