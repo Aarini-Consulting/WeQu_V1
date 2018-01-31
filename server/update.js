@@ -21,5 +21,16 @@
        },
        'updateProfileGroupQuizPerson' : function(userId, flag){
           return Meteor.users.update({_id: userId}, {$set: {'profile.groupQuizPerson' : flag } });
-       }
+       },
+
+        'signUpInvited' : function(data){
+
+          Meteor.call("updateTrialUser", data.userId);
+
+          Meteor.call('updateProfile', data);
+    
+          Meteor.call('setPassword', data.userId , data.registerPassword,  { logout: false });
+    
+          Meteor.call('verifiedTrue', data.userId);
+        }
     });

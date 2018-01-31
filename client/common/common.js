@@ -192,3 +192,28 @@ displaySkills = (userId) =>{
 
   return null;
 }
+
+formatDate = (val) => {
+  if (val) {
+      let day = moment().dayOfYear() - moment(val).dayOfYear(); // gives number of days 
+      // Writing custom logic for calculating days , weeks 
+      if(day > 7){
+          let week =  parseInt(day / 7) ;
+
+          if(week > 4 )
+          {
+              let month =  parseInt(week / 4) ;
+              return `${month}m`
+          }
+
+          return `${week}w`;
+      }
+      if(day == 0){
+          day++;    
+      }
+      return `${day}d`;
+
+
+  }
+  return null;
+}

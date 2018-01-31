@@ -22,5 +22,39 @@
             // console.log(qset , a , fb);
 
             return true;
+        },
+        'feedback.answer.question.self'(fb) {
+            Feedback.update({
+                _id:fb._id,
+              },
+              {$set: {
+                from:fb.from,
+                to:fb.to,
+                qset: fb.qset,
+                done:fb.done,
+                lastUpdated:new Date()
+              }   
+            },
+            (error, result) => {
+                if(error){
+                    console.log(error);
+                    return error;
+                }else if(fb.done){
+                    if(fb.from == fb.to) {
+                        fb.qset = genInitialQuestionSet("You", qdata.type1you, 12);
+                    } else {
+                        var user = Meteor.users.findOne({ _id: fb.to });
+                        fb.qset = genQuizQuestionSet(user.profile);
+                    }
+        
+                    if(fb.qset == [] || fb.qset.length == 0 ){
+                        throw new Meteor.Error("qset undefined");
+                    }
+                    
+                    let a = Feedback.insert({from: fb.from, to: fb.to, qset: fb.qset, done : false});
+                    // console.log(qset , a , fb);
+                }
+                return true;
+            });
         }
     });
