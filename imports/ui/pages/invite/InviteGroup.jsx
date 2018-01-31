@@ -63,7 +63,7 @@ class InviteGroup extends React.Component {
         if(res){
           this.setState({
               inviteStatus: 'sent',
-              inviteSuccess:true
+              inviteSuccess:res
             });
           }
           if(err)
@@ -252,7 +252,7 @@ class InviteGroup extends React.Component {
 
     render() {
     if(this.props.dataReady){
-      if(this.state.inviteSuccess &&  this.state.inviteSuccess > 0){
+      if(this.state.inviteSuccess){
         return (
           <div className="fillHeight flex-start">
           <section className="groupbg whiteText alignCenter feed">
@@ -261,6 +261,9 @@ class InviteGroup extends React.Component {
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext">Awesome!
                 <br/>Your changes has been saved
+                {this.state.inviteSuccess > 0 &&
+                <div><br/>An invitation was sent to {this.state.inviteSuccess} people</div>
+                }
                 </div>
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>

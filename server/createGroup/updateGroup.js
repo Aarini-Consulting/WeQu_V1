@@ -51,14 +51,14 @@ Meteor.methods({
                 let body = SSR.render('GroupInviteHtmlEmail', emailData);
             
                 Meteor.call('sendEmail', arr_emails_notExisting[i], subject, body, function (err, result) {
-                if(err){ return err};
+                if(err){ return err}
                 });
             
             }
             }
         });
-
-    return true;
+    
+    return arr_emails_notExisting.length;
 
   }
 });
