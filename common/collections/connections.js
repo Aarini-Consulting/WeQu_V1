@@ -3,11 +3,6 @@
 
 Connections = new Mongo.Collection("connections");
 
-if (Meteor.isClient) {
-    Meteor.subscribe("connections");
-}
-
-
   Connections.allow({
     'insert': function () {
      return true;

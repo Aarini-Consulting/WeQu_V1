@@ -12,12 +12,13 @@ dataForRadar =  function dataForRadar(score) {
   var vertices = _.keys(framework)['length'];
   var i = 0;
   return _.object(_.map([
+    'TEAMWORK',
+    'PROBLEM_SOLVING',
+    'COMMUNICATION',
     'VIRTUE',
     'SELF_MANAGEMENT',
-    'COMMUNICATION',
-    'TEAMWORK',
     'LEADERSHIP',
-    'PROBLEM_SOLVING'
+    
     ], function (key) {
       var len = score[key];
       var angle = Math.PI * 0.5 + i * (2 * Math.PI / vertices);
@@ -189,5 +190,30 @@ displaySkills = (userId) =>{
     return data; 
   }
 
+  return null;
+}
+
+formatDate = (val) => {
+  if (val) {
+      let day = moment().dayOfYear() - moment(val).dayOfYear(); // gives number of days 
+      // Writing custom logic for calculating days , weeks 
+      if(day > 7){
+          let week =  parseInt(day / 7) ;
+
+          if(week > 4 )
+          {
+              let month =  parseInt(week / 4) ;
+              return `${month}m`
+          }
+
+          return `${week}w`;
+      }
+      if(day == 0){
+          day++;    
+      }
+      return `${day}d`;
+
+
+  }
   return null;
 }
