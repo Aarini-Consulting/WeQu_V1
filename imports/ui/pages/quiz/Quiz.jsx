@@ -249,8 +249,11 @@ export default withTracker((props) => {
       }
   });
 
-  if(handleFeedback.ready() && handleConnections.ready()){
-    feedback = Feedback.findOne();
+  if((props.feedback || (handleFeedback && handleFeedback.ready())) && handleConnections.ready()){
+    if(!props.feedback){
+      feedback = Feedback.findOne();
+    }
+    
     connections = Connections.find().fetch();
     username = getUserName(user.profile);
     dataReady = true;

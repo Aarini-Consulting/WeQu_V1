@@ -67,17 +67,19 @@ Meteor.methods({
                 firstName: toName,
                 profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result }
               });
-      link = `invitation/${_id}`;
+      // link = `invitation/${_id}`;
     } 
     else {
       userId = toUser._id;
       // When an invitation send to an existing user (the account created with linkedin)
       // the email login field should not displayed
-      link = `signIn/invited/${email}/${_id}`;
-      if(toUser && toUser.services && toUser.services.linkedin){
-        link = `signIn/linkedinInvited/${email}/${_id}`;        
-      }
+      // link = `signIn/invited/${email}/${_id}`;
+      // if(toUser && toUser.services && toUser.services.linkedin){
+      //   link = `signIn/linkedinInvited/${email}/${_id}`;        
+      // }
     }
+
+    link = `invitation/${_id}`;
 
     // inserting the inforamtion into the connections collection
     Connections.upsert({

@@ -56,7 +56,7 @@ export default withTracker((props) => {
   });
 
   if(handleFeedback.ready()){
-    var feedback = Feedback.findOne(props.match.params.id);
+    var feedback = Feedback.findOne({_id:props.match.params.id});
     
     if(feedback){
         quizUser = Meteor.users.findOne({_id : feedback.from});
