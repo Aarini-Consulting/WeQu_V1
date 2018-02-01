@@ -163,8 +163,9 @@ export default withTracker((props) => {
       users.concat(
         Connections.find( 
           { $or : [ {inviteId:Meteor.userId()} ,
-          {email : Meteor.user().emails && Meteor.user().emails[0].address},
-          {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] } ,
+          // {email : Meteor.user().emails && Meteor.user().emails[0].address},
+          // {email : Meteor.user().profile && Meteor.user().profile.emailAddress}
+          ] } ,
           ).fetch()
         .map((conn)=>{return conn.userId;})
       )

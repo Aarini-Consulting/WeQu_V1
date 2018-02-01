@@ -94,8 +94,9 @@ export default withTracker((props) => {
   var userType;
   var handle = Meteor.subscribe('connections', 
     { $or : [ {inviteId:Meteor.userId()} ,
-      {email : Meteor.user().emails && Meteor.user().emails[0].address},
-      {email : Meteor.user().profile && Meteor.user().profile.emailAddress}] 
+      // {email : Meteor.user().emails && Meteor.user().emails[0].address},
+      // {email : Meteor.user().profile && Meteor.user().profile.emailAddress}
+      ] 
     },
     {},
     {
@@ -108,8 +109,9 @@ export default withTracker((props) => {
 
   if(Meteor.user() && handle.ready()){
     connections = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-      {email : Meteor.user().emails && Meteor.user().emails[0].address},
-      {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] }                                                       
+      // {email : Meteor.user().emails && Meteor.user().emails[0].address},
+      // {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   
+      ] }                                                       
     ).fetch();
 
     let email = ( Meteor.user() && Meteor.user().emails && Meteor.user().emails[0].address ) || ( Meteor.user()  && Meteor.user().profile.emailAddress) ;

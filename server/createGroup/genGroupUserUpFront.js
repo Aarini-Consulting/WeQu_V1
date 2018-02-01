@@ -1,6 +1,6 @@
 Meteor.methods({
 
-	genGroupUserUpFront(arr_emails, data, groupName){
+	genGroupUserUpFront(arr_emails, data, groupName, groupId){
 
 		// var copiedData = [];
 		// data.forEach(function (user) {
@@ -46,6 +46,20 @@ Meteor.methods({
 
 
 			// inserting the inforamtion into the connections collection
+
+			// Connections.upsert({
+			// 	userId:userId,
+			// 	inviteId : Meteor.userId(),
+			// 	groupId: groupId,
+			//   },
+			//   {$set: {
+			// 	email: email,
+			// 	userId : userId,
+			// 	groupId: groupId,
+			// 	inviteId : Meteor.userId(),
+			// 	services : {invitationId: _id}
+			//   }    
+			// });
 			/* ----------   verfiy this one   ----------------------- */
 		    // Connections.insert({username: toName,
 		    //   email: email,
@@ -88,44 +102,45 @@ Meteor.methods({
 		   }
 
 
-		   for (i = 0; i < data.length; i++) {
+	// 	   for (i = 0; i < data.length; i++) {
 
-            for (j = 0; j < data.length; j++) {            
+    //         for (j = 0; j < data.length; j++) {            
 
-              if(i != j){
-                user = Meteor.users.findOne({$or : [ {"emails.address" : data[i].email  }, { "profile.emailAddress" : data[i].email }]} );
-                user2 = Meteor.users.findOne({$or : [ {"emails.address" : data[j].email }, { "profile.emailAddress" : data[j].email }]} );
+    //           if(i != j){
+    //             user = Meteor.users.findOne({$or : [ {"emails.address" : data[i].email  }, { "profile.emailAddress" : data[i].email }]} );
+    //             user2 = Meteor.users.findOne({$or : [ {"emails.address" : data[j].email }, { "profile.emailAddress" : data[j].email }]} );
 
-                var name = getUserName(user2.profile);
-                gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
+    //             var name = getUserName(user2.profile);
+    //             gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
 
-                if (gender_result  == 'Male'){
-									qset = genInitialQuestionSet(data[i].firstName, qdata.type1he, 12);
-								} else if (gender_result  == 'Female') {
-									qset = genInitialQuestionSet(data[i].firstName, qdata.type1she, 12);
-								}
-								if (gender  == 'Male'){
-									qset1 = genInitialQuestionSet(toName, qdata.type1he, 12);
-								} else if (gender  == 'Female') {
-									qset1 = genInitialQuestionSet(toName, qdata.type1she, 12);
-								}
+    //             if (gender_result  == 'Male'){
+	// 								qset = genInitialQuestionSet(data[i].firstName, qdata.type1he, 12);
+	// 							} else if (gender_result  == 'Female') {
+	// 								qset = genInitialQuestionSet(data[i].firstName, qdata.type1she, 12);
+	// 							}
+	// 							if (gender  == 'Male'){
+	// 								qset1 = genInitialQuestionSet(toName, qdata.type1he, 12);
+	// 							} else if (gender  == 'Female') {
+	// 								qset1 = genInitialQuestionSet(toName, qdata.type1she, 12);
+	// 							}
 
-											var _id = Random.secret();
+	// 										var _id = Random.secret();
 
 
-											if(!qset){
-												throw new Meteor.Error("qset undefined");
-											}
+	// 										if(!qset){
+	// 											throw new Meteor.Error("qset undefined");
+	// 										}
 
-											var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset,
-																									invite : false, done: false ,
-																									groupName: groupName
-																									});
-										console.log(" \n Feedback id genGroupUserUpFront \n ", fbId );
-								}
+	// 										var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset,
+	// 																								invite : false, done: false ,
+	// 																								groupName: groupName,
+	// 																								groupId: groupId,
+	// 																								});
+	// 									console.log(" \n Feedback id genGroupUserUpFront \n ", fbId );
+	// 							}
 
-         }
-       }
+    //      }
+    //    }
        	
 
 	}

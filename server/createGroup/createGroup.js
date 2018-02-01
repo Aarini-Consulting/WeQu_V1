@@ -61,7 +61,7 @@ Meteor.methods({
 
         // #77 create user up front for arr_emails_notExisting 
 
-       Meteor.call('genGroupUserUpFront',  arr_emails_notExisting , dataEmailNotExisting, groupName, function (err, result) {
+       Meteor.call('genGroupUserUpFront',  arr_emails_notExisting , dataEmailNotExisting, groupName, groupId, function (err, result) {
         console.log("genGroupUserUpFront" , err, result);
         if(err){ return err};
       });
@@ -80,6 +80,8 @@ Meteor.methods({
 
         //TODO : Directly use user instead email , Code Optimization
 
+
+        //assign groupmember's connection and feedback question with each other
         for (i = 0; i < arr_emails.length; i++) {
 
           for (j = 0; j < arr_emails.length; j++) {            
@@ -89,6 +91,7 @@ Meteor.methods({
               user2 = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[j]  }, { "profile.emailAddress" : arr_emails[j] }]} );
               //check if feedback already exist
               var check = Feedback.findOne({from : user._id , to: user2._id,groupId:groupId});
+              var checkConnection = Connections.findOne({inviteId : user._id , userId: user2._id,groupId:groupId});
 
               if(!check){
                 var name = getUserName(user2.profile);
@@ -109,6 +112,16 @@ Meteor.methods({
                   groupName: groupName,
                   groupId:groupId
                  });
+
+                 if(!checkConnection){
+                  Connections.insert( {
+                    email: user2.emails[0].address,
+                    userId : user2._id,
+                    groupId: groupId,
+                    inviteId : user._id,
+                    services : {invitationId: _id} 
+                  });
+                 }
 
                  console.log(" \n Feedback id \n ", fbId );
               }

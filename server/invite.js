@@ -82,23 +82,35 @@ Meteor.methods({
     link = `invitation/${_id}`;
 
     // inserting the inforamtion into the connections collection
-    Connections.upsert({
-        userId:userId,
-        inviteId : Meteor.userId(),
-      },
-      {$set: {
-        username: toName,
-        email: email,
-        password: _id,
-        userId : userId,
-  
-        inviteId : Meteor.userId(),
-  
-        services : {invitationId: _id},
-        profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result,
-                    trialMember: true}
-      }    
+
+    //meteor < 1.6 bug, can't use $ operator in upsert
+    // Connections.upsert({
+    //     userId:userId,
+    //     inviteId : Meteor.userId(),
+    //     groupId: {$exists: false}
+    //   },
+    //   {$set: {
+    //     email: email,
+    //     userId : userId,
+    //     inviteId : Meteor.userId(),
+    //     services : {invitationId: _id}
+    //   }    
+    // });
+
+    var connectionCheck = Connections.findOne({
+      userId:userId,
+      inviteId : Meteor.userId(),
+      groupId: {$exists: false}
     });
+
+    if(!connectionCheck){
+      Connections.insert({
+        email: email,
+        userId : userId,
+        inviteId : Meteor.userId(),
+        services : {invitationId: _id}
+      });
+    }
 
     // Updating the profile groupQuizPerson to false
     let flag = false;
