@@ -196,6 +196,14 @@ class Quiz extends React.Component {
               </div>
             </section>
             }
+
+            {!this.props.feedback &&
+            <section>
+              <div className="question">
+                <h2>You have no quiz set for this user</h2>
+              </div>
+            </section>
+            }
     
           </section>
         );
@@ -241,7 +249,10 @@ export default withTracker((props) => {
   }
 
   handleConnections = Meteor.subscribe('connections',
-    {inviteId:user._id},
+    {$or : [ 
+      {inviteId:Meteor.userId()},
+      {userId:Meteor.userId()} 
+    ]},
     {},
     {
     onError: function (error) {

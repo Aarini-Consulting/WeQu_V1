@@ -147,10 +147,10 @@ export default withTracker((props) => {
   var userProfiles;
   var dataReady;
   var handle = Meteor.subscribe('connections', 
-  { $or : [ {inviteId:Meteor.userId()} ,
-    {email : Meteor.user().emails && Meteor.user().emails[0].address},
-    {email : Meteor.user().profile && Meteor.user().profile.emailAddress}] 
-  },
+  { $or : [ 
+    {inviteId:Meteor.userId()},
+    {userId:Meteor.userId()}
+    ]},
   {},
   {
     onError: function (error) {
@@ -162,9 +162,10 @@ export default withTracker((props) => {
     users = [...new Set(
       users.concat(
         Connections.find( 
-          { $or : [ {inviteId:Meteor.userId()} ,
-          {email : Meteor.user().emails && Meteor.user().emails[0].address},
-          {email : Meteor.user().profile && Meteor.user().profile.emailAddress}   ] } ,
+          { $or : [ 
+            {inviteId:Meteor.userId()},
+            {userId:Meteor.userId()}
+          ] } ,
           ).fetch()
         .map((conn)=>{return conn.userId;})
       )
