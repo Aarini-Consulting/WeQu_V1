@@ -145,9 +145,9 @@ export default withTracker((props) => {
   var dataReady;
   var count;
   var handleConnections = Meteor.subscribe('connections',
-    { $or : [ {inviteId:Meteor.userId()} ,
-      // {email : Meteor.user().emails && Meteor.user().emails[0].address},
-      // {email : Meteor.user().profile && Meteor.user().profile.emailAddress}
+    { $or : [
+      {inviteId:Meteor.userId()}, 
+      {userId:Meteor.userId()}
       ]
     },
     {},
@@ -157,9 +157,9 @@ export default withTracker((props) => {
       }
   });
   if(handleConnections.ready()){
-    count = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-      // {email : Meteor.user().emails && Meteor.user().emails[0].address},
-      // {email : Meteor.user().profile && Meteor.user().profile.emailAddress} 
+    count = Connections.find( { $or : [
+      {inviteId:Meteor.userId()}, 
+      {userId:Meteor.userId()}
       ] }                                                       
     ).count();
     dataReady = true;

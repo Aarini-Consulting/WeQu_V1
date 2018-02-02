@@ -12,6 +12,7 @@ class InvitePage extends React.Component {
   constructor(props){
       super(props);
       this.state={
+        deleting:false,
         showInvite:false,
       }
   }
@@ -24,13 +25,33 @@ class InvitePage extends React.Component {
     }
   }
 
-  renderFriendList(){
-    return this.props.users.map((user) => {
+  deletePersonalInvitation(user){
+    if(this.state.deleting == false){
+      this.setState({
+        deleting: true,
+      });
+  
+      Meteor.call('deletePersonalInvitation', user._id , (err, res) => {
+          if(err)
+          {
+            console.log(err);
+          }     
+  
+          this.setState({
+            deleting: false,
+          });
+      }); 
+    }
+    
+  }
+
+  renderGroupFriendList(){
+    return this.props.usersGroup.map((user, index) => {
         return (
-            <Link  key={user._id} to={`/quiz/${user._id}`}>
-            <div className="row">
+            <div  key={user._id}>
+              <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="avatawrapper padding10">
+                <Link className="avatawrapper padding10"  to={`/quiz/${user._id}`}>
                     {user.services && user.services.linkedin && user.services.linkedin.pictureUrl
                     ?
                     <div>
@@ -53,10 +74,50 @@ class InvitePage extends React.Component {
                     </span>
                     </div>
                     } 
+                </Link>
                 </div>
+              </div>
+            </div>
+        );
+      });
+  }
+
+  renderFriendList(){
+    return this.props.users.map((user, index) => {
+        return (
+            <div  key={user._id}>
+              <div className="row">
+                <div className="col-md-12 col-sm-12 col-xs-12">
+                <Link className="avatawrapper padding10"  to={`/quiz/${user._id}`}>
+                    {user.services && user.services.linkedin && user.services.linkedin.pictureUrl
+                    ?
+                    <div>
+                    <img className="image-5 img-circle" src={user.services.linkedin.pictureUrl}/> 
+                    <span className="font-white contactName"> 
+                    {user.invitedPerson 
+                        ? getUserName(user.profile) + " " + "( Invited You )" 
+                        : getUserName(user.profile)
+                    }
+                    </span>
+                    </div>
+                    :    
+                    <div>
+                    <img className="image-5" src="/img/avatar.png"/> 
+                    <span className="font-white contactName"> 
+                    {user.invitedPerson 
+                        ? getUserName(user.profile) + " " + "( Invited You )" 
+                        : getUserName(user.profile)
+                    }
+                    </span>
+                    </div>
+                    } 
+                </Link>
+                <span>
+                  <input type="button" defaultValue="Delete" className="delete bttnmembr bttnsaved w-button" onClick ={this.deletePersonalInvitation.bind(this,user)}/>
+                </span>
                 </div>
-                </div>
-            </Link>
+              </div>
+            </div>
         );
       });
   }
@@ -111,6 +172,7 @@ class InvitePage extends React.Component {
                     <li className="list-item w-clearfix">
                     
                     {this.renderFriendList()}
+                    {this.renderGroupFriendList()}
                 </li>
                 <li></li>
                 </ul>
@@ -137,11 +199,12 @@ export default withTracker((props) => {
     var dataReady;
     var count;
     var users;
+    var usersGroup;
     var connections;
     var handle = Meteor.subscribe('connections', 
-    { $or : [ {inviteId:Meteor.userId()} ,
-      // {email : Meteor.user().emails && Meteor.user().emails[0].address},
-      // {email : Meteor.user().profile && Meteor.user().profile.emailAddress}
+    { $or : [ 
+      {inviteId:Meteor.userId()}, 
+      {userId:Meteor.userId()}
       ] 
     },
     {},
@@ -151,14 +214,14 @@ export default withTracker((props) => {
         }
     });
     if(Meteor.user() && handle.ready()){
-        count = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-          // {$and : [ {creatorId: { $exists: false }},{email : Meteor.user().emails && Meteor.user().emails[0].address}]},
-          // {$and : [ {creatorId: { $exists: false }},{email : Meteor.user().profile && Meteor.user().profile.emailAddress}]}   
+        count = Connections.find( { $or : [ 
+          {inviteId:Meteor.userId()} ,
+          {userId:Meteor.userId()}  
         ]}                                                       
           ).count();
-        connections = Connections.find( { $or : [ {inviteId:Meteor.userId()} ,
-            // {$and : [ {creatorId: { $exists: false }},{email : Meteor.user().emails && Meteor.user().emails[0].address}]},
-            // {$and : [ {creatorId: { $exists: false }},{email : Meteor.user().profile && Meteor.user().profile.emailAddress}]},
+        connections = Connections.find( 
+              { $or : [ {inviteId:Meteor.userId()},
+              {userId:Meteor.userId()}
             ]} ,
             // {
             //         transform: function (doc)
@@ -179,20 +242,45 @@ export default withTracker((props) => {
             //         }
             // }
           ).fetch()
-          
-        users = Meteor.users.find(
+        
+        var connectionPersonal = connections.filter((conn)=>{
+          return !conn.groupId;
+        }) 
+
+        var connectionGroup = connections.filter((conn)=>{
+          return conn.groupId;
+        })
+
+        usersGroup = Meteor.users.find(
           {_id:
-            {$in:connections.map((conn)=>{
-                return conn.userId
+            {$in:connectionGroup.map((conn)=>{
+                if(conn.userId == Meteor.userId()){
+                  return conn.inviteId
+                }else{
+                  return conn.userId
+                }
+                
               })
             }
           }).fetch();
-        console.log(users);
+          
+        users = Meteor.users.find(
+          {_id:
+            {$in:connectionPersonal.map((conn)=>{
+              if(conn.userId == Meteor.userId()){
+                return conn.inviteId
+              }else{
+                return conn.userId
+              }
+              })
+            }
+          }).fetch();
       dataReady = true;
     }
     return {
         count: count,
         users : users,
+        usersGroup : usersGroup,
         currentUser: Meteor.user(),
         dataReady:dataReady
     };

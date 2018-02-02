@@ -249,7 +249,10 @@ export default withTracker((props) => {
   }
 
   handleConnections = Meteor.subscribe('connections',
-    {inviteId:user._id},
+    {$or : [ 
+      {inviteId:Meteor.userId()},
+      {userId:Meteor.userId()} 
+    ]},
     {},
     {
     onError: function (error) {

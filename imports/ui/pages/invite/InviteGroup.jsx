@@ -191,7 +191,7 @@ class InviteGroup extends React.Component {
               <td>{data.lastName}</td>
               <td>{data.email}</td>
               <td>{data.gender}</td>
-              <td><input type="text" defaultValue="Delete" className="delete bttnmembr bttnsaved w-button" onClick ={this.deleteField.bind(this,index)}/></td>
+              <td><input type="button" defaultValue="Delete" className="delete bttnmembr bttnsaved w-button" onClick ={this.deleteField.bind(this,index)}/></td>
             </tr>
           );
         });
