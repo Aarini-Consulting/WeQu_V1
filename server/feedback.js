@@ -23,7 +23,7 @@
 
             return true;
         },
-        'feedback.answer.question.self'(fb) {
+        'feedback.answer.question'(fb) {
             Feedback.update({
                 _id:fb._id,
               },
@@ -51,8 +51,13 @@
                         throw new Meteor.Error("qset undefined");
                     }
                     
-                    let a = Feedback.insert({from: fb.from, to: fb.to, qset: fb.qset, done : false});
-                    // console.log(qset , a , fb);
+                    if(feedback.groupId){
+                        Feedback.insert({from: fb.from, to: fb.to, qset: fb.qset,groupId:fb.groupId, groupName:fb.groupName, done : false});
+                    }else{
+                        let a = Feedback.insert({from: fb.from, to: fb.to, qset: fb.qset, done : false});
+                        // console.log(qset , a , fb);
+                    }
+                   
                 }
                 return true;
             });

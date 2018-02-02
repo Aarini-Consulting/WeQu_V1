@@ -10,10 +10,12 @@ class Quiz extends React.Component {
   constructor(props){
       super(props);
       this.state={
+        currentFeedback:undefined,
         currentQuestion:undefined,
         currentQuestionIndex:-1,
         questionTotal:0,
-        showSummary:false
+        showSummary:false,
+        username:undefined
       }
   }
 
@@ -36,7 +38,7 @@ class Quiz extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.feedback){
-      var current = this.getCurrentQuestion(nextProps)
+      var current = this.getCurrentQuestion(nextProps);
       if(this.props.inviteLanding && !current){
         this.setState({
           showSummary: true,
@@ -46,23 +48,49 @@ class Quiz extends React.Component {
   }
 
   getCurrentQuestion(props){
-    //find question from qset that don't have answer yet
-    return props.feedback.qset.find((question, index, qset)=>{
-      if(!question.answer && question.answer !== false){
-        this.setState({
-          currentQuestion: question,
-          currentQuestionIndex:index,
-          questionTotal:qset.length
-        });
-        return !question.answer;
-      }else{
-        this.setState({
-          showSummary: false,
-        });
-        return false;
-      }
-      
-    })
+    var currentFeedback;
+    if(!this.state.currentFeedback || 
+      (props.feedback.from === this.state.currentFeedback.from &&
+        props.feedback.to === this.state.currentFeedback.to)){
+      currentFeedback = props.feedback;
+
+      this.setState({
+        currentFeedback: currentFeedback,
+        username: props.username
+      });
+    }else{
+      currentFeedback = props.feedbacksArray.find(
+        (fa)=>{
+          return (
+            fa.from === this.state.currentFeedback.from && fa.to === this.state.currentFeedback.to 
+          )}
+        );
+    }
+
+    if(!currentFeedback){
+      return false
+    }else{
+      //find question from qset that don't have answer yet
+      return currentFeedback.qset.find((question, index, qset)=>{
+        if(!question.answer && question.answer !== false){
+          this.setState({
+            currentQuestion: question,
+            currentQuestionIndex:index,
+            questionTotal:qset.length
+          });
+          return !question.answer;
+        }else{
+          // this.setState({
+          //   showSummary: false,
+          // });
+          return false;
+        }
+        
+      })
+
+    }
+
+    
   }
 
   renderAnswerList(answers) {
@@ -75,7 +103,7 @@ class Quiz extends React.Component {
 
   answerQuestion(answer, event){
     event.preventDefault();
-    var feedback = this.props.feedback;
+    var feedback = this.state.currentFeedback;
     var question = this.state.currentQuestion;
     var index = this.state.currentQuestionIndex;
 
@@ -98,8 +126,6 @@ class Quiz extends React.Component {
           showSummary: true,
         });
       }
-      
-      // console.log(feedback);
     }
 
     if(answer && answer.skill == "genderId")
@@ -108,7 +134,7 @@ class Quiz extends React.Component {
         {$set : { "profile.gender": event.target.getAttribute('id') }});
     }
 
-    Meteor.call('feedback.answer.question.self', feedback , (err, result) => {
+    Meteor.call('feedback.answer.question', feedback , (err, result) => {
       if(err){
         console.log(err);
         this.setState({
@@ -122,7 +148,40 @@ class Quiz extends React.Component {
   
   skip(question,index,event){
     this.answerQuestion(null,event);
-  } 
+  }
+
+  cycleFeedbackForward(bool){
+    if(this.state.currentFeedback && this.props.feedbacksArray && this.props.feedbacksArray.length > 0){
+      var currentFeedback;
+      var currentIndex = this.props.feedbacksArray.map((fa)=>{return fa._id}).indexOf(this.state.currentFeedback._id);
+      if(bool) {
+        if(this.state.currentFeedback._id === this.props.feedback._id){
+          currentFeedback = this.props.feedbacksArray[0];
+        }
+        else if(currentIndex + 1 < this.props.feedbacksArray.length){
+          currentFeedback = this.props.feedbacksArray[currentIndex + 1];
+        }else{
+          currentFeedback = this.props.feedback;
+        }
+      }else{
+        if(this.state.currentFeedback._id === this.props.feedback._id){
+          currentFeedback = this.props.feedbacksArray[this.props.feedbacksArray.length - 1];
+        }
+        else if(currentIndex - 1 >= 0){
+          currentFeedback = this.props.feedbacksArray[currentIndex - 1];
+        }
+        else{
+          currentFeedback = this.props.feedback;
+        }
+      }
+
+      var user = this.props.usersArray.find((user)=>{return user._id === currentFeedback.to});
+      
+      this.setState({ currentFeedback: currentFeedback, username:(user ? getUserName(user.profile) : undefined)}, () => {
+        this.getCurrentQuestion(this.props);
+      });
+    }
+  }
 
   render() {
     if(this.props.dataReady){
@@ -152,16 +211,18 @@ class Quiz extends React.Component {
         return (
           <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
-              <div>
-                {/* <a id="prevPerson" style={{visibility:'hidden'}}>
-                <img src="/img/left.png" className="nav"/>
-                </a> */}
-              </div>
+              {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+                <div>
+                  <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
+                  <img src="/img/left.png" className="nav"/>
+                  </a>
+                </div>
+              }
               <div className="h4" id="specificUser">
                 <div>
-                  {this.props.feedback 
+                  {this.state.currentFeedback 
                   ?
-                    this.props.feedback.groupName
+                    this.state.currentFeedback.groupName
                   :
                     ''
                   }
@@ -170,16 +231,18 @@ class Quiz extends React.Component {
                 <img src="/img/avatar.png" className="avatar" id="specificUser"/>
       
                 <br/>
-                {this.props.username }
+                {this.state.username }
               </div>
+              {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
               <div>
-                {/* <a id="nextPerson" style={{visibility:'visible'}}>
+                <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
-                </a> */}
+                </a>
               </div>
+              }
             </section>
             
-            {this.props.feedback && this.state.currentQuestion &&
+            {this.state.currentFeedback && this.state.currentQuestion &&
             <section>
               <div className="question">
                 <h2>{this.state.currentQuestion.text}</h2>
@@ -197,7 +260,7 @@ class Quiz extends React.Component {
             </section>
             }
 
-            {!this.props.feedback &&
+            {!this.state.currentFeedback &&
             <section>
               <div className="question">
                 <h2>You have no quiz set for this user</h2>
@@ -220,11 +283,13 @@ class Quiz extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var feedback;
+  var feedbacksArray;
   var connections;
   var username;
   var handleFeedback;
   var handleConnections
   var user;
+  var usersArray;
     
   if(props.inviteLanding && props.feedback){
     feedback = props.feedback;
@@ -240,7 +305,16 @@ export default withTracker((props) => {
     user = props.quizUser;
     
   }else{
-    handleFeedback = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false }, {}, {
+    handleFeedback = Meteor.subscribe('feedback', 
+    {
+      $or : [ 
+      {from:Meteor.userId()},
+      {to:Meteor.userId()} 
+      ], 
+      done: false }, 
+    
+    {}, 
+    {
       onError: function (error) {
               console.log(error);
           }
@@ -248,24 +322,25 @@ export default withTracker((props) => {
     user = Meteor.user();
   }
 
-  handleConnections = Meteor.subscribe('connections',
-    {$or : [ 
-      {inviteId:Meteor.userId()},
-      {userId:Meteor.userId()} 
-    ]},
-    {},
-    {
-    onError: function (error) {
-          console.log(error);
-      }
-  });
+  
 
-  if((props.feedback || (handleFeedback && handleFeedback.ready())) && handleConnections.ready()){
+  if((props.feedback || (handleFeedback && handleFeedback.ready()))){
     if(!props.feedback){
-      feedback = Feedback.findOne();
+      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
+
+      if(!props.quizUser){
+        feedbacksArray = Feedback.find({
+          $and : [
+            {to:{$ne:Meteor.userId()}} 
+            ]
+          }).fetch();
+
+        usersArray = Meteor.users.find({
+          _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
+        }).fetch();
+      }
     }
-    
-    connections = Connections.find().fetch();
+
     username = getUserName(user.profile);
     dataReady = true;
   }
@@ -273,8 +348,10 @@ export default withTracker((props) => {
   return {
       currentUser: Meteor.user(),
       username: username,
+      usersArray:usersArray,
       connections:connections,
       feedback: feedback,
+      feedbacksArray:feedbacksArray,
       dataReady:dataReady,
   };
 })(Quiz);
