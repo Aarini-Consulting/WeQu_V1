@@ -253,7 +253,7 @@ class Quiz extends React.Component {
               <div className="statusBar">
                 <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
                 {//if not question to self, allow to skip
-                  !(this.props.feedback.from == this.props.feedback.to) &&
+                  !(this.state.currentFeedback && this.state.currentFeedback.from == this.state.currentFeedback.to) &&
                   <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
                 }
               </div>

@@ -51,7 +51,7 @@
                         throw new Meteor.Error("qset undefined");
                     }
                     
-                    if(feedback.groupId){
+                    if(fb.groupId){
                         Feedback.insert({from: fb.from, to: fb.to, qset: fb.qset,groupId:fb.groupId, groupName:fb.groupName, done : false});
                     }else{
                         let a = Feedback.insert({from: fb.from, to: fb.to, qset: fb.qset, done : false});
