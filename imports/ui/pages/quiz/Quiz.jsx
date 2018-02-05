@@ -326,9 +326,8 @@ export default withTracker((props) => {
 
   if((props.feedback || (handleFeedback && handleFeedback.ready()))){
     if(!props.feedback){
-      feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
-
       if(!props.quizUser){
+        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
         feedbacksArray = Feedback.find({
           $and : [
             {to:{$ne:Meteor.userId()}} 
@@ -338,6 +337,8 @@ export default withTracker((props) => {
         usersArray = Meteor.users.find({
           _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
         }).fetch();
+      }else{
+        feedback = Feedback.findOne();
       }
     }
 
