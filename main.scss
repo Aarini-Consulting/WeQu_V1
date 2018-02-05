@@ -174,33 +174,33 @@ input {
   border: none;
 }
 
-.menuBar {
-  min-height: 50px;
-  padding-top: 5px;
-  border: none;
-  color: white;
-  background-color: #303030;
+// .menuBar {
+//   min-height: 50px;
+//   padding-top: 5px;
+//   border: none;
+//   color: white;
+//   background-color: #303030;
 
-  @include flexbox;
-  @include flex-direction(row);
-  @include flex-wrap(nowrap);
-  @include justify-content(space-around);
-  @include align-items(center);
+//   @include flexbox;
+//   @include flex-direction(row);
+//   @include flex-wrap(nowrap);
+//   @include justify-content(space-around);
+//   @include align-items(center);
 
-  @include flex-grow(0);
-  @include flex-shrink(0);
-  @include flex-basis(auto);
+//   @include flex-grow(0);
+//   @include flex-shrink(0);
+//   @include flex-basis(auto);
 
-  img {
-    width: 40px;
-  }
+//   img {
+//     width: 40px;
+//   }
 
-  a {
-    color: #fff;
-    text-decoration: none;
-    //opacity: 0.5;
-  }
-}
+//   a {
+//     color: #fff;
+//     text-decoration: none;
+//     //opacity: 0.5;
+//   }
+// }
 
 section {
   //padding: 20px;
