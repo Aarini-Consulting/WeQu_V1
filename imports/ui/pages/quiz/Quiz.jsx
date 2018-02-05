@@ -116,10 +116,10 @@ class Quiz extends React.Component {
     feedback.qset[index] = question;
 
     var next = feedback.qset.find((question, index, qset)=>{
-      return !question.answer;
+      return !question.answer && question.answer !== false;
     })
 
-    if(!next && !feedback.done){
+    if(!next){
       feedback.done = true;
       if(this.props.inviteLanding || this.props.currentUser.profile.loginScript == 'finish'){
         this.setState({
