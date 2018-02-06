@@ -61,6 +61,7 @@ class InviteGroup extends React.Component {
   
       Meteor.call('updateGroup', this.props.group, groupName, this.state.inviteDatas, emailsArray , (err, res) => {
         if(res){
+          console.log(res);
           this.setState({
               inviteStatus: 'sent',
               inviteSuccess:res

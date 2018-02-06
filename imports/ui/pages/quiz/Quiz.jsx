@@ -193,13 +193,13 @@ class Quiz extends React.Component {
         }else{
           return (
             <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
-              <h2 style={{width:65+'%'}}>
+              <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
               Well done!<br/>
               <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
               </h2>
               {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
   
-              <h2 style={{width:65+'%'}}>
+              <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
               <Link to="/invite">Invite other people</Link>
               </h2>
               {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
@@ -212,13 +212,13 @@ class Quiz extends React.Component {
           <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
               {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-                <div>
+                <div className="w-inline-block">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
                   </a>
                 </div>
               }
-              <div className="h4" id="specificUser">
+              <div className="h4 w-inline-block" id="specificUser">
                 <div>
                   {this.state.currentFeedback 
                   ?
@@ -234,7 +234,7 @@ class Quiz extends React.Component {
                 {this.state.username }
               </div>
               {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-              <div>
+              <div className="w-inline-block">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
                 </a>

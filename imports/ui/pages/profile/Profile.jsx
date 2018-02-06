@@ -11,8 +11,6 @@ import ShareProfile from './ShareProfile';
 import SkillSet from './SkillSet';
 import SectionProfile from './SectionProfile';
 
-import '/imports/startup/client/wequ-profile.webflow.css';
-
 class Profile extends React.Component {
   constructor(props){
     super(props);

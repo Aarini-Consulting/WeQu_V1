@@ -79,7 +79,7 @@ h3 + h5 {
   }
 }
 
-.alignCenter {text-align: center}
+.alignCenter {text-align: center;}
 
 .fillHeight {
   display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
@@ -229,6 +229,9 @@ section {
     @include flex-grow(1);
     @include flex-shrink(1);
     @include flex-basis(auto);
+    margin-left:8vw;
+    margin-right: 8vw;
+    vertical-align: middle;
 
     //border: 1px solid red;
   }

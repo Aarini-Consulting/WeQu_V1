@@ -9,11 +9,9 @@ export default class Menu extends React.Component {
             <Link to="/quiz" className="text fontreleway fontmenu">quiz</Link>
             {Roles.userIsInRole( Meteor.userId(), 'GameMaster' )
             ? 
-                <div className="dropdown dd-contact">
-                    <div className="text fontreleway fontmenu _2">
-                        contact
-                        <span className="dropdown-arrow"></span>
-                    </div>
+                <div className="text fontreleway fontmenu _2 dd-contact">
+                    contact
+                    <span className="dropdown-arrow"></span>
                     <div className="dd-contact-box">
                         <Link to="/invite" className="text fontreleway fontmenu fdropdown w-dropdown-link">personal</Link>
                         <Link to="/invite-group" href="#" className="text fontreleway fontmenu fdropdown w-dropdown-link">Group</Link>
