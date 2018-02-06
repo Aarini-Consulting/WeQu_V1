@@ -137,7 +137,10 @@ class AdminUser extends React.Component {
                     </td>
                     <td id="user">{formatDate(user.createdAt)}</td>
                     <td id="user">
-                        {formatDate(user.status.lastLogin.date)}
+                    {user.status.lastLogin && user.status.lastLogin.date  
+                    ? formatDate(user.status.lastLogin.date)
+                    : "N/A"
+                    }
                     </td>
                 </tr>
             );
