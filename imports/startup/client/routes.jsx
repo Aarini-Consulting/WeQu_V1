@@ -24,6 +24,7 @@ import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
 import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
+import Settings from '/imports/ui/pages/Settings';
 import NotFound from '/imports/ui/pages/NotFound';
 
 // import Test from '/imports/ui/pages/test';
@@ -105,6 +106,7 @@ const App = () => (
       <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} />
       <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
+      <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
       <Route exact path='/invitation/:id' component={InviteLanding}/>
       <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
       <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
