@@ -43,6 +43,7 @@ import AdminUser from '/imports/ui/pages/AdminUser';
 import '/imports/startup/client/css/normalize';
 import '/imports/startup/client/css/webflow';
 import '/imports/startup/client/css/wequ-profile.webflow';
+import QuizSummary from '/imports/ui/pages/quiz/QuizSummary';
 
 
 const history = createBrowserHistory();
@@ -114,6 +115,7 @@ const App = () => (
       <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
+      {/* <Route exact path='/test' render={(props) => (<CheckLoginVerified childComponent={<QuizSummary {...props}/>} {...props}/>)} /> */}
       <Route path='/terms' component={Terms}/>
       <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />

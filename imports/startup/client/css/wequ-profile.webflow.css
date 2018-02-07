@@ -346,7 +346,6 @@ body {
 .quizcount {
   margin-top: 0px;
   margin-bottom: 0px;
-  padding-top: 5px;
   padding-bottom: 5px;
   background-color: #fff;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
@@ -362,9 +361,9 @@ body {
   overflow: visible;
 }
 
-.quizcount.summary {
+.section.summary {
   overflow: visible;
-  margin-top: 50px;
+  overflow:scroll;
 }
 
 .sectionprofile {
@@ -1001,16 +1000,9 @@ body {
   margin-bottom: 10px;
 }
 
-.footersummary {
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  height: 80px;
-  border-top: 1px solid #f3eeee;
-  border-bottom: 0px none #f3eeee;
-  background-color: #fff;
-  box-shadow: 0 0 15px 0 #f3eeee;
+.summary-list {
+  flex:1 1 auto;
+  margin-bottom:80px;
 }
 
 .bttn-area-summary {

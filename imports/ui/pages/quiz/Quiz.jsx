@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import InviteLandingSuccess from '/imports/ui/pages/invitationLanding/InviteLandingSuccess';
+import QuizSummary from './QuizSummary';
 
 class Quiz extends React.Component {
   constructor(props){
@@ -80,9 +81,6 @@ class Quiz extends React.Component {
           });
           return !question.answer;
         }else{
-          // this.setState({
-          //   showSummary: false,
-          // });
           return false;
         }
         
@@ -177,7 +175,10 @@ class Quiz extends React.Component {
 
       var user = this.props.usersArray.find((user)=>{return user._id === currentFeedback.to});
       
-      this.setState({ currentFeedback: currentFeedback, username:(user ? getUserName(user.profile) : undefined)}, () => {
+      this.setState({ 
+        showSummary:false,
+        currentFeedback: currentFeedback, 
+        username:(user ? getUserName(user.profile) : undefined)}, () => {
         this.getCurrentQuestion(this.props);
       });
     }
@@ -192,18 +193,20 @@ class Quiz extends React.Component {
           );
         }else{
           return (
-            <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
-              <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
-              Well done!<br/>
-              <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
-              </h2>
-              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+            <QuizSummary quizUser={this.props.quizUser} feedback={this.state.currentFeedback} continue={()=>{this.setState({showSummary: false});}}
+            next={this.cycleFeedbackForward.bind(this, true)}/>
+          //   <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
+          //     <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
+          //     Well done!<br/>
+          //     <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
+          //     </h2>
+          //     {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
   
-              <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
-              <Link to="/invite">Invite other people</Link>
-              </h2>
-              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-          </section>
+          //     <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
+          //     <Link to="/invite">Invite other people</Link>
+          //     </h2>
+          //     {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+          // </section>
           );
         }
       }
@@ -211,7 +214,7 @@ class Quiz extends React.Component {
         return (
           <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
-              {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+              {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
                 <div className="w-inline-block">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
@@ -233,7 +236,7 @@ class Quiz extends React.Component {
                 <br/>
                 {this.state.username }
               </div>
-              {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+              {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
               <div className="w-inline-block">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
@@ -328,18 +331,18 @@ export default withTracker((props) => {
     if(!props.feedback){
       if(!props.quizUser){
         feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
-        feedbacksArray = Feedback.find({
-          $and : [
-            {to:{$ne:Meteor.userId()}} 
-            ]
-          }).fetch();
-
-        usersArray = Meteor.users.find({
-          _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
-        }).fetch();
       }else{
-        feedback = Feedback.findOne();
+        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
       }
+      feedbacksArray = Feedback.find({
+        $and : [
+          {to:{$ne:Meteor.userId()}} 
+          ]
+        }).fetch();
+
+      usersArray = Meteor.users.find({
+        _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
+      }).fetch();
     }
 
     username = getUserName(user.profile);
