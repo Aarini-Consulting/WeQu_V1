@@ -18,7 +18,6 @@ class QuizSummary extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.feedbacks && nextProps.feedbacks.length > 0){
-      console.log(nextProps.feedbacks[0]);
       this.setState({
         currentFeedback:nextProps.feedbacks[0],
         lastAnsweredCount: 12,
@@ -170,15 +169,36 @@ export default withTracker((props) => {
     }
 
     var othersFeedbacks = Feedback.find({
-      done:false,
+      done: false,
       $and : [
+        {to:Meteor.userId()},
+        {from:{$ne:Meteor.userId()}} 
+        ],
+      $and : [
+        {from:Meteor.userId()},
         {to:{$ne:Meteor.userId()}} 
-        ]
+        ],
       },
-      ).fetch();
-    
-    if(othersFeedbacks.length > 0){
-      nextPerson = Meteor.users.findOne({_id:othersFeedbacks[0].to});
+    { sort: { _id: -1 }}).fetch()
+    .filter((fb, index, fa)=>{
+      return index === fa.findIndex((fb2)=>{
+        return (fb2.to === fb.to);
+      })
+    });
+
+    if(othersFeedbacks && othersFeedbacks.length > 0){
+      var currentIndex = othersFeedbacks.findIndex((fb)=>{
+        return (fb.from === feedbacks[0].from &&
+                fb.to === feedbacks[0].to)
+      });
+
+      if(currentIndex >= 0 && currentIndex + 1 < othersFeedbacks.length){
+        nextPerson = Meteor.users.findOne({_id:othersFeedbacks[currentIndex+1].to});
+      }else if(currentIndex >= 0 && currentIndex + 1 >= othersFeedbacks.length){
+        nextPerson = Meteor.user();
+      }else{
+        nextPerson = Meteor.users.findOne({_id:othersFeedbacks[0].to});
+      }
       console.log(nextPerson);
     }
     dataReady = true;
