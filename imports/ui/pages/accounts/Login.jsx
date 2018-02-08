@@ -20,6 +20,7 @@ class Login extends React.Component {
             if(postLoginRedirect){
                 //unset session variable
                 Session.set("loginRedirect",undefined);
+                Session.set("loggedOut",undefined);
     
                 this.props.history.replace(postLoginRedirect);
             }else{

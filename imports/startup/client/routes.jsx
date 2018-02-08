@@ -24,6 +24,7 @@ import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
 import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
+import Settings from '/imports/ui/pages/Settings';
 import NotFound from '/imports/ui/pages/NotFound';
 
 // import Test from '/imports/ui/pages/test';
@@ -37,6 +38,12 @@ import Terms from '/imports/ui/pages/legal/Terms';
 import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
 
 import AdminUser from '/imports/ui/pages/AdminUser';
+
+
+import '/imports/startup/client/css/normalize';
+import '/imports/startup/client/css/webflow';
+import '/imports/startup/client/css/wequ-profile.webflow';
+import QuizSummary from '/imports/ui/pages/quiz/QuizSummary';
 
 
 const history = createBrowserHistory();
@@ -100,6 +107,7 @@ const App = () => (
       <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} />
       <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
+      <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
       <Route exact path='/invitation/:id' component={InviteLanding}/>
       <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
       <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
@@ -107,6 +115,7 @@ const App = () => (
       <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
+      {/* <Route exact path='/test' render={(props) => (<CheckLoginVerified childComponent={<QuizSummary {...props}/>} {...props}/>)} /> */}
       <Route path='/terms' component={Terms}/>
       <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />

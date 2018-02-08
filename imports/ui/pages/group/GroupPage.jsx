@@ -11,8 +11,6 @@ import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import UserTile from './UserTile';
 
-import '/imports/startup/client/group-members-profile-view.webflow';
-
 class GroupPage extends React.Component {
   constructor(props){
       super(props);

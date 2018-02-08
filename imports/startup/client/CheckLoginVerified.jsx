@@ -14,7 +14,10 @@ class CheckLoginVerified extends React.Component {
 
   render() {
     if(!Meteor.loggingIn() && !Meteor.userId()){
-        Session.set( "loginRedirect", this.props.location.pathname);
+        if(!Session.get("loggedOut")){
+            Session.set( "loginRedirect", this.props.location.pathname);
+        }
+        
         return(
           <Redirect to="/login"/>
         ); 

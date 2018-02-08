@@ -60,12 +60,6 @@ class InviteGroup extends React.Component {
       });
   
       Meteor.call('updateGroup', this.props.group, groupName, this.state.inviteDatas, emailsArray , (err, res) => {
-        if(res){
-          this.setState({
-              inviteStatus: 'sent',
-              inviteSuccess:res
-            });
-          }
           if(err)
           {
             console.log(err);
@@ -73,6 +67,18 @@ class InviteGroup extends React.Component {
               inviteStatus: 'error',
               info: 'something went wrong',
             });
+          }else{
+            var msg;
+            if(res > 0){
+              msg = res;
+            }else{
+              msg = true;
+            }
+            
+            this.setState({
+                inviteStatus: 'sent',
+                inviteSuccess:msg
+              });
           }     
       }); 
     }
@@ -261,7 +267,7 @@ class InviteGroup extends React.Component {
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext">Awesome!
                 <br/>Your changes has been saved
-                {this.state.inviteSuccess > 0 &&
+                {this.state.inviteSuccess && typeof this.state.inviteSuccess != "boolean" && this.state.inviteSuccess > 0 &&
                 <div><br/>An invitation was sent to {this.state.inviteSuccess} people</div>
                 }
                 </div>

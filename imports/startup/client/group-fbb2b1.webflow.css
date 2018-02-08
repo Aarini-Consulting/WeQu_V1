@@ -325,7 +325,7 @@ h1 {
 
 .sectionname {
   padding-bottom: 10px;
-  background-image: url('../images/Background_white20.png');
+  background-image: url('/images/Background_white20.png');
   background-position: 50% 0px;
   background-size: cover;
   box-shadow: none;
@@ -333,14 +333,6 @@ h1 {
 
 .containername {
   padding-bottom: 25px;
-}
-
-.avatarprofile {
-  display: block;
-  height: 140px;
-  margin: 40px auto;
-  border-radius: 500px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
 }
 
 .fontreleway {

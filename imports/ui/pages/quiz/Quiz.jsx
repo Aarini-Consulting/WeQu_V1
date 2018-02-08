@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import InviteLandingSuccess from '/imports/ui/pages/invitationLanding/InviteLandingSuccess';
+import QuizSummary from './QuizSummary';
 
 class Quiz extends React.Component {
   constructor(props){
@@ -80,9 +81,6 @@ class Quiz extends React.Component {
           });
           return !question.answer;
         }else{
-          // this.setState({
-          //   showSummary: false,
-          // });
           return false;
         }
         
@@ -153,9 +151,12 @@ class Quiz extends React.Component {
   cycleFeedbackForward(bool){
     if(this.state.currentFeedback && this.props.feedbacksArray && this.props.feedbacksArray.length > 0){
       var currentFeedback;
-      var currentIndex = this.props.feedbacksArray.map((fa)=>{return fa._id}).indexOf(this.state.currentFeedback._id);
+      var currentIndex = this.props.feedbacksArray.findIndex((fb)=>{
+        return (fb.from === this.state.currentFeedback.from &&
+                fb.to === this.state.currentFeedback.to)
+      })
       if(bool) {
-        if(this.state.currentFeedback._id === this.props.feedback._id){
+        if(currentIndex < 0){
           currentFeedback = this.props.feedbacksArray[0];
         }
         else if(currentIndex + 1 < this.props.feedbacksArray.length){
@@ -164,7 +165,7 @@ class Quiz extends React.Component {
           currentFeedback = this.props.feedback;
         }
       }else{
-        if(this.state.currentFeedback._id === this.props.feedback._id){
+        if(currentIndex < 0){
           currentFeedback = this.props.feedbacksArray[this.props.feedbacksArray.length - 1];
         }
         else if(currentIndex - 1 >= 0){
@@ -177,7 +178,10 @@ class Quiz extends React.Component {
 
       var user = this.props.usersArray.find((user)=>{return user._id === currentFeedback.to});
       
-      this.setState({ currentFeedback: currentFeedback, username:(user ? getUserName(user.profile) : undefined)}, () => {
+      this.setState({ 
+        showSummary:false,
+        currentFeedback: currentFeedback, 
+        username:(user ? getUserName(user.profile) : undefined)}, () => {
         this.getCurrentQuestion(this.props);
       });
     }
@@ -192,18 +196,23 @@ class Quiz extends React.Component {
           );
         }else{
           return (
-            <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
-              <h2 style={{width:65+'%'}}>
-              Well done!<br/>
-              <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
-              </h2>
-              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+            <QuizSummary quizUser={this.props.quizUser} 
+            feedback={this.state.currentFeedback}
+            othersFeedbacks={this.props.feedbacksArray}
+            continue={()=>{this.setState({showSummary: false});}}
+            next={this.cycleFeedbackForward.bind(this, true)}/>
+          //   <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
+          //     <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
+          //     Well done!<br/>
+          //     <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
+          //     </h2>
+          //     {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
   
-              <h2 style={{width:65+'%'}}>
-              <Link to="/invite">Invite other people</Link>
-              </h2>
-              {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-          </section>
+          //     <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
+          //     <Link to="/invite">Invite other people</Link>
+          //     </h2>
+          //     {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
+          // </section>
           );
         }
       }
@@ -211,14 +220,14 @@ class Quiz extends React.Component {
         return (
           <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
             <section className="person">
-              {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-                <div>
+              {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+                <div className="w-inline-block">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
                   </a>
                 </div>
               }
-              <div className="h4" id="specificUser">
+              <div className="h4 w-inline-block" id="specificUser">
                 <div>
                   {this.state.currentFeedback 
                   ?
@@ -233,8 +242,8 @@ class Quiz extends React.Component {
                 <br/>
                 {this.state.username }
               </div>
-              {this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-              <div>
+              {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+              <div className="w-inline-block">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
                 </a>
@@ -247,10 +256,10 @@ class Quiz extends React.Component {
               <div className="question">
                 <h2>{this.state.currentQuestion.text}</h2>
               </div>
-              <ul className="answers">
+              <ul className="answers noselect">
                 {this.renderAnswerList(this.state.currentQuestion.answers)}
               </ul>
-              <div className="statusBar">
+              <div className="statusBar noselect">
                 <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
                 {//if not question to self, allow to skip
                   !(this.state.currentFeedback && this.state.currentFeedback.from == this.state.currentFeedback.to) &&
@@ -328,18 +337,30 @@ export default withTracker((props) => {
     if(!props.feedback){
       if(!props.quizUser){
         feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
-        feedbacksArray = Feedback.find({
-          $and : [
-            {to:{$ne:Meteor.userId()}} 
-            ]
-          }).fetch();
-
-        usersArray = Meteor.users.find({
-          _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
-        }).fetch();
       }else{
-        feedback = Feedback.findOne();
+        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
       }
+      feedbacksArray = Feedback.find({
+        done: false,
+        $and : [
+          {to:Meteor.userId()},
+          {from:{$ne:Meteor.userId()}} 
+          ],
+        $and : [
+          {from:Meteor.userId()},
+          {to:{$ne:Meteor.userId()}} 
+          ],
+        },
+      { sort: { _id: -1 }}).fetch()
+      .filter((fb, index, fa)=>{
+        return index === fa.findIndex((fb2)=>{
+          return (fb2.to === fb.to);
+        })
+      });
+
+      usersArray = Meteor.users.find({
+        _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
+      }).fetch();
     }
 
     username = getUserName(user.profile);
