@@ -199,7 +199,6 @@ export default withTracker((props) => {
       }else{
         nextPerson = Meteor.users.findOne({_id:othersFeedbacks[0].to});
       }
-      console.log(nextPerson);
     }
     dataReady = true;
   }
