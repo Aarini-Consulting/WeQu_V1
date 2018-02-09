@@ -62,9 +62,14 @@ class Profile extends React.Component {
   }
 
   getProfileInfo(){
-    return this.props.userProfiles.find((profile, index)=>{
-      return profile._id == this.getActiveProfile();
-    })
+    if(this.props.userProfiles){
+      return this.props.userProfiles.find((profile, index)=>{
+        return profile._id == this.getActiveProfile();
+      })
+    }else{
+      return false;
+    } 
+    
   }
 
   componentWillUnmount() {
@@ -87,7 +92,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    
+    var profileInfo = this.getProfileInfo();
     if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript && this.props.dataReady){
       return (
       <section className="feed" id="feed" ref="feed">
@@ -103,7 +108,9 @@ class Profile extends React.Component {
               {/* <img className="avatarprofile" src="{{pictureUrl}}"/> */}
               <img src="/img/avatar.png" className="avatarprofile" id="specificUser" data-filter-id={Meteor.userId()}/>
               <div className="fontprofilename fontreleway">
-              {getUserName(this.getProfileInfo().profile)} 
+              {profileInfo && 
+              getUserName(profileInfo.profile)
+              } 
               </div>
             </div>
             <div className="profileclick right" id="nextPerson">
@@ -169,7 +176,7 @@ export default withTracker((props) => {
       )
     )];
 
-    userProfiles = Meteor.users.find( {_id : {$in : users}},{ profile : 1}).fetch();
+    userProfiles = Meteor.users.find( {_id : {$in : users}},{ createdAt : 1}).fetch();
 
     dataReady = true;
   }

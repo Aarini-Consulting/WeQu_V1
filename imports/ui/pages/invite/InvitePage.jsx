@@ -223,24 +223,6 @@ export default withTracker((props) => {
               { $or : [ {inviteId:Meteor.userId()},
               {userId:Meteor.userId()}
             ]} ,
-            // {
-            //         transform: function (doc)
-            //         {
-            //             let invitedPerson = doc.email ==(Meteor.user().emails && Meteor.user().emails[0].address);
-            //             // Linked in login
-            //             let invitedPerson2 = doc.email == (Meteor.user().profile && Meteor.user().profile.emailAddress);
-            //             doc.invitedPerson = false;
-            //             doc.services = Meteor.users.findOne({_id: doc.userId }) && (Meteor.users.findOne({_id: doc.userId }).services);
-            //             if(invitedPerson || invitedPerson2){
-            //             doc.invitedPerson = true;
-            //             doc.profile = Meteor.users.findOne({_id: doc.inviteId }) && Meteor.users.findOne({_id: doc.inviteId }).profile;
-            //             doc.services = Meteor.users.findOne({_id: doc.inviteId }) && (Meteor.users.findOne({_id: doc.inviteId }).services);
-            //         }
-
-                    
-            //             return doc;
-            //         }
-            // }
           ).fetch()
         
         var connectionPersonal = connections.filter((conn)=>{
