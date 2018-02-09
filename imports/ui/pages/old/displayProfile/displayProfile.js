@@ -138,7 +138,7 @@ import './displayProfile.html';
                 data.prevPerson = (friends.indexOf(quizPerson.get()) > 0);               
 
                 _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch())) 
-
+                console.log(data);
                 template.result.set(data);
 
               }

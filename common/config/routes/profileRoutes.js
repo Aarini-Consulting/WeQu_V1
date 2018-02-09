@@ -1,4 +1,4 @@
-
+ 
     // //Display profile
 
     // Router.route('/profile/user/:userId', function () {
@@ -30,6 +30,7 @@
                
     //             // TODO : Verify this logic ...
     //             //var feedbacks = Feedback.find().fetch();
+    //             console.log( Feedback.find().count());
     //             var feedbacks = Feedback.find({$or : [ {from : Meteor.userId()}, {to : Meteor.userId()} ]}).fetch();
 
     //             var friends =  _.chain(feedbacks).map(function(feedback){
@@ -54,8 +55,6 @@
     //             data.prevPerson = (friends.indexOf(quizPerson.get()) > 0);
 
     //             _.extend(data, calculateTopWeak(Feedback.find({to: userId }).fetch()))  
-                
-    //             import '/imports/ui/pages/displayProfile/displayProfile.js';
     //             this.render('displayProfile', { data : data});  
     //         }
     //     } 
@@ -101,7 +100,6 @@
     //                 })
     //             }
     //         })
-    //         import '/imports/ui/pages/skills/profileSKills/profileSkills.js';
     //         this.render('profileSkills', { data : data });
     //         }
 
@@ -158,8 +156,6 @@
 
 
     //         _.extend(data, calculateTopWeak(Feedback.find({to: Meteor.userId()}).fetch()))
-
-    //         import '/imports/ui/pages/profile/profile.js';
     //         this.render('profile', { data : data});
     //     } else {
     //         this.render('loading');
@@ -192,7 +188,6 @@
     //                 })
     //             }
     //         })
-    //         import '/imports/ui/pages/skills/profileSKills/profileSkills.js';
     //         this.render('profileSkills', { data : data });
 
     //     } else {
@@ -203,7 +198,6 @@
     //   Router.route('/profile/written-feedback', function () {
     //     route.set("feedback");
     //     this.layout('ApplicationLayout');
-    //     import '/imports/ui/pages/skills/profileSKills/profileWrittenFeedback.html';
     //     return this.render('profileWrittenFeedback', {
     //         'data': function () { return Meteor.user(); }
     //     });
@@ -219,8 +213,7 @@
     //     this.wait(Meteor.subscribe('feedback',"allData"),  Accounts.loginServicesConfigured());
 
     //     if(this.ready()){
-    //         import '/imports/ui/pages/publicUser/publicUser.js';
-    //         return this.render('publicUser');   
+    //        return this.render('publicUser');   
     //     }
     //     else{
     //         this.render('loading');

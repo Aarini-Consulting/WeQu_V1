@@ -17,7 +17,7 @@ dataForRadar =  function dataForRadar(score) {
     'COMMUNICATION',
     'TEAMWORK',
     'LEADERSHIP',
-    'PROBLEM_SOLVING'
+    'PROBLEM_SOLVING',
     ], function (key) {
       var len = score[key];
       var angle = Math.PI * 0.5 + i * (2 * Math.PI / vertices);
