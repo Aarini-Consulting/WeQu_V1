@@ -198,21 +198,8 @@ class Quiz extends React.Component {
           return (
             <QuizSummary quizUser={this.props.quizUser} 
             feedback={this.state.currentFeedback}
-            othersFeedbacks={this.props.feedbacksArray}
             continue={()=>{this.setState({showSummary: false});}}
             next={this.cycleFeedbackForward.bind(this, true)}/>
-          //   <section className={"gradient"+(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.gradient)+" whiteText alignCenter"}>
-          //     <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
-          //     Well done!<br/>
-          //     <a onClick={()=>{this.setState({showSummary: false});}}>Answer more question</a>
-          //     </h2>
-          //     {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-  
-          //     <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
-          //     <Link to="/invite">Invite other people</Link>
-          //     </h2>
-          //     {/* <img src="/img/next.png" id="next" style={{width:60+'px', marginTop:30+'%'}}/> */}
-          // </section>
           );
         }
       }
