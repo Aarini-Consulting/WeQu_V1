@@ -21,11 +21,13 @@ FeedbackSchema = new SimpleSchema({
     },
     "qset":{
     	type: [Object],
-    	label: "qset"
+		label: "qset",
+		optional: true
     },
     "done":{
     	type: Boolean,
-    	label: "done"
+		label: "done",
+		optional: true
     },
     "invite":{
     	type: Boolean,
@@ -37,7 +39,7 @@ FeedbackSchema = new SimpleSchema({
 		label: "Date group created",
 		optional: true,
 		autoValue: function() {
-		  if ( this.isInsert ) {
+		  if ( this.isInsert || this.isUpsert ) {
 			return new Date;
 		  }
 		}
@@ -55,4 +57,16 @@ FeedbackSchema = new SimpleSchema({
 
 })
 
-Feedback.attachSchema(FeedbackSchema);
+// Feedback.attachSchema(FeedbackSchema);
+
+// Feedback.allow({
+// 	'insert': function () {
+// 	 return true;
+//    },
+//    'update':function () {
+// 	 return true;
+//    },
+//    'remove': function () {
+// 	 return true;
+//    },
+//   })

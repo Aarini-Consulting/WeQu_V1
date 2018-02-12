@@ -17,12 +17,15 @@ Meteor.startup(function () {
 
     Accounts.loginServiceConfiguration.upsert({
         service: 'linkedin'
-      }, {
+      }, 
+      {$set: {
         service: 'linkedin',
         clientId:clientId,
         secret: secret,
         loginStyle: 'popup'
-      });
+        }
+      } 
+    );
 
 
     Accounts.validateNewUser(function (user) {
