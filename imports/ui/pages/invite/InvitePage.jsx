@@ -129,6 +129,7 @@ class InvitePage extends React.Component {
   }
 
   render() {
+    console.log(this.props.dataReady);
     if(this.props.dataReady){
       if((this.props.count != undefined && this.props.count < 1) && !this.state.showInvite ){
         return (
@@ -214,16 +215,20 @@ export default withTracker((props) => {
         }
     });
     if(Meteor.user() && handle.ready()){
-        count = Connections.find( { $or : [ 
-          {inviteId:Meteor.userId()} ,
-          {userId:Meteor.userId()}  
-        ]}                                                       
-          ).count();
+        // count = Connections.find( { $or : [ 
+        //   {inviteId:Meteor.userId()} ,
+        //   {userId:Meteor.userId()}  
+        // ]}                                                       
+        //   ).count();
         connections = Connections.find( 
               { $or : [ {inviteId:Meteor.userId()},
               {userId:Meteor.userId()}
             ]} ,
           ).fetch()
+
+        count = (connections && connections.length) || 0;
+
+        console.log(connections);
         
         var connectionPersonal = connections.filter((conn)=>{
           return !conn.groupId;
@@ -257,6 +262,8 @@ export default withTracker((props) => {
               })
             }
           }).fetch();
+
+      console.log(users);
       dataReady = true;
     }
     return {

@@ -55,7 +55,6 @@ class Strength extends React.Component {
 
   render() {
     if(this.props.dataReady){
-      console.log(this.props.userType);
       return (
         <div className="sectiongreybg sectionprofile">
         {this.props.data && this.props.data.top3 && this.props.data.weak3
