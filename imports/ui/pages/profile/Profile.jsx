@@ -92,6 +92,7 @@ class Profile extends React.Component {
   }
 
   render() {
+    console.log(this.props.dataReady);
     var profileInfo = this.getProfileInfo();
     if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript && this.props.dataReady){
       return (
@@ -175,8 +176,11 @@ export default withTracker((props) => {
         .map((conn)=>{return conn.userId;})
       )
     )];
+    console.log(users);
 
     userProfiles = Meteor.users.find( {_id : {$in : users}},{ createdAt : 1}).fetch();
+
+    console.log(userProfiles);
 
     dataReady = true;
   }
