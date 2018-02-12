@@ -22,12 +22,15 @@ Meteor.methods({
             Feedback.upsert({
                 'from': Meteor.userId(),
                 'to': userId
-            }, {
+            },
+            {$set: {
                 'from': Meteor.userId(),
                 'to': userId,
                 'qset': qset,
                 'done': false,
-            });
+                }
+            } 
+        );
 
             // TODO : Convert the above statement into below ..
 

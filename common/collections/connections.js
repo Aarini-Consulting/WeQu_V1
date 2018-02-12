@@ -59,7 +59,7 @@ ConnectionsSchema = new SimpleSchema({
 
 })
 
-Connections.attachSchema(ConnectionsSchema);
+// Connections.attachSchema(ConnectionsSchema);
 
   // Connections.allow({
   //   'insert': function () {

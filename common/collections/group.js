@@ -61,7 +61,7 @@ GroupSchema = new SimpleSchema({
 
 })
 
-Group.attachSchema(GroupSchema);
+// Group.attachSchema(GroupSchema);
 
 // TODO : For only Testing Purpose , Remove later
 
