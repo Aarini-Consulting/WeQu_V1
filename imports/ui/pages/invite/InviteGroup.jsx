@@ -402,13 +402,25 @@ export default withTracker((props) => {
           console.log(error);
       }
   });
+
+
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
     if(props.addNewMemberOnly && props.group){
-      users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}).fetch();
-    }
-    dataReady = true;
+      var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {}, {
+        onError: function (error) {
+                console.log(error);
+            }
+      });
 
+      if(handleUsers.ready()){
+        users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}).fetch();
+        dataReady = true;
+      }
+    }else{
+      dataReady = true;
+    }
+    
   }
   return {
       count:count,

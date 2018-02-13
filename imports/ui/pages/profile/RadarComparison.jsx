@@ -67,37 +67,48 @@ export default withTracker((props) => {
     var dataReady;
     var myScore;
     var otherScore;
+    var user;
 
     var handleFeedback;
-
-    let user = Meteor.users.findOne({_id : props.quizPerson});
-
-    if(user){
-      let userId = user._id;
-
-      handleFeedback = Meteor.subscribe('feedback',{'from' : userId},{}, {
-        onError: function (error) {
+    var handleUsers = Meteor.subscribe('users',{_id : props.quizPerson},{}, {
+      onError: function (error) {
               console.log(error);
           }
-      });
+    });
 
-      if(handleFeedback.ready()){
-        if(userId == Meteor.userId()){
-          var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
-          myScore = calculateScore(joinFeedbacks(myfeedback));
-        }else{
-          var myfeedback = Feedback.find({ 'from': userId , 'to' : Meteor.userId() }).fetch();
-          myScore = calculateScore(joinFeedbacks(myfeedback));
+    if(handleUsers.ready()){
+      user = Meteor.users.findOne({_id : props.quizPerson});
+
+      if(user){
+        let userId = user._id;
+
+        handleFeedback = Meteor.subscribe('feedback',{'from' : userId},{}, {
+          onError: function (error) {
+                console.log(error);
+            }
+        });
+
+        if(handleFeedback.ready()){
+          if(userId == Meteor.userId()){
+            var myfeedback = Feedback.find({ 'from': userId , 'to' : userId }).fetch();
+            myScore = calculateScore(joinFeedbacks(myfeedback));
+          }else{
+            var myfeedback = Feedback.find({ 'from': userId , 'to' : Meteor.userId() }).fetch();
+            myScore = calculateScore(joinFeedbacks(myfeedback));
+          }
+          
+          var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
+          var qset = joinFeedbacks(otherFeedback);
+      
+          var validAnswers = _.filter(qset, function(question) { return question.answer });
+          otherScore = calculateScore(qset);
+          dataReady = true;
         }
-        
-        var otherFeedback = Feedback.find({ 'from': { '$ne': userId }, 'to' : userId }).fetch();
-        var qset = joinFeedbacks(otherFeedback);
-    
-        var validAnswers = _.filter(qset, function(question) { return question.answer });
-        otherScore = calculateScore(qset);
+      }else{
         dataReady = true;
       }
     }
+    
   return {
       quizUser:user,
       myScore:myScore,

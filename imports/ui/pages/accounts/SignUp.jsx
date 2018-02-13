@@ -147,7 +147,7 @@ class SignUp extends React.Component {
 export default withTracker((props) => {
 	var user;
 	var dataReady;
-	var handle = Meteor.subscribe('users', {
+	var handle = Meteor.subscribe('users', {_id : props.match.params.id}, {}, {
         onError: function (error) {
                 console.log(error);
             }

@@ -345,13 +345,26 @@ export default withTracker((props) => {
         })
       });
 
-      usersArray = Meteor.users.find({
-        _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
-      }).fetch();
+      var handleUsers = Meteor.subscribe('users',{
+          _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
+        },{}, {
+        onError: function (error) {
+                console.log(error);
+            }
+      });
+      if(handleUsers.ready()){
+        usersArray = Meteor.users.find({
+          _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
+        }).fetch();
+
+        dataReady = true;
+      }
+    }else{
+      dataReady = true;
     }
 
     username = getUserName(user.profile);
-    dataReady = true;
+    
   }
    
   return {

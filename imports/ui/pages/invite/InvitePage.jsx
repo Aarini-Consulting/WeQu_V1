@@ -214,7 +214,15 @@ export default withTracker((props) => {
             console.log(error);
         }
     });
-    if(Meteor.user() && handle.ready()){
+
+    var handleUsers = Meteor.subscribe('users',{} , {}, {
+      onError: function (error) {
+              console.log(error);
+          }
+    });
+
+    
+    if(Meteor.user() && handle.ready() && handleUsers.ready()){
         // count = Connections.find( { $or : [ 
         //   {inviteId:Meteor.userId()} ,
         //   {userId:Meteor.userId()}  
