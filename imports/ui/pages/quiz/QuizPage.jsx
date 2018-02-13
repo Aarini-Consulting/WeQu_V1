@@ -38,13 +38,6 @@ export default withTracker((props) => {
   var quizUser;
 
   if(props.match.params.uid){
-    var handle = Meteor.subscribe('user',props.match.params.uid, {
-      onError: function (error) {
-            console.log(error);
-        }
-      });
-  
-    if(handle.ready()){
       if(props.match.params.uid){
         var handleUsers = Meteor.subscribe('users',{_id : props.match.params.uid},{}, {
           onError: function (error) {
@@ -57,7 +50,6 @@ export default withTracker((props) => {
           dataReady = true;
         }
       }
-    }
   }else{
     dataReady = true;
   }
