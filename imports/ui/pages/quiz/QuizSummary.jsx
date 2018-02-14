@@ -32,6 +32,7 @@ class QuizSummary extends React.Component {
       qset = this.state.currentFeedback.qset;
     }
     return qset.map((question, index, qset) => {
+      console.log(question);
       var statementSkillMore;
       var statementSkillLess;
       var statementText;
@@ -78,15 +79,6 @@ class QuizSummary extends React.Component {
     if(this.props.dataReady){
       return (
         <section className="section summary">
-            {/* <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
-            Well done!<br/>
-            <Link to="/quiz">Answer more question</Link>
-            </h2>
-
-            <h2 style={{width:65+'%',marginLeft:"auto",marginRight:"auto"}}>
-            <Link to="/invite">Invite other people</Link>
-            </h2> */}
-
             <div className="quizcount w-row">
               <div className="columprogress w-col w-col-6 w-col-small-6 w-col-tiny-6">
                 <a className="fontreleway progressnumber fontmyself">{this.state.lastAnsweredCount}</a>

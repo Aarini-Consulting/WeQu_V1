@@ -84,6 +84,9 @@ class SkillCategories extends React.Component {
                 return categories.map((cat) => {
                     return (
                         <div key={"skillset "+cat.name}>
+                            <div className="skillElement">
+                                <div className="title"><b className="h5">{cat.name}</b></div>
+                            </div>
                             {this.renderSkills(cat.skills)}
                         </div>
                     );

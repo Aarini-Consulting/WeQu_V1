@@ -88,7 +88,7 @@ class Strength extends React.Component {
            
 
             <div className="sectionprofile sectiongreybg paddingTopInverse45" id="outer">
-            <Link className="fontbttn profilebttn w-button" id="specificUser" to={"/quiz/" + (this.props.quizPerson != Meteor.userId() && this.props.quizPerson)}>
+            <Link className="fontbttn profilebttn w-button" id="specificUser" to={(this.props.quizPerson != Meteor.userId() && this.props.quizPerson) ? "/quiz/" + this.props.quizPerson : "/quiz"}>
             
             {this.props.quizPerson == Meteor.userId()
             ? "Answer more questions about " + this.props.userType2

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 import Radar from './Radar';
@@ -46,9 +47,9 @@ class RadarComparison extends React.Component {
 
         {this.props.quizPerson == Meteor.userId() &&
           <div className="divbttn" id="finish">
-            <a className="fontbttn profilebttn w-button">
+            <Link to="/invite" className="fontbttn profilebttn w-button">
             invite my teammates to learn how they see me
-            </a>
+            </Link>
           </div>
         }
 
