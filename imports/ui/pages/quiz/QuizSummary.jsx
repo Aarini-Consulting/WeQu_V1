@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 
+import {statement} from '/imports/startup/client/statement';
 import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
 
@@ -36,6 +37,9 @@ class QuizSummary extends React.Component {
       var statementSkillMore;
       var statementSkillLess;
       var statementText;
+
+      var statementClass;
+      var statementClassLess;
       var count = 0;
       if (question.answer && question.answers[0]._id == question.answer){
           statementSkillMore = question.answers[0].skill;
@@ -50,11 +54,20 @@ class QuizSummary extends React.Component {
         count += 1;
       }
       if(question.answer){
+        for (var categoryName in framework) {
+          if(framework[categoryName].indexOf(statementSkillMore) > -1){
+            statementClass = statement(categoryName, true);
+          }
+          if(framework[categoryName].indexOf(statementSkillLess) > -1){
+            statementClassLess = statement(categoryName, false);
+          }
+        }
+
         return (
           <li key={question.answer} className="list-item">
             <div className="summarytext">
               <div className="fontreleway fontstatement">
-                more <strong className="qualityname _4">{statementSkillMore}</strong> than <strong className="qualityname _2">{statementSkillLess}</strong>
+                more <strong className={statementClass}>{statementSkillMore}</strong> than <strong className={statementClassLess}>{statementSkillLess}</strong>
               </div>
               <div className="fontreleway fontstatement fontexample">{statementText}</div>
             </div>

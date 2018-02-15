@@ -1,4 +1,4 @@
-export function badges(name, more){
+export function statement(name, more){
     if(name){
         if(more){
             return "qualityname " + name.toString().toLowerCase();

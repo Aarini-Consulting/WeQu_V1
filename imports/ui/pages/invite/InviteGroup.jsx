@@ -36,7 +36,7 @@ class InviteGroup extends React.Component {
         var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
         nextProps.users.forEach(function(user) {
-          var email = user.emails[0].address || user.profile.emailAddress;
+          var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
           if(emailsArray.indexOf(email) < 0){
             copyStateData.push({firstName:user.profile.firstName, 
               lastName:user.profile.lastName, email:email, gender:user.profile.gender});
