@@ -33,7 +33,6 @@ class QuizSummary extends React.Component {
       qset = this.state.currentFeedback.qset;
     }
     return qset.map((question, index, qset) => {
-      console.log(question);
       var statementSkillMore;
       var statementSkillLess;
       var statementText;
@@ -53,7 +52,7 @@ class QuizSummary extends React.Component {
         statementText = question.answers[1].text;
         count += 1;
       }
-      if(question.answer){
+      if(question.answer && questions.answers[0].skill != "genderId"){
         for (var categoryName in framework) {
           if(framework[categoryName].indexOf(statementSkillMore) > -1){
             statementClass = statement(categoryName, true);
@@ -103,7 +102,11 @@ class QuizSummary extends React.Component {
               </div>
             </div>
             <div className="summarysection w-clearfix">
-              <div className="fontreleway fonttitle">You&#x27;ve reflected that you are...</div>
+            {this.props.quizPerson && this.props.quizPerson._id == Meteor.userId() 
+            ?<div className="fontreleway fonttitle">You&#x27;ve reflected that you are...</div>
+            :<div className="fontreleway fonttitle">You&#x27;ve reflected that {getUserName(this.props.quizPerson.profile)} is...</div>
+            }
+              
             </div>
             {this.state.currentFeedback && 
               <ul className="w-list-unstyled summary-list">
@@ -120,7 +123,9 @@ class QuizSummary extends React.Component {
               </div>
               <div className="bttn-area-summary _2">
                 {this.props.next && this.props.nextPerson
-                ?<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Load questions about {getUserName(this.props.nextPerson.profile)}</a>
+                ?this.props.nextPerson._id == Meteor.userId()
+                  ?<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Load more questions about myself</a>
+                  :<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Load questions about {getUserName(this.props.nextPerson.profile)}</a>
                 :<Link to="/invite" className="button fontreleway fontbttnsummary w-button">Invite other people</Link>
                 }
               </div>
@@ -163,7 +168,12 @@ export default withTracker((props) => {
       feedbacks = Feedback.find({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done:true}, 
       { sort: { lastUpdated: -1 } }).fetch();
     }else{
-      user = Meteor.user();
+      if(props.quizPerson){
+        user = props.quizPerson;
+      }
+      else{
+        user = Meteor.user();
+      }
       if(props.feedback){
         feedbacks = Feedback.find({'from': props.feedback.from, 'to' : props.feedback.to, done:true}, 
         { sort: { lastUpdated: -1 }}).fetch();
@@ -205,6 +215,7 @@ export default withTracker((props) => {
         nextPerson = Meteor.users.findOne({_id:othersFeedbacks[0].to});
       }
     }
+    console.log(user);
     dataReady = true;
   }
   return {
