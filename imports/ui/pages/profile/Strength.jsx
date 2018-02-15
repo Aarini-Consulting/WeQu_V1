@@ -88,7 +88,7 @@ class Strength extends React.Component {
            
 
             <div className="sectionprofile sectiongreybg paddingTopInverse45" id="outer">
-            <Link className="fontbttn profilebttn w-button" id="specificUser" to={"/quiz/" + (this.props.quizPerson != Meteor.userId() && this.props.quizPerson)}>
+            <Link className="fontbttn profilebttn w-button" id="specificUser" to={(this.props.quizPerson != Meteor.userId() && this.props.quizPerson) ? "/quiz/" + this.props.quizPerson : "/quiz"}>
             
             {this.props.quizPerson == Meteor.userId()
             ? "Answer more questions about " + this.props.userType2
@@ -119,9 +119,16 @@ export default withTracker((props) => {
           console.log(error);
       }
   });
+  
+
+  var handleUsers = Meteor.subscribe('users',{_id : props.quizPerson},{}, {
+    onError: function (error) {
+            console.log(error);
+        }
+  });
  
 
-  if(handleFeedback.ready()){
+  if(handleFeedback.ready() && handleUsers.ready()){
     data = calculateTopWeak(Feedback.find({to: props.quizPerson }).fetch());
 
     if(props.quizPerson == Meteor.userId())

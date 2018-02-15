@@ -36,7 +36,7 @@ class InviteGroup extends React.Component {
         var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
         nextProps.users.forEach(function(user) {
-          var email = user.emails[0].address || user.profile.emailAddress;
+          var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
           if(emailsArray.indexOf(email) < 0){
             copyStateData.push({firstName:user.profile.firstName, 
               lastName:user.profile.lastName, email:email, gender:user.profile.gender});
@@ -402,13 +402,25 @@ export default withTracker((props) => {
           console.log(error);
       }
   });
+
+
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
     if(props.addNewMemberOnly && props.group){
-      users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}).fetch();
-    }
-    dataReady = true;
+      var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {}, {
+        onError: function (error) {
+                console.log(error);
+            }
+      });
 
+      if(handleUsers.ready()){
+        users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}).fetch();
+        dataReady = true;
+      }
+    }else{
+      dataReady = true;
+    }
+    
   }
   return {
       count:count,

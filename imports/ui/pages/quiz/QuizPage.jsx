@@ -38,19 +38,18 @@ export default withTracker((props) => {
   var quizUser;
 
   if(props.match.params.uid){
-    var handle = Meteor.subscribe('user',props.match.params.uid, {
-      onError: function (error) {
-            console.log(error);
-        }
-      });
-  
-    if(handle.ready()){
       if(props.match.params.uid){
-        quizUser = Meteor.users.findOne({_id : props.match.params.uid});
+        var handleUsers = Meteor.subscribe('users',{_id : props.match.params.uid},{}, {
+          onError: function (error) {
+                  console.log(error);
+              }
+        });
+
+        if(handleUsers.ready()){
+          quizUser = Meteor.users.findOne({_id : props.match.params.uid});
+          dataReady = true;
+        }
       }
-     
-      dataReady = true;
-    }
   }else{
     dataReady = true;
   }

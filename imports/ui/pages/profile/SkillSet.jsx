@@ -102,10 +102,14 @@ export default withTracker((props) => {
               console.log(error);
           }
       });
-      
+  var handleUsers = Meteor.subscribe('users',{_id : props.quizPerson},{}, {
+    onError: function (error) {
+            console.log(error);
+        }
+  });
   var handleGroup;
 
-  if(Meteor.user() && handle.ready()){
+  if(Meteor.user() && handle.ready() && handleUsers.ready()){
     connections = Connections.find( { $or : [ {inviteId:Meteor.userId()}, 
       {userId:Meteor.userId()}
       ] }                                                       

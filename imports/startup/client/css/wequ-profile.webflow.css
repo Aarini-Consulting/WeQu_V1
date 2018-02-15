@@ -259,7 +259,6 @@ body {
   display: -ms-flexbox;
   display: flex;
   margin-top: 0px;
-  margin-left: 5%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -269,10 +268,10 @@ body {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  -webkit-box-align: stretch;
-  -webkit-align-items: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-flex: 0;
   -webkit-flex: 0 auto;
   -ms-flex: 0 auto;
@@ -962,43 +961,43 @@ body {
   border-bottom-style: none;
 }
 
-.qualityname {
+.qualityname.communication {
   color: #0ad;
 }
 
-.qualityname._1 {
+.qualityname.virtue {
   color: #d2316c;
 }
 
-.qualityname._1.less {
+.qualityname.virtue.less {
   color: rgba(210, 49, 108, .5);
 }
 
-.qualityname._5 {
+.qualityname.leadership {
   color: #273888;
 }
 
-.qualityname._5.less {
+.qualityname.leadership.less {
   color: rgba(39, 56, 136, .5);
 }
 
-.qualityname._4 {
+.qualityname.teamwork {
   color: #f75f04;
 }
 
-.qualityname._4.less {
+.qualityname.teamwork.less {
   color: rgba(247, 95, 4, .5);
 }
 
-.qualityname._6 {
+.qualityname.problem_solving {
   color: #3ba12b;
 }
 
-.qualityname._2 {
+.qualityname.self_management {
   color: #9a61ba;
 }
 
-.qualityname._2.less {
+.qualityname.self_management.less {
   color: rgba(154, 97, 186, .5);
 }
 

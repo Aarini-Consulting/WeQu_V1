@@ -92,7 +92,6 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log(this.props.dataReady);
     var profileInfo = this.getProfileInfo();
     if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript && this.props.dataReady){
       return (
@@ -163,6 +162,7 @@ export default withTracker((props) => {
           console.log(error);
       }
   });
+
   if(Meteor.user() && handle.ready()){
     //get unique userId from connections collection
     users = [...new Set(
@@ -176,13 +176,18 @@ export default withTracker((props) => {
         .map((conn)=>{return conn.userId;})
       )
     )];
-    console.log(users);
+    
+    var handleUsers = Meteor.subscribe('users',{_id : {$in : users}},{ createdAt : 1}, {
+      onError: function (error) {
+              console.log(error);
+          }
+    });
 
-    userProfiles = Meteor.users.find( {_id : {$in : users}},{ createdAt : 1}).fetch();
-
-    console.log(userProfiles);
-
-    dataReady = true;
+    if(handleUsers.ready()){
+      userProfiles = Meteor.users.find( {_id : {$in : users}},{ createdAt : 1}).fetch();
+      dataReady = true;
+    }
+    
   }
   
   return {

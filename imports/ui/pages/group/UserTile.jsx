@@ -232,54 +232,64 @@ export default withTracker((props) => {
   var skillData;
   var categories;
   var handleFeedback;
-  if(props.email){
-    user = Meteor.users.findOne({$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]} );
+  var handleUsers;
 
-    if(user){
-      handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
-        onError: function (error) {
+  if(props.email){
+    handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
+      onError: function (error) {
               console.log(error);
           }
-      });
+    });
 
-      if(handleFeedback.ready()){
+    if(handleUsers.ready()){
+      user = Meteor.users.findOne({$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]} );
 
-        var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
-        myScore = calculateScore(joinFeedbacks(myfeedback));
-
-        var otherFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
-        otherscore = calculateScore(joinFeedbacks(otherFeedback));
-
-        himselfAnswered = questionHimselfAnswered(user._id);
-        inviteesAnsweredHim = questionInviteesAnsweredHim(user._id);
-
-        skillData = calculateTopWeak(Feedback.find({to: user._id }).fetch());
-
-        var joinedQset = Feedback.find({ 'to' : user._id }).fetch().map((fb, index)=>{
-            return fb.qset;
-        })
-          
-        var otherscore = calculateScore(joinedQset, true);
-
-        var i=0;
-        categories = _.map(_.keys(framework), function(category) {
-                return {
-                    name : i18n[category],
-                    category : category,
-                    skills : _.map(framework[category], function(skill){
-                        var data = {name : i18n[skill], value: 0, scored: otherscore.scored[skill], total: otherscore.total[skill], skill: skill, category: category }
-                        if(otherscore.total[skill] > 0) {
-                            data.value = Math.round(otherscore.scored[skill] * 100 / otherscore.total[skill]);
-                        }
-                        return data;
-                    })
-                }
+      if(user){
+        handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
+          onError: function (error) {
+                console.log(error);
+            }
         });
-        
+
+        if(handleFeedback.ready()){
+
+          var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
+          myScore = calculateScore(joinFeedbacks(myfeedback));
+
+          var otherFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
+          otherscore = calculateScore(joinFeedbacks(otherFeedback));
+
+          himselfAnswered = questionHimselfAnswered(user._id);
+          inviteesAnsweredHim = questionInviteesAnsweredHim(user._id);
+
+          skillData = calculateTopWeak(Feedback.find({to: user._id }).fetch());
+
+          var joinedQset = Feedback.find({ 'to' : user._id }).fetch().map((fb, index)=>{
+              return fb.qset;
+          })
+            
+          var otherscore = calculateScore(joinedQset, true);
+
+          var i=0;
+          categories = _.map(_.keys(framework), function(category) {
+                  return {
+                      name : i18n[category],
+                      category : category,
+                      skills : _.map(framework[category], function(skill){
+                          var data = {name : i18n[skill], value: 0, scored: otherscore.scored[skill], total: otherscore.total[skill], skill: skill, category: category }
+                          if(otherscore.total[skill] > 0) {
+                              data.value = Math.round(otherscore.scored[skill] * 100 / otherscore.total[skill]);
+                          }
+                          return data;
+                      })
+                  }
+          });
+          
+          dataReady = true;
+        }      
+      }else{
         dataReady = true;
-      }      
-    }else{
-      dataReady = true;
+      }
     }
   }
   return {

@@ -68,8 +68,13 @@ export default withTracker((props) => {
           console.log(error);
       }
     });
+  var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" :props.match.params.email }, { "profile.emailAddress" : props.match.params.email }]}, {}, {
+      onError: function (error) {
+              console.log(error);
+          }
+    });
 
-  if(handleGroup.ready()){
+  if(handleGroup.ready() && handleUsers.ready()){
     var group = Group.findOne(props.match.params.id);
     
     if(group){

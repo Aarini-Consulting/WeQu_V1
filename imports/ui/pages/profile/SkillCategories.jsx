@@ -84,6 +84,9 @@ class SkillCategories extends React.Component {
                 return categories.map((cat) => {
                     return (
                         <div key={"skillset "+cat.name}>
+                            <div className="skillElement">
+                                <div className="title"><b className="h5">{cat.name}</b></div>
+                            </div>
                             {this.renderSkills(cat.skills)}
                         </div>
                     );
@@ -148,9 +151,16 @@ class SkillCategories extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var feedbacks;
+  var user;
   var handleFeedback
+  var handleUsers = Meteor.subscribe('users',{_id : props.quizPerson},{}, {
+    onError: function (error) {
+            console.log(error);
+        }
+  });
 
-    let user = Meteor.users.findOne({_id : props.quizPerson});
+  if(handleUsers.ready()){
+    user = Meteor.users.findOne({_id : props.quizPerson});
     if(user){
         handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
             onError: function (error) {
@@ -162,7 +172,12 @@ export default withTracker((props) => {
             feedbacks = Feedback.find({ 'to' : user._id }).fetch();
             dataReady = true;
         }
+    }else{
+        dataReady = true;
     }
+  }
+
+    
 
   return {
       user: user,

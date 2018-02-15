@@ -229,7 +229,12 @@ class AdminUser extends React.Component {
 export default withTracker((props) => {
     var dataReady;
     var listUsers;
-    let handle = Meteor.subscribe("users");
+    var handle = Meteor.subscribe('users',{}, {}, {
+        onError: function (error) {
+                console.log(error);
+            }
+		});
+
 
     if(handle.ready()){
         listUsers = Meteor.users.find().fetch();

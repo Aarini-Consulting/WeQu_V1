@@ -57,7 +57,13 @@ export default withTracker((props) => {
     var myQuizPersonAnsweredQuestionSet;
     var inviteesQuizPersonAnsweredQuestionSet;
 
-    if(Meteor.user()){
+    var handleUsers = Meteor.subscribe('users',{_id : props.quizPerson},{}, {
+        onError: function (error) {
+                console.log(error);
+            }
+      });
+
+    if(handleUsers.ready()){
         quizUser = Meteor.users.findOne({_id : props.quizPerson});
         userId = quizUser._id;
 
