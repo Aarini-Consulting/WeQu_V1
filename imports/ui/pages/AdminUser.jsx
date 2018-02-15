@@ -57,7 +57,7 @@ class AdminUser extends React.Component {
         return this.props.listUsers.map((user) => {
             return (
                 <tr key={user._id}>
-                    <td>{user.status.online 
+                    <td>{user && user.status && user.status.online 
                         ?
                         <span className="badge badge-success">&nbsp;</span>
                         :
