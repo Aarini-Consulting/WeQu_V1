@@ -16,6 +16,7 @@ class Quiz extends React.Component {
         currentQuestionIndex:-1,
         questionTotal:0,
         showSummary:false,
+        user:undefined,
         username:undefined
       }
   }
@@ -181,6 +182,7 @@ class Quiz extends React.Component {
       this.setState({ 
         showSummary:false,
         currentFeedback: currentFeedback, 
+        user:user,
         username:(user ? getUserName(user.profile) : undefined)}, () => {
         this.getCurrentQuestion(this.props);
       });
@@ -197,6 +199,7 @@ class Quiz extends React.Component {
         }else{
           return (
             <QuizSummary quizUser={this.props.quizUser} 
+            quizPerson={this.state.user}
             feedback={this.state.currentFeedback}
             continue={()=>{this.setState({showSummary: false});}}
             next={this.cycleFeedbackForward.bind(this, true)}/>
