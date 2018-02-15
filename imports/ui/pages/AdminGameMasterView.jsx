@@ -12,7 +12,6 @@ class AdminGameMasterView extends React.Component {
         // const value = target.type === 'checkbox' ? target.checked : target.value;
         // const name = target.name;
         // console.log(event);
-        console.log(user);
 
         Meteor.call('addRoleGameMaster', user._id , function (err, result) {
             if(err){

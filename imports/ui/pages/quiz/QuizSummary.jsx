@@ -147,7 +147,7 @@ export default withTracker((props) => {
   var user;
   var handleFeedback;
   var nextPerson;
-
+  
   handleFeedback = Meteor.subscribe('feedback', 
     {
       $or : [ 
@@ -215,7 +215,6 @@ export default withTracker((props) => {
         nextPerson = Meteor.users.findOne({_id:othersFeedbacks[0].to});
       }
     }
-    console.log(user);
     dataReady = true;
   }
   return {

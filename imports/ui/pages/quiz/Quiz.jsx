@@ -39,13 +39,23 @@ class Quiz extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.feedback){
+    if(nextProps.feedback && !this.state.showSummary){
       var current = this.getCurrentQuestion(nextProps);
-      if(this.props.inviteLanding && !current){
+      if(!this.state.showSummary && this.props.inviteLanding && !current){
         this.setState({
           showSummary: true,
         });
       }
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.dataReady){
+      console.log(nextProps);
+      console.log(nextState);
+      return true;
+    }else{
+      return false;
     }
   }
 

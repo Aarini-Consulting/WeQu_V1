@@ -29,8 +29,6 @@ class ScriptLogin extends React.Component {
                             condition = this.props.currentUser && this.props.currentUser.emails && this.props.currentUser.emails[0].verified;
                         }
         
-                        console.log(condition);
-        
                         if(condition)
                         {
                             return (<Quiz/>);
