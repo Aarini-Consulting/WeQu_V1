@@ -52,7 +52,7 @@ class QuizSummary extends React.Component {
         statementText = question.answers[1].text;
         count += 1;
       }
-      if(question.answer && questions.answers[0].skill != "genderId"){
+      if(question.answer && question.answers[0].skill != "genderId"){
         for (var categoryName in framework) {
           if(framework[categoryName].indexOf(statementSkillMore) > -1){
             statementClass = statement(categoryName, true);
