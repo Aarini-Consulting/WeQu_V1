@@ -51,8 +51,6 @@ class Quiz extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.dataReady){
-      console.log(nextProps);
-      console.log(nextState);
       return true;
     }else{
       return false;

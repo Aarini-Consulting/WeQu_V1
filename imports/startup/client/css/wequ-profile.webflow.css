@@ -965,6 +965,11 @@ body {
   color: #0ad;
 }
 
+.qualityname.communication.less {
+  color: rgba(0, 170, 221, .5);
+}
+
+
 .qualityname.virtue {
   color: #d2316c;
 }
@@ -991,6 +996,10 @@ body {
 
 .qualityname.problem_solving {
   color: #3ba12b;
+}
+
+.qualityname.problem_solving.less {
+  color: rgba(59, 161, 43, .5);
 }
 
 .qualityname.self_management {
