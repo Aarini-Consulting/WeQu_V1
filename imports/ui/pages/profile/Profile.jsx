@@ -131,7 +131,7 @@ class Profile extends React.Component {
 
         <Strength quizPerson={this.getActiveProfile()}/>
 
-        <ShareProfile/>
+        {/* <ShareProfile/> */}
 
         <SkillSet quizPerson={this.getActiveProfile()}/>
 

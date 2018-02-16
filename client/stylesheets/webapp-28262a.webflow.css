@@ -656,12 +656,6 @@ html.w-mod-js *[data-ix="loginbox"] {
     font-size: 25px;
 }
 
-.friendlist {
-  margin-top: 0px;
-  float: left;
-  clear: left;
-}
-
 .avatawrapper {
   padding-right: 30px;
   float: left;

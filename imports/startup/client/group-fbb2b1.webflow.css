@@ -99,12 +99,6 @@ h1 {
   text-align: center;
 }
 
-.friendlist {
-  margin-top: 0px;
-  float: left;
-  clear: left;
-}
-
 .list-item {
   display: block;
   width: 100%;

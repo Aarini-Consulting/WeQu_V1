@@ -36,7 +36,7 @@ class Settings extends React.Component {
                 <div className="fontreleway fontstatement" onClick={()=>{
                     Session.set( "loggedOut", true);
                     Meteor.logout()
-                    }}>LOG OUT</div>
+                    }}><u>LOG OUT</u></div>
             </div>
             </li>
         </ul>

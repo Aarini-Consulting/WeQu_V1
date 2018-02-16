@@ -103,8 +103,8 @@ class QuizSummary extends React.Component {
             </div>
             <div className="summarysection w-clearfix">
             {this.props.quizPerson && this.props.quizPerson._id == Meteor.userId() 
-            ?<div className="fontreleway fonttitle">You&#x27;ve reflected that you are...</div>
-            :<div className="fontreleway fonttitle">You&#x27;ve reflected that {getUserName(this.props.quizPerson.profile)} is...</div>
+            ?<div className="fontreleway fonttitle summary">You&#x27;ve reflected that you are...</div>
+            :<div className="fontreleway fonttitle summary">You&#x27;ve reflected that {getUserName(this.props.quizPerson.profile)} is...</div>
             }
               
             </div>
