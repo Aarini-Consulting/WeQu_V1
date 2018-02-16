@@ -129,7 +129,6 @@ class InvitePage extends React.Component {
   }
 
   render() {
-    console.log(this.props.dataReady);
     if(this.props.dataReady){
       if((this.props.count != undefined && this.props.count < 1) && !this.state.showInvite ){
         return (
