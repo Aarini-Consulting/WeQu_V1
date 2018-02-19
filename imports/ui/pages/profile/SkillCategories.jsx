@@ -20,16 +20,14 @@ class SkillCategories extends React.Component {
         let userId = nextProps.user._id;
         var data = { userId:userId, profile : nextProps.user.profile };
 
-        var joinedQset = nextProps.feedbacks.map((fb, index)=>{
-            return fb.qset;
-        })
+        // var joinedQset = nextProps.feedbacks.map((fb, index)=>{
+        //     return fb.qset;
+        // })
         
 
-        var validAnswers = joinedQset.filter((q, index)=>{
-            return q.answer;
-        })
-
-        var otherscore = calculateScore(joinedQset, true);
+        var validAnswers = _.filter(joinFeedbacks(nextProps.feedbacks), function(question) { return question.answer });
+        
+        var otherscore = calculateScore(joinFeedbacks(nextProps.feedbacks), true);
         data.enoughData = (validAnswers.length > 9);
 
         var i=0;
@@ -64,8 +62,8 @@ class SkillCategories extends React.Component {
                     </div>
                     <div className="score">
                     {skill.total <= 0 
-                    ?"0"
-                    :(skill.scored/skill.total)
+                    ?"0/0"
+                    :skill.scored +"/"+ skill.total
                     }
                     </div>
                 </div>
