@@ -1132,6 +1132,13 @@ body {
   border-style: none;
 }
 
+.column-4 {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
 .contactnamefield {
   display: inline-block;
   border-bottom: 1px none #000;
@@ -1165,13 +1172,15 @@ body {
 
 .c-data {
   height: 50px;
-  float: right;
-  clear: right;
+  /* float: right;
+  clear: right; */
 }
 
 .contactc {
   width: 100%;
   height: 50px;
+  display: flex;
+  flex-direction: row;
 }
 
 .contactc.contacttop {
@@ -1625,12 +1634,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     padding-left: 4px;
   }
   .fontcontactname {
-    display: none;
     font-size: 0.9em;
     line-height: 10px;
-  }
-  .c-data {
-    display: none;
   }
   .contactq-div.contactqmobile {
     width: 70px;
@@ -1646,13 +1651,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     font-weight: 700;
   }
 
-  .column-5 {
+  /* .column-5 {
     position: static;
     top: 0px;
     right: 0px;
     bottom: 0px;
     text-align: left;
-  }
+  } */
 }
 
 .footersummary {

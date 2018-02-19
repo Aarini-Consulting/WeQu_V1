@@ -68,7 +68,7 @@ class InvitePage extends React.Component {
     return this.props.usersGroup.map((user, index) => {
         return (
           <div key={groupId +" "+ user._id} className="contactc w-row">
-            <div className="column-4 w-col w-col-5 w-col-small-5 w-col-tiny-5">
+            <div className="column-4">
               <div className="contactnamefield w-clearfix cursor-pointer" 
               onClick={()=>{
                 this.props.history.push(`/profile/${user._id}`);
@@ -77,7 +77,7 @@ class InvitePage extends React.Component {
                 <div className="fontcontactname">{getUserName(user.profile)}</div>
               </div>
             </div>
-            <div className="column-5 w-clearfix w-col w-col-7 w-col-small-7 w-col-tiny-7">
+            <div className="column-5 w-clearfix">
               <div className="c-data">
                 <div className="coontactcount2 w-clearfix">
                   <div className="contactq-div contactqmobile w-clearfix">
@@ -106,11 +106,11 @@ class InvitePage extends React.Component {
                     </div>
                     <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve received</div>
                   </div>
-                  <Link to={`/quiz/${user._id}/${groupId}`}className="contactq-div w-clearfix cursor-pointer">
+                  <Link to={`/quiz/${user._id}/${groupId}`}className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
                     <div className="fontreleway fontcontactq _1-top">Go to</div>
                     <div className="fontreleway fontcontactq _3">QUIZ</div>
                   </Link>
-                  <Link to={`/profile/${user._id}/${groupId}`} className="contactq-div w-clearfix cursor-pointer">
+                  <Link to={`/profile/${user._id}/${groupId}`} className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
                     <div className="fontreleway fontcontactq _1-top">Go to</div>
                     <div className="fontreleway fontcontactq _3">PROFILE</div>
                   </Link>
@@ -158,7 +158,7 @@ class InvitePage extends React.Component {
         return (
                 <li className="contactlist"  key={user._id}>
                   <div className="contactc w-row">
-                    <div className="column-4 w-col w-col-5 w-col-small-5 w-col-tiny-5">
+                    <div className="column-4">
                       <div className="contactnamefield w-clearfix cursor-pointer" 
                       onClick={()=>{
                         this.props.history.push(`/profile/${user._id}`);
@@ -167,7 +167,7 @@ class InvitePage extends React.Component {
                         <div className="fontcontactname">{getUserName(user.profile)}</div>
                       </div>
                     </div>
-                    <div className="column-5 w-clearfix w-col w-col-7 w-col-small-7 w-col-tiny-7">
+                    <div className="column-5 w-clearfix">
                       <div className="c-data">
                         <div className="coontactcount2 w-clearfix">
                           <div className="contactq-div contactqmobile w-clearfix">
@@ -196,11 +196,11 @@ class InvitePage extends React.Component {
                             </div>
                             <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve received</div>
                           </div>
-                          <Link to={`/quiz/${user._id}`}className="contactq-div w-clearfix cursor-pointer">
+                          <Link to={`/quiz/${user._id}`}className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
                             <div className="fontreleway fontcontactq _1-top">Go to</div>
                             <div className="fontreleway fontcontactq _3">QUIZ</div>
                           </Link>
-                          <Link to={`/profile/${user._id}`} className="contactq-div w-clearfix cursor-pointer">
+                          <Link to={`/profile/${user._id}`} className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
                             <div className="fontreleway fontcontactq _1-top">Go to</div>
                             <div className="fontreleway fontcontactq _3">PROFILE</div>
                           </Link>
