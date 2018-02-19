@@ -105,6 +105,8 @@ const App = () => (
       <Route exact path='/quiz/:uid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
       <Route exact path='/quiz/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
       <Route exact path='/profile' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
+      <Route exact path='/profile/:uid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
+      <Route exact path='/profile/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
       <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} />
       <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
