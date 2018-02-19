@@ -15,7 +15,7 @@ class QuizPage extends React.Component {
         return (
           <div className="fillHeight">
           <Menu location={this.props.location} history={this.props.history}/>
-          <Quiz quizUser={this.props.quizUser}/>
+          <Quiz quizUser={this.props.quizUser} group={this.props.group}/>
           </div>
         );
       }else{
@@ -34,8 +34,8 @@ class QuizPage extends React.Component {
 
 export default withTracker((props) => {
   var dataReady;
-  var feedback;
   var quizUser;
+  var group;
 
   if(props.match.params.uid){
       if(props.match.params.uid){
@@ -46,8 +46,24 @@ export default withTracker((props) => {
         });
 
         if(handleUsers.ready()){
+          
           quizUser = Meteor.users.findOne({_id : props.match.params.uid});
-          dataReady = true;
+          if(quizUser && props.match.params.gid){
+            var handleGroups = Meteor.subscribe('group',{_id : props.match.params.gid},{}, {
+              onError: function (error) {
+                      console.log(error);
+                  }
+            });
+            if(handleGroups.ready()){
+              group = Group.findOne({_id:props.match.params.gid});
+              dataReady = true;
+            }
+            
+          }
+          else{
+            dataReady = true;
+          }
+          
         }
       }
   }else{
@@ -59,6 +75,7 @@ export default withTracker((props) => {
   return {
       currentUser: Meteor.user(),
       quizUser: quizUser,
+      group: group,
       dataReady:dataReady,
   };
 })(QuizPage);

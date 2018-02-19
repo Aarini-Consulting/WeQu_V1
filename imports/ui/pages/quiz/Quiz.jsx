@@ -61,7 +61,8 @@ class Quiz extends React.Component {
     var currentFeedback;
     if(!this.state.currentFeedback || 
       (props.feedback.from === this.state.currentFeedback.from &&
-        props.feedback.to === this.state.currentFeedback.to)){
+        props.feedback.to === this.state.currentFeedback.to &&
+        props.feedback.groupId === this.state.currentFeedback.groupId)){
       currentFeedback = props.feedback;
 
       this.setState({
@@ -72,7 +73,8 @@ class Quiz extends React.Component {
       currentFeedback = props.feedbacksArray.find(
         (fa)=>{
           return (
-            fa.from === this.state.currentFeedback.from && fa.to === this.state.currentFeedback.to 
+            fa.from === this.state.currentFeedback.from && fa.to === this.state.currentFeedback.to &&
+            fa.groupId === this.state.currentFeedback.groupId
           )}
         );
     }
@@ -162,7 +164,8 @@ class Quiz extends React.Component {
       var currentFeedback;
       var currentIndex = this.props.feedbacksArray.findIndex((fb)=>{
         return (fb.from === this.state.currentFeedback.from &&
-                fb.to === this.state.currentFeedback.to)
+                fb.to === this.state.currentFeedback.to &&
+                fb.groupId === this.state.currentFeedback.groupId)
       })
       if(bool) {
         if(currentIndex < 0){
@@ -333,10 +336,16 @@ export default withTracker((props) => {
 
   if((props.feedback || (handleFeedback && handleFeedback.ready()))){
     if(!props.feedback){
-      if(!props.quizUser){
-        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
+      if(props.quizUser){
+        if(props.group){
+          feedback = Feedback.findOne(
+            { 'from': Meteor.userId(), 'to' : props.quizUser._id, groupId:props.group._id, done: false });
+        }else{
+          feedback = Feedback.findOne(
+            { 'from': Meteor.userId(), 'to' : props.quizUser._id, groupId:{$exists: false}, done: false });
+        }
       }else{
-        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
+        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
       }
       feedbacksArray = Feedback.find({
         done: false,

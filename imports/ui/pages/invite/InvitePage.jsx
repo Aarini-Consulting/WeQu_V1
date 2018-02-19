@@ -58,7 +58,7 @@ class InvitePage extends React.Component {
       return (
         <li key={group._id} className="contactlist" >
             <div>{group.groupName}</div>                
-            {this.renderGroupFriendList(group.groupId)}
+            {this.renderGroupFriendList(group._id)}
         </li>
       )
     })
@@ -106,11 +106,11 @@ class InvitePage extends React.Component {
                     </div>
                     <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve received</div>
                   </div>
-                  <Link to={`/quiz/${user._id}`}className="contactq-div w-clearfix cursor-pointer">
+                  <Link to={`/quiz/${user._id}/${groupId}`}className="contactq-div w-clearfix cursor-pointer">
                     <div className="fontreleway fontcontactq _1-top">Go to</div>
                     <div className="fontreleway fontcontactq _3">QUIZ</div>
                   </Link>
-                  <Link to={`/profile/${user._id}`} className="contactq-div w-clearfix cursor-pointer">
+                  <Link to={`/profile/${user._id}/${groupId}`} className="contactq-div w-clearfix cursor-pointer">
                     <div className="fontreleway fontcontactq _1-top">Go to</div>
                     <div className="fontreleway fontcontactq _3">PROFILE</div>
                   </Link>
