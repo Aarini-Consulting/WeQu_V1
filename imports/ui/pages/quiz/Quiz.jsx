@@ -219,32 +219,31 @@ class Quiz extends React.Component {
       }
       else{
         return (
-          <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
+          <section className="quiz-section">
             <section className="person">
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-                <div className="w-inline-block">
+                <div className="w-inline-block cursor-pointer">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
                   </a>
                 </div>
               }
               <div className="h4 w-inline-block" id="specificUser">
-                <div>
-                  {this.state.currentFeedback 
-                  ?
-                    this.state.currentFeedback.groupName
-                  :
-                    ''
-                  }
-                </div>
                 {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
                 <img src="/img/avatar.png" className="avatar" id="specificUser"/>
       
                 <br/>
-                {this.state.username }
+                <div className="fontreleway f-q-username">
+                  {this.state.username }
+                </div>
+
+                <div className="fontreleway f-q-username f-q-groupname" 
+                style={{visibility:(this.state.currentFeedback && this.state.currentFeedback.groupName) ? 'visible' :'hidden'}}>
+                  {this.state.currentFeedback.groupName}
+                </div>
               </div>
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-              <div className="w-inline-block">
+              <div className="w-inline-block cursor-pointer">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
                 </a>
@@ -253,7 +252,7 @@ class Quiz extends React.Component {
             </section>
             
             {this.state.currentFeedback && this.state.currentQuestion &&
-            <section>
+            <section className="fontreleway">
               <div className="question">
                 <h2>{this.state.currentQuestion.text}</h2>
               </div>

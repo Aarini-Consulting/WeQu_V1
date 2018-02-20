@@ -20,7 +20,6 @@ html, body {
   //overflow-y: scroll;
   //-webkit-overflow-scrolling: touch;
 
-  cursor: pointer;
   //-webkit-backface-visibility: hidden;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 
@@ -205,7 +204,7 @@ input {
 section {
   //padding: 20px;
   //border: 1px solid red;
-  min-width: 100vw;
+  // min-width: 100vw;
 
   @include flex-grow(1);
   @include flex-shrink(1);
@@ -220,17 +219,16 @@ section {
 
 .person {
   //border: 1px solid red;
-
+  width:100%;
+  margin-top:6em;
   @include flex-direction(row);
   @include align-items(center);
 
   div {
     text-align: center;
-    @include flex-grow(1);
-    @include flex-shrink(1);
+    // @include flex-grow(1);
+    // @include flex-shrink(1);
     @include flex-basis(auto);
-    margin-left:8vw;
-    margin-right: 8vw;
     vertical-align: middle;
 
     //border: 1px solid red;
@@ -399,7 +397,7 @@ section {
   }
 
   .skip {
-    color: white;
+    color:#000;    
     text-decoration: none;
   }
 }
@@ -409,6 +407,12 @@ section {
 
   min-height: 20vh;
   width: 100vw;
+
+  font-family: Raleway, sans-serif;
+  color: #a0a0a0;
+  font-size: 2em;
+  line-height: 1.5em;
+  text-decoration: none;
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -454,14 +458,14 @@ section {
 
 li.answer:nth-child(odd) {
     border: none;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+    border-top: 1px solid hsla(0, 0%, 63%, .5);
+    border-bottom: 1px solid hsla(0, 0%, 63%, .5);
   }
 li.answer:nth-child(even) {
     border: none;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    border-left: 1px solid white;
+    border-top: 1px solid hsla(0, 0%, 63%, .5);
+    border-bottom: 1px solid hsla(0, 0%, 63%, .5);
+    border-left: 1px solid hsla(0, 0%, 63%, .5);
 }
 
 .maxContainer {
