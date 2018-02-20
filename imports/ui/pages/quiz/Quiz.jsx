@@ -2,10 +2,13 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
+import Radium from 'radium';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import InviteLandingSuccess from '/imports/ui/pages/invitationLanding/InviteLandingSuccess';
 import QuizSummary from './QuizSummary';
+
+import {color} from '/imports/startup/client/color';
 
 class Quiz extends React.Component {
   constructor(props){
@@ -104,8 +107,26 @@ class Quiz extends React.Component {
 
   renderAnswerList(answers) {
     return answers.map((answer) => {
+      var colorHover;
+      for (var categoryName in framework) {
+        if(framework[categoryName].indexOf(answer.skill) > -1){
+          colorHover = color(categoryName, true);
+        }
+        if(framework[categoryName].indexOf(answer.skill) > -1){
+          colorHover = color(categoryName, false);
+        }
+      }
+
       return (
-        <li className="answer" key={answer._id} id={answer._id} data-skill={answer.skill} onClick={this.answerQuestion.bind(this, answer)}>{answer.text}</li>
+        <li className="answer cursor-pointer" key={answer._id} onClick={this.answerQuestion.bind(this, answer)}
+        style={{
+          ':hover': {
+            color:'#fff',
+            backgroundColor: colorHover
+          }
+        }}>
+        {answer.text}
+        </li>
       );
     });
   }
@@ -222,7 +243,7 @@ class Quiz extends React.Component {
           <section className="quiz-section">
             <section className="person">
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-                <div className="w-inline-block cursor-pointer">
+                <div className="w-inline-block cursor-pointer prevPerson">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
                   </a>
@@ -243,7 +264,7 @@ class Quiz extends React.Component {
                 </div>
               </div>
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-              <div className="w-inline-block cursor-pointer">
+              <div className="w-inline-block cursor-pointer nextPerson">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
                 </a>
@@ -252,9 +273,9 @@ class Quiz extends React.Component {
             </section>
             
             {this.state.currentFeedback && this.state.currentQuestion &&
-            <section className="fontreleway">
-              <div className="question">
-                <h2>{this.state.currentQuestion.text}</h2>
+            <section className="fontreleway question-answer">
+              <div className="question noselect">
+                {this.state.currentQuestion.text}
               </div>
               <ul className="answers noselect">
                 {this.renderAnswerList(this.state.currentQuestion.answers)}
@@ -263,7 +284,7 @@ class Quiz extends React.Component {
                 <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
                 {//if not question to self, allow to skip
                   !(this.state.currentFeedback && this.state.currentFeedback.from == this.state.currentFeedback.to) &&
-                  <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
+                  <div><a className="skip cursor-pointer" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
                 }
               </div>
             </section>
@@ -395,4 +416,4 @@ export default withTracker((props) => {
       feedbacksArray:feedbacksArray,
       dataReady:dataReady,
   };
-})(Quiz);
+})(Radium(Quiz));

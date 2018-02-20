@@ -11,6 +11,7 @@
     "jquery": "^3.2.1",
     "node-pre-gyp": "^0.6.33",
     "object-assign": "^4.1.1",
+    "radium": "^0.22.0",
     "react": "^16.1.1",
     "react-addons-pure-render-mixin": "^15.6.2",
     "react-dom": "^16.1.1",
