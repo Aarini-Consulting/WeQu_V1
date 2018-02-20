@@ -1113,16 +1113,24 @@ body {
   background-color: #f3eeee;
 }
 
+.contactlist-wrapper {
+  margin-bottom:80px;
+}
+
 .contactlist {
   display: inline-block;
   width: 100%;
   margin-top: 15px;
   padding-left:2.5%;
   padding-right:2.5%;
-  border-bottom: 1px none #f3eeee;
   text-align: left;
   cursor: default;
   border-bottom: 5px solid #f3eeee;
+}
+
+.contactlist.group {
+  background-color: #f3eeee;
+  border-bottom: 5px solid #fff;
 }
 
 .contactface {
@@ -1144,13 +1152,13 @@ body {
   border-bottom: 1px none #000;
 }
 
-.unordered-list {
-  padding-bottom: 10px;
-}
-
 .unordered-list.listcontact {
     flex:1 1 auto;
-    margin-bottom:80px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.unordered-list.listcontact.group {
+  background-color: #f3eeee;
 }
 
 .fontcontactname {
@@ -1163,6 +1171,19 @@ body {
   line-height: 50px;
   font-weight: 700;
   height: 100%;
+}
+
+.fontcontactname.group {
+  display: block;
+  height:40px;
+  line-height: 40px;
+  font-size: 1.5em;
+  background-color: #f3eeee;
+  margin-top:1px;
+  border-bottom: 5px solid #fff;
+  text-align: left;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
 }
 
 .conractlist {
@@ -1630,13 +1651,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   }
   .unordered-list.listcontact {
     padding-right: 4px;
-    padding-bottom: 10px;
     padding-left: 4px;
   }
   .fontcontactname {
     font-size: 0.9em;
     line-height: 10px;
   }
+  
   .contactq-div.contactqmobile {
     width: 70px;
   }

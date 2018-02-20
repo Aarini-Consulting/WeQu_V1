@@ -56,10 +56,14 @@ class InvitePage extends React.Component {
   renderGroupList(){
     return this.props.groups.map((group, index)=>{
       return (
-        <li key={group._id} className="contactlist" >
-            <div>{group.groupName}</div>                
-            {this.renderGroupFriendList(group._id)}
-        </li>
+        <div key={group._id}>
+          <div className="fontcontactname group">
+          {group.groupName}
+          </div>
+          <ul className="unordered-list listcontact group w-clearfix w-list-unstyled">
+              {this.renderGroupFriendList(group._id)}
+          </ul>
+        </div>
       )
     })
   }
@@ -67,88 +71,59 @@ class InvitePage extends React.Component {
   renderGroupFriendList(groupId){
     return this.props.usersGroup.map((user, index) => {
         return (
-          <div key={groupId +" "+ user._id} className="contactc w-row">
-            <div className="column-4">
-              <div className="contactnamefield w-clearfix cursor-pointer" 
-              onClick={()=>{
-                this.props.history.push(`/profile/${user._id}`);
-              }}>
-                <img src="/img/avatar.png" className="contactface"/>
-                <div className="fontcontactname">{getUserName(user.profile)}</div>
+          <li  key={groupId +" "+ user._id} className="contactlist group" >
+            <div className="contactc w-row">
+              <div className="column-4">
+                <div className="contactnamefield w-clearfix cursor-pointer" 
+                onClick={()=>{
+                  this.props.history.push(`/profile/${user._id}`);
+                }}>
+                  <img src="/img/avatar.png" className="contactface"/>
+                  <div className="fontcontactname">{getUserName(user.profile)}</div>
+                </div>
               </div>
-            </div>
-            <div className="column-5 w-clearfix">
-              <div className="c-data">
-                <div className="coontactcount2 w-clearfix">
-                  <div className="contactq-div contactqmobile w-clearfix">
-                    <div className="fontreleway fontcontactq _1">
+              <div className="column-5 w-clearfix">
+                <div className="c-data">
+                  <div className="coontactcount2 w-clearfix">
+                    <div className="contactq-div contactqmobile w-clearfix">
+                      <div className="fontreleway fontcontactq _1">
+                        {
+                          Feedback.find({
+                            from:Meteor.userId(),
+                            to:user._id,
+                            done:true,
+                            groupId:{$exists: true}
+                            }).count() * 12
+                        }
+                        </div>
+                      <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve given</div>
+                    </div>
+                    <div className="contactq-div w-clearfix">
+                      <div className="fontreleway fontcontactq _2">
                       {
                         Feedback.find({
-                          from:Meteor.userId(),
-                          to:user._id,
+                          from:user._id,
+                          to:Meteor.userId(),
                           done:true,
                           groupId:{$exists: true}
                           }).count() * 12
                       }
                       </div>
-                    <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve given</div>
-                  </div>
-                  <div className="contactq-div w-clearfix">
-                    <div className="fontreleway fontcontactq _2">
-                    {
-                      Feedback.find({
-                        from:user._id,
-                        to:Meteor.userId(),
-                        done:true,
-                        groupId:{$exists: true}
-                        }).count() * 12
-                    }
+                      <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve received</div>
                     </div>
-                    <div className="fontreleway fontcontactq _1-top">Answers I&#x27;ve received</div>
+                    <Link to={`/quiz/${user._id}/${groupId}`}className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
+                      <div className="fontreleway fontcontactq _1-top">Go to</div>
+                      <div className="fontreleway fontcontactq _3">QUIZ</div>
+                    </Link>
+                    <Link to={`/profile/${user._id}/${groupId}`} className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
+                      <div className="fontreleway fontcontactq _1-top">Go to</div>
+                      <div className="fontreleway fontcontactq _3">PROFILE</div>
+                    </Link>
                   </div>
-                  <Link to={`/quiz/${user._id}/${groupId}`}className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
-                    <div className="fontreleway fontcontactq _1-top">Go to</div>
-                    <div className="fontreleway fontcontactq _3">QUIZ</div>
-                  </Link>
-                  <Link to={`/profile/${user._id}/${groupId}`} className="contactq-div w-clearfix cursor-pointer w-hidden-small w-hidden-tiny">
-                    <div className="fontreleway fontcontactq _1-top">Go to</div>
-                    <div className="fontreleway fontcontactq _3">PROFILE</div>
-                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-
-            // <div key={groupId +" "+ user._id}>
-            //   <div className="row">
-            //     <div className="col-md-12 col-sm-12 col-xs-12">
-            //     <Link className="avatawrapper padding10"  to={`/quiz/${user._id}`}>
-            //         {user.services && user.services.linkedin && user.services.linkedin.pictureUrl
-            //         ?
-            //         <div>
-            //         <img className="image-5 img-circle" src={user.services.linkedin.pictureUrl}/> 
-            //         <span className="font-white contactName"> 
-            //         {user.invitedPerson 
-            //             ? getUserName(user.profile) + " " + "( Invited You )" 
-            //             : getUserName(user.profile)
-            //         }
-            //         </span>
-            //         </div>
-            //         :    
-            //         <div>
-            //         <img className="image-5" src="/img/avatar.png"/> 
-            //         <span className="font-white contactName"> 
-            //         {user.invitedPerson 
-            //             ? getUserName(user.profile) + " " + "( Invited You )" 
-            //             : getUserName(user.profile)
-            //         }
-            //         </span>
-            //         </div>
-            //         } 
-            //     </Link>
-            //     </div>
-            //   </div>
-            // </div>
+          </li>
         );
       });
   }
@@ -246,24 +221,13 @@ class InvitePage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section>
-                {/* <div className="contentwrapper w-clearfix">
-                <div className="screentitlewrapper w-clearfix">
-                    <div className="screentitle">
-                    <div className="title">Add Contact</div>
-                    </div>
-                    <div className="screentitlebttn">
-                    <a className="w-inline-block marginTop5" onClick={this.showInvite.bind(this, true)}><img src="/img/Invite_Plus_white.png"/>
-                    </a>
-                    </div>
-                </div> */}
-                
-                <ul className="unordered-list listcontact w-clearfix w-list-unstyled">
-
-                    {this.renderFriendList()}
-
-                    {this.renderGroupList()}
-                </ul>
+            <section className="section summary">
+                <div className="contactlist-wrapper">
+                  <ul className="unordered-list listcontact w-clearfix w-list-unstyled">
+                      {this.renderFriendList()}
+                  </ul>
+                  {this.renderGroupList()}
+                </div>
 
                 <div className="footersummary w-clearfix">
                   <div className="bttn-area-summary contact" >
