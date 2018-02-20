@@ -204,7 +204,7 @@ input {
 section {
   //padding: 20px;
   //border: 1px solid red;
-  // min-width: 100vw;
+  width:100%;
 
   @include flex-grow(1);
   @include flex-shrink(1);
@@ -270,7 +270,7 @@ section {
 
 .feed {
   @extend section;
-
+  width:100%;
   padding: 0;
   height:100%;
   overflow-y: auto;
