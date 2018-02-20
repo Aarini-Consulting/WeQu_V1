@@ -246,12 +246,12 @@
   margin-bottom: 40px;
   padding-bottom: 0px;
   font-family: Raleway, sans-serif;
-  color: #fff;
+  color: #000;
   font-size: 18px;
   text-align: center;
 }
 
-.invitebttn {
+.invitebttn.w-button {
   position: static;
   display: block;
   overflow: visible;

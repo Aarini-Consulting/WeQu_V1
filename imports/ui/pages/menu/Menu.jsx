@@ -6,7 +6,7 @@ export default class Menu extends React.Component {
         var currentPath = this.props.location.pathname;
         if(path == currentPath){
             this.props.history.replace(path);
-        }else if(currentPath.startsWith(path) || path.startsWith(currentPath)){
+        }else if(currentPath.startsWith(path+"/") || path.startsWith(currentPath+"/")){
             this.props.history.push(path);
             window.location.reload();
         }else{
@@ -26,7 +26,7 @@ export default class Menu extends React.Component {
                     <span className="dropdown-arrow"></span>
                     <div className="dd-contact-box">
                         <a onClick={this.decideAction.bind(this,"/invite")} className="text fontreleway fontmenu fdropdown w-dropdown-a">personal</a>
-                        <a onClick={this.decideAction.bind(this,"/invite-group")} href="#" className="text fontreleway fontmenu fdropdown w-dropdown-a">Group</a>
+                        <a onClick={this.decideAction.bind(this,"/invite-group")} className="text fontreleway fontmenu fdropdown w-dropdown-a">Group</a>
                     </div>
                 </div>
             :
