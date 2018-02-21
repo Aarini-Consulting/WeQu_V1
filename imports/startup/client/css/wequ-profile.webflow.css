@@ -1881,6 +1881,127 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width:100%;
 }
 
+.screentitlewrapper {
+  width: 100%;
+  height: 90px;
+  margin-top: 0px;
+  padding-top: 20px;
+  float: none;
+  clear: none;
+}
+
+.fontreleway.font-invite-title {
+  color: #a0a0a0;
+  font-size: 1.5em;
+  text-align: left;
+  line-height: 1.5em;
+}
+
+.fontreleway.f-c-invite {
+  color: #a0a0a0;
+  font-size: 1.2em;
+  text-align: left;
+  flex-basis: 4em;
+  margin-right:1em;
+  padding-bottom:0.75em;
+}
+
+.form {
+  border-bottom: 2px none #f75f04;
+}
+
+.form-invite {
+  padding-bottom:2px;
+  border-bottom: 2px solid #f75f04;
+  font-family: Raleway, sans-serif;
+  font-size: 1em;
+  text-align: left;
+}
+
+.form-invite:focus {
+  color: #f75f04;
+}
+
+.form-invite::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  text-align: left;
+}
+.form-invite::-moz-placeholder { /* Firefox 19+ */
+  text-align: left;
+}
+.form-invite:-ms-input-placeholder { /* IE 10+ */
+  text-align: left;
+}
+.form-invite:-moz-placeholder { /* Firefox 18- */
+  text-align: left;
+}
+.form-invite::placeholder {
+  text-align: left;
+}
+
+.form-field-wrapper{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 40px;
+  margin-bottom: 5px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.form-radio-group{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  align-items: center;
+  width:8em;
+}
+
+.form-radio {
+  width: 85%;
+  float: right;
+  text-align: left;
+}
+
+.field-label {
+  font-family: Raleway, sans-serif;
+  color: #a0a0a0;
+  font-size: 1em;
+  flex-basis: 4em;
+}
+
+.bttn.bttn-invite {
+  display: inline-block;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 500px;
+  background-color: #a0a0a0;
+  -webkit-transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-size: 1.2em;
+}
+
 
 
 @font-face {

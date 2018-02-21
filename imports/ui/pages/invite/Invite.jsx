@@ -87,33 +87,49 @@ handleBackArrowClick(){
       }
       else{
         return (
-            <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText feed"}>
+            <section className="fontreleway">
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   {this.props.count != undefined && this.props.count > 0 &&
                     <a className="w-clearfix w-inline-block" onClick={this.handleBackArrowClick.bind(this)}>
-                    <img className="image-7" src="/img/arrow_white.png"/>
+                    <img className="image-7" src="/img/arrow.svg"/>
                     </a>
                   }
                 </div>
-                <div className="screentitle w-clearfix">
-                  <div className="titleGr">Invite teammate</div>
+                <div className="fontreleway font-invite-title w-clearfix">
+                  Invite teammate
                 </div>
               </div>
               <div className="contentwrapper invite">
                 <div className="inviteform w-form">
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                  <input className="emailfield font-white w-input" data-name="Name" id="name" maxLength="256" name="name" ref="name" placeholder="name" type="text" required/>
-                  <input className="emailfield font-white w-input" data-name="Email" id="email" maxLength="256" name="email" ref="email" placeholder="email address" required type="email" style={{textTransform:"lowercase"}}/>
-                  <div className="w-radio">
-                    <label className="w-form-label font-text-20"><input type="radio" name="gender" id="m" ref="male" value="Male" className="gender" required/>male</label>
+                <div className="form-field-wrapper">
+                    <label className="fontreleway f-c-invite">Name</label>
+                    <input type="text" className="form-invite w-input" maxLength="256" name="name" data-name="Name" placeholder="Name" id="name" ref="name" required/>
                   </div>
-                  <div className="w-radio">
-                    <label className="w-form-label font-text-20"><input type="radio" name="gender" id="f" ref="female" value="Female" className="gender margin10" required/>female</label>
+
+                  <div className="form-field-wrapper">
+                    <label className="fontreleway f-c-invite">Email</label>
+                    <input type="email" className="form-invite w-input" maxLength="256" name="email" data-name="Email" placeholder="Email address" id="email" ref="email" required style={{textTransform:"lowercase"}}/>
                   </div>
-                    
-                  <button className="formbttn invitebttn w-button" id="sendInvite" data-wait="Please wait..." type="submit"> send invitation</button>
+
+                  <div className="form-field-wrapper">
+                    <label className="fontreleway f-c-invite">Gender</label>
+                    <div className="form-radio-group">
+                      <div className="form-radio w-radio">
+                        <input type="radio" name="gender" id="m" ref="male" value="Male" className="w-radio-input" required/>
+                        <label className="field-label w-form-label">Male</label>
+                      </div>
+                      <div className="form-radio w-radio">
+                        <input type="radio" name="gender" id="f" ref="female" value="Female" className="w-radio-input" required/>
+                        <label className="field-label w-form-label">Female</label>
+                      </div>
+                    </div>
+                  </div>
+                  <button className="bttn bttn-invite w-button" id="sendInvite" data-wait="Please wait..." type="submit"> send invitation</button>
                 </form>
+                  
+                  
               
                 {this.state.inviteStatus == 'sending' && 
                   <span className="sendingStatus"><img src="/img/status_sending.png"/>sending...</span>
