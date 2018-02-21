@@ -345,7 +345,7 @@ section {
 }
 
 .skillElement {
-  width: 90%;
+  width: 100%;
   min-height: 15px;
   padding: 5px 10px;
 
@@ -380,6 +380,7 @@ section {
   .score {
     font-size: $h5;
     margin-left: $h5;
+    text-align: right;
   }
   .value {background-color: #DF6959;}
   .problem_solving {background-color: #379350;}
@@ -399,6 +400,7 @@ section {
   @include flex-wrap(nowrap);
   @include justify-content(space-around);
   @include align-items(center);
+  @include flex-basis(50px);
 
   > div {
     //border: 1px solid red;

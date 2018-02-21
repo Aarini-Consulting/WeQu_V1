@@ -42,7 +42,7 @@ class Quiz extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.feedback && !this.state.showSummary){
+    if(nextProps.feedback){
       var current = this.getCurrentQuestion(nextProps);
       if(!this.state.showSummary && this.props.inviteLanding && !current){
         this.setState({
@@ -271,12 +271,13 @@ class Quiz extends React.Component {
               </div>
               }
             </section>
-            
+            {this.state.currentFeedback && this.state.currentQuestion &&
+            <div className="question noselect">
+              {this.state.currentQuestion.text}
+            </div>
+            }
             {this.state.currentFeedback && this.state.currentQuestion &&
             <section className="fontreleway question-answer">
-              <div className="question noselect">
-                {this.state.currentQuestion.text}
-              </div>
               <ul className="answers noselect">
                 {this.renderAnswerList(this.state.currentQuestion.answers)}
               </ul>
@@ -380,8 +381,8 @@ export default withTracker((props) => {
         },
       { sort: { _id: -1 }}).fetch()
       .filter((fb, index, fa)=>{
-        return index === fa.findIndex((fb2)=>{
-          return (fb2.to === fb.to);
+        return index == fa.findIndex((fb2)=>{
+          return (fb2.to === fb.to && fb2.from === fb.from && fb2.groupId === fb.groupId);
         })
       });
 
@@ -402,7 +403,6 @@ export default withTracker((props) => {
     }else{
       dataReady = true;
     }
-
     username = getUserName(user.profile);
     
   }
