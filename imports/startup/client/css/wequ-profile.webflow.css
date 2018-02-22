@@ -12,6 +12,10 @@
                                   supported by Chrome and Opera */
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 body {
   box-shadow: none;
   font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
@@ -99,6 +103,29 @@ body {
   font-family: Raleway, sans-serif;
   color: #000;
   text-decoration: none;
+}
+
+.fontreleway.f-q-username {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #a0a0a0;
+  font-weight: 700;
+}
+
+.fontreleway.f-q-username.f-q-groupname {
+  display: inline-block;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 500px;
+  background-color: #b2b2b2;
+  padding-top:0.2em;
+  padding-bottom:0.2em;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  color:#fff;
+  font-size:1em;
+  font-weight: 200;
+  min-height:1.4em;
 }
 
 .fontreleway.fontprofilename {
@@ -253,6 +280,38 @@ body {
   text-align: center;
 }
 
+.fontreleway.fonttitle.summary {
+  margin-right: 5%;
+  margin-left: 5%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 0px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: initial;
+  -webkit-align-items: left;
+  -ms-flex-align: initial;
+  align-items: left;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 auto;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+  color: #a0a0a0;
+  font-size: 1.4em;
+  line-height: 30px;
+  font-weight: 700;
+  text-align: left;
+}
+
 .fontreleway.fonttitle {
   display: -webkit-box;
   display: -webkit-flex;
@@ -352,6 +411,84 @@ body {
   border-right-color: #f3eeee;
 }
 
+.quiz-section{
+  display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+  -webkit-box-align: center;
+  align-items: center;
+
+  flex-direction: column;
+  flex-basis: 0;
+  justify-content: center;
+
+  flex-grow:1;
+
+  width:100%;
+}
+
+.question-answer{
+  display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+  -webkit-box-align: center;
+  align-items: center;
+
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: center;
+
+  flex-grow:3;
+
+  width: 100%;
+}
+
+.question{
+  font-size:2em;
+  display:block;
+  padding:1em;
+}
+
+.h4.w-inline-block{
+  flex-basis: 40vw;
+}
+
+.answer.communication:hover{
+  color:#fff;
+  background-color: #0ad;
+}
+
+.answer.virtue:hover{
+  color:#fff;
+  background-color: #d2316c;
+}
+
+.answer.leadership:hover{
+  color:#fff;
+  background-color: #273888;
+}
+
+.answer.teamwork:hover{
+  color:#fff;
+  background-color: #f75f04;
+}
+
+.answer.problem_solving:hover{
+  color:#fff;
+  background-color: #3ba12b;
+}
+
+.answer.self_management:hover{
+  color:#fff;
+  background-color: #9a61ba;
+}
+
 .quizcount {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -373,6 +510,7 @@ body {
 .section.summary {
   overflow: visible;
   overflow:scroll;
+  width:100%;
 }
 
 .sectionprofile {
@@ -499,9 +637,8 @@ body {
 }
 
 .profilebttn {
-  display: block;
-  width: 50%;
-  height: 50px;
+  display: inline-block;
+  line-height: 50px;
   margin-right: auto;
   margin-left: auto;
   border: 2px solid #8a8a8a;
@@ -590,7 +727,8 @@ body {
 .columtop {
   display: block;
   width: 80%;
-  margin-top: 35px;
+  margin-top: 1.5em;
+  margin-bottom: 2em;
   margin-right: auto;
   margin-left: auto;
 }
@@ -738,6 +876,21 @@ body {
   filter: blur(2px);
 }
 
+.skillcovergrey2.fontreleway{
+  color:#a0a0a0;
+}
+
+.skill-elements-wrapper{
+  margin-bottom:1em;
+}
+
+.row-center-10{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
 .socialcolum {
   display: block;
   width: 80%;
@@ -884,6 +1037,7 @@ body {
   line-height: 50px;
   text-transform: uppercase;
   position: relative;
+  cursor: pointer;
 }
 
 .text.fontreleway.fontmenu:hover {
@@ -1077,14 +1231,24 @@ body {
   background-color: #f3eeee;
 }
 
+.contactlist-wrapper {
+  margin-bottom:80px;
+}
+
 .contactlist {
   display: inline-block;
   width: 100%;
-  margin-top: 15px;
-  margin-left: 2%;
-  float: left;
-  border-bottom: 1px none #f3eeee;
+  padding-bottom:1em;
+  padding-left:2.5%;
+  padding-right:2.5%;
   text-align: left;
+  cursor: default;
+  border-bottom: 5px solid #f3eeee;
+}
+
+.contactlist.group {
+  background-color: #f3eeee;
+  border-bottom: 5px solid #fff;
 }
 
 .contactface {
@@ -1094,35 +1258,50 @@ body {
   border-style: none;
 }
 
+.column-4 {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
 .contactnamefield {
-  width: 100%;
+  display: inline-block;
   border-bottom: 1px none #000;
 }
 
-.unordered-list {
-  padding-bottom: 10px;
-  border-bottom: 5px solid #f3eeee;
-}
-
 .unordered-list.listcontact {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-right: 40px;
-  padding-bottom: 15px;
+    flex:1 1 auto;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.unordered-list.listcontact.group {
+  background-color: #f3eeee;
 }
 
 .fontcontactname {
-  display: inline-block;
-  margin-top: 4%;
-  margin-left: 10px;
-  padding-left: 0px;
-  float: left;
+  display:inline-block;
+  padding-left: 10px;
   clear: none;
   font-family: Raleway, sans-serif;
   color: #a0a0a0;
   font-size: 1.4em;
-  line-height: 20px;
+  line-height: 50px;
   font-weight: 700;
+  height: 100%;
+}
+
+.fontcontactname.group {
+  display: block;
+  height:40px;
+  line-height: 1.5em;
+  font-size: 1.5em;
+  background-color: #f3eeee;
+  border-bottom: 5px solid #fff;
+  text-align: left;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  padding-bottom:5px;
 }
 
 .conractlist {
@@ -1132,13 +1311,15 @@ body {
 
 .c-data {
   height: 50px;
-  float: right;
-  clear: right;
+  /* float: right;
+  clear: right; */
 }
 
 .contactc {
   width: 100%;
   height: 50px;
+  display: flex;
+  flex-direction: row;
 }
 
 .contactc.contacttop {
@@ -1148,10 +1329,6 @@ body {
 .contactq-div {
   width: 80px;
   float: left;
-}
-
-.fontcontactnamem {
-  display: none;
 }
 
 .c-data-area {
@@ -1387,6 +1564,21 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 @media (max-width: 479px) {
+  .h4.w-inline-block{
+    flex-basis: 70vw;
+  }
+  .question{
+    font-size:1.5em;
+  }
+  .answers{
+    font-size:1em;
+  }
+  .row.center{
+    margin:0px;
+  }
+  .row-center-10{
+    width:100%;
+  }
   .sectionname.public {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -1592,17 +1784,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   }
   .unordered-list.listcontact {
     padding-right: 4px;
-    padding-bottom: 10px;
     padding-left: 4px;
   }
   .fontcontactname {
-    display: none;
     font-size: 0.9em;
     line-height: 10px;
   }
-  .c-data {
-    display: none;
-  }
+  
   .contactq-div.contactqmobile {
     width: 70px;
   }
@@ -1616,22 +1804,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     line-height: 15px;
     font-weight: 700;
   }
-  .c-data-m {
-    padding-top: 5px;
-    float: right;
-  }
-  .c-data-area {
-    display: block;
-    width: 74px;
-    float: left;
-  }
-  .column-5 {
+
+  /* .column-5 {
     position: static;
     top: 0px;
     right: 0px;
     bottom: 0px;
     text-align: left;
-  }
+  } */
 }
 
 .footersummary {
@@ -1728,6 +1908,127 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin-left: auto;
   margin-right: auto;
   width:100%;
+}
+
+.screentitlewrapper {
+  width: 100%;
+  height: 90px;
+  margin-top: 0px;
+  padding-top: 20px;
+  float: none;
+  clear: none;
+}
+
+.fontreleway.font-invite-title {
+  color: #a0a0a0;
+  font-size: 1.5em;
+  text-align: left;
+  line-height: 1.5em;
+}
+
+.fontreleway.f-c-invite {
+  color: #a0a0a0;
+  font-size: 1.2em;
+  text-align: left;
+  flex-basis: 4em;
+  margin-right:1em;
+  padding-bottom:0.75em;
+}
+
+.form {
+  border-bottom: 2px none #f75f04;
+}
+
+.form-invite {
+  padding-bottom:2px;
+  border-bottom: 2px solid #f75f04;
+  font-family: Raleway, sans-serif;
+  font-size: 1em;
+  text-align: left;
+}
+
+.form-invite:focus {
+  color: #f75f04;
+}
+
+.form-invite::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  text-align: left;
+}
+.form-invite::-moz-placeholder { /* Firefox 19+ */
+  text-align: left;
+}
+.form-invite:-ms-input-placeholder { /* IE 10+ */
+  text-align: left;
+}
+.form-invite:-moz-placeholder { /* Firefox 18- */
+  text-align: left;
+}
+.form-invite::placeholder {
+  text-align: left;
+}
+
+.form-field-wrapper{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 40px;
+  margin-bottom: 5px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.form-radio-group{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  align-items: center;
+  width:8em;
+}
+
+.form-radio {
+  width: 85%;
+  float: right;
+  text-align: left;
+}
+
+.field-label {
+  font-family: Raleway, sans-serif;
+  color: #a0a0a0;
+  font-size: 1em;
+  flex-basis: 4em;
+}
+
+.bttn.bttn-invite {
+  display: inline-block;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 500px;
+  background-color: #a0a0a0;
+  -webkit-transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-size: 1.2em;
 }
 
 

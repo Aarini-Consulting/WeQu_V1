@@ -173,11 +173,6 @@ img.lg-icon{
     padding: 50px 0 !important;
 }
 
-.skillElement {
-    width: 98% !important;
-}
-
-
 @media (max-width: 479px) {
 
 	.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11{

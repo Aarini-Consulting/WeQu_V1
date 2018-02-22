@@ -29,7 +29,8 @@ Meteor.methods({
     }
     
     //check if user is already invited before
-    let oldUser = Connections.findOne( { $and : [{"email":email},{"inviteId": this.userId}]});
+    let oldUser = Connections.findOne( 
+      { $and : [{"email":email},{"inviteId": this.userId},{groupId:{$exists: false}}]});
     if(oldUser){
       throw (new Meteor.Error("already_invited"));
     }

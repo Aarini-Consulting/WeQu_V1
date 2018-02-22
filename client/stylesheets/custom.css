@@ -34,28 +34,14 @@
 	white-space: nowrap;
 }
 
-
-@media only screen and (min-width: 600px) {
-	.skillElement .title {
-		width: 10% !important;
-	}
-}
-
-@media only screen and (min-width: 600px) {
-	.skillElement .title{
-		width: 20% !important;
-	}	
+.skillElement .title{
+	width: 10em !important;
 }
 
 @media only screen and (max-width: 400px) {
 	.skillElement .title{
-		width: 50% !important;
+		width: 14em !important;
 	}	
-}
-
-.skillElement .title{
-	/*width: 30% !important;*/
-	width: 40% !important;
 }
 
 

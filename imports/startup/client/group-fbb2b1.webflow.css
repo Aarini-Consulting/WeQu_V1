@@ -99,12 +99,6 @@ h1 {
   text-align: center;
 }
 
-.friendlist {
-  margin-top: 0px;
-  float: left;
-  clear: left;
-}
-
 .list-item {
   display: block;
   width: 100%;
@@ -203,7 +197,7 @@ h1 {
   margin-bottom: 40px;
   padding-bottom: 0px;
   font-family: Raleway, sans-serif;
-  color: #fff;
+  color: #000;
   font-size: 18px;
   text-align: center;
 }
@@ -408,7 +402,6 @@ h1 {
   margin-bottom: 0px;
   padding-top: 5px;
   padding-bottom: 5px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
 }
 
 .sectionradar {

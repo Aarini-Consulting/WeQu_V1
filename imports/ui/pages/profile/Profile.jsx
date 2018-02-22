@@ -15,7 +15,7 @@ class Profile extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      activeProfileIndex:0,
+      activeProfileIndex:-1,
     }
 }
 
@@ -77,10 +77,32 @@ class Profile extends React.Component {
       feed.removeEventListener('scroll', this.handleScroll);
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.dataReady){
+      if(this.state.activeProfileIndex == -1){
+        if(nextProps.initialUser){
+          this.setState({
+            activeProfileIndex: nextProps.users.indexOf(nextProps.initialUser._id)
+          });
+        }else{
+          this.setState({
+            activeProfileIndex: 0
+          });
+        }
+      }
+    }
+  }
+
   componentDidMount(prevProps, prevState){
     const feed = ReactDOM.findDOMNode(this.refs.feed);
     if(feed){
       feed.addEventListener('scroll', this.handleScroll);
+    }
+
+    if(this.state.activeProfileIndex < 0 && !this.props.initialUser){
+      this.setState({
+        activeProfileIndex: 0
+      });
     }
   }
 
@@ -92,8 +114,9 @@ class Profile extends React.Component {
   }
 
   render() {
-    var profileInfo = this.getProfileInfo();
+    
     if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript && this.props.dataReady){
+      var profileInfo = this.getProfileInfo();
       return (
       <section className="feed" id="feed" ref="feed">
 
@@ -131,7 +154,7 @@ class Profile extends React.Component {
 
         <Strength quizPerson={this.getActiveProfile()}/>
 
-        <ShareProfile/>
+        {/* <ShareProfile/> */}
 
         <SkillSet quizPerson={this.getActiveProfile()}/>
 

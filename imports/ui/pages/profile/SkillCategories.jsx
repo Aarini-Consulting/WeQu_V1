@@ -20,16 +20,14 @@ class SkillCategories extends React.Component {
         let userId = nextProps.user._id;
         var data = { userId:userId, profile : nextProps.user.profile };
 
-        var joinedQset = nextProps.feedbacks.map((fb, index)=>{
-            return fb.qset;
-        })
+        // var joinedQset = nextProps.feedbacks.map((fb, index)=>{
+        //     return fb.qset;
+        // })
         
 
-        var validAnswers = joinedQset.filter((q, index)=>{
-            return q.answer;
-        })
-
-        var otherscore = calculateScore(joinedQset, true);
+        var validAnswers = _.filter(joinFeedbacks(nextProps.feedbacks), function(question) { return question.answer });
+        
+        var otherscore = calculateScore(joinFeedbacks(nextProps.feedbacks), true);
         data.enoughData = (validAnswers.length > 9);
 
         var i=0;
@@ -62,10 +60,10 @@ class SkillCategories extends React.Component {
                     <div className="underBar" style={{width:60+"%"}}>
                     <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
                     </div>
-                    <div className="score">
+                    <div className="score w-inline-block" style={{width:6+"em"}}>
                     {skill.total <= 0 
-                    ?"0"
-                    :(skill.scored/skill.total)
+                    ?"0/0"
+                    :skill.scored +"/"+ skill.total
                     }
                     </div>
                 </div>
@@ -83,7 +81,7 @@ class SkillCategories extends React.Component {
             if(categories){
                 return categories.map((cat) => {
                     return (
-                        <div key={"skillset "+cat.name}>
+                        <div key={"skillset "+cat.name} className="skill-elements-wrapper">
                             <div className="skillElement">
                                 <div className="title"><b className="h5">{cat.name}</b></div>
                             </div>
@@ -116,12 +114,8 @@ class SkillCategories extends React.Component {
     if(this.props.dataReady){
       return (
         <div ref="sectionSkills">
-            <div className="row">
-            <div className="col-md-1 col-sm-1 col-xs-1"></div>
-                <div className="col-md-10 col-sm-10 col-xs-10">
-                    {this.renderCategories()}
-                </div> 
-                <div className="col-md-1 col-sm-1 col-xs-1"></div>
+            <div className="row-center-10 w-container">
+                {this.renderCategories()}
             </div>
 
             {this.state.data && this.state.data.categories && this.state.data.categories.length > 0 &&

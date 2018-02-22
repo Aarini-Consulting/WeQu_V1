@@ -88,7 +88,8 @@ class Strength extends React.Component {
            
 
             <div className="sectionprofile sectiongreybg paddingTopInverse45" id="outer">
-            <Link className="fontbttn profilebttn w-button" id="specificUser" to={(this.props.quizPerson != Meteor.userId() && this.props.quizPerson) ? "/quiz/" + this.props.quizPerson : "/quiz"}>
+            <Link className="fontbttn profilebttn w-button" id="specificUser" 
+            to={this.props.buttonLink}>
             
             {this.props.quizPerson == Meteor.userId()
             ? "Answer more questions about " + this.props.userType2
@@ -113,6 +114,7 @@ export default withTracker((props) => {
   var userType2;
   var data;
   var handleFeedback;
+  var buttonLink;
 
   handleFeedback = Meteor.subscribe('feedback',{'to' : props.quizPerson},{}, {
     onError: function (error) {
@@ -129,19 +131,38 @@ export default withTracker((props) => {
  
 
   if(handleFeedback.ready() && handleUsers.ready()){
-    data = calculateTopWeak(Feedback.find({to: props.quizPerson }).fetch());
-
+    var feedbacks = Feedback.find({to: props.quizPerson }).fetch();
+    data = calculateTopWeak(feedbacks);
     if(props.quizPerson == Meteor.userId())
     {
       userType = "My"; 
       userType2 = "Myself"
+      buttonLink = "/quiz";
     }
-    else
-      {
+    else{
         let user = Meteor.users.findOne({_id: props.quizPerson});
         if(user){
           userType = getUserName(user.profile);
           userType2 = userType;
+
+          if(feedbacks.length < 1){
+            buttonLink = "/quiz";
+          }else{
+            if(feedbacks.length > 0){
+              var personalFeedbackOnly = feedbacks.find(fb => {
+                return !fb.groupId;
+              });
+          
+              if(personalFeedbackOnly){
+                buttonLink = "/quiz/" + props.quizPerson 
+              }else{
+                var groupFeedback = feedbacks.find(fb => {
+                  return fb.groupId;
+                });
+                buttonLink = "/quiz/" + props.quizPerson +"/"+ groupFeedback.groupId;
+              }
+            }
+          }
         }
       }
     dataReady = true;
@@ -150,6 +171,7 @@ export default withTracker((props) => {
     data:data,
     userType:userType,
     userType2:userType2,
+    buttonLink:buttonLink,
     dataReady:dataReady
   };
 })(Strength);

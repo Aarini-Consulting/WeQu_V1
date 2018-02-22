@@ -7,6 +7,8 @@ import Loading from '/imports/ui/pages/loading/Loading';
 import InviteLandingSuccess from '/imports/ui/pages/invitationLanding/InviteLandingSuccess';
 import QuizSummary from './QuizSummary';
 
+import {color} from '/imports/startup/client/color';
+
 class Quiz extends React.Component {
   constructor(props){
       super(props);
@@ -39,7 +41,7 @@ class Quiz extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.feedback && !this.state.showSummary){
+    if(nextProps.feedback){
       var current = this.getCurrentQuestion(nextProps);
       if(!this.state.showSummary && this.props.inviteLanding && !current){
         this.setState({
@@ -61,7 +63,8 @@ class Quiz extends React.Component {
     var currentFeedback;
     if(!this.state.currentFeedback || 
       (props.feedback.from === this.state.currentFeedback.from &&
-        props.feedback.to === this.state.currentFeedback.to)){
+        props.feedback.to === this.state.currentFeedback.to &&
+        props.feedback.groupId === this.state.currentFeedback.groupId)){
       currentFeedback = props.feedback;
 
       this.setState({
@@ -72,7 +75,8 @@ class Quiz extends React.Component {
       currentFeedback = props.feedbacksArray.find(
         (fa)=>{
           return (
-            fa.from === this.state.currentFeedback.from && fa.to === this.state.currentFeedback.to 
+            fa.from === this.state.currentFeedback.from && fa.to === this.state.currentFeedback.to &&
+            fa.groupId === this.state.currentFeedback.groupId
           )}
         );
     }
@@ -102,8 +106,17 @@ class Quiz extends React.Component {
 
   renderAnswerList(answers) {
     return answers.map((answer) => {
+      var name="";
+      for (var categoryName in framework) {
+        if(framework[categoryName].indexOf(answer.skill) > -1){
+          name = categoryName;
+        }
+      }
+
       return (
-        <li className="answer" key={answer._id} id={answer._id} data-skill={answer.skill} onClick={this.answerQuestion.bind(this, answer)}>{answer.text}</li>
+        <li className={"answer " + name.toString().toLowerCase() + " cursor-pointer"} key={answer._id} onClick={this.answerQuestion.bind(this, answer)}>
+        {answer.text}
+        </li>
       );
     });
   }
@@ -162,7 +175,8 @@ class Quiz extends React.Component {
       var currentFeedback;
       var currentIndex = this.props.feedbacksArray.findIndex((fb)=>{
         return (fb.from === this.state.currentFeedback.from &&
-                fb.to === this.state.currentFeedback.to)
+                fb.to === this.state.currentFeedback.to &&
+                fb.groupId === this.state.currentFeedback.groupId)
       })
       if(bool) {
         if(currentIndex < 0){
@@ -216,44 +230,44 @@ class Quiz extends React.Component {
       }
       else{
         return (
-          <section className={"vote gradient" + ( (!this.props.inviteLanding && this.props.currentUser.profile.gradient) ? this.props.currentUser.profile.gradient : '')}>
+          <section className="quiz-section">
             <section className="person">
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-                <div className="w-inline-block">
+                <div className="w-inline-block cursor-pointer prevPerson">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
                   </a>
                 </div>
               }
               <div className="h4 w-inline-block" id="specificUser">
-                <div>
-                  {this.state.currentFeedback 
-                  ?
-                    this.state.currentFeedback.groupName
-                  :
-                    ''
-                  }
-                </div>
                 {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
                 <img src="/img/avatar.png" className="avatar" id="specificUser"/>
       
                 <br/>
-                {this.state.username }
+                <div className="fontreleway f-q-username">
+                  {this.state.username }
+                </div>
+
+                <div className="fontreleway f-q-username f-q-groupname" 
+                style={{visibility:(this.state.currentFeedback && this.state.currentFeedback.groupName) ? 'visible' :'hidden'}}>
+                  {this.state.currentFeedback.groupName}
+                </div>
               </div>
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
-              <div className="w-inline-block">
+              <div className="w-inline-block cursor-pointer nextPerson">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>
                 </a>
               </div>
               }
             </section>
-            
             {this.state.currentFeedback && this.state.currentQuestion &&
-            <section>
-              <div className="question">
-                <h2>{this.state.currentQuestion.text}</h2>
-              </div>
+            <div className="question noselect">
+              {this.state.currentQuestion.text}
+            </div>
+            }
+            {this.state.currentFeedback && this.state.currentQuestion &&
+            <section className="fontreleway question-answer">
               <ul className="answers noselect">
                 {this.renderAnswerList(this.state.currentQuestion.answers)}
               </ul>
@@ -261,7 +275,7 @@ class Quiz extends React.Component {
                 <div>Question {this.state.currentQuestionIndex + 1} of {this.state.questionTotal}</div>
                 {//if not question to self, allow to skip
                   !(this.state.currentFeedback && this.state.currentFeedback.from == this.state.currentFeedback.to) &&
-                  <div><a className="skip" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
+                  <div><a className="skip cursor-pointer" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
                 }
               </div>
             </section>
@@ -333,10 +347,16 @@ export default withTracker((props) => {
 
   if((props.feedback || (handleFeedback && handleFeedback.ready()))){
     if(!props.feedback){
-      if(!props.quizUser){
-        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
+      if(props.quizUser){
+        if(props.group){
+          feedback = Feedback.findOne(
+            { 'from': Meteor.userId(), 'to' : props.quizUser._id, groupId:props.group._id, done: false });
+        }else{
+          feedback = Feedback.findOne(
+            { 'from': Meteor.userId(), 'to' : props.quizUser._id, groupId:{$exists: false}, done: false });
+        }
       }else{
-        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false });
+        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
       }
       feedbacksArray = Feedback.find({
         done: false,
@@ -351,8 +371,8 @@ export default withTracker((props) => {
         },
       { sort: { _id: -1 }}).fetch()
       .filter((fb, index, fa)=>{
-        return index === fa.findIndex((fb2)=>{
-          return (fb2.to === fb.to);
+        return index == fa.findIndex((fb2)=>{
+          return (fb2.to === fb.to && fb2.from === fb.from && fb2.groupId === fb.groupId);
         })
       });
 
@@ -373,7 +393,6 @@ export default withTracker((props) => {
     }else{
       dataReady = true;
     }
-
     username = getUserName(user.profile);
     
   }

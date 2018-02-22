@@ -60,7 +60,7 @@ class SkillSet extends React.Component {
             ?
               <div className="skillcovergrey"></div>
             :
-            <div className= "skillcovergrey2">
+            <div className= "skillcovergrey2 fontreleway">
                 <SkillCategories quizPerson={this.props.quizPerson}/>        
             </div>
             }

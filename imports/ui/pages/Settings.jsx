@@ -16,27 +16,27 @@ class Settings extends React.Component {
         <ul className="w-list-unstyled">
             <li className="list-item">
             <div className="summarytext">
-                <div className="fontreleway fontstatement">{getUserName(this.props.currentUser.profile)}</div>
+                <div className="fontreleway fontstatement noselect">{getUserName(this.props.currentUser.profile)}</div>
             </div>
             </li>
             <li className="list-item">
             <div className="summarytext">
-                <div className="fontreleway fontstatement">
+                <div className="fontreleway fontstatement noselect">
                 {this.props.currentUser.emails && this.props.currentUser.emails[0].address}
                 </div>
             </div>
             </li>
             <li className="list-item">
             <div className="summarytext">
-                <div className="fontreleway fontstatement">{this.props.currentUser.profile.gender}</div>
+                <div className="fontreleway fontstatement noselect">{this.props.currentUser.profile.gender}</div>
             </div>
             </li>
             <li className="list-item">
             <div className="summarytext">
-                <div className="fontreleway fontstatement" onClick={()=>{
+                <div className="fontreleway fontstatement cursor-pointer" onClick={()=>{
                     Session.set( "loggedOut", true);
                     Meteor.logout()
-                    }}>LOG OUT</div>
+                    }}><u>LOG OUT</u></div>
             </div>
             </li>
         </ul>
