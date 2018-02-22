@@ -61,15 +61,17 @@ class InvitePage extends React.Component {
           {group.groupName}
           </div>
           <ul className="unordered-list listcontact group w-clearfix w-list-unstyled">
-              {this.renderGroupFriendList(group._id)}
+              {this.renderGroupFriendList(group._id, group.emails)}
           </ul>
         </div>
       )
     })
   }
 
-  renderGroupFriendList(groupId){
+  renderGroupFriendList(groupId, emails){
     return this.props.usersGroup.map((user, index) => {
+      var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
+      if(emails.indexOf(email) > -1){
         return (
           <li  key={groupId +" "+ user._id} className="contactlist group" >
             <div className="contactc w-row">
@@ -125,7 +127,8 @@ class InvitePage extends React.Component {
             </div>
           </li>
         );
-      });
+      }
+    });
   }
 
   renderFriendList(){

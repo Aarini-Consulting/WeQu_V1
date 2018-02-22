@@ -459,6 +459,35 @@ body {
   flex-basis: 40vw;
 }
 
+.answer.communication:hover{
+  color:#fff;
+  background-color: #0ad;
+}
+
+.answer.virtue:hover{
+  color:#fff;
+  background-color: #d2316c;
+}
+
+.answer.leadership:hover{
+  color:#fff;
+  background-color: #273888;
+}
+
+.answer.teamwork:hover{
+  color:#fff;
+  background-color: #f75f04;
+}
+
+.answer.problem_solving:hover{
+  color:#fff;
+  background-color: #3ba12b;
+}
+
+.answer.self_management:hover{
+  color:#fff;
+  background-color: #9a61ba;
+}
 
 .quizcount {
   margin-top: 0px;

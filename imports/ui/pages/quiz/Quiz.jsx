@@ -2,7 +2,6 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
-import Radium from 'radium';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import InviteLandingSuccess from '/imports/ui/pages/invitationLanding/InviteLandingSuccess';
@@ -107,24 +106,15 @@ class Quiz extends React.Component {
 
   renderAnswerList(answers) {
     return answers.map((answer) => {
-      var colorHover;
+      var name="";
       for (var categoryName in framework) {
         if(framework[categoryName].indexOf(answer.skill) > -1){
-          colorHover = color(categoryName, true);
-        }
-        if(framework[categoryName].indexOf(answer.skill) > -1){
-          colorHover = color(categoryName, false);
+          name = categoryName;
         }
       }
 
       return (
-        <li className="answer cursor-pointer" key={answer._id} onClick={this.answerQuestion.bind(this, answer)}
-        style={{
-          ':hover': {
-            color:'#fff',
-            backgroundColor: colorHover
-          }
-        }}>
+        <li className={"answer " + name.toString().toLowerCase() + " cursor-pointer"} key={answer._id} onClick={this.answerQuestion.bind(this, answer)}>
         {answer.text}
         </li>
       );
@@ -416,4 +406,4 @@ export default withTracker((props) => {
       feedbacksArray:feedbacksArray,
       dataReady:dataReady,
   };
-})(Radium(Quiz));
+})(Quiz);

@@ -78,7 +78,7 @@ handleBackArrowClick(){
                 <div className="bttn-area-summary">
                 <Link className="fontreleway fontbttnsummary" to={`/quiz/${this.state.inviteLastSuccess}`}>Load questions about {this.state.inviteLastUsername}</Link>
                 </div>
-                <div className="bttn-area-summary _2">
+                <div className="bttn-area-summary _2 cursor-pointer">
                 <a className="fontreleway fontbttnsummary" onClick={this.handleBackArrowClick.bind(this)}>Go back to the list</a></div>
                 </div>
             </div>
@@ -117,31 +117,35 @@ handleBackArrowClick(){
                     <label className="fontreleway f-c-invite">Gender</label>
                     <div className="form-radio-group">
                       <div className="form-radio w-radio">
-                        <input type="radio" name="gender" id="m" ref="male" value="Male" className="w-radio-input" required/>
-                        <label className="field-label w-form-label">Male</label>
+                        <label className="field-label w-form-label">
+                          <input type="radio" name="gender" id="m" ref="male" value="Male" className="w-radio-input" required/>
+                          Male
+                          </label>
                       </div>
                       <div className="form-radio w-radio">
-                        <input type="radio" name="gender" id="f" ref="female" value="Female" className="w-radio-input" required/>
-                        <label className="field-label w-form-label">Female</label>
+                        <label className="field-label w-form-label">
+                          <input type="radio" name="gender" id="f" ref="female" value="Female" className="w-radio-input" required/>
+                          Female
+                        </label>
                       </div>
                     </div>
                   </div>
                   <button className="bttn bttn-invite w-button" id="sendInvite" data-wait="Please wait..." type="submit"> send invitation</button>
                 </form>
                   
-                  
+                <br/>
               
                 {this.state.inviteStatus == 'sending' && 
-                  <span className="sendingStatus"><img src="/img/status_sending.png"/>sending...</span>
+                  <span className="sendingStatus">sending...</span>
                 }
                 {this.state.inviteStatus == 'sent' && 
-                  <span className="sendingStatus"><img src="/img/status_sent.png"/>sent!</span>
+                  <span className="sendingStatus">sent!</span>
                 }
                 {this.state.inviteStatus == 'error' &&
-                  <span className="sendingStatus"><img src="/img/status_error.png"/>error sending email</span>
+                  <span className="sendingStatus">error sending email</span>
                 }
                 {this.state.inviteStatus == 'alreadyInvited' &&
-                  <span className="sendingStatus"><img src="/img/status_error.png"/>Already Invited</span>
+                  <span className="sendingStatus">Already Invited</span>
                 }
                 </div>
               </div>
