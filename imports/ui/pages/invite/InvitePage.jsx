@@ -81,8 +81,8 @@ class InvitePage extends React.Component {
                   this.props.history.push(`/profile/${user._id}`);
                 }}>
                   <img src="/img/avatar.png" className="contactface"/>
-                  <div className="fontcontactname">{getUserName(user.profile)}</div>
                 </div>
+                <div className="fontcontactname">{getUserName(user.profile)}</div>
               </div>
               <div className="column-5 w-clearfix">
                 <div className="c-data">
@@ -142,8 +142,8 @@ class InvitePage extends React.Component {
                         this.props.history.push(`/profile/${user._id}`);
                       }}>
                         <img src="/img/avatar.png" className="contactface"/>
-                        <div className="fontcontactname">{getUserName(user.profile)}</div>
                       </div>
+                      <div className="fontcontactname">{getUserName(user.profile)}</div>
                     </div>
                     <div className="column-5 w-clearfix">
                       <div className="c-data">
