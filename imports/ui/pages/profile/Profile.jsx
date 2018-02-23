@@ -196,9 +196,22 @@ export default withTracker((props) => {
             {userId:Meteor.userId()}
           ] } ,
           ).fetch()
-        .map((conn)=>{return conn.userId;})
+        .map((conn)=>{
+          if(conn.userId == Meteor.userId()){
+            return conn.inviteId;
+          }else{
+            return conn.userId;
+          }
+        })
       )
     )];
+
+    console.log(Connections.find( 
+      { $or : [ 
+        {inviteId:Meteor.userId()},
+        {userId:Meteor.userId()}
+      ] } ,
+      ).fetch());
     
     var handleUsers = Meteor.subscribe('users',{_id : {$in : users}},{ createdAt : 1}, {
       onError: function (error) {
