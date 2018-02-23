@@ -274,7 +274,7 @@ class Quiz extends React.Component {
             }
             {this.state.currentFeedback && this.state.currentQuestion &&
             <section className="fontreleway question-answer">
-              <ul className="answers noselect">
+              <ul className="answers noselect" onTouchStart={()=>{}}>
                 {this.renderAnswerList(this.state.currentQuestion.answers)}
               </ul>
               <div className="statusBar noselect">

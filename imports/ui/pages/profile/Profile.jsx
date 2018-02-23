@@ -205,13 +205,6 @@ export default withTracker((props) => {
         })
       )
     )];
-
-    console.log(Connections.find( 
-      { $or : [ 
-        {inviteId:Meteor.userId()},
-        {userId:Meteor.userId()}
-      ] } ,
-      ).fetch());
     
     var handleUsers = Meteor.subscribe('users',{_id : {$in : users}},{ createdAt : 1}, {
       onError: function (error) {

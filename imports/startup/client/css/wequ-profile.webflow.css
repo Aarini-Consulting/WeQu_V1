@@ -459,32 +459,42 @@ body {
   flex-basis: 40vw;
 }
 
+.answer{
+  -webkit-appearance: none;
+}
+
 .answer.communication:active{
+  -webkit-appearance: none;
   color:#fff;
   background-color: #0ad;
 }
 
 .answer.virtue:active{
+  -webkit-appearance: none;
   color:#fff;
   background-color: #d2316c;
 }
 
 .answer.leadership:active{
+  -webkit-appearance: none;
   color:#fff;
   background-color: #273888;
 }
 
 .answer.teamwork:active{
+  -webkit-appearance: none;
   color:#fff;
   background-color: #f75f04;
 }
 
 .answer.problem_solving:active{
+  -webkit-appearance: none;
   color:#fff;
   background-color: #3ba12b;
 }
 
 .answer.self_management:active{
+  -webkit-appearance: none;
   color:#fff;
   background-color: #9a61ba;
 }
