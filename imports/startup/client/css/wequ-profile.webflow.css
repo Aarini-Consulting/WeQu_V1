@@ -459,32 +459,32 @@ body {
   flex-basis: 40vw;
 }
 
-.answer.communication:hover{
+.answer.communication:active{
   color:#fff;
   background-color: #0ad;
 }
 
-.answer.virtue:hover{
+.answer.virtue:active{
   color:#fff;
   background-color: #d2316c;
 }
 
-.answer.leadership:hover{
+.answer.leadership:active{
   color:#fff;
   background-color: #273888;
 }
 
-.answer.teamwork:hover{
+.answer.teamwork:active{
   color:#fff;
   background-color: #f75f04;
 }
 
-.answer.problem_solving:hover{
+.answer.problem_solving:active{
   color:#fff;
   background-color: #3ba12b;
 }
 
-.answer.self_management:hover{
+.answer.self_management:active{
   color:#fff;
   background-color: #9a61ba;
 }
