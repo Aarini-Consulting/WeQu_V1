@@ -1,3 +1,7 @@
+#react-root{
+  height: 100%;
+}
+
 .loginwraper {
   position: fixed;
   left: 0px;
@@ -185,11 +189,11 @@
   text-decoration: none
 }
 
-.submit-button {
+.submit-button.w-button {
   display: block;
   width: 100%;
   margin-top: 10px;
-  margin-bottom: : 10px;
+  margin-bottom:10px;
   /*padding-top: 15px;
   padding-bottom: 15px;*/
   border-radius: 100px;
@@ -201,7 +205,7 @@
   font-weight: 600;
 }
 
-.submit-button:hover {
+.submit-button.w-button:hover {
   background-color: #3f3f3f;
 }
 
@@ -652,12 +656,6 @@ html.w-mod-js *[data-ix="loginbox"] {
     font-size: 25px;
 }
 
-.friendlist {
-  margin-top: 0px;
-  float: left;
-  clear: left;
-}
-
 .avatawrapper {
   padding-right: 30px;
   float: left;
@@ -783,17 +781,16 @@ html.w-mod-js *[data-ix="loginbox"] {
   background-color: #eee;
 }
 
-.profilebttn {
+/* .profilebttn {
   display: block;
-  width: 50%;
-  height: 50px;
+  max-width: 50%;
   margin-right: auto;
   margin-left: auto;
   border: 2px solid #8a8a8a;
   border-radius: 100px;
   background-color: transparent;
-}
-.profilebttn.fontbttn {/*
+} */
+/* .profilebttn.fontbttn {
   -webkit-transition: background-color 400ms ease;
   transition: background-color 400ms ease;
   font-family: Raleway, sans-serif;
@@ -802,8 +799,8 @@ html.w-mod-js *[data-ix="loginbox"] {
   line-height: 30px;
   font-weight: 500;
   text-align: center;
-  text-transform: uppercase;*/
-}
+  text-transform: uppercase;
+} */
 .sectionprofile {
   position: static;
   margin-top: 0px;
@@ -884,13 +881,13 @@ html.w-mod-js *[data-ix="loginbox"] {
     margin-right: auto;
     margin-left: auto;
 }
-.columtop {
+/* .columtop {
     display: block;
     width: 80%;
     margin-top: 35px;
     margin-right: auto;
     margin-left: auto;
-}
+} */
 html.w-mod-js *[data-ix="skillls"] {
     display: none;
     opacity: 0;

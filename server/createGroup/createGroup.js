@@ -1,93 +1,99 @@
-  Meteor.methods({
-  	'createGroup' : function (groupName,arr_emails) {
-  		console.log(groupName , arr_emails);
-  		
-      let groupId = Group.insert({groupName: groupName , emails:arr_emails , creatorId: Meteor.userId()});
+Meteor.methods({
+  'createGroup' : function (groupName,data,arr_emails) {
+    console.log(groupName , data, arr_emails);
+    
+    let groupId = Group.insert({groupName: groupName , data:data,  emails:arr_emails , creatorId: Meteor.userId()});
 
-      if(!groupId){
-       throw (new Meteor.Error("group_creation_failed")); 
-     }
+    if(!groupId){
+     throw (new Meteor.Error("group_creation_failed")); 
+   }
 
-     var data, index , i , j , link; 
+   Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName, (err, result)=> {
+    //  console.log("genGroupQuestionSet" , err, result);
+      if(err){ return err}
+      else{
+        var link; 
+        for (var i = 0; i < arr_emails.length; i++) {
 
-     for (i = 0; i < arr_emails.length; i++) {
-       user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i] }, { "profile.emailAddress" : arr_emails[i] }]} );
-       if (user) {
-        link = `signIn/groupInvitation/${arr_emails[i]}/${groupId}`;
-        if(user && user.services && user.services.linkedin){
-          link = `signIn/groupInvitationLinkedinUser/${arr_emails[i]}/${groupId}`;
+          link = `group-invitation/${arr_emails[i]}/${groupId}`
+      
+          var subject = `[WeQu] Inviting for joining ${groupName}` ;
+          var message = `Please join the group by clicking the invitation link ${link}`
+      
+          var emailData = {
+            'from': '',
+            'to' : '',
+            'link': Meteor.absoluteUrl(link),
+            'groupName': groupName
+          };
+      
+          let body = SSR.render('GroupInviteHtmlEmail', emailData);
+      
+          Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
+            if(err){ return err};
+          });
+      
         }
       }
-      else{
-        link = `signUp/groupInvitation/${arr_emails[i]}/${groupId}`
-      }
-
-      var subject = `[WeQu] Inviting for joining ${groupName}` ;
-      var message = `Please join the group by clicking the invitation link ${link}`
-
-      var emailData = {
-        'from': '',
-        'to' : '',
-        'link': Meteor.absoluteUrl(link),
-        'groupName': groupName
-      };
-
-      let body = SSR.render('GroupInviteHtmlEmail', emailData);
-
-      Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
-        if(err){ return err};
-      });
-    }
-
-      // TODO : Use the filtered isExisting user arr_emails .
-
-      Meteor.call('genGroupQuestionSet', arr_emails , groupId , groupName, function (err, result) {
-      //  console.log("genGroupQuestionSet" , err, result);
-      if(err){ return err};
     });
 
-      return true;
+    return true;
 
-    },
+  },
 
-    'genGroupQuestionSet' : function (arr_emails , groupId , groupName) {
+  'genGroupQuestionSet' : function (arr_emails , groupId , data, groupName) {
 
-    // Creating questions for Group members (Existing Users)
-    var i , j , user , user2 , arr_emails_notExisting = [] , arr_emails_existing =[];
+  // Creating questions for Group members (Existing Users)
+  var i , j , user , user2 , arr_emails_notExisting = [] , arr_emails_existing =[], dataEmailNotExisting=[];
 
-      //try{
-
-          arr_emails.filter(typeOfUser); // Filtering existing members
-          function typeOfUser(email){
-            user = Meteor.users.findOne({$or : [ {"emails.address" : email  }, { "profile.emailAddress" : email }]} );
-            if (user) {
-              arr_emails_existing.push(email);
-            }
-            else{
-              arr_emails_notExisting.push(email)
-            }
-          };
-
-        // Updating two new fields -> new users , existings users in group collection
-        
-        var groupUpdateId = Group.update({_id: groupId} ,
-               { $set: {"arr_emails_existing": arr_emails_existing,
-                        "arr_emails_notExisting": arr_emails_notExisting } } ); 
-        console.log(groupUpdateId, " Group Update with category of emails success \n");
+    try{
+        data.forEach((d)=>{
+          user = Meteor.users.findOne({$or : [ {"emails.address" : d.email  }, { "profile.emailAddress" : d.email }]} );
+          if (user) {
+            arr_emails_existing.push(d.email);
+          }
+          else{
+            arr_emails_notExisting.push(d.email);
+            dataEmailNotExisting.push(d);
+          }
+        })
 
 
-        arr_emails  = arr_emails_existing;
+        // #77 create user up front for arr_emails_notExisting 
 
-          //TODO : Directly use user instead email , Code Optimization
+       Meteor.call('genGroupUserUpFront',  arr_emails_notExisting , dataEmailNotExisting, groupName, groupId, function (err, result) {
+        console.log("genGroupUserUpFront" , err, result);
+        if(err){ return err};
+      });
 
-          for (i = 0; i < arr_emails.length; i++) {
 
-            for (j = 0; j < arr_emails.length; j++) {            
 
-              if(i != j){
-                user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
-                user2 = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[j]  }, { "profile.emailAddress" : arr_emails[j] }]} );
+      // Updating two new fields -> new users , existings users in group collection
+      
+      var groupUpdateId = Group.update({_id: groupId} ,
+             { $set: {"arr_emails_existing": arr_emails_existing,
+                      "arr_emails_notExisting": arr_emails_notExisting } } ); 
+      console.log(groupUpdateId, " Group Update with category of emails success \n");
 
+
+     // arr_emails  = arr_emails_existing;
+
+        //TODO : Directly use user instead email , Code Optimization
+
+
+        //assign groupmember's connection and feedback question with each other
+        for (i = 0; i < arr_emails.length; i++) {
+
+          for (j = 0; j < arr_emails.length; j++) {            
+
+            if(i != j){
+              user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
+              user2 = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[j]  }, { "profile.emailAddress" : arr_emails[j] }]} );
+              //check if feedback already exist
+              var check = Feedback.findOne({from : user._id , to: user2._id,groupId:groupId});
+              var checkConnection = Connections.findOne({inviteId : user._id , userId: user2._id,groupId:groupId});
+
+              if(!check){
                 var name = getUserName(user2.profile);
                 var gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
 
@@ -100,28 +106,39 @@
                   qset = genInitialQuestionSet(name, qdata.type1he, 12);
                 }
                 var _id = Random.secret();
-                if(!qset){
-                  throw new Meteor.Error("qset undefined");
-                }
 
                 var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset,
-                                             invite : false, done: false ,
-                                             groupName: groupName
-                                            });
-           }
+                  invite : false, done: false ,
+                  groupName: groupName,
+                  groupId:groupId
+                 });
 
+                 if(!checkConnection){
+                  Connections.insert( {
+                    email: user2.emails[0].address,
+                    userId : user2._id,
+                    groupId: groupId,
+                    inviteId : user._id,
+                    services : {invitationId: _id} 
+                  });
+                 }
+
+                 console.log(" \n Feedback id \n ", fbId );
+              }
          }
+
        }
+     }
 
-       /* }
-        catch(e){
-          console.log("error in creating questions for group members")
-          throw (new Meteor.Error("empty_group_creation_questions"));
-        } */
-
-        return true;
-
+     }
+      catch(e){
+        console.log("error in creating questions for group members")
+        throw (new Meteor.Error("empty_group_creation_questions"));
       }
 
-    });
+      return true;
+
+    }
+
+  });
 

@@ -5,6 +5,10 @@ GroupSchema = new SimpleSchema({
       type: String,
       label: "groupName"
     },
+    "data":{
+      type: [Object],
+      label: "data",
+    },
     "emails":{
       type: [String],
       label: "emails",
@@ -48,7 +52,7 @@ GroupSchema = new SimpleSchema({
       label: "Date group updated",
       optional: true , 
       autoValue: function() {
-        if ( this.isUpdate ) {
+        if ( this.isUpdate || this.isUpsert ) {
           return new Date;
         }
       }
@@ -57,23 +61,18 @@ GroupSchema = new SimpleSchema({
 
 })
 
-//Group.attachSchema(GroupSchema);
-
-if (Meteor.isClient) {
-  Meteor.subscribe("group");
-}
-
+// Group.attachSchema(GroupSchema);
 
 // TODO : For only Testing Purpose , Remove later
 
-Group.allow({
-  'insert': function () {
-   return true;
- },
- 'update':function () {
-   return true;
- },
- 'remove': function () {
-   return true;
- },
-})
+// Group.allow({
+//   'insert': function () {
+//    return true;
+//  },
+//  'update':function () {
+//    return true;
+//  },
+//  'remove': function () {
+//    return true;
+//  },
+// })
