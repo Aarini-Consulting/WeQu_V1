@@ -54,7 +54,7 @@ export default withTracker((props) => {
     var feedback = Feedback.findOne({to:{ '$ne': Meteor.userId() }});
     if(feedback){
       next = ()=>{
-        props.history.push(`/quiz/${feedback._to}`);
+        props.history.push(`/quiz/${feedback.to}`);
       }
     }
     dataReady = true;
