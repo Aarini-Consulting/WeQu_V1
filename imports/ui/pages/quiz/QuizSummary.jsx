@@ -66,7 +66,7 @@ class QuizSummary extends React.Component {
           <li key={question.answer} className="list-item">
             <div className="summarytext">
               <div className="fontreleway fontstatement">
-                more <strong className={statementClass}>{statementSkillMore}</strong> than <strong className={statementClassLess}>{statementSkillLess}</strong>
+                more <strong className={statementClass}>{statementSkillMore.toString().replace("_"," ")}</strong> than <strong className={statementClassLess}>{statementSkillLess.toString().replace("_"," ")}</strong>
               </div>
               <div className="fontreleway fontstatement fontexample">{statementText}</div>
             </div>

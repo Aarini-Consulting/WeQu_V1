@@ -1264,10 +1264,10 @@ body {
 	display: -webkit-flex;
   display: flex;
 
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 1;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .contactnamefield {
@@ -1285,13 +1285,19 @@ body {
 }
 
 .fontcontactname {
-  display:inline-block;
   padding-left: 10px;
-  clear: none;
+
+  display: -ms-flexbox;
+	display: -webkit-flex;
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
   font-family: Raleway, sans-serif;
   color: #a0a0a0;
   font-size: 1.4em;
-  line-height: 50px;
   font-weight: 700;
   height: 100%;
 }
