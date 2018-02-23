@@ -31,7 +31,11 @@ class ScriptLogin extends React.Component {
         
                         if(condition)
                         {
-                            return (<Quiz/>);
+                            return (
+                                <div className="fillHeight">
+                                    <Quiz/>
+                                </div>
+                            );
                         }
                         else
                         {
@@ -42,7 +46,11 @@ class ScriptLogin extends React.Component {
         
                     }
                     case 'quiz': {
-                        return (<Quiz/>);
+                        return (
+                        <div className="fillHeight">
+                            <Quiz/>
+                        </div>
+                        );
                         break;
                     }
                     case 'after-quiz' :
