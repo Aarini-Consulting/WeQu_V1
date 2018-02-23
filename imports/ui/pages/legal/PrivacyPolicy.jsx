@@ -7,7 +7,7 @@ export default class PrivacyPolicy extends React.Component {
                 <div className="topbanner"></div>
                 <div className="textcontainer w-container">
                     <h1 className="heading">Privacy Policy</h1>
-                    <div className="textblock">WeQu B.V. (“We”) are committed to protecting and respecting your privacy.We are WeQu B.V., a company registered with Dutch Chamber of Commerce under number 66840724 whose principal place of business is at Weesperstraat 61 1018 VN Amsterdam The Netherlands (“WeQu ”/“we”/“us”/“our”). We provide online content accessible from websites such as www.wequ.co (the “Websites”) and a number of mobile applications, including WeQu (“Apps”).
+                    <div className="textblock">WeQ B.V. (“We”) are committed to protecting and respecting your privacy.We are WeQ B.V., a company registered with Dutch Chamber of Commerce under number 66840724 whose principal place of business is at Weesperstraat 61 1018 VN Amsterdam The Netherlands (“WeQ ”/“we”/“us”/“our”). We provide online content accessible from websites such as www.weq.io (the “Websites”) and a number of mobile applications, including WeQ (“Apps”).
                     <br/>
                     <br/>By using the Websites and/or using any of our Apps, you consent to us processing your personal information in accordance with this Privacy and Cookie Policy (the “Policy”). This is the legal basis upon which we process your personal information as well. It is necessary for the performance of our obligations under the terms of use/terms and conditions you accept to use our Apps or the Websites. You may withdraw such consent at any time by letting us know at contact@wequ.co. At that time, you may also want to remove any cookies which have been placed on any device used to access the Websites. Your withdrawal of consent will not affect the lawfulness of any processing carried out by us prior to such withdrawal.
                     <br/>
@@ -21,7 +21,7 @@ export default class PrivacyPolicy extends React.Component {
                     <br/>how we keep your information secure;
                     <br/>and your rights in relation to your information.
                     <br/>
-                    <br/>At WeQu we take your privacy seriously. We operate on the principle that your personal information belongs to you and only you can decide who you want to share it with and why. This is fundamental to the way we work and we are committed to providing a secure environment for you to store your personal information and share it with others when you want to.
+                    <br/>At WeQ we take your privacy seriously. We operate on the principle that your personal information belongs to you and only you can decide who you want to share it with and why. This is fundamental to the way we work and we are committed to providing a secure environment for you to store your personal information and share it with others when you want to.
                     <br/>
                     <br/>THIS IS THE INFORMATION WE MAY COLLECT ABOUT YOU
                     <br/>1. Information you provide if you decide to contact us
@@ -100,7 +100,7 @@ export default class PrivacyPolicy extends React.Component {
                     </div>
                 </div>
                 <div className="footer">
-                    <div className="footertext">WeQu B.V.&nbsp;
+                    <div className="footertext">WeQ B.V.&nbsp;
                     <br/>Weesperstraat 61 1018 VN Amsterdam</div>
                 </div>
         </div>

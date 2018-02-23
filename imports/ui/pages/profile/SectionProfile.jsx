@@ -14,8 +14,8 @@ class SectionProfile extends React.Component {
     return (
         <div className="sectionprofile">
           <div className="titlesection w-container"><img className="iconplay iconwrapper" src="/img/iconPlay2.png"/>
-            <div className="fontreleway fonttitle">WeQu Team Feedback Game</div>
-            <p className="fontreleway titlepara">Discover WeQu games, crafted for team feedback experience.
+            <div className="fontreleway fonttitle">WeQ Team Feedback Game</div>
+            <p className="fontreleway titlepara">Discover WeQ games, crafted for team feedback experience.
               <br/>It's a perfect way to break the ice and kickstart an open dialogue in any team.
               <br/>Get your own game today and join the community!</p>
             </div>
@@ -28,7 +28,7 @@ class SectionProfile extends React.Component {
                 onLoad={this.onFrameLoad.bind(this)}
                 ref="iframe"></iframe>
               </div>
-              <a className="buybttn fontbttn profilebttn w-button" href="https://www.wequ.co/">buy wequ games</a>
+              <a className="buybttn fontbttn profilebttn w-button" href="https://www.weq.io/">Supercharge your team</a>
             </div>
         </div>
     );

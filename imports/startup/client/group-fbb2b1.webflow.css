@@ -636,8 +636,8 @@ h1 {
 }
 
 .heading {
-  color: #ca3737;
-  font-size: 70px;
+  color: #000;
+  font-size: 2em;
 }
 
 .heading.tag {
