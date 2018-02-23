@@ -16,7 +16,7 @@ export default class NotFound extends React.Component {
                     <p className="error-description">The page you are looking for might have been removed.</p>
                     <div className="error-goback-text">Would you like to go <Link to="/">Home</Link>?</div>
                         <br/> <br/>
-                    <div className="footer">&copy; 2017 <Link to="/">WEQU</Link></div>
+                    <div className="footer">&copy; 2018 <Link to="/">WeQ</Link></div>
                     </div>
                 </div>
                 </div>

@@ -52,7 +52,7 @@ class EmailVerified extends React.Component {
           
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
-              <div className="alert alert-warning">You need to verify your email address before using wequ.
+              <div className="alert alert-warning">You need to verify your email address before using WeQ.
                 <br/>
                 <a className="resend-verification-link" onClick ={this.sendVerificationLink.bind(this)}>Resend verification link</a>
                 <br/>
