@@ -1233,6 +1233,7 @@ body {
 
 .contactlist-wrapper {
   margin-bottom:80px;
+  height:100%;
 }
 
 .contactlist {
@@ -1259,10 +1260,14 @@ body {
 }
 
 .column-4 {
+  display: -ms-flexbox;
+	display: -webkit-flex;
   display: flex;
-  flex-direction: row;
+
+  flex-direction: column;
   flex-grow: 1;
-  justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .contactnamefield {
@@ -1543,16 +1548,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     font-size: 1.2em;
     line-height: 20px;
   }
-  .contactlist {
-    margin-right: 1%;
-    margin-left: 1%;
-  }
   .unordered-list.listcontact {
     padding-right: 0px;
     padding-left: 0px;
   }
   .fontcontactname {
-    margin-top: 5%;
     font-size: 0.9em;
   }
   .contactq-div {
@@ -1775,9 +1775,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     font-size: 1.1em;
     line-height: 20px;
   }
-  .contactlist {
-    margin-right: 0%;
-  }
   .contactface {
     width: 45px;
     font-size: 1em;
@@ -1788,7 +1785,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   }
   .fontcontactname {
     font-size: 0.9em;
-    line-height: 10px;
   }
   
   .contactq-div.contactqmobile {
