@@ -131,7 +131,6 @@ class Quiz extends React.Component {
     var feedback = this.state.currentFeedback;
     var question = this.state.currentQuestion;
     var index = this.state.currentQuestionIndex;
-
    
     if(answer){
       question.answer = answer._id;
@@ -156,7 +155,7 @@ class Quiz extends React.Component {
     if(answer && answer.skill == "genderId")
     {
       Meteor.users.update({_id: Meteor.userId()},
-        {$set : { "profile.gender": event.target.getAttribute('id') }});
+        {$set : { "profile.gender": answer._id }});
     }
 
     Meteor.call('feedback.answer.question', feedback , (err, result) => {
