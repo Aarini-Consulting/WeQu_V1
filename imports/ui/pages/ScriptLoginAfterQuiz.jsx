@@ -17,7 +17,12 @@ class LoginAfterQuiz extends React.Component {
           <QuizSummary quizUser={undefined} 
               feedback={undefined}
               continue={()=>{this.props.history.replace('/quiz');}}
-              next={this.props.next}/>
+              next={this.props.feedback 
+                ? this.props.feedback.groupId
+                  ?()=>{this.props.history.push(`/quiz/${this.props.feedback.to}/${this.props.feedback.groupId}`)} 
+                  :()=>{this.props.history.push(`/quiz/${this.props.feedback.to}`)}
+                : 
+                  undefined}/>
         </div>
       );
     }else{
@@ -34,7 +39,7 @@ class LoginAfterQuiz extends React.Component {
 
 export default withTracker((props) => {
   var dataReady;
-  var next;
+  var feedback;
   
   handleFeedback = Meteor.subscribe('feedback', 
     {
@@ -51,16 +56,11 @@ export default withTracker((props) => {
       });
   
   if(handleFeedback.ready()){
-    var feedback = Feedback.findOne({to:{ '$ne': Meteor.userId() }});
-    if(feedback){
-      next = ()=>{
-        props.history.push(`/quiz/${feedback.to}`);
-      }
-    }
+    feedback = Feedback.findOne({to:{ '$ne': Meteor.userId() }});
     dataReady = true;
   }
   return {
     dataReady:dataReady,
-    next:next
+    feedback:feedback
   };
 })(LoginAfterQuiz);
