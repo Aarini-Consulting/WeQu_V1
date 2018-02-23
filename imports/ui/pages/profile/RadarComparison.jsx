@@ -11,7 +11,7 @@ class RadarComparison extends React.Component {
     if(this.props.dataReady){
       return (
         <div>
-        <section className="ptb_h1">
+        <section className="ptb_h1 fontreleway">
           <img src="/img/icon_overview.png" className="titleIcon"/>
           <h3>Comparisons</h3>
           <svg height="300" width="300" 

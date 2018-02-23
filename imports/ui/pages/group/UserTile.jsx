@@ -94,7 +94,7 @@ class UserTile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="tile-radar"><img className="title-icon" src="/img/iconRadar.png"/>
+              <div className="tile-radar fontreleway"><img className="title-icon" src="/img/iconRadar.png"/>
                 <div className="font-tile font-title-title font18">Comparisons</div>
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
                 <svg height="300" width="300" 

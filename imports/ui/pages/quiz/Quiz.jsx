@@ -268,7 +268,7 @@ class Quiz extends React.Component {
               }
             </section>
             {this.state.currentFeedback && this.state.currentQuestion &&
-            <div className="question noselect">
+            <div className="question noselect fontreleway">
               {this.state.currentQuestion.text}
             </div>
             }
