@@ -33,6 +33,7 @@ import Login from '/imports/ui/pages/accounts/Login';
 import RecoverPassword from '/imports/ui/pages/accounts/RecoverPassword';
 import SignUp from '/imports/ui/pages/accounts/SignUp';
 import VerifyEmail from '/imports/ui/pages/accounts/VerifyEmail';
+import ResetPassword from '/imports/ui/pages/accounts/ResetPassword';
 
 import Terms from '/imports/ui/pages/legal/Terms';
 import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
@@ -116,6 +117,7 @@ const App = () => (
       <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
+      <Route exact path='/reset-password/:token' component={ResetPassword} />
       <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       {/* <Route exact path='/test' render={(props) => (<CheckLoginVerified childComponent={<QuizSummary {...props}/>} {...props}/>)} /> */}
