@@ -35,8 +35,13 @@ class Quiz extends React.Component {
               });        
             }
     }
-    if(this.props.currentUser && this.props.currentUser.profile.loginScript != 'init' && this.props.feedback){
-      this.getCurrentQuestion(this.props);
+    if(((this.props.currentUser && this.props.currentUser.profile.loginScript != 'init') || this.props.inviteLanding)  && this.props.feedback){
+      var current = this.getCurrentQuestion(this.props);
+      if(!current){
+        this.setState({
+          showSummary: true,
+        });
+      }
     }
   }
 
@@ -233,6 +238,7 @@ class Quiz extends React.Component {
           <section className="quiz-section">
             <section className="person">
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+                this.props.currentUser && this.props.currentUser.profile.loginScript == 'finish' &&
                 <div className="w-inline-block cursor-pointer prevPerson">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
                   <img src="/img/left.png" className="nav"/>
@@ -250,10 +256,11 @@ class Quiz extends React.Component {
 
                 <div className="fontreleway f-q-username f-q-groupname" 
                 style={{visibility:(this.state.currentFeedback && this.state.currentFeedback.groupName) ? 'visible' :'hidden'}}>
-                  {this.state.currentFeedback.groupName}
+                  {this.state.currentFeedback && this.state.currentFeedback.groupName}
                 </div>
               </div>
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
+                this.props.currentUser && this.props.currentUser.profile.loginScript == 'finish' &&
               <div className="w-inline-block cursor-pointer nextPerson">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
                 <img src="/img/right.png" className="nav"/>

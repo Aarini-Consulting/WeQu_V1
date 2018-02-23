@@ -6,17 +6,24 @@ import { Link } from 'react-router-dom';
 import Menu from '/imports/ui/pages/menu/Menu';
 import QuizSummary from '/imports/ui/pages/quiz/QuizSummary';
 
-export default class LoginAfterQuiz extends React.Component {
+import Loading from '/imports/ui/pages/loading/Loading';
+
+class LoginAfterQuiz extends React.Component {
   render() {
-    return (
-      <div className="fillHeight">
-        <Menu location={this.props.location} history={this.props.history}/>
-        <QuizSummary quizUser={undefined} 
-            feedback={undefined}
-            continue={()=>{this.props.history.replace('/quiz');}}
-            next={undefined}/>
-      </div>
-    );
+    if(this.props.dataReady){
+      return (
+        <div className="fillHeight">
+          <Menu location={this.props.location} history={this.props.history}/>
+          <QuizSummary quizUser={undefined} 
+              feedback={undefined}
+              continue={()=>{this.props.history.replace('/quiz');}}
+              next={this.props.next}/>
+        </div>
+      );
+    }else{
+      return(<Loading/>);
+    }
+    
   }
     
 
@@ -24,3 +31,36 @@ export default class LoginAfterQuiz extends React.Component {
     setLoginScript('finish');
   }
 }
+
+export default withTracker((props) => {
+  var dataReady;
+  var next;
+  
+  handleFeedback = Meteor.subscribe('feedback', 
+    {
+      $or : [ 
+      {from:Meteor.userId()},
+      {to:Meteor.userId()} 
+      ]}, 
+    
+    {}, 
+    {
+      onError: function (error) {
+              console.log(error);
+          }
+      });
+  
+  if(handleFeedback.ready()){
+    var feedback = Feedback.findOne({to:{ '$ne': Meteor.userId() }});
+    if(feedback){
+      next = ()=>{
+        props.history.push(`/quiz/${feedback._to}`);
+      }
+    }
+    dataReady = true;
+  }
+  return {
+    dataReady:dataReady,
+    next:next
+  };
+})(LoginAfterQuiz);
