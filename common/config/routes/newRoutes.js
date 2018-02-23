@@ -1,30 +1,33 @@
   
 
 
-  Router.route('/settings', function () {
-        route.set("settings");
-        this.layout('ApplicationLayout');
+//   Router.route('/settings', function () {
+//         route.set("settings");
+//         this.layout('ApplicationLayout');
 
-       return this.render('settings');
+//         import '/imports/ui/pages/settings/settings.js';
+//         return this.render('settings');
 
-    }, { 'name': '/settings' });
+//     }, { 'name': '/settings' });
  
- Router.route('/scriptLoginAfterQuiz/:userId?', function () {
+//  Router.route('/scriptLoginAfterQuiz/:userId?', function () {
 
-     this.layout('ApplicationLayout');
+//      this.layout('ApplicationLayout');
+//      import '/imports/ui/pages/script/script.js';
+//      return this.render('scriptLoginAfterQuiz');
 
-     return this.render('scriptLoginAfterQuiz');
+//  }, { 'name': '/scriptLoginAfterQuiz/:userId?' });
 
- }, { 'name': '/scriptLoginAfterQuiz/:userId?' });
+// Router.route('/terms', function () {
+//   this.layout('ScriptLayout');
+//     import '/imports/ui/pages/register/terms.html';
+//     this.render('terms');
 
-Router.route('/terms', function () {
-  this.layout('ScriptLayout');
-    this.render('terms');
+// });
 
-});
+// Router.route('/privacyPolicy', function () {
+//   this.layout('ScriptLayout');
+//     import '/imports/ui/pages/register/privacyPolicy.html';
+//     this.render('privacyPolicy');
 
-Router.route('/privacyPolicy', function () {
-  this.layout('ScriptLayout');
-    this.render('privacyPolicy');
-
-});
+// });

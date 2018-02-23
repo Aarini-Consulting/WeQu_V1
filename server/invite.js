@@ -22,6 +22,19 @@ Meteor.methods({
       throw (new Meteor.Error("invalid_email"));
     }
 
+    //check user, prevent sending invite to current  user's email
+    var toUser = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
+		if(toUser && toUser._id == this.userId){
+			throw (new Meteor.Error("send_email_self"));
+    }
+    
+    //check if user is already invited before
+    let oldUser = Connections.findOne( 
+      { $and : [{"email":email},{"inviteId": this.userId},{groupId:{$exists: false}}]});
+    if(oldUser){
+      throw (new Meteor.Error("already_invited"));
+    }
+
     var profile = Meteor.user().profile;
     var name = getUserName(profile);
 
@@ -39,13 +52,12 @@ Meteor.methods({
       qset1 = genInitialQuestionSet(toName, qdata.type1she, 12);
     }
 
-    var user = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email }]});
     var _id = Random.secret()
     var _id1 = Random.secret()
     var userId , username;
 
     var link;
-    if(! user){
+    if(!toUser){
       username = Random.id();
       userId = Accounts.createUser({
                 username: username,
@@ -56,31 +68,50 @@ Meteor.methods({
                 firstName: toName,
                 profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result }
               });
-      link = `invitation/${_id}`;
+      // link = `invitation/${_id}`;
     } 
     else {
-      userId = user._id;
+      userId = toUser._id;
       // When an invitation send to an existing user (the account created with linkedin)
       // the email login field should not displayed
-      link = `signIn/invited/${email}/${_id}`;
-      if(user && user.services && user.services.linkedin){
-        link = `signIn/linkedinInvited/${email}/${_id}`;        
-      }
+      // link = `signIn/invited/${email}/${_id}`;
+      // if(toUser && toUser.services && toUser.services.linkedin){
+      //   link = `signIn/linkedinInvited/${email}/${_id}`;        
+      // }
     }
+
+    link = `invitation/${_id}`;
 
     // inserting the inforamtion into the connections collection
 
-    Connections.insert({username: toName,
-      email: email,
-      password: _id,
-      userId : userId,
+    //meteor < 1.6 bug, can't use $ operator in upsert
+    // Connections.upsert({
+    //     userId:userId,
+    //     inviteId : Meteor.userId(),
+    //     groupId: {$exists: false}
+    //   },
+    //   {$set: {
+    //     email: email,
+    //     userId : userId,
+    //     inviteId : Meteor.userId(),
+    //     services : {invitationId: _id}
+    //   }    
+    // });
 
+    var connectionCheck = Connections.findOne({
+      userId:userId,
       inviteId : Meteor.userId(),
-
-      services : {invitationId: _id},
-      profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result,
-                  trialMember: true}
+      groupId: {$exists: false}
     });
+
+    if(!connectionCheck){
+      Connections.insert({
+        email: email,
+        userId : userId,
+        inviteId : Meteor.userId(),
+        services : {invitationId: _id}
+      });
+    }
 
     // Updating the profile groupQuizPerson to false
     let flag = false;
@@ -95,7 +126,7 @@ Meteor.methods({
     var fbId = Feedback.insert({_id: _id, from : userId, to: Meteor.userId(), qset : qset, invite : true, done: false });
     var fbId1 = Feedback.insert({_id: _id1, from : Meteor.userId(), to: userId, qset : qset1, invite : false, done: false });
     console.log("\n fbId1 \t ", fbId1,"\n");
-    if(!user){
+    if(!toUser){
       Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id}});
     }
 

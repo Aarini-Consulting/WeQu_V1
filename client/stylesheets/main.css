@@ -106,7 +106,7 @@
 	/*end 55-new-improve-ui*/
 }
 
-#light-grey-color{
+.light-grey-color{
 	background-color: #e7e7e7;
 }
 
@@ -172,11 +172,6 @@ img.lg-icon{
 .ptb_h1 {
     padding: 50px 0 !important;
 }
-
-.skillElement {
-    width: 98% !important;
-}
-
 
 @media (max-width: 479px) {
 
