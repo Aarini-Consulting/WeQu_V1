@@ -47,7 +47,7 @@ class GroupPage extends React.Component {
         return(
           <div className="fillHeight">
               <Menu location={this.props.location} history={this.props.history}/>
-              <section className="fontreleway">
+              <section className="section summary fontreleway groupbg">
                 <div className="screentitlewrapper w-clearfix">
                   <div className="screentitlebttn back">
                     <a className="w-clearfix w-inline-block" onClick={()=>{

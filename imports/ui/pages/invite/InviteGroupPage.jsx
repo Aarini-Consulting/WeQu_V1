@@ -35,7 +35,7 @@ class InviteGroupPage extends React.Component {
                   <div className="contactnamefield w-clearfix">
                     <img src="/img/avatar.png" className="contactface"/>
                   </div>
-                  <div className="fontcontactname">{group.groupName}</div>
+                  <div className="fontcontactname white">{group.groupName}</div>
                 </div>
               </div>
             </li>
@@ -57,7 +57,7 @@ class InviteGroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText alignCenter feed"}>
+            <section className="fontreleway groupbg">
               <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
                 <div className="emptytext">Hey, there is nobody here
                 </div>
@@ -78,7 +78,7 @@ class InviteGroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section className="section summary">
+            <section className="section summary fontreleway groupbg">
                 <div className="contactlist-wrapper">
                   {this.renderGroupList()}
                 </div>

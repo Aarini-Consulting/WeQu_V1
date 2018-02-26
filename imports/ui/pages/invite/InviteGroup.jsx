@@ -259,7 +259,7 @@ class InviteGroup extends React.Component {
       if(this.state.inviteSuccess){
         return (
           <div className="fillHeight flex-start">
-          <section className="groupbg whiteText alignCenter feed">
+          <section className="fontreleway groupbg">
             {this.props.addNewMemberOnly 
             ?
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
@@ -286,7 +286,7 @@ class InviteGroup extends React.Component {
       }
       else{
         return (
-            <section className="fontreleway">
+            <section className="fontreleway groupbg">
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   {(this.props.addNewMemberOnly || (this.props.count != undefined && this.props.count > 0)) &&

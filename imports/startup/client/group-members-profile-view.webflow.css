@@ -500,7 +500,7 @@
   text-align: center;
 }
 
-.profile-tile-wrapper {
+/* .profile-tile-wrapper {
   display: block;
   overflow: scroll;
   width: 320px;
@@ -516,7 +516,7 @@
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 0 20px 0 hsla(0, 0%, 100%, .28);
-}
+} */
 
 .tile-name {
   position: static;
