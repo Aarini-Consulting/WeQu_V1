@@ -47,37 +47,34 @@ class GroupPage extends React.Component {
         return(
           <div className="fillHeight">
               <Menu location={this.props.location} history={this.props.history}/>
-              <section className="groupbg whiteText alignCenter feed">
-                  <div className="contentwrapper">
-                      <div className="text-left">
-                          <a onClick={()=>{
-                              this.props.history.goBack();
-                          }}>
-                          <img src="/img/arrow_white.png"/>
-                          </a>
-                          &nbsp;
-                          {this.props.group.groupName}
-                      </div>
-  
-                      <div className="screentitlewrapper w-clearfix">
-                        <div className="screentitle">
-                        <div className="title">edit group</div>
-                        </div>
-                        <div className="screentitlebttn">
-                        <a className="w-inline-block marginTop5"  onClick={this.showInviteGroup.bind(this, true)}><img src="/img/Invite_Plus_white.png"/>
-                        </a>
-                        </div>
+              <section className="fontreleway">
+                <div className="screentitlewrapper w-clearfix">
+                  <div className="screentitlebttn back">
+                    <a className="w-clearfix w-inline-block" onClick={()=>{
+                      this.props.history.goBack();
+                    }}>
+                    <img className="image-7" src="/img/arrow.svg"/>
+                    </a>
+                  </div>
+                  <div className="fontreleway font-invite-title w-clearfix">
+                  {this.props.group.groupName}
+                  </div>
+                </div>
+                <div className="tile-section">
+                    <div className="title-table w-row">
+                        {this.renderUserTiles()}
+                        <div className="column-4 w-col w-col-4 w-col-stack"></div>
+                        <div className="column-5 w-col w-col-4 w-col-stack"></div>
                     </div>
-                      <br/>
+                </div>
+
+                <div className="footersummary w-clearfix">
+                  <div className="bttn-area-summary contact" >
+                    <a className="button fontreleway bttncontact w-button" onClick={this.showInviteGroup.bind(this, true)}>
+                    Edit group
+                    </a>
                   </div>
-                  <br/>
-                  <div className="tile-section">
-                      <div className="title-table w-row">
-                          {this.renderUserTiles()}
-                          <div className="column-4 w-col w-col-4 w-col-stack"></div>
-                          <div className="column-5 w-col w-col-4 w-col-stack"></div>
-                      </div>
-                  </div>
+                </div>
               </section>
           </div>
         )

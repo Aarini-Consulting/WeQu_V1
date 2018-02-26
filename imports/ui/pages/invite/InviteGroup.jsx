@@ -12,8 +12,6 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import MultiSelect from './MultiSelect';
 import '/imports/startup/client/react-select.css';
 
-import '/imports/startup/client/group-fbb2b1.webflow';
-
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);
@@ -288,21 +286,21 @@ class InviteGroup extends React.Component {
       }
       else{
         return (
-            <section className={"gradient"+this.props.currentUser.profile.gradient+" whiteText feed"}>
+            <section className="fontreleway">
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   {(this.props.addNewMemberOnly || (this.props.count != undefined && this.props.count > 0)) &&
                     <a className="w-clearfix w-inline-block" onClick={this.handleBackArrowClick.bind(this)}>
-                    <img className="image-7" src="/img/arrow_white.png"/>
+                    <img className="image-7" src="/img/arrow.svg"/>
                     </a>
                   }
                 </div>
-                <div className="screentitle w-clearfix">
+                <div className="fontreleway font-invite-title w-clearfix">
                   {this.props.addNewMemberOnly 
                   ?
-                    <div className="titleGr">Edit</div>
+                    "Edit"
                   :
-                    <div className="titleGr">Create a new group</div>
+                    "Create a new group"
                   }
                 </div>
               </div>

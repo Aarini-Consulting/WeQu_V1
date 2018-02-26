@@ -28,15 +28,17 @@ class InviteGroupPage extends React.Component {
     return this.props.groups.map((group) => {
         return (
           <Link  key={group._id} to={`/group/${group._id}`}>
-            <ul className="friendlist w-list-unstyled">
-            <li className="list-item w-clearfix">
-            <div  className="avatawrapper">
-              <div className="w-inline-block"><img className="image-5" src="/img/avatar_group_2.png"/>
+            <ul className="unordered-list listcontact w-clearfix w-list-unstyled">
+            <li className="contactlist">
+              <div className="contactc w-row cursor-pointer">
+                <div className="column-4">
+                  <div className="contactnamefield w-clearfix">
+                    <img src="/img/avatar.png" className="contactface"/>
+                  </div>
+                  <div className="fontcontactname">{group.groupName}</div>
+                </div>
               </div>
-              <span id="viewGroup" className="contactName">{group.groupName}</span>
-            </div>
             </li>
-            <li></li>
           </ul>
           </Link>
         );
@@ -76,21 +78,18 @@ class InviteGroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section className={"gradient"+this.props.currentUser.profile.gradient +" whiteText feed"}>
-                <div className="contentwrapper w-clearfix">
-                <div className="screentitlewrapper w-clearfix">
-                    <div className="screentitle">
-                    <div className="title">Add Group</div>
-                    </div>
-                    <div className="screentitlebttn">
-                    <a className="w-inline-block marginTop5" onClick={this.showInviteGroup.bind(this, true)}><img src="/img/Invite_Plus_white.png"/>
-                    </a>
-                    </div>
+            <section className="section summary">
+                <div className="contactlist-wrapper">
+                  {this.renderGroupList()}
                 </div>
 
-                {this.renderGroupList()}
-            
-                </div>  
+                <div className="footersummary w-clearfix">
+                  <div className="bttn-area-summary contact" >
+                    <a className="button fontreleway bttncontact w-button" onClick={this.showInviteGroup.bind(this, true)}>
+                    Add new group
+                    </a>
+                  </div>
+                </div>
 
             </section>
           </div>
