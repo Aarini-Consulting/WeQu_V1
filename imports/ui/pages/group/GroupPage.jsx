@@ -50,7 +50,7 @@ class GroupPage extends React.Component {
               <section className="section summary fontreleway groupbg">
                 <div className="screentitlewrapper w-clearfix">
                   <div className="screentitlebttn back">
-                    <a className="w-clearfix w-inline-block" onClick={()=>{
+                    <a className="w-clearfix w-inline-block cursor-pointer" onClick={()=>{
                       this.props.history.goBack();
                     }}>
                     <img className="image-7" src="/img/arrow.svg"/>

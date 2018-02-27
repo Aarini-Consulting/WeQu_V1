@@ -277,7 +277,7 @@ class InviteGroup extends React.Component {
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   {(this.props.addNewMemberOnly || (this.props.count != undefined && this.props.count > 0)) &&
-                    <a className="w-clearfix w-inline-block" onClick={this.handleBackArrowClick.bind(this)}>
+                    <a className="w-clearfix w-inline-block cursor-pointer" onClick={this.handleBackArrowClick.bind(this)}>
                     <img className="image-7" src="/img/arrow.svg"/>
                     </a>
                   }
