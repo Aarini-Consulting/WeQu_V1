@@ -207,7 +207,7 @@ class InvitePage extends React.Component {
               <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
                 <div className="emptytext">Hey, there is nobody here
                   <br/>Invite your teammates to learn how they see you</div>
-                  <a className="invitebttn w-button step-invitebttn" onClick={this.showInvite.bind(this)}>invite</a>
+                  <a className="bttn bttn-invite w-button" onClick={this.showInvite.bind(this)}>invite</a>
               </div>
             </section>
           </div>

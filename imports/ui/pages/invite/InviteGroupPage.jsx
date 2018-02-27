@@ -59,7 +59,7 @@ class InviteGroupPage extends React.Component {
             <Menu location={this.props.location} history={this.props.history}/>
             <section className="fontreleway groupbg">
               <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
-                <div className="emptytext">Hey, there is nobody here
+                <div className="emptytext group">Hey, there is nobody here
                 </div>
                   <a className="invitebttn w-button step-invitebttn" onClick={this.showInviteGroup.bind(this,true)}>Create a group</a>
               </div>

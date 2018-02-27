@@ -190,41 +190,28 @@ class InviteGroup extends React.Component {
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
           return (
-            <tr key={data.email}>
-              <td>{data.firstName}</td>
-              <td>{data.lastName}</td>
-              <td>{data.email}</td>
-              <td>{data.gender}</td>
-              <td><input type="button" defaultValue="Delete" className="delete bttnmembr bttnsaved w-button" onClick ={this.deleteField.bind(this,index)}/></td>
-            </tr>
+            <li className="w-clearfix" key={data.email}>
+              <div className="font f_12"></div>
+              <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
+              <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
+              <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
+              <div className="bttngender w-clearfix disabled">
+                <div className={"fontreleway fgenderbttn " + (data.gender == "Male" ? "selected" : "disabled") + " noselect"} id="m">Male</div>
+              </div>
+              <div className="bttngender w-clearfix disabled">
+                <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
+              </div>
+              <input type="submit" defaultValue="Delete" className="addDelete invitebttn bttnmembr w-button" onClick ={this.deleteField.bind(this,index)}/>
+            </li>
           );
         });
     }
 
     renderFieldTable(){
       return (
-        <div className="row">
-        <div className="col-md-12 col-sm-12 col-xs-12">
-          <table className="table table-fw-widget">
-          
-            <thead>
-            <tr>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Email</th>
-              <th>Gender </th>
-              <th>press to delete</th>
-            </tr>
-            </thead>
-            
-            <tbody className="no-border-x">
-              {this.renderFields()}
-            </tbody>
-
-          </table>
-        </div>
-        </div>
-        
+        <ol className="w-list-unstyled">
+          {this.renderFields()}
+        </ol>
       )
     }
 
@@ -263,7 +250,7 @@ class InviteGroup extends React.Component {
             {this.props.addNewMemberOnly 
             ?
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
-                <div className="emptytext">Awesome!
+                <div className="emptytext group">Awesome!
                 <br/>Your changes has been saved
                 {this.state.inviteSuccess && typeof this.state.inviteSuccess != "boolean" && this.state.inviteSuccess > 0 &&
                 <div><br/>An invitation was sent to {this.state.inviteSuccess} people</div>
@@ -273,7 +260,7 @@ class InviteGroup extends React.Component {
             </div>
             :
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
-                <div className="emptytext">Awesome!
+                <div className="emptytext group">Awesome!
                 <br/>Your invitation is sent to {this.state.inviteSuccess} people
                 <br/>When they sign up, you can view their profiles
                 </div>
@@ -337,16 +324,16 @@ class InviteGroup extends React.Component {
                       <ol className="w-list-unstyled">
                         <li className="w-clearfix">
                           <div className="font f_12"></div>
-                          <input type="text" className="formstyle formuser w-input fistName" maxLength="256" ref="firstName" placeholder="First name"  required={!this.state.submitInvite}/>
-                          <input type="text" className="formstyle formuser w-input lastName " maxLength="256" ref="lastName" placeholder="Last name" required={!this.state.submitInvite}/>
-                          <input type="email" className="formstyle formuser formemail w-input email" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={!this.state.submitInvite}/>
+                          <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={!this.state.submitInvite}/>
+                          <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={!this.state.submitInvite}/>
+                          <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={!this.state.submitInvite}/>
                           <div className="bttngender w-clearfix">
                             <div className={"fontreleway fgenderbttn " + (this.state.gender == "Male" ? "selected" : "")} id="m"  onClick ={this.setGender.bind(this,"Male")}>Male</div>
                           </div>
                           <div className="bttngender w-clearfix">
                             <div className={"fontreleway fgenderbttn " + (this.state.gender == "Female" ? "selected" : "")} id="f" onClick ={this.setGender.bind(this,"Female")}>Female</div>
                           </div>
-                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr bttnsaved w-button"/>
+                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr w-button"/>
                         </li>
                       </ol>
 
