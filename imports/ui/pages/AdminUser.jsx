@@ -90,7 +90,7 @@ class AdminUser extends React.Component {
                         <br/>
                         {user.profile && user.profile.publicProfileUrl &&
                             <span className="badge">
-                            <a className="colorRed" href={profile.publicProfileUrl} target="_blank">{profile.publicProfileUrl}</a>
+                            <a className="colorRed" href={user.profile.publicProfileUrl} target="_blank">{user.profile.publicProfileUrl}</a>
                             </span>
                         }
                         <br/>
