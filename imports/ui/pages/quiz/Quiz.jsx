@@ -324,7 +324,16 @@ export default withTracker((props) => {
 
   }
   else if(props.quizUser){
-    handleFeedback = Meteor.subscribe('feedback', { 'from': Meteor.userId(), 'to' : props.quizUser._id, done: false }, {}, {
+    handleFeedback = Meteor.subscribe('feedback', 
+    {
+      $or : [ 
+      {from:Meteor.userId()},
+      {to:Meteor.userId()} 
+      ], 
+      done: false }, 
+    
+    {}, 
+    {
       onError: function (error) {
               console.log(error);
           }
@@ -353,17 +362,6 @@ export default withTracker((props) => {
 
   if((props.feedback || (handleFeedback && handleFeedback.ready()))){
     if(!props.feedback){
-      if(props.quizUser){
-        if(props.group){
-          feedback = Feedback.findOne(
-            { 'from': Meteor.userId(), 'to' : props.quizUser._id, groupId:props.group._id, done: false });
-        }else{
-          feedback = Feedback.findOne(
-            { 'from': Meteor.userId(), 'to' : props.quizUser._id, groupId:{$exists: false}, done: false });
-        }
-      }else{
-        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
-      }
       feedbacksArray = Feedback.find({
         done: false,
         $and : [
@@ -382,6 +380,20 @@ export default withTracker((props) => {
         })
       });
 
+      if(props.quizUser){
+        feedback = feedbacksArray.find((fb, index, fa)=>{
+          if(props.group){
+            return (fb.from == Meteor.userId() && fb.to == props.quizUser._id 
+            &&  fb.groupId == props.group._id && fb.done == false);
+          }else{
+            return (fb.from == Meteor.userId() && fb.to == props.quizUser._id 
+            &&  !fb.groupId && fb.done == false);
+          }
+        })
+      }else{
+        feedback = Feedback.findOne({ 'from': Meteor.userId(), 'to' : Meteor.userId(), done: false });
+      }
+      
       var handleUsers = Meteor.subscribe('users',{
           _id:{$in:feedbacksArray.map((fa)=>{return fa.to;})}
         },{}, {

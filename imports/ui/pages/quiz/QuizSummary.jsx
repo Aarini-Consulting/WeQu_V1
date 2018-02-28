@@ -165,8 +165,8 @@ export default withTracker((props) => {
   if(handleFeedback.ready()){
     if(props.quizUser){
       user = props.quizUser;
-      feedbacks = Feedback.find({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done:true}, 
-      { sort: { lastUpdated: -1 } }).fetch();
+      // feedbacks = Feedback.find({ 'from': Meteor.userId(), 'to' : props.quizUser._id, done:true}, 
+      // { sort: { lastUpdated: -1 } }).fetch();
     }else{
       if(props.quizPerson){
         user = props.quizPerson;
@@ -174,13 +174,17 @@ export default withTracker((props) => {
       else{
         user = Meteor.user();
       }
-      if(props.feedback){
-        feedbacks = Feedback.find({'from': props.feedback.from, 'to' : props.feedback.to, done:true}, 
-        { sort: { lastUpdated: -1 }}).fetch();
-      }else{
-        feedbacks = Feedback.find({'from': Meteor.userId(), 'to' : Meteor.userId(), done:true}, 
-        { sort: { lastUpdated: -1 }}).fetch();
-      }
+      
+    }
+
+    if(props.feedback){
+      feedbacks = Feedback.find(
+        {'from': props.feedback.from, 'to' : props.feedback.to, 'groupId' : props.feedback.groupId, done:true}, 
+      { sort: { lastUpdated: -1 }}).fetch();
+    }else{
+      feedbacks = Feedback.find(
+        {'from': Meteor.userId(), 'to' : Meteor.userId(), done:true}, 
+      { sort: { lastUpdated: -1 }}).fetch();
     }
 
     var othersFeedbacks = Feedback.find({
@@ -196,15 +200,16 @@ export default withTracker((props) => {
       },
     { sort: { _id: -1 }}).fetch()
     .filter((fb, index, fa)=>{
-      return index === fa.findIndex((fb2)=>{
-        return (fb2.to === fb.to);
+      return index == fa.findIndex((fb2)=>{
+        return (fb2.to === fb.to && fb2.from === fb.from && fb2.groupId === fb.groupId);
       })
     });
 
     if(othersFeedbacks && othersFeedbacks.length > 0){
       var currentIndex = othersFeedbacks.findIndex((fb)=>{
         return (fb.from === feedbacks[0].from &&
-                fb.to === feedbacks[0].to)
+                fb.to === feedbacks[0].to &&
+                fb.groupId === feedbacks[0].groupId)
       });
 
       if(currentIndex >= 0 && currentIndex + 1 < othersFeedbacks.length){
