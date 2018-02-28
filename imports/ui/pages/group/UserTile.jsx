@@ -77,8 +77,6 @@ class UserTile extends React.Component {
                 <img className="w-hidden-main w-hidden-medium" src="/img/arrowLeft.png" width="10"/>
                 </a> */}
                 <div className="font-tile-name">{this.props.email}</div>
-                <a className="tile-arrow-right tile-nav-arrow w-clearfix w-hidden-main w-hidden-medium w-inline-block"><img className="image-11 w-hidden-main w-hidden-medium" src="/img/arrowRight.png" width="10"/>
-                </a>
                 <div className="name-stat">
                   <div className="w-row">
                     <div className="column-2 w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6">
@@ -137,12 +135,7 @@ class UserTile extends React.Component {
           <div className="column-3 w-clearfix w-col w-col-4 w-col-stack">
               <div className="profile-tile-wrapper w-clearfix">
               <div className="tile-name w-clearfix">
-                {/* <a className="tile-arrow-left tile-nav-arrow w-hidden-main w-hidden-medium w-inline-block">
-                <img className="w-hidden-main w-hidden-medium" src="/img/arrowLeft.png" width="10"/>
-                </a> */}
                 <div className="font-tile-name">{this.props.email}</div>
-                <a className="tile-arrow-right tile-nav-arrow w-clearfix w-hidden-main w-hidden-medium w-inline-block"><img className="image-11 w-hidden-main w-hidden-medium" src="/img/arrowRight.png" width="10"/>
-                </a>
                 <div className="name-stat">
                   <div className="w-row">
                     <div className="column-2 w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6">
