@@ -13,7 +13,8 @@ import Invite from './invite/Invite';
 
 class ScriptLogin extends React.Component {
   render() {
-        if(this.props.dataReady && this.props.currentUser.profile){
+        if(this.props.dataReady){
+            if(this.props.currentUser && this.props.currentUser.profile  && this.props.currentUser.profile.loginScript){
                 switch(this.props.currentUser.profile.loginScript) {
                     case 'init': {
                         var condition = true;
@@ -60,6 +61,18 @@ class ScriptLogin extends React.Component {
                         return (<Redirect to={"/quiz"}/>);
                         break;
                 }
+            }else{
+                Session.set( "loggedOut", true);
+                Meteor.logout((error)=>{
+                    if(error){
+                      console.log(error);
+                      return false;
+                    }else{
+                        this.props.history.replace('/login');
+                    }
+                  });
+                return false;
+            }
         }
         else{
             return(
