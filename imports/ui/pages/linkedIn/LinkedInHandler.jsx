@@ -31,17 +31,28 @@ export default class LinkedInHandler extends React.Component {
             params[keyValue[0]] = keyValue[1];
         });
 
+        console.log(params);
+
         if(params.code){
-            //TODO get access token first before calling the code below
-            // var extraFields = 'positions,industry,picture-urls::(original)';
-            // Meteor.call('get.linkedIn.data', params.code, extraFields, (error, result) => {
-            //   if (error){
-            //   console.log(error);
-            //   }
-            //   else if(result) {
-            //    console.log(result)
-            //   }
-            // });
+            var redirect_ui =  Meteor.absoluteUrl() + this.props.location.pathname.toString().substr(1);
+            Meteor.call('get.access.token', redirect_ui, params.code, (error, result) => {
+              if (error){
+              console.log(error);
+              }
+              else if(result) {
+               console.log(result)
+              }
+            });
+        }else if(params.access_token){
+            var extraFields = 'positions,industry,picture-urls::(original)';
+            Meteor.call('get.linkedIn.data', params.access_token, extraFields, (error, result) => {
+              if (error){
+              console.log(error);
+              }
+              else if(result) {
+               console.log(result)
+              }
+            });
         }
     }
     
