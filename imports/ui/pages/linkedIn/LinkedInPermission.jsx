@@ -10,7 +10,7 @@ export default class LinkedInPermission extends React.Component {
             Session.set( "csrf", Random.secret());
         }
         var redirect_uri = Meteor.absoluteUrl() + this.props.match.params.redirect_pathname;
-        var params =`?response_type=code&client_id=${Meteor.settings.public.LinkedInClientId}&redirect_uri=${redirect_uri}&state=${Session.get("csrf")}&scope=r_basicprofile`;
+        var params =`?response_type=code&client_id=${Meteor.settings.public.LinkedInClientId}&redirect_uri=${redirect_uri}&state=${Session.get("csrf")}`;
 
         window.location = 'https://www.linkedin.com/oauth/v2/authorization'+params;
         return (

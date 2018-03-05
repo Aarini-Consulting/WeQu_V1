@@ -12,12 +12,12 @@ export default class LinkedInHandler extends React.Component {
         super(props);
         this.state={
           csrfCheck:true,
+          loading:true,
+          success:false
         }
     }
 
     componentWillMount(){
-        console.log(this.props.location);
-
         var split = this.props.location.search.split("&");
         var params={};
 
@@ -31,8 +31,6 @@ export default class LinkedInHandler extends React.Component {
             params[keyValue[0]] = keyValue[1];
         });
 
-        console.log(params);
-
         if(params.code){
             var redirect_ui =  Meteor.absoluteUrl() + this.props.location.pathname.toString().substr(1);
             Meteor.call('get.access.token', redirect_ui, params.code, (error, result) => {
@@ -40,29 +38,46 @@ export default class LinkedInHandler extends React.Component {
               console.log(error);
               }
               else if(result) {
-               console.log(result)
-              }
-            });
-        }else if(params.access_token){
-            var extraFields = 'positions,industry,picture-urls::(original)';
-            Meteor.call('get.linkedIn.data', params.access_token, extraFields, (error, result) => {
-              if (error){
-              console.log(error);
-              }
-              else if(result) {
-               console.log(result)
+               if(result.data && result.data.access_token){
+                var extraFields = 'first-name,last-name,headline,location,summary,public-profile-url,positions,industry,picture-url,picture-urls::(original)';
+                Meteor.call('get.linkedIn.data', result.data.access_token, extraFields, (error, result) => {
+                  if (error){
+                  console.log(error);
+                  this.setState({
+                        loading: false,
+                        success:false
+                    });
+                  }
+                  else if(result) {
+                    this.setState({
+                        loading: false,
+                        success:true
+                    });
+                  }else{
+                    this.setState({
+                        loading: false,
+                        success:false
+                    }); 
+                  }
+                });
+               }
               }
             });
         }
     }
     
     render() {
-        return (
-            <div className="loginwraper">
-                <Loading/>
-            </div>
-        );
-        
+        if(this.state.loading){
+            return (
+                <div className="loginwraper">
+                    <Loading/>
+                </div>
+            );
+        }else{
+            return(
+                <Redirect to="/profile"/>
+            );
+        }
     }
   }
   
