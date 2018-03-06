@@ -63,6 +63,11 @@ export default class LinkedInHandler extends React.Component {
                }
               }
             });
+        }else{
+            this.setState({
+                loading: false,
+                success:false
+            }); 
         }
     }
     
