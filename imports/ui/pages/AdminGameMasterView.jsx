@@ -46,7 +46,7 @@ class AdminGameMasterView extends React.Component {
             });
             //remove duplicate
             users = [...new Set(users)];
-
+            console.log(user);
             return (
                 <tr key={user._id}>
                     <td>{user.status.online 
@@ -59,8 +59,10 @@ class AdminGameMasterView extends React.Component {
     
                     <td className="user-avatar">
                         <div><span className="status"></span>
-                            {user.profile && user.profile.pictureUrl
-                            ? <img className="img-circle" src={user.profile.pictureUrl}/>
+                            {user.profile && user.profile.linkedIn && user.profile.linkedIn.pictureUrl
+                            ? user.profile && user.profile.linkedIn.pictureUrls && user.profile.linkedIn.pictureUrls.values 
+                                ?<img className="img-circle" width="75" height="75" src={user.profile.linkedIn.pictureUrls.values[0]}/>
+                                :<img className="img-circle" width="75" height="75" src={user.profile.linkedIn.pictureUrl}/>
                             : <img className="img-circle" width="75" height="75" src="/img/profile/profile4.png"/>
                             }
                         </div>
