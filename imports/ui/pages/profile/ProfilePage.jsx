@@ -14,7 +14,8 @@ class ProfilePage extends React.Component {
         return (
           <div className="fillHeight">
           <Menu location={this.props.location} history={this.props.history}/>
-          <Profile initialUser={this.props.quizUser} initialUserGroup={this.props.group}/>
+          <Profile initialUser={this.props.quizUser} initialUserGroup={this.props.group} 
+          location={this.props.location} history={this.props.history}/>
           </div>
         );
       }else{

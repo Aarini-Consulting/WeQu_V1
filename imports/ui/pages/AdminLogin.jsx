@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-export default class NotFound extends React.Component {
+export default class AdminLogin extends React.Component {
     handleSubmit(event){
         event.preventDefault();
         var loginEmail = ReactDOM.findDOMNode(this.refs.loginEmail).value.trim();

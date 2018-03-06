@@ -77,10 +77,17 @@ class InvitePage extends React.Component {
             <div className="contactc w-row">
               <div className="column-4">
                 <div className="contactnamefield w-clearfix cursor-pointer" 
-                onClick={()=>{
-                  this.props.history.push(`/profile/${user._id}`);
-                }}>
-                  <img src="/img/avatar.png" className="contactface"/>
+                  onClick={()=>{
+                    this.props.history.push(`/profile/${user._id}`);
+                  }}>
+
+                  {user.profile && user.profile.linkedIn && user.profile.linkedIn.pictureUrl
+                    ? user.profile && user.profile.linkedIn.pictureUrls && user.profile.linkedIn.pictureUrls.values 
+                        ?<img src={user.profile.linkedIn.pictureUrls.values[0]} className="contactface"/>
+                        :<img src={user.profile.linkedIn.pictureUrl} className="contactface"/>
+                    : <img src="/img/avatar.png" className="contactface"/>
+                  }
+
                 </div>
                 <div className="fontcontactname">{getUserName(user.profile)}</div>
               </div>
@@ -138,10 +145,15 @@ class InvitePage extends React.Component {
                   <div className="contactc w-row">
                     <div className="column-4">
                       <div className="contactnamefield w-clearfix cursor-pointer" 
-                      onClick={()=>{
-                        this.props.history.push(`/profile/${user._id}`);
-                      }}>
-                        <img src="/img/avatar.png" className="contactface"/>
+                        onClick={()=>{
+                          this.props.history.push(`/profile/${user._id}`);
+                        }}>
+                        {user.profile && user.profile.linkedIn && user.profile.linkedIn.pictureUrl
+                          ? user.profile && user.profile.linkedIn.pictureUrls && user.profile.linkedIn.pictureUrls.values 
+                              ?<img src={user.profile.linkedIn.pictureUrls.values[0]} className="contactface"/>
+                              :<img src={user.profile.linkedIn.pictureUrl} className="contactface"/>
+                          : <img src="/img/avatar.png" className="contactface"/>
+                        }
                       </div>
                       <div className="fontcontactname">{getUserName(user.profile)}</div>
                     </div>

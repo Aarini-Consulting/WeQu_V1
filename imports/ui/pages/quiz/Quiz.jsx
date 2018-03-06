@@ -74,6 +74,7 @@ class Quiz extends React.Component {
 
       this.setState({
         currentFeedback: currentFeedback,
+        user:props.user,
         username: props.username
       });
     }else{
@@ -246,7 +247,12 @@ class Quiz extends React.Component {
               }
               <div className="h4 w-inline-block" id="specificUser">
                 {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
-                <img src="/img/avatar.png" className="avatar" id="specificUser"/>
+                {this.state.user && this.state.user.profile && this.state.user.profile.linkedIn && this.state.user.profile.linkedIn.pictureUrl
+                  ? this.state.user.profile && this.state.user.profile.linkedIn.pictureUrls && this.state.user.profile.linkedIn.pictureUrls.values 
+                      ?<img src={this.state.user.profile.linkedIn.pictureUrls.values[0]} className="avatar"/>
+                      :<img src={this.state.user.profile.linkedIn.pictureUrl} className="avatar"/>
+                  : <img src="/img/avatar.png" className="avatar"/>
+                }
       
                 <br/>
                 <div className="fontreleway f-q-username">
@@ -412,11 +418,11 @@ export default withTracker((props) => {
       dataReady = true;
     }
     username = getUserName(user.profile);
-    
   }
    
   return {
       currentUser: Meteor.user(),
+      user:user,
       username: username,
       usersArray:usersArray,
       connections:connections,

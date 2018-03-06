@@ -16,8 +16,9 @@ class Profile extends React.Component {
     super(props);
     this.state={
       activeProfileIndex:-1,
+      connectingLinkedIn:false,
     }
-}
+  }
 
   handleScroll(ev) {
     var scroll = ev && ev.target && ev.target.scrollTop;
@@ -70,6 +71,13 @@ class Profile extends React.Component {
       return false;
     } 
     
+  }
+
+  getLinkedInInfo(){
+    if(this.props.currentUser && this.props.currentUser._id == Meteor.userId()){
+      var pathname = "linkedin-handler"
+      this.props.history.push(`/linkedin-permission/${pathname}`);
+    }
   }
 
   componentWillUnmount() {
@@ -128,8 +136,12 @@ class Profile extends React.Component {
               }
             </div>
             <div className="profilefac">
-              {/* <img className="avatarprofile" src="{{pictureUrl}}"/> */}
-              <img src="/img/avatar.png" className="avatarprofile" id="specificUser" data-filter-id={Meteor.userId()}/>
+              {profileInfo.profile && profileInfo.profile.linkedIn && profileInfo.profile.linkedIn.pictureUrl
+                ? profileInfo.profile && profileInfo.profile.linkedIn.pictureUrls && profileInfo.profile.linkedIn.pictureUrls.values 
+                    ?<img src={profileInfo.profile.linkedIn.pictureUrls.values[0]} className="avatarprofile" onClick={this.getLinkedInInfo.bind(this)}/>
+                    :<img src={profileInfo.profile.linkedIn.pictureUrl} className="avatarprofile" onClick={this.getLinkedInInfo.bind(this)}/>
+                : <img src="/img/avatar.png" className="avatarprofile" onClick={this.getLinkedInInfo.bind(this)}/>
+              }
               <div className="fontprofilename fontreleway">
               {profileInfo && 
               getUserName(profileInfo.profile)
