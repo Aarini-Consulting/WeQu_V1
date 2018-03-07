@@ -28,8 +28,6 @@ import Settings from '/imports/ui/pages/Settings';
 import NotFound from '/imports/ui/pages/NotFound';
 import NotAuthorized from '/imports/ui/pages/NotAuthorized';
 
-import Typeform from '/imports/ui/pages/typeform/Typeform';
-
 // import Test from '/imports/ui/pages/test';
 
 import Login from '/imports/ui/pages/accounts/Login';
@@ -131,9 +129,6 @@ const App = () => (
       <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />
       {/* <Route path="/test" component={Test}/> */}
-
-      <Route exact path='/typeform' render={(props) => (<CheckLoginVerified childComponent={<Typeform {...props}/>} {...props}/>)} />
-
       <Route path="/adminUser" component={AdminUser}/>
       <Route path="/404" component={NotFound}/>
       <Route path="/401" component={NotAuthorized}/>
