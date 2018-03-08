@@ -155,6 +155,34 @@ class InviteGroup extends React.Component {
       });
     }
 
+    resendInvite(index){
+      var copyStateData = this.state.inviteDatas.slice();
+      console.log(this.props.group);
+      console.log(copyStateData[index]);
+
+      if(this.props.group){
+        this.setState({
+          inviteStatus: 'sending',
+        });
+    
+        Meteor.call('resend.group.invite', this.props.group._id, copyStateData[index].email , (err, res) => {
+          if(res){
+            this.setState({
+                inviteStatus: 'sent',
+                inviteSuccess:1,
+              });
+            }
+            if(err)
+            {
+              this.setState({
+                inviteStatus: 'error',
+                info: 'error sending email',
+              });
+            }     
+        }); 
+      }
+    }
+
     addField(){
       var copyStateData = this.state.inviteDatas.slice();
       var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
@@ -190,7 +218,7 @@ class InviteGroup extends React.Component {
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
           return (
-            <li className="w-clearfix" key={data.email}>
+            <li className="w-clearfix invite-field" key={data.email}>
               <div className="font f_12"></div>
               <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
               <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
@@ -201,7 +229,8 @@ class InviteGroup extends React.Component {
               <div className="bttngender w-clearfix disabled">
                 <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
               </div>
-              <input type="submit" defaultValue="Delete" className="addDelete invitebttn bttnmembr w-button" onClick ={this.deleteField.bind(this,index)}/>
+              <div className="addDelete invitebttn bttnmembr resend w-button" onClick ={this.resendInvite.bind(this,index)}>R</div>
+              <div className="addDelete invitebttn bttnmembr w-button" onClick ={this.deleteField.bind(this,index)}>Delete</div>
             </li>
           );
         });
@@ -333,7 +362,7 @@ class InviteGroup extends React.Component {
                           <div className="bttngender w-clearfix">
                             <div className={"fontreleway fgenderbttn " + (this.state.gender == "Female" ? "selected" : "")} id="f" onClick ={this.setGender.bind(this,"Female")}>Female</div>
                           </div>
-                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr w-button"/>
+                          <input type="submit" id="submitAdd" defaultValue="add &amp; invite" className="addDelete invitebttn bttnmembr add w-button"/>
                         </li>
                       </ol>
 
