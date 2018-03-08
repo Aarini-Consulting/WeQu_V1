@@ -4,15 +4,17 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import Radar from '/imports/ui/pages/profile/Radar';0
 import Loading from '/imports/ui/pages/loading/Loading';
 
 class InviteLandingSuccess extends React.Component {
     renderSkills(skillData){
         return skillData.map((data) => {
             return (
-              <div key={"skill-highlight-"+data.skill} className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
-                <div className="title-skillicon-div"><img className="title-skill-icon" src={"/img/skills/"+data.skill+".png"}/>
-                  <div className="font-skillicon font-tile">{data.text}</div>
+              <div key={"skill-highlight-"+data.skill} className="skillcolumn w-col w-col-4 w-col-medium-4 w-col-small-small-stack w-col-tiny-tiny-stack">
+                <div className="skillblock">
+                    <img className="iconskill swapDescription1 swap1{{skill}} active" src={"/img/skills/"+data.skill+".png"}/>
+                    <div className="fontreleway skillname">{data.text}</div>
                 </div>
               </div>
             );
@@ -22,8 +24,8 @@ class InviteLandingSuccess extends React.Component {
   render() {
       if(this.props.dataReady){
         return (
-            <section className={"gradient whiteText alignCenter"}>
-                <h2 className="scriptInvitationFillData marginTop25 marginTop25">
+            <section className={"feed"}>
+                <h2 className="scriptInvitationFillData">
                 Well done {getUserName(this.props.quizUser.profile)}!
                 </h2>
 
@@ -33,8 +35,14 @@ class InviteLandingSuccess extends React.Component {
                         You have discovered that<br/>
                         {getUserName(this.props.senderUser.profile)}'s top strengths are
                     </h2>
+                    <svg height="300" width="300" 
+                        style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
+                        {this.props.radarScore &&
+                            <Radar points = {dataForRadar(this.props.radarScore)} color="white" outline="#E96956"/>
+                        }
+                    </svg>
                     <div className="columtop w-row">
-                    {this.renderSkills(this.props.skillData.top3)}
+                        {this.renderSkills(this.props.skillData.top3)}
                     </div>
                 </div>
                 }
@@ -51,11 +59,11 @@ class InviteLandingSuccess extends React.Component {
                 
                 {this.props.quizUser.profile.trial
                 ?
-                <Link to={`/sign-up/${this.props.quizUser._id}`} className="next transparent customDimension margin30 font-white">
+                <Link to={`/sign-up/${this.props.quizUser._id}`} className="bttn bttn-invite w-button">
                 Sign up with email
                 </Link>
                 :
-                <Link to={"/"} className="next transparent customDimension margin30 font-white">
+                <Link to={"/"} className="bttn bttn-invite w-button">
                 Home
                 </Link>
                 }
@@ -74,6 +82,8 @@ export default withTracker((props) => {
     var senderUser;
     var skillData;
     var dataReady;
+    var radarScore;
+
     var handleUsers = Meteor.subscribe('users',{_id : props.feedback.to}, {}, {
         onError: function (error) {
                 console.log(error);
@@ -83,11 +93,13 @@ export default withTracker((props) => {
     if(handleUsers.ready()){
         senderUser = Meteor.users.findOne({_id : props.feedback.to});
         skillData = calculateTopWeak([props.feedback]);
+        radarScore = calculateScore(joinFeedbacks([props.feedback]));
         dataReady = true;
     }
 
   return {
       dataReady:dataReady,
+      radarScore:radarScore,
       senderUser: senderUser,
       skillData:skillData
   };
