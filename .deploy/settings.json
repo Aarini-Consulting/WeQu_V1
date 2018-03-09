@@ -1,6 +1,6 @@
 {
   "public": {
-
+    "LinkedInClientId":"758ew0beoeqe01",
     "domain": {
       "url": "http://app.wequ.tech",
       "int": "http://app.wequ.co",
@@ -10,7 +10,8 @@
     "verifyEmail": true
   },
   "private": {
-
+    "LinkedInClientId":"758ew0beoeqe01",
+    "LinkedInSecretId":"qwAMdc8wlJ3KxgY1",
     "postmail": "postmaster@wequ.co",
     "defaultUsers": [
       {
