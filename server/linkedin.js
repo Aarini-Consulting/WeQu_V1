@@ -15,7 +15,7 @@ Meteor.methods({
                 "client_secret":Meteor.settings.private.LinkedInSecretId
                 }
             });
-            console.log(result);
+
             return result;
         }
         catch(error){
@@ -37,7 +37,7 @@ Meteor.methods({
                     format: 'json'
                     }
             });
-            console.log(result);
+            
             if(result.data){
                 Meteor.call('store.linkedIn.data', result.data);
                 return true;
@@ -48,11 +48,27 @@ Meteor.methods({
         }
     },
     'store.linkedIn.data'(linkedInData) {
-        Meteor.users.update(Meteor.userId(), { 
-            '$set': { 
-                'profile.linkedIn': linkedInData,
-                } 
-            });
-    },
+        var pictureUrl;
 
+        if(linkedInData && linkedInData.pictureUrls  && linkedInData.pictureUrls.values){
+            pictureUrl = linkedInData.pictureUrls.values[0];
+        }else{
+            pictureUrl = linkedInData.pictureUrl;
+        }
+
+        if(pictureUrl){
+            Meteor.users.update(Meteor.userId(), { 
+                '$set': {
+                    'profile.pictureUrl': pictureUrl,
+                    'profile.linkedIn': linkedInData,
+                    } 
+                });
+        }else{
+            Meteor.users.update(Meteor.userId(), { 
+                '$set': {
+                    'profile.linkedIn': linkedInData,
+                    } 
+                });
+        }
+    },
 })

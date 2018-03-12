@@ -67,10 +67,8 @@ class AdminUser extends React.Component {
     
                     <td className="user-avatar">
                         <div><span className="status"></span>
-                        {user.profile && user.profile.linkedIn && user.profile.linkedIn.pictureUrl
-                            ? user.profile && user.profile.linkedIn.pictureUrls && user.profile.linkedIn.pictureUrls.values 
-                                ?<img className="img-circle" width="75" height="75" src={user.profile.linkedIn.pictureUrls.values[0]}/>
-                                :<img className="img-circle" width="75" height="75" src={user.profile.linkedIn.pictureUrl}/>
+                        {user.profile && user.profile.pictureUrl
+                            ? <img className="img-circle" width="75" height="75" src={user.profile.pictureUrl}/>
                             : <img className="img-circle" width="75" height="75" src="/img/profile/profile4.png"/>
                         }
                         </div>
