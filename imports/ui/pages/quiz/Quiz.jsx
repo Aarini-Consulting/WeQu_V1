@@ -248,7 +248,7 @@ class Quiz extends React.Component {
               <div className="h4 w-inline-block" id="specificUser">
                 {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
                 {this.state.user && this.state.user.profile && this.state.user.profile.pictureUrl
-                  ? <img src={this.state.user.profile.pictureUrl} className="avatar"/>
+                  ? <img src={this.state.user.profile.pictureUrl} className={"avatar "+ this.state.user.profile.pictureShape}/>
                   : <img src="/img/avatar.png" className="avatar"/>
                 }
       

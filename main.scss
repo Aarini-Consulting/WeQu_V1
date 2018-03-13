@@ -167,6 +167,11 @@ input {
   //@include clip-path(circle(50% at center));
 }
 
+.avatar.square {
+  border-radius: 0%
+  //@include clip-path(circle(50% at center));
+}
+
 .avatarSmall {
   @extend .avatar;
   height: 40px;

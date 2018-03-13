@@ -137,7 +137,7 @@ class Profile extends React.Component {
             </div>
             <div className="profilefac">
               {profileInfo.profile && profileInfo.profile.pictureUrl 
-                ? <img src={profileInfo.profile.pictureUrl} className="avatarprofile" onClick={this.getLinkedInInfo.bind(this)}/>
+                ? <img src={profileInfo.profile.pictureUrl} className={"avatarprofile "+profileInfo.profile.pictureShape} onClick={this.getLinkedInInfo.bind(this)}/>
                 : <img src="/img/avatar.png" className="avatarprofile" onClick={this.getLinkedInInfo.bind(this)}/>
               }
               <div className="fontprofilename fontreleway">

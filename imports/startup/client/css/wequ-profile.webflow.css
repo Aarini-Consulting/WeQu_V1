@@ -596,6 +596,10 @@ body {
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
 }
 
+.avatarprofile.square {
+  border-radius: 0px;
+}
+
 .fontreleway {
   float: none;
   font-family: Raleway, sans-serif;
@@ -1952,6 +1956,11 @@ body {
   float: left;
   clear: left;
   border-style: none;
+  border-radius:50%
+}
+
+.contactface.square {
+  border-radius:0%
 }
 
 .column-3 {
