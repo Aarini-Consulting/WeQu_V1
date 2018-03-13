@@ -1598,11 +1598,12 @@ body {
   cursor: pointer;
 }
 
-.text.fontreleway.fontmenu:hover {
+.text.fontreleway.fontmenu:hover,.text.fontreleway.fontmenu.active {
   color: #63b250;
+  text-decoration: none;
 }
 
-.text.fontreleway.fontmenu._1:hover {
+.text.fontreleway.fontmenu._1:hover,.text.fontreleway.fontmenu._1.active {
   color: #6db75c;
 }
 
@@ -1613,15 +1614,15 @@ body {
   float: none;
 } */
 
-.text.fontreleway.fontmenu._2:hover {
+.text.fontreleway.fontmenu._2:hover,.text.fontreleway.fontmenu._2.active {
   color: #fa6250;
 }
 
-.text.fontreleway.fontmenu._3:hover {
+.text.fontreleway.fontmenu._3:hover,.text.fontreleway.fontmenu._3.active {
   color: #39a2c6;
 }
 
-.text.fontreleway.fontmenu._4:hover {
+.text.fontreleway.fontmenu._4:hover,.text.fontreleway.fontmenu._4.active {
   color: #9a61ba;
 }
 
