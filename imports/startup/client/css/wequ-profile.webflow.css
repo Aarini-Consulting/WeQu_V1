@@ -339,6 +339,11 @@
   text-align: center;
 }
 
+/* .invite-field {
+  display:flex;
+  flex-direction: row;
+} */
+
 .inviteformstyle.groupform {
   display: block;
   width: 100%;
@@ -433,6 +438,7 @@
   -ms-flex-align: end;
   align-items: flex-end;
   font-size: 1.2em;
+  color:#fff;
 }
 
 .invitebttn {
@@ -476,8 +482,16 @@
   font-size: 1em;
 }
 
+.invitebttn.bttnmembr.resend {
+  position: static;
+  width: 6%;
+}
+
+.invitebttn.bttnmembr.add {
+  width:auto;
+}
+
 .invitebttn.bttnmembr:hover {
-  width: 12%;
   background-color: #fff;
   color: #000;
 }
