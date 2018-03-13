@@ -10,3 +10,14 @@
 Meteor.publish('users', function(selector, options) {
   return Meteor.users.find(selector, options);
 });
+
+
+Meteor.methods({
+  'store.profile.picture'(base64String) {
+    Meteor.users.update(Meteor.userId(), { 
+      '$set': {
+          'profile.pictureUrl': base64String,
+          } 
+      });
+  },
+})

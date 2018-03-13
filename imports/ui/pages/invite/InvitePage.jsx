@@ -81,10 +81,8 @@ class InvitePage extends React.Component {
                     this.props.history.push(`/profile/${user._id}`);
                   }}>
 
-                  {user.profile && user.profile.linkedIn && user.profile.linkedIn.pictureUrl
-                    ? user.profile && user.profile.linkedIn.pictureUrls && user.profile.linkedIn.pictureUrls.values 
-                        ?<img src={user.profile.linkedIn.pictureUrls.values[0]} className="contactface"/>
-                        :<img src={user.profile.linkedIn.pictureUrl} className="contactface"/>
+                  {user.profile && user.profile.pictureUrl                         
+                    ? <img src={user.profile.pictureUrl} className="contactface"/>
                     : <img src="/img/avatar.png" className="contactface"/>
                   }
 
@@ -148,10 +146,8 @@ class InvitePage extends React.Component {
                         onClick={()=>{
                           this.props.history.push(`/profile/${user._id}`);
                         }}>
-                        {user.profile && user.profile.linkedIn && user.profile.linkedIn.pictureUrl
-                          ? user.profile && user.profile.linkedIn.pictureUrls && user.profile.linkedIn.pictureUrls.values 
-                              ?<img src={user.profile.linkedIn.pictureUrls.values[0]} className="contactface"/>
-                              :<img src={user.profile.linkedIn.pictureUrl} className="contactface"/>
+                        {user.profile && user.profile.pictureUrl 
+                          ? <img src={user.profile.pictureUrl} className="contactface"/>
                           : <img src="/img/avatar.png" className="contactface"/>
                         }
                       </div>
