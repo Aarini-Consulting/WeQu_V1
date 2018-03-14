@@ -593,7 +593,7 @@ body {
   height: 140px;
   margin: 40px auto;
   border-radius: 500px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
+  /* box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2); */
 }
 
 .avatarprofile.square {
@@ -616,6 +616,7 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
   color: #a0a0a0;
+  font-size: 1.3em;
   font-weight: 700;
 }
 
@@ -2161,6 +2162,86 @@ html.w-mod-js *[data-ix="skillls"] {
 html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: block;
   opacity: 1;
+}
+
+.div-q-face {
+  position: relative;
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: repeat-y;
+}
+
+.bttn-linkedin {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 40px;
+  background-color: hsla(0, 0%, 63%, .75);
+  cursor: pointer;
+}
+
+.text-block-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 40px;
+  float: left;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-weight: 200;
+}
+
+.icon-camera {
+  width: 25px;
+  height: 25px;
+  margin: 7px;
+  float: left;
+  background-image: url('/img/camera.png');
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.logo-linkedin {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 70px;
+  height: 20px;
+  margin-top: 10px;
+  margin-left: 7px;
+  float: left;
+  clear: right;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  background-image: url('/img/Logo-White-108px-R.png');
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 @media (max-width: 991px) {

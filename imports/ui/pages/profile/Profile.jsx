@@ -136,10 +136,23 @@ class Profile extends React.Component {
               }
             </div>
             <div className="profilefac">
-              {profileInfo.profile && profileInfo.profile.pictureUrl 
-                ? <img src={profileInfo.profile.pictureUrl} className={"avatarprofile "+profileInfo.profile.pictureShape} onClick={this.getLinkedInInfo.bind(this)}/>
-                : <img src="/img/avatar.png" className="avatarprofile" onClick={this.getLinkedInInfo.bind(this)}/>
-              }
+              <div className="div-q-face">
+                {profileInfo.profile && profileInfo.profile.pictureUrl 
+                  ? <img src={profileInfo.profile.pictureUrl} className={"avatarprofile "+profileInfo.profile.pictureShape}/>
+                  : <img src="/img/avatar.png" className="avatarprofile"/>
+                }
+
+                {this.props.currentUser._id == profileInfo._id && profileInfo.profile && !profileInfo.profile.linkedIn 
+                ? 
+                <div className="bttn-linkedin w-clearfix" onClick={this.getLinkedInInfo.bind(this)}>
+                  <div className="icon-camera"></div>
+                  <div className="text-block-3">from</div>
+                  <div className="logo-linkedin"></div>
+                </div>
+                :
+                ""
+                }
+              </div>
               <div className="fontprofilename fontreleway">
               {profileInfo && 
               getUserName(profileInfo.profile)

@@ -175,6 +175,13 @@ class Quiz extends React.Component {
     this.answerQuestion(null,event);
   }
 
+  // getLinkedInInfo(){
+  //   if(this.props.currentUser && this.props.currentUser._id == Meteor.userId()){
+  //     var pathname = "linkedin-handler"
+  //     this.props.history.push(`/linkedin-permission/${pathname}`);
+  //   }
+  // }
+
   cycleFeedbackForward(bool){
     if(this.state.currentFeedback && this.props.feedbacksArray && this.props.feedbacksArray.length > 0){
       var currentFeedback;
@@ -236,23 +243,33 @@ class Quiz extends React.Component {
       else{
         return (
           <section className="quiz-section">
-            <section className="person">
+            <div className="sectionname">
+            <div className="profilename w-container">
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
                 this.props.currentUser && this.props.currentUser.profile.loginScript == 'finish' &&
-                <div className="w-inline-block cursor-pointer prevPerson">
+                <div className="left profileclick">
                   <a id="prevPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, false)}>
-                  <img src="/img/left.png" className="nav"/>
+                  <img src="/img/left.png" className="profilearrow" height="80"/>
                   </a>
                 </div>
               }
-              <div className="h4 w-inline-block" id="specificUser">
-                {/* <img src="{{pictureUrl to}}" className="avatar" id="specificUser" data-filter-id="{{userId}}"> */}
-                {this.state.user && this.state.user.profile && this.state.user.profile.pictureUrl
-                  ? <img src={this.state.user.profile.pictureUrl} className={"avatar "+ this.state.user.profile.pictureShape}/>
-                  : <img src="/img/avatar.png" className="avatar"/>
-                }
-      
-                <br/>
+              <div className="profilefac">
+                <div className="div-q-face">
+                  {this.state.user && this.state.user.profile && this.state.user.profile.pictureUrl
+                    ? <img src={this.state.user.profile.pictureUrl} className={"avatarprofile "+ this.state.user.profile.pictureShape}/>
+                    : <img src="/img/avatar.png" className="avatarprofile"/>
+                  }
+                  {/* {this.state.user && this.props.currentUser._id == this.state.user._id && this.state.user.profile && !this.state.user.profile.linkedIn 
+                  ? 
+                  <div className="bttn-linkedin w-clearfix" onClick={this.getLinkedInInfo.bind(this)}>
+                    <div className="icon-camera"></div>
+                    <div className="text-block-3">from</div>
+                    <div className="logo-linkedin"></div>
+                  </div>
+                  :
+                  ""
+                  } */}
+                </div>
                 <div className="fontreleway f-q-username">
                   {this.state.username }
                 </div>
@@ -264,13 +281,14 @@ class Quiz extends React.Component {
               </div>
               {!this.props.quizUser && this.props.feedbacksArray && this.props.feedbacksArray.length > 0 &&
                 this.props.currentUser && this.props.currentUser.profile.loginScript == 'finish' &&
-              <div className="w-inline-block cursor-pointer nextPerson">
+                <div className="profileclick right">
                 <a id="nextPerson" style={{visibility:'visible'}} onClick={this.cycleFeedbackForward.bind(this, true)}>
-                <img src="/img/right.png" className="nav"/>
+                <img src="/img/right.png" className="profilearrow" height="80"/>
                 </a>
               </div>
               }
-            </section>
+              </div>
+            </div>
             {this.state.currentFeedback && this.state.currentQuestion &&
             <div className="question noselect fontreleway">
               {this.state.currentQuestion.text}
