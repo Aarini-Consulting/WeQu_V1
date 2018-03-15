@@ -918,7 +918,7 @@ body {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
+  width: 65px;
   height: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -933,8 +933,6 @@ body {
   color: #fff;
   font-size: 1em;
   text-align: center;
-  border-right: 1px solid #fff;
-  padding-top:1px;
 }
 
 .fontreleway.fgenderbttn:hover {
