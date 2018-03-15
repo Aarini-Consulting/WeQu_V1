@@ -151,19 +151,6 @@ class InviteGroup extends React.Component {
   }
 
   handleSubmitButton(){
-    if(this.refs.form){
-
-      this.checkUnsavedForm();
-  
-      this.setState({
-        showConfirm: true,
-      });
-      // if(this.props.isEdit){
-      //   this.updateGroup();
-      // }else{
-      //   this.createGroup();
-      // } 
-    }else{
       if(!this.state.groupName){
         this.setState({
           inviteStatus: 'error',
@@ -175,8 +162,13 @@ class InviteGroup extends React.Component {
           inviteStatus: 'error',
           info: 'Please enter atleast two group members',
         });
+      }else{
+        this.checkUnsavedForm();
+  
+        this.setState({
+          showConfirm: true,
+        });
       }
-    }
   }
 
     handleBackArrowClick(){
@@ -205,8 +197,6 @@ class InviteGroup extends React.Component {
 
     resendInvite(index){
       var copyStateData = this.state.inviteDatas.slice();
-      console.log(this.props.group);
-      console.log(copyStateData[index]);
 
       if(this.props.group){
         this.setState({
@@ -281,7 +271,9 @@ class InviteGroup extends React.Component {
               <div className="bttngender w-clearfix disabled">
                 <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
               </div>
-              <div className="addDelete invitebttn bttnmembr resend w-button" onClick ={this.resendInvite.bind(this,index)}>R</div>
+              {this.props.isEdit &&
+                <div className="addDelete invitebttn bttnmembr resend w-button" onClick ={this.resendInvite.bind(this,index)}>R</div>
+              } 
               <div className="addDelete invitebttn bttnmembr w-button" onClick ={this.deleteField.bind(this,index)}>Delete</div>
             </li>
           );
@@ -361,7 +353,9 @@ class InviteGroup extends React.Component {
                           :
                           <div>
                           <div className="groupformtext">What is the name of this group?</div>
-                          <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" required/>
+                          <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" 
+                          value={this.state.groupName} 
+                          onChange={this.handleChange.bind(this)} required/>
                           </div>
                         }
                       
@@ -428,17 +422,19 @@ class InviteGroup extends React.Component {
                             this.setState({ showConfirm: false });
                         }}
                         onConfirm={() => {
+                          this.setState({ showConfirm: false });
                           this.updateGroup();
                         }}/>
                       :
                         <SweetAlert
                         type={"confirm-add"}
                         inviteDatas={this.state.inviteDatas}
-                        groupName={this.state.groupName}
+                        unsaved={this.state.unsaved}
                         onCancel={() => {
                             this.setState({ showConfirm: false });
                         }}
                         onConfirm={() => {
+                          this.setState({ showConfirm: false });
                           this.createGroup();
                         }}/>
                       )

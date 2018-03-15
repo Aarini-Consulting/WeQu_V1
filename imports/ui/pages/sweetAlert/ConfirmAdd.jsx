@@ -12,8 +12,16 @@ export default class ConfirmAdd extends React.Component {
             <div>
             <div className="sweet-overlay" tabIndex="-1" style={{opacity: 1.34, display: "block"}}></div>
             <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block', marginTop: -16.5+ "em"}}>
-                <div className="fontreleway">The following actions need your confirmation</div>
-                <div className="msg-wrapper"></div>
+                <div className="fontreleway f-popup-title">The following actions need your confirmation</div>
+                <div className="msg-wrapper">
+                    {this.props.inviteDatas.length > 0 &&
+                        <div className="fontreleway f-popup-title f-popup-msg">Added {this.props.inviteDatas.length} member</div>
+                    }
+
+                    {this.props.unsaved &&
+                        <div className="fontreleway f-popup-title f-popup-msg">unsaved input detected</div>
+                    }
+                </div>
 
                 <div className="bttn-wrapper w-clearfix">
                     <div className="popup-bttn left" onClick={this.props.onCancel}>
