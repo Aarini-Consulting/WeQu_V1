@@ -3,6 +3,9 @@ import { Meteor } from 'meteor/meteor';
 
 import '/imports/startup/client/css/sweetalert';
 
+import ConfirmAdd from './ConfirmAdd';
+import ConfirmEdit from './ConfirmEdit';
+
 export default class SweetAlert extends React.Component {
 
   constructor(props) {
@@ -63,7 +66,18 @@ export default class SweetAlert extends React.Component {
             </div>
             </div> 
           );
-    }else{
+    }
+    else if(this.props.type == "confirm-add"){
+        return (
+            <ConfirmAdd {...this.props}/>
+        );
+    }
+    else if(this.props.type == "confirm-edit"){
+        return (
+            <ConfirmEdit {...this.props}/>
+        );
+    }
+    else{
         console.log(this.props.type);
         return null;
     }

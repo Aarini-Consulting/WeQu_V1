@@ -941,6 +941,30 @@ body {
   color: #000;
 }
 
+.fontreleway.f-bttn {
+  display: block;
+  margin-left: 0%;
+  padding-left: 0%;
+  -webkit-transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
+  color: #fff;
+  font-size: 1.2em;
+  line-height: 40px;
+  text-transform: uppercase;
+}
+
+.fontreleway.f-popup-title {
+  color: #a0a0a0;
+  font-size: 1.3em;
+}
+
+.fontreleway.f-popup-title.f-popup-msg {
+  margin-bottom: 5px;
+  color: #f75f04;
+  font-size: 1.2em;
+  text-align: center;
+}
+
 .columprogress {
   border-style: solid;
   border-width: 0px 1px 0px 0px;
@@ -2242,6 +2266,78 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background-position: 50% 50%;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.popup-bttn {
+  display: block;
+  width: 40%;
+  height: 40px;
+  margin-right: auto;
+  margin-left: auto;
+  float: left;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  border-radius: 100px;
+  background-color: #a0a0a0;
+  cursor: pointer;
+}
+
+.popup-bttn.left {
+  width: 50%;
+  border-right: 1px solid #f1f0f0;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  -webkit-transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
+}
+
+.popup-bttn.left:hover {
+  background-color: #4b4b4b;
+}
+
+.popup-bttn.right {
+  width: 50%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  -webkit-transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
+}
+
+.popup-bttn.right:hover {
+  background-color: #f75f04;
+}
+
+.bttn-wrapper {
+  margin-right: 10%;
+  margin-left: 10%;
+  padding-left: 0%;
+}
+
+.msg-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 65%;
+  margin: 5px 5% 7%;
+  padding: 3% 1%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border: 1px none #a0a0a0;
+  border-radius: 5px;
 }
 
 @media (max-width: 991px) {
