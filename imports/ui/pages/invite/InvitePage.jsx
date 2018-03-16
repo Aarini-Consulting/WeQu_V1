@@ -82,7 +82,7 @@ class InvitePage extends React.Component {
                   }}>
 
                   {user.profile && user.profile.pictureUrl                         
-                    ? <img src={user.profile.pictureUrl} className="contactface"/>
+                    ? <img src={user.profile.pictureUrl} className={"contactface "+user.profile.pictureShape}/>
                     : <img src="/img/avatar.png" className="contactface"/>
                   }
 
@@ -147,7 +147,7 @@ class InvitePage extends React.Component {
                           this.props.history.push(`/profile/${user._id}`);
                         }}>
                         {user.profile && user.profile.pictureUrl 
-                          ? <img src={user.profile.pictureUrl} className="contactface"/>
+                          ? <img src={user.profile.pictureUrl} className={"contactface "+user.profile.pictureShape}/>
                           : <img src="/img/avatar.png" className="contactface"/>
                         }
                       </div>

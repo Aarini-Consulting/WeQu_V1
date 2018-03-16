@@ -12,23 +12,29 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import MultiSelect from './MultiSelect';
 import '/imports/startup/client/react-select.css';
 
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
-        // options:[],
-        // lastValue:undefined,
-        // value:undefined,
-        submitInvite:false,
         inviteStatus:false,
         inviteSuccess:false,
         gender:"Male",
-        inviteDatas:[]
+        groupName:"",
+        inviteDatas:[],
+        newInviteDatas:[],
+        inviteDeleted:[],
+        inviteResend:[],
+        resendFailed:0,
+        modifiedByUser:false,
+        showConfirm:false,
+        unsaved:false
       }
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.addNewMemberOnly && nextProps.group){
+    if(nextProps.isEdit && nextProps.group){
       if(nextProps.users){
         var copyStateData = this.state.inviteDatas.slice();
         var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
@@ -42,21 +48,40 @@ class InviteGroup extends React.Component {
         });
         this.setState({
           info:undefined,
+          groupName: nextProps.group.groupName,
           inviteDatas: copyStateData,
+          newInviteDatas:[],
+          inviteDeleted:[],
+          modifiedByUser: false,
         });
       }
     }
   }
 
   updateGroup(){
-    var groupName = ReactDOM.findDOMNode(this.refs.groupName).value;
+    var groupName = this.state.groupName;
     if(groupName && this.state.inviteDatas && this.state.inviteDatas.length >= 2){
       var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
       this.setState({
         inviteStatus: 'sending',
       });
-  
+
+      var resend = this.state.inviteResend.filter((resend) => {
+        var existIndex = this.state.inviteDatas.findIndex((invite)=>{
+           return resend.email == invite.email
+        })
+        if(existIndex > 0){
+            return !this.state.newInviteDatas.find((newData)=>{
+                return newData.email == this.state.inviteDatas[existIndex].email
+             })
+        }else{
+            return false;
+        }
+      });
+
+      resend.map( (resend) => this.resendInvite(resend.email));
+      
       Meteor.call('updateGroup', this.props.group, groupName, this.state.inviteDatas, emailsArray , (err, res) => {
           if(err)
           {
@@ -69,7 +94,15 @@ class InviteGroup extends React.Component {
             var msg;
             if(res > 0){
               msg = res;
-            }else{
+            }
+            else if(this.state.inviteResend.length > 0){
+              if(msg && Number.isInteger(msg)){
+                msg += (this.state.inviteResend.length - this.state.resendFailed)
+              }else{
+                msg = (this.state.inviteResend.length - this.state.resendFailed)
+              }
+            }
+            else{
               msg = true;
             }
             
@@ -82,12 +115,12 @@ class InviteGroup extends React.Component {
     }
 
     this.setState({
-      submitInvite:false,
+      newInviteDatas:[]
     });
   }
 
   createGroup(){
-    var groupName = ReactDOM.findDOMNode(this.refs.groupName).value.trim();
+    var groupName = this.state.groupName;
     if(groupName && this.state.inviteDatas && this.state.inviteDatas.length >= 2){
       var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
@@ -111,32 +144,57 @@ class InviteGroup extends React.Component {
           }     
       }); 
     }
+  }
 
+  checkUnsavedForm(){
+    var firstName = ReactDOM.findDOMNode(this.refs.firstName);
+    var lastName = ReactDOM.findDOMNode(this.refs.lastName);
+    var email = ReactDOM.findDOMNode(this.refs.email);
     this.setState({
-      submitInvite:false,
+      unsaved: (firstName.value || lastName.value || email.value),
     });
+  }
+
+  handleChange(event) {
+    var newValue = event.target.value.trim();
+    this.setState({groupName: newValue});
+    if(this.props.group && this.props.group.groupName != newValue){
+      if(!this.state.modifiedByUser){
+        this.setState({
+          modifiedByUser: true
+        });
+      }
+    }
   }
 
   handleSubmit (event) {
       event.preventDefault();
-      if(this.state.submitInvite){
-        
-        ReactDOM.findDOMNode(this.refs.firstName).value="";
-        ReactDOM.findDOMNode(this.refs.lastName).value="";
-        ReactDOM.findDOMNode(this.refs.email).value="";
+      this.addField();
+  }
 
-        if(this.props.addNewMemberOnly){
-          this.updateGroup();
-        }else{
-          this.createGroup();
-        } 
+  handleSubmitButton(){
+      if(!this.state.groupName){
+        this.setState({
+          inviteStatus: 'error',
+          info: 'Please enter a group name',
+        });
+      }
+      else if(this.state.inviteDatas && this.state.inviteDatas.length < 2){
+        this.setState({
+          inviteStatus: 'error',
+          info: 'Please enter atleast two group members',
+        });
       }else{
-        this.addField();
+        this.checkUnsavedForm();
+  
+        this.setState({
+          showConfirm: true,
+        });
       }
   }
 
     handleBackArrowClick(){
-    if(this.props.addNewMemberOnly || (this.props.count && this.props.count > 0)){
+    if(this.props.isEdit || (this.props.count && this.props.count > 0)){
             this.props.closeInviteGroup();
         }
     }
@@ -149,10 +207,48 @@ class InviteGroup extends React.Component {
 
     deleteField(index){
       var copyStateData = this.state.inviteDatas.slice();
+      var copyStateDataDel = this.state.inviteDeleted.slice();
+      copyStateDataDel.push(copyStateData[index]);
       copyStateData.splice(index,1);
       this.setState({
         inviteDatas: copyStateData,
+        inviteDeleted: copyStateDataDel,
+        modifiedByUser: true
       });
+    }
+
+    resendInviteMarkToggle(index, resendIndex){
+      var copyStateDataResend = this.state.inviteResend.slice();
+
+      if(resendIndex < 0){
+        copyStateDataResend.push(this.state.inviteDatas[index]);
+      }else{
+        copyStateDataResend.splice(resendIndex,1);
+      }
+
+      this.setState({
+        inviteResend:copyStateDataResend
+      });
+
+      if(copyStateDataResend.length > 0){
+        this.setState({
+          modifiedByUser: true
+        });
+      }
+    }
+
+    resendInvite(email){
+      if(this.props.group){
+        Meteor.call('resend.group.invite', this.props.group._id, email , (err, res) => {
+          if(err){
+            this.setState({
+              resendFailed: this.state.resendFailed + 1,
+              inviteStatus: 'error',
+              info: 'error sending email',
+            });
+          }     
+        }); 
+      }
     }
 
     addField(){
@@ -174,10 +270,14 @@ class InviteGroup extends React.Component {
           info: 'a user with the same email address is already a member of this group',
         });
       }else{
+        var copyStateDataNew = this.state.newInviteDatas.slice();
+        copyStateDataNew.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
         copyStateData.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
         this.setState({
           info:undefined,
           inviteDatas: copyStateData,
+          newInviteDatas:copyStateDataNew,
+          modifiedByUser: true
         });
 
         ReactDOM.findDOMNode(this.refs.firstName).value="";
@@ -189,9 +289,17 @@ class InviteGroup extends React.Component {
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
+          var newInvite = this.state.newInviteDatas.find((newInvites)=>{
+              return data.email == newInvites.email
+          })
+
+          var resendIndex = this.state.inviteResend.findIndex((resend)=>{
+            return data.email == resend.email
+          })
+          
           return (
-            <li className="w-clearfix" key={data.email}>
-              <div className="font f_12"></div>
+            <li className="w-clearfix invite-field" key={data.email}>
+              <div className="font f_12">{index+1}</div>
               <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
               <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
@@ -201,7 +309,20 @@ class InviteGroup extends React.Component {
               <div className="bttngender w-clearfix disabled">
                 <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
               </div>
-              <input type="submit" defaultValue="Delete" className="addDelete invitebttn bttnmembr w-button" onClick ={this.deleteField.bind(this,index)}/>
+              {this.props.isEdit && !newInvite &&
+                this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
+                ?
+                <div className="addDelete invitebttn bttnmembr resend w-button active noselect">
+                  <i className="far fa-envelope-open"></i>
+                </div>
+                :
+                <div className={"addDelete invitebttn bttnmembr resend w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendInviteMarkToggle.bind(this,index,resendIndex)}>
+                  <i className="far fa-envelope"></i>
+                </div>
+              } 
+              <div className="addDelete invitebttn bttnmembr resend w-button"  onClick ={this.deleteField.bind(this,index)}>
+                <i className="fas fa-trash-alt"></i>
+              </div>
             </li>
           );
         });
@@ -215,39 +336,13 @@ class InviteGroup extends React.Component {
       )
     }
 
-    triggerSubmitInvite(){
-        this.setState({
-          submitInvite: true,
-        },
-        ()=>{
-          //callback after setting submit invite as true
-          if(this.refs.form && this.refs.form.checkValidity()){
-            this.refs.form.dispatchEvent(new Event("submit",{ cancelable: true }));
-          }else{
-            if(!ReactDOM.findDOMNode(this.refs.groupName).value){
-              this.setState({
-                inviteStatus: 'error',
-                info: 'Please enter a group name',
-              });
-            }
-            else if(this.state.inviteDatas && this.state.inviteDatas.length < 2){
-              this.setState({
-                inviteStatus: 'error',
-                info: 'Please enter atleast two group members',
-              });
-            }
-          }
-        });
-    }
-  
-
     render() {
     if(this.props.dataReady){
       if(this.state.inviteSuccess){
         return (
           <div className="fillHeight flex-start">
           <section className="fontreleway groupbg">
-            {this.props.addNewMemberOnly 
+            {this.props.isEdit 
             ?
             <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext group">Awesome!
@@ -276,14 +371,14 @@ class InviteGroup extends React.Component {
             <section className="fontreleway groupbg">
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
-                  {(this.props.addNewMemberOnly || (this.props.count != undefined && this.props.count > 0)) &&
+                  {(this.props.isEdit || (this.props.count != undefined && this.props.count > 0)) &&
                     <a className="w-clearfix w-inline-block cursor-pointer" onClick={this.handleBackArrowClick.bind(this)}>
                     <img className="image-7" src="/img/arrow.svg"/>
                     </a>
                   }
                 </div>
                 <div className="fontreleway font-invite-title w-clearfix">
-                  {this.props.addNewMemberOnly 
+                  {this.props.isEdit 
                   ?
                     "Edit"
                   :
@@ -294,24 +389,21 @@ class InviteGroup extends React.Component {
               <div className="contentwrapper invite">   
                 <div className="inviteform w-form">
                     <form ref="form" onSubmit={this.handleSubmit.bind(this)} name="email-form" data-name="Email Form" className="inviteformstyle groupform">
-                        {this.props.addNewMemberOnly 
+                        {this.props.isEdit 
                           ? 
                           <div>
                           <div className="groupformtext">Group name</div>
-                          <input type="text" ref="groupName" defaultValue={this.props.group.groupName} 
+                          <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
                           name="name" data-name="Name" maxLength="256" required="" 
                           placeholder="group name" className="formstyle w-input" 
-                          onBlur={()=>{
-                            if(!ReactDOM.findDOMNode(this.refs.groupName).value){
-                              ReactDOM.findDOMNode(this.refs.groupName).value = this.props.group.groupName;
-                            }
-                          }}
                           required/>
                           </div>
                           :
                           <div>
                           <div className="groupformtext">What is the name of this group?</div>
-                          <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" required/>
+                          <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" 
+                          value={this.state.groupName} 
+                          onChange={this.handleChange.bind(this)} required/>
                           </div>
                         }
                       
@@ -324,16 +416,16 @@ class InviteGroup extends React.Component {
                       <ol className="w-list-unstyled">
                         <li className="w-clearfix">
                           <div className="font f_12"></div>
-                          <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={!this.state.submitInvite}/>
-                          <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={!this.state.submitInvite}/>
-                          <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={!this.state.submitInvite}/>
+                          <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={true}/>
+                          <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={true}/>
+                          <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
                           <div className="bttngender w-clearfix">
                             <div className={"fontreleway fgenderbttn " + (this.state.gender == "Male" ? "selected" : "")} id="m"  onClick ={this.setGender.bind(this,"Male")}>Male</div>
                           </div>
                           <div className="bttngender w-clearfix">
                             <div className={"fontreleway fgenderbttn " + (this.state.gender == "Female" ? "selected" : "")} id="f" onClick ={this.setGender.bind(this,"Female")}>Female</div>
                           </div>
-                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr w-button"/>
+                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr add w-button"/>
                         </li>
                       </ol>
 
@@ -358,12 +450,44 @@ class InviteGroup extends React.Component {
                           // :
                           // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                     }
-                    
-                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.triggerSubmitInvite.bind(this)}>submit</a>
-                    
+                    {(!this.props.isEdit || this.state.modifiedByUser) &&
+                      <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>submit</a>
+                    }
                     </form>
-                                  
-                    
+
+                    {this.state.showConfirm && 
+                      (this.props.isEdit 
+                      ?
+                        <SweetAlert
+                        type={"confirm-edit"}
+                        inviteDatas={this.state.inviteDatas}
+                        inviteDeleted={this.state.inviteDeleted}
+                        newInviteDatas={this.state.newInviteDatas}
+                        inviteResend={this.state.inviteResend}
+                        groupName={this.props.group.groupName}
+                        newName={this.state.groupName}
+                        unsaved={this.state.unsaved}
+                        onCancel={() => {
+                            this.setState({ showConfirm: false });
+                        }}
+                        onConfirm={() => {
+                          this.setState({ showConfirm: false });
+                          this.updateGroup();
+                        }}/>
+                      :
+                        <SweetAlert
+                        type={"confirm-add"}
+                        inviteDatas={this.state.inviteDatas}
+                        unsaved={this.state.unsaved}
+                        onCancel={() => {
+                            this.setState({ showConfirm: false });
+                        }}
+                        onConfirm={() => {
+                          this.setState({ showConfirm: false });
+                          this.createGroup();
+                        }}/>
+                      )
+                    }
                 </div>
               </div>
             </section>
@@ -391,7 +515,7 @@ export default withTracker((props) => {
 
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
-    if(props.addNewMemberOnly && props.group){
+    if(props.isEdit && props.group){
       var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {}, {
         onError: function (error) {
                 console.log(error);

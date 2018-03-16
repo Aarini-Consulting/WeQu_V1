@@ -17,6 +17,7 @@ Meteor.methods({
     Meteor.users.update(Meteor.userId(), { 
       '$set': {
           'profile.pictureUrl': base64String,
+          'profile.pictureShape': "square"
           } 
       });
   },

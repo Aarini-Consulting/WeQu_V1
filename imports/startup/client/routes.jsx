@@ -41,7 +41,7 @@ import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
 
 import AdminUser from '/imports/ui/pages/AdminUser';
 
-
+import '/imports/startup/client/css/fontawesome-all.min';
 import '/imports/startup/client/css/normalize';
 import '/imports/startup/client/css/webflow';
 import '/imports/startup/client/css/wequ-profile.webflow';

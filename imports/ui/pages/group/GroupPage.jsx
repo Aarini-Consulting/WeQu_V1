@@ -40,7 +40,7 @@ class GroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)} addNewMemberOnly={true} group={this.props.group} />
+            <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)} isEdit={true} group={this.props.group} />
           </div>
         );
       }else{

@@ -60,6 +60,7 @@ Meteor.methods({
             Meteor.users.update(Meteor.userId(), { 
                 '$set': {
                     'profile.pictureUrl': pictureUrl,
+                    'profile.pictureShape': "circle",
                     'profile.linkedIn': linkedInData,
                     } 
                 });
