@@ -310,6 +310,12 @@ class InviteGroup extends React.Component {
                 <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
               </div>
               {this.props.isEdit && !newInvite &&
+                this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
+                ?
+                <div className="addDelete invitebttn bttnmembr resend w-button active noselect">
+                  <i className="far fa-envelope-open"></i>
+                </div>
+                :
                 <div className={"addDelete invitebttn bttnmembr resend w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendInviteMarkToggle.bind(this,index,resendIndex)}>
                   <i className="far fa-envelope"></i>
                 </div>
