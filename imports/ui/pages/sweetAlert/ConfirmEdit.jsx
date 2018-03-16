@@ -23,9 +23,25 @@ export default class ConfirmEdit extends React.Component {
    });
   }
 
+  inviteResend(){
+    return this.props.inviteResend.filter((resend) => {
+        var existIndex = this.props.inviteDatas.findIndex((invite)=>{
+           return resend.email == invite.email
+        })
+        if(existIndex > 0){
+            return !this.props.newInviteDatas.find((newData)=>{
+                return newData.email == this.props.inviteDatas[existIndex].email
+             })
+        }else{
+            return false;
+        }
+   });
+  }
+
   render() {
        var deleted = this.inviteDeleted();
        var added = this.inviteAdded();
+       var resend = this.inviteResend();
         return (
             <div>
             <div className="sweet-overlay" tabIndex="-1" style={{opacity: 1.34, display: "block"}}></div>
@@ -38,6 +54,10 @@ export default class ConfirmEdit extends React.Component {
 
                     {added.length > 0 &&
                         <div className="fontreleway f-popup-title f-popup-msg">Added {added.length} member</div>
+                    }
+
+                    {resend.length > 0 &&
+                        <div className="fontreleway f-popup-title f-popup-msg">Send reminder to {resend.length} member</div>
                     }
 
                     {this.props.unsaved &&

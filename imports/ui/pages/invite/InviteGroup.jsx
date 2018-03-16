@@ -18,9 +18,6 @@ class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
-        // options:[],
-        // lastValue:undefined,
-        // value:undefined,
         inviteStatus:false,
         inviteSuccess:false,
         gender:"Male",
@@ -28,6 +25,8 @@ class InviteGroup extends React.Component {
         inviteDatas:[],
         newInviteDatas:[],
         inviteDeleted:[],
+        inviteResend:[],
+        resendFailed:0,
         modifiedByUser:false,
         showConfirm:false,
         unsaved:false
@@ -67,6 +66,21 @@ class InviteGroup extends React.Component {
       this.setState({
         inviteStatus: 'sending',
       });
+
+      var resend = this.state.inviteResend.filter((resend) => {
+        var existIndex = this.state.inviteDatas.findIndex((invite)=>{
+           return resend.email == invite.email
+        })
+        if(existIndex > 0){
+            return !this.state.newInviteDatas.find((newData)=>{
+                return newData.email == this.state.inviteDatas[existIndex].email
+             })
+        }else{
+            return false;
+        }
+      });
+
+      resend.map( (resend) => this.resendInvite(resend.email));
       
       Meteor.call('updateGroup', this.props.group, groupName, this.state.inviteDatas, emailsArray , (err, res) => {
           if(err)
@@ -80,7 +94,15 @@ class InviteGroup extends React.Component {
             var msg;
             if(res > 0){
               msg = res;
-            }else{
+            }
+            else if(this.state.inviteResend.length > 0){
+              if(msg && Number.isInteger(msg)){
+                msg += (this.state.inviteResend.length - this.state.resendFailed)
+              }else{
+                msg = (this.state.inviteResend.length - this.state.resendFailed)
+              }
+            }
+            else{
               msg = true;
             }
             
@@ -195,28 +217,36 @@ class InviteGroup extends React.Component {
       });
     }
 
-    resendInvite(index){
-      var copyStateData = this.state.inviteDatas.slice();
+    resendInviteMarkToggle(index, resendIndex){
+      var copyStateDataResend = this.state.inviteResend.slice();
 
-      if(this.props.group){
+      if(resendIndex < 0){
+        copyStateDataResend.push(this.state.inviteDatas[index]);
+      }else{
+        copyStateDataResend.splice(resendIndex,1);
+      }
+
+      this.setState({
+        inviteResend:copyStateDataResend
+      });
+
+      if(copyStateDataResend.length > 0){
         this.setState({
-          inviteStatus: 'sending',
+          modifiedByUser: true
         });
-    
-        Meteor.call('resend.group.invite', this.props.group._id, copyStateData[index].email , (err, res) => {
-          if(res){
+      }
+    }
+
+    resendInvite(email){
+      if(this.props.group){
+        Meteor.call('resend.group.invite', this.props.group._id, email , (err, res) => {
+          if(err){
             this.setState({
-                inviteStatus: 'sent',
-                inviteSuccess:1,
-              });
-            }
-            if(err)
-            {
-              this.setState({
-                inviteStatus: 'error',
-                info: 'error sending email',
-              });
-            }     
+              resendFailed: this.state.resendFailed + 1,
+              inviteStatus: 'error',
+              info: 'error sending email',
+            });
+          }     
         }); 
       }
     }
@@ -259,6 +289,14 @@ class InviteGroup extends React.Component {
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
+          var newInvite = this.state.newInviteDatas.find((newInvites)=>{
+              return data.email == newInvites.email
+          })
+
+          var resendIndex = this.state.inviteResend.findIndex((resend)=>{
+            return data.email == resend.email
+          })
+          
           return (
             <li className="w-clearfix invite-field" key={data.email}>
               <div className="font f_12">{index+1}</div>
@@ -271,10 +309,14 @@ class InviteGroup extends React.Component {
               <div className="bttngender w-clearfix disabled">
                 <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
               </div>
-              {this.props.isEdit &&
-                <div className="addDelete invitebttn bttnmembr resend w-button" onClick ={this.resendInvite.bind(this,index)}>R</div>
+              {this.props.isEdit && !newInvite &&
+                <div className={"addDelete invitebttn bttnmembr resend w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendInviteMarkToggle.bind(this,index,resendIndex)}>
+                  <i className="far fa-envelope"></i>
+                </div>
               } 
-              <div className="addDelete invitebttn bttnmembr w-button" onClick ={this.deleteField.bind(this,index)}>Delete</div>
+              <div className="addDelete invitebttn bttnmembr resend w-button"  onClick ={this.deleteField.bind(this,index)}>
+                <i className="fas fa-trash-alt"></i>
+              </div>
             </li>
           );
         });
@@ -415,6 +457,7 @@ class InviteGroup extends React.Component {
                         inviteDatas={this.state.inviteDatas}
                         inviteDeleted={this.state.inviteDeleted}
                         newInviteDatas={this.state.newInviteDatas}
+                        inviteResend={this.state.inviteResend}
                         groupName={this.props.group.groupName}
                         newName={this.state.groupName}
                         unsaved={this.state.unsaved}
