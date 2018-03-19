@@ -298,30 +298,34 @@ class InviteGroup extends React.Component {
           })
           
           return (
-            <li className="w-clearfix invite-field" key={data.email}>
+            <li className="invite-group-line-wrapper" key={data.email}>
               <div className="font f_12">{index+1}</div>
               <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
               <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
-              <div className="bttngender w-clearfix disabled">
-                <div className={"fontreleway fgenderbttn " + (data.gender == "Male" ? "selected" : "disabled") + " noselect"} id="m">Male</div>
+              {data.gender == "Male" &&
+              <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
+                Male
               </div>
-              <div className="bttngender w-clearfix disabled">
-                <div className={"fontreleway fgenderbttn " + (data.gender == "Female" ? "selected" : "disabled") + " noselect"} id="f">Female</div>
+              }
+              {data.gender == "Female" && 
+              <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
+                Female
               </div>
+              }
               {this.props.isEdit && !newInvite &&
                 this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
                 ?
-                <div className="addDelete invitebttn bttnmembr resend w-button active noselect">
-                  <i className="far fa-envelope-open"></i>
+                <div className="invitebttn bttnmembr gender w-button selected noselect">
+                  active
                 </div>
-                :
-                <div className={"addDelete invitebttn bttnmembr resend w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendInviteMarkToggle.bind(this,index,resendIndex)}>
-                  <i className="far fa-envelope"></i>
+                :this.props.isEdit && !newInvite &&
+                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendInviteMarkToggle.bind(this,index,resendIndex)}>
+                  resend
                 </div>
-              } 
-              <div className="addDelete invitebttn bttnmembr resend w-button"  onClick ={this.deleteField.bind(this,index)}>
-                <i className="fas fa-trash-alt"></i>
+              }
+              <div className="invitebttn bttnmembr action w-button"  onClick ={this.deleteField.bind(this,index)}>
+                Delete
               </div>
             </li>
           );
@@ -414,18 +418,18 @@ class InviteGroup extends React.Component {
                       
 
                       <ol className="w-list-unstyled">
-                        <li className="w-clearfix">
-                          <div className="font f_12"></div>
+                        <li className="invite-group-line-wrapper w-clearfix">
+                          <div className="font f_12">></div>
                           <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={true}/>
                           <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={true}/>
                           <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
-                          <div className="bttngender w-clearfix">
-                            <div className={"fontreleway fgenderbttn " + (this.state.gender == "Male" ? "selected" : "")} id="m"  onClick ={this.setGender.bind(this,"Male")}>Male</div>
+                          <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
+                            Male
                           </div>
-                          <div className="bttngender w-clearfix">
-                            <div className={"fontreleway fgenderbttn " + (this.state.gender == "Female" ? "selected" : "")} id="f" onClick ={this.setGender.bind(this,"Female")}>Female</div>
+                          <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
+                            Female
                           </div>
-                          <input type="submit" id="submitAdd" defaultValue="add" className="addDelete invitebttn bttnmembr add w-button"/>
+                          <input type="submit" id="submitAdd" defaultValue="add" className="invitebttn bttnmembr action w-button"/>
                         </li>
                       </ol>
 
@@ -450,8 +454,8 @@ class InviteGroup extends React.Component {
                           // :
                           // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                     }
-                    {(!this.props.isEdit || this.state.modifiedByUser) &&
-                      <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>submit</a>
+                    {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
+                      <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save and confirm</a>
                     }
                     </form>
 
