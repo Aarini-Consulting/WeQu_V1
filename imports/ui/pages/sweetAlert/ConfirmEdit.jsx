@@ -28,7 +28,7 @@ export default class ConfirmEdit extends React.Component {
         var existIndex = this.props.inviteDatas.findIndex((invite)=>{
            return resend.email == invite.email
         })
-        if(existIndex > 0){
+        if(existIndex > -1){
             return !this.props.newInviteDatas.find((newData)=>{
                 return newData.email == this.props.inviteDatas[existIndex].email
              })

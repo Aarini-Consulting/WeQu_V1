@@ -71,7 +71,7 @@ class InviteGroup extends React.Component {
         var existIndex = this.state.inviteDatas.findIndex((invite)=>{
            return resend.email == invite.email
         })
-        if(existIndex > 0){
+        if(existIndex > -1){
             return !this.state.newInviteDatas.find((newData)=>{
                 return newData.email == this.state.inviteDatas[existIndex].email
              })

@@ -597,7 +597,7 @@ body {
   /* box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2); */
 }
 
-.avatarprofile.square {
+.avatarprofile.square, .avatarprofile.undefined {
   border-radius: 0px;
 }
 
@@ -1983,7 +1983,7 @@ body {
   border-radius:50%
 }
 
-.contactface.square {
+.contactface.square, .contactface.undefined {
   border-radius:0%
 }
 
