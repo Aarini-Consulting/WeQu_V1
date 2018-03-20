@@ -187,7 +187,7 @@ class InviteGroup extends React.Component {
   }
 
   handleChange(event) {
-    var newValue = event.target.value.trim();
+    var newValue = event.target.value;
     this.setState({groupName: newValue});
     if(this.props.group && this.props.group.groupName != newValue){
       if(!this.state.modifiedByUser){
