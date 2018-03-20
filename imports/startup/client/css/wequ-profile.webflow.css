@@ -477,6 +477,10 @@
   width: 100%;
 }
 
+.fa-margin-right {
+  margin-right:5px;
+}
+
 .invitebttn.bttnmembr {
   position: static;
   width: 10%;
@@ -493,8 +497,10 @@
 .invitebttn.bttnmembr.gender {
   width: auto;
   height: 30px;
-  flex-basis: 10%;
+  flex-basis: 12%;
   margin-top: 0.5em;
+  margin-right:5px;
+  margin-left:5px;
   padding: 2px 5px;
   border-width: 1px;
   border-radius: 5px;
@@ -505,10 +511,11 @@
 .invitebttn.bttnmembr.action {
   width: auto;
   height: 30px;
-  flex-basis: 10%;
-  margin-top: 7px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  flex-basis: 12%;
+  margin-top: 0.5em;
+  margin-right:5px;
+  margin-left:5px;
+  padding: 2px 5px;
   border-style: none;
   border-radius: 0px;
   font-weight: 500;

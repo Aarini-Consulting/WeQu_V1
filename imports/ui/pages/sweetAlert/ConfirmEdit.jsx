@@ -25,15 +25,21 @@ export default class ConfirmEdit extends React.Component {
 
   inviteResend(){
     return this.props.inviteResend.filter((resend) => {
-        var existIndex = this.props.inviteDatas.findIndex((invite)=>{
-           return resend.email == invite.email
+        var deletedIndex = this.props.inviteDeleted.findIndex((deleted)=>{
+            return resend.email == deleted.email
         })
-        if(existIndex > -1){
-            return !this.props.newInviteDatas.find((newData)=>{
-                return newData.email == this.props.inviteDatas[existIndex].email
-             })
-        }else{
+        if(deletedIndex > -1){
             return false;
+        }else{
+            var newIndex = this.props.newInviteDatas.findIndex((newData)=>{
+                return resend.email == newData.email
+            })
+            
+            if(newIndex > -1){
+                return false;
+            }else{
+                return true;
+            }
         }
    });
   }

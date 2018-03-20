@@ -60,21 +60,31 @@ class InviteGroup extends React.Component {
 
   updateGroup(){
     var groupName = this.state.groupName;
-    if(groupName && this.state.inviteDatas && this.state.inviteDatas.length >= 2){
-      var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
+    var inviteDatas = this.state.inviteDatas.filter((inviteData) => {
+      var deleteIndex = this.state.inviteDeleted.findIndex((deleted)=>{
+        return inviteData.email == deleted.email
+      })
+
+      if(deleteIndex < 0){
+        return true;
+      }else{
+        return false;
+      }
+    });
+
+    if(groupName && inviteDatas && inviteDatas.length >= 2){
+      var emailsArray = inviteDatas.map( (fields) => fields.email);
 
       this.setState({
         inviteStatus: 'sending',
       });
 
       var resend = this.state.inviteResend.filter((resend) => {
-        var existIndex = this.state.inviteDatas.findIndex((invite)=>{
-           return resend.email == invite.email
+        var newIndex = this.state.newInviteDatas.findIndex((newData)=>{
+          return resend.email == newData.email
         })
-        if(existIndex > -1){
-            return !this.state.newInviteDatas.find((newData)=>{
-                return newData.email == this.state.inviteDatas[existIndex].email
-             })
+        if(newIndex < 0){
+            return true;
         }else{
             return false;
         }
@@ -82,7 +92,7 @@ class InviteGroup extends React.Component {
 
       resend.map( (resend) => this.resendInvite(resend.email));
       
-      Meteor.call('updateGroup', this.props.group, groupName, this.state.inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('updateGroup', this.props.group, groupName, inviteDatas, emailsArray , (err, res) => {
           if(err)
           {
             console.log(err);
@@ -92,14 +102,25 @@ class InviteGroup extends React.Component {
             });
           }else{
             var msg;
+            var resend = this.state.inviteResend.filter((resend) => {
+              var newIndex = this.state.newInviteDatas.findIndex((newData)=>{
+                return resend.email == newData.email
+              })
+              if(newIndex < 0){
+                  return true;
+              }else{
+                  return false;
+              }
+            });
+
             if(res > 0){
               msg = res;
             }
-            else if(this.state.inviteResend.length > 0){
+            else if(resend.length > 0){
               if(msg && Number.isInteger(msg)){
-                msg += (this.state.inviteResend.length - this.state.resendFailed)
+                msg += (resend.length - this.state.resendFailed)
               }else{
-                msg = (this.state.inviteResend.length - this.state.resendFailed)
+                msg = (resend.length - this.state.resendFailed)
               }
             }
             else{
@@ -110,13 +131,23 @@ class InviteGroup extends React.Component {
                 inviteStatus: 'sent',
                 inviteSuccess:msg
               });
-          }     
+          }
+          
+          this.setState({
+            inviteDatas:[],
+            newInviteDatas:[],
+            inviteDeleted:[],
+            inviteResend:[],
+            resendFailed:0,
+            modifiedByUser:false,
+            modifiedByUser:false,
+            showConfirm:false,
+            unsaved:false
+          });
       }); 
     }
 
-    this.setState({
-      newInviteDatas:[]
-    });
+    
   }
 
   createGroup(){
@@ -179,10 +210,10 @@ class InviteGroup extends React.Component {
           info: 'Please enter a group name',
         });
       }
-      else if(this.state.inviteDatas && this.state.inviteDatas.length < 2){
+      else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 2){
         this.setState({
           inviteStatus: 'error',
-          info: 'Please enter atleast two group members',
+          info: 'A group needs at least two group members',
         });
       }else{
         this.checkUnsavedForm();
@@ -205,32 +236,45 @@ class InviteGroup extends React.Component {
       });
     }
 
-    deleteField(index){
-      var copyStateData = this.state.inviteDatas.slice();
-      var copyStateDataDel = this.state.inviteDeleted.slice();
-      copyStateDataDel.push(copyStateData[index]);
-      copyStateData.splice(index,1);
-      this.setState({
-        inviteDatas: copyStateData,
-        inviteDeleted: copyStateDataDel,
-        modifiedByUser: true
-      });
+    deleteAction(index, deleteIndex, resendIndex, newInvite){
+      if(newInvite && deleteIndex < 0){
+        var copyStateData = this.state.inviteDatas.slice();
+        copyStateData.splice(index,1);
+        this.setState({
+          inviteDatas: copyStateData,
+          modifiedByUser: true
+        });
+      }else{
+        if(resendIndex > -1){
+          var copyStateDataResend = this.state.inviteResend.slice();
+          copyStateDataResend.splice(resendIndex,1);
+          this.setState({
+            inviteResend: copyStateDataResend,
+            modifiedByUser: true
+          });
+        }
+        this.markToggle(index, deleteIndex, "inviteDeleted");
+      }
     }
 
-    resendInviteMarkToggle(index, resendIndex){
-      var copyStateDataResend = this.state.inviteResend.slice();
-
-      if(resendIndex < 0){
-        copyStateDataResend.push(this.state.inviteDatas[index]);
-      }else{
-        copyStateDataResend.splice(resendIndex,1);
+    resendAction(index, deleteIndex, resendIndex, newInvite){
+      if(deleteIndex < 0){
+        this.markToggle(index, resendIndex, "inviteResend");
       }
+    }
 
+    markToggle(index, markIndex, markStateName){
+      var copyMarkStateData = this.state[markStateName].slice();
+      if(markIndex < 0){
+        copyMarkStateData.push(this.state.inviteDatas[index]);
+      }else{
+        copyMarkStateData.splice(markIndex,1);
+      }
       this.setState({
-        inviteResend:copyStateDataResend
+        [markStateName]:copyMarkStateData
       });
 
-      if(copyStateDataResend.length > 0){
+      if(copyMarkStateData.length > 0){
         this.setState({
           modifiedByUser: true
         });
@@ -296,6 +340,10 @@ class InviteGroup extends React.Component {
           var resendIndex = this.state.inviteResend.findIndex((resend)=>{
             return data.email == resend.email
           })
+
+          var deleteIndex = this.state.inviteDeleted.findIndex((deleted)=>{
+            return data.email == deleted.email
+          })
           
           return (
             <li className="invite-group-line-wrapper" key={data.email}>
@@ -317,14 +365,33 @@ class InviteGroup extends React.Component {
                 this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
                 ?
                 <div className="invitebttn bttnmembr gender w-button selected noselect">
+                  <i className="far fa-envelope-open fa-margin-right"></i>
                   active
                 </div>
                 :this.props.isEdit && !newInvite &&
-                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendInviteMarkToggle.bind(this,index,resendIndex)}>
+                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+                  {resendIndex > -1 
+                    ?
+                    <i className="fas fa-check fa-margin-right"></i>
+                    :
+                    <i className="far fa-envelope fa-margin-right"></i>
+                  }
                   resend
                 </div>
               }
-              <div className="invitebttn bttnmembr action w-button"  onClick ={this.deleteField.bind(this,index)}>
+              {this.props.isEdit && newInvite &&
+                <div className="invitebttn bttnmembr gender w-button selected noselect">
+                <i className="fas fa-plus-circle fa-margin-right"></i>
+                new
+                </div>
+              }
+              <div className="invitebttn bttnmembr action w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+                {deleteIndex > -1 
+                    ?
+                    <i className="fas fa-times fa-margin-right"></i>
+                    :
+                    <i className="fas fa-trash-alt fa-margin-right"></i>
+                  }
                 Delete
               </div>
             </li>
@@ -520,14 +587,14 @@ export default withTracker((props) => {
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
     if(props.isEdit && props.group){
-      var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {}, {
+      var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {
         onError: function (error) {
                 console.log(error);
             }
       });
 
       if(handleUsers.ready()){
-        users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}).fetch();
+        users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]},{ sort: { "profile.emailAddress": 1 }}).fetch();
         dataReady = true;
       }
     }else{
