@@ -22,7 +22,8 @@ FeedbackSchema = new SimpleSchema({
     "qset":{
     	type: [Object],
 		label: "qset",
-		optional: true
+		optional: true,
+		blackbox:true
     },
     "done":{
     	type: Boolean,
@@ -57,7 +58,7 @@ FeedbackSchema = new SimpleSchema({
 
 })
 
-// Feedback.attachSchema(FeedbackSchema);
+Feedback.attachSchema(FeedbackSchema);
 
 // Feedback.allow({
 // 	'insert': function () {

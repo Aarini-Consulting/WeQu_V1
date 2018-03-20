@@ -8,10 +8,17 @@ GroupSchema = new SimpleSchema({
     "data":{
       type: [Object],
       label: "data",
+      blackbox:true
     },
     "emails":{
       type: [String],
       label: "emails",
+    },
+
+    "emailsSurveyed":{
+      type: [String],
+      label: "emails",
+      optional: true
     },
 
     "arr_emails_existing":{
@@ -61,7 +68,7 @@ GroupSchema = new SimpleSchema({
 
 })
 
-// Group.attachSchema(GroupSchema);
+Group.attachSchema(GroupSchema);
 
 // TODO : For only Testing Purpose , Remove later
 
