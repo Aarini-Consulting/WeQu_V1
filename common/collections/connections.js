@@ -18,11 +18,13 @@ ConnectionsSchema = new SimpleSchema({
   },
   "groupId":{
     type: String,
-    label: "groupId"
+    label: "groupId",
+    optional: true,
   },
   "services":{
     type: Object,
     label: "services",
+    optional: true,
   },
   "creatorId": {
       type: String,
@@ -59,7 +61,7 @@ ConnectionsSchema = new SimpleSchema({
 
 })
 
-// Connections.attachSchema(ConnectionsSchema);
+Connections.attachSchema(ConnectionsSchema);
 
   // Connections.allow({
   //   'insert': function () {
