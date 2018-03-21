@@ -11,13 +11,38 @@ import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import UserTile from './UserTile';
 
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
 class GroupPage extends React.Component {
   constructor(props){
       super(props);
       this.state={
         inviteStatus:false,
         showInviteGroup:false,
+        showConfirm:false,
+        sending:false
       }
+  }
+
+  closeCycleConfirm(){
+    this.setState({
+      showConfirm: true,
+    });
+  }
+
+  closeCycle(){
+    this.setState({
+      sending: true,
+    });
+
+    Meteor.call( 'closeCycle', this.props.group._id, ( error, response ) => {
+      this.setState({
+        sending: false,
+      });
+      if ( error ) {
+        console.log(error);
+      }
+    });
   }
 
   renderUserTiles(){
@@ -59,6 +84,11 @@ class GroupPage extends React.Component {
                   <div className="fontreleway font-invite-title w-clearfix">
                   {this.props.group.groupName}
                   </div>
+                  <div className="close-group-cycle w-clearfix cursor-pointer">
+                    <div className="fontreleway font-invite-title close-cycle w-clearfix" onClick={this.closeCycleConfirm.bind(this)}>
+                    <u>Close Cycle</u>
+                    </div>
+                  </div>
                 </div>
                 <div className="tile-section">
                     <div className="title-table w-row">
@@ -75,6 +105,17 @@ class GroupPage extends React.Component {
                     </a>
                   </div>
                 </div>
+                {this.state.showConfirm &&
+                  <SweetAlert
+                  type={"confirm-close-cycle"}
+                  onCancel={() => {
+                      this.setState({ showConfirm: false });
+                  }}
+                  onConfirm={() => {
+                    this.setState({ showConfirm: false });
+                    this.closeCycle();
+                  }}/>
+                }
               </section>
           </div>
         )

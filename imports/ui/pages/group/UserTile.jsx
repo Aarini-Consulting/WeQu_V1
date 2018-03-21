@@ -246,8 +246,8 @@ export default withTracker((props) => {
 
         if(handleFeedback.ready()){
 
-          var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
-          myScore = calculateScore(joinFeedbacks(myfeedback));
+          // var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
+          // myScore = calculateScore(joinFeedbacks(myfeedback));
 
           var otherFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
           otherscore = calculateScore(joinFeedbacks(otherFeedback));

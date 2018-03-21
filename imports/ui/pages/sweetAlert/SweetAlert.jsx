@@ -5,6 +5,7 @@ import '/imports/startup/client/css/sweetalert';
 
 import ConfirmAdd from './ConfirmAdd';
 import ConfirmEdit from './ConfirmEdit';
+import ConfirmCloseCycle from './ConfirmCloseCycle';
 
 export default class SweetAlert extends React.Component {
 
@@ -75,6 +76,11 @@ export default class SweetAlert extends React.Component {
     else if(this.props.type == "confirm-edit"){
         return (
             <ConfirmEdit {...this.props}/>
+        );
+    }
+    else if(this.props.type == "confirm-close-cycle"){
+        return (
+            <ConfirmCloseCycle {...this.props}/>
         );
     }
     else{
