@@ -112,18 +112,18 @@ class GroupPage extends React.Component {
                   <div className="fontreleway font-invite-title w-clearfix">
                   {this.props.group.groupName}
                   </div>
-                  <div className="close-group-cycle w-clearfix cursor-pointer">
+                  {/* <div className="close-group-cycle w-clearfix cursor-pointer">
                     <div className="fontreleway font-invite-title close-cycle w-clearfix" onClick={this.closeCycleConfirm.bind(this)}>
                     <u>Close Cycle</u>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
-                {this.props.feedbackCycle &&
+                {/* {this.props.feedbackCycle &&
                   <div className="screentitlewrapper w-clearfix">
                     {this.renderFeedbackCycles()}
                   </div>
-                }
+                } */}
                 
                 
                 <div className="tile-section">
