@@ -2158,7 +2158,7 @@ body {
   float: none;
   position: absolute;
   min-width:180px;
-  z-index: 1;
+  z-index: 3;
 }
 
 .dropdown-arrow:before {

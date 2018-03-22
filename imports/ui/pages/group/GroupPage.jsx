@@ -20,7 +20,8 @@ class GroupPage extends React.Component {
         inviteStatus:false,
         showInviteGroup:false,
         showConfirm:false,
-        sending:false
+        sending:false,
+        selectedCycle:[]
       }
   }
 
@@ -45,6 +46,25 @@ class GroupPage extends React.Component {
     });
   }
 
+  showInviteGroup(bool){
+    this.setState({
+      showInviteGroup: bool,
+    });
+  }
+
+  toggleCycle(id, index){
+    var copyStateData = this.state.selectedCycle.slice();
+    if(index > -1){
+      copyStateData.splice(index,1);
+    }else{
+      copyStateData.push(id);
+    }
+
+    this.setState({
+      selectedCycle: copyStateData,
+    });
+  }
+
   renderUserTiles(){
     return this.props.group.emails.map((email) => {
         return (
@@ -53,11 +73,19 @@ class GroupPage extends React.Component {
       });
   }
 
-  showInviteGroup(bool){
-    this.setState({
-      showInviteGroup: bool,
+  renderFeedbackCycles(){
+    return this.props.feedbackCycle.map((data, index) => {
+      var index = this.state.selectedCycle.indexOf(data._id);
+      return(
+        <div className={"invitebttn bttnmembr gender w-button " + (index > -1 ? "selected" : "")} 
+        key={data._id} onClick={this.toggleCycle.bind(this, data._id, index)}>
+          {data.createdAt.getDay()}/{data.createdAt.getDate()}/{data.createdAt.getFullYear()}
+        </div>
+      );
     });
   }
+
+  
 
   render() {
     if(this.props.dataReady){
@@ -90,6 +118,14 @@ class GroupPage extends React.Component {
                     </div>
                   </div>
                 </div>
+
+                {this.props.feedbackCycle &&
+                  <div className="screentitlewrapper w-clearfix">
+                    {this.renderFeedbackCycles()}
+                  </div>
+                }
+                
+                
                 <div className="tile-section">
                     <div className="title-table w-row">
                         {this.renderUserTiles()}
@@ -136,6 +172,7 @@ class GroupPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var group;
+  var feedbackCycle;
   var handleGroup;
     if(props.match.params.id){
         handleGroup = Meteor.subscribe('group',{_id : props.match.params.id},{}, {
@@ -143,13 +180,31 @@ export default withTracker((props) => {
                 console.log(error);
             }
         });
-        if(handleGroup.ready()){
+
+        handleFeedbackCycle = Meteor.subscribe('feedback_cycle',{
+          groupId : props.match.params.id,
+          creatorId : Meteor.userId()
+        },{}, {
+          onError: function (error) {
+                console.log(error);
+            }
+        });
+
+        if(handleGroup.ready() && handleFeedbackCycle.ready()){
           group = Group.findOne({_id : props.match.params.id});
+
+          feedbackCycle = FeedbackCycle.find({
+            groupId : props.match.params.id,
+            creatorId : Meteor.userId()
+          }).fetch();
+
+          console.log(feedbackCycle);
           dataReady = true;
         }
     }
   return {
       group:group,
+      feedbackCycle:feedbackCycle,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };
