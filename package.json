@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@typeform/embed": "^0.5.6",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.2",
     "create-react-class": "^15.6.2",

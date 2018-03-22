@@ -16,8 +16,9 @@ class Profile extends React.Component {
     super(props);
     this.state={
       activeProfileIndex:-1,
+      connectingLinkedIn:false,
     }
-}
+  }
 
   handleScroll(ev) {
     var scroll = ev && ev.target && ev.target.scrollTop;
@@ -70,6 +71,13 @@ class Profile extends React.Component {
       return false;
     } 
     
+  }
+
+  getLinkedInInfo(){
+    if(this.props.currentUser && this.props.currentUser._id == Meteor.userId()){
+      var pathname = "linkedin-handler"
+      this.props.history.push(`/linkedin-permission/${pathname}`);
+    }
   }
 
   componentWillUnmount() {
@@ -128,8 +136,23 @@ class Profile extends React.Component {
               }
             </div>
             <div className="profilefac">
-              {/* <img className="avatarprofile" src="{{pictureUrl}}"/> */}
-              <img src="/img/avatar.png" className="avatarprofile" id="specificUser" data-filter-id={Meteor.userId()}/>
+              <div className="div-q-face">
+                {profileInfo.profile && profileInfo.profile.pictureUrl 
+                  ? <img src={profileInfo.profile.pictureUrl} className={"avatarprofile "+profileInfo.profile.pictureShape}/>
+                  : <img src="/img/avatar.png" className="avatarprofile"/>
+                }
+
+                {this.props.currentUser._id == profileInfo._id && profileInfo.profile && !profileInfo.profile.linkedIn 
+                ? 
+                <div className="bttn-linkedin w-clearfix" onClick={this.getLinkedInInfo.bind(this)}>
+                  <div className="icon-camera"></div>
+                  <div className="text-block-3">from</div>
+                  <div className="logo-linkedin"></div>
+                </div>
+                :
+                ""
+                }
+              </div>
               <div className="fontprofilename fontreleway">
               {profileInfo && 
               getUserName(profileInfo.profile)

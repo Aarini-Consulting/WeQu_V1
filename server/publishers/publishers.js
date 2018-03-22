@@ -7,6 +7,10 @@ Meteor.publish('feedback', function(selector, options) {
     return Feedback.find(selector, options);
 });
 
+Meteor.publish('feedback_cycle', function(selector, options) {
+    return FeedbackCycle.find(selector, options);
+});
+
 Meteor.publish('invitation', function (id) {
     var fb = Feedback.findOne(id);
     if(!fb) { return [] }

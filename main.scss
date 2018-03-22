@@ -161,9 +161,14 @@ input {
 }
 
 .avatar {
-  height: 120px;
+  // height: 120px;
   border: 2px solid white;
   border-radius: 50%;
+  //@include clip-path(circle(50% at center));
+}
+
+.avatar.square {
+  border-radius: 0%
   //@include clip-path(circle(50% at center));
 }
 

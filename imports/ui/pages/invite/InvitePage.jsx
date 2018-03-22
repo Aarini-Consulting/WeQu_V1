@@ -77,10 +77,15 @@ class InvitePage extends React.Component {
             <div className="contactc w-row">
               <div className="column-4">
                 <div className="contactnamefield w-clearfix cursor-pointer" 
-                onClick={()=>{
-                  this.props.history.push(`/profile/${user._id}`);
-                }}>
-                  <img src="/img/avatar.png" className="contactface"/>
+                  onClick={()=>{
+                    this.props.history.push(`/profile/${user._id}`);
+                  }}>
+
+                  {user.profile && user.profile.pictureUrl                         
+                    ? <img src={user.profile.pictureUrl} className={"contactface "+user.profile.pictureShape}/>
+                    : <img src="/img/avatar.png" className="contactface"/>
+                  }
+
                 </div>
                 <div className="fontcontactname">{getUserName(user.profile)}</div>
               </div>
@@ -138,10 +143,13 @@ class InvitePage extends React.Component {
                   <div className="contactc w-row">
                     <div className="column-4">
                       <div className="contactnamefield w-clearfix cursor-pointer" 
-                      onClick={()=>{
-                        this.props.history.push(`/profile/${user._id}`);
-                      }}>
-                        <img src="/img/avatar.png" className="contactface"/>
+                        onClick={()=>{
+                          this.props.history.push(`/profile/${user._id}`);
+                        }}>
+                        {user.profile && user.profile.pictureUrl 
+                          ? <img src={user.profile.pictureUrl} className={"contactface "+user.profile.pictureShape}/>
+                          : <img src="/img/avatar.png" className="contactface"/>
+                        }
                       </div>
                       <div className="fontcontactname">{getUserName(user.profile)}</div>
                     </div>

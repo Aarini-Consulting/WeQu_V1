@@ -21,7 +21,7 @@ Accounts.emailTemplates.verifyEmail = {
 
 Accounts.emailTemplates.resetPassword = {
   subject() {
-    return "[WeQu] Reset Your Email Address";
+    return "[WeQu] Reset Your Password";
   },
   text( user, url ) {
     var emailAddress   = user.emails[0].address,

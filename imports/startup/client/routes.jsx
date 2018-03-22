@@ -26,6 +26,7 @@ import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
 import Settings from '/imports/ui/pages/Settings';
 import NotFound from '/imports/ui/pages/NotFound';
+import NotAuthorized from '/imports/ui/pages/NotAuthorized';
 
 // import Test from '/imports/ui/pages/test';
 
@@ -40,12 +41,13 @@ import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
 
 import AdminUser from '/imports/ui/pages/AdminUser';
 
-
+import '/imports/startup/client/css/fontawesome-all.min';
 import '/imports/startup/client/css/normalize';
 import '/imports/startup/client/css/webflow';
 import '/imports/startup/client/css/wequ-profile.webflow';
 import QuizSummary from '/imports/ui/pages/quiz/QuizSummary';
-
+import LinkedInPermission from '/imports/ui/pages/linkedIn/LinkedInPermission';
+import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
 const history = createBrowserHistory();
 
@@ -112,6 +114,8 @@ const App = () => (
       <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
+      <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
+      <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
       <Route exact path='/invitation/:id' component={InviteLanding}/>
       <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
       <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
@@ -126,6 +130,8 @@ const App = () => (
       <Route exact path='/verify-email/:token' component={VerifyEmail} />
       {/* <Route path="/test" component={Test}/> */}
       <Route path="/adminUser" component={AdminUser}/>
+      <Route path="/404" component={NotFound}/>
+      <Route path="/401" component={NotAuthorized}/>
       <Route path="*" component={NotFound}/>
   </Switch>
 )

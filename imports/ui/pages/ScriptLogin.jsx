@@ -11,10 +11,27 @@ import Profile from './profile/Profile';
 import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
 import Invite from './invite/Invite';
 
+import {init} from '/imports/ui/pages/profile/minBlock';
+
 class ScriptLogin extends React.Component {
   render() {
         if(this.props.dataReady){
             if(this.props.currentUser && this.props.currentUser.profile  && this.props.currentUser.profile.loginScript){
+                if(!this.props.currentUser.profile.pictureUrl){
+                    //create random gravatar image and store it in profile
+                    var gravatar = init({
+                        divId          : "gravatar",
+                        time           : 200,
+                        randomColor    : false,
+                        pause           :true
+                      });
+                    Meteor.call('store.profile.picture',gravatar.toDataURL(), (error, result) => {
+                        if(error){
+                            console.log(error);
+                        }
+                    })
+                }
+
                 switch(this.props.currentUser.profile.loginScript) {
                     case 'init': {
                         var condition = true;
