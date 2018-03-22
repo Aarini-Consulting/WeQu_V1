@@ -13,7 +13,7 @@ Meteor.methods({
                 emailsSurveyed.push(email);
             }
 
-            Group.upsert({"_id":groupId},
+            Group.update({"_id":groupId},
                 {'$set':{emailsSurveyed:emailsSurveyed}
             });	
         }else{
