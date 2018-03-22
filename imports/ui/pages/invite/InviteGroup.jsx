@@ -9,8 +9,8 @@ import { Creatable } from 'react-select';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
-import MultiSelect from './MultiSelect';
-import '/imports/startup/client/react-select.css';
+// import MultiSelect from './MultiSelect';
+// import '/imports/startup/client/react-select.css';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 

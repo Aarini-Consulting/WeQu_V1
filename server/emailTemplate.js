@@ -9,3 +9,10 @@ SSR.compileTemplate('GroupInviteHtmlEmail', Assets.getText('group-invite-email.h
 Template.GroupInviteHtmlEmail.helpers({
     //Add any helper methods to enable default data in template
 });
+
+SSR.compileTemplate('GroupCloseCycleEmail', Assets.getText('group-close-cycle-email.html'));
+
+Template.GroupCloseCycleEmail.helpers({
+    //Add any helper methods to enable default data in template
+});
+

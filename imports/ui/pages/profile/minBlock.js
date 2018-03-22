@@ -87,7 +87,7 @@ function getLocation(number) {
 function fillIt(ctx, height, width, padding, blockStack, color, number) {
 
     var coordinate = getLocation(number);
-    console.log(coordinate);
+    
     if(coordinate){
         enlight(ctx, height, width, padding, blockStack, color, coordinate[1], coordinate[0]);
     }
