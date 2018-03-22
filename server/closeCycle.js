@@ -13,6 +13,41 @@ Meteor.methods({
             throw (new Meteor.Error("group_creator_missing")); 
         }
 
+        var latestCycle = FeedbackCycle.findOne({
+            groupId:groupCheck._id,
+            creatorId: groupCreator._id
+        },
+        { sort: { createdAt: -1 } });
+
+        var earliestFeedback;
+
+        if(latestCycle){
+            earliestFeedback = Feedback.findOne({
+                done:true, groupId:groupCheck._id, 
+                $and: [ {  updatedAt:{"$lte":new Date()} }, {  updatedAt:{"$gt":latestCycle.createdAt} } ]
+            },
+            { sort: { lastUpdated: 1 } });
+
+        }else{
+            earliestFeedback = Feedback.findOne({
+                done:true, groupId:groupCheck._id, 
+                updatedAt:{"$lte":new Date()}
+            },
+            { sort: { lastUpdated: 1 } });
+        }
+        
+        console.log(earliestFeedback);
+
+        if(!earliestFeedback){
+            throw (new Meteor.Error("no_completed_feedback_found")); 
+        }
+
+        FeedbackCycle.insert({
+            groupId: groupCheck._id, 
+            creatorId: groupCreator._id, 
+            from: earliestFeedback.updatedAt
+        });
+
 
         var arr_emails=["yohandi@aarini.co"];
         
