@@ -94,11 +94,11 @@ class QuizSummary extends React.Component {
             <div className="quizcount w-row">
               <div className="columprogress w-col w-col-6 w-col-small-6 w-col-tiny-6">
                 <a className="fontreleway progressnumber fontmyself">{this.state.lastAnsweredCount}</a>
-                <div className="fontreleway fontprogress fontwidthmobile">Answers answered just now</div>
+                <div className="fontreleway fontprogress fontwidthmobile">Questions you just completed</div>
               </div>
               <div className="columprogress w-col w-col-6 w-col-small-6 w-col-tiny-6">
                 <a className="fontreleway progressnumber fontothers">{this.state.answeredTotal}</a>
-                <div className="fontreleway fontprogress">Answered so far by you</div>
+                <div className="fontreleway fontprogress">Total questions you answered</div>
               </div>
             </div>
             <div className="summarysection w-clearfix">
@@ -116,16 +116,16 @@ class QuizSummary extends React.Component {
             <div className="footersummary w-clearfix">
               <div className="bttn-area-summary">
               {this.props.quizPerson._id == Meteor.userId()
-              ?<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.continue}>Load more questions about myself</a>
-              :<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.continue}>Load more questions about {getUserName(this.props.quizPerson.profile)}</a>
+              ?<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.continue}>Continue quiz about myself</a>
+              :<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.continue}>Continue quiz about {getUserName(this.props.quizPerson.profile)}</a>
               }
                 
               </div>
               <div className="bttn-area-summary _2">
                 {this.props.next && this.props.nextPerson
                 ?this.props.nextPerson._id == Meteor.userId()
-                  ?<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Load more questions about myself</a>
-                  :<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Load questions about {getUserName(this.props.nextPerson.profile)}</a>
+                  ?<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Take a quiz about myself</a>
+                  :<a className="button fontreleway fontbttnsummary w-button" onClick={this.props.next}>Take a quiz about {getUserName(this.props.nextPerson.profile)}</a>
                 :<Link to="/invite" className="button fontreleway fontbttnsummary w-button">Invite other people</Link>
                 }
               </div>

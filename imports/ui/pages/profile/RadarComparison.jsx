@@ -48,7 +48,7 @@ class RadarComparison extends React.Component {
         {this.props.quizPerson == Meteor.userId() &&
           <div className="divbttn" id="finish">
             <Link to="/invite" className="fontbttn profilebttn w-button">
-            invite my teammates to learn how they see me
+            invite teammates to explore and compare your attributes
             </Link>
           </div>
         }

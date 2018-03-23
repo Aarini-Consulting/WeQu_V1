@@ -49,7 +49,7 @@ Meteor.methods({
                 //Sign Up: Registration Confirmed
 
                 var sendtoEmail = user.email;
-                var subject="Welcome to WEQU";
+                var subject="Welcome to WeQ";
                 var url=Meteor.settings.public.domain.int;
                 var body="Welcome<br> Your email address is now confirmed. <a href=\""+url+"\"> Click here </a> to go to your dashboard.<br><br><br><br>Happy Quotient<br>";
                 
