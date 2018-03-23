@@ -38,7 +38,7 @@ Meteor.methods({
         
                     link = `group-invitation/${arr_emails_notExisting[i]}/${groupId}`
                 
-                    var subject = `[WeQu] Inviting for joining ${groupName}` ;
+                    var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
                     var message = `Please join the group by clicking the invitation link ${link}`
                 
                     var emailData = {
@@ -67,7 +67,7 @@ Meteor.methods({
         if(check){
             var link = `group-invitation/${email}/${groupId}`
                 
-            var subject = `[WeQu] Inviting for joining ${check.groupName}` ;
+            var subject = `[WeQ] Invitation to join the group "${check.groupName}"` ;
             var message = `Please join the group by clicking the invitation link ${link}`
         
             var emailData = {

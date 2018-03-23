@@ -53,7 +53,7 @@ Meteor.methods({
         
         for (var i = 0; i < arr_emails.length; i++) {
 
-            var subject = `[WeQu] Notification for handling group cycle` ;
+            var subject = `[WeQ] Notification for handling group cycle` ;
 
             var emailData = {
                 'creatorEmail': groupCreator.emails[0].address,

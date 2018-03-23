@@ -170,7 +170,7 @@ class Profile extends React.Component {
         <SectionProgress quizPerson={this.getActiveProfile()} ref="sectionProgress"/>
 
         <div className="progressdesdiv">
-          <div className="fontprogressdes fontreleway small">Below&nbsp;information is being generated based on the inputs from you and your teammates</div>
+          <div className="fontprogressdes fontreleway small">The data below is generated based on the input from you and your teammates</div>
         </div>
           
         <RadarComparison quizPerson={this.getActiveProfile()}/>
