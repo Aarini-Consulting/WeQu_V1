@@ -12,10 +12,10 @@ class SectionProgress extends React.Component {
                 <div className="sectionprogress" id="sectionprogress">
                     <div className="row w-row webflow-row">
                         <div className="columprogress w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><span className="fontmyself fontreleway progressnumber">{this.props.myAnsweredQuestionSet * 12}</span>
-                        <div className="fontprogress fontreleway fontwidthmobile small">Answers by myself</div>
+                        <div className="fontprogress fontreleway fontwidthmobile small">Answered by me</div>
                         </div>
                         <div className="w-col w-col-6 w-col-medium-6 w-col-small-6 w-col-tiny-6"><span className="font2 fontothers fontreleway progressnumber">{this.props.inviteesMyAnsweredQuestionSet * 12}</span>
-                        <div className="fontprogress fontreleway small">Answers by others</div>
+                        <div className="fontprogress fontreleway small">Answered by others</div>
                         </div>
                     </div>
                 </div>
@@ -25,13 +25,13 @@ class SectionProgress extends React.Component {
             <div className="sectionprogress" id="sectionprogress">
                 <div className="row w-row webflow-row">
                 <div className="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="fontmyself fontreleway progressnumber">{this.props.quizPersonAnsweredQuestionSet * 12}</span>
-                    <div className="fontprogress fontreleway fontwidthmobile small">Answers by {getUserName(this.props.quizUser.profile)}</div>
+                    <div className="fontprogress fontreleway fontwidthmobile small">Answered by {getUserName(this.props.quizUser.profile)}</div>
                 </div>
                 <div className="columprogress w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="fontothers fontreleway progressnumber">{this.props.myQuizPersonAnsweredQuestionSet * 12}</span>
-                    <div className="fontprogress fontreleway small">Answers by myself</div>
+                    <div className="fontprogress fontreleway small">Answered by me</div>
                 </div>
                 <div className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4"><span className="font2 fontothers fontreleway progressnumber">{this.props.inviteesQuizPersonAnsweredQuestionSet * 12}</span>
-                    <div className="fontprogress fontreleway small">Answers by others</div>
+                    <div className="fontprogress fontreleway small">Answered by others</div>
                 </div>
                 </div>
             </div>

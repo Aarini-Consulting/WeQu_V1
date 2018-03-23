@@ -17,7 +17,7 @@ Meteor.methods({
 
           link = `group-invitation/${arr_emails[i]}/${groupId}`
       
-          var subject = `[WeQu] Inviting for joining ${groupName}` ;
+          var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
           var message = `Please join the group by clicking the invitation link ${link}`
       
           var emailData = {

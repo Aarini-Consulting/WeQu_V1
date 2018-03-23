@@ -14,10 +14,10 @@ class SectionProfile extends React.Component {
     return (
         <div className="sectionprofile">
           <div className="titlesection w-container"><img className="iconplay iconwrapper" src="/img/iconPlay2.png"/>
-            <div className="fontreleway fonttitle">WeQ Team Feedback Game</div>
-            <p className="fontreleway titlepara">Discover WeQ games, crafted for team feedback experience.
-              <br/>It's a perfect way to break the ice and kickstart an open dialogue in any team.
-              <br/>Get your own game today and join the community!</p>
+            <div className="fontreleway fonttitle">Let the games begin!</div>
+            <p className="fontreleway titlepara">Discover WeQ, the system that uses proven scientific principles to build peak-perfoming teams.
+              <br/>It's a perfect way to remove bias, promote group feedback, and build psychological safety in any team.
+              <br/>Visit <a href="https://www.weq.io/">www.weq.io</a> to book your sesion today!</p>
             </div>
             <div className="instagramdiv">
               <div className="html-embed w-embed w-iframe w-script">

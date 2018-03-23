@@ -76,7 +76,7 @@ class Strength extends React.Component {
             </div>
 
             <p className="fontreleway paratopskills">These skills are selected based on the questions you and your teammates have answered about you.
-            <br/>The more questions you answered, the more accurate your profile becomes.
+            <br/>The more questions you answer, the more accurate your profile becomes.
             </p>
           </div>
           :
@@ -92,8 +92,8 @@ class Strength extends React.Component {
             to={this.props.buttonLink}>
             
             {this.props.quizPerson == Meteor.userId()
-            ? "Answer more questions about " + this.props.userType2
-            : "Answer more question about " + this.props.userType
+            ? "Take a new quiz about " + this.props.userType2
+            : "Answer more questions about " + this.props.userType
             }
             </Link>
             </div>
@@ -136,7 +136,7 @@ export default withTracker((props) => {
     if(props.quizPerson == Meteor.userId())
     {
       userType = "My"; 
-      userType2 = "Myself"
+      userType2 = "Me"
       buttonLink = "/quiz";
     }
     else{

@@ -56,6 +56,19 @@ class Quiz extends React.Component {
     }
   }
 
+  resetCurrentQuiz(props){
+    this.setState({
+      showSummary: false,
+      currentFeedback:undefined,
+      currentQuestion:undefined,
+      currentQuestionIndex:-1,
+      questionTotal:0,
+    },()=>{
+      var current = this.getCurrentQuestion(props);
+    });
+    
+  }
+
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.dataReady){
       return true;
@@ -235,7 +248,7 @@ class Quiz extends React.Component {
             <QuizSummary quizUser={this.props.quizUser} 
             quizPerson={this.state.user}
             feedback={this.state.currentFeedback}
-            continue={()=>{this.setState({showSummary: false});}}
+            continue={()=>{this.resetCurrentQuiz(this.props);}}
             next={this.cycleFeedbackForward.bind(this, true)}/>
           );
         }
