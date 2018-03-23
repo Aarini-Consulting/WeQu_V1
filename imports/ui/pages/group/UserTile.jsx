@@ -43,8 +43,8 @@ class UserTile extends React.Component {
               </div>
               <div className="font-title font18 marginleft3P" style={{width:10+"%"}}>
               {skill.total <= 0 
-              ?"0"
-              :(skill.scored/skill.total)
+              ?"0/0"
+              :skill.scored +"/"+ skill.total
               }
               </div>
             </div>
@@ -58,7 +58,6 @@ class UserTile extends React.Component {
             <div key={cat.name}>
                 <div className="skillElement">
                   <div className="title font-title font18">{cat.name}</div>
-                  <div className="underBar" style={{width:20+"%",visibility:"hidden"}}></div>
                 </div>
                 {this.renderCategorySkills(cat.skills)}
             </div>
@@ -223,16 +222,31 @@ export default withTracker((props) => {
   var himselfAnswered = 0;
   var inviteesAnsweredHim = 0;
   var skillData;
-  var categories;
+  var categories={};
   var handleFeedback;
   var handleUsers;
 
   if(props.email){
-    handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
-      onError: function (error) {
-              console.log(error);
-          }
-    });
+
+    if(props.feedbackCycle){
+      var cycleStart = props.feedbackCycle.from;
+      var cycleEnd = props.feedbackCycle.createdAt;
+      
+      handleUsers = Meteor.subscribe('users',{
+        $or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}],
+        $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
+      }, {}, {
+        onError: function (error) {
+                console.log(error);
+            }
+      });
+    }else{
+      handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
+        onError: function (error) {
+                console.log(error);
+            }
+      });
+    }
 
     if(handleUsers.ready()){
       user = Meteor.users.findOne({$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]} );
@@ -246,24 +260,17 @@ export default withTracker((props) => {
 
         if(handleFeedback.ready()){
 
-          // var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
-          // myScore = calculateScore(joinFeedbacks(myfeedback));
+          var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
+          myScore = calculateScore(joinFeedbacks(myfeedback));
 
           var otherFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
-          otherscore = calculateScore(joinFeedbacks(otherFeedback));
+          otherscore = calculateScore(joinFeedbacks(otherFeedback), true);
 
           himselfAnswered = questionHimselfAnswered(user._id);
           inviteesAnsweredHim = questionInviteesAnsweredHim(user._id);
 
           skillData = calculateTopWeak(Feedback.find({to: user._id }).fetch());
 
-          var joinedQset = Feedback.find({ 'to' : user._id }).fetch().map((fb, index)=>{
-              return fb.qset;
-          })
-            
-          var otherscore = calculateScore(joinedQset, true);
-
-          var i=0;
           categories = _.map(_.keys(framework), function(category) {
                   return {
                       name : i18n[category],

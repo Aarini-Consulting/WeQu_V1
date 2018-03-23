@@ -21,7 +21,7 @@ class GroupPage extends React.Component {
         showInviteGroup:false,
         showConfirm:false,
         sending:false,
-        selectedCycle:[]
+        selectedCycle:undefined
       }
   }
 
@@ -52,33 +52,32 @@ class GroupPage extends React.Component {
     });
   }
 
-  toggleCycle(id, index){
-    var copyStateData = this.state.selectedCycle.slice();
-    if(index > -1){
-      copyStateData.splice(index,1);
+  toggleCycle(data){
+    if(this.state.selectedCycle && this.state.selectedCycle._id == data._id){
+      this.setState({
+        selectedCycle: undefined,
+      });
     }else{
-      copyStateData.push(id);
+      this.setState({
+        selectedCycle: data,
+      });
     }
-
-    this.setState({
-      selectedCycle: copyStateData,
-    });
   }
 
   renderUserTiles(){
     return this.props.group.emails.map((email) => {
         return (
-          <UserTile key={email} email={email}/>
+          <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle}/>
         );
       });
   }
 
   renderFeedbackCycles(){
     return this.props.feedbackCycle.map((data, index) => {
-      var index = this.state.selectedCycle.indexOf(data._id);
       return(
-        <div className={"invitebttn bttnmembr gender w-button " + (index > -1 ? "selected" : "")} 
-        key={data._id} onClick={this.toggleCycle.bind(this, data._id, index)}>
+        <div className={"invitebttn bttnmembr gender w-button " + 
+        (this.state.selectedCycle && this.state.selectedCycle._id == data._id ? "selected" : "")} 
+        key={data._id} onClick={this.toggleCycle.bind(this, data)}>
           {data.createdAt.getDay()}/{data.createdAt.getDate()}/{data.createdAt.getFullYear()}
         </div>
       );
@@ -198,7 +197,6 @@ export default withTracker((props) => {
             creatorId : Meteor.userId()
           }).fetch();
 
-          console.log(feedbackCycle);
           dataReady = true;
         }
     }
