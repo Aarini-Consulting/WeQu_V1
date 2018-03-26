@@ -39,8 +39,8 @@ export default class ResetPassword extends React.Component {
                 <div className="loginwraper">
                     <div className="forgottenpw loginbox"><img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
                     <div className="formarea w-container">
-                        <h1 className="formheader">Recover your password</h1>
-                        <p className="formtext lostpw">Enter your new password below</p>
+                        <h1 className="formheader">Create a new password</h1>
+                        {/* <p className="formtext lostpw">Enter your new password below</p> */}
                         <div className="w-form">
                         <form className="loginemail" data-name="Email Form" id="forgot-password" name="email-form"  onSubmit={this.handleSubmit.bind(this)}>
                             <input className="emailfield w-input" maxLength="256" ref="newPassword" placeholder="new password" required type="password"/>
