@@ -11,30 +11,6 @@ Meteor.methods({
    Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName, (err, result)=> {
     //  console.log("genGroupQuestionSet" , err, result);
       if(err){ return err}
-      else{
-        var link; 
-        for (var i = 0; i < arr_emails.length; i++) {
-
-          link = `group-invitation/${arr_emails[i]}/${groupId}`
-      
-          var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
-          var message = `Please join the group by clicking the invitation link ${link}`
-      
-          var emailData = {
-            'from': '',
-            'to' : '',
-            'link': Meteor.absoluteUrl(link),
-            'groupName': groupName
-          };
-      
-          let body = SSR.render('GroupInviteHtmlEmail', emailData);
-      
-          Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
-            if(err){ return err};
-          });
-      
-        }
-      }
     });
 
     return true;
@@ -56,6 +32,24 @@ Meteor.methods({
             arr_emails_notExisting.push(d.email);
             dataEmailNotExisting.push(d);
           }
+
+          var link = `group-invitation/${d.email}/${groupId}`
+      
+          var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
+          var message = `Please join the group by clicking the invitation link ${link}`
+      
+          var emailData = {
+            'from': '',
+            'to' : '',
+            'link': Meteor.absoluteUrl(link),
+            'groupName': groupName
+          };
+      
+          let body = SSR.render('GroupInviteHtmlEmail', emailData);
+		      console.log("sending mail to: "+ d.email);
+          Meteor.call('sendEmail', d.email, subject, body, function (err, result) {
+            if(err){ return err};
+          });
         })
 
 
@@ -132,6 +126,7 @@ Meteor.methods({
 
      }
       catch(e){
+        console.log(e);
         console.log("error in creating questions for group members")
         throw (new Meteor.Error("empty_group_creation_questions"));
       }
