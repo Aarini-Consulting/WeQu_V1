@@ -439,7 +439,7 @@ class InviteGroup extends React.Component {
       }
       else{
         return (
-            <section className="fontreleway groupbg">
+            <section className="section summary fontreleway groupbg">
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   {(this.props.isEdit || (this.props.count != undefined && this.props.count > 0)) &&
