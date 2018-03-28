@@ -19,12 +19,7 @@ class SkillCategories extends React.Component {
     {
         let userId = nextProps.user._id;
         var data = { userId:userId, profile : nextProps.user.profile };
-
-        // var joinedQset = nextProps.feedbacks.map((fb, index)=>{
-        //     return fb.qset;
-        // })
         
-
         var validAnswers = _.filter(joinFeedbacks(nextProps.feedbacks), function(question) { return question.answer });
         
         var otherscore = calculateScore(joinFeedbacks(nextProps.feedbacks), true);

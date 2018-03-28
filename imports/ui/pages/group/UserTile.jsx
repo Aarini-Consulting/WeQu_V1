@@ -10,14 +10,31 @@ import Menu from '/imports/ui/pages/menu/Menu';
 
 import Radar from '/imports/ui/pages/profile/Radar';
 import Strength from '/imports/ui/pages/profile/Strength';
-import SkillCategories from '/imports/ui/pages/profile/SkillCategories';
+
+import SkillSetUserTile from '/imports/ui/pages/group/SkillSetUserTile';
 
 class UserTile extends React.Component {
   constructor(props){
       super(props);
       this.state={
         inviteStatus:false,
+        feedback:undefined
       }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.dataReady){
+      if(!this.state.feedback){
+        this.setState({
+          feedback:nextProps.allFeedback
+        });
+      }
+    }
+  }
+
+
+  setFeedbackState(fb){
+    this.setState({ feedback: fb });
   }
 
   renderSkills(skillData){
@@ -28,39 +45,6 @@ class UserTile extends React.Component {
               <div className="font-skillicon font-tile">{data.text}</div>
             </div>
           </div>
-        );
-      });
-  }
-
-  renderCategorySkills(skills){
-    return skills.map((skill) => {
-        return (
-            <div key={skill.name} className="skillElement">
-              <div className="title font-title font18" style={{width:20+"%"}}>
-                {skill.name} </div>
-              <div className="underBar" style={{width:40+"%"}}>
-                <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
-              </div>
-              <div className="font-title font18 marginleft3P" style={{width:10+"%"}}>
-              {skill.total <= 0 
-              ?"0/0"
-              :skill.scored +"/"+ skill.total
-              }
-              </div>
-            </div>
-        );
-      });
-  }
-
-  renderCategories(){
-    return this.props.categories.map((cat) => {
-        return (
-            <div key={cat.name}>
-                <div className="skillElement">
-                  <div className="title font-title font18">{cat.name}</div>
-                </div>
-                {this.renderCategorySkills(cat.skills)}
-            </div>
         );
       });
   }
@@ -92,15 +76,12 @@ class UserTile extends React.Component {
                 </div>
               </div>
               <div className="tile-radar fontreleway"><img className="title-icon" src="/img/iconRadar.png"/>
-                <div className="font-tile font-title-title font18">Comparisons</div>
+                {/* <div className="font-tile font-title-title font18">Comparisons</div> */}
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
                 <svg height="300" width="300" 
                 style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
                   {this.props.myScore &&
                     <Radar points = {dataForRadar(this.props.myScore)} color="white" outline="#E96956"/>
-                  }
-                  {this.props.otherScore &&
-                    <Radar points = {dataForRadar(this.props.otherScore)} color="#E96956" outline="white"/>
                   }
                 </svg>
                 
@@ -120,10 +101,18 @@ class UserTile extends React.Component {
                 <img className="title-icon" src="/img/icon24.png" width="12"/>
                 <div className="font-tile font-title-title font18">Character Skills</div>
                 <div className="row">
-
-                  <div className="col-md-12 col-sm-12 col-xs-12">
-                    {this.renderCategories()}
-                  </div> 
+                  <div className="w-button" onClick={this.setFeedbackState.bind(this,this.props.allFeedback)}>
+                    ALL
+                  </div>
+                  <div className="w-button" onClick={this.setFeedbackState.bind(this,this.props.othersFeedback)}>
+                    OTHERS
+                  </div>
+                  <div className="w-button" onClick={this.setFeedbackState.bind(this,this.props.myFeedback)}>
+                    MINE
+                  </div>
+                </div>
+                <div className="row">
+                  <SkillSetUserTile feedback={this.state.feedback}/>
                 </div>
               </div>
               </div>
@@ -218,12 +207,14 @@ export default withTracker((props) => {
   var dataReady;
   var user;
   var myScore;
-  var otherScore;
   var himselfAnswered = 0;
   var inviteesAnsweredHim = 0;
   var skillData;
   var categories={};
   var handleFeedback;
+  var othersFeedback;
+  var myFeedback;
+  var allFeedback;
   var handleUsers;
 
   if(props.email){
@@ -260,30 +251,16 @@ export default withTracker((props) => {
 
         if(handleFeedback.ready()){
 
-          var myfeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
-          myScore = calculateScore(joinFeedbacks(myfeedback));
+          myFeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
+          myScore = calculateScore(joinFeedbacks(myFeedback));
 
-          var otherFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
-          otherscore = calculateScore(joinFeedbacks(otherFeedback), true);
+          othersFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
+          allFeedback = Feedback.find({'to' : user._id }).fetch();
 
           himselfAnswered = questionHimselfAnswered(user._id);
           inviteesAnsweredHim = questionInviteesAnsweredHim(user._id);
 
           skillData = calculateTopWeak(Feedback.find({to: user._id }).fetch());
-
-          categories = _.map(_.keys(framework), function(category) {
-                  return {
-                      name : i18n[category],
-                      category : category,
-                      skills : _.map(framework[category], function(skill){
-                          var data = {name : i18n[skill], value: 0, scored: otherscore.scored[skill], total: otherscore.total[skill], skill: skill, category: category }
-                          if(otherscore.total[skill] > 0) {
-                              data.value = Math.round(otherscore.scored[skill] * 100 / otherscore.total[skill]);
-                          }
-                          return data;
-                      })
-                  }
-          });
           
           dataReady = true;
         }      
@@ -295,11 +272,12 @@ export default withTracker((props) => {
   return {
       user: user,
       myScore:myScore,
-      otherScore:otherScore,
       himselfAnswered:himselfAnswered,
       inviteesAnsweredHim:inviteesAnsweredHim,
       skillData:skillData,
-      categories:categories,
+      allFeedback:allFeedback,
+      myFeedback:myFeedback,
+      othersFeedback:othersFeedback,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };
