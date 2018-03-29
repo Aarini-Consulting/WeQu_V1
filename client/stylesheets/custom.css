@@ -46,6 +46,14 @@
 
 
 /* Applying skills category color */
+.compare-skill{
+	position: relative;
+	top:-8px;
+}
+
+.compare-bar{
+	background-color: #a0a0a0 !important;
+}
 
 .VIRTUE{
 	background-color: #d0376f !important;
@@ -578,10 +586,6 @@ input[type="radio"]{
 
 .colorNone{
 	color: black;
-}
-
-.active{
-	display: block !important;
 }
 
 .section-social {

@@ -9,52 +9,29 @@ class SkillCategories extends React.Component {
   constructor(props){
       super(props);
       this.state={
-        expand:false,
-        data:undefined
+        expand:false
       }
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(nextProps.dataReady && nextProps.user && nextProps.feedbacks)
-    {
-        let userId = nextProps.user._id;
-        var data = { userId:userId, profile : nextProps.user.profile };
-        
-        var validAnswers = _.filter(joinFeedbacks(nextProps.feedbacks), function(question) { return question.answer });
-        
-        var otherscore = calculateScore(joinFeedbacks(nextProps.feedbacks), true);
-        data.enoughData = (validAnswers.length > 9);
-
-        var i=0;
-        let categories = {};
-        categories = _.map(_.keys(framework), function(category) {
-                return {
-                    name : i18n[category],
-                    category : category,
-                    skills : _.map(framework[category], function(skill){
-                        var data = {name : i18n[skill], value: 0, scored: otherscore.scored[skill], total: otherscore.total[skill], skill: skill, category: category }
-                        if(otherscore.total[skill] > 0) {
-                            data.value = Math.round(otherscore.scored[skill] * 100 / otherscore.total[skill]);
-                        }
-                        return data;
-                    })
-                }
-        });
-        data.categories = categories;
-        this.setState({
-            data:data
-        });
-        }
     }
 
-    renderSkills(skills){
-        return skills.map((skill) => {
+    renderCategorySkills(skills, compareSkills){
+        return skills.map((skill, index) => {
             return (
                 <div className="skillElement" key={skill.category + " " +skill.name}>
                     <div className="title">{skill.name}</div>
-                    <div className="underBar" style={{width:60+"%"}}>
-                    <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
-                    </div>
+
+                    {compareSkills && compareSkills[index] && compareSkills[index].name == skill.name 
+                        ?
+                        <div className="underBar" style={{width:60+"%"}}>
+                            <div className={"bar compare-bar"} style={{width:compareSkills[index].value + "%"}}></div>
+                            <div className={"bar compare-skill "+skill.category} style={{width:skill.value + "%"}}></div>
+                        </div>
+                        :
+                        <div className="underBar" style={{width:60+"%"}}>
+                            <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
+                        </div>
+                    }
+
+                    
                     <div className="score w-inline-block" style={{width:6+"em"}}>
                     {skill.total <= 0 
                     ?"0/0"
@@ -67,20 +44,24 @@ class SkillCategories extends React.Component {
     }
 
     renderCategories(){
-        if(this.state.data && this.state.data.categories){
-            var categories = this.state.data.categories
+        if(this.props.categories){
+            var categories = this.props.categories
             if(!this.state.expand){
-                categories = this.state.data.categories.slice(0,2);
+                categories = categories.slice(0,2);
             }
             
             if(categories){
-                return categories.map((cat) => {
+                return categories.map((cat, index) => {
                     return (
                         <div key={"skillset "+cat.name} className="skill-elements-wrapper">
                             <div className="skillElement">
                                 <div className="title"><b className="h5">{cat.name}</b></div>
                             </div>
-                            {this.renderSkills(cat.skills)}
+                            {this.props.categoriesCompare && this.props.categoriesCompare[index] 
+                            && this.props.categoriesCompare[index].name == cat.name
+                                ?this.renderCategorySkills(cat.skills, this.props.categoriesCompare[index].skills)
+                                :this.renderCategorySkills(cat.skills)
+                            }
                         </div>
                     );
                   });
@@ -113,7 +94,7 @@ class SkillCategories extends React.Component {
                 {this.renderCategories()}
             </div>
 
-            {this.state.data && this.state.data.categories && this.state.data.categories.length > 0 &&
+            {this.props.categories.length > 0 &&
                 <div className="row">
                     <div className="col-md-12 col-sm-12 col-xs-12">
                     <div className="sectionprofile sectiongreybgGradient arrow paddingZero" id="outer">
@@ -138,40 +119,53 @@ class SkillCategories extends React.Component {
 }
 
 export default withTracker((props) => {
-  var dataReady;
-  var feedbacks;
-  var user;
-  var handleFeedback
-  var handleUsers = Meteor.subscribe('users',{_id : props.quizPerson},{}, {
-    onError: function (error) {
-            console.log(error);
-        }
-  });
+    var dataReady;
+    var user;
+    var scoreCompare;
+    var score;
+    var categories;
+    var categoriesCompare;
+  
+    score = calculateScore(joinFeedbacks(props.feedback), true);
 
-  if(handleUsers.ready()){
-    user = Meteor.users.findOne({_id : props.quizPerson});
-    if(user){
-        handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
-            onError: function (error) {
-                    console.log(error);
-                }
-            });
-            
-        if(handleFeedback.ready()){
-            feedbacks = Feedback.find({ 'to' : user._id }).fetch();
-            dataReady = true;
-        }
-    }else{
-        dataReady = true;
+    categories = _.map(_.keys(framework), function(category) {
+            return {
+                name : i18n[category],
+                category : category,
+                skills : _.map(framework[category], function(skill){
+                    var data = {name : i18n[skill], value: 0, scored: score.scored[skill], total: score.total[skill], skill: skill, category: category }
+                    if(score.total[skill] > 0) {
+                        data.value = Math.round(score.scored[skill] * 100 / score.total[skill]);
+                    }
+                    return data;
+                })
+            }
+    });
+
+    if(props.feedbackCompare){
+        scoreCompare = calculateScore(joinFeedbacks(props.feedbackCompare), true);
+        categoriesCompare = _.map(_.keys(framework), function(category) {
+            return {
+                name : i18n[category],
+                category : category,
+                skills : _.map(framework[category], function(skill){
+                    var data = {name : i18n[skill], value: 0, scored: scoreCompare.scored[skill], total: scoreCompare.total[skill], skill: skill, category: category }
+                    if(scoreCompare.total[skill] > 0) {
+                        data.value = Math.round(scoreCompare.scored[skill] * 100 / scoreCompare.total[skill]);
+                    }
+                    return data;
+                })
+            }
+    });
+
     }
-  }
-
     
-
-  return {
-      user: user,
-      feedbacks: feedbacks,
-      dataReady:dataReady,
-  };
-})(SkillCategories);
+    dataReady = true;
+    
+    return {
+        categories:categories,
+        categoriesCompare:categoriesCompare,
+        dataReady:dataReady
+    };
+  })(SkillCategories);
 

@@ -18,23 +18,27 @@ class UserTile extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
-        feedback:undefined
+        feedback:undefined,
+        feedbackCompare:undefined,
+        feedbackActive:undefined
       }
   }
 
   componentWillReceiveProps(nextProps){
     if(nextProps.dataReady){
       if(!this.state.feedback){
-        this.setState({
-          feedback:nextProps.allFeedback
-        });
+        this.setFeedbackState(nextProps.allFeedback,undefined,"ALL");
       }
     }
   }
 
 
-  setFeedbackState(fb){
-    this.setState({ feedback: fb });
+  setFeedbackState(fb, compare, id){
+    this.setState({ 
+      feedback: fb,
+      feedbackCompare: compare,
+      feedbackActive: id 
+    });
   }
 
   renderSkills(skillData){
@@ -76,7 +80,7 @@ class UserTile extends React.Component {
                 </div>
               </div>
               <div className="tile-radar fontreleway"><img className="title-icon" src="/img/iconRadar.png"/>
-                {/* <div className="font-tile font-title-title font18">Comparisons</div> */}
+                <div className="font-tile font-title-title font18">Comparisons</div>
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
                 <svg height="300" width="300" 
                 style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
@@ -101,18 +105,21 @@ class UserTile extends React.Component {
                 <img className="title-icon" src="/img/icon24.png" width="12"/>
                 <div className="font-tile font-title-title font18">Character Skills</div>
                 <div className="row">
-                  <div className="w-button" onClick={this.setFeedbackState.bind(this,this.props.allFeedback)}>
+                  <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"")} 
+                  onClick={this.setFeedbackState.bind(this,this.props.allFeedback,undefined,"ALL")}>
                     ALL
                   </div>
-                  <div className="w-button" onClick={this.setFeedbackState.bind(this,this.props.othersFeedback)}>
+                  <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"")} 
+                  onClick={this.setFeedbackState.bind(this,this.props.othersFeedback,this.props.allFeedback,"OTHERS")}>
                     OTHERS
                   </div>
-                  <div className="w-button" onClick={this.setFeedbackState.bind(this,this.props.myFeedback)}>
-                    MINE
+                  <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"")} 
+                  onClick={this.setFeedbackState.bind(this,this.props.myFeedback,this.props.allFeedback,"MINE")}>
+                    His/Hers
                   </div>
                 </div>
                 <div className="row">
-                  <SkillSetUserTile feedback={this.state.feedback}/>
+                  <SkillSetUserTile feedback={this.state.feedback} feedbackCompare={this.state.feedbackCompare}/>
                 </div>
               </div>
               </div>

@@ -6,15 +6,23 @@ import { Link } from 'react-router-dom';
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 
 class SkillSetUserTile extends React.Component {
-  renderCategorySkills(skills){
-    return skills.map((skill) => {
+  renderCategorySkills(skills, compareSkills){
+    return skills.map((skill, index) => {
         return (
             <div key={skill.name} className="skillElement">
               <div className="title font-title font18" style={{width:20+"%"}}>
                 {skill.name} </div>
-              <div className="underBar" style={{width:40+"%"}}>
-                <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
-              </div>
+                {compareSkills && compareSkills[index] && compareSkills[index].name == skill.name 
+                ?
+                <div className="underBar" style={{width:40+"%"}}>
+                    <div className={"bar compare-bar"} style={{width:compareSkills[index].value + "%"}}></div>
+                    <div className={"bar compare-skill "+skill.category} style={{width:skill.value + "%"}}></div>
+                </div>
+                :
+                <div className="underBar" style={{width:40+"%"}}>
+                    <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
+                </div>
+                }
               <div className="font-title font18 marginleft3P" style={{width:10+"%"}}>
               {skill.total <= 0 
               ?"0/0"
@@ -27,13 +35,17 @@ class SkillSetUserTile extends React.Component {
   }
 
   renderCategories(){
-    return this.props.categories.map((cat) => {
+    return this.props.categories.map((cat, index) => {
         return (
             <div key={cat.name}>
                 <div className="skillElement">
                   <div className="title font-title font18">{cat.name}</div>
                 </div>
-                {this.renderCategorySkills(cat.skills)}
+                {this.props.categoriesCompare && this.props.categoriesCompare[index] 
+                && this.props.categoriesCompare[index].name == cat.name
+                ?this.renderCategorySkills(cat.skills, this.props.categoriesCompare[index].skills)
+                :this.renderCategorySkills(cat.skills)
+                }
             </div>
         );
       });
@@ -58,14 +70,10 @@ class SkillSetUserTile extends React.Component {
 export default withTracker((props) => {
     var dataReady;
     var user;
-    var myScore;
+    var scoreCompare;
     var score;
-    var himselfAnswered = 0;
-    var inviteesAnsweredHim = 0;
-    var skillData;
-    var categories={};
-    var handleFeedback;
-    var handleUsers;
+    var categories;
+    var categoriesCompare;
   
     score = calculateScore(joinFeedbacks(props.feedback), true);
 
@@ -82,11 +90,30 @@ export default withTracker((props) => {
                 })
             }
     });
+
+    if(props.feedbackCompare){
+        scoreCompare = calculateScore(joinFeedbacks(props.feedbackCompare), true);
+        categoriesCompare = _.map(_.keys(framework), function(category) {
+            return {
+                name : i18n[category],
+                category : category,
+                skills : _.map(framework[category], function(skill){
+                    var data = {name : i18n[skill], value: 0, scored: scoreCompare.scored[skill], total: scoreCompare.total[skill], skill: skill, category: category }
+                    if(scoreCompare.total[skill] > 0) {
+                        data.value = Math.round(scoreCompare.scored[skill] * 100 / scoreCompare.total[skill]);
+                    }
+                    return data;
+                })
+            }
+    });
+
+    }
     
     dataReady = true;
     
     return {
         categories:categories,
+        categoriesCompare:categoriesCompare,
         dataReady:dataReady
     };
   })(SkillSetUserTile);
