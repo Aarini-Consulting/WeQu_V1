@@ -23,7 +23,10 @@ class SkillCategories extends React.Component {
                         ?
                         <div className="underBar" style={{width:60+"%"}}>
                             <div className={"bar compare-bar"} style={{width:compareSkills[index].value + "%"}}></div>
-                            <div className={"bar compare-skill "+skill.category} style={{width:skill.value + "%"}}></div>
+                            {compareSkills[index].total > 0 &&
+                                <div className={"bar compare-skill "+skill.category} 
+                                style={{width:Math.round(skill.scored * 100/compareSkills[index].total) + "%"}}></div>
+                            }
                         </div>
                         :
                         <div className="underBar" style={{width:60+"%"}}>
@@ -31,13 +34,25 @@ class SkillCategories extends React.Component {
                         </div>
                     }
 
-                    
+                    {compareSkills && compareSkills[index] && compareSkills[index].name == skill.name 
+                    ?
                     <div className="score w-inline-block" style={{width:6+"em"}}>
-                    {skill.total <= 0 
-                    ?"0/0"
-                    :skill.scored +"/"+ skill.total
-                    }
+                        {compareSkills[index].total <= 0 
+                        ?"0/0"
+                        :skill.scored +"/"+ compareSkills[index].total
+                        }
                     </div>
+                    :
+                    <div className="score w-inline-block" style={{width:6+"em"}}>
+                        {skill.total <= 0 
+                        ?"0/0"
+                        :skill.scored +"/"+ skill.total
+                        }
+                    </div>
+                    }
+
+                    
+                    
                 </div>
             );
           });
