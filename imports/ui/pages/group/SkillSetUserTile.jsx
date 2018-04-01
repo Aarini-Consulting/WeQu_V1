@@ -10,25 +10,40 @@ class SkillSetUserTile extends React.Component {
     return skills.map((skill, index) => {
         return (
             <div key={skill.name} className="skillElement">
-              <div className="title font-title font18" style={{width:20+"%"}}>
-                {skill.name} </div>
+                <div className="title font-title font18" style={{width:20+"%"}}>
+                    {skill.name} 
+                </div>
                 {compareSkills && compareSkills[index] && compareSkills[index].name == skill.name 
                 ?
                 <div className="underBar" style={{width:40+"%"}}>
                     <div className={"bar compare-bar"} style={{width:compareSkills[index].value + "%"}}></div>
-                    <div className={"bar compare-skill "+skill.category} style={{width:skill.value + "%"}}></div>
+                    {compareSkills[index].total > 0 &&
+                        <div className={"bar compare-skill "+skill.category} 
+                        style={{width:Math.round(skill.scored * 100/compareSkills[index].total) + "%"}}></div>
+                    }
                 </div>
                 :
                 <div className="underBar" style={{width:40+"%"}}>
                     <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
                 </div>
                 }
-              <div className="font-title font18 marginleft3P" style={{width:10+"%"}}>
-              {skill.total <= 0 
-              ?"0/0"
-              :skill.scored +"/"+ skill.total
-              }
-              </div>
+                {compareSkills && compareSkills[index] && compareSkills[index].name == skill.name 
+                ?
+                <div className="font-title font18 marginleft3P" style={{width:10+"%"}}>
+                    {compareSkills[index].total <= 0 
+                    ?"0/0"
+                    :skill.scored +"/"+ compareSkills[index].total
+                    }
+                </div>
+                :
+                <div className="font-title font18 marginleft3P" style={{width:10+"%"}}>
+                    {skill.total <= 0 
+                    ?"0/0"
+                    :skill.scored +"/"+ skill.total
+                    }
+                </div>
+                }
+              
             </div>
         );
       });
