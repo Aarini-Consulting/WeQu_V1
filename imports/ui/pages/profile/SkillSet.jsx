@@ -78,23 +78,25 @@ class SkillSet extends React.Component {
               <div className="skillcovergrey"></div>
             :
             <div className= "skillcovergrey2 fontreleway">
-                <div className="row">
-                  <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"")} 
-                  onClick={this.setFeedbackState.bind(this,this.props.allFeedback,undefined,"ALL")}>
-                    ALL
+                {this.props.quizPerson == Meteor.userId() &&
+                  <div className="row">
+                    <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"")} 
+                    onClick={this.setFeedbackState.bind(this,this.props.allFeedback,undefined,"ALL")}>
+                      ALL
+                    </div>
+                    <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"")} 
+                    onClick={this.setFeedbackState.bind(this,this.props.othersFeedback,this.props.allFeedback,"OTHERS")}>
+                      OTHERS
+                    </div>
+                    <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"")} 
+                    onClick={this.setFeedbackState.bind(this,this.props.myFeedback,this.props.allFeedback,"MINE")}>
+                      {this.props.quizPerson == Meteor.userId()
+                        ?"MINE"
+                        :getUserName(this.props.user.profile)
+                      }
+                    </div>
                   </div>
-                  <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"")} 
-                  onClick={this.setFeedbackState.bind(this,this.props.othersFeedback,this.props.allFeedback,"OTHERS")}>
-                    OTHERS
-                  </div>
-                  <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"")} 
-                  onClick={this.setFeedbackState.bind(this,this.props.myFeedback,this.props.allFeedback,"MINE")}>
-                    {this.props.quizPerson == Meteor.userId()
-                      ?"MINE"
-                      :getUserName(this.props.user.profile)
-                    }
-                  </div>
-                </div>
+                }
                 <SkillCategories feedback={this.state.feedback} feedbackCompare={this.state.feedbackCompare}/>       
             </div>
             }
