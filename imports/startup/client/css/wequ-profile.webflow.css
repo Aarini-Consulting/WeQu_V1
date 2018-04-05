@@ -3077,6 +3077,33 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-size: 1.2em;
 }
 
+.tap-1 {
+  border: 2px solid #a0a0a0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: transparent;
+  -webkit-transition: background-color 200ms ease;
+  transition: background-color 200ms ease;
+  font-family: Raleway, sans-serif;
+  color: #a0a0a0;
+  font-size: 1.2em;
+}
+
+.tap-1:hover,.tap-1.active {
+  color: #fff;
+  background-color: #a0a0a0;
+}
+
+.tap-1._2 {
+  border-width: 2px 2px 2px 0px;
+  border-radius: 0px;
+}
+
+.tap-1._3 {
+  border-left-style: none;
+  border-radius: 0px 50px 50px 0px;
+}
+
 
 
 @font-face {

@@ -11,7 +11,10 @@ class SkillSet extends React.Component {
       super(props);
       this.state={
         sectionEmpty:true,
-        count:0
+        count:0,
+        feedback:undefined,
+        feedbackCompare:undefined,
+        feedbackActive:undefined
       }
   }
 
@@ -43,9 +46,18 @@ class SkillSet extends React.Component {
 
       this.setState({
         sectionEmpty:bool,
-        count:countAlpha
+        count:countAlpha,
       });
+      this.setFeedbackState(nextProps.allFeedback,undefined,"ALL");
     }
+  }
+
+  setFeedbackState(fb, compare, id){
+    this.setState({ 
+      feedback: fb,
+      feedbackCompare: compare,
+      feedbackActive: id 
+    });
   }
 
   render() {
@@ -54,14 +66,38 @@ class SkillSet extends React.Component {
           <div className="width-100">
             <div className="sectionprofile sectionskills" id="sectionskills">
             <div className="titlesection w-container"><img className="iconwrapper" src="/img/icon24.png"/>
-              <div className="fontreleway fonttitle">{this.props.userType} Character Skill Set</div>
+              <div className="fontreleway fonttitle">
+              {this.props.quizPerson == Meteor.userId()
+                      ?"My "
+                      :getUserName(this.props.user.profile) + " "
+              }
+              Character Skill Set</div>
             </div>
             {this.state.sectionEmpty
             ?
               <div className="skillcovergrey"></div>
             :
             <div className= "skillcovergrey2 fontreleway">
-                <SkillCategories quizPerson={this.props.quizPerson}/>        
+                {this.props.quizPerson == Meteor.userId() &&
+                  <div className="row">
+                    <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"")} 
+                    onClick={this.setFeedbackState.bind(this,this.props.allFeedback,undefined,"ALL")}>
+                      ALL
+                    </div>
+                    <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"")} 
+                    onClick={this.setFeedbackState.bind(this,this.props.othersFeedback,this.props.allFeedback,"OTHERS")}>
+                      OTHERS
+                    </div>
+                    <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"")} 
+                    onClick={this.setFeedbackState.bind(this,this.props.myFeedback,this.props.allFeedback,"MINE")}>
+                      {this.props.quizPerson == Meteor.userId()
+                        ?"MINE"
+                        :getUserName(this.props.user.profile)
+                      }
+                    </div>
+                  </div>
+                }
+                <SkillCategories feedback={this.state.feedback} feedbackCompare={this.state.feedbackCompare}/>       
             </div>
             }
             
@@ -91,7 +127,12 @@ export default withTracker((props) => {
   var dataReady;
   var connections;
   var groups;
-  var userType;
+
+  var myFeedback;
+  var othersFeedback;
+  var allFeedback;
+  var user;
+
   var handle = Meteor.subscribe('connections', 
     { $or : [ {inviteId:Meteor.userId()},{userId:Meteor.userId()}
       ] 
@@ -126,27 +167,32 @@ export default withTracker((props) => {
     if(handleGroup.ready()){
       groups = Group.find({emails:email}).fetch();
 
-      if(props.quizPerson == Meteor.userId())
-      {
-        userType = "My"; 
-      }
-      else
-        {
-          let user = Meteor.users.findOne({_id: props.quizPerson});
-          if(user){
-            userType = getUserName(user.profile);
+      user = Meteor.users.findOne({_id: props.quizPerson});
+
+      handleFeedback = Meteor.subscribe('feedback',{'to' : props.quizPerson},{}, {
+        onError: function (error) {
+              console.log(error);
           }
-        }
-      dataReady = true;
+      });
+
+      if(handleFeedback.ready()){
+        myFeedback = Feedback.find({ 'from': props.quizPerson, 'to' : props.quizPerson }).fetch();
+        othersFeedback = Feedback.find({ 'from': { '$ne': props.quizPerson }, 'to' : props.quizPerson }).fetch();
+        allFeedback = Feedback.find({'to' : props.quizPerson }).fetch();
+        dataReady = true;
+      }
     }
   }
 
 
   return {
       currentUser: Meteor.user(),
+      myFeedback:myFeedback,
+      othersFeedback:othersFeedback,
+      allFeedback:allFeedback,
       connections:connections,
       groups:groups,
-      usertype:userType,
+      user:user,
       dataReady:dataReady,
   };
 })(SkillSet);
