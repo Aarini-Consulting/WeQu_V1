@@ -74,7 +74,7 @@ export default class Terms extends React.Component {
                     <br/>You agree that these terms represent the entire understanding between you and WeQ B.V. in respect of your relationship with WeQ B.V. These Terms and Conditions supersede any previous agreements between you and WeQ B.V. including any previous version of these Terms of Service.
                     <br/>
                     <br/>12. Contact
-                    <br/>Questions, comments and requests regarding our terms and conditions are welcomed and should be addressed to WeQ B.V. Weesperstraat 61 1018 VN Amsterdam, The Netherlands <a href="mailto:contact@wequ.co?subject=Terms of Services">contact@WeQ.co</a>.</div>
+                    <br/>Questions, comments and requests regarding our terms and conditions are welcomed and should be addressed to WeQ B.V. Weesperstraat 61 1018 VN Amsterdam, The Netherlands <a href="mailto:contact@wequ.co?subject=Terms of Services">contact@wequ.co</a>.</div>
                 </div> 
                 <div className="footer">
                     <div className="footertext">WeQ B.V.&nbsp;
