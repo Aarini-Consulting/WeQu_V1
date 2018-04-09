@@ -59,7 +59,6 @@ class Quiz extends React.Component {
   resetCurrentQuiz(props){
     this.setState({
       showSummary: false,
-      currentFeedback:undefined,
       currentQuestion:undefined,
       currentQuestionIndex:-1,
       questionTotal:0,
@@ -98,6 +97,11 @@ class Quiz extends React.Component {
             fa.groupId === this.state.currentFeedback.groupId
           )}
         );
+      if(currentFeedback){
+        this.setState({
+          currentFeedback: currentFeedback
+        });
+      }
     }
 
     if(!currentFeedback){
@@ -115,12 +119,8 @@ class Quiz extends React.Component {
         }else{
           return false;
         }
-        
       })
-
     }
-
-    
   }
 
   renderAnswerList(answers) {
