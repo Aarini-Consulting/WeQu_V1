@@ -28,6 +28,18 @@ class UserTile extends React.Component {
     if(nextProps.dataReady){
       if(!this.state.feedback){
         this.setFeedbackState(nextProps.allFeedback,undefined,"ALL");
+      }else if(this.state.feedbackActive){
+        switch(this.state.feedbackActive){
+          case "ALL":
+            this.setFeedbackState(nextProps.allFeedback,undefined,"ALL");
+            break;
+          case "OTHERS":
+            this.setFeedbackState(nextProps.othersFeedback,nextProps.allFeedback,"OTHERS");
+            break;
+          case "MINE":
+            this.setFeedbackState(nextProps.myFeedback,nextProps.allFeedback,"MINE");
+            break;
+        }
       }
     }
   }
@@ -250,11 +262,29 @@ export default withTracker((props) => {
       user = Meteor.users.findOne({$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]} );
 
       if(user){
-        handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
-          onError: function (error) {
-                console.log(error);
-            }
-        });
+
+        if(props.feedbackCycle){
+          var cycleStart = props.feedbackCycle.from;
+          var cycleEnd = props.feedbackCycle.createdAt;
+          
+          handleFeedback = Meteor.subscribe('feedback',
+          {
+            'to' : user._id,
+            $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
+          },
+          {}, {
+            onError: function (error) {
+                  console.log(error);
+              }
+          });
+        }else{
+          handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
+            onError: function (error) {
+                  console.log(error);
+              }
+          });
+        }
+        
 
         if(handleFeedback.ready()){
 
