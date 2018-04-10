@@ -578,7 +578,6 @@ body {
 
 .sectionname {
   margin-top: auto;
-  padding-top: 50px;
   padding-bottom: 10px;
   background-image: url('/images/Background_white20.png');
   background-position: 50% -61px;
@@ -1017,6 +1016,9 @@ body {
   flex-grow:1;
 
   width:100%;
+  height:100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .question-answer{
