@@ -6,9 +6,13 @@ setLoginScript =  function setLoginScript(value) {
   Meteor.users.update(Meteor.userId(), { '$set': { 'profile.loginScript': value } });
 };
 
-dataForRadar =  function dataForRadar(score) {
+dataForRadar =  function dataForRadar(score, width) {
   var radius = 120;
   var center = 150;
+  if(width){
+    center = width/2;
+    radius = center - 30;
+  }
   var vertices = _.keys(framework)['length'];
   var i = 0;
   return _.object(_.map([
@@ -80,9 +84,9 @@ capitalizeFirstLetter = (string) => {
 
 
 questionHimselfAnswered = (userId) => {
-  let count = Feedback.find({from: userId, to: userId, done:true}).count();
+  let count = Feedback.find({'from': userId, 'to': userId, 'done':true}).count();
   count = count*12;
-  var a = Feedback.findOne({from: userId, to: userId, done:false});
+  var a = Feedback.findOne({'from': userId, 'to': userId, 'done':false});
   var idx = 0;
   if(a){
     _.find(a.qset, function (question) {
@@ -97,9 +101,14 @@ questionHimselfAnswered = (userId) => {
 }
 
 
-questionInviteesAnsweredHim = (userId) => {
+questionInviteesAnsweredHim = (userId, groupId) => {
 
-  let b = Feedback.find({to: userId,done:true, from: { $nin: [ userId , Meteor.userId() ] }  })
+  let b;
+  if(groupId){
+    b = Feedback.find({'groupId':groupId, 'to': userId,'done':true, 'from': { $nin: [ userId , Meteor.userId() ] }  });
+  }else{
+    b = Feedback.find({'to': userId,'done':true, 'from': { $nin: [ userId , Meteor.userId() ] }  });
+  }
   var count=0;
   if(b.count()>0){
     b.forEach(function (data) {
@@ -111,7 +120,14 @@ questionInviteesAnsweredHim = (userId) => {
       });
     });
   }
-  var a = Feedback.findOne({to: userId, done:false, from: { $nin: [ userId , Meteor.userId() ] } });
+
+  var a;
+  if(groupId){
+    a = Feedback.findOne({'groupId':groupId,'to': userId, 'done':false, 'from': { $nin: [ userId , Meteor.userId() ] } });
+  }else{
+    a = Feedback.findOne({'to': userId, 'done':false, 'from': { $nin: [ userId , Meteor.userId() ] } });
+  }
+  
   var idx = 0;
   if(a){
     qset = a.qset;

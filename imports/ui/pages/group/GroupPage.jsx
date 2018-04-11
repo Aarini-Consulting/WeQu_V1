@@ -67,7 +67,7 @@ class GroupPage extends React.Component {
   renderUserTiles(){
     return this.props.group.emails.map((email) => {
         return (
-          <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle}/>
+          <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle} group={this.props.group}/>
         );
       });
   }
@@ -78,7 +78,7 @@ class GroupPage extends React.Component {
         <div className={"invitebttn bttnmembr gender w-button " + 
         (this.state.selectedCycle && this.state.selectedCycle._id == data._id ? "selected" : "")} 
         key={data._id} onClick={this.toggleCycle.bind(this, data)}>
-          {data.createdAt.getDay()}/{data.createdAt.getDate()}/{data.createdAt.getFullYear()}
+          {data.createdAt.getDate()}/{data.createdAt.getMonth()+1}/{data.createdAt.getFullYear()}
         </div>
       );
     });
