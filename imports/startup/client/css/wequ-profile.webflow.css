@@ -1022,21 +1022,7 @@ body {
 }
 
 .question-answer{
-  display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-  -webkit-box-align: center;
-  align-items: center;
-
-  flex-direction: column;
-  flex-basis: auto;
-  justify-content: center;
-
-  flex-grow:3;
-
+  display: block;
   width: 100%;
 }
 
