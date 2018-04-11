@@ -1022,14 +1022,20 @@ body {
 }
 
 .question-answer{
+  position:relative;
   display: block;
   width: 100%;
+}
+
+.question-answer-anchor{
+  position:absolute;
+  bottom:0;
 }
 
 .question{
   font-size:2em;
   display:block;
-  padding:1em;
+  padding:2em 1em 1em 1em;
 }
 
 .h4.w-inline-block{
@@ -3090,6 +3096,21 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .tap-1._3 {
   border-left-style: none;
   border-radius: 0px 50px 50px 0px;
+}
+
+
+@media (max-width: 359px) {
+  .question-answer{
+    position:static;
+  }
+  
+  .question-answer-anchor{
+    position:static;
+  }
+
+  .question{
+    padding:1em
+  }
 }
 
 

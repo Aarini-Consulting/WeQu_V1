@@ -309,6 +309,7 @@ class Quiz extends React.Component {
             }
             {this.state.currentFeedback && this.state.currentQuestion &&
             <section className="fontreleway question-answer">
+              <div className="fontreleway question-answer-anchor">
               <ul className="answers noselect" onTouchStart={()=>{}}>
                 {this.renderAnswerList(this.state.currentQuestion.answers)}
               </ul>
@@ -318,6 +319,7 @@ class Quiz extends React.Component {
                   !(this.state.currentFeedback && this.state.currentFeedback.from == this.state.currentFeedback.to) &&
                   <div><a className="skip cursor-pointer" onClick={this.skip.bind(this, this.state.currentQuestion, this.state.currentQuestionIndex)}>Skip this question</a></div>
                 }
+              </div>
               </div>
             </section>
             }
