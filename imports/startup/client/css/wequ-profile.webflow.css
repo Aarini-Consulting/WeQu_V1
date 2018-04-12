@@ -618,11 +618,18 @@ body {
   align-items: center;
 }
 
+.avatarprofile-img{
+  max-width: none;
+  width:auto;
+  height:100%;
+}
+
 .avatarprofile {
   display: block;
-  height: 140px;
+  height: 150px;
   margin: 40px auto;
-  border-radius: 500px;
+  border-radius: 50%;
+  overflow:hidden;
   /* box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2); */
 }
 

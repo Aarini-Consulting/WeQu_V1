@@ -269,8 +269,15 @@ class Quiz extends React.Component {
               <div className="profilefac">
                 <div className="div-q-face">
                   {this.state.user && this.state.user.profile && this.state.user.profile.pictureUrl
-                    ? <img src={this.state.user.profile.pictureUrl} className={"avatarprofile "+ this.state.user.profile.pictureShape}/>
-                    : <img src="/img/avatar.png" className="avatarprofile"/>
+                  ? 
+                  <div className={"avatarprofile "+this.state.user.profile.pictureShape}>
+                    <img src={this.state.user.profile.pictureUrl} className="avatarprofile-img"/>
+                  </div>
+                  
+                  : 
+                  <div className="avatarprofile">
+                  <img src="/img/avatar.png" className="avatarprofile-img"/>
+                  </div>
                   }
                   {/* {this.state.user && this.props.currentUser._id == this.state.user._id && this.state.user.profile && !this.state.user.profile.linkedIn 
                   ? 
