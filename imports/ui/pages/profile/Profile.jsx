@@ -138,8 +138,15 @@ class Profile extends React.Component {
             <div className="profilefac">
               <div className="div-q-face">
                 {profileInfo.profile && profileInfo.profile.pictureUrl 
-                  ? <img src={profileInfo.profile.pictureUrl} className={"avatarprofile "+profileInfo.profile.pictureShape}/>
-                  : <img src="/img/avatar.png" className="avatarprofile"/>
+                  ? 
+                  <div className={"avatarprofile "+profileInfo.profile.pictureShape}>
+                    <img src={profileInfo.profile.pictureUrl} className="avatarprofile-img"/>
+                  </div>
+                  
+                  : 
+                  <div className="avatarprofile">
+                  <img src="/img/avatar.png" className="avatarprofile-img"/>
+                  </div>
                 }
 
                 {this.props.currentUser._id == profileInfo._id && profileInfo.profile && !profileInfo.profile.linkedIn 

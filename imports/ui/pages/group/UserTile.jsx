@@ -94,12 +94,30 @@ class UserTile extends React.Component {
               <div className="tile-radar fontreleway"><img className="title-icon" src="/img/iconRadar.png"/>
                 <div className="font-tile font-title-title font18">Comparisons</div>
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
-                <svg height="300" width="300" 
-                style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
-                  {this.props.myScore &&
-                    <Radar points = {dataForRadar(this.props.myScore)} color="white" outline="#E96956"/>
-                  }
-                </svg>
+                <div className="tile-radar-wrapper">
+                  <svg className="tile-radar-svg" width="250" height="250"
+                  style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
+                    {this.props.myScore &&
+                      <Radar points = {dataForRadar(this.props.myScore,250)} color="white" outline="#E96956"/>
+                    }
+                    {this.props.otherScore &&
+                      <Radar points = {dataForRadar(this.props.otherScore,250)} color="#E96956" outline="white"/>
+                    }
+                  </svg>
+                </div>
+
+                <div className="radarAgenda">
+                  <div><img src="/img/Diamond_Myself.png"/>
+                    <span className="marginleft10 font-small">  
+                      How <span className="text-capitalize"> {getUserName(this.props.user.profile)}</span> sees himself  
+                    </span>
+                  </div>
+                  <div><img src="/img/Diamond_Others.png" className="t50"/>
+                    <span className="marginleft10 font-small">
+                      How others see <span className="text-capitalize">{getUserName(this.props.user.profile)}</span> 
+                    </span> 
+                  </div>
+                </div>
                 
                 <img className="title-icon" src="/img/iconSkills.png" width="12"/>
                 <div className="font-tile font-title-title font18">MORE TRUE Skills</div>
@@ -226,6 +244,7 @@ export default withTracker((props) => {
   var dataReady;
   var user;
   var myScore;
+  var otherScore;
   var himselfAnswered = 0;
   var inviteesAnsweredHim = 0;
   var skillData;
@@ -278,7 +297,7 @@ export default withTracker((props) => {
               }
           });
         }else{
-          handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
+          handleFeedback = Meteor.subscribe('feedback',{'to' : user._id,},{}, {
             onError: function (error) {
                   console.log(error);
               }
@@ -288,16 +307,18 @@ export default withTracker((props) => {
 
         if(handleFeedback.ready()){
 
-          myFeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
+          myFeedback = Feedback.find({'from': user._id, 'to' : user._id }).fetch();
           myScore = calculateScore(joinFeedbacks(myFeedback));
 
-          othersFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
+          othersFeedback = Feedback.find({'groupId':props.group._id, 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
+          otherScore = calculateScore(joinFeedbacks(othersFeedback));
+
           allFeedback = Feedback.find({'to' : user._id }).fetch();
 
           himselfAnswered = questionHimselfAnswered(user._id);
-          inviteesAnsweredHim = questionInviteesAnsweredHim(user._id);
+          inviteesAnsweredHim = questionInviteesAnsweredHim(user._id, props.group._id);
 
-          skillData = calculateTopWeak(Feedback.find({to: user._id }).fetch());
+          skillData = calculateTopWeak(Feedback.find({'to': user._id }).fetch());
           
           dataReady = true;
         }      
@@ -309,6 +330,7 @@ export default withTracker((props) => {
   return {
       user: user,
       myScore:myScore,
+      otherScore:otherScore,
       himselfAnswered:himselfAnswered,
       inviteesAnsweredHim:inviteesAnsweredHim,
       skillData:skillData,
