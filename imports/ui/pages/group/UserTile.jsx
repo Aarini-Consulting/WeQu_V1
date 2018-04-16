@@ -259,7 +259,7 @@ export default withTracker((props) => {
 
     if(props.feedbackCycle){
       var cycleStart = props.feedbackCycle.from;
-      var cycleEnd = props.feedbackCycle.createdAt;
+      var cycleEnd = props.feedbackCycle.to;
       
       handleUsers = Meteor.subscribe('users',{
         $or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}],
@@ -284,7 +284,10 @@ export default withTracker((props) => {
 
         if(props.feedbackCycle){
           var cycleStart = props.feedbackCycle.from;
-          var cycleEnd = props.feedbackCycle.createdAt;
+          var cycleEnd = props.feedbackCycle.to;
+
+          console.log(cycleStart);
+          console.log(cycleEnd);
           
           handleFeedback = Meteor.subscribe('feedback',
           {

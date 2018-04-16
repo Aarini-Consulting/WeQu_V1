@@ -21,9 +21,14 @@ FeedbackCycleSchema = new SimpleSchema({
     type: Date,
     label: "date group cycle start",
     },
+  "to": {
+    type: Date,
+    label: "date group cycle ends",
+    optional: true,
+    },
   "createdAt": {
     type: Date,
-    label: "Date group cycle end",
+    label: "Date group cycle created",
     optional: true,
     autoValue: function() {
       if ( this.isInsert ) {

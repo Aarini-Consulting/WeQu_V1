@@ -78,7 +78,7 @@ class GroupPage extends React.Component {
         <div className={"invitebttn bttnmembr gender w-button " + 
         (this.state.selectedCycle && this.state.selectedCycle._id == data._id ? "selected" : "")} 
         key={data._id} onClick={this.toggleCycle.bind(this, data)}>
-          {data.createdAt.getDate()}/{data.createdAt.getMonth()+1}/{data.createdAt.getFullYear()}
+          {data.to.getDate()}/{data.to.getMonth()+1}/{data.to.getFullYear()}
         </div>
       );
     });
@@ -182,7 +182,8 @@ export default withTracker((props) => {
 
         handleFeedbackCycle = Meteor.subscribe('feedback_cycle',{
           groupId : props.match.params.id,
-          creatorId : Meteor.userId()
+          creatorId : Meteor.userId(),
+          to:{$exists: true}
         },{}, {
           onError: function (error) {
                 console.log(error);
@@ -194,7 +195,8 @@ export default withTracker((props) => {
 
           feedbackCycle = FeedbackCycle.find({
             groupId : props.match.params.id,
-            creatorId : Meteor.userId()
+            creatorId : Meteor.userId(),
+            to:{$exists: true}
           }).fetch();
 
           dataReady = true;
