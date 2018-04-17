@@ -46,8 +46,13 @@ Meteor.methods({
                 'groupId': groupCheck._id,
                 'groupName': groupCheck.groupName
             };
-
-            let body = SSR.render('GroupCloseCycleCancelEmail', emailData);
+            
+            var body;
+            if(arr_emails[i] == groupCreator.emails[0].address){
+                body = SSR.render('GroupCreatorCloseCycleCancelEmail', emailData);
+            }else{
+                body = SSR.render('GroupCloseCycleCancelEmail', emailData);
+            }
 
             Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
                 if(err){ return err};
@@ -192,8 +197,13 @@ Meteor.methods({
                 'groupId': groupCheck._id,
                 'groupName': groupCheck.groupName
             };
-
-            let body = SSR.render('GroupCloseCycleEmail', emailData);
+            var body;
+            if(arr_emails[i] == groupCreator.emails[0].address){
+                body = SSR.render('GroupCreatorCloseCycleEmail', emailData);
+            }else{
+                body = SSR.render('GroupCloseCycleEmail', emailData);
+            }
+            
 
             Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
                 if(err){ return err};
