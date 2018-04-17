@@ -285,14 +285,11 @@ export default withTracker((props) => {
         if(props.feedbackCycle){
           var cycleStart = props.feedbackCycle.from;
           var cycleEnd = props.feedbackCycle.to;
-
-          console.log(cycleStart);
-          console.log(cycleEnd);
           
           handleFeedback = Meteor.subscribe('feedback',
           {
             'to' : user._id,
-            $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
+            // $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
           },
           {}, {
             onError: function (error) {
