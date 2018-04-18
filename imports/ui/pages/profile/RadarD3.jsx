@@ -26,7 +26,7 @@ export default class Graph extends React.Component {
             factorLegend: 1,
             radians: 2 * Math.PI,
             maxValue:0,
-            radius:5
+            radius:4.5
         };
 
         var id = ReactDOM.findDOMNode(this.refs.chart);
@@ -36,7 +36,7 @@ export default class Graph extends React.Component {
         .attr("width", "100%")
         .attr("viewBox", "0,0,300,300")
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .style("padding", "19%")
+        .style("padding", "19.5%")
         .append("g");
 
         var allAxis = [
@@ -117,8 +117,6 @@ export default class Graph extends React.Component {
 
 
         var total = allAxis.length;
-        
-        console.log(radarData);
 
         //draw polygon(s)
         radarData.forEach(function(rd, x){

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
-import Radar from '/imports/ui/pages/profile/Radar';
+import RadarD3 from '/imports/ui/pages/profile/RadarD3';
 import Strength from '/imports/ui/pages/profile/Strength';
 
 import SkillSetUserTile from '/imports/ui/pages/group/SkillSetUserTile';
@@ -95,15 +95,7 @@ class UserTile extends React.Component {
                 <div className="font-tile font-title-title font18">Comparisons</div>
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
                 <div className="tile-radar-wrapper">
-                  <svg className="tile-radar-svg" width="250" height="250"
-                  style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
-                    {this.props.myScore &&
-                      <Radar points = {dataForRadar(this.props.myScore,250)} color="white" outline="#E96956"/>
-                    }
-                    {this.props.otherScore &&
-                      <Radar points = {dataForRadar(this.props.otherScore,250)} color="#E96956" outline="white"/>
-                    }
-                  </svg>
+                  <RadarD3 myPoints={this.props.myScore} otherPoints={this.props.otherScore}/>
                 </div>
 
                 <div className="radarAgenda">

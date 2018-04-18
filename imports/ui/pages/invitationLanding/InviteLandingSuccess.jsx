@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import Radar from '/imports/ui/pages/profile/Radar';0
+import RadarD3 from '/imports/ui/pages/profile/RadarD3';
 import Loading from '/imports/ui/pages/loading/Loading';
 
 class InviteLandingSuccess extends React.Component {
@@ -32,12 +32,9 @@ class InviteLandingSuccess extends React.Component {
                 {this.props.skillData.top3.length > 0 &&
                 <div>
                     <div className="w-block">
-                    <svg height="300" width="300" 
-                        style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
                         {this.props.radarScore &&
-                            <Radar points = {dataForRadar(this.props.radarScore)} color="white" outline="#E96956"/>
+                            <RadarD3 myPoints={this.props.radarScore}/>
                         }
-                    </svg>
                     </div>
                     <div className="fontreleway fontprofilename w-block">
                         You have discovered that<br/>
