@@ -1314,8 +1314,8 @@ body {
 }
 
 .divbttn {
-  margin-top: 10px;
-  margin-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 30px;
   width: 100%;
 }
 
@@ -2371,6 +2371,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-radius: 5px;
 }
 
+.cream{
+  background: #F9F1DC
+}
+
 @media (max-width: 991px) {
   /*.sectionname {
     background-image: url('/img/Background_white20.png');
@@ -2794,13 +2798,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     font-weight: 700;
   }
 
-  /* .column-5 {
-    position: static;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    text-align: left;
-  } */
+  .ptb_h1 {
+		width:85%;
+	}
+
+	.radarAgenda {
+		padding-left:15%;
+		padding-right:15%;
+	}
 }
 
 .footersummary {

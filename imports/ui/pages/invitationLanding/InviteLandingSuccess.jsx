@@ -31,7 +31,7 @@ class InviteLandingSuccess extends React.Component {
 
                 {this.props.skillData.top3.length > 0 &&
                 <div>
-                    <div className="w-block">
+                    <div className="ptb_h1 fontreleway">
                         {this.props.radarScore &&
                             <RadarD3 myPoints={this.props.radarScore}/>
                         }

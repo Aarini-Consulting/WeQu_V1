@@ -126,7 +126,7 @@ class Profile extends React.Component {
     if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.loginScript && this.props.dataReady){
       var profileInfo = this.getProfileInfo();
       return (
-      <section className="feed" id="feed" ref="feed">
+      <section className="feed" ref="feed">
 
         <div className="sectionname">
           <div className="profilename w-container">
@@ -176,7 +176,7 @@ class Profile extends React.Component {
 
         <SectionProgress quizPerson={this.getActiveProfile()} ref="sectionProgress"/>
 
-        <div className="progressdesdiv">
+        <div className="progressdesdiv cream">
           <div className="fontprogressdes fontreleway small">The data below is generated based on the input from you and your teammates</div>
         </div>
           
