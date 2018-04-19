@@ -6,8 +6,8 @@ export default class PrivacyPolicy extends React.Component {
             <div className="termswraper">
                 <div className="topbanner"></div>
                 <div className="textcontainer w-container">
-                    <h1 className="heading">Privacy Policy</h1>
-                    <div class="textblock">WeQu B.V. (Tradename WeQ)  (“We”) are committed to protecting and respecting your privacy. We are WeQu B.V., a company registered with Dutch Chamber of Commerce under number 66840724 whose principal place of business is at Singel 542 1017 AZ Amsterdam The Netherlands (“WeQ ”/“we”/“us”/“our”). We provide online content accessible from websites such as www.weq.io (the “Websites”) and a number of mobile applications, including WeQ App (“Apps”). 
+                    <h1 className="heading align-left">Privacy Policy</h1>
+                    <div class="textblock align-left">WeQu B.V. (Tradename WeQ)  (“We”) are committed to protecting and respecting your privacy. We are WeQu B.V., a company registered with Dutch Chamber of Commerce under number 66840724 whose principal place of business is at Singel 542 1017 AZ Amsterdam The Netherlands (“WeQ ”/“we”/“us”/“our”). We provide online content accessible from websites such as www.weq.io (the “Websites”) and a number of mobile applications, including WeQ App (“Apps”). 
                     <br/>
                     <br/>By using the Websites and/or using any of our Apps, you consent to us processing your personal information in accordance with this Privacy and Cookie Policy (the “Policy”). This is the legal basis upon which we process your personal information as well. It is necessary for the performance of our obligations under the terms of use/terms and conditions you accept to use our Apps or the Websites. You may withdraw such consent at any time by letting us know at <a href="mailto:contact@wequ.co?subject=Privacy Policy">contact@wequ.co</a>. At that time, you may also want to remove any cookies which have been placed on any device used to access the Websites. Your withdrawal of consent will not affect the lawfulness of any processing carried out by us prior to such withdrawal.
                     <br/>
@@ -77,10 +77,6 @@ export default class PrivacyPolicy extends React.Component {
                     <br/>
                     <br/><span>We</span> really do welcome any questions, comments and requests you may have regarding this Policy. You can contact us by emailing us at <a href="mailto:contact@wequ.co?subject=Privacy Policy">contact@wequ.co</a>
                     </div>
-                </div>
-                <div className="footer">
-                    <div className="footertext">WeQ B.V.&nbsp;
-                    <br/>Weesperstraat 61 1018 VN Amsterdam</div>
                 </div>
         </div>
         );

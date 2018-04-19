@@ -2375,6 +2375,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background: #F9F1DC
 }
 
+.align-left{
+  text-align: left;
+}
+
 @media (max-width: 991px) {
   /*.sectionname {
     background-image: url('/img/Background_white20.png');

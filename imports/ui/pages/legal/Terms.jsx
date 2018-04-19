@@ -6,8 +6,8 @@ export default class Terms extends React.Component {
             <div className="termswraper">
                 <div className="topbanner"></div>
                 <div className="textcontainer w-container">
-                    <h1 className="heading">Terms of Services</h1>
-                    <div class="textblock">These are terms of service which apply to all users of our platform, service and applications (together “services/WeQ”) (“you”) and WeQu B.V. (Trandname WeQ, KvK Number: 66840724 ) (“we/us/WeQ”). You can also access these terms online at <a href="https://www.weq.io/terms" target="_blank">https://www.weq.io/terms</a> our “terms”). 
+                    <h1 className="heading align-left">Terms of Services</h1>
+                    <div class="textblock align-left">These are terms of service which apply to all users of our platform, service and applications (together “services/WeQ”) (“you”) and WeQu B.V. (Trandname WeQ, KvK Number: 66840724 ) (“we/us/WeQ”). You can also access these terms online at <a href="https://www.weq.io/terms" target="_blank">https://www.weq.io/terms</a> our “terms”). 
                         <br/>
                         <br/> Our terms describe your obligations and our responsibilities while using our service. To see how we handle your personal data, please see our privacy policy at <a href="https://www.weq.io/privacy" target="_blank">https://www.weq.io/privacy</a>.
                         <br/>
@@ -49,10 +49,6 @@ export default class Terms extends React.Component {
                         <br/>These terms and the relationship between you and WeQu B.V. shall be governed by the laws of England without regard to any conflict of law provisions of any jurisdiction. Both you and WeQ B.V. agree to submit to the exclusive jurisdiction of the Dutch courts, except that WeQu B.V. may seek injunctive relief in any jurisdiction in order to enforce its rights under these terms.No person other than you and WeQu B.V. shall have any rights under these Terms in relation to your use of our services. Any failure of WeQu B.V. to exercise or enforce any right or provision of the terms shall not constitute a waiver of this right or provision. If any provision of the terms is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavour to give effect to the parties’ intentions as reflected in the provision, and the other provisions of the terms shall remain in full force and effect. You agree that these terms represent the entire understanding between you and WeQu B.V. in respect of your relationship with WeQu B.V. These Terms and Conditions supersede any previous agreements between you and WeQu B.V. including any previous version of these Terms of Service.
                         <br/>
                         <br/>12. Contact Questions, comments and requests regarding our terms and conditions are welcomed and should be addressed to WeQu B.V. Singel 542 1017 AZ Amsterdam, The Netherlands <a href="mailto:contact@wequ.co?subject=Terms of Services">contact@wequ.co</a>.
-                    </div>
-                    <div className="footer">
-                        <div className="footertext">WeQ B.V.&nbsp;
-                        <br/>Weesperstraat 61 1018 VN Amsterdam</div>
                     </div>
                 </div>
             </div>
