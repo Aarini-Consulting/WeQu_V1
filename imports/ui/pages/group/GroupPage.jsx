@@ -242,7 +242,7 @@ class GroupPage extends React.Component {
                     <option value="-1">
                     {this.state.selectedCycleIndex > -1 
                     ?"Current cycle"
-                    :"Go to previous cycle"
+                    :"All"
                     }
                     
                     </option>
