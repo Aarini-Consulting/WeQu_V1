@@ -268,7 +268,7 @@ export default withTracker((props) => {
             'to' : user._id,
             $or: [ 
               { 'from': user._id },
-              {$and: [ {"from":{ '$ne': user._id }},{  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]}
+              {$and: [ {"from":{ '$ne': user._id }},{  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gte":cycleStart} } ]}
             ],
           },
           {}, {
