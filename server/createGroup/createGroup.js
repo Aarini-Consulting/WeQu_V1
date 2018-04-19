@@ -1,7 +1,5 @@
 Meteor.methods({
   'createGroup' : function (groupName,data,arr_emails) {
-    console.log(groupName , data, arr_emails);
-
     var now = new Date();
     
     let groupId = Group.insert({groupName: groupName , data:data,  emails:arr_emails , creatorId: Meteor.userId()});

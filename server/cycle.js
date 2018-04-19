@@ -1,4 +1,42 @@
 Meteor.methods({
+    'assign.cycle.old.group': function(groupId){
+        var now = new Date();
+
+        let groupCheck = Group.findOne({'_id': groupId});
+  
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        let groupCreator = Meteor.users.findOne({'_id':groupCheck.creatorId});
+        
+        if(!groupCheck){
+            throw (new Meteor.Error("group_creator_missing")); 
+        }
+
+        var latestCycle = FeedbackCycle.findOne({
+            'groupId':groupCheck._id,
+            'creatorId': groupCreator._id,
+        },
+        { sort: { createdAt: -1 } });
+
+        if(!latestCycle){
+            var earliestFeedback = Feedback.findOne({
+                groupId:groupCheck._id,
+            },
+            { sort: { lastUpdated: 1 } });
+
+            if(earliestFeedback){
+                FeedbackCycle.insert({
+                    'groupId': groupId, 
+                    'creatorId': Meteor.userId(), 
+                    'from': earliestFeedback.createdAt
+                });
+            }else{
+                throw (new Meteor.Error("group_has_no_feedback"));
+            }
+        }
+    },
     'reopen.cycle' : function (groupId) {
         var now = new Date();
 

@@ -11,10 +11,10 @@ class RadarComparison extends React.Component {
   render() {
     if(this.props.dataReady){
       return (
-        <div>
+        <div className="w-block cream">
         <section className="ptb_h1 fontreleway">
           <img src="/img/icon_overview.png" className="titleIcon"/>
-          <h3>Comparisons</h3>
+          <h3 className="fontreleway">Comparisons</h3>
           <RadarD3 myPoints={this.props.myScore} otherPoints={this.props.otherScore}/>
         </section>
         {this.props.quizPerson == Meteor.userId()

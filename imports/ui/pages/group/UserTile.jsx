@@ -248,26 +248,11 @@ export default withTracker((props) => {
   var handleUsers;
 
   if(props.email){
-
-    if(props.feedbackCycle){
-      var cycleStart = props.feedbackCycle.from;
-      var cycleEnd = props.feedbackCycle.to;
-      
-      handleUsers = Meteor.subscribe('users',{
-        $or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}],
-        $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
-      }, {}, {
-        onError: function (error) {
-                console.log(error);
-            }
-      });
-    }else{
-      handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
-        onError: function (error) {
-                console.log(error);
-            }
-      });
-    }
+    handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
+      onError: function (error) {
+              console.log(error);
+          }
+    });
 
     if(handleUsers.ready()){
       user = Meteor.users.findOne({$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]} );
@@ -281,7 +266,10 @@ export default withTracker((props) => {
           handleFeedback = Meteor.subscribe('feedback',
           {
             'to' : user._id,
-            // $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
+            $or: [ 
+              { 'from': user._id },
+              {$and: [ {"from":{ '$ne': user._id }},{  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gte":cycleStart} } ]}
+            ],
           },
           {}, {
             onError: function (error) {

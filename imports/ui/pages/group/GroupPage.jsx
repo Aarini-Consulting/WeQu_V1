@@ -241,8 +241,8 @@ class GroupPage extends React.Component {
                     <select className="fontreleway w-select" value={this.state.selectedCycleIndex} onChange={this.toggleCycle.bind(this)}>
                     <option value="-1">
                     {this.state.selectedCycleIndex > -1 
-                    ?"Current cycle"
-                    :"Go to previous cycle"
+                    ?"All Cycle"
+                    :"All Cycle"
                     }
                     
                     </option>
@@ -341,21 +341,34 @@ export default withTracker((props) => {
         if(handleGroup.ready() && handleFeedbackCycle.ready()){
           group = Group.findOne({_id : props.match.params.id});
 
-          feedbackCycle = FeedbackCycle.find({
+          var check = FeedbackCycle.findOne({
             groupId : props.match.params.id,
             creatorId : Meteor.userId(),
-            to:{$exists: true}
-          },
-          { sort: { createdAt: -1 } }).fetch();
+          });
 
-          currentFeedbackCycle = FeedbackCycle.findOne({
-            groupId : props.match.params.id,
-            creatorId : Meteor.userId(),
-            to:{$exists: false}
-          },
-          { sort: { createdAt: -1 } });
+          if(!check){
+            Meteor.call( 'assign.cycle.old.group', props.match.params.id, ( error, response ) => {
+              if ( error ) {
+                console.log(error);
+              }
+            });
+          }else{
+            feedbackCycle = FeedbackCycle.find({
+              groupId : props.match.params.id,
+              creatorId : Meteor.userId(),
+              to:{$exists: true}
+            },
+            { sort: { createdAt: -1 } }).fetch();
+  
+            currentFeedbackCycle = FeedbackCycle.findOne({
+              groupId : props.match.params.id,
+              creatorId : Meteor.userId(),
+              to:{$exists: false}
+            },
+            { sort: { createdAt: -1 } });
 
-          dataReady = true;
+            dataReady = true;
+          }
         }
     }
   return {

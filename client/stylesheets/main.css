@@ -166,7 +166,9 @@ img.lg-icon{
 }
 
 .ptb_h1 {
-    padding: 50px 0 !important;
+	width:30%;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 @media (max-width: 479px) {
