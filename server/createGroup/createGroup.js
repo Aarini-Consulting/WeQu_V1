@@ -1,12 +1,18 @@
 Meteor.methods({
   'createGroup' : function (groupName,data,arr_emails) {
-    console.log(groupName , data, arr_emails);
+    var now = new Date();
     
     let groupId = Group.insert({groupName: groupName , data:data,  emails:arr_emails , creatorId: Meteor.userId()});
 
     if(!groupId){
      throw (new Meteor.Error("group_creation_failed")); 
    }
+
+   FeedbackCycle.insert({
+    'groupId': groupId, 
+    'creatorId': Meteor.userId(), 
+    'from': now
+    });
 
    Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName, (err, result)=> {
     //  console.log("genGroupQuestionSet" , err, result);
@@ -54,20 +60,20 @@ Meteor.methods({
 
 
         // #77 create user up front for arr_emails_notExisting 
-
-       Meteor.call('genGroupUserUpFront',  arr_emails_notExisting , dataEmailNotExisting, groupName, groupId, function (err, result) {
-        console.log("genGroupUserUpFront" , err, result);
-        if(err){ return err};
-      });
-
+       if(arr_emails.length > 0){
+        Meteor.call('genGroupUserUpFront',  arr_emails , data, groupName, groupId, function (err, result) {
+          console.log("genGroupUserUpFront" , err, result);
+          if(err){ return err};
+        });
+       }
 
 
       // Updating two new fields -> new users , existings users in group collection
       
-      var groupUpdateId = Group.update({_id: groupId} ,
-             { $set: {"arr_emails_existing": arr_emails_existing,
-                      "arr_emails_notExisting": arr_emails_notExisting } } ); 
-      console.log(groupUpdateId, " Group Update with category of emails success \n");
+      // var groupUpdateId = Group.update({_id: groupId} ,
+      //        { $set: {"arr_emails_existing": arr_emails_existing,
+      //                 "arr_emails_notExisting": arr_emails_notExisting } } ); 
+      // console.log(groupUpdateId, " Group Update with category of emails success \n");
 
 
      // arr_emails  = arr_emails_existing;

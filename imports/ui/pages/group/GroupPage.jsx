@@ -20,14 +20,76 @@ class GroupPage extends React.Component {
         inviteStatus:false,
         showInviteGroup:false,
         showConfirm:false,
+        showReopenConfirm:false,
+        showInfo:false,
         sending:false,
+        selectedCycleIndex:-1,
         selectedCycle:undefined
       }
   }
 
+  startCycleClick(){
+    if(this.props.currentFeedbackCycle){
+      this.startCycle();
+    }
+  }
+
+  collectDataClick(){
+    if(this.props.currentFeedbackCycle){
+      this.setState({
+        showInfo: true,
+        showInfoMessage:"Currently feedback date is being collected. Each user should give at least 12 answers for oneself and for each others"
+      });
+    }
+  }
+
   closeCycleConfirm(){
+    if(this.props.currentFeedbackCycle){
+      this.setState({
+        showConfirm: true,
+      });
+    }else if(this.props.feedbackCycle,length > 0){
+      var date = this.props.feedbackCycle[0].to;
+      var dateText = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+      
+      this.setState({
+        showInfo: true,
+        showInfoMessage:`You've requested a report already on ${dateText}. If you haven't received your report contact master.coach@weq.io`
+      });
+    }
+  }
+
+  reopenCycleConfirm(){
+    if(!this.props.currentFeedbackCycle && this.props.feedbackCycle.length > 0 ){
+      if((new Date().getTime() - this.props.feedbackCycle[0].createdAt.getTime()) < (1 * 24 * 60 * 60 * 1000)){
+        this.setState({
+          showReopenConfirm: true,
+        });
+      }else{
+        this.setState({
+          showInfo: true,
+          showInfoMessage:"You are not allowed to cancel the report generation after 24 hours have passed. You will receive your report within 24 hours. Thank you"
+        });
+      }
+    }
+  }
+
+  startCycle(){
     this.setState({
-      showConfirm: true,
+      sending: true,
+    });
+
+    Meteor.call( 'start.new.cycle', this.props.group._id, ( error, response ) => {
+      this.setState({
+        sending: false,
+      });
+      if ( error ) {
+        console.log(error);
+        this.setState({
+          showInfo: true,
+          showInfoMessage:error.error
+        });
+      }
     });
   }
 
@@ -36,12 +98,35 @@ class GroupPage extends React.Component {
       sending: true,
     });
 
-    Meteor.call( 'closeCycle', this.props.group._id, ( error, response ) => {
+    Meteor.call( 'close.cycle', this.props.group._id, ( error, response ) => {
       this.setState({
         sending: false,
       });
       if ( error ) {
         console.log(error);
+        this.setState({
+          showInfo: true,
+          showInfoMessage:error.error
+        });
+      }
+    });
+  }
+
+  reopenCycle(){
+    this.setState({
+      sending: true,
+    });
+
+    Meteor.call( 'reopen.cycle', this.props.group._id, ( error, response ) => {
+      this.setState({
+        sending: false,
+      });
+      if ( error ) {
+        console.log(error);
+        this.setState({
+          showInfo: true,
+          showInfoMessage:error.error
+        });
       }
     });
   }
@@ -52,14 +137,17 @@ class GroupPage extends React.Component {
     });
   }
 
-  toggleCycle(data){
-    if(this.state.selectedCycle && this.state.selectedCycle._id == data._id){
+  toggleCycle(event){
+    var index = event.target.value;
+    if(index < 0){
       this.setState({
+        selectedCycleIndex:-1,
         selectedCycle: undefined,
       });
     }else{
       this.setState({
-        selectedCycle: data,
+        selectedCycleIndex:index,
+        selectedCycle: this.props.feedbackCycle[index],
       });
     }
   }
@@ -67,7 +155,7 @@ class GroupPage extends React.Component {
   renderUserTiles(){
     return this.props.group.emails.map((email) => {
         return (
-          <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle}/>
+          <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle} group={this.props.group}/>
         );
       });
   }
@@ -75,11 +163,9 @@ class GroupPage extends React.Component {
   renderFeedbackCycles(){
     return this.props.feedbackCycle.map((data, index) => {
       return(
-        <div className={"invitebttn bttnmembr gender w-button " + 
-        (this.state.selectedCycle && this.state.selectedCycle._id == data._id ? "selected" : "")} 
-        key={data._id} onClick={this.toggleCycle.bind(this, data)}>
-          {data.createdAt.getDay()}/{data.createdAt.getDate()}/{data.createdAt.getFullYear()}
-        </div>
+        <option value={index} key={data._id}>
+          {data.to.getDate()}/{data.to.getMonth()+1}/{data.to.getFullYear()}
+        </option>
       );
     });
   }
@@ -111,18 +197,60 @@ class GroupPage extends React.Component {
                   <div className="fontreleway font-invite-title w-clearfix">
                   {this.props.group.groupName}
                   </div>
-                  {/* <div className="close-group-cycle w-clearfix cursor-pointer">
-                    <div className="fontreleway font-invite-title close-cycle w-clearfix" onClick={this.closeCycleConfirm.bind(this)}>
-                    <u>Close Cycle</u>
-                    </div>
-                  </div> */}
                 </div>
 
-                {/* {this.props.feedbackCycle &&
-                  <div className="screentitlewrapper w-clearfix">
-                    {this.renderFeedbackCycles()}
+                <div className="screentitlewrapper w-clearfix">
+                  <div className="phase w-inline-block">
+                    <a className={"fontreleway f-phase " + 
+                    (this.props.currentFeedbackCycle 
+                      ? 
+                      "f-old"
+                      : 
+                      (this.props.feedbackCycle.length > 0 && new Date().getTime() - this.props.feedbackCycle[0].createdAt.getTime()) > (2 * 24 * 60 * 60 * 1000) 
+                      ? ""
+                      : "f-old"
+                    )
+                    }>
+                      Start new cycle
+                      <div className="phase-chevron"></div>
+                    </a>
                   </div>
-                } */}
+                  <div className="phase w-inline-block">
+                    <a className={"fontreleway f-phase "+ (this.props.currentFeedbackCycle ? "f-active":"f-old")}
+                    onClick={this.collectDataClick.bind(this)}>
+                      Collect data
+                      <div className="phase-chevron"></div>
+                    </a>
+                  </div>
+                  <div className="phase w-inline-block">
+                    <div className={"fontreleway f-phase "+ (!this.props.currentFeedbackCycle ? "f-active":"")} 
+                    onClick={this.closeCycleConfirm.bind(this)}>
+                      Request report &amp; close cycle
+                      <div className="phase-chevron"></div>
+                    </div>
+                    {!this.props.currentFeedbackCycle && this.props.feedbackCycle.length > 0 &&
+                    (new Date().getTime() - this.props.feedbackCycle[0].createdAt.getTime()) < (2 * 24 * 60 * 60 * 1000) &&
+                      <div className="close-cycle-cancel" onClick={this.reopenCycleConfirm.bind(this)}>
+                        cancel the request (only valid within 24 hours)
+                      </div>
+                    }
+                    
+                  </div>
+                  {this.props.feedbackCycle.length > 0 &&
+                  <div className="phase-select w-clearfix cursor-pointer">
+                    <select className="fontreleway w-select" value={this.state.selectedCycleIndex} onChange={this.toggleCycle.bind(this)}>
+                    <option value="-1">
+                    {this.state.selectedCycleIndex > -1 
+                    ?"All Cycle"
+                    :"All Cycle"
+                    }
+                    
+                    </option>
+                    {this.renderFeedbackCycles()}
+                    </select>
+                  </div>
+                  }
+                </div>
                 
                 
                 <div className="tile-section">
@@ -151,6 +279,26 @@ class GroupPage extends React.Component {
                     this.closeCycle();
                   }}/>
                 }
+                {this.state.showReopenConfirm &&
+                  <SweetAlert
+                  type={"confirm-reopen-cycle"}
+                  onCancel={() => {
+                      this.setState({ showReopenConfirm: false });
+                  }}
+                  onConfirm={() => {
+                    this.setState({ showReopenConfirm: false });
+                    this.reopenCycle();
+                  }}/>
+                }
+
+                {this.state.showInfo &&
+                  <SweetAlert
+                  type={"info"}
+                  message={this.state.showInfoMessage}
+                  onCancel={() => {
+                      this.setState({ showInfo: false });
+                  }}/>
+                }
               </section>
           </div>
         )
@@ -172,6 +320,7 @@ export default withTracker((props) => {
   var dataReady;
   var group;
   var feedbackCycle;
+  var currentFeedbackCycle;
   var handleGroup;
     if(props.match.params.id){
         handleGroup = Meteor.subscribe('group',{_id : props.match.params.id},{}, {
@@ -182,7 +331,7 @@ export default withTracker((props) => {
 
         handleFeedbackCycle = Meteor.subscribe('feedback_cycle',{
           groupId : props.match.params.id,
-          creatorId : Meteor.userId()
+          creatorId : Meteor.userId(),
         },{}, {
           onError: function (error) {
                 console.log(error);
@@ -192,17 +341,40 @@ export default withTracker((props) => {
         if(handleGroup.ready() && handleFeedbackCycle.ready()){
           group = Group.findOne({_id : props.match.params.id});
 
-          feedbackCycle = FeedbackCycle.find({
+          var check = FeedbackCycle.findOne({
             groupId : props.match.params.id,
-            creatorId : Meteor.userId()
-          }).fetch();
+            creatorId : Meteor.userId(),
+          });
 
-          dataReady = true;
+          if(!check){
+            Meteor.call( 'assign.cycle.old.group', props.match.params.id, ( error, response ) => {
+              if ( error ) {
+                console.log(error);
+              }
+            });
+          }else{
+            feedbackCycle = FeedbackCycle.find({
+              groupId : props.match.params.id,
+              creatorId : Meteor.userId(),
+              to:{$exists: true}
+            },
+            { sort: { createdAt: -1 } }).fetch();
+  
+            currentFeedbackCycle = FeedbackCycle.findOne({
+              groupId : props.match.params.id,
+              creatorId : Meteor.userId(),
+              to:{$exists: false}
+            },
+            { sort: { createdAt: -1 } });
+
+            dataReady = true;
+          }
         }
     }
   return {
       group:group,
       feedbackCycle:feedbackCycle,
+      currentFeedbackCycle:currentFeedbackCycle,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };

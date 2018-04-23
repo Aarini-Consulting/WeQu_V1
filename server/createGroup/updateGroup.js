@@ -11,54 +11,24 @@ Meteor.methods({
             throw (new Meteor.Error("only owner can modify group")); 
         }
 
+        var newEmailInGroup = emailsArray.filter((email)=>{
+            return check.emails.indexOf(email) < 0
+        })
+
+        var newData = data.filter((d)=>{
+            return check.emails.indexOf(d.email) < 0
+        })
+
         Group.update({"_id":groupId},
         {'$set':{groupName: groupName , data:data,  emails:emailsArray , creatorId: group.creatorId}
         });	
-        
-        var arr_emails_existing = []; 
-        var arr_emails_notExisting = [];
 
-        emailsArray.filter(typeOfUser); // Filtering existing members
-            function typeOfUser(email){
-            user = Meteor.users.findOne({$or : [ {"emails.address" : email  }, { "profile.emailAddress" : email }]} );
-            if (user) {
-                arr_emails_existing.push(email);
-            }
-            else{
-                arr_emails_notExisting.push(email)
-            }
-            };
-
-        Meteor.call('genGroupQuestionSet', emailsArray , groupId , data, groupName, (err, result)=> {
+        Meteor.call('genGroupQuestionSet', newEmailInGroup , groupId , newData, groupName, (err, result)=> {
             //  console.log("genGroupQuestionSet" , err, result);
                 if(err){ return err}
-                else{
-                var link; 
-                for (var i = 0; i < arr_emails_notExisting.length; i++) {
-        
-                    link = `group-invitation/${arr_emails_notExisting[i]}/${groupId}`
-                
-                    var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
-                    var message = `Please join the group by clicking the invitation link ${link}`
-                
-                    var emailData = {
-                    'from': '',
-                    'to' : '',
-                    'link': Meteor.absoluteUrl(link),
-                    'groupName': groupName
-                    };
-                
-                    let body = SSR.render('GroupInviteHtmlEmail', emailData);
-                
-                    Meteor.call('sendEmail', arr_emails_notExisting[i], subject, body, function (err, result) {
-                    if(err){ return err}
-                    });
-                
-                }
-                }
             });
         
-        return arr_emails_notExisting.length;
+        return newEmailInGroup.length;
 
     },
     'resend.group.invite' : function (groupId,email) {

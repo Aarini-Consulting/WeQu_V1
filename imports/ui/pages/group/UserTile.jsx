@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
-import Radar from '/imports/ui/pages/profile/Radar';
+import RadarD3 from '/imports/ui/pages/profile/RadarD3';
 import Strength from '/imports/ui/pages/profile/Strength';
 
 import SkillSetUserTile from '/imports/ui/pages/group/SkillSetUserTile';
@@ -28,6 +28,18 @@ class UserTile extends React.Component {
     if(nextProps.dataReady){
       if(!this.state.feedback){
         this.setFeedbackState(nextProps.allFeedback,undefined,"ALL");
+      }else if(this.state.feedbackActive){
+        switch(this.state.feedbackActive){
+          case "ALL":
+            this.setFeedbackState(nextProps.allFeedback,undefined,"ALL");
+            break;
+          case "OTHERS":
+            this.setFeedbackState(nextProps.othersFeedback,nextProps.allFeedback,"OTHERS");
+            break;
+          case "MINE":
+            this.setFeedbackState(nextProps.myFeedback,nextProps.allFeedback,"MINE");
+            break;
+        }
       }
     }
   }
@@ -82,12 +94,22 @@ class UserTile extends React.Component {
               <div className="tile-radar fontreleway"><img className="title-icon" src="/img/iconRadar.png"/>
                 <div className="font-tile font-title-title font18">Comparisons</div>
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
-                <svg height="300" width="300" 
-                style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
-                  {this.props.myScore &&
-                    <Radar points = {dataForRadar(this.props.myScore)} color="white" outline="#E96956"/>
-                  }
-                </svg>
+                <div className="tile-radar-wrapper">
+                  <RadarD3 myPoints={this.props.myScore} otherPoints={this.props.otherScore}/>
+                </div>
+
+                <div className="radarAgenda">
+                  <div><img src="/img/Diamond_Myself.png"/>
+                    <span className="marginleft10 font-small">  
+                      How <span className="text-capitalize"> {getUserName(this.props.user.profile)}</span> sees himself  
+                    </span>
+                  </div>
+                  <div><img src="/img/Diamond_Others.png" className="t50"/>
+                    <span className="marginleft10 font-small">
+                      How others see <span className="text-capitalize">{getUserName(this.props.user.profile)}</span> 
+                    </span> 
+                  </div>
+                </div>
                 
                 <img className="title-icon" src="/img/iconSkills.png" width="12"/>
                 <div className="font-tile font-title-title font18">MORE TRUE Skills</div>
@@ -214,6 +236,7 @@ export default withTracker((props) => {
   var dataReady;
   var user;
   var myScore;
+  var otherScore;
   var himselfAnswered = 0;
   var inviteesAnsweredHim = 0;
   var skillData;
@@ -225,49 +248,57 @@ export default withTracker((props) => {
   var handleUsers;
 
   if(props.email){
-
-    if(props.feedbackCycle){
-      var cycleStart = props.feedbackCycle.from;
-      var cycleEnd = props.feedbackCycle.createdAt;
-      
-      handleUsers = Meteor.subscribe('users',{
-        $or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}],
-        $and: [ {  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gt":cycleStart} } ]
-      }, {}, {
-        onError: function (error) {
-                console.log(error);
-            }
-      });
-    }else{
-      handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
-        onError: function (error) {
-                console.log(error);
-            }
-      });
-    }
+    handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]}, {}, {
+      onError: function (error) {
+              console.log(error);
+          }
+    });
 
     if(handleUsers.ready()){
       user = Meteor.users.findOne({$or : [ {"emails.address" : props.email  }, { "profile.emailAddress" : props.email}]} );
 
       if(user){
-        handleFeedback = Meteor.subscribe('feedback',{'to' : user._id},{}, {
-          onError: function (error) {
-                console.log(error);
-            }
-        });
+
+        if(props.feedbackCycle){
+          var cycleStart = props.feedbackCycle.from;
+          var cycleEnd = props.feedbackCycle.to;
+          
+          handleFeedback = Meteor.subscribe('feedback',
+          {
+            'to' : user._id,
+            $or: [ 
+              { 'from': user._id },
+              {$and: [ {"from":{ '$ne': user._id }},{  updatedAt:{"$lte":cycleEnd} }, {  updatedAt:{"$gte":cycleStart} } ]}
+            ],
+          },
+          {}, {
+            onError: function (error) {
+                  console.log(error);
+              }
+          });
+        }else{
+          handleFeedback = Meteor.subscribe('feedback',{'to' : user._id,},{}, {
+            onError: function (error) {
+                  console.log(error);
+              }
+          });
+        }
+        
 
         if(handleFeedback.ready()){
 
-          myFeedback = Feedback.find({ 'from': user._id, 'to' : user._id }).fetch();
+          myFeedback = Feedback.find({'from': user._id, 'to' : user._id }).fetch();
           myScore = calculateScore(joinFeedbacks(myFeedback));
 
-          othersFeedback = Feedback.find({ 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
+          othersFeedback = Feedback.find({'groupId':props.group._id, 'from': { '$ne': user._id }, 'to' : user._id }).fetch();
+          otherScore = calculateScore(joinFeedbacks(othersFeedback));
+
           allFeedback = Feedback.find({'to' : user._id }).fetch();
 
           himselfAnswered = questionHimselfAnswered(user._id);
-          inviteesAnsweredHim = questionInviteesAnsweredHim(user._id);
+          inviteesAnsweredHim = questionInviteesAnsweredHim(user._id, props.group._id);
 
-          skillData = calculateTopWeak(Feedback.find({to: user._id }).fetch());
+          skillData = calculateTopWeak(Feedback.find({'to': user._id }).fetch());
           
           dataReady = true;
         }      
@@ -279,6 +310,7 @@ export default withTracker((props) => {
   return {
       user: user,
       myScore:myScore,
+      otherScore:otherScore,
       himselfAnswered:himselfAnswered,
       inviteesAnsweredHim:inviteesAnsweredHim,
       skillData:skillData,

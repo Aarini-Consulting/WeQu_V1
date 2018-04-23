@@ -5,27 +5,32 @@ import { Link } from 'react-router-dom';
 
 import Loading2 from '/imports/ui/pages/loading/Loading2';
 import Radar from './Radar';
+import RadarD3 from './RadarD3';
 
 class RadarComparison extends React.Component {
   render() {
     if(this.props.dataReady){
       return (
-        <div>
+        <div className="w-block cream">
         <section className="ptb_h1 fontreleway">
           <img src="/img/icon_overview.png" className="titleIcon"/>
-          <h3>Comparisons</h3>
-          <svg height="300" width="300" 
-          style={{zminMinHeight:300+"px", backgroundImage:"url('/img/skills2.png')", backgroundSize: "cover"}}>
-            <Radar points = {dataForRadar(this.props.myScore)} color="white" outline="#E96956"/>
-            <Radar points = {dataForRadar(this.props.otherScore)} color="#E96956" outline="white"/>
-          </svg>
+          <h3 className="fontreleway">Comparisons</h3>
+          <RadarD3 myPoints={this.props.myScore} otherPoints={this.props.otherScore}/>
         </section>
         {this.props.quizPerson == Meteor.userId()
         ?
           <section>
             <div className="radarAgenda">
-                <div><img src="/img/myradar.png"/></div>
-                <div><img src="/img/othersradar.png" className="t50"/></div>
+              <div><img src="/img/Diamond_Myself.png"/>
+                <span className="marginleft10 font-small">  
+                  How I see myself  
+                </span>
+              </div>
+              <div><img src="/img/Diamond_Others.png" className="t50"/>
+                <span className="marginleft10 font-small">
+                  How others see me
+                </span> 
+              </div>
             </div>
           </section>
         :

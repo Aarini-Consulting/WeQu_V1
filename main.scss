@@ -67,7 +67,6 @@ h3 + h5 {
 .t100 {opacity: 1.0}
 
 .m0 {margin: 0}
-.ptb_h1 {padding: $h1 0}
 
 .whiteText {
   color: white;
@@ -274,7 +273,6 @@ section {
 }
 
 .feed {
-  @extend section;
   width:100%;
   padding: 0;
   height:100%;
@@ -533,7 +531,10 @@ li.answer:nth-child(even) {
 
 .radarAgenda {
   width: 100%;
-  padding: 20px 0;
+  padding-left:25%;
+  padding-right:25%;
+  padding-top:1em;
+  padding-bottom:1em;
   //border: 1px solid red;
 
   @include flexbox;
