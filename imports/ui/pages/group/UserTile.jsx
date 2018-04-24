@@ -91,26 +91,28 @@ class UserTile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="tile-radar fontreleway"><img className="title-icon" src="/img/iconRadar.png"/>
+              <div className="tile-content fontreleway cream"><img className="titleIcon" src="/img/iconRadar.png"/>
                 <div className="font-tile font-title-title font18">Comparisons</div>
                 {/* <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/> */}
-                <div className="tile-radar-wrapper">
+                <div className="tile-content-wrapper">
                   <RadarD3 myPoints={this.props.myScore} otherPoints={this.props.otherScore}/>
                 </div>
 
-                <div className="radarAgenda">
+                <div className="radarAgenda tile">
                   <div><img src="/img/Diamond_Myself.png"/>
-                    <span className="marginleft10 font-small">  
+                    <span className="marginleft10">  
                       How <span className="text-capitalize"> {getUserName(this.props.user.profile)}</span> sees himself  
                     </span>
                   </div>
                   <div><img src="/img/Diamond_Others.png" className="t50"/>
-                    <span className="marginleft10 font-small">
+                    <span className="marginleft10">
                       How others see <span className="text-capitalize">{getUserName(this.props.user.profile)}</span> 
                     </span> 
                   </div>
                 </div>
-                
+              </div>
+
+              <div className="tile-content top-weak">
                 <img className="title-icon" src="/img/iconSkills.png" width="12"/>
                 <div className="font-tile font-title-title font18">MORE TRUE Skills</div>
                 <div className="row-2 w-row">
@@ -121,21 +123,20 @@ class UserTile extends React.Component {
                 <div className="w-row">
                   {this.renderSkills(this.props.skillData.weak3)}
                 </div>
-                
               </div>
-              <div className="title-skillgraph">
+              <div className="tile-content title-skillgraph">
                 <img className="title-icon" src="/img/icon24.png" width="12"/>
                 <div className="font-tile font-title-title font18">Character Skills</div>
-                <div className="row">
-                  <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"")} 
+                <div className="tile-content">
+                  <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"") + " tap-1-tile"} 
                   onClick={this.setFeedbackState.bind(this,this.props.allFeedback,undefined,"ALL")}>
                     ALL
                   </div>
-                  <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"")} 
+                  <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"") + " tap-1-tile"} 
                   onClick={this.setFeedbackState.bind(this,this.props.othersFeedback,this.props.allFeedback,"OTHERS")}>
                     OTHERS
                   </div>
-                  <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"")} 
+                  <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"") + " tap-1-tile"} 
                   onClick={this.setFeedbackState.bind(this,this.props.myFeedback,this.props.allFeedback,"MINE")}>
                     His/Hers
                   </div>
@@ -168,51 +169,19 @@ class UserTile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="tile-radar"><img className="title-icon" src="/img/iconRadar.png"/>
+              <div className="tile-content fontreleway cream"><img className="title-icon" src="/img/iconRadar.png"/>
                 <div className="font-tile font-title-title font18">Comparisons</div>
                 <img className="image-9" sizes="(max-width: 479px) 81vw, 288px" src="/img/Radar.png" srcSet="/img/Radar-p-500.png 500w, /img/Radar.png 630w" width="90"/>
+              </div>
+              <div className="tile-content fontreleway">
                 <img className="title-icon" src="/img/iconSkills.png" width="12"/>
                 <div className="font-tile font-title-title font18">MORE TRUE Skills</div>
                 <div className="row-2 w-row">
-                  <div className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
-                    <div className="title-skillicon-div">
-                      <img className="title-skill-icon" src="/img/connector.png"/>
-                      <div className="font-skillicon font-tile">skill name</div>
-                    </div>
-                  </div>
-                  <div className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
-                    <div className="title-skillicon-div">
-                      <img className="title-skill-icon" src="/img/creative.png"/>
-                      <div className="font-skillicon font-tile">skill name</div>
-                    </div>
-                  </div>
-                  <div className="w-col w-col-4 w-col-medium-4 w-col-small-4 w-col-tiny-4">
-                    <div className="title-skillicon-div">
-                      <img className="title-skill-icon" src="/img/doer.png"/>
-                      <div className="font-skillicon font-tile">skill name</div>
-                    </div>
-                  </div>
+                N/A
                 </div>
                 <div className="font-tile font-title-title font18">LESS TRUE Skills</div>
                 <div className="w-row">
-                  <div className="w-col w-col-4 w-col-small-4 w-col-tiny-4">
-                    <div className="title-skillicon-div">
-                      <img className="title-skill-icon" src="/img/connector.png"/>
-                      <div className="font-skillicon font-tile">skill name</div>
-                    </div>
-                  </div>
-                  <div className="w-col w-col-4 w-col-small-4 w-col-tiny-4">
-                    <div className="title-skillicon-div">
-                      <img className="title-skill-icon" src="/img/creative.png"/>
-                      <div className="font-skillicon font-tile">skill name</div>
-                    </div>
-                  </div>
-                  <div className="w-col w-col-4 w-col-small-4 w-col-tiny-4">
-                    <div className="title-skillicon-div">
-                      <img className="title-skill-icon" src="/img/doer.png"/>
-                      <div className="font-skillicon font-tile">skill name</div>
-                    </div>
-                  </div>
+                N/A
                 </div>
               </div>
               <div className="title-skillgraph">

@@ -18,13 +18,13 @@ class SkillSetUserTile extends React.Component {
                 <div className="underBar" style={{width:40+"%"}}>
                     <div className={"bar compare-bar"} style={{width:compareSkills[index].value + "%"}}></div>
                     {compareSkills[index].total > 0 &&
-                        <div className={"bar compare-skill "+skill.category} 
+                        <div className={"bar compare-skill bg "+skill.category} 
                         style={{width:Math.round(skill.scored * 100/compareSkills[index].total) + "%"}}></div>
                     }
                 </div>
                 :
                 <div className="underBar" style={{width:40+"%"}}>
-                    <div className={"bar "+skill.category} style={{width:skill.value + "%"}}></div>
+                    <div className={"bar bg "+skill.category} style={{width:skill.value + "%"}}></div>
                 </div>
                 }
                 {compareSkills && compareSkills[index] && compareSkills[index].name == skill.name 
@@ -54,7 +54,7 @@ class SkillSetUserTile extends React.Component {
         return (
             <div key={cat.name}>
                 <div className="skillElement">
-                  <div className="title font-title font18">{cat.name}</div>
+                  <div className={"title font-title font18" + " color " + cat.category}>{cat.name}</div>
                 </div>
                 {this.props.categoriesCompare && this.props.categoriesCompare[index] 
                 && this.props.categoriesCompare[index].name == cat.name

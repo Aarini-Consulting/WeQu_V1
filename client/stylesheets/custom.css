@@ -44,42 +44,6 @@
 	}	
 }
 
-
-/* Applying skills category color */
-.compare-skill{
-	position: relative;
-	top:-8px;
-}
-
-.compare-bar{
-	background-color: #a0a0a0 !important;
-}
-
-.VIRTUE{
-	background-color: #d0376f !important;
-}
-
-.SELF_MANAGEMENT{
-	background-color: #9964b8 !important;
-}
-
-.COMMUNICATION{
-	background-color: #00aadb !important;
-}
-
-
-.TEAMWORK{	
-	background-color: #f46021 !important;
-}
-
-.LEADERSHIP{
-	background-color: #1c307e !important;
-}
-
-.PROBLEM_SOLVING{
-	background-color: #3fa033 !important;
-}
-
 /* profile page */
 
 .menuBar{
