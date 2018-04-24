@@ -339,6 +339,10 @@
   text-align: center;
 }
 
+.sendingStatus{
+  color:#fff;
+}
+
 .inviteformstyle.groupform {
   display: block;
   width: 100%;
@@ -1888,6 +1892,10 @@ body {
   overflow:auto;
 }
 
+.radarAgenda.tile{
+  padding:0;
+}
+
 .title-table {
   display: block;
   width: 90%;
@@ -1934,11 +1942,23 @@ body {
   box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, .06);
 }
 
-.tile-radar {
+.tile-content {
   width: 100%;
-  margin-right: 0px;
-  margin-left: 0px;
-  padding-top: 0px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left:7.5%;
+  padding-right:7.5%;
+  padding-bottom:0.5em;
+  padding-top:0.5em;
+}
+
+.tile-content.top-weak{
+  background-color: #f1f0f0;
+}
+
+.tile-content.title-skillgraph{
+  padding-left:0;
+  padding-right:0;
 }
 
 .image-9 {
@@ -1994,9 +2014,10 @@ body {
 .font-tile.font-title-title {
   display: block;
   margin-right: auto;
-  margin-bottom: 5px;
   margin-left: auto;
-  color: #777;
+  margin-top:5px;
+  margin-bottom: 5px;
+  color: #000;
   text-align: center;
 }
 
@@ -2592,7 +2613,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   }
   .fontreleway {
     float: none;
-    color: #a0a0a0;
+    /* color: #a0a0a0; */
   }
   .fontreleway.fontprofilename {
     line-height: 30px;
@@ -3176,7 +3197,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   transition: background-color 200ms ease;
   font-family: Raleway, sans-serif;
   color: #a0a0a0;
-  font-size: 1.2em;
 }
 
 .tap-1:hover,.tap-1.active {
