@@ -128,15 +128,15 @@ class UserTile extends React.Component {
                 <img className="title-icon" src="/img/icon24.png" width="12"/>
                 <div className="font-tile font-title-title font18">Character Skills</div>
                 <div className="tile-content">
-                  <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"")} 
+                  <div className={"tap-1 w-button " + (this.state.feedbackActive == "ALL" ? "active":"") + " tap-1-tile"} 
                   onClick={this.setFeedbackState.bind(this,this.props.allFeedback,undefined,"ALL")}>
                     ALL
                   </div>
-                  <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"")} 
+                  <div className={"tap-1 _2 w-button " + (this.state.feedbackActive == "OTHERS" ? "active":"") + " tap-1-tile"} 
                   onClick={this.setFeedbackState.bind(this,this.props.othersFeedback,this.props.allFeedback,"OTHERS")}>
                     OTHERS
                   </div>
-                  <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"")} 
+                  <div className={"tap-1 _3 w-button " + (this.state.feedbackActive == "MINE" ? "active":"") + " tap-1-tile"} 
                   onClick={this.setFeedbackState.bind(this,this.props.myFeedback,this.props.allFeedback,"MINE")}>
                     His/Hers
                   </div>
