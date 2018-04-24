@@ -1116,7 +1116,7 @@ body {
   overflow-x: hidden;
   overflow-y:scroll;
   width:100%;
-  margin-bottom:80px;
+  /* margin-bottom:80px; */
 }
 
 .sectionprofile {
@@ -2990,6 +2990,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-size: 1.5em;
   text-align: left;
   line-height: 1.5em;
+}
+
+.fontreleway.font-invite-title.edit {
+  text-align: right;
+  text-decoration: underline;
+  flex-grow: 1;
 }
 
 .fontreleway.f-phase {
