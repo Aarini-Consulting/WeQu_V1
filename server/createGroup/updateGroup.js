@@ -32,17 +32,26 @@ Meteor.methods({
 
     },
     'resend.group.invite' : function (groupId,email) {
-        let check = Group.findOne({_id:groupId,emails:email});
-        console.log(check);
+        let check = Group.findOne({_id:groupId});
+    
         if(check){
+            let groupCreator = Meteor.users.findOne({'_id':check.creatorId});
+        
+            if(!check){
+                throw (new Meteor.Error("group_creator_missing")); 
+            }
+
+            if(check.emails.indexOf(email) < 0){
+                throw (new Meteor.Error("email_not_group_member")); 
+            }
+
             var link = `group-invitation/${email}/${groupId}`
                 
             var subject = `[WeQ] Invitation to join the group "${check.groupName}"` ;
             var message = `Please join the group by clicking the invitation link ${link}`
         
             var emailData = {
-            'from': '',
-            'to' : '',
+            'creatorEmail': groupCreator.emails[0].address,
             'link': Meteor.absoluteUrl(link),
             'groupName': check.groupName
             };
