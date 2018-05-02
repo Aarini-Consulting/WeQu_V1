@@ -11,12 +11,15 @@ import ShareProfile from './ShareProfile';
 import SkillSet from './SkillSet';
 import SectionProfile from './SectionProfile';
 
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
 class Profile extends React.Component {
   constructor(props){
     super(props);
     this.state={
       activeProfileIndex:-1,
       connectingLinkedIn:false,
+      showConfirmLinkedIn:false
     }
   }
 
@@ -71,6 +74,12 @@ class Profile extends React.Component {
       return false;
     } 
     
+  }
+
+  showLinkedInConfirmation(){
+    this.setState({
+      showConfirmLinkedIn: true
+    });
   }
 
   getLinkedInInfo(){
@@ -151,10 +160,13 @@ class Profile extends React.Component {
 
                 {this.props.currentUser._id == profileInfo._id && profileInfo.profile && !profileInfo.profile.linkedIn 
                 ? 
-                <div className="bttn-linkedin w-clearfix" onClick={this.getLinkedInInfo.bind(this)}>
-                  <div className="icon-camera"></div>
-                  <div className="text-block-3">from</div>
-                  <div className="logo-linkedin"></div>
+                // <div className="bttn-linkedin w-clearfix" onClick={this.getLinkedInInfo.bind(this)}>
+                //   <div className="icon-camera"></div>
+                //   <div className="text-block-3">from</div>
+                //   <div className="logo-linkedin"></div>
+                // </div>
+                <div className="avatarprofile overlay" onClick={this.showLinkedInConfirmation.bind(this)}>
+                <div className="icon-camera center"></div>
                 </div>
                 :
                 ""
@@ -189,6 +201,21 @@ class Profile extends React.Component {
         <SkillSet quizPerson={this.getActiveProfile()}/>
 
         <SectionProfile/>
+
+        {this.state.showConfirmLinkedIn &&
+          <SweetAlert
+          type={"confirm"}
+          message={"Change profile pic to customize your WeQ charts. Simply log in to your LinkedIn account"}
+          confirmText={"Proceed"}
+          cancelText={"Cancel"}
+          onCancel={() => {
+              this.setState({ showConfirmLinkedIn: false });
+          }}
+          onConfirm={() => {
+            this.setState({ showConfirmLinkedIn: false });
+            this.getLinkedInInfo();
+          }}/>
+        }
       </section>
       );
     }
