@@ -907,9 +907,20 @@ body {
   text-align: left;
 }
 
+.fontreleway.edit.settings.title {
+  color: #a0a0a0;
+  font-size: 1.2em;
+  text-align: left;
+  padding-top:0.25em;
+  padding-bottom:0.35em;
+  font-weight: bold;
+}
+
 .fontreleway.fontstatement {
-  margin-right: 5%;
-  margin-left: 5%;
+  display:block;
+  width: 100%;
+  padding-right: 5%;
+  padding-left: 5%;
   float: none;
   color: #a0a0a0;
   font-size: 1.4em;
@@ -1813,6 +1824,23 @@ body {
 
 .summarytext {
   margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.summarytext:link {
+  text-decoration: none;
+}
+
+.summarytext:visited {
+  text-decoration: none;
+}
+
+.summarytext:hover {
+  text-decoration: none;
+}
+
+.summarytext:active {
+  text-decoration: none;
 }
 
 .summary-list {
@@ -2711,9 +2739,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     margin-left: 2%;
   }
   .fontreleway.fontstatement {
-    margin-right: 2%;
-    margin-left: 2%;
-    text-align: left;
+    padding-right: 2%;
+    padding-left: 2%;
   }
   .fontreleway.fontcontactq._3 {
     display: none;
@@ -2967,6 +2994,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin-left: auto;
   margin-right: auto;
   width:100%;
+}
+.settings-edit-wrapper{
+  padding-left:5%;
+  padding-right:5%;
+  text-align: left;
 }
 
 .screentitlewrapper {
