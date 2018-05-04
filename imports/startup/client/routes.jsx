@@ -24,7 +24,8 @@ import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
 import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
-import Settings from '/imports/ui/pages/Settings';
+import Settings from '/imports/ui/pages/settings/Settings';
+import EditEntry from '/imports/ui/pages/settings/EditEntry';
 import NotFound from '/imports/ui/pages/NotFound';
 import NotAuthorized from '/imports/ui/pages/NotAuthorized';
 
@@ -114,6 +115,7 @@ const App = () => (
       <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
+      <Route exact path='/settings/:type' render={(props) => (<CheckLoginVerified childComponent={<EditEntry {...props}/>} {...props}/>)} />
       <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
       <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
       <Route exact path='/invitation/:id' component={InviteLanding}/>

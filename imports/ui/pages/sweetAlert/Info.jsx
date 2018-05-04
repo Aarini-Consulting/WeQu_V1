@@ -18,9 +18,13 @@ export default class Info extends React.Component {
                     </div>
                 </div>
 
-                <div className="bttn-wrapper w-clearfix">
-                    <div className="popup-bttn" onClick={this.props.onCancel}>
-                        <div className="fontreleway f-bttn">Ok</div>
+                <div className="w-block align-center">
+                    <div className="w-inline-block">
+                        <div className="bttn-wrapper w-clearfix">
+                            <div className="popup-bttn" onClick={this.props.onCancel}>
+                                <div className="fontreleway f-bttn">Ok</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

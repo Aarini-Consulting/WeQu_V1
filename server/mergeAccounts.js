@@ -28,15 +28,4 @@
             Feedback.update({to: oldUser._id}, {$set : { to : curUser._id}}, {multi : true});
             Meteor.users.remove({ _id: oldUser._id });
         },
-
-        "removeAccounts" : function(id){
-            //return Meteor.users.remove({ _id: id});
-
-            //TODO : Not a good approach ,  So remove the account
-            // in connections collections store the old user id and retrieve it to update
-
-            return Meteor.users.update({_id : id}, {$set : { "emails.0.address" : "" }});
-        }
-
-
     });
