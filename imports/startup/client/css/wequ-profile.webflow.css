@@ -1008,14 +1008,13 @@ body {
 } */
 
 .fontreleway.f-bttn {
-  display: block;
+  display: inline-block;
   margin-left: 0%;
   padding-left: 0%;
   -webkit-transition: background-color 200ms ease;
   transition: background-color 200ms ease;
   color: #fff;
   font-size: 1.2em;
-  line-height: 40px;
   text-transform: uppercase;
 }
 
@@ -2378,20 +2377,16 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .popup-bttn {
-  display: block;
+  display: table-cell;
   width: 40%;
-  height: 40px;
+  min-height: 40px;
+  min-width:4em;
+  padding:0.5em;
+  height:100%;
   margin-right: auto;
   margin-left: auto;
-  float: left;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: stretch;
-  -webkit-align-items: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
+  text-align: center;
+  vertical-align: middle;
   border-radius: 100px;
   background-color: #a0a0a0;
   cursor: pointer;
@@ -2423,9 +2418,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .bttn-wrapper {
-  margin-right: 10%;
-  margin-left: 10%;
-  padding-left: 0%;
+  display: table-row;
+  text-align: center;
+  margin: 0 auto;
+  min-height:40px;
 }
 
 .msg-wrapper {

@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
 class EditEntry extends React.Component {
 
@@ -14,6 +15,8 @@ class EditEntry extends React.Component {
     this.state={
         updating:false,
         gender:undefined,
+        showInfo:false,
+        showInfoMessage:""
     }
   }
   
@@ -56,7 +59,11 @@ class EditEntry extends React.Component {
               updating: false,
             });
             if ( error ) {
-              console.log(error);
+                console.log(error);
+                this.setState({ 
+                    showInfo: true,
+                    showInfoMessage:error.error
+                });
             }else{
                 this.props.history.goBack();
             }
@@ -77,7 +84,11 @@ class EditEntry extends React.Component {
               updating: false,
             });
             if ( error ) {
-              console.log(error);
+                console.log(error);
+                this.setState({ 
+                    showInfo: true,
+                    showInfoMessage:error.error
+                });
             }else{
                 this.props.history.goBack();
             }
@@ -95,7 +106,11 @@ class EditEntry extends React.Component {
               updating: false,
             });
             if ( error ) {
-              console.log(error);
+                console.log(error);
+                this.setState({ 
+                    showInfo: true,
+                    showInfoMessage:error.error
+                });
             }else{
                 this.props.history.goBack();
             }
@@ -188,6 +203,16 @@ class EditEntry extends React.Component {
                     </div>
                 </div>
                 {content}
+
+                {this.state.showInfo &&
+                    <SweetAlert
+                    type={"info"}
+                    message={this.state.showInfoMessage}
+                    onCancel={() => {
+                        this.setState({ showInfo: false });
+                    }}/>
+                }
+                
                 </section>
             </div>
         )

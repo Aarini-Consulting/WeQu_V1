@@ -31,10 +31,16 @@ Meteor.methods({
       });
   },
   'user.update.email'(email) {
-    var check = Meteor.users.findOne({_id:Meteor.userId()});
+    var currentUser = Meteor.users.findOne({_id:Meteor.userId()});
+    var oldMail = currentUser.emails[0].address;
 
-    var oldMail = check.emails[0].address;
-    if(check){
+    if(currentUser){
+      var checkEmail = Meteor.users.find({_id:{$ne:Meteor.userId()},"emails.0.address":email}).fetch();
+
+      if(checkEmail.length > 0){
+        throw new Meteor.Error("email already in use");
+      }
+      
       var updatedGroup = 0;
       Group.find(
         {$or : [
@@ -113,5 +119,69 @@ Meteor.methods({
           'profile.gender': gender,
           } 
       });
+  },
+  'user.delete'() {
+    var currentUser = Meteor.users.findOne({_id:Meteor.userId()});
+    var userMail = currentUser.emails[0].address;
+
+    if(currentUser){
+      var groupOwnedByUser = Group.find({"creatorId":currentUser._id}).fetch();
+      if(groupOwnedByUser.length > 0){
+        throw new Meteor.Error("not allowed to delete groupowner");
+      }
+      Group.find(
+        {$or : [
+            { "emails": userMail},
+            { "emailsSurveyed": userMail}
+          ] 
+        }
+      ).forEach(function(gr){
+        var doUpdate = false;
+
+        if(gr.emails){
+          var check = gr.emails.indexOf(userMail);
+
+          if(check > -1){
+            gr.emails.splice(check, 1);
+            doUpdate = true;
+          }
+        }
+
+        if(gr.emailsSurveyed){
+          var check = gr.emailsSurveyed.indexOf(userMail);
+
+          if(check > -1){
+            gr.emailsSurveyed.splice(check, 1);
+            doUpdate = true;
+          }
+        }
+
+        if(doUpdate){
+          Group.update({_id:gr._id},
+            {$set: gr},
+            {});
+        }
+      });
+
+      Connections.remove(
+        {$or : [
+          { "userId": currentUser._id},
+          { "email": userMail}
+          ] 
+        },
+        {});
+
+      Feedback.remove(
+        {$or : [
+          { "from": currentUser._id},
+          { "to": currentUser._id}
+          ] 
+        },
+        {});
+
+      Meteor.users.remove({_id:Meteor.userId()});
+    }else{
+      throw new Meteor.Error("unknown user");
+    }
   },
 })

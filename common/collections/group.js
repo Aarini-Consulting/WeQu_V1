@@ -5,11 +5,6 @@ GroupSchema = new SimpleSchema({
       type: String,
       label: "groupName"
     },
-    "data":{
-      type: [Object],
-      label: "data",
-      blackbox:true
-    },
     "emails":{
       type: [String],
       label: "emails",

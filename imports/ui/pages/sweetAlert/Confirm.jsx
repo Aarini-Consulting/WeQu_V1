@@ -17,13 +17,16 @@ export default class Confirm extends React.Component {
                     {this.props.message}
                     </div>
                 </div>
-
-                <div className="bttn-wrapper w-clearfix">
-                    <div className="popup-bttn left" onClick={this.props.onCancel}>
-                        <div className="fontreleway f-bttn">{this.props.cancelText}</div>
-                    </div>
-                    <div className="popup-bttn right" onClick={this.props.onConfirm}>
-                        <div className="fontreleway f-bttn">{this.props.confirmText}</div>
+                <div className="w-block align-center">
+                    <div className="w-inline-block">
+                        <div className="bttn-wrapper w-clearfix">
+                            <div className="popup-bttn left" onClick={this.props.onCancel}>
+                            <div className="fontreleway f-bttn">{this.props.cancelText}</div>
+                            </div>
+                            <div className="popup-bttn right" onClick={this.props.onConfirm}>
+                            <div className="fontreleway f-bttn">{this.props.confirmText}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

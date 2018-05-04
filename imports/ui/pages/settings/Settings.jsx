@@ -5,8 +5,45 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
 class Settings extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            showConfirmDelete:false,
+            showDeleteInfoGameMaster:false
+        }
+    }
+
+    showConfirmDelete(){
+        this.setState({
+            showConfirmDelete:true,
+        })
+    }
+
+    deleteAccount(){
+        this.setState({ showConfirmDelete: false });
+        if(this.props.currentUser && this.props.currentUser.roles && this.props.currentUser.roles[0] == "GameMaster"){
+            this.setState({
+                showDeleteInfoGameMaster:true,
+            })
+        }else{
+            Meteor.call( 'user.delete', ( error, response ) => {
+                if ( error ) {
+                    console.log(error);
+                }else{
+                    Session.set( "loggedOut", true);
+                }
+            });
+        }
+    }
+
+    logout(){
+        Session.set( "loggedOut", true);
+        Meteor.logout()
+    }
+
     render() {
       return (
         <div className="fillHeight">
@@ -47,13 +84,40 @@ class Settings extends React.Component {
             </li>
             <li className="list-item">
                 <div className="summarytext">
-                    <div className="fontreleway fontstatement cursor-pointer" onClick={()=>{
-                        Session.set( "loggedOut", true);
-                        Meteor.logout()
-                        }}><u>LOG OUT</u></div>
+                    <div className="fontreleway fontstatement cursor-pointer" onClick={this.showConfirmDelete.bind(this)}>
+                    <u>DELETE MY ACCOUNT/DATA</u></div>
+                </div>
+            </li>
+            <li className="list-item">
+                <div className="summarytext">
+                    <div className="fontreleway fontstatement cursor-pointer" onClick={this.logout.bind(this)}>
+                        <u>LOG OUT</u>
+                    </div>
                 </div>
             </li>
         </ul>
+        {this.state.showConfirmDelete &&
+            <SweetAlert
+            type={"confirm"}
+            message={"This action is not reversible, are you sure?"}
+            confirmText={"Yes, Delete my account and data"}
+            cancelText={"Cancel"}
+            onCancel={() => {
+                this.setState({ showConfirmDelete: false });
+            }}
+            onConfirm={() => {
+                this.deleteAccount();
+            }}/>
+        }
+        {this.state.showDeleteInfoGameMaster &&
+            <SweetAlert
+            type={"info"}
+            message={"Please consult contact@weq.io for the removal of your account"}
+            onCancel={() => {
+                this.setState({ showDeleteInfoGameMaster: false });
+            }}/>
+        }
+        
         </section>
         :
         <Loading/>

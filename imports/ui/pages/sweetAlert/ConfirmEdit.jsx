@@ -75,12 +75,16 @@ export default class ConfirmEdit extends React.Component {
                     }
                 </div>
 
-                <div className="bttn-wrapper w-clearfix">
-                    <div className="popup-bttn left" onClick={this.props.onCancel}>
-                        <div className="fontreleway f-bttn">Go Back</div>
-                    </div>
-                    <div className="popup-bttn right" onClick={this.props.onConfirm}>
-                        <div className="fontreleway f-bttn">Proceed</div>
+                <div className="w-block align-center">
+                    <div className="w-inline-block">
+                        <div className="bttn-wrapper w-clearfix">
+                            <div className="popup-bttn left" onClick={this.props.onCancel}>
+                            <div className="fontreleway f-bttn">Go Back</div>
+                            </div>
+                            <div className="popup-bttn right" onClick={this.props.onConfirm}>
+                            <div className="fontreleway f-bttn">Proceed</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
