@@ -58,6 +58,7 @@ Meteor.methods({
           var emailData = {
             'creatorEmail': groupCreator.emails[0].address,
             'link': Meteor.absoluteUrl(link),
+            'firstName':d.firstName,
             'groupName': groupName
           };
       
