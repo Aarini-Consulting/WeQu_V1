@@ -34,12 +34,10 @@ Meteor.methods({
     var check = Meteor.users.findOne({_id:Meteor.userId()});
 
     var oldMail = check.emails[0].address;
-
     if(check){
       var updatedGroup = 0;
       Group.find(
-        {$or : [ 
-            { "data.email": oldMail}, 
+        {$or : [
             { "emails": oldMail},
             { "emailsSurveyed": oldMail}
           ] 
@@ -47,30 +45,19 @@ Meteor.methods({
       ).forEach(function(gr){
         var doUpdate = false;
 
-        if(gr.data){
-          var check = gr.data.findIndex((d)=>{
-            return d.email == oldMail
-          })
-
-          if(check && check > -1){
-            gr.data[check].email = email;
-            doUpdate = true;
-          }
-        }
-
-        if(gr.emails && Array.isArray(gr.emails)){
+        if(gr.emails){
           var check = gr.emails.indexOf(oldMail);
 
-          if(check && check > -1){
+          if(check > -1){
             gr.emails[check] = email;
             doUpdate = true;
           }
         }
 
-        if(gr.emailsSurveyed && Array.isArray(gr.emailsSurveyed)){
+        if(gr.emailsSurveyed){
           var check = gr.emailsSurveyed.indexOf(oldMail);
 
-          if(check && check > -1){
+          if(check > -1){
             gr.emailsSurveyed[check] = email;
             doUpdate = true;
           }
@@ -89,8 +76,6 @@ Meteor.methods({
         }
       });
 
-      console.log("updatedGroup: "+ updatedGroup);
-
       updatedConn = 0;
       Connections.find(
         { "email": oldMail}, 
@@ -98,11 +83,12 @@ Meteor.methods({
         var doUpdate = false;
 
         if(conn.email == oldMail){
+          conn.email = email;
           doUpdate = true;
         }
 
         if(doUpdate){
-          Group.update({_id:conn._id},
+          Connections.update({_id:conn._id},
             {$set: conn},
             {},
             (err,res) => {
@@ -113,8 +99,6 @@ Meteor.methods({
           updatedConn = updatedConn + 1;
         }
       });
-
-      console.log("updatedConn: "+updatedConn);
       
       Meteor.users.update(Meteor.userId(), { 
         '$set': {

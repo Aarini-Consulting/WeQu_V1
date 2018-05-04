@@ -2,7 +2,7 @@ Meteor.methods({
   'createGroup' : function (groupName,data,arr_emails) {
     var now = new Date();
     
-    let groupId = Group.insert({groupName: groupName , data:data,  emails:arr_emails , creatorId: Meteor.userId()});
+    let groupId = Group.insert({groupName: groupName,  emails:arr_emails , creatorId: Meteor.userId()});
 
     if(!groupId){
      throw (new Meteor.Error("group_creation_failed")); 

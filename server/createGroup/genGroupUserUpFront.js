@@ -28,12 +28,10 @@ Meteor.methods({
 		    gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : 'Male'
 		    gender= data[i].gender;
 
-			username = Random.id();
 			email = arr_emails[i];
 			toName = data[i].name;
 
 			userId = Accounts.createUser({
-				username: username,
 				email: email,
 				password: _id,
 				trialMember: true,

@@ -39,38 +39,47 @@ class EditEntry extends React.Component {
     })
   }
 
-  handleNameSubmit(){
-    var firstName = ReactDOM.findDOMNode(this.refs.firstName);
-    var lastName = ReactDOM.findDOMNode(this.refs.lastName);
+  handleNameSubmit(event){
+    event.preventDefault();
+    var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+    var lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
 
-    if(firstName.value && lastName.value && firstName.value != "" && lastName.value != ""){
+    console.log(firstName);
+    console.log(lastName);
+
+    if(firstName && lastName && firstName != "" && lastName != ""){
         this.setState({
             updating: true,
         });
-        Meteor.call( 'user.update.name', firstName.trim(), lastName.trim(), ( error, response ) => {
+        Meteor.call( 'user.update.name', firstName, lastName, ( error, response ) => {
             this.setState({
               updating: false,
             });
             if ( error ) {
               console.log(error);
+            }else{
+                this.props.history.goBack();
             }
         });
     }
   }
 
-  handleEmailSubmit(){
-    var email = ReactDOM.findDOMNode(this.refs.email);
+  handleEmailSubmit(event){
+    event.preventDefault();
+    var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
 
-    if(email.value && email.value != "" && !this.state.updating){
+    if(email && email != "" && !this.state.updating){
         this.setState({
             updating: true,
         });
-        Meteor.call( 'user.update.email', email.trim(), ( error, response ) => {
+        Meteor.call( 'user.update.email', email, ( error, response ) => {
             this.setState({
               updating: false,
             });
             if ( error ) {
               console.log(error);
+            }else{
+                this.props.history.goBack();
             }
         });
     }
@@ -87,6 +96,8 @@ class EditEntry extends React.Component {
             });
             if ( error ) {
               console.log(error);
+            }else{
+                this.props.history.goBack();
             }
         });
     }
