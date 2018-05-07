@@ -34,6 +34,7 @@ class Settings extends React.Component {
                     console.log(error);
                 }else{
                     Session.set( "loggedOut", true);
+                    Meteor.logout();
                 }
             });
         }
@@ -58,7 +59,7 @@ class Settings extends React.Component {
                         <div className="w-block summarytext">
                             {getUserName(this.props.currentUser.profile)}
                         </div>
-                        <div className="w-block summarytext">change your name</div>
+                        <div className="w-block summarytext-sub">change your name</div>
                     </div>
                 </Link>
             </li>
@@ -68,7 +69,7 @@ class Settings extends React.Component {
                         <div className="w-block summarytext">
                         {this.props.currentUser.emails && this.props.currentUser.emails[0].address}
                         </div>
-                        <div className="w-block summarytext">change your email address</div>
+                        <div className="w-block summarytext-sub">change your email address</div>
                     </div>
                 </Link>
             </li>
@@ -78,7 +79,7 @@ class Settings extends React.Component {
                         <div className="w-block summarytext">
                         {this.props.currentUser.profile.gender}
                         </div>
-                        <div className="w-block summarytext">change your gender information</div>
+                        <div className="w-block summarytext-sub">change your gender information</div>
                     </div>
                 </Link>
             </li>

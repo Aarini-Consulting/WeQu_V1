@@ -76,7 +76,7 @@ handleBackArrowClick(){
             <div className="footersummary w-clearfix">
                 <div className="footer-flex-container">
                 <div className="bttn-area-summary">
-                <Link className="fontreleway fontbttnsummary" to={`/quiz/${this.state.inviteLastSuccess}`}>Load questions about {this.state.inviteLastUsername}</Link>
+                <Link className="fontreleway fontbttnsummary" to={`/quiz/${this.state.inviteLastSuccess}`}>Take a quiz about {this.state.inviteLastUsername}</Link>
                 </div>
                 <div className="bttn-area-summary _2 cursor-pointer">
                 <a className="fontreleway fontbttnsummary" onClick={this.handleBackArrowClick.bind(this)}>Go back to the list</a></div>

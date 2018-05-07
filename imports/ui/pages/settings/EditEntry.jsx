@@ -121,8 +121,10 @@ class EditEntry extends React.Component {
   render() {
     var content;
     var type = this.props.match.params.type;
+    var title = "";
     if(this.props.currentUser){
         if(type == "name"){
+            title = "Name";
             content = 
             <div className="settings-edit-wrapper">
                 <div className="fontreleway edit settings title">
@@ -131,6 +133,7 @@ class EditEntry extends React.Component {
                 <div className="fontreleway font-invite-title w-clearfix">
                 {getUserName(this.props.currentUser.profile)}
                 </div>
+                <br/>
                 <div className="fontreleway edit settings title">
                 Enter new information below:
                 </div>
@@ -139,9 +142,10 @@ class EditEntry extends React.Component {
                     <input className="emailfield w-input" maxLength="256" ref="lastName" placeholder="last name" required="required" type="text"/>
                     <input className="submit-button w-button" type="submit" value="Change Name"/>
                 </form>
-            </div>
+            </div>;
         }
         else if(type == "email"){
+            title = "Email";
             content = 
             <div className="settings-edit-wrapper">
                 <div className="fontreleway edit settings title">
@@ -150,6 +154,7 @@ class EditEntry extends React.Component {
                 <div className="fontreleway font-invite-title w-clearfix">
                 {this.props.currentUser.emails && this.props.currentUser.emails[0].address}
                 </div>
+                <br/>
                 <div className="fontreleway edit settings title">
                 Enter new information below:
                 </div>
@@ -160,6 +165,7 @@ class EditEntry extends React.Component {
             </div>
         }
         else if(type == "gender"){
+            title = "Gender"
             content = 
             <div className="settings-edit-wrapper">
                 <div className="fontreleway w-block">
@@ -200,6 +206,9 @@ class EditEntry extends React.Component {
                         }}>
                         <img className="image-7" src="/img/arrow.svg"/>
                         </a>
+                    </div>
+                    <div className="fontreleway font-invite-title w-clearfix w-inline-block">
+                        {title}
                     </div>
                 </div>
                 {content}
