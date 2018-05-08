@@ -1826,6 +1826,12 @@ body {
   text-decoration: none;
 }
 
+.summarytext-sub {
+  font-size:0.75em;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
 .summarytext:link {
   text-decoration: none;
 }
@@ -3239,6 +3245,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width: 85%;
   float: right;
   text-align: left;
+}
+
+.radio-input{
+  margin-right:2em;
 }
 
 .field-label {

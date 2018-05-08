@@ -34,5 +34,12 @@ Template.GroupCreatorCloseCycleCancelEmail.helpers({
     //Add any helper methods to enable default data in template
 });
 
+SSR.compileTemplate('EmailChangeVerification', Assets.getText('email-change-verification.html'));
+
+Template.EmailChangeVerification.helpers({
+    //Add any helper methods to enable default data in template
+});
+
+
 
 

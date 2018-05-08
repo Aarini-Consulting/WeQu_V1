@@ -486,6 +486,7 @@ button.close{
 
 input[type="radio"]{
 	width: initial;
+	margin-right:0.2em;
 }
 
 .navColor{

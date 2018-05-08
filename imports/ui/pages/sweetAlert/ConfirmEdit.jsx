@@ -55,15 +55,15 @@ export default class ConfirmEdit extends React.Component {
                 <div className="fontreleway f-popup-title">The following actions need your confirmation</div>
                 <div className="msg-wrapper">
                     {deleted.length > 0 &&
-                        <div className="fontreleway f-popup-title f-popup-msg">Removed {deleted.length} member</div>
+                        <div className="fontreleway f-popup-title f-popup-msg">Removed {deleted.length} member(s)</div>
                     }
 
                     {added.length > 0 &&
-                        <div className="fontreleway f-popup-title f-popup-msg">Added {added.length} member</div>
+                        <div className="fontreleway f-popup-title f-popup-msg">Added {added.length} member(s)</div>
                     }
 
                     {resend.length > 0 &&
-                        <div className="fontreleway f-popup-title f-popup-msg">Send reminder to {resend.length} member</div>
+                        <div className="fontreleway f-popup-title f-popup-msg">Send reminder to {resend.length} member(s)</div>
                     }
 
                     {this.props.unsaved &&
