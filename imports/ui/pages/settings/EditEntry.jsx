@@ -74,25 +74,34 @@ class EditEntry extends React.Component {
   handleEmailSubmit(event){
     event.preventDefault();
     var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
-
+    
     if(email && email != "" && !this.state.updating){
-        this.setState({
-            updating: true,
-        });
-        Meteor.call( 'user.update.email', email, ( error, response ) => {
-            this.setState({
-              updating: false,
+        if(email && email != "" && email == this.props.currentUser.emails[0].address){
+            this.setState({ 
+                showInfo: true,
+                showInfoMessage:"new email is the same as the old one"
             });
-            if ( error ) {
-                console.log(error);
-                this.setState({ 
-                    showInfo: true,
-                    showInfoMessage:error.error
+        }else{
+            this.setState({
+                updating: true,
+            });
+            Meteor.call( 'change.email.verification.send', email, ( error, response ) => {
+                this.setState({
+                  updating: false,
                 });
-            }else{
-                this.props.history.goBack();
-            }
-        });
+                if ( error ) {
+                    console.log(error);
+                    this.setState({ 
+                        showInfo: true,
+                        showInfoMessage:error.error
+                    });
+                }else{
+                    this.setState({ 
+                        updateEmailVerificationSent: true,
+                    });
+                }
+            });
+        }
     }
   }
 
@@ -159,8 +168,13 @@ class EditEntry extends React.Component {
                 Enter new information below:
                 </div>
                 <form className="loginemail" data-name="Email Form" name="email-form" onSubmit={this.handleEmailSubmit.bind(this)}>
-                    <input className="emailfield w-input" maxLength="256" ref="email" placeholder="email address" type="text" style={{textTransform:"lowercase"}} required/>
+                    <input className="emailfield w-input" maxLength="256" ref="email" placeholder="email address" type="email" style={{textTransform:"lowercase"}} required/>
+                    
+                    {this.state.updating ?
+                    <input className="submit-button w-button" type="submit" value="Updating..." disabled={true}/>
+                    :
                     <input className="submit-button w-button" type="submit" value="Change Email"/>
+                    }
                 </form>
             </div>
         }
@@ -202,7 +216,9 @@ class EditEntry extends React.Component {
                 <div className="screentitlewrapper w-clearfix">
                     <div className="screentitlebttn back">
                         <a className="w-clearfix w-inline-block cursor-pointer" onClick={()=>{
-                            this.props.history.goBack();
+                            if(!this.state.updating){
+                                this.props.history.goBack();
+                            }
                         }}>
                         <img className="image-7" src="/img/arrow.svg"/>
                         </a>
@@ -219,6 +235,15 @@ class EditEntry extends React.Component {
                     message={this.state.showInfoMessage}
                     onCancel={() => {
                         this.setState({ showInfo: false });
+                    }}/>
+                }
+
+                {this.state.updateEmailVerificationSent &&
+                    <SweetAlert
+                    type={"info"}
+                    message={"Verification email sent to email, Please follow the link in the email to change your email"}
+                    onCancel={() => {
+                        this.props.history.goBack();
                     }}/>
                 }
                 

@@ -35,6 +35,7 @@ import Login from '/imports/ui/pages/accounts/Login';
 import RecoverPassword from '/imports/ui/pages/accounts/RecoverPassword';
 import SignUp from '/imports/ui/pages/accounts/SignUp';
 import VerifyEmail from '/imports/ui/pages/accounts/VerifyEmail';
+import VerifyUpdateEmail from '/imports/ui/pages/accounts/VerifyUpdateEmail';
 import ResetPassword from '/imports/ui/pages/accounts/ResetPassword';
 
 import Terms from '/imports/ui/pages/legal/Terms';
@@ -130,6 +131,7 @@ const App = () => (
       <Route path='/terms' component={Terms}/>
       <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />
+      <Route exact path='/update-email/:token' component={VerifyUpdateEmail} />
       {/* <Route path="/test" component={Test}/> */}
       <Route path="/adminUser" component={AdminUser}/>
       <Route path="/404" component={NotFound}/>
