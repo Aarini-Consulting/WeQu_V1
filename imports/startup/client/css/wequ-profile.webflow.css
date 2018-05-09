@@ -2505,9 +2505,9 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   .iconskill {
     width: 100px;
   }
-  .skillcovergrey {
+  /* .skillcovergrey {
     background-size: auto, 95%;
-  }
+  } */
   .button.fontreleway.fontbttnsummary {
     padding-top: 8%;
     padding-bottom: 7%;
@@ -2900,6 +2900,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 		padding-left:15%;
 		padding-right:15%;
 	}
+}
+
+.my-color{
+  color:#F86577;
+}
+
+.other-color{
+  color:#4D9AD4;
 }
 
 .footersummary {

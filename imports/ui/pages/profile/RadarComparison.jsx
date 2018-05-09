@@ -22,12 +22,12 @@ class RadarComparison extends React.Component {
           <section>
             <div className="radarAgenda">
               <div><img src="/img/Diamond_Myself.png"/>
-                <span className="marginleft10 font-small">  
+                <span className="marginleft10 font-small my-color">  
                   How I see myself  
                 </span>
               </div>
               <div><img src="/img/Diamond_Others.png" className="t50"/>
-                <span className="marginleft10 font-small">
+                <span className="marginleft10 font-small other-color">
                   How others see me
                 </span> 
               </div>
@@ -37,12 +37,12 @@ class RadarComparison extends React.Component {
           <section>
             <div className="radarAgenda">
               <div><img src="/img/Diamond_Myself.png"/>
-                <span className="marginleft10 font-small">  
+                <span className="marginleft10 font-small my-color">  
                   How <span className="text-capitalize"> {getUserName(this.props.quizUser.profile)}</span> sees me  
                 </span>
               </div>
               <div><img src="/img/Diamond_Others.png" className="t50"/>
-                <span className="marginleft10 font-small">
+                <span className="marginleft10 font-small other-color">
                   How I see <span className="text-capitalize">{getUserName(this.props.quizUser.profile)}</span> 
                 </span> 
               </div>

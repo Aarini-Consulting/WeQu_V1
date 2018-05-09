@@ -100,12 +100,12 @@ class UserTile extends React.Component {
 
                 <div className="radarAgenda tile">
                   <div><img src="/img/Diamond_Myself.png"/>
-                    <span className="marginleft10">  
+                    <span className="marginleft10 my-color">  
                       How <span className="text-capitalize"> {getUserName(this.props.user.profile)}</span> sees himself  
                     </span>
                   </div>
                   <div><img src="/img/Diamond_Others.png" className="t50"/>
-                    <span className="marginleft10">
+                    <span className="marginleft10 other-color">
                       How others see <span className="text-capitalize">{getUserName(this.props.user.profile)}</span> 
                     </span> 
                   </div>
