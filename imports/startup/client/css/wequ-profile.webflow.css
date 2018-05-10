@@ -3074,6 +3074,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   line-height: 1.5em;
 }
 
+.fontreleway.font-invite-title.white {
+  color: #fff;
+}
+
 .fontreleway.font-invite-title.edit {
   text-align: right;
   text-decoration: underline;
@@ -3155,6 +3159,80 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-decoration: underline;
   text-align: left;
   cursor: pointer;
+}
+
+.tabs-menu{
+  display:block;
+  width:100%;
+  padding-left:5%;
+  padding-right:5%;
+  text-align: left;
+}
+
+.tap {
+  display:inline-block;
+  height: 40px;
+  border-top: 1px solid #000;
+  border-right: 1px none #000;
+  border-left: 1px solid #000;
+  background-color: transparent;
+  color: #525252;
+}
+
+.tap-last{
+  border-right: 1px solid #000;
+}
+
+.tap.edit{
+  color:#3e9f32;
+}
+
+.tap.edit.w--current {
+  background-color: #3e9f32;
+  color:#fff;
+}
+
+.tap-underline.edit {
+  border-bottom: 1px solid #3e9f32;
+}
+
+.tap.survey{
+  color:#fec93b;
+}
+
+.tap.survey.w--current {
+  background-color: #fec93b;
+  color:#fff;
+}
+
+.tap-underline.survey {
+  border-bottom: 1px solid #fec93b;
+}
+
+.tap.card{
+  color:#299199;
+}
+
+.tap.card.w--current {
+  background-color: #299199;
+  color:#fff;
+}
+
+.tap-underline.card {
+  border-bottom: 1px solid #299199;;
+}
+
+.tap.report{
+  color:#fc808c;
+}
+
+.tap.report.w--current {
+  background-color: #fc808c;
+  color:#fff;
+}
+
+.tap-underline.report {
+  border-bottom: 1px solid #fc808c;
 }
 
 .fontreleway.f-c-invite {

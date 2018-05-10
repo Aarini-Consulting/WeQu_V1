@@ -14,6 +14,7 @@ class SkillCategories extends React.Component {
     }
 
     renderCategorySkills(skills, compareSkills){
+        console.log(skills);
         return skills.map((skill, index) => {
             return (
                 <div className="skillElement" key={skill.category + " " +skill.name}>
