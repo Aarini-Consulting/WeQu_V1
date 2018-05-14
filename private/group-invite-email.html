@@ -13,9 +13,9 @@
 			<!--div> Hi <b>{{to}},</b> </div -->
 
 		<!--	<div> {{from}}  invites you to the WeQ App. It helps you get to know your We-Qualities based on how your teammates see you. </div> -->
-			<div>Hi,</div>
+			<div>Hi {{firstName}},</div>
 			<br>
-			<div>Please join your WeQ group by clicking this link</div>
+			<div>Please join your WeQ group by clicking this link:</div>
 			<a href="{{link}}">{{link}}</a>
 			<br><br>
 			
@@ -24,10 +24,16 @@
 			<div>"<b>{{groupName}}</b>"</div>
 
 			<p> First, you will answer a few anonymous questions about your team.</p>
-			<p> Then you will take a short quiz about individual teammates, and about yourself. </p> 
-			<p>Based on the data gathered, we will personalise your WeQ session experience. </p>
+			<p> Then you will take a short quiz about individual teammates, and about yourself.</p>
+			<p>Please complete at least one round of the quiz (12 questions) for each person in your group.</p>
+			<p>Based on the data gathered, we will personalize your WeQ session experience </p>
 			 
-			<div>Questions? Reply to <a href="mailto:ohyoon@weq.io?subject=Group Invitation">ohyoon@weq.io</a>.</div>
+			<div>
+			For questions about this app, reply to: <a href="mailto:contact@weq.io?subject=Group Invitation">contact@weq.io</a>.
+			<br>
+			For questions about your WeQ session, reply to: <a href="mailto:{{creatorEmail}}?subject=Group Invitation">{{creatorEmail}}</a>.
+			<br>
+			</div>
 			<br>
 			<div> WeQ Team </div>
 			<div>"Nothing beats a kick-ass team"</div>

@@ -2,7 +2,7 @@ Meteor.methods({
   'createGroup' : function (groupName,data,arr_emails) {
     var now = new Date();
     
-    let groupId = Group.insert({groupName: groupName , data:data,  emails:arr_emails , creatorId: Meteor.userId()});
+    let groupId = Group.insert({groupName: groupName,  emails:arr_emails , creatorId: Meteor.userId()});
 
     if(!groupId){
      throw (new Meteor.Error("group_creation_failed")); 
@@ -26,7 +26,18 @@ Meteor.methods({
   'genGroupQuestionSet' : function (arr_emails , groupId , data, groupName) {
 
   // Creating questions for Group members (Existing Users)
-  var i , j , user , user2 , arr_emails_notExisting = [] , arr_emails_existing =[], dataEmailNotExisting=[];
+    var i , j , user , user2 , arr_emails_notExisting = [] , arr_emails_existing =[], dataEmailNotExisting=[];
+    let groupCheck = Group.findOne({'_id': groupId});
+    
+    if(!groupCheck){
+        throw (new Meteor.Error("unknown_group")); 
+    }
+
+    let groupCreator = Meteor.users.findOne({'_id':groupCheck.creatorId});
+    
+    if(!groupCheck){
+        throw (new Meteor.Error("group_creator_missing")); 
+    }
 
     try{
         data.forEach((d)=>{
@@ -45,9 +56,9 @@ Meteor.methods({
           var message = `Please join the group by clicking the invitation link ${link}`
       
           var emailData = {
-            'from': '',
-            'to' : '',
+            'creatorEmail': groupCreator.emails[0].address,
             'link': Meteor.absoluteUrl(link),
+            'firstName':d.firstName,
             'groupName': groupName
           };
       

@@ -102,9 +102,14 @@ class ScriptLogin extends React.Component {
 export default withTracker((props) => {
     var dataReady;
 
-    if(Meteor.user()){
+    if(Meteor.userId()){
+        if(Meteor.user()){
+            dataReady = true;
+        }
+    }else{
         dataReady = true;
     }
+    
     return {
         dataReady:dataReady,
         currentUser: Meteor.user()

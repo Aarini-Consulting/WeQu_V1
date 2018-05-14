@@ -54,13 +54,11 @@ Meteor.methods({
 
     var _id = Random.secret()
     var _id1 = Random.secret()
-    var userId , username;
+    var userId;
 
     var link;
     if(!toUser){
-      username = Random.id();
       userId = Accounts.createUser({
-                username: username,
                 email: email,
                 password: _id,
                 trialMember: true,

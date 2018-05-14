@@ -20,7 +20,7 @@ Meteor.methods({
         })
 
         Group.update({"_id":groupId},
-        {'$set':{groupName: groupName , data:data,  emails:emailsArray , creatorId: group.creatorId}
+        {'$set':{groupName: groupName,  emails:emailsArray , creatorId: group.creatorId}
         });	
 
         Meteor.call('genGroupQuestionSet', newEmailInGroup , groupId , newData, groupName, (err, result)=> {
@@ -32,18 +32,34 @@ Meteor.methods({
 
     },
     'resend.group.invite' : function (groupId,email) {
-        let check = Group.findOne({_id:groupId,emails:email});
-        console.log(check);
+        let check = Group.findOne({_id:groupId});
+    
         if(check){
+            let groupCreator = Meteor.users.findOne({'_id':check.creatorId});
+            
+            if(!check){
+                throw (new Meteor.Error("group_creator_missing")); 
+            }
+
+            if(check.emails.indexOf(email) < 0){
+                throw (new Meteor.Error("email_not_group_member")); 
+            }
+
+            var emailTarget = Meteor.users.findOne({'emails.0.address': email});
+
+            if(!emailTarget){
+                throw (new Meteor.Error("user_not_found")); 
+            }
+            
             var link = `group-invitation/${email}/${groupId}`
                 
             var subject = `[WeQ] Invitation to join the group "${check.groupName}"` ;
             var message = `Please join the group by clicking the invitation link ${link}`
         
             var emailData = {
-            'from': '',
-            'to' : '',
+            'creatorEmail': groupCreator.emails[0].address,
             'link': Meteor.absoluteUrl(link),
+            'firstName':emailTarget.profile.firstName,
             'groupName': check.groupName
             };
         

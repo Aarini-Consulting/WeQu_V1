@@ -197,6 +197,9 @@ class GroupPage extends React.Component {
                   <div className="fontreleway font-invite-title w-clearfix">
                   {this.props.group.groupName}
                   </div>
+                  <div className="fontreleway font-invite-title edit w-clearfix">
+                    <span className="cursor-pointer" onClick={this.showInviteGroup.bind(this, true)}>Edit Group</span>
+                  </div>
                 </div>
 
                 <div className="screentitlewrapper w-clearfix">
@@ -261,13 +264,13 @@ class GroupPage extends React.Component {
                     </div>
                 </div>
 
-                <div className="footersummary w-clearfix">
+                {/* <div className="footersummary w-clearfix">
                   <div className="bttn-area-summary contact" >
                     <a className="button fontreleway bttncontact w-button" onClick={this.showInviteGroup.bind(this, true)}>
                     Edit group
                     </a>
                   </div>
-                </div>
+                </div> */}
                 {this.state.showConfirm &&
                   <SweetAlert
                   type={"confirm-close-cycle"}
