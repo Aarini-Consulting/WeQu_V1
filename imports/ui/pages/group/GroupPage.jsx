@@ -181,21 +181,31 @@ class GroupPage extends React.Component {
 
   renderSurveyGraph(skills){
     return skills.map((skill, index) => {
+        var leftPos = 0;
+        if(skill.value > 0){
+          leftPos = `calc(${ skill.value }% - 40px)`;
+        }
         return (
-            <div className="skillElement" key={skill.name}>
-              <div className="title">{skill.name}</div>
-
-              <div className="underBar" style={{width:60+"%"}}>
-                  <div className="bar bg VIRTUE" style={{width:skill.value + "%"}}></div>
-              </div>
-
-              <div className="score w-inline-block" style={{width:6+"em"}}>
-                  {skill.total <= 0 
-                  ?"0/0"
-                  :skill.scored +"/"+ skill.total
-                  }
+          <div className="tap-content w-clearfix">
+            <div className="tap-left">
+              <div className="font-matric">
+                {skill.name}
               </div>
             </div>
+            <div className="show-numbers">
+              <div className="chart-graph w-clearfix">
+                <div className="chart-graph active" style={{width:skill.value + "%"}}></div>
+                <div className="chart-number" style={{left:leftPos}}>
+                  <div className="font-chart-nr">{skill.scored}</div>
+                </div>
+              </div>
+            </div>
+            <div className="tap-right">
+              <div className="font-matric">
+                {skill.scored} / {skill.total}
+              </div>
+            </div>
+          </div>
         );
     });
   }
@@ -211,11 +221,13 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
-        <div className="contentwrapper invite">
-          <div className="title-table w-row">
-          {this.renderSurveyGraph([{name:"test",scored:1,total:1,value:100},{name:"test2",scored:2,total:4,value:50}])}
-          </div>;
-        </div>
+        <div className="tap-content-wrapper">
+          {this.renderSurveyGraph([{name:"Psychological Safety",scored:1,total:1,value:100},
+          {name:"Feedback",scored:3.5,total:7,value:50},
+          {name:"Equal Turntaking",scored:0,total:7,value:0},
+          {name:"Shared Goal",scored:1,total:7,value:14.28},
+          {name:"Metric 5",scored:5,total:7,value:71.40}])}
+        </div>;
       }
       return(
         <div className="fillHeight">
