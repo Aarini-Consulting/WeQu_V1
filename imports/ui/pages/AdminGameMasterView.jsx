@@ -173,10 +173,15 @@ class AdminGameMasterView extends React.Component {
                                 </div>
                                 <div className="table-responsive noSwipe">
                                     <form>
+                                    <label>Psychological Safety</label>
                                     <input className="w-input"  ref="matrix1" type="number" required/>
+                                    <label>Feedback</label>
                                     <input className="w-input"  ref="matrix2" type="number" required/>
+                                    <label>Equal Turntaking</label>
                                     <input className="w-input"  ref="matrix3" type="number" required/>
+                                    <label>Shared Goal</label>
                                     <input className="w-input"  ref="matrix4" type="number" required/>
+                                    <label>Metric 5</label>
                                     <input className="w-input"  ref="matrix5" type="number" required/>
                                     <input className="submit-button w-button" type="submit" value="Set Typeform Score"/>
                                     </form>

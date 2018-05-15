@@ -3356,6 +3356,94 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   min-height: 50px;
 }
 
+.font-card-username {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 50px;
+  width:100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-family: Raleway, sans-serif;
+  font-size: 1.2em;
+  font-weight: 400;
+  text-decoration: none;
+  word-wrap:break-all;
+}
+
+.font-card-username.ready{
+  color: #fff;
+}
+
+.font-card-username.not-ready{
+  color: #f94686;
+}
+
+.show-cards {
+  display: flex;
+  width: 80%;
+  height: 50px;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+.bttn-next-card {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 0px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  float: left;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border: 1px none #299199;
+  border-radius: 100px;
+  background-color: #202020;
+  -webkit-transition: -webkit-transform 200ms ease;
+  transition: -webkit-transform 200ms ease;
+  transition: transform 200ms ease;
+  transition: transform 200ms ease, -webkit-transform 200ms ease;
+  font-family: Raleway, sans-serif;
+  color: #299199;
+  text-align: center;
+  text-decoration: none;
+  padding:0.75em;
+}
+
+.bttn-next-card:active {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.bttn-next-card.not-ready {
+  color: #fd4386;
+}
+
+.bttn-next-card.wait {
+  background-color: #299199;
+  color: #fff;
+}
+
 .fontreleway.f-c-invite {
   color: #a0a0a0;
   font-size: 1.2em;

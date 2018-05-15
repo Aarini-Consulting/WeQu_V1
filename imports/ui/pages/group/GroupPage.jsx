@@ -179,11 +179,49 @@ class GroupPage extends React.Component {
     });
   }
 
-  renderCards(users){
-    return users.map((skill, index) => {
+  renderUserCards(cards){
+    return cards.map((card, index) => {
+      return(
+        <div className="tap-content w-clearfix" key={card._id}>
+        </div>
+      )
+    });
+  }
+
+  renderUsers(users){
+    return users.map((user, index) => {
+      var email = user.emails[0].address;
+      var readySurvey, readyPregame;
+      if(this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(email) > -1){
+        readySurvey = true;
+      }
+      if(this.props.group.emailsPregameCompleted && this.props.group.emailsPregameCompleted.indexOf(email) > -1){
+        readyPregame = true;
+      }
+      var ready = (readySurvey && readyPregame);
+      var started = this.props.group.isActive;
       return(
         <div className="tap-content w-clearfix" key={user._id}>
-          
+          <div className="tap-left card">
+            <div className={"font-card-username "+(ready ? "ready": "not-ready")}>
+              {user.profile.firstName + " " + user.profile.lastName}
+            </div>
+          </div>
+          <div className="show-cards">
+            {ready && started
+            ?
+              this.renderUserCards()
+            :
+              ready 
+              ? 
+                <div className="bttn-next-card">Ready!</div>
+              : 
+              <div>
+              {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
+              {!readySurvey && <div className="bttn-next-card not-ready">Pre-game quiz incomplete</div>}
+              </div>
+            }
+          </div>
         </div>
       )
     });
@@ -255,7 +293,16 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "card"){
         tabContent = 
         <div className="tap-content-wrapper">
-          {this.renderSurveyGraph()}
+          {this.renderUsers(this.props.users)}
+          {!this.props.group.isActive &&
+            <div className="tap-content w-clearfix">
+              <div className="tap-left card">
+              </div>
+              <div className="show-cards">
+                <div className="bttn-next-card wait">Start Game</div>
+              </div>
+            </div>
+          }
         </div>;
       }
       return(
@@ -410,6 +457,7 @@ class GroupPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var group;
+  var users;
   var feedbackCycle;
   var currentFeedbackCycle;
   var handleGroup;
@@ -458,11 +506,19 @@ export default withTracker((props) => {
             },
             { sort: { createdAt: -1 } });
 
+            users = Meteor.users.find(
+              {
+                $or : [ {"emails.address" : {$in:group.emails}  }, 
+                { "profile.emailAddress" : {$in:group.emails}}]
+              }
+            );
+
             dataReady = true;
           }
         }
     }
   return {
+      users:users,
       group:group,
       feedbackCycle:feedbackCycle,
       currentFeedbackCycle:currentFeedbackCycle,
