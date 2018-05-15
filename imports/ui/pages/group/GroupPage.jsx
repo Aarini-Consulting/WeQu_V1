@@ -179,14 +179,36 @@ class GroupPage extends React.Component {
     });
   }
 
+  renderCards(users){
+    return users.map((skill, index) => {
+      return(
+        <div className="tap-content w-clearfix" key={user._id}>
+          
+        </div>
+      )
+    });
+  }
+
   renderSurveyGraph(skills){
-    return skills.map((skill, index) => {
+    if(!skills || skills.length < 1){
+      return(
+        <div className="tap-content w-clearfix">
+          <div className="font-matric">
+            Please check again when survey is completed
+          </div>
+        </div>
+      );
+    }
+    else{
+      return skills.map((skill, index) => {
         var leftPos = 0;
         if(skill.value > 0){
           leftPos = `calc(${ skill.value }% - 40px)`;
         }
+        var scored = skill.scored || 0;
+        var formattedScore = Number.parseFloat(scored).toPrecision(2);
         return (
-          <div className="tap-content w-clearfix">
+          <div className="tap-content w-clearfix" key={skill.name}>
             <div className="tap-left">
               <div className="font-matric">
                 {skill.name}
@@ -196,18 +218,19 @@ class GroupPage extends React.Component {
               <div className="chart-graph w-clearfix">
                 <div className="chart-graph active" style={{width:skill.value + "%"}}></div>
                 <div className="chart-number" style={{left:leftPos}}>
-                  <div className="font-chart-nr">{skill.scored}</div>
+                  <div className="font-chart-nr">{formattedScore}</div>
                 </div>
               </div>
             </div>
             <div className="tap-right">
               <div className="font-matric">
-                {skill.scored} / {skill.total}
+                {formattedScore} / {skill.total}
               </div>
             </div>
           </div>
         );
-    });
+      });
+    }
   }
 
   
@@ -222,11 +245,17 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "survey"){
         tabContent = 
         <div className="tap-content-wrapper">
-          {this.renderSurveyGraph([{name:"Psychological Safety",scored:1,total:1,value:100},
+          {this.renderSurveyGraph([{name:"Psychological Safety",scored:7,total:7,value:100},
           {name:"Feedback",scored:3.5,total:7,value:50},
           {name:"Equal Turntaking",scored:0,total:7,value:0},
           {name:"Shared Goal",scored:1,total:7,value:14.28},
           {name:"Metric 5",scored:5,total:7,value:71.40}])}
+        </div>;
+      }
+      else if(this.state.currentTab == "card"){
+        tabContent = 
+        <div className="tap-content-wrapper">
+          {this.renderSurveyGraph()}
         </div>;
       }
       return(
