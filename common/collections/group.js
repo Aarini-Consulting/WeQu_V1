@@ -16,6 +16,19 @@ GroupSchema = new SimpleSchema({
       optional: true
     },
 
+    "emailsPregameCompleted":{
+      type: [String],
+      label: "emailsPregameCompleted",
+      optional: true
+    },
+
+    "typeformGraph":{
+      type: [Object],
+      label: "typeformGraph",
+      blackbox:true,
+      optional: true
+    },
+    
     "arr_emails_existing":{
       type: [String],
       label: "emails",

@@ -19,9 +19,16 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("group_not_found")); 
         }
-
-        
-      
+    },
+    'set.typeform.graph' : function (groupId,graphData) {
+        let check = Group.findOne({_id:groupId});
+        if(check){
+            Group.update({"_id":groupId},
+                {'$set':{typeformGraph:graphData}
+            });	
+        }else{
+            throw (new Meteor.Error("group_not_found")); 
+        }
     }
 });
   

@@ -13,14 +13,42 @@ class AdminGameMasterView extends React.Component {
             selectedUser:undefined,
             selectedUserGroupList:[],
             selectedGroup:undefined,
+            matrixName1:"name1",
+            matrixName2:"name2",
+            matrixName3:"name3",
+            matrixName4:"name4",
+            matrixName5:"name5",
+            matrixScore1:0,
+            matrixScore2:0,
+            matrixScore3:0,
+            matrixScore4:0,
+            matrixScore5:0,
+            matrixScoreMax:0,
         }
     }
 
     setEditTypeform(group, event){
         event.preventDefault();
         this.setState({
-            selectedGroup:group
+            selectedGroup:group,
         });
+
+        if(group.typeformGraph){
+            var matrix1 = group.typeformGraph[0];
+            var matrix2 = group.typeformGraph[1];
+            var matrix3 = group.typeformGraph[2];
+            var matrix4 = group.typeformGraph[3];
+            var matrix5 = group.typeformGraph[4];
+
+            this.state={
+                matrixScore1:(matrix1 && matrix1.score) ? matrix1.score : 0,
+                matrixScore2:(matrix2 && matrix2.score) ? matrix2.score : 0,
+                matrixScore3:(matrix3 && matrix3.score) ? matrix3.score : 0,
+                matrixScore4:(matrix4 && matrix4.score) ? matrix4.score : 0,
+                matrixScore5:(matrix5 && matrix5.score) ? matrix5.score : 0,
+                matrixScoreMax:(matrix1 && matrix1.score) ? matrix1.total : 7
+            }
+        }
     }
 
     setShowGrouplist(user,groups,event){
@@ -28,7 +56,63 @@ class AdminGameMasterView extends React.Component {
         this.setState({
             selectedUser:user,
             selectedUserGroupList:groups,
-            selectedGroup:undefined
+            selectedGroup:undefined,
+            matrixName1:"name1",
+            matrixName2:"name2",
+            matrixName3:"name3",
+            matrixName4:"name4",
+            matrixName5:"name5",
+            matrixScore1:0,
+            matrixScore2:0,
+            matrixScore3:0,
+            matrixScore4:0,
+            matrixScore5:0,
+            matrixScoreMax:7,
+        });
+    }
+
+    handleTypeformNameChange(stateName, event){
+        this.setState({
+            [stateName]:event.target.value
+        });
+    }
+
+    handleTypeformScoreChange(stateName, event){
+        var value = event.target.value;
+        if(value < 0){
+            value = 0;
+        }
+        if(stateName != "matrixScoreMax"){
+            if(value > this.state.matrixScoreMax){
+                value = this.state.matrixScoreMax;
+            }
+        }
+        this.setState({
+            [stateName]:Number(value)
+        });
+    }
+
+    handleTypeformSubmit(event){
+        event.preventDefault();
+        var typeformGraph = [
+            {name:this.state.matrixName1,score:this.state.matrixScore1, total:this.state.matrixScoreMax},
+            {name:this.state.matrixName2,score:this.state.matrixScore2, total:this.state.matrixScoreMax},
+            {name:this.state.matrixName3,score:this.state.matrixScore3, total:this.state.matrixScoreMax},
+            {name:this.state.matrixName4,score:this.state.matrixScore4, total:this.state.matrixScoreMax},
+            {name:this.state.matrixName5,score:this.state.matrixScore5, total:this.state.matrixScoreMax},
+        ]
+
+        this.setState({
+            sending: true,
+        });
+
+        Meteor.call( 'set.typeform.graph', this.state.selectedGroup._id, typeformGraph, ( error, response ) => {
+            this.setState({
+              sending: false,
+            });
+            if ( error ) {
+              console.log(error);
+            }
         });
     }
 
@@ -166,23 +250,81 @@ class AdminGameMasterView extends React.Component {
                         <div className="col-md-12 col-sm-12 col-xs-12">
                             <div className="widget widget-fullwidth widget-small">
                                 <div className="widget-head">
-                                    <div className="title"><strong>{this.state.selectedUserGroupList.length}</strong> Groups </div>
                                     <a className="w-clearfix w-inline-block cursor-pointer" onClick={this.setEditTypeform.bind(this, undefined)}>
                                     <img className="image-7" src="/img/arrow.svg"/>
                                     </a>
                                 </div>
                                 <div className="table-responsive noSwipe">
-                                    <form>
-                                    <label>Psychological Safety</label>
-                                    <input className="w-input"  ref="matrix1" type="number" required/>
-                                    <label>Feedback</label>
-                                    <input className="w-input"  ref="matrix2" type="number" required/>
-                                    <label>Equal Turntaking</label>
-                                    <input className="w-input"  ref="matrix3" type="number" required/>
-                                    <label>Shared Goal</label>
-                                    <input className="w-input"  ref="matrix4" type="number" required/>
-                                    <label>Metric 5</label>
-                                    <input className="w-input"  ref="matrix5" type="number" required/>
+                                    <table className="table table-fw-widget table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th style={{width:"50%"}}>{this.state.selectedGroup.groupName}</th>
+                                                <th style={{width:"50%"}}></th>
+                                            </tr>
+                                        </thead>				
+                                        
+                                    </table>
+                                    <form onSubmit={this.handleTypeformSubmit.bind(this)}>
+                                    <label>all Matrix max value</label>
+                                    <input className="w-input"  value={this.state.matrixScoreMax} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScoreMax")}/>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Matrix 1 name</label>
+                                            <input className="w-input"  value={this.state.matrixName1} type="text" required onChange={this.handleTypeformNameChange.bind(this,"matrixName1")}/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <label>Matrix 1 value</label>
+                                            <input className="w-input"  value={this.state.matrixScore1} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore1")}/>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Matrix 2 name</label>
+                                            <input className="w-input"  value={this.state.matrixName2} type="text" required onChange={this.handleTypeformNameChange.bind(this,"matrixName2")}/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <label>Matrix 2 value</label>
+                                            <input className="w-input"  value={this.state.matrixScore2} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore2")}/>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>matrix 3 name</label>
+                                            <input className="w-input"  value={this.state.matrixName3} type="text" required onChange={this.handleTypeformNameChange.bind(this,"matrixName3")}/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <label>Matrix 3 value</label>
+                                            <input className="w-input"  value={this.state.matrixScore3} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore3")}/>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Matrix 4 name</label>
+                                            <input className="w-input"  value={this.state.matrixName4} type="text" required onChange={this.handleTypeformNameChange.bind(this,"matrixName4")}/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <label>Matrix 4 value</label>
+                                            <input className="w-input"  value={this.state.matrixScore4} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore4")}/>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <label>Matrix 5 name</label>
+                                            <input className="w-input"  value={this.state.matrixName5} type="text" required onChange={this.handleTypeformNameChange.bind(this,"matrixName5")}/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <label>Matrix 5 value</label>
+                                            <input className="w-input"  value={this.state.matrixScore5} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore5")}/>
+                                        </div>
+                                    </div>
+
                                     <input className="submit-button w-button" type="submit" value="Set Typeform Score"/>
                                     </form>
                                 </div>
