@@ -3444,6 +3444,77 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color: #fff;
 }
 
+.font-number {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  margin-top: 0px;
+  margin-right: 30px;
+  margin-left: 0px;
+  float: left;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border: 1px solid #299199;
+  border-radius: 100px;
+  background-color: #202020;
+  color: #299199;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.font-number.c-1 {
+  border-style: none;
+  background-color: #ea5184;
+  box-shadow: 0 0 6px 0 #202020;
+  color: #fff;
+}
+
+.font-number.c-2 {
+  border-style: none;
+  border-color: #7962a8;
+  background-color: #7962a8;
+  box-shadow: 0 0 6px 0 #202020;
+  color: #fff;
+}
+
+.font-number.c-3 {
+  background-color: #299199;
+  box-shadow: 0 0 6px 0 #202020;
+  color: #fff;
+}
+
+.font-number.c-4 {
+  border-style: none;
+  border-color: #fff;
+  background-color: #e9682b;
+  box-shadow: 0 0 6px 0 #202020;
+  color: #fff;
+}
+
+.font-number.c-5 {
+  border-style: none;
+  background-color: #204d8a;
+  box-shadow: 0 0 6px 0 #202020;
+  color: #fff;
+}
+
+.font-number.c-6 {
+  border-style: none;
+  background-color: #308a4f;
+  color: #fff;
+}
+
+
 .fontreleway.f-c-invite {
   color: #a0a0a0;
   font-size: 1.2em;

@@ -182,7 +182,8 @@ class GroupPage extends React.Component {
   renderUserCards(cards){
     return cards.map((card, index) => {
       return(
-        <div className="tap-content w-clearfix" key={card._id}>
+        <div className={"font-number "+card.type} key={card._id}>
+          {card.number}
         </div>
       )
     });
@@ -210,7 +211,11 @@ class GroupPage extends React.Component {
           <div className="show-cards">
             {ready && started
             ?
-              this.renderUserCards()
+              this.renderUserCards([
+                {_id:1,type:"c-1",number:25},{_id:2,type:"c-2",number:5},{_id:3,type:"c-3",number:35},
+                {_id:4,type:"c-4",number:25},{_id:5,type:"c-5",number:25},{_id:6,type:"c-6",number:25},
+                {_id:7,type:"c-7",number:25}
+              ])
             :
               ready 
               ? 
