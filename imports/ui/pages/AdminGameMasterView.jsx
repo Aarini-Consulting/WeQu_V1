@@ -29,10 +29,6 @@ class AdminGameMasterView extends React.Component {
 
     setEditTypeform(group, event){
         event.preventDefault();
-        this.setState({
-            selectedGroup:group,
-        });
-
         if(group.typeformGraph){
             var matrix1 = group.typeformGraph[0];
             var matrix2 = group.typeformGraph[1];
@@ -40,15 +36,19 @@ class AdminGameMasterView extends React.Component {
             var matrix4 = group.typeformGraph[3];
             var matrix5 = group.typeformGraph[4];
 
-            this.state={
-                matrixScore1:(matrix1 && matrix1.score) ? matrix1.score : 0,
-                matrixScore2:(matrix2 && matrix2.score) ? matrix2.score : 0,
-                matrixScore3:(matrix3 && matrix3.score) ? matrix3.score : 0,
-                matrixScore4:(matrix4 && matrix4.score) ? matrix4.score : 0,
-                matrixScore5:(matrix5 && matrix5.score) ? matrix5.score : 0,
-                matrixScoreMax:(matrix1 && matrix1.score) ? matrix1.total : 7
-            }
+            this.setState({
+                matrixScore1:((matrix1 && matrix1.score) ? matrix1.score : 0),
+                matrixScore2:((matrix2 && matrix2.score) ? matrix2.score : 0),
+                matrixScore3:((matrix3 && matrix3.score) ? matrix3.score : 0),
+                matrixScore4:((matrix4 && matrix4.score) ? matrix4.score : 0),
+                matrixScore5:((matrix5 && matrix5.score) ? matrix5.score : 0),
+                matrixScoreMax:((matrix1 && matrix1.score) ? matrix1.total : 7)
+            });
         }
+
+        this.setState({
+            selectedGroup:group,
+        });
     }
 
     setShowGrouplist(user,groups,event){

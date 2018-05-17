@@ -245,11 +245,19 @@ class GroupPage extends React.Component {
     else{
       return skills.map((skill, index) => {
         var leftPos = 0;
-        if(skill.value > 0){
-          leftPos = `calc(${ skill.value }% - 40px)`;
+        var total = skill.total || 0;
+        var score = skill.score || 0;
+        var formattedScore = Number.parseFloat(score).toPrecision(2);
+
+        var value = 0;
+        if(total > 0){
+          value = formattedScore/total * 100;
         }
-        var scored = skill.scored || 0;
-        var formattedScore = Number.parseFloat(scored).toPrecision(2);
+        
+        if(value > 0){
+          leftPos = `calc(${ value }% - 40px)`;
+        }
+        
         return (
           <div className="tap-content w-clearfix" key={skill.name}>
             <div className="tap-left">
@@ -259,7 +267,7 @@ class GroupPage extends React.Component {
             </div>
             <div className="show-numbers">
               <div className="chart-graph w-clearfix">
-                <div className="chart-graph active" style={{width:skill.value + "%"}}></div>
+                <div className="chart-graph active" style={{width:value + "%"}}></div>
                 <div className="chart-number" style={{left:leftPos}}>
                   <div className="font-chart-nr">{formattedScore}</div>
                 </div>
@@ -267,7 +275,7 @@ class GroupPage extends React.Component {
             </div>
             <div className="tap-right">
               <div className="font-matric">
-                {formattedScore} / {skill.total}
+                {formattedScore} / {total}
               </div>
             </div>
           </div>
@@ -288,11 +296,13 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "survey"){
         tabContent = 
         <div className="tap-content-wrapper">
-          {this.renderSurveyGraph([{name:"Psychological Safety",scored:7,total:7,value:100},
+          {/* {this.renderSurveyGraph([{name:"Psychological Safety",scored:7,total:7,value:100},
           {name:"Feedback",scored:3.5,total:7,value:50},
           {name:"Equal Turntaking",scored:0,total:7,value:0},
           {name:"Shared Goal",scored:1,total:7,value:14.28},
-          {name:"Metric 5",scored:5,total:7,value:71.40}])}
+          {name:"Metric 5",scored:5,total:7,value:71.40}])} */}
+
+          {this.renderSurveyGraph(this.props.group.typeformGraph)}
         </div>;
       }
       else if(this.state.currentTab == "card"){
