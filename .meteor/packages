@@ -53,7 +53,7 @@ wizonesolutions:moment-duration-format
 # cfs:filesystem
 
 alanning:roles
-mizzao:user-status 
 react-meteor-data
 http
 d3js:d3
+mizzao:user-status

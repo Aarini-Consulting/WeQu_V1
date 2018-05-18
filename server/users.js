@@ -182,6 +182,13 @@ Meteor.methods({
         });
     }
   },
+  'user.set.pregame'(id, groupId) {
+    Meteor.users.update(id, { 
+      '$set': {
+          'profile.pregame': groupId,
+          } 
+      });
+  },
   'user.update.gender'(gender) {
     Meteor.users.update(Meteor.userId(), { 
       '$set': {

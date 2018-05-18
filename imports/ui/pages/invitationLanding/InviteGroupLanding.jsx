@@ -33,15 +33,15 @@ class InviteGroupLanding extends React.Component {
 
   render() {
     if(this.props.dataReady){
-        if(this.props.currentUser && this.props.currentUser.emails[0].address != this.props.match.params.email){
-            return(
-                <div className="fillHeight">
-                <h1>This link is not meant for you</h1>
-                </div>
-            )
-            
-        }
-      else if(this.props.group && this.props.group.emails.indexOf(this.props.match.params.email) > -1){
+      if(this.props.currentUser && this.props.currentUser.emails[0].address != this.props.match.params.email){
+          return(
+              <div className="fillHeight">
+              <h1>This link is not meant for you</h1>
+              </div>
+          )
+          
+      }
+      else if(this.props.quizUser && this.props.group && this.props.group.emails.indexOf(this.props.match.params.email) > -1){
         if(this.props.surveyCompleted || this.state.surveyCompleted){  
           if(this.props.quizUser && !this.props.quizUser.profile.trial){
             if(Meteor.userId()){
@@ -107,7 +107,13 @@ export default withTracker((props) => {
     
     if(group){
         quizUser = Meteor.users.findOne({$or : [ {"emails.address" :props.match.params.email }, { "profile.emailAddress" : props.match.params.email }]} );
-        surveyCompleted = group.emailsSurveyed && group.emailsSurveyed.indexOf(props.match.params.email) > -1
+        surveyCompleted = group.emailsSurveyed && group.emailsSurveyed.indexOf(props.match.params.email) > -1;
+
+        if(quizUser){
+          Meteor.call('user.set.pregame', quizUser._id, group._id, (err, result) => {
+            console.log(err)
+          });
+        }
     }
     dataReady = true;
   }

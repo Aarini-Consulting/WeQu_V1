@@ -7,6 +7,7 @@ import Loading from './loading/Loading';
 // import ScriptLoginInit from './ScriptLoginInit'; 
 import EmailVerified from './accounts/EmailVerified'; 
 import Quiz from './quiz/Quiz'; 
+import QuizPregameReminder from './quizPregame/QuizPregameReminder'; 
 import Profile from './profile/Profile'; 
 import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
 import Invite from './invite/Invite';
@@ -14,24 +15,58 @@ import Invite from './invite/Invite';
 import {init} from '/imports/ui/pages/profile/minBlock';
 
 class ScriptLogin extends React.Component {
-  render() {
-        if(this.props.dataReady){
-            if(this.props.currentUser && this.props.currentUser.profile  && this.props.currentUser.profile.loginScript){
-                if(!this.props.currentUser.profile.pictureUrl){
-                    //create random gravatar image and store it in profile
-                    var gravatar = init({
-                        divId          : "gravatar",
-                        time           : 200,
-                        randomColor    : false,
-                        pause           :true
-                      });
-                    Meteor.call('store.profile.picture',gravatar.toDataURL(), (error, result) => {
-                        if(error){
-                            console.log(error);
-                        }
-                    })
-                }
+    constructor(props){
+        super(props);
+        this.state={
+          showPregameReminder:false,
+        }
+    }
 
+    componentDidMount(){
+        this.setState({
+            showPregameReminder: (this.props.groups && this.props.groups.length > 0),
+          });
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            showPregameReminder: (nextProps.groups && nextProps.groups.length > 0),
+        });
+    }
+
+    render() {
+        if(this.props.dataReady){
+            if(this.props.currentUser && this.props.currentUser.profile  && !this.props.currentUser.profile.pictureUrl){
+                //create random gravatar image and store it in profile
+                var gravatar = init({
+                    divId          : "gravatar",
+                    time           : 200,
+                    randomColor    : false,
+                    pause           :true
+                  });
+                Meteor.call('store.profile.picture',gravatar.toDataURL(), (error, result) => {
+                    if(error){
+                        console.log(error);
+                    }
+                })
+            }
+
+            if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.pregame){
+                return(
+                    <QuizPregame user={this.props.currentUser}/>
+                );
+            }
+            else if(this.state.showPregameReminder){
+                return(
+                    <QuizPregameReminder user={this.props.currentUser} groups={this.props.groups} 
+                    hideReminder={()=>{
+                        this.setState({
+                            showPregameReminder: false,
+                        });
+                    }} />
+                );
+            }
+            else if(this.props.currentUser && this.props.currentUser.profile  && this.props.currentUser.profile.loginScript){
                 switch(this.props.currentUser.profile.loginScript) {
                     case 'init': {
                         var condition = true;
@@ -101,10 +136,30 @@ class ScriptLogin extends React.Component {
 
 export default withTracker((props) => {
     var dataReady;
+    var groups;
 
     if(Meteor.userId()){
         if(Meteor.user()){
-            dataReady = true;
+            var email = Meteor.user().emails[0].address;
+            handleGroup = Meteor.subscribe('group',{
+                $and : [ {"emails" : email }, 
+                { "emailsPregameCompleted" : {$nin:[email]}}]
+                
+            },{}, {
+                onError: function (error) {
+                      console.log(error);
+                  }
+            });
+
+            if(handleGroup.ready()){
+                groups = Group.find({
+                    $and : [ {"emails" : email }, 
+                    { "emailsPregameCompleted" : {$nin:[email]}}]
+                    
+                }).fetch();
+
+                dataReady = true;
+            }
         }
     }else{
         dataReady = true;
@@ -112,6 +167,7 @@ export default withTracker((props) => {
     
     return {
         dataReady:dataReady,
+        groups:groups,
         currentUser: Meteor.user()
     };
   })(ScriptLogin);
