@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
-import Quiz from './Quiz';
 import QuizPregame from './QuizPregame';
 
 class QuizPregamePage extends React.Component {

@@ -291,7 +291,7 @@ class GroupPage extends React.Component {
       var tabContent;
 
       if(this.state.currentTab == "edit"){
-        tabContent = <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)} isEdit={true} group={this.props.group} />
+        tabContent = <InviteGroup isEdit={true} group={this.props.group} />
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 

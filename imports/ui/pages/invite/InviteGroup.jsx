@@ -226,8 +226,16 @@ class InviteGroup extends React.Component {
 
     handleBackArrowClick(){
     if(this.props.isEdit || (this.props.count && this.props.count > 0)){
-            this.props.closeInviteGroup();
+        if(this.props.closeInviteGroup){
+          this.props.closeInviteGroup();
+        }else{
+          this.setState({
+            inviteSuccess: false,
+            inviteStatus:false
+          });
         }
+            
+      }
     }
 
     setGender(g){
