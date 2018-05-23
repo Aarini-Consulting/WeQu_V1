@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
+import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
@@ -67,11 +68,7 @@ class QuizPregame extends React.Component {
 
     componentWillReceiveProps(nextProps){
         if(!this.props.dataReady && nextProps.dataReady){
-            this.setState({
-                start: new Date(),
-            },()=>{
-                this.timer = setInterval(this.tick.bind(this), 1000);
-            });
+            this.setTimer(true);
         }
     }
 
@@ -79,7 +76,7 @@ class QuizPregame extends React.Component {
         // componentDidMount is called by react when the component 
         // has been rendered on the page. We can set the interval here:
         if(this.timer){
-            clearInterval(this.timer);
+            this.setTimer(false);
         }
         
     }
@@ -89,9 +86,21 @@ class QuizPregame extends React.Component {
         this.setState({
             quizOver: true,
         });
-        clearInterval(this.timer);
+        this.setTimer(false);
 
 
+    }
+
+    setTimer(bool){
+        if(bool){
+            this.setState({
+                start: new Date(),
+            },()=>{
+                this.timer = setInterval(this.tick.bind(this), 1000);
+            });
+        }else{
+            clearInterval(this.timer);
+        }
     }
 
     tick(){
@@ -134,7 +143,7 @@ class QuizPregame extends React.Component {
                         <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
                     </div>
                     <div className="w-block cursor-pointer">
-                        <div className="font-rate f-bttn w-inline-block" onClick={this.quizFinished.bind(this)}>Done!</div>
+                        <div className="font-rate f-bttn w-inline-block noselect" onClick={this.quizFinished.bind(this)}>Done!</div>
                     </div>
                     </section>
                 </div>

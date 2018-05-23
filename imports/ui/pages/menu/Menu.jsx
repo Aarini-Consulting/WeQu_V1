@@ -26,29 +26,18 @@ export default class Menu extends React.Component {
     render() {
         return (
             <div className="menubar w-clearfix">
-                <a onClick={this.decideAction.bind(this,"/quiz")} 
-                className={"text fontreleway fontmenu " + this.isCurrent("/quiz")}>quiz</a>
                 {Roles.userIsInRole( Meteor.userId(), 'GameMaster' )
                 ? 
-                    <div className={"text fontreleway fontmenu _2 "+ this.isCurrent("/invite") + this.isCurrent("/invite-group") +" dd-contact"}>
-                        contact
-                        <span className="dropdown-arrow"></span>
-                        <div className="dd-contact-box">
-                            <a onClick={this.decideAction.bind(this,"/invite")} className="text fontreleway fontmenu fdropdown w-dropdown-a">personal</a>
-                            <a onClick={this.decideAction.bind(this,"/invite-group")} className="text fontreleway fontmenu fdropdown w-dropdown-a">Group</a>
-                        </div>
-                    </div>
-                :
-                    <a onClick={this.decideAction.bind(this,"/invite")} 
-                    className={"text fontreleway fontmenu _2 " + this.isCurrent("/invite")}>
-                        contact
+                    <a onClick={this.decideAction.bind(this,"/invite-group")} 
+                    className={"text fontreleway fontmenu _2 " + this.isCurrent("/invite-group")}>
+                        groups
+                    </a>
+                :   
+                    <a onClick={this.decideAction.bind(this,"/")} 
+                    className={"text fontreleway fontmenu _2 " + this.isCurrent("/")}>
+                        home
                     </a>
                 }
-
-                <a onClick={this.decideAction.bind(this,"/profile")} 
-                className={"text fontreleway fontmenu _3 " + this.isCurrent("/profile")}>
-                    profile
-                </a>
                 
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
