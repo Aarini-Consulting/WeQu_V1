@@ -7,76 +7,144 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
-const SortableItem = SortableElement(({value}) =>
-    <div className="rate-box w-clearfix cursor-pointer">
+const SortableItem = SortableElement(({value, disabled}) =>
+    <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
             <div className="rate-line"></div>
             <div className="rate-line"></div>
             <div className="rate-line"></div>
         </div>
-        <div className="font-rate-quality">{value}</div>
+        <div className={"font-rate-quality" + (disabled ? " noselect":"")}>{value.toString().replace("_"," ")}</div>
     </div>
 );
 
-const SortableList = SortableContainer(({items}) => {
+const SortableList = SortableContainer(({items, disabled}) => {
   return (
     <div className="w-block">
       {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
+        <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled}/>
       ))}
     </div>
   );
 });
 
-class SortableComponent extends React.Component {
+class QuizPregame extends React.Component {
     constructor(props){
         super(props);
+        var timer = undefined;
         this.state = {
-            items: ['Item 1a;dklfj;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 
-            'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
+            start: undefined,
+            elapsed:0,
+            items:[],
+            firstSwipe:undefined,
+            quizOver:false
           };
     }
-  
+
+    componentDidMount(){
+        Meteor.call( 'generate.pregame.quiz.from.csv', Meteor.userId(), (error, result)=>{
+            if(result){
+                var items=[];
+                for(var r in result){
+                    var quiz = result[r];
+                    var subCategory = quiz.subCategory;
+                    var min = Math.ceil(0);
+                    var max = Math.floor(subCategory.length);
+                    var randomIndex =  Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+                    items.push(subCategory[randomIndex])
+                }
+                this.setState({
+                    items: items,
+                });
+            }else{
+                this.setState({
+                    items: undefined,
+                });
+                console.log(error);
+            }
+        });
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(!this.props.dataReady && nextProps.dataReady){
+            this.setState({
+                start: new Date(),
+            },()=>{
+                this.timer = setInterval(this.tick.bind(this), 1000);
+            });
+        }
+    }
+
+    componentWillUnmount(){
+        // componentDidMount is called by react when the component 
+        // has been rendered on the page. We can set the interval here:
+        if(this.timer){
+            clearInterval(this.timer);
+        }
+        
+    }
+
+    quizFinished(){
+        console.log("it's over");
+        this.setState({
+            quizOver: true,
+        });
+        clearInterval(this.timer);
+
+
+    }
+
+    tick(){
+        // This function is called every 1000 ms. It updates the 
+        // elapsed counter. Calling setState causes the component to be re-rendered
+        if(this.state.elapsed <= 60000){
+             this.setState({elapsed: new Date() - this.state.start});
+        }
+        else{
+            this.quizFinished();
+        }
+    }
+
     onSortEnd(newArray){
+        if(this.state.firstSwipe){
+            this.setState({
+                firstSwipe: {item:this.state.items[newArray.oldIndex], startingIndex: newArray.oldIndex, newIndex: newArray.newIndex},
+            });
+        }
         this.setState({
             items: arrayMove(this.state.items, newArray.oldIndex, newArray.newIndex),
         });
     };
-    render() {
-        return <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} />;
-    }
-}
 
-class QuizPregame extends React.Component {
-  render() {
-    if(this.props.dataReady){
-        return (
-            <div className="fillHeight">
-                <section className="section summary fontreleway purple-bg">
-                <div className="section-name font-rate font-name-header">
-                    {this.props.currentUser && this.props.currentUser.profile &&
-                        this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
-                    }
+    render() {
+        if(this.props.dataReady){
+            return (
+                <div className="fillHeight">
+                    <section className="section summary fontreleway purple-bg">
+                    <div className="section-name font-rate font-name-header">
+                        {this.props.currentUser && this.props.currentUser.profile &&
+                            this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
+                        }
+                    </div>
+                    <div className="div-time-100">
+                        <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
+                    </div>
+                    <div className="rate-content">
+                        <div className="font-rate font-name-header f-white">Rank your qualities in 60 seconds</div>
+                        <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
+                    </div>
+                    <div className="w-block cursor-pointer">
+                        <div className="font-rate f-bttn w-inline-block" onClick={this.quizFinished.bind(this)}>Done!</div>
+                    </div>
+                    </section>
                 </div>
-                <div className="div-time-100">
-                    <div className="actual-time" style={{width:60 +"%"}}></div>
-                </div>
-                <div className="rate-content">
-                    <div className="font-rate font-name-header f-white">Rank my qualities in 60 seconds</div>
-                    <SortableComponent/>
-                </div>
-                <div className="w-block cursor-pointer">
-                    <div className="font-rate f-bttn w-inline-block">Done!</div>
-                </div>
-                </section>
-            </div>
-        );
-    }else{
-      return(
-        <Loading/>
-      );
+            );
+        }else{
+            return(
+                <Loading/>
+            );
+        }
     }
-  }
 }
 
 export default withTracker((props) => {
@@ -111,7 +179,6 @@ export default withTracker((props) => {
     }else{
         dataReady = true;
     }
-    
    
   return {
       group:group,

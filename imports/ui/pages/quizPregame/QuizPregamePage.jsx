@@ -17,7 +17,7 @@ class QuizPregamePage extends React.Component {
                     {group.groupName}									
                     </td>
                     <td>
-                    <Link to={`pregame/${ group._id }`} id="sign-up" className="loginBtn">go to quiz</Link>
+                    <Link to={`pregame/${ group._id }`} className="loginBtn">go to pregame quiz</Link>
                     </td>
                 </tr>
             )

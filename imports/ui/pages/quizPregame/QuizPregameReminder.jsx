@@ -17,7 +17,7 @@ class QuizPregameReminder extends React.Component {
             <div className="fillHeight">
             <h1>Hi, you have pending pregame quiz</h1>
             {this.props.groups && this.props.groups.length > 0 &&
-                <Link to={link} id="sign-up" className="loginBtn">Let's do this</Link>
+                <Link to={link} className="loginBtn">Let's do this</Link>
             }
             <div onClick={this.props.hideReminder}>ignore</div>
             </div>
