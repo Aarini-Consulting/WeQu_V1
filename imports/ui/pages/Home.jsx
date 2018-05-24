@@ -59,16 +59,7 @@ class Home extends React.Component {
                     <QuizPregame user={this.props.currentUser}/>
                 );
             }
-            else if(this.state.showPregameReminder){
-                return(
-                    <QuizPregameReminder user={this.props.currentUser} groups={this.props.groups} 
-                    hideReminder={()=>{
-                        this.setState({
-                            showPregameReminder: false,
-                        });
-                    }} />
-                );
-            }else{
+            else{
                 if(Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
                     return(
                         <Redirect to="/invite-group"/>
@@ -76,7 +67,6 @@ class Home extends React.Component {
                 }else{
                     return(
                         <div className="fillHeight">
-                            <Menu location={this.props.location} history={this.props.history}/>
                             <section className="section summary fontreleway groupbg">
                             <h1>im home</h1>
                             </section>
