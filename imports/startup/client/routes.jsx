@@ -19,7 +19,6 @@ import CheckLoginVerified from './CheckLoginVerified';
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
 import Home from '/imports/ui/pages/Home';
 import QuizPage from '/imports/ui/pages/quiz/QuizPage';
-import QuizPregamePage from '/imports/ui/pages/quizPregame/QuizPregamePage';
 import QuizPregame from '/imports/ui/pages/quizPregame/QuizPregame';
 import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
 import InvitePage from '/imports/ui/pages/invite/InvitePage';
@@ -113,8 +112,7 @@ const App = () => (
       {/* <Route exact path='/quiz' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} /> */}
       {/* <Route exact path='/quiz/:uid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} /> */}
       {/* <Route exact path='/quiz/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} /> */}
-      <Route exact path='/quiz-pregame/' render={(props) => (<CheckLoginVerified childComponent={<QuizPregamePage {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz-pregame/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPregame {...props}/>} {...props}/>)} />
+      <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPregame {...props}/>} {...props}/>)} />
       {/* <Route exact path='/profile' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} /> */}
       {/* <Route exact path='/profile/:uid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} /> */}
       {/* <Route exact path='/profile/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} /> */}

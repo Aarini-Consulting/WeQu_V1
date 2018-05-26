@@ -3324,6 +3324,86 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background-attachment: fixed;
 }
 
+.section.home{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-top{
+  width: 100%;
+}
+
+.home-group-list-wrapper{
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, .05);
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.group-row{
+  display: flex;
+  width:100%;
+  flex-direction: row;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.group-entry-left{
+  width:50%;
+  padding:0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: right;
+  font-family: Raleway, sans-serif;
+  font-size: 1.2em;
+  word-break:break-all;
+}
+
+.group-entry-right{
+  width:50%;
+  padding:0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  font-family: Raleway, sans-serif;
+  font-size: 0.8em;
+  word-break:break-all;
+}
+
+.group-entry-right.s-1 {
+  color: #3e9f32;
+}
+
+.group-entry-right.s-2 {
+  color: #e9682b;
+}
+
+.group-entry-right.s-3 {
+  color: #1db4c0;
+}
+
+.group-entry-right.s-4 {
+  color: #aaa6a6;
+}
+
+.ring {
+  width:12em;
+  height:12em;
+  background-image: url("/img/assets/WEQU_LOGO_NEW.png");
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  margin:auto;
+}
+
 .section-name{
   display: -webkit-box;
   display: -webkit-flex;
@@ -3367,6 +3447,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-size: 2em;
   line-height: 1.4em;
   text-align: center;
+}
+
+.font-rate.f-em1{
+  font-size: 1em;
+  margin-top:1em;
+  padding-bottom:2em;
 }
 
 .font-rate.font-name-header {
@@ -3643,6 +3729,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 @media (max-width: 479px) {
+  .group-entry-left{
+    width:100%;
+    text-align: center;
+  }
+  .group-entry-right{
+    width:100%;
+    text-align: center;
+  }
   .column-3 {
     position: static;
     display: block;
