@@ -182,12 +182,18 @@ Meteor.methods({
         });
     }
   },
-  'user.set.pregame'(id, groupId) {
-    Meteor.users.update(id, { 
-      '$set': {
-          'profile.pregame': groupId,
-          } 
-      });
+  'user.set.self.rank'(id, groupId) {
+    let groupCheck = Group.findOne({_id:groupId});
+    let userCheck = Meteor.users.findOne(id);
+
+    var emailsSurveyed = groupCheck.emailsSurveyed;
+    if(!emailsSurveyed || (emailsSurveyed && emailsSurveyed.indexOf(userCheck.emails[0].address) == -1)){
+      Meteor.users.update(id, { 
+        '$set': {
+            'profile.selfRank': groupId,
+            } 
+        });
+    }
   },
   'user.update.gender'(gender) {
     Meteor.users.update(Meteor.userId(), { 
@@ -248,6 +254,14 @@ Meteor.methods({
         {});
 
       Feedback.remove(
+        {$or : [
+          { "from": currentUser._id},
+          { "to": currentUser._id}
+          ] 
+        },
+        {});
+
+      FeedbackRank.remove(
         {$or : [
           { "from": currentUser._id},
           { "to": currentUser._id}

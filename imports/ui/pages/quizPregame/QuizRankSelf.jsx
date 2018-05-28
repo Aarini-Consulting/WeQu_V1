@@ -29,7 +29,7 @@ const SortableList = SortableContainer(({items, disabled}) => {
   );
 });
 
-class QuizPregame extends React.Component {
+class QuizRankSelf extends React.Component {
     constructor(props){
         super(props);
         var timer = undefined;
@@ -46,7 +46,7 @@ class QuizPregame extends React.Component {
     }
 
     componentWillMount(){
-        Meteor.call( 'generate.pregame.quiz.from.csv', Meteor.userId(), (error, result)=>{
+        Meteor.call( 'generate.self.rank.quiz.from.csv', Meteor.userId(), (error, result)=>{
             if(result){
                 //result has 6 main categories
                 //each main category has 4 sub-categories
@@ -108,7 +108,7 @@ class QuizPregame extends React.Component {
                 this.state.items.forEach((el,index,array) => {
                     rankObject[el]=(array.length - index)
                 });
-                  
+                console.log(rankObject);
                 Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
                     if(error){
                         console.log(error)
@@ -174,7 +174,7 @@ class QuizPregame extends React.Component {
             items: arrayMove(this.state.items, newArray.oldIndex, newArray.newIndex),
         });
     };
-
+    
     render() {
         if(this.props.dataReady && !this.state.savingData){
             return (
@@ -210,6 +210,7 @@ class QuizPregame extends React.Component {
                     </section>
                 </div>
             );
+            
         }else{
             return(
                 <Loading/>
@@ -223,27 +224,27 @@ export default withTracker((props) => {
     var group;
     var currentUser;
 
-    if(props.user && props.user.profile.pregame){
-        var handleGroup = Meteor.subscribe('group',{_id:props.user.profile.pregame},{}, {
+    if(props.user && props.user.profile.selfRank){
+        var handleGroup = Meteor.subscribe('group',{_id:props.user.profile.selfRank},{}, {
             onError: function (error) {
                   console.log(error);
               }
         });
 
         if(handleGroup.ready()){
-            group = Group.findOne({_id:props.user.profile.pregame});
+            group = Group.findOne({_id:props.user.profile.selfRank});
             currentUser = props.user;
             dataReady = true;
         }
-    }else if(props.match.params.gid){
-        var handleGroup = Meteor.subscribe('group',{_id:props.match.params.gid},{}, {
+    }else if(props.group){
+        var handleGroup = Meteor.subscribe('group',{_id:props.group._id},{}, {
             onError: function (error) {
                   console.log(error);
-              }
+            }
         });
 
         if(handleGroup.ready()){
-            group = Group.findOne({_id:props.match.params.gid});
+            group = Group.findOne({_id:props.group._id});
             currentUser = Meteor.user();
             dataReady = true;
         }
@@ -256,4 +257,4 @@ export default withTracker((props) => {
       currentUser:currentUser,
       dataReady:dataReady,
   };
-})(QuizPregame);
+})(QuizRankSelf);

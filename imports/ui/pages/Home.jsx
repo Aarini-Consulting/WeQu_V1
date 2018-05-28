@@ -8,7 +8,6 @@ import Loading from './loading/Loading';
 // import ScriptLoginInit from './ScriptLoginInit'; 
 import EmailVerified from './accounts/EmailVerified'; 
 import Quiz from './quiz/Quiz';
-import QuizPregame from './quizPregame/QuizPregame';
 import Profile from './profile/Profile'; 
 import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
 import Invite from './invite/Invite';
@@ -16,38 +15,21 @@ import Invite from './invite/Invite';
 import {init} from '/imports/ui/pages/profile/minBlock';
 
 import Menu from '/imports/ui/pages/menu/Menu';
+import LandingSurveyComponent from './survey/LandingSurveyComponent';
 
 class Home extends React.Component {
     constructor(props){
         super(props);
-        this.state={
-          showPregameReminder:false,
-        }
-    }
-
-    componentDidMount(){
-        this.setState({
-            showPregameReminder: (this.props.groups && this.props.groups.length > 0),
-          });
-    }
-
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            showPregameReminder: (nextProps.groups && nextProps.groups.length > 0),
-        });
     }
 
     renderGroups(){
         return this.props.groups.map((group, index) => {
             var email = this.props.currentUser.emails[0].address;
-            var readySurvey, readyPregame;
+            var readySurvey;
             if(group.emailsSurveyed && group.emailsSurveyed.indexOf(email) > -1){
               readySurvey = true;
             }
-            if(group.emailsPregameCompleted && group.emailsPregameCompleted.indexOf(email) > -1){
-              readyPregame = true;
-            }
-            var ready = (readySurvey && readyPregame);
+            var ready = (readySurvey);
             var started = group.isActive;
             var finished = group.isFinished;
             var status;
@@ -91,39 +73,73 @@ class Home extends React.Component {
                     }
                 })
             }
-
-            if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.pregame){
-                return(
-                    <QuizPregame user={this.props.currentUser}/>
-                );
+            if(Roles.userIsInRole( Meteor.userId(), 'admin' )){
+                Session.set( "loggedOut", true);
+                Meteor.logout((error)=>{
+                    if(error){
+                      console.log(error);
+                      return false;
+                    }else{
+                        this.props.history.replace('/login');
+                    }
+                  });
+                return false;
             }
-            else{
-                if(Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
+            else if(this.props.currentUser && this.props.currentUser.emails && this.props.currentUser.emails[0].verified){
+                if(this.props.currentUser && this.props.currentUser.profile && this.props.currentUser.profile.selfRank){
                     return(
-                        <Redirect to="/invite-group"/>
-                    )
-                }else{
-                    return(
-                        
-                            <section className="section home fontreleway">
-                            <div className="w-block home-top weq-bg">
-                                <div className="screentitlewrapper w-clearfix">
-                                    <div className="fontreleway font-invite-title edit w-clearfix">
-                                    <Link className="cursor-pointer" to="/settings">Settings</Link>
-                                    </div>
-                                </div>
-                                <div className="ring"></div>
-                                <div className="font-rate rank-separator-top">Welcome!</div>
-                                <div className="font-rate f-em1">Select a group below</div>
-                            </div>
-                            <div className="w-block home-group-list-wrapper">
-                                {this.renderGroups()}
-                            </div>
-
-                            </section>
-                    )
+                        <LandingSurveyComponent user={this.props.currentUser}/>
+                    );
                 }
+                else{
+                    if(Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
+                        return(
+                            <Redirect to="/invite-group"/>
+                        )
+                    }else if(this.props.groups && this.props.groups.length > 0){
+                        return(
+                            <section className="section home fontreleway">
+                                <div className="w-block home-top weq-bg">
+                                    <div className="screentitlewrapper w-clearfix">
+                                        <div className="fontreleway font-invite-title edit w-clearfix">
+                                        <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                        </div>
+                                    </div>
+                                    <div className="ring"></div>
+                                    <div className="font-rate rank-separator-top">Welcome!</div>
+                                    <div className="font-rate f-em1">Select a group below</div>
+                                </div>
+                                <div className="w-block home-group-list-wrapper">
+                                    {this.renderGroups()}
+                                </div>
+                            </section>
+                        )
+                    }else{
+                        return(
+                            <section className="section home fontreleway">
+                                <div className="w-block home-top weq-bg">
+                                    <div className="screentitlewrapper w-clearfix">
+                                        <div className="fontreleway font-invite-title edit w-clearfix">
+                                        <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                        </div>
+                                    </div>
+                                    <div className="ring"></div>
+                                    <div className="font-rate rank-separator-top">Welcome!</div>
+                                </div>
+                                <div className="w-block home-group-list-wrapper">
+                                    <img src="https://orig00.deviantart.net/798a/f/2012/319/2/9/nothing_to_do_here_gif_by_cartoonzack-d5l4eqj.gif"/>
+                                </div>
+                            </section>
+                        );
+                    }
+                }
+            }else{
+                return(
+                    <EmailVerified/>
+                )
             }
+
+            
         }
         else{
             return(
@@ -153,6 +169,8 @@ export default withTracker((props) => {
                 groups = Group.find({
                     "emails" : email 
 
+                },{
+                    sort: { groupName: -1 }
                 }).fetch();
 
                 dataReady = true;

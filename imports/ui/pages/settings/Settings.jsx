@@ -73,7 +73,7 @@ class Settings extends React.Component {
                     </div>
                 </Link>
             </li>
-            <li className="list-item">
+            {/* <li className="list-item">
                 <Link to="/settings/gender" className="summarytext">
                     <div className="fontreleway fontstatement cursor-pointer">
                         <div className="w-block summarytext">
@@ -82,7 +82,7 @@ class Settings extends React.Component {
                         <div className="w-block summarytext-sub">change your gender information</div>
                     </div>
                 </Link>
-            </li>
+            </li> */}
             <li className="list-item">
                 <div className="summarytext">
                     <div className="fontreleway fontstatement cursor-pointer" onClick={this.showConfirmDelete.bind(this)}>

@@ -15,7 +15,15 @@ Meteor.methods({
 
             Group.update({"_id":groupId},
                 {'$set':{emailsSurveyed:emailsSurveyed}
-            });	
+            });
+
+            Meteor.users.update({
+                "$and": [ 
+                    {  '_id':Meteor.userId() }, 
+                    {  'profile.selfRank': groupId} 
+                ]}, 
+                {$unset : { "profile.selfRank": "" }});
+                
         }else{
             throw (new Meteor.Error("group_not_found")); 
         }
@@ -25,7 +33,7 @@ Meteor.methods({
         if(check){
             Group.update({"_id":groupId},
                 {'$set':{typeformGraph:graphData}
-            });	
+            });
         }else{
             throw (new Meteor.Error("group_not_found")); 
         }

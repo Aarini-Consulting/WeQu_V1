@@ -15,10 +15,17 @@ GroupSchema = new SimpleSchema({
       label: "emails",
       optional: true
     },
-
-    "emailsPregameCompleted":{
+    "isActive":{
+      type: Boolean,
+      label: "session active"
+    },
+    "isFinished":{
+      type: Boolean,
+      label: "session finished"
+    },
+    "emailsSelfRankCompleted":{
       type: [String],
-      label: "emailsPregameCompleted",
+      label: "self rank Completed",
       optional: true
     },
 

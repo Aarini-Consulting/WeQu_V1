@@ -1,5 +1,5 @@
 Meteor.methods({
-    'generate.pregame.quiz.from.csv': function() {
+    'generate.self.rank.quiz.from.csv': function() {
         var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
 
         if(lines.length > 0){
@@ -106,21 +106,17 @@ Meteor.methods({
         });
 
         if(Object.keys(rank).length == 24){
-            var emailsPregameCompleted = groupCheck.emailsPregameCompleted;
-            if(emailsPregameCompleted){
-                emailsPregameCompleted.push(userCheck.emails[0].address);
+            var emailsSelfRankCompleted = groupCheck.emailsSelfRankCompleted;
+            if(emailsSelfRankCompleted){
+                if(emailsSelfRankCompleted.indexOf(userCheck.emails[0].address) == -1){
+                    emailsSelfRankCompleted.push(userCheck.emails[0].address);
+                }
             }else{
-                emailsPregameCompleted = [userCheck.emails[0].address];
+                emailsSelfRankCompleted = [userCheck.emails[0].address];
             }
-            Meteor.users.update({
-                "$and": [ 
-                    {  '_id':Meteor.userId() }, 
-                    {  'profile.pregame': groupId} 
-                ]}, 
-                {$unset : { "profile.pregame": "" }});
 
             Group.update({_id:groupId}, 
-                {$set : { "emailsPregameCompleted": emailsPregameCompleted }});
+                {$set : { "emailsSelfRankCompleted": emailsSelfRankCompleted }});
         }
     },
 });

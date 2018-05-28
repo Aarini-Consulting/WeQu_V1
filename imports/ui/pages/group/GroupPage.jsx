@@ -192,14 +192,14 @@ class GroupPage extends React.Component {
   renderUsers(users){
     return users.map((user, index) => {
       var email = user.emails[0].address;
-      var readySurvey, readyPregame;
+      var readySurvey, readySelfRank;
       if(this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(email) > -1){
         readySurvey = true;
       }
-      if(this.props.group.emailsPregameCompleted && this.props.group.emailsPregameCompleted.indexOf(email) > -1){
-        readyPregame = true;
+      if(this.props.group.emailsSelfRankCompleted && this.props.group.emailsSelfRankCompleted.indexOf(email) > -1){
+        readySelfRank = true;
       }
-      var ready = (readySurvey && readyPregame);
+      var ready = (readySurvey && readySelfRank);
       var started = this.props.group.isActive;
       return(
         <div className="tap-content w-clearfix" key={user._id}>
@@ -223,7 +223,7 @@ class GroupPage extends React.Component {
               : 
               <div>
               {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
-              {!readySurvey && <div className="bttn-next-card not-ready">Pre-game quiz incomplete</div>}
+              {!readySelfRank && <div className="bttn-next-card not-ready">Self rank incomplete</div>}
               </div>
             }
           </div>
