@@ -29,7 +29,7 @@ const SortableList = SortableContainer(({items, disabled}) => {
   );
 });
 
-class QuizRankSelf extends React.Component {
+class QuizRankOther extends React.Component {
     constructor(props){
         super(props);
         var timer = undefined;
@@ -37,7 +37,6 @@ class QuizRankSelf extends React.Component {
             start: undefined,
             elapsed:0,
             items:[],
-            steps:undefined,
             currentStep:0,
             firstSwipe:undefined,
             savingData:false,
@@ -47,37 +46,53 @@ class QuizRankSelf extends React.Component {
 
     componentWillMount(){
         Meteor.call( 'generate.rank.category.from.csv', Meteor.userId(), (error, result)=>{
+            console.log(result);
+        })
+        Meteor.call( 'generate.rank.category.from.csv', Meteor.userId(), (error, result)=>{
             if(result){
                 //result has 6 main categories
                 //each main category has 4 sub-categories
-                //user needs to get 4 sets of 6 sub-categories
-                //every set of this 6 sub-categories must have 1 randomly-selected sub-category from each category
-                //BUT sub-category that has been added to the set of 6 sub-categories CANNOT be used again for other set of 6 sub-categories
-                var steps={};
-                for(var r in result){
-                    var quiz = result[r];
-                    var subCategory = quiz.subCategory;
+                //user needs to get 1 set of 5 sub-categories
+                var numUser = 5;
+                var numOfSet = 5;
 
-                    for(var i = subCategory.length-1;i>=0;i--){
-                        var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                        if(steps[i]){
-                            steps[i].push(randomSub[0]);
+                var categories = JSON.parse(JSON.stringify(result));
+                var itemsTotal = [];
+                for(var i=0;i<numUser;i++){
+                    var items=[];
+                    var keys = Object.keys(categories);
+                    for(var i2=0;i2<numOfSet;i2++){
+                        if(keys.length >= 1){
+                            var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
+                            var randomCat =  categories[randomKeys];
+                            var subCategory = categories[randomKeys].subCategory;
+                            var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
+                            items.push(randomSub[0]);
+                            
+                            if(subCategory.length == 0){
+                                console.log("delete" + randomKeys);
+                                delete categories[randomKeys];
+                            }
                         }else{
-                            steps[i]=[randomSub[0]];
+                            console.log("stop");
+                            var survivingKeys = Object.keys(categories);
+                            if(survivingKeys.length < 1){
+                                console.log("out_of_ammo");
+                            }else{
+                                console.log(survivingKeys);
+                                console.log("misfire");
+                            }
                         }
                     }
+                    itemsTotal[i] = items;
                 }
 
+                console.log(itemsTotal);
+                console.log(categories);
+
                 this.setState({
-                    steps: steps,
-                    items: steps[0]
+                    items: []
                 });
-            }else{
-                this.setState({
-                    steps: undefined,
-                    items:[]
-                });
-                console.log(error);
             }
         });
     }
@@ -98,38 +113,37 @@ class QuizRankSelf extends React.Component {
     }
 
     stepFinished(){
-        if(this.state.currentStep < Object.keys(this.state.steps).length){
-            this.setTimer(false);
+        this.setTimer(false);
 
-            this.setState({
-                savingData:true
-            },()=>{
-                var rankObject={};
-                this.state.items.forEach((el,index,array) => {
-                    rankObject[el]=(array.length - index)
-                });
-                console.log(rankObject);
-                Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
-                    if(error){
-                        console.log(error)
-                    }else{
-                        if(this.state.currentStep + 1 >= Object.keys(this.state.steps).length){
-                            this.quizFinished();
-                        }
-                        else{
-                            this.setState({
-                                items: this.state.steps[(this.state.currentStep + 1)],
-                                firstSwipe:undefined,
-                                currentStep:(this.state.currentStep + 1),
-                                savingData:false
-                            },()=>{
-                                this.setTimer(true);
-                            });
-                        }
-                    }
-                })
+        this.setState({
+            savingData:true
+        },()=>{
+            var rankObject={};
+            this.state.items.forEach((el,index,array) => {
+                rankObject[el]=(array.length - index)
             });
-        }
+            console.log(rankObject);
+            // Meteor.call( 'save.other.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
+            //     if(error){
+            //         console.log(error)
+            //     }else{
+            //         if(this.state.currentStep + 1 >= Object.keys(this.state.steps).length){
+            //             this.quizFinished();
+            //         }
+            //         else{
+            //             this.setState({
+            //                 items: this.state.steps[(this.state.currentStep + 1)],
+            //                 firstSwipe:undefined,
+            //                 currentStep:(this.state.currentStep + 1),
+            //                 savingData:false
+            //             },()=>{
+            //                 this.setTimer(true);
+            //             });
+            //         }
+            //     }
+            // })
+        });
+        
     }
 
     quizFinished(){
@@ -190,22 +204,15 @@ class QuizRankSelf extends React.Component {
                         </div>
                         <div className="rate-content">
                             <div className="font-rate font-name-header f-white">Rank your qualities in 60 seconds</div>
-                            {this.state.steps &&
-                                <div className="font-rate font-name-header f-white">
-                                    {(this.state.currentStep+1)+"/"+(Object.keys(this.state.steps).length)}
-                                </div>
-                            }
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
                         </div>
                         <div className="w-block cursor-pointer">
-                            {this.state.steps &&
-                                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                                    {this.state.currentStep < (Object.keys(this.state.steps).length-1)
+                            <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
+                                    {this.props.users
                                     ?"Next"
                                     :"Done!"
                                     }
-                                </div>
-                            }  
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -223,38 +230,47 @@ export default withTracker((props) => {
     var dataReady;
     var group;
     var currentUser;
+    var users;
+    var groupId;
+    var feedbackRank;
 
     if(props.user && props.user.profile.selfRank){
-        var handleGroup = Meteor.subscribe('group',{_id:props.user.profile.selfRank},{}, {
-            onError: function (error) {
-                  console.log(error);
-              }
-        });
-
-        if(handleGroup.ready()){
-            group = Group.findOne({_id:props.user.profile.selfRank});
-            currentUser = props.user;
-            dataReady = true;
-        }
+        groupId = props.user.profile.selfRank;
+        currentUser = props.user;
     }else if(props.group){
-        var handleGroup = Meteor.subscribe('group',{_id:props.group._id},{}, {
-            onError: function (error) {
-                  console.log(error);
-            }
-        });
+        groupId = props.group._id;
+        currentUser = Meteor.user();
+    }
 
-        if(handleGroup.ready()){
-            group = Group.findOne({_id:props.group._id});
-            currentUser = Meteor.user();
-            dataReady = true;
+    var handleGroup = Meteor.subscribe('group',{_id:groupId},{}, {
+        onError: function (error) {
+              console.log(error);
         }
-    }else{
+    });
+
+    
+
+    if(handleGroup.ready()){
+        group = Group.findOne({_id:groupId});
+        users = Meteor.users.findOne(
+            {
+                $and : [ 
+                    {$or : [ {"emails.address" : {$in:group.emails}  }, 
+                        { "profile.emailAddress" : {$in:group.emails}}
+                    ]}, 
+                    { "_id" : {$not:Meteor.userId()}}
+                ]
+            },{
+                sort: { "profile.firstName": 1 }
+            }
+        );
+        
         dataReady = true;
     }
-   
   return {
+      users:users,
       group:group,
       currentUser:currentUser,
       dataReady:dataReady,
   };
-})(QuizRankSelf);
+})(QuizRankOther);

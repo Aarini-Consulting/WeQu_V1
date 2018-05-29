@@ -8,6 +8,7 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 import QuizRankSelf from './QuizRankSelf';
+import QuizRankOther from './QuizRankOther';
 
 import Typeform from '/imports/ui/pages/survey/Typeform';
 
@@ -43,7 +44,7 @@ class QuizRankPage extends React.Component {
                             )
                         }else{
                             return(
-                                <h1>quiz about other</h1>
+                                <QuizRankOther user={this.props.currentUser} group={this.props.group}/>
                             )
                         }
                         

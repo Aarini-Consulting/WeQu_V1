@@ -1,5 +1,5 @@
 Meteor.methods({
-    'generate.self.rank.quiz.from.csv': function() {
+    'generate.rank.category.from.csv': function() {
         var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
 
         if(lines.length > 0){
