@@ -223,7 +223,7 @@ class GroupPage extends React.Component {
               : 
               <div>
               {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
-              {!readySelfRank && <div className="bttn-next-card not-ready">Self rank incomplete</div>}
+              {/* {!readySelfRank && <div className="bttn-next-card not-ready">Self rank incomplete</div>} */}
               </div>
             }
           </div>
@@ -314,7 +314,15 @@ class GroupPage extends React.Component {
               <div className="tap-left card">
               </div>
               <div className="show-cards">
-                <div className="bttn-next-card wait">Start Game</div>
+                <div className="bttn-next-card wait" onClick={()=>{
+                   Meteor.call( 'start.game', user._id, groupCheck._id, (error, result)=>{
+                     if(error){
+                       console.log(error)
+                     }else{
+                       console.log("game started")
+                     }
+                   });
+                }}>Start Game</div>
               </div>
             </div>
           }

@@ -1,28 +1,32 @@
 FeedbackRank =  new Mongo.Collection('feedbackRank');
 
 FeedbackRankSchema = new SimpleSchema({
-    "from":{
-    	type: String,
-    	label: "from"
-    },
-    "to":{
-    	type: String,
-    	label: "to"
+	"from":{
+		type: String,
+		label: "from"
+	},
+	"to":{
+		type: String,
+		label: "to"
 	},
 	"groupId":{
-    	type: String,
+		type: String,
 		label: "groupId",
-    },
-    "rank":{
-    	type: Object,
+	},
+	"rankItems":{
+		type: Object,
+		blackbox:true
+	},
+	"rank":{
+		type: Object,
 		optional: true,
 		blackbox:true
-    },
-    "firstSwipe":{
-    	type: [Object],
+	},
+	"firstSwipe":{
+		type: [Object],
 		optional: true,
 		blackbox:true
-    },
+	},
 	"createdAt": {
 		type: Date,
 		label: "Date group created",

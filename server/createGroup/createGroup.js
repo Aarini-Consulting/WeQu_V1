@@ -141,6 +141,17 @@ Meteor.methods({
     //    }
     //  }
 
+       //create user's self rank feedback
+       var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
+
+      users.forEach(function(user, index, _arr) {
+        Meteor.call( 'generate.self.rank', user._id, groupCheck._id, (error, result)=>{
+          if(error){
+            console.log(error);
+          }
+        });
+      });
+
      }
       catch(e){
         console.log(e);
