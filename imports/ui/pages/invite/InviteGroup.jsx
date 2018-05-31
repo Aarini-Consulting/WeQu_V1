@@ -20,7 +20,7 @@ class InviteGroup extends React.Component {
       this.state={
         inviteStatus:false,
         inviteSuccess:false,
-        gender:"Male",
+        // gender:"Male",
         groupName:"",
         inviteDatas:[],
         newInviteDatas:[],
@@ -43,7 +43,7 @@ class InviteGroup extends React.Component {
           var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
           if(emailsArray.indexOf(email) < 0){
             copyStateData.push({firstName:user.profile.firstName, 
-              lastName:user.profile.lastName, email:email, gender:user.profile.gender});
+              lastName:user.profile.lastName, email:email});
           }
         });
         this.setState({
@@ -238,11 +238,11 @@ class InviteGroup extends React.Component {
       }
     }
 
-    setGender(g){
-      this.setState({
-        gender: g,
-      });
-    }
+    // setGender(g){
+    //   this.setState({
+    //     gender: g,
+    //   });
+    // }
 
     deleteAction(index, deleteIndex, resendIndex, newInvite){
       if(newInvite && deleteIndex < 0){
@@ -323,8 +323,8 @@ class InviteGroup extends React.Component {
         });
       }else{
         var copyStateDataNew = this.state.newInviteDatas.slice();
-        copyStateDataNew.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
-        copyStateData.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
+        copyStateDataNew.push({firstName:firstName, lastName:lastName, email:email});
+        copyStateData.push({firstName:firstName, lastName:lastName, email:email});
         this.setState({
           info:undefined,
           inviteDatas: copyStateData,
@@ -352,6 +352,11 @@ class InviteGroup extends React.Component {
           var deleteIndex = this.state.inviteDeleted.findIndex((deleted)=>{
             return data.email == deleted.email
           })
+
+          var readySurvey;
+          if(this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1){
+            readySurvey = true;
+          }
           
           return (
             <li className="invite-group-line-wrapper" key={data.email}>
@@ -359,7 +364,17 @@ class InviteGroup extends React.Component {
               <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
               <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
-              {data.gender == "Male" &&
+              {readySurvey 
+              ? 
+              <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
+                survey completed
+              </div>
+              :
+              <div className="invitebttn bttnmembr gender w-clearfix noselect">
+                survey incomplete
+              </div>
+              }
+              {/* {data.gender == "Male" &&
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
                 Male
               </div>
@@ -368,7 +383,7 @@ class InviteGroup extends React.Component {
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
                 Female
               </div>
-              }
+              } */}
               {this.props.isEdit && !newInvite &&
                 this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
                 ?
@@ -453,6 +468,12 @@ class InviteGroup extends React.Component {
                     {this.props.isEdit 
                       ? 
                       <div>
+                      {this.props.group && !this.props.group.isStarted && !this.props.group.isFinished}
+                      <div>
+                        <a id="submitSend" className="invitebttn formbttn w-button" onClick={this.props.startGame}>Start game</a>
+                        <br/>
+                        <br/>
+                      </div>
                       <div className="groupformtext">Group name</div>
                       <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
                       name="name" data-name="Name" maxLength="256" required="" 
@@ -480,12 +501,12 @@ class InviteGroup extends React.Component {
                       <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={true}/>
                       <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={true}/>
                       <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
-                      <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
+                      {/* <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
                         Male
                       </div>
                       <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
                         Female
-                      </div>
+                      </div> */}
                       <input type="submit" id="submitAdd" defaultValue="add" className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>

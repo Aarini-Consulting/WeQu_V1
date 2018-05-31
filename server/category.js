@@ -192,12 +192,18 @@ Meteor.methods({
         var rankFirstSwipe;
         if(currentRank){
             rank = currentRank.rank;
+            rankFirstSwipe = currentRank.firstSwipe
+            if(!rank){
+                rank = {};
+            }
+            if(!rankFirstSwipe){
+                rankFirstSwipe = [];
+            }
             for(var rItems in rankItems){
                 rank[rItems] = rankItems[rItems];
             }
             if(firstSwipe){
-                currentRank.firstSwipe.push(firstSwipe);
-                rankFirstSwipe = currentRank.firstSwipe;
+                rankFirstSwipe.push(firstSwipe);
             }
             
         }else{
@@ -210,11 +216,10 @@ Meteor.methods({
             }
         }
 
-        FeedbackRank.upsert({
+        FeedbackRank.update({
             'from': Meteor.userId(),
             'to': Meteor.userId(),
-            'groupId': Meteor.userId(),
-            
+            'groupId': groupCheck._id,
         },
         {$set: {
             'rank': rank,
@@ -245,30 +250,56 @@ Meteor.methods({
         }
 
         if(!groupCheck.isActive && !groupCheck.isFinished){
-            var users = Meteor.users.find(
-                {"emails.0.address":{$in:groupCheck.emails}},
-                {sort: { "profile.firstName": 1 }}
-            ).fetch();
-    
-            if(users.length < 1){
-                throw new Meteor.Error("no_group_member_found");
-            }
-    
-            users.forEach(function(user, index, _arr) {
-                Meteor.call( 'generate.others.rank', user._id, groupCheck._id, (error, result)=>{
-                  if(error){
-                    console.log(error);
-                  }
+            if(groupCheck.emailsSurveyed && groupCheck.emailsSurveyed.length == groupCheck.emails.length){
+                var users = Meteor.users.find(
+                    {$and: [{"emails.0.address":{$in:groupCheck.emails}},
+                    {"emails.0.address":{$in:groupCheck.emailsSurveyed}}]},
+                    {sort: { "profile.firstName": 1 }}
+                ).fetch();
+        
+                if(users.length < 1){
+                    throw new Meteor.Error("no_group_member_found");
+                }
+        
+                users.forEach(function(user, index, _arr) {
+                    Meteor.call( 'generate.others.rank', user._id, groupCheck._id, (error, result)=>{
+                      if(error){
+                        console.log(error);
+                      }
+                    });
                 });
-            });
-    
-            Group.update({_id:groupId}, 
-                {$set : { "isActive": true }});
+        
+                Group.update({_id:groupId}, 
+                    {$set : { "isActive": true }});
+
+            }else{
+                throw (new Meteor.Error("not_all_invitees_finished_survey")); 
+            }
+            
         }else{
             throw (new Meteor.Error("game_already_started_or_finished")); 
         }
+    },
 
-        
+    'set.readiness': function(groupId,feedbackRankId) {
+        let groupCheck = Group.findOne({'_id': groupId});
 
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(groupCheck.isActive && !groupCheck.isFinished){
+            var feedbackRankCheck = FeedbackRank.findOne({'_id': feedbackRankId});
+
+            if(!feedbackRankCheck){
+                throw (new Meteor.Error("unknown_quiz_rank")); 
+            }
+
+            FeedbackRank.update({_id:feedbackRankCheck._id}, 
+                {$set : { "isSelected": true }});
+            
+        }else{
+            throw (new Meteor.Error("game_not_started_or_already_finished")); 
+        }
     }
 });

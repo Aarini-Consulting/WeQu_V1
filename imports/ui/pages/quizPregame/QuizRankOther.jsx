@@ -37,106 +37,27 @@ class QuizRankOther extends React.Component {
             start: undefined,
             elapsed:0,
             items:[],
-            currentStep:0,
             firstSwipe:undefined,
             savingData:false,
             quizOver:false,
           };
     }
 
-    componentWillMount(){
-        Meteor.call( 'generate.rank.category.from.csv', Meteor.userId(), (error, result)=>{
-            if(result){
-                //result has 6 main categories
-                //each main category has 4 sub-categories
-                //every user needs to get 1 set of 5 sub-categories
-                //this set of 5 sub-categories contains 1 randomly chosen subcategory 
-                //from 5 randomly chosen main categories
-                //if a subCategory is already chosen, NO other subCategory from the same main category can be used in the same set
-                //if a subCategory is already chosen, it cannot be used again for other user
-                //a sub categoryif can be reused for other user if all unique subCategory is already chosen 
-                //or the remaining subCategory cannot be chosen because current set already contains other subCategory from the same main category
-
-                
-                var numUser = 5;
-                var numOfSet = 5;
-
-                var categories = JSON.parse(JSON.stringify(result));
-                var itemsTotal = [];
-                for(var i=0;i<numUser;i++){
-                    var items=[];
-                    var keys = Object.keys(categories);
-                    for(var i2=0;i2<numOfSet;i2++){
-                        if(keys.length >= 1){
-                            //select random category and remove it from the keys array to ensure that it won't be selected again on this set
-                            var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
-                            var randomCat =  categories[randomKeys];
-                            var subCategory = categories[randomKeys].subCategory;
-
-                            //select random category and remove it from the array to ensure that it won't be selected again on this set
-                            var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                            
-                            items.push(randomSub[0]);
-                            
-                            //if all subCategories from a category is already selected, delete the category
-                            if(subCategory.length == 0){
-                                console.log("delete" + randomKeys);
-                                delete categories[randomKeys];
-                            }
-                        }else{
-                            //either all unique subCategory already selected or
-                            //current set already contains a subCategory from the surviving category data
-                            var currentSet = items[items.length-1];
-                            
-                            //load fresh copy of categories
-                            categories = JSON.parse(JSON.stringify(result));
-                            keys = Object.keys(categories);
-
-                            //removed keys that already selected in the current set
-                            for(var r in categories){
-                                var quiz = categories[r];
-                                var subCategory = quiz.subCategory;
-
-                                subCategory.some((subCat) => {
-                                    if(currentSet.indexOf(subCat) > -1){
-                                        if(keys.indexOf(r) > -1){
-                                            keys.splice(keys.indexOf(r), 1);
-                                        }
-                                        return true;
-                                    }else{
-                                        return false;
-                                    }
-                                });
-                            }
-
-                            //do the same thing again
-                            var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
-                            var randomCat =  categories[randomKeys];
-                            var subCategory = categories[randomKeys].subCategory;
-                            var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                            items.push(randomSub[0]);
-                            
-                            if(subCategory.length == 0){
-                                console.log("delete" + randomKeys);
-                                delete categories[randomKeys];
-                            }
-                        }
-                    }
-                    itemsTotal[i] = items;
-                }
-
-                console.log(itemsTotal);
-
-                this.setState({
-                    items: []
-                });
-            }
-        });
-    }
-
     componentWillReceiveProps(nextProps){
         if(!this.props.dataReady && nextProps.dataReady){
-            this.setTimer(true);
+            if(nextProps.feedbackRank && nextProps.feedbackRank.rankItems){
+                this.setState({
+                    items: nextProps.feedbackRank.rankItems[0]
+                },()=>{
+                    this.setTimer(true);
+                });
+            }else{
+                this.setState({
+                    firstSwipe:undefined,
+                    items:[]
+                });
+                this.setTimer(false);
+            }
         }
     }
 
@@ -232,8 +153,8 @@ class QuizRankOther extends React.Component {
                 <div className="fillHeight">
                     <section className="section summary fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
-                            {this.props.currentUser && this.props.currentUser.profile &&
-                                this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
+                            {this.props.quizUser && this.props.quizUser.profile &&
+                                this.props.quizUser.profile.firstName +" "+ this.props.quizUser.profile.lastName
                             }
                         </div>
                         <div className="div-time-100">
@@ -241,7 +162,7 @@ class QuizRankOther extends React.Component {
                         </div>
                         <div className="rate-content">
                             <div className="font-rate font-name-header f-white">{this.props.group.groupName}</div>
-                            <div className="font-rate font-name-header f-white">Rank other qualities in 60 seconds</div>
+                            <div className="font-rate font-name-header f-white">Rank teammate's qualities in 60 seconds</div>
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
                         </div>
                         <div className="w-block cursor-pointer">
@@ -267,6 +188,7 @@ class QuizRankOther extends React.Component {
 export default withTracker((props) => {
     var dataReady;
     var group;
+    var quizUser;
     var currentUser;
     var users;
     var groupId;
@@ -302,12 +224,32 @@ export default withTracker((props) => {
         //         sort: { "profile.firstName": 1 }
         //     }
         // );
-        
-        dataReady = true;
+        var handleFeedbackRank = Meteor.subscribe('feedbackRank',
+        {groupId:props.group._id,from:Meteor.userId()},
+        {}, {
+            onError: function (error) {
+                    console.log(error);
+            }
+        });
+
+        if(handleFeedbackRank.ready()){
+            if(group){
+                feedbackRank = FeedbackRank.findOne({groupId:props.group._id,from:Meteor.userId()});
+            }
+
+            quizUser = Meteor.users.findOne(
+                {_id:feedbackRank.to}
+            );
+
+            currentUser = Meteor.user();
+            dataReady = true;
+        }
     }
   return {
+      quizUser:quizUser,
       users:users,
       group:group,
+      feedbackRank:feedbackRank,
       currentUser:currentUser,
       dataReady:dataReady,
   };

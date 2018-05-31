@@ -14,8 +14,8 @@ Meteor.methods({
 
 		for (i = 0; i < arr_emails.length; i++) {
 
-		    gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : 'Male'
-		    gender= data[i].gender;
+		    // gender_result = Meteor.user().profile.gender ? Meteor.user().profile.gender : 'Male'
+		    // gender= data[i].gender;
 
 			email = arr_emails[i];
 			toName = data[i].name;
@@ -27,7 +27,10 @@ Meteor.methods({
 				trial: true,
 				firstName: data[i].firstName,
 				lastName: data[i].lastName,
-				profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result }
+				profile : { emailAddress : email, name: toName, 
+					// gender: gender, 
+					// inviteGender: gender_result 
+				}
 			});
 
 		    Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id }});

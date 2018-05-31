@@ -161,6 +161,17 @@ class GroupPage extends React.Component {
     }
   }
 
+  startGame(){
+    console.log("start game");
+    Meteor.call( 'start.game', this.props.group._id, (error, result)=>{
+      if(error){
+        console.log(error)
+      }else{
+        console.log("game started")
+      }
+    });
+  }
+
   renderUserTiles(){
     return this.props.group.emails.map((email) => {
         return (
@@ -284,14 +295,12 @@ class GroupPage extends React.Component {
     }
   }
 
-  
-
   render() {
     if(this.props.dataReady){
       var tabContent;
 
       if(this.state.currentTab == "edit"){
-        tabContent = <InviteGroup isEdit={true} group={this.props.group} />
+        tabContent = <InviteGroup isEdit={true} group={this.props.group} startGame={this.startGame.bind(this)}/>
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
@@ -314,7 +323,7 @@ class GroupPage extends React.Component {
               <div className="tap-left card">
               </div>
               <div className="show-cards">
-                <div className="bttn-next-card wait" onClick={()=>{
+                {/* <div className="bttn-next-card wait" onClick={()=>{
                    Meteor.call( 'start.game', user._id, groupCheck._id, (error, result)=>{
                      if(error){
                        console.log(error)
@@ -322,7 +331,7 @@ class GroupPage extends React.Component {
                        console.log("game started")
                      }
                    });
-                }}>Start Game</div>
+                }}>Start Game</div> */}
               </div>
             </div>
           }

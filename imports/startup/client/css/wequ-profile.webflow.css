@@ -510,7 +510,7 @@
 
 .invitebttn.bttnmembr.gender {
   width: auto;
-  height: 30px;
+  min-height: 30px;
   flex-basis: 12%;
   margin-top: 0.5em;
   margin-right:5px;

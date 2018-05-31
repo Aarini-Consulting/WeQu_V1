@@ -38,53 +38,46 @@ class QuizRankSelf extends React.Component {
             elapsed:0,
             items:[],
             steps:undefined,
-            currentStep:0,
+            currentStep:-1,
             firstSwipe:undefined,
             savingData:false,
             quizOver:false,
           };
     }
 
-    componentWillMount(){
-        Meteor.call( 'generate.rank.category.from.csv', Meteor.userId(), (error, result)=>{
-            if(result){
-                //result has 6 main categories
-                //each main category has 4 sub-categories
-                //user needs to get 4 sets of 6 sub-categories
-                //every set of this 6 sub-categories must have 1 randomly-selected sub-category from each category
-                //BUT sub-category that has been added to the set of 6 sub-categories CANNOT be used again for other set of 6 sub-categories
-                var steps={};
-                for(var r in result){
-                    var quiz = result[r];
-                    var subCategory = quiz.subCategory;
-
-                    for(var i = subCategory.length-1;i>=0;i--){
-                        var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                        if(steps[i]){
-                            steps[i].push(randomSub[0]);
-                        }else{
-                            steps[i]=[randomSub[0]];
-                        }
-                    }
+    componentWillReceiveProps(nextProps){
+        if(!this.props.dataReady && nextProps.dataReady){
+            if(nextProps.feedbackRank && nextProps.feedbackRank.rankItems){
+                var currentStep = 0;
+                var lengthOfSet = Object.keys(nextProps.feedbackRank.rankItems[0]).length;
+                var numOfSet = Object.keys(nextProps.feedbackRank.rankItems).length;
+                if(nextProps.feedbackRank.rank){
+                    currentStep = Math.round(Object.keys(nextProps.feedbackRank.rank).length/lengthOfSet)-1;
                 }
 
+                if(currentStep >= numOfSet){
+                    currentStep = numOfSet-1;
+                }
+                if(currentStep < 0){
+                    currentStep = 0;
+                }
+                console.log(currentStep);
                 this.setState({
-                    steps: steps,
-                    items: steps[0]
+                    steps: nextProps.feedbackRank.rankItems,
+                    items: nextProps.feedbackRank.rankItems[currentStep],
+                    currentStep: currentStep
+                },()=>{
+                    this.setTimer(true);
                 });
             }else{
                 this.setState({
                     steps: undefined,
+                    currentStep:-1,
+                    firstSwipe:undefined,
                     items:[]
                 });
-                console.log(error);
+                this.setTimer(false);
             }
-        });
-    }
-
-    componentWillReceiveProps(nextProps){
-        if(!this.props.dataReady && nextProps.dataReady){
-            this.setTimer(true);
         }
     }
 
@@ -98,7 +91,7 @@ class QuizRankSelf extends React.Component {
     }
 
     stepFinished(){
-        if(this.state.currentStep < Object.keys(this.state.steps).length){
+        if(this.state.currentStep >= 0 && this.state.currentStep < Object.keys(this.state.steps).length){
             this.setTimer(false);
 
             this.setState({
@@ -190,7 +183,7 @@ class QuizRankSelf extends React.Component {
                         </div>
                         <div className="rate-content">
                             <div className="font-rate font-name-header f-white">Rank your qualities in 60 seconds</div>
-                            {this.state.steps &&
+                            {this.state.steps && this.state.currentStep >= 0 &&
                                 <div className="font-rate font-name-header f-white">
                                     {(this.state.currentStep+1)+"/"+(Object.keys(this.state.steps).length)}
                                 </div>
@@ -198,7 +191,7 @@ class QuizRankSelf extends React.Component {
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
                         </div>
                         <div className="w-block cursor-pointer">
-                            {this.state.steps &&
+                            {this.state.steps && this.state.currentStep >= 0 &&
                                 <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
                                     {this.state.currentStep < (Object.keys(this.state.steps).length-1)
                                     ?"Next"
@@ -223,6 +216,7 @@ export default withTracker((props) => {
     var dataReady;
     var group;
     var currentUser;
+    var feedbackRank;
 
     if(props.user && props.user.profile.selfRank){
         var handleGroup = Meteor.subscribe('group',{_id:props.user.profile.selfRank},{}, {
@@ -245,8 +239,22 @@ export default withTracker((props) => {
 
         if(handleGroup.ready()){
             group = Group.findOne({_id:props.group._id});
-            currentUser = Meteor.user();
-            dataReady = true;
+
+            var handleFeedbackRank = Meteor.subscribe('feedbackRank',
+            {groupId:props.group._id,from:Meteor.userId(),to:Meteor.userId()},
+            {}, {
+                onError: function (error) {
+                      console.log(error);
+                }
+            });
+
+            if(handleFeedbackRank.ready()){
+                if(group){
+                    feedbackRank = FeedbackRank.findOne({groupId:props.group._id,from:Meteor.userId(),to:Meteor.userId()});
+                }
+                currentUser = Meteor.user();
+                dataReady = true;
+            }
         }
     }else{
         dataReady = true;
@@ -254,6 +262,7 @@ export default withTracker((props) => {
    
   return {
       group:group,
+      feedbackRank:feedbackRank,
       currentUser:currentUser,
       dataReady:dataReady,
   };

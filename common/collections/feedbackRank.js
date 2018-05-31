@@ -27,6 +27,10 @@ FeedbackRankSchema = new SimpleSchema({
 		optional: true,
 		blackbox:true
 	},
+	"isSelected":{
+		type: Boolean,
+		optional: true,
+	},
 	"createdAt": {
 		type: Date,
 		label: "Date group created",

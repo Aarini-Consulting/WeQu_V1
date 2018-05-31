@@ -9,6 +9,7 @@ import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 import QuizRankSelf from './QuizRankSelf';
 import QuizRankOther from './QuizRankOther';
+import QuizRankWait from './QuizRankWait';
 
 import Typeform from '/imports/ui/pages/survey/Typeform';
 
@@ -44,7 +45,7 @@ class QuizRankPage extends React.Component {
                             )
                         }else{
                             return(
-                                <QuizRankOther user={this.props.currentUser} group={this.props.group}/>
+                                <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
                             )
                         }
                         
