@@ -16,17 +16,11 @@ class QuizRankWait extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            ready:false,
-            waitForOthers: false,
-            everyoneReady: false
+            feedbackRank: undefined,
         };
     }
 
     confirmReadiness(){
-        this.setState({
-            ready: true,
-        });
-
         Meteor.call( 'set.readiness', this.props.group._id,this.props.feedbackRank._id, (error, result)=>{
             if(error){
               console.log(error)
@@ -36,43 +30,43 @@ class QuizRankWait extends React.Component {
           });
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.dataReady){
-            if(this.props.feedbackRank && nextProps.feedbackRank && this.props.feedbackRank._id != nextProps.feedbackRank._id){
-                this.setState({
-                    ready: false,
-                });
-            }else if(nextProps.feedbackRank && nextProps.feedbackRank.isSelected){
-                this.setState({
-                    ready: true,
-                });
-            }
-
-            if(nextProps.otherFeedbackRanksReady && nextProps.otherFeedbackRanksReady.length == nextProps.group.emails.length){
-                this.setState({
-                    everyoneReady: true,
-                });
-            }
-        }
-    }
-    
+    // componentWillReceiveProps(nextProps){
+    //     if(nextProps.dataReady){
+    //         if(nextProps.feedbackRank){
+    //             if(){
+    //                 //do nothing because waiting for others
+    //             }else{
+    //                 this.setState({
+    //                     feedbackRank: nextProps.feedbackRank,
+    //                 });
+    //             }
+    //         }
+    //     }
+        
+    // }
 
     render() {
         if(this.props.dataReady){
-            console.log(Meteor.userId());
             if(this.props.targetedForOthersFeedback){
                 return(
                     <div>
                         <h1>Please standby, the others are evaluating your personalities</h1>
+                        <h1>{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</h1>
                     </div>
                 )
-            }else{
+            }else if(this.props.feedbackRank){
                 var ready = this.props.feedbackRank.isSelected;
                 var everyoneReady = (this.props.otherFeedbackRanksReady && this.props.otherFeedbackRanksReady.length == (this.props.group.emails.length - 1));
                 if(this.props.group.emails.length == this.props.group.emailsSelfRankCompleted.length){
-                    if(ready && everyoneReady){
+                    if((!ready && this.props.waitForOthersFeedback)){
+                        <div>
+                            <h1>Please wait other user completes their feedback</h1>
+                            <h1>{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</h1>
+                        </div>
+                    }
+                    else if((ready && everyoneReady) || this.props.otherFeedbackRanksGiven.length < this.props.group.emails.length-1){
                         return (
-                            <QuizRankOther user={this.props.currentUser} group={this.props.group}/>
+                            <QuizRankOther user={this.props.currentUser} group={this.props.group} feedbackRank={this.props.feedbackRank}/>
                         );
                     }
                     else{
@@ -82,6 +76,7 @@ class QuizRankWait extends React.Component {
                                 !(everyoneReady) &&
                                     <div>
                                         <h1>waiting for others to click ready</h1>
+                                        <h1>{this.props.otherFeedbackRanksReady.length}/{this.props.group.emails.length-1}</h1>
                                     </div>
                                 }
 
@@ -100,6 +95,11 @@ class QuizRankWait extends React.Component {
                         <h1>please wait for others to finish ranking themself</h1>
                     );
                 }
+            }
+            else{
+                return (
+                    <h1>quiz is over, generating card now</h1>
+                );
             }
             
             
@@ -120,7 +120,9 @@ export default withTracker((props) => {
     var groupId;
     var feedbackRank;
     var otherFeedbackRanksReady;
+    var otherFeedbackRanksGiven;
     var targetedForOthersFeedback = false;
+    var waitForOthersFeedback;
 
     if(props.user && props.user.profile.selfRank){
         groupId = props.user.profile.selfRank;
@@ -155,24 +157,28 @@ export default withTracker((props) => {
                 {sort: { "createdAt": 1 }}
                 ).fetch();
 
-                var uniqueOrder = [...new Set(allAvailableFeedbackRank.map(fbr => fbr.to))];
+                var uniqueQuizTargetOrder = [...new Set(allAvailableFeedbackRank.map(fbr => fbr.to))];
                 
-                console.log(uniqueOrder);
-
-                if(uniqueOrder[0] == Meteor.userId()){
+                if(uniqueQuizTargetOrder[0] == Meteor.userId()){
                     feedbackRank = undefined;
                     targetedForOthersFeedback = true;
                 }
                 else{
                     feedbackRank = FeedbackRank.findOne(
-                        {groupId:props.group._id,from:Meteor.userId(),to:uniqueOrder[0],rank:{$exists: false}
+                        {groupId:props.group._id,from:Meteor.userId(),to:uniqueQuizTargetOrder[0],rank:{$exists: false}
                     });
                     targetedForOthersFeedback = false;
                 }
 
                 otherFeedbackRanksReady = FeedbackRank.find(
-                    {groupId:props.group._id,rank:{$exists: false},isSelected:true
+                    {groupId:props.group._id,to:uniqueQuizTargetOrder[0], rank:{$exists: false},isSelected:true
                 }).fetch();
+
+                otherFeedbackRanksGiven = FeedbackRank.find(
+                    {groupId:props.group._id,to:uniqueQuizTargetOrder[0], rank:{$exists: true},isSelected:true
+                }).fetch();
+
+                waitForOthersFeedback = (otherFeedbackRanksGiven.length > 0 && otherFeedbackRanksGiven.length < (group.emails.length-1));
 
                 currentUser = Meteor.user();
                 dataReady = true;
@@ -183,8 +189,10 @@ export default withTracker((props) => {
       users:users,
       group:group,
       otherFeedbackRanksReady:otherFeedbackRanksReady,
+      otherFeedbackRanksGiven:otherFeedbackRanksGiven,
       feedbackRank:feedbackRank,
       targetedForOthersFeedback:targetedForOthersFeedback,
+      waitForOthersFeedback:waitForOthersFeedback,
       currentUser:currentUser,
       dataReady:dataReady,
   };

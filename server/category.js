@@ -65,7 +65,6 @@ Meteor.methods({
     },
 
     'generate.others.rank': function(userId, groupId) {
-
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
@@ -240,6 +239,60 @@ Meteor.methods({
             Group.update({_id:groupId}, 
                 {$set : { "emailsSelfRankCompleted": emailsSelfRankCompleted }});
         }
+    },
+
+    'save.others.rank': function(userId,groupId,rankItems,firstSwipe) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        var userCheck = Meteor.users.findOne(userId);
+        
+        var currentRank = FeedbackRank.findOne({
+            'from': Meteor.userId(),
+            'to': userId,
+            'groupId': groupCheck._id
+        });
+        var rank;
+        var rankFirstSwipe;
+        if(currentRank){
+            rank = currentRank.rank;
+            rankFirstSwipe = currentRank.firstSwipe
+            if(!rank){
+                rank = {};
+            }
+            if(!rankFirstSwipe){
+                rankFirstSwipe = [];
+            }
+            for(var rItems in rankItems){
+                rank[rItems] = rankItems[rItems];
+            }
+            if(firstSwipe){
+                rankFirstSwipe.push(firstSwipe);
+            }
+            
+        }else{
+            rank = rankItems;
+
+            if(firstSwipe){
+                rankFirstSwipe = [firstSwipe];
+            }else{
+                rankFirstSwipe = [];
+            }
+        }
+
+        FeedbackRank.update({
+            'from': Meteor.userId(),
+            'to': userId,
+            'groupId': groupCheck._id,
+        },
+        {$set: {
+            'rank': rank,
+            'firstSwipe': rankFirstSwipe,
+            }
+        });
     },
 
     'start.game': function(groupId) {

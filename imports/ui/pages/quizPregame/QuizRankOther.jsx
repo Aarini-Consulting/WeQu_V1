@@ -47,7 +47,9 @@ class QuizRankOther extends React.Component {
         if(!this.props.dataReady && nextProps.dataReady){
             if(nextProps.feedbackRank && nextProps.feedbackRank.rankItems){
                 this.setState({
-                    items: nextProps.feedbackRank.rankItems[0]
+                    items: nextProps.feedbackRank.rankItems[0],
+                    firstSwipe:undefined,
+                    savingData:false
                 },()=>{
                     this.setTimer(true);
                 });
@@ -81,25 +83,13 @@ class QuizRankOther extends React.Component {
                 rankObject[el]=(array.length - index)
             });
             console.log(rankObject);
-            // Meteor.call( 'save.other.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
-            //     if(error){
-            //         console.log(error)
-            //     }else{
-            //         if(this.state.currentStep + 1 >= Object.keys(this.state.steps).length){
-            //             this.quizFinished();
-            //         }
-            //         else{
-            //             this.setState({
-            //                 items: this.state.steps[(this.state.currentStep + 1)],
-            //                 firstSwipe:undefined,
-            //                 currentStep:(this.state.currentStep + 1),
-            //                 savingData:false
-            //             },()=>{
-            //                 this.setTimer(true);
-            //             });
-            //         }
-            //     }
-            // })
+            Meteor.call( 'save.others.rank', this.props.feedbackRank.to, this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
+                if(error){
+                    console.log(error)
+                }else{
+                    this.quizFinished();
+                }
+            })
         });
         
     }
@@ -202,6 +192,8 @@ export default withTracker((props) => {
         currentUser = Meteor.user();
     }
 
+
+
     var handleGroup = Meteor.subscribe('group',{_id:groupId},{}, {
         onError: function (error) {
               console.log(error);
@@ -225,7 +217,9 @@ export default withTracker((props) => {
         //     }
         // );
         var handleFeedbackRank = Meteor.subscribe('feedbackRank',
-        {groupId:props.group._id,from:Meteor.userId()},
+        {groupId:groupId,
+        from:Meteor.userId(),
+        to:props.feedbackRank.to},
         {}, {
             onError: function (error) {
                     console.log(error);
@@ -234,7 +228,10 @@ export default withTracker((props) => {
 
         if(handleFeedbackRank.ready()){
             if(group){
-                feedbackRank = FeedbackRank.findOne({groupId:props.group._id,from:Meteor.userId()});
+                feedbackRank = FeedbackRank.findOne({
+                    groupId:groupId,
+                    from:Meteor.userId(),
+                    to:props.feedbackRank.to});
             }
 
             quizUser = Meteor.users.findOne(
@@ -242,6 +239,7 @@ export default withTracker((props) => {
             );
 
             currentUser = Meteor.user();
+            console.log(feedbackRank);
             dataReady = true;
         }
     }
