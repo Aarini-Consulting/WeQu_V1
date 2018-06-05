@@ -476,20 +476,16 @@ class InviteGroup extends React.Component {
                           {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
                             <a id="submitSend" className="invitebttn formbttn w-button" onClick={this.props.startGame}>Start game</a>
                           }
-
-                          {(this.props.group && this.props.group.isActive) &&
-                            <a id="submitSend" className="invitebttn formbttn w-button">
-                              Game Started
-                            </a>
-                          }
-
-                          {(this.props.group && this.props.group.isFinished) &&
+                          {(this.props.group && this.props.group.isFinished) 
+                            ?
                             <a id="submitSend" className="invitebttn formbttn w-button">
                               Game Finished
                             </a>
-                          }
-
-                          
+                            :this.props.group.isActive &&
+                            <a id="submitSend" className="invitebttn formbttn w-button">
+                              Game Started
+                            </a>
+                          }          
                           <br/>
                           <br/>
                         </div>

@@ -42,7 +42,7 @@ class QuizRankPage extends React.Component {
                         if(this.props.selfRankCompleted){
                             if(this.props.group.isFinished){
                                 return(
-                                    <h1>all done</h1>
+                                    <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
                                 )
                             }else{
                                 return(

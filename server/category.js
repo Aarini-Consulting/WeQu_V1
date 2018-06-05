@@ -306,7 +306,7 @@ Meteor.methods({
 
         if(!checkNotComplete){
             Group.update({"_id":groupId},
-            {'$set':{"isActive":false, "isFinished":true}
+            {'$set':{"isFinished":true}
             });	
         }
     },
@@ -370,5 +370,99 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("game_not_started_or_already_finished")); 
         }
+    },
+    'generate.card.placement': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.isFinished){
+            throw (new Meteor.Error("group_not_finished")); 
+        }
+
+        if(!groupCheck.isActive){
+            throw (new Meteor.Error("group_not_started")); 
+        }
+
+        var userCheck = Meteor.users.findOne(Meteor.userId());
+
+        if(!userCheck){
+            throw (new Meteor.Error("unknown_user")); 
+        }
+
+        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': Meteor.userId()});
+        var rankOrder=[];
+        var combinedRank={};
+        if(!cardPlacementCheck){
+            var feedbackRankFromSelf = FeedbackRank.findOne({
+                'from': Meteor.userId(),
+                'to': Meteor.userId(),
+                'groupId': groupCheck._id,
+                "rank":{$exists: true}
+            });
+
+            if(feedbackRankFromSelf && feedbackRankFromSelf.rank){
+                var feedbackRankFromOthers = FeedbackRank.find({
+                    'from': {$ne:Meteor.userId()},
+                    'to': Meteor.userId(),
+                    'groupId': groupCheck._id,
+                    "rank":{$exists: true}
+                }).fetch();
+
+                var rankFromSelf = feedbackRankFromSelf.rank;
+                
+                //get rank from self rank
+                //For self rank, each rank quiz set consist of 6 unique sub categories from the main categories
+                //therefore, score point range is from 1 to 6
+                for(var r in rankFromSelf){
+                    if(combinedRank[r]){
+                        var average = (combinedRank[r] + rankFromSelf[r])/2 
+                        combinedRank[r]=average;
+                    }else{
+                        combinedRank[r]=rankFromSelf[r];
+                    }
+                }
+                //For other rank, each rank quiz set consist of 5 uniquely-selected sub categories from 6 main categories
+                //therefore, score point range is from 1 to 5, so need to convert the score to the same range (in this case 6)
+                feedbackRankFromOthers.forEach((feedbackRank, index, _arr) => {
+                    var rankFromOther = feedbackRank.rank;
+                    for(var r in rankFromOther){
+                        var converted = (rankFromOther[r]/Object.keys(rankFromOther).length) * 6;
+                        if(combinedRank[r]){
+                            var average = (combinedRank[r] + converted)/2 
+                            combinedRank[r]=average;
+                        }else{
+                            combinedRank[r]=converted;
+                        }
+                    }
+                });
+                //to array
+                for(var r in combinedRank){
+                    rankOrder.push({"subCategory":r,"value":combinedRank[r]});
+                }
+
+                //sort descending (highest value first)
+                rankOrder.sort((a, b) => {
+                    return b.value - a.value;
+                });
+            }else{
+                throw (new Meteor.Error("completed_self_rank_not_found")); 
+            }
+        }else{
+            rankOrder = cardPlacementCheck.rankOrder;
+            combinedRank = cardPlacementCheck.combinedRank;
+        }
+
+        CardPlacement.upsert({groupId:groupCheck._id, userId:userCheck._id}, 
+            {$set : { 
+                "userId": userCheck._id,
+                "groupId": groupCheck._id,
+                "combinedRank":combinedRank,
+                "rankOrder":rankOrder
+
+            }
+        });
     }
 });
