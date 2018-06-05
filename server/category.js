@@ -293,6 +293,22 @@ Meteor.methods({
             'firstSwipe': rankFirstSwipe,
             }
         });
+
+
+        var checkNotComplete = FeedbackRank.findOne(
+            {
+                groupId:groupCheck._id,
+                $or : [ {"isSelected":false}, 
+                        {"rank":{$exists: false}}
+                    ],
+            }
+        );
+
+        if(!checkNotComplete){
+            Group.update({"_id":groupId},
+            {'$set':{"isActive":false, "isFinished":true}
+            });	
+        }
     },
 
     'start.game': function(groupId) {

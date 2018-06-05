@@ -23,114 +23,114 @@ class GroupPage extends React.Component {
         showReopenConfirm:false,
         showInfo:false,
         sending:false,
-        selectedCycleIndex:-1,
-        selectedCycle:undefined,
+        // selectedCycleIndex:-1,
+        // selectedCycle:undefined,
         currentTab:"edit"
       }
   }
 
-  startCycleClick(){
-    if(this.props.currentFeedbackCycle){
-      this.startCycle();
-    }
-  }
+  // startCycleClick(){
+  //   if(this.props.currentFeedbackCycle){
+  //     this.startCycle();
+  //   }
+  // }
 
-  collectDataClick(){
-    if(this.props.currentFeedbackCycle){
-      this.setState({
-        showInfo: true,
-        showInfoMessage:"Currently feedback date is being collected. Each user should give at least 12 answers for oneself and for each others"
-      });
-    }
-  }
+  // collectDataClick(){
+  //   if(this.props.currentFeedbackCycle){
+  //     this.setState({
+  //       showInfo: true,
+  //       showInfoMessage:"Currently feedback date is being collected. Each user should give at least 12 answers for oneself and for each others"
+  //     });
+  //   }
+  // }
 
-  closeCycleConfirm(){
-    if(this.props.currentFeedbackCycle){
-      this.setState({
-        showConfirm: true,
-      });
-    }else if(this.props.feedbackCycle,length > 0){
-      var date = this.props.feedbackCycle[0].to;
-      var dateText = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+  // closeCycleConfirm(){
+  //   if(this.props.currentFeedbackCycle){
+  //     this.setState({
+  //       showConfirm: true,
+  //     });
+  //   }else if(this.props.feedbackCycle,length > 0){
+  //     var date = this.props.feedbackCycle[0].to;
+  //     var dateText = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
       
-      this.setState({
-        showInfo: true,
-        showInfoMessage:`You've requested a report already on ${dateText}. If you haven't received your report contact master.coach@weq.io`
-      });
-    }
-  }
+  //     this.setState({
+  //       showInfo: true,
+  //       showInfoMessage:`You've requested a report already on ${dateText}. If you haven't received your report contact master.coach@weq.io`
+  //     });
+  //   }
+  // }
 
-  reopenCycleConfirm(){
-    if(!this.props.currentFeedbackCycle && this.props.feedbackCycle.length > 0 ){
-      if((new Date().getTime() - this.props.feedbackCycle[0].createdAt.getTime()) < (1 * 24 * 60 * 60 * 1000)){
-        this.setState({
-          showReopenConfirm: true,
-        });
-      }else{
-        this.setState({
-          showInfo: true,
-          showInfoMessage:"You are not allowed to cancel the report generation after 24 hours have passed. You will receive your report within 24 hours. Thank you"
-        });
-      }
-    }
-  }
+  // reopenCycleConfirm(){
+  //   if(!this.props.currentFeedbackCycle && this.props.feedbackCycle.length > 0 ){
+  //     if((new Date().getTime() - this.props.feedbackCycle[0].createdAt.getTime()) < (1 * 24 * 60 * 60 * 1000)){
+  //       this.setState({
+  //         showReopenConfirm: true,
+  //       });
+  //     }else{
+  //       this.setState({
+  //         showInfo: true,
+  //         showInfoMessage:"You are not allowed to cancel the report generation after 24 hours have passed. You will receive your report within 24 hours. Thank you"
+  //       });
+  //     }
+  //   }
+  // }
 
-  startCycle(){
-    this.setState({
-      sending: true,
-    });
+  // startCycle(){
+  //   this.setState({
+  //     sending: true,
+  //   });
 
-    Meteor.call( 'start.new.cycle', this.props.group._id, ( error, response ) => {
-      this.setState({
-        sending: false,
-      });
-      if ( error ) {
-        console.log(error);
-        this.setState({
-          showInfo: true,
-          showInfoMessage:error.error
-        });
-      }
-    });
-  }
+  //   Meteor.call( 'start.new.cycle', this.props.group._id, ( error, response ) => {
+  //     this.setState({
+  //       sending: false,
+  //     });
+  //     if ( error ) {
+  //       console.log(error);
+  //       this.setState({
+  //         showInfo: true,
+  //         showInfoMessage:error.error
+  //       });
+  //     }
+  //   });
+  // }
 
-  closeCycle(){
-    this.setState({
-      sending: true,
-    });
+  // closeCycle(){
+  //   this.setState({
+  //     sending: true,
+  //   });
 
-    Meteor.call( 'close.cycle', this.props.group._id, ( error, response ) => {
-      this.setState({
-        sending: false,
-      });
-      if ( error ) {
-        console.log(error);
-        this.setState({
-          showInfo: true,
-          showInfoMessage:error.error
-        });
-      }
-    });
-  }
+  //   Meteor.call( 'close.cycle', this.props.group._id, ( error, response ) => {
+  //     this.setState({
+  //       sending: false,
+  //     });
+  //     if ( error ) {
+  //       console.log(error);
+  //       this.setState({
+  //         showInfo: true,
+  //         showInfoMessage:error.error
+  //       });
+  //     }
+  //   });
+  // }
 
-  reopenCycle(){
-    this.setState({
-      sending: true,
-    });
+  // reopenCycle(){
+  //   this.setState({
+  //     sending: true,
+  //   });
 
-    Meteor.call( 'reopen.cycle', this.props.group._id, ( error, response ) => {
-      this.setState({
-        sending: false,
-      });
-      if ( error ) {
-        console.log(error);
-        this.setState({
-          showInfo: true,
-          showInfoMessage:error.error
-        });
-      }
-    });
-  }
+  //   Meteor.call( 'reopen.cycle', this.props.group._id, ( error, response ) => {
+  //     this.setState({
+  //       sending: false,
+  //     });
+  //     if ( error ) {
+  //       console.log(error);
+  //       this.setState({
+  //         showInfo: true,
+  //         showInfoMessage:error.error
+  //       });
+  //     }
+  //   });
+  // }
 
   showInviteGroup(bool){
     this.setState({
@@ -138,20 +138,20 @@ class GroupPage extends React.Component {
     });
   }
 
-  toggleCycle(event){
-    var index = event.target.value;
-    if(index < 0){
-      this.setState({
-        selectedCycleIndex:-1,
-        selectedCycle: undefined,
-      });
-    }else{
-      this.setState({
-        selectedCycleIndex:index,
-        selectedCycle: this.props.feedbackCycle[index],
-      });
-    }
-  }
+  // toggleCycle(event){
+  //   var index = event.target.value;
+  //   if(index < 0){
+  //     this.setState({
+  //       selectedCycleIndex:-1,
+  //       selectedCycle: undefined,
+  //     });
+  //   }else{
+  //     this.setState({
+  //       selectedCycleIndex:index,
+  //       selectedCycle: this.props.feedbackCycle[index],
+  //     });
+  //   }
+  // }
 
   toggleTabs(tabName){
     if(this.state.currentTab != tabName){
@@ -172,23 +172,23 @@ class GroupPage extends React.Component {
     });
   }
 
-  renderUserTiles(){
-    return this.props.group.emails.map((email) => {
-        return (
-          <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle} group={this.props.group}/>
-        );
-      });
-  }
+  // renderUserTiles(){
+  //   return this.props.group.emails.map((email) => {
+  //       return (
+  //         <UserTile key={email} email={email} feedbackCycle={this.state.selectedCycle} group={this.props.group}/>
+  //       );
+  //     });
+  // }
 
-  renderFeedbackCycles(){
-    return this.props.feedbackCycle.map((data, index) => {
-      return(
-        <option value={index} key={data._id}>
-          {data.to.getDate()}/{data.to.getMonth()+1}/{data.to.getFullYear()}
-        </option>
-      );
-    });
-  }
+  // renderFeedbackCycles(){
+  //   return this.props.feedbackCycle.map((data, index) => {
+  //     return(
+  //       <option value={index} key={data._id}>
+  //         {data.to.getDate()}/{data.to.getMonth()+1}/{data.to.getFullYear()}
+  //       </option>
+  //     );
+  //   });
+  // }
 
   renderUserCards(cards){
     return cards.map((card, index) => {
@@ -440,7 +440,7 @@ class GroupPage extends React.Component {
                   </a>
                 </div>
               </div> */}
-              {this.state.showConfirm &&
+              {/* {this.state.showConfirm &&
                 <SweetAlert
                 type={"confirm-close-cycle"}
                 onCancel={() => {
@@ -461,7 +461,7 @@ class GroupPage extends React.Component {
                   this.setState({ showReopenConfirm: false });
                   this.reopenCycle();
                 }}/>
-              }
+              } */}
 
               {this.state.showInfo &&
                 <SweetAlert
@@ -490,8 +490,8 @@ export default withTracker((props) => {
   var dataReady;
   var group;
   var users;
-  var feedbackCycle;
-  var currentFeedbackCycle;
+  // var feedbackCycle;
+  // var currentFeedbackCycle;
   var handleGroup;
     if(props.match.params.id){
         handleGroup = Meteor.subscribe('group',{_id : props.match.params.id},{}, {
@@ -500,60 +500,71 @@ export default withTracker((props) => {
             }
         });
 
-        handleFeedbackCycle = Meteor.subscribe('feedback_cycle',{
-          groupId : props.match.params.id,
-          creatorId : Meteor.userId(),
-        },{}, {
-          onError: function (error) {
-                console.log(error);
-            }
-        });
+        // handleFeedbackCycle = Meteor.subscribe('feedback_cycle',{
+        //   groupId : props.match.params.id,
+        //   creatorId : Meteor.userId(),
+        // },{}, {
+        //   onError: function (error) {
+        //         console.log(error);
+        //     }
+        // });
 
-        if(handleGroup.ready() && handleFeedbackCycle.ready()){
+        if(handleGroup.ready() 
+        // && handleFeedbackCycle.ready()
+        ){
           group = Group.findOne({_id : props.match.params.id});
 
-          var check = FeedbackCycle.findOne({
-            groupId : props.match.params.id,
-            creatorId : Meteor.userId(),
-          });
+          // var check = FeedbackCycle.findOne({
+          //   groupId : props.match.params.id,
+          //   creatorId : Meteor.userId(),
+          // });
 
-          if(!check){
-            Meteor.call( 'assign.cycle.old.group', props.match.params.id, ( error, response ) => {
-              if ( error ) {
-                console.log(error);
-              }
-            });
-          }else{
-            feedbackCycle = FeedbackCycle.find({
-              groupId : props.match.params.id,
-              creatorId : Meteor.userId(),
-              to:{$exists: true}
-            },
-            { sort: { createdAt: -1 } }).fetch();
+          // if(!check){
+          //   Meteor.call( 'assign.cycle.old.group', props.match.params.id, ( error, response ) => {
+          //     if ( error ) {
+          //       console.log(error);
+          //     }
+          //   });
+          // }else{
+          //   feedbackCycle = FeedbackCycle.find({
+          //     groupId : props.match.params.id,
+          //     creatorId : Meteor.userId(),
+          //     to:{$exists: true}
+          //   },
+          //   { sort: { createdAt: -1 } }).fetch();
   
-            currentFeedbackCycle = FeedbackCycle.findOne({
-              groupId : props.match.params.id,
-              creatorId : Meteor.userId(),
-              to:{$exists: false}
-            },
-            { sort: { createdAt: -1 } });
+          //   currentFeedbackCycle = FeedbackCycle.findOne({
+          //     groupId : props.match.params.id,
+          //     creatorId : Meteor.userId(),
+          //     to:{$exists: false}
+          //   },
+          //   { sort: { createdAt: -1 } });
 
-            users = Meteor.users.find(
-              {
-                $or : [ {"emails.address" : {$in:group.emails}  }, 
-                { "profile.emailAddress" : {$in:group.emails}}]
-              }
-            );
+          //   users = Meteor.users.find(
+          //     {
+          //       $or : [ {"emails.address" : {$in:group.emails}  }, 
+          //       { "profile.emailAddress" : {$in:group.emails}}]
+          //     }
+          //   );
 
-            dataReady = true;
-          }
+          //   dataReady = true;
+          // }
+
+          users = Meteor.users.find(
+            {
+              $or : [ {"emails.address" : {$in:group.emails}  }, 
+              { "profile.emailAddress" : {$in:group.emails}}]
+            }
+          );
+
+          dataReady = true;
         }
     }
   return {
       users:users,
       group:group,
-      feedbackCycle:feedbackCycle,
-      currentFeedbackCycle:currentFeedbackCycle,
+      // feedbackCycle:feedbackCycle,
+      // currentFeedbackCycle:currentFeedbackCycle,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };

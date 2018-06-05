@@ -1,27 +1,72 @@
 Meteor.methods({
     'updateGroup' : function (group,groupName, data, emailsArray) {
         var groupId = group._id;
-        let check = Group.findOne({_id:groupId});
+        let groupCheck = Group.findOne({_id:groupId});
         
-        if(!check){
+        if(!groupCheck){
         throw (new Meteor.Error("group doesn't exist")); 
         }
 
-        if(check.creatorId != Meteor.userId()){
+        if(groupCheck.creatorId != Meteor.userId()){
             throw (new Meteor.Error("only owner can modify group")); 
         }
 
         var newEmailInGroup = emailsArray.filter((email)=>{
-            return check.emails.indexOf(email) < 0
+            return groupCheck.emails.indexOf(email) < 0
         })
 
         var newData = data.filter((d)=>{
-            return check.emails.indexOf(d.email) < 0
+            return groupCheck.emails.indexOf(d.email) < 0
         })
+
+        var removedEmails = groupCheck.emails.filter((email)=>{
+            return emailsArray.indexOf(email) < 0
+        })
+        var updatedEmailsSurveyed;
+        if(removedEmails && removedEmails.length > 0 && groupCheck.emailsSurveyed){
+            updatedEmailsSurveyed = groupCheck.emailsSurveyed.filter((email)=>{
+                return removedEmails.indexOf(email) < 0
+            })
+        }
+
+        var updatedEmailsSelfRankCompleted;
+        if(removedEmails && removedEmails.length > 0 && groupCheck.emailsSelfRankCompleted){
+            updatedEmailsSelfRankCompleted = groupCheck.emailsSelfRankCompleted.filter((email)=>{
+                return removedEmails.indexOf(email) < 0
+            })
+        }
+        
+
+        if(removedEmails.length > 0){
+            var users = Meteor.users.find(
+                {"emails.0.address":{$in:removedEmails}}
+            ).fetch();
+
+            users.forEach((user) => {
+                FeedbackRank.remove({
+                    $or : [ {"from" : user._id  }, 
+                            { "to" : user._id}],
+                            
+                    'groupId': groupCheck._id,
+                })
+            });
+        }
 
         Group.update({"_id":groupId},
         {'$set':{groupName: groupName,  emails:emailsArray , creatorId: group.creatorId}
-        });	
+        });
+
+        if(updatedEmailsSurveyed){
+            Group.update({"_id":groupId},
+            {'$set':{emailsSurveyed: updatedEmailsSurveyed}
+            });	
+        }
+
+        if(updatedEmailsSelfRankCompleted){
+            Group.update({"_id":groupId},
+            {'$set':{emailsSelfRankCompleted: updatedEmailsSelfRankCompleted}
+            });	
+        }
 
         Meteor.call('genGroupQuestionSet', newEmailInGroup , groupId , newData, groupName, (err, result)=> {
             //  console.log("genGroupQuestionSet" , err, result);

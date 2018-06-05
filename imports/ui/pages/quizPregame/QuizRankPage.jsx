@@ -36,37 +36,44 @@ class QuizRankPage extends React.Component {
     
     render() {
         if(this.props.dataReady){
-            if(this.props.surveyCompleted || this.state.surveyCompleted){
-                if(this.props.group.isActive){
-                    if(this.props.selfRankCompleted){
-                        if(this.props.group.isFinished){
-                            return(
-                                <h1>all done</h1>
-                            )
+            if(this.props.isGroupMember){
+                if(this.props.surveyCompleted || this.state.surveyCompleted){
+                    if(this.props.group.isActive){
+                        if(this.props.selfRankCompleted){
+                            if(this.props.group.isFinished){
+                                return(
+                                    <h1>all done</h1>
+                                )
+                            }else{
+                                return(
+                                    <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
+                                )
+                            }
+                            
                         }else{
-                            return(
-                                <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
-                            )
+                            return (
+                                <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
+                            );
                         }
-                        
                     }else{
-                        return (
-                            <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
-                        );
+                        return(
+                            <div className="fillHeight weq-bg">
+                                <div className="font-rate">Please wait until gamemaster start the session</div>
+                            </div>
+                        )
                     }
+                    
+                    
                 }else{
                     return(
-                        <h1>Please wait until gamemaster start the session</h1>
+                        <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)}/>
                     )
                 }
-                
-                
             }else{
                 return(
-                    <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)}/>
+                    <Redirect to="/"/>
                 )
             }
-            
         }else{
             return(
                 <Loading/>
@@ -81,6 +88,7 @@ export default withTracker((props) => {
     var currentUser;
     var surveyCompleted;
     var selfRankCompleted;
+    var isGroupMember;
 
     if(props.user && props.user.profile.selfRank){
         var handleGroup = Meteor.subscribe('group',{_id:props.user.profile.selfRank},{}, {
@@ -104,6 +112,7 @@ export default withTracker((props) => {
         if(handleGroup.ready() && currentUser){
             group = Group.findOne({_id:props.match.params.gid});
             var email = currentUser.emails[0].address;
+            isGroupMember = group && group.emails && group.emails.indexOf(email) > -1;
             surveyCompleted = group && group.emailsSurveyed && group.emailsSurveyed.indexOf(email) > -1;
             selfRankCompleted = group.emailsSelfRankCompleted && group.emailsSelfRankCompleted.indexOf(email) > -1;
             dataReady = true;
@@ -117,6 +126,7 @@ export default withTracker((props) => {
       currentUser:currentUser,
       surveyCompleted:surveyCompleted,
       selfRankCompleted:selfRankCompleted,
+      isGroupMember:isGroupMember,
       dataReady:dataReady,
   };
 })(QuizRankPage);
