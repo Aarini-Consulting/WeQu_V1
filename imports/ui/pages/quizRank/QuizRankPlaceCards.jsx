@@ -39,14 +39,31 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
+        if(nextProps.dataReady){
+            Meteor.call( 'generate.rank.category.from.csv', (error, result)=>{
+                console.log(result);
+            });
+
+            Meteor.call( 'generate.card.from.csv', (error, result)=>{
+                console.log(result);
+            });
+        }
         if(nextProps.dataReady && !nextProps.cardPlacement){
-            Meteor.call( 'generate.card.placement', nextProps.group._id, (error, result)=>{
+            Meteor.call( 'combine.rank.data', nextProps.group._id, (error, result)=>{
                 if(error){
                     console.log(error)
                 }
             })
         }else if(nextProps.dataReady && nextProps.cardPlacement){
             console.log("startPicking");
+            Meteor.call( 'pick.card', nextProps.group._id, (error, result)=>{
+                if(error){
+                    console.log(error)
+                }
+                if(result){
+                    console.log(result);
+                }
+            })
         }
     }
 

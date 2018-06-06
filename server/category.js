@@ -20,6 +20,27 @@ Meteor.methods({
         }
     },
 
+    'generate.card.from.csv': function() {
+        var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
+
+        if(lines.length > 0){
+            var holder={}
+            for (var i = 1; i < lines.length; i++) {
+                if(holder[lines[i][1]] && holder[lines[i][1]].cards){
+                    if(holder[lines[i][1]].cards && holder[lines[i][1]].cards.indexOf(lines[i][2]) < 0){
+                        holder[lines[i][1]].cards.push(lines[i][2]);
+                    }
+                }else{
+                    holder[lines[i][1]] = {
+                        cards:[lines[i][2]]
+                    };
+                }
+            }
+
+            return holder;
+        }
+    },
+
     'generate.self.rank': function(userId, groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
@@ -371,7 +392,7 @@ Meteor.methods({
             throw (new Meteor.Error("game_not_started_or_already_finished")); 
         }
     },
-    'generate.card.placement': function(groupId) {
+    'combine.rank.data': function(groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
@@ -438,9 +459,16 @@ Meteor.methods({
                         }
                     }
                 });
+
+                var resultCategories = Meteor.call( 'generate.rank.category.from.csv');
+                var mainCatValues = Object.values(resultCategories);
+                var mainCatKeys = Object.keys(resultCategories);
                 //to array
                 for(var r in combinedRank){
-                    rankOrder.push({"subCategory":r,"value":combinedRank[r]});
+                    var mainCatIndex = mainCatValues.findIndex((cat) => {
+                        return cat.subCategory.indexOf(r) > -1;
+                    });
+                    rankOrder.push({"category":mainCatKeys[mainCatIndex], "subCategory":r,"value":combinedRank[r]});
                 }
 
                 //sort descending (highest value first)
@@ -464,5 +492,139 @@ Meteor.methods({
 
             }
         });
+    },
+    'pick.card': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.isFinished){
+            throw (new Meteor.Error("group_not_finished")); 
+        }
+
+        if(!groupCheck.isActive){
+            throw (new Meteor.Error("group_not_started")); 
+        }
+
+        var userCheck = Meteor.users.findOne(Meteor.userId());
+
+        if(!userCheck){
+            throw (new Meteor.Error("unknown_user")); 
+        }
+
+        var users = Meteor.users.find(
+            {"emails.0.address":{$in:groupCheck.emails}}
+        ).fetch();
+
+        if(users.length < 1){
+            throw new Meteor.Error("no_group_member_found");
+        }
+
+        var resultCategories = Meteor.call( 'generate.rank.category.from.csv');
+        var resultCards = Meteor.call( 'generate.card.from.csv');
+
+        if(resultCategories){
+            users.forEach(function(user, index, _arr) {
+                var cardPlacementCheck = CardPlacement.findOne({
+                    'groupId': groupId,'userId': Meteor.userId(),"combinedRank":{$exists: true},"rankOrder":{$exists: true}
+                });
+                if(cardPlacementCheck){
+                    var categories = JSON.parse(JSON.stringify(resultCategories));
+                    var top = cardPlacementCheck.rankOrder;
+                    var low = cardPlacementCheck.rankOrder.slice().reverse();
+
+                    var pickTop = 4;
+                    var pickLow = 3;
+
+                    var topPicked = []
+                    var lowPicked = [];
+                    var cardPicked = [];
+
+                    var categoryKeys = Object.keys(categories);
+
+                    // do {
+                        //get the first 4 category from the top
+                        top.some((topRank) => {
+                            if(topPicked.length < pickTop){
+                                var categoryIndex = categoryKeys.indexOf(topRank.category);
+                                if(categoryIndex > -1){
+                                    var subCategoryIndex = categories[topRank.category].subCategory.indexOf(topRank.subCategory)
+                                    if(subCategoryIndex > -1){
+                                        //selected
+                                        topPicked.push(topRank);
+                                        var subCategoryCards = resultCards[topRank.subCategory].cards;
+                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                        cardPicked.push(randomCard);
+
+                                        //removed from subcategory pool
+                                        categories[topRank.category].subCategory.splice(subCategoryIndex, 1);
+
+                                        //removed from main category pool
+                                        categoryKeys.splice(categoryIndex, 1);
+                                    }
+                                }
+                            }else{
+                                return false;
+                            }
+                        });
+                    // }
+                    // while (topPicked.length < pickTop);
+                    
+                    //refresh categoryKeys before getting the remaining 3 category from the bottom
+                    categoryKeys = Object.keys(categories);
+                    
+
+                    // do{
+                        //get the remaining 3 category from the bottom
+                        low.some((lowRank) => {
+                            if(lowPicked.length < pickLow){
+                                var categoryIndex = categoryKeys.indexOf(lowRank.category);
+                                if(categoryIndex > -1){
+                                    var subCategoryIndex = categories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
+                                    if(subCategoryIndex > -1){
+                                        //selected
+                                        lowPicked.push(lowRank);
+                                        var subCategoryCards = resultCards[lowRank.subCategory].cards;
+                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                        cardPicked.push(randomCard);
+
+                                        //removed from subcategory pool
+                                        categories[lowRank.category].subCategory.splice(subCategoryIndex, 1);
+
+                                        //removed keys from main category keys pool
+                                        categoryKeys.splice(categoryIndex, 1);
+                                    }
+                                }
+                            }
+                            else{
+                                return false;
+                            }
+                        });
+                    // }
+                    // while (lowPicked.length < pickLow);
+                    var holder =  {"top":topPicked,"low":lowPicked};
+                    console.log(holder);
+                    console.log(cardPicked);
+
+                    
+
+                    
+
+                    return holder;
+                    // CardPlacement.update({groupId:groupCheck._id, userId:userCheck._id}, 
+                    //     {$set : { 
+                    //         "cardPicked": [],
+                    //     }
+                    // });
+                }else{
+                    console.log("rank_not_combined_or_sorted");
+                }
+            });
+    
+        }
+
+        
     }
 });

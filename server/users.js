@@ -114,7 +114,8 @@ Meteor.methods({
       Group.find(
         {$or : [
             { "emails": oldMail},
-            { "emailsSurveyed": oldMail}
+            { "emailsSurveyed": oldMail},
+            { "emailsSelfRankCompleted": oldMail}
           ] 
         }
       ).forEach(function(gr){
@@ -134,6 +135,15 @@ Meteor.methods({
 
           if(check > -1){
             gr.emailsSurveyed[check] = email;
+            doUpdate = true;
+          }
+        }
+
+        if(gr.emailsSelfRankCompleted){
+          var check = gr.emailsSelfRankCompleted.indexOf(oldMail);
+
+          if(check > -1){
+            gr.emailsSelfRankCompleted[check] = email;
             doUpdate = true;
           }
         }
@@ -214,7 +224,8 @@ Meteor.methods({
       Group.find(
         {$or : [
             { "emails": userMail},
-            { "emailsSurveyed": userMail}
+            { "emailsSurveyed": userMail},
+            { "emailsSelfRankCompleted": oldMail}
           ] 
         }
       ).forEach(function(gr){
@@ -234,6 +245,15 @@ Meteor.methods({
 
           if(check > -1){
             gr.emailsSurveyed.splice(check, 1);
+            doUpdate = true;
+          }
+        }
+
+        if(gr.emailsSelfRankCompleted){
+          var check = gr.emailsSelfRankCompleted.indexOf(userMail);
+
+          if(check > -1){
+            gr.emailsSelfRankCompleted.splice(check, 1);
             doUpdate = true;
           }
         }
@@ -265,6 +285,13 @@ Meteor.methods({
         {$or : [
           { "from": currentUser._id},
           { "to": currentUser._id}
+          ] 
+        },
+        {});
+      
+      CardPlacement.remove(
+        {$or : [
+          { "userId": currentUser._id},
           ] 
         },
         {});

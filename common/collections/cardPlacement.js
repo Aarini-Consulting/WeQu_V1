@@ -19,6 +19,12 @@ CardPlacementSchema = new SimpleSchema({
 		blackbox:true,
 		label: "rankOrder",
 	},
+	"cardPicked":{
+		type: [Object],
+		blackbox:true,
+		label: "cardPicked",
+		optional: true,
+	},
 	"createdAt": {
 		type: Date,
 		label: "Date group created",
