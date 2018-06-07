@@ -133,10 +133,21 @@ class Home extends React.Component {
                         );
                     }
                 }
-            }else{
+            }else if(this.props.currentUser){
                 return(
                     <EmailVerified/>
                 )
+            }else{
+                Session.set( "loggedOut", true);
+                Meteor.logout((error)=>{
+                    if(error){
+                      console.log(error);
+                      return false;
+                    }else{
+                        this.props.history.replace('/login');
+                    }
+                  });
+                return false;
             }
 
             
