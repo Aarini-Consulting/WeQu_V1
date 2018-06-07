@@ -498,12 +498,10 @@ Meteor.methods({
         ).fetch();
 
         if(readyForPicking.length == groupCheck.emails.length){
-            readyForPicking.forEach((cp, index, _arr) => {
-                Meteor.call('pick.card', groupCheck._id,cp.userId);
-            });
+            Meteor.call('pick.card', groupCheck._id);
         }
     },
-    'pick.card': function(groupId,userId) {
+    'pick.card': function(groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
@@ -516,12 +514,6 @@ Meteor.methods({
 
         if(!groupCheck.isActive){
             throw (new Meteor.Error("group_not_started")); 
-        }
-
-        var userCheck = Meteor.users.findOne(userId);
-
-        if(!userCheck){
-            throw (new Meteor.Error("unknown_user")); 
         }
 
         var users = Meteor.users.find(
@@ -538,7 +530,7 @@ Meteor.methods({
         if(resultCategories){
             users.forEach(function(user, index, _arr) {
                 var cardPlacementCheck = CardPlacement.findOne({
-                    'groupId': groupId,'userId': userId,"combinedRank":{$exists: true},"rankOrder":{$exists: true}
+                    'groupId': groupId,'userId': user._id,"combinedRank":{$exists: true},"rankOrder":{$exists: true}
                 });
                 if(cardPlacementCheck){
                     var categories = JSON.parse(JSON.stringify(resultCategories));
@@ -634,7 +626,7 @@ Meteor.methods({
                     // while (lowPicked.length < pickLow);
                     var holder =  {"top":topPicked,"low":lowPicked};
 
-                    CardPlacement.update({groupId:groupCheck._id, userId:userCheck._id}, 
+                    CardPlacement.update({groupId:groupCheck._id, userId:user._id}, 
                         {$set : { 
                             "cardPicked": cardPicked,
                         }

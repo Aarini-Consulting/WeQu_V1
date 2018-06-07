@@ -49,10 +49,7 @@ class QuizRankPlaceCards extends React.Component {
                 if(error){
                     console.log(error)
                 }
-                this.setTimer(false);
             })
-        }else if(nextProps.dataReady && nextProps.cardPlacement && nextProps.cardPlacement.cardPicked){
-            this.setTimer(false);
         }
     }
 
@@ -107,7 +104,7 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     render() {
-        if(this.props.dataReady && Math.round(this.state.elapsed/1000)  >= this.state.wait && this.props.cardPlacement && this.props.cardPlacement.cardPicked){
+        if(this.props.dataReady && Math.round(this.state.elapsed)  >= this.state.wait && this.props.cardPlacement && this.props.cardPlacement.cardPicked){
             return (
                 <div className="fillHeight">
                     <section className="section summary fontreleway weq-bg">
