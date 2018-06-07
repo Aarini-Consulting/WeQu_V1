@@ -392,10 +392,12 @@ class AdminGameMasterView extends React.Component {
                 }
             }
             else{
+                if(Meteor.userId() || this.props.currentUser){
+                    Meteor.logout();
+                }
                 return(
                     <AdminLogin/>
                 )
-                
             }
         }
         else{
