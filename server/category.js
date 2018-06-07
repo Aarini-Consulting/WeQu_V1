@@ -392,7 +392,7 @@ Meteor.methods({
             throw (new Meteor.Error("game_not_started_or_already_finished")); 
         }
     },
-    'combine.rank.data': function(groupId) {
+    'combine.rank.data': function(groupId,userId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
@@ -413,21 +413,21 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_user")); 
         }
 
-        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': Meteor.userId()});
+        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': userId});
         var rankOrder=[];
         var combinedRank={};
         if(!cardPlacementCheck){
             var feedbackRankFromSelf = FeedbackRank.findOne({
-                'from': Meteor.userId(),
-                'to': Meteor.userId(),
+                'from': userId,
+                'to': userId,
                 'groupId': groupCheck._id,
                 "rank":{$exists: true}
             });
 
             if(feedbackRankFromSelf && feedbackRankFromSelf.rank){
                 var feedbackRankFromOthers = FeedbackRank.find({
-                    'from': {$ne:Meteor.userId()},
-                    'to': Meteor.userId(),
+                    'from': {$ne:userId},
+                    'to': userId,
                     'groupId': groupCheck._id,
                     "rank":{$exists: true}
                 }).fetch();
@@ -478,22 +478,32 @@ Meteor.methods({
             }else{
                 throw (new Meteor.Error("completed_self_rank_not_found")); 
             }
-        }else{
-            rankOrder = cardPlacementCheck.rankOrder;
-            combinedRank = cardPlacementCheck.combinedRank;
+
+            CardPlacement.upsert({groupId:groupCheck._id, userId:userCheck._id}, 
+                {$set : { 
+                    "userId": userCheck._id,
+                    "groupId": groupCheck._id,
+                    "combinedRank":combinedRank,
+                    "rankOrder":rankOrder
+    
+                }
+            });
         }
 
-        CardPlacement.upsert({groupId:groupCheck._id, userId:userCheck._id}, 
-            {$set : { 
-                "userId": userCheck._id,
-                "groupId": groupCheck._id,
-                "combinedRank":combinedRank,
-                "rankOrder":rankOrder
-
+        var readyForPicking = CardPlacement.find(
+            {
+                groupId:groupCheck._id,
+                cardPicked:{$exists: false}
             }
-        });
+        ).fetch();
+
+        if(readyForPicking.length == groupCheck.emails.length){
+            readyForPicking.forEach((cp, index, _arr) => {
+                Meteor.call('pick.card', groupCheck._id,cp.userId);
+            });
+        }
     },
-    'pick.card': function(groupId) {
+    'pick.card': function(groupId,userId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
@@ -508,7 +518,7 @@ Meteor.methods({
             throw (new Meteor.Error("group_not_started")); 
         }
 
-        var userCheck = Meteor.users.findOne(Meteor.userId());
+        var userCheck = Meteor.users.findOne(userId);
 
         if(!userCheck){
             throw (new Meteor.Error("unknown_user")); 
@@ -528,7 +538,7 @@ Meteor.methods({
         if(resultCategories){
             users.forEach(function(user, index, _arr) {
                 var cardPlacementCheck = CardPlacement.findOne({
-                    'groupId': groupId,'userId': Meteor.userId(),"combinedRank":{$exists: true},"rankOrder":{$exists: true}
+                    'groupId': groupId,'userId': userId,"combinedRank":{$exists: true},"rankOrder":{$exists: true}
                 });
                 if(cardPlacementCheck){
                     var categories = JSON.parse(JSON.stringify(resultCategories));
@@ -551,12 +561,21 @@ Meteor.methods({
                                 var categoryIndex = categoryKeys.indexOf(topRank.category);
                                 if(categoryIndex > -1){
                                     var subCategoryIndex = categories[topRank.category].subCategory.indexOf(topRank.subCategory)
-                                    if(subCategoryIndex > -1){
+                                    var subCategoryCards = resultCards[topRank.subCategory].cards;
+
+                                    //check if cards from this subcategory still available to pick
+                                    if(subCategoryIndex > -1 && subCategoryCards.length > 0){
                                         //selected
                                         topPicked.push(topRank);
-                                        var subCategoryCards = resultCards[topRank.subCategory].cards;
+
+                                        //pick card
                                         var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
-                                        cardPicked.push(randomCard);
+                                        cardPicked.push(
+                                            {
+                                                category:topRank.category,
+                                                subCategory:topRank.subCategory, 
+                                                cardId:randomCard[0]
+                                            });
 
                                         //removed from subcategory pool
                                         categories[topRank.category].subCategory.splice(subCategoryIndex, 1);
@@ -583,12 +602,21 @@ Meteor.methods({
                                 var categoryIndex = categoryKeys.indexOf(lowRank.category);
                                 if(categoryIndex > -1){
                                     var subCategoryIndex = categories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
-                                    if(subCategoryIndex > -1){
+                                    var subCategoryCards = resultCards[lowRank.subCategory].cards;
+
+                                    //check if cards from this subcategory still available to pick
+                                    if(subCategoryIndex > -1 && subCategoryCards.length > 0){
                                         //selected
                                         lowPicked.push(lowRank);
-                                        var subCategoryCards = resultCards[lowRank.subCategory].cards;
+                                        
+                                        //pick card
                                         var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
-                                        cardPicked.push(randomCard);
+                                        cardPicked.push(
+                                            {
+                                                category:lowRank.category,
+                                                subCategory:lowRank.subCategory, 
+                                                cardId:randomCard[0]
+                                            });
 
                                         //removed from subcategory pool
                                         categories[lowRank.category].subCategory.splice(subCategoryIndex, 1);
@@ -605,26 +633,17 @@ Meteor.methods({
                     // }
                     // while (lowPicked.length < pickLow);
                     var holder =  {"top":topPicked,"low":lowPicked};
-                    console.log(holder);
-                    console.log(cardPicked);
 
-                    
-
-                    
-
-                    return holder;
-                    // CardPlacement.update({groupId:groupCheck._id, userId:userCheck._id}, 
-                    //     {$set : { 
-                    //         "cardPicked": [],
-                    //     }
-                    // });
+                    CardPlacement.update({groupId:groupCheck._id, userId:userCheck._id}, 
+                        {$set : { 
+                            "cardPicked": cardPicked,
+                        }
+                    });
                 }else{
                     console.log("rank_not_combined_or_sorted");
                 }
             });
     
         }
-
-        
     }
 });
