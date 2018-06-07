@@ -471,23 +471,6 @@ class InviteGroup extends React.Component {
                     {this.props.isEdit 
                       ? 
                       <div>
-                        <div>
-                          {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-                            <a id="submitSend" className="invitebttn formbttn w-button" onClick={this.props.startGame}>Start game</a>
-                          }
-                          {(this.props.group && this.props.group.isFinished) 
-                            ?
-                            <a id="submitSend" className="invitebttn formbttn w-button">
-                              Game Finished
-                            </a>
-                            :this.props.group.isActive &&
-                            <a id="submitSend" className="invitebttn formbttn w-button">
-                              Game Started
-                            </a>
-                          }          
-                          <br/>
-                          <br/>
-                        </div>
                         <div className="groupformtext">Group name</div>
                         <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
                         name="name" data-name="Name" maxLength="256" required="" 

@@ -166,8 +166,6 @@ class GroupPage extends React.Component {
     Meteor.call( 'start.game', this.props.group._id, (error, result)=>{
       if(error){
         console.log(error)
-      }else{
-        console.log("game started")
       }
     });
   }
@@ -303,7 +301,7 @@ class GroupPage extends React.Component {
       var tabContent;
 
       if(this.state.currentTab == "edit"){
-        tabContent = <InviteGroup isEdit={true} group={this.props.group} startGame={this.startGame.bind(this)}/>
+        tabContent = <InviteGroup isEdit={true} group={this.props.group}/>
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
@@ -355,9 +353,22 @@ class GroupPage extends React.Component {
                 <div className="fontreleway font-invite-title white w-clearfix">
                 {this.props.group.groupName}
                 </div>
-                {/* <div className="fontreleway font-invite-title edit w-clearfix">
-                  <span className="cursor-pointer" onClick={this.showInviteGroup.bind(this, true)}>Edit Group</span>
-                </div> */}
+                <div className="fontreleway font-invite-title edit w-clearfix">
+                  {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
+                    <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.startGame.bind(this)}>Start game</a>
+                  }
+                  {(this.props.group && this.props.group.isFinished) 
+                    ?
+                    <a id="submitSend" className="invitebttn w-button w-inline-block">
+                      Game Finished
+                    </a>
+                    :this.props.group.isActive &&
+                    <a id="submitSend" className="invitebttn w-button w-inline-block">
+                      Game Started
+                    </a>
+                  }          
+                </div>
+
               </div>
               <div className="tabs w-tabs">
                 <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
@@ -369,14 +380,14 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"survey")}>
                     <div>View survey</div>
                   </a>
-                  <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
+                  <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
                     <div>Curate cards</div>
                   </a>
-                  <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                  {/* <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Get report</div>
-                  </a>
+                  </a> */}
                 </div>
                 <div className="w-tab-content">
                   {tabContent}
