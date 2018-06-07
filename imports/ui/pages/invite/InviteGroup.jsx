@@ -464,7 +464,6 @@ class InviteGroup extends React.Component {
         )
       }
       else{
-        console.log(this.props.group)
         return (
           <div className="contentwrapper invite">   
             <div className="inviteform w-form">

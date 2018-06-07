@@ -193,8 +193,8 @@ class GroupPage extends React.Component {
   renderUserCards(cards){
     return cards.map((card, index) => {
       return(
-        <div className={"font-number "+card.type} key={card._id}>
-          {card.number}
+        <div className={`font-number ${ card.category }`} key={card.cardId}>
+          {card.cardId}
         </div>
       )
     });
@@ -210,8 +210,13 @@ class GroupPage extends React.Component {
       if(this.props.group.emailsSelfRankCompleted && this.props.group.emailsSelfRankCompleted.indexOf(email) > -1){
         readySelfRank = true;
       }
-      var ready = (readySurvey && readySelfRank);
+      var ready = (readySurvey);
       var started = this.props.group.isActive;
+
+      var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
+        return cp.userId == user._id;
+      })
+
       return(
         <div className="tap-content w-clearfix" key={user._id}>
           <div className="tap-left card">
@@ -222,11 +227,9 @@ class GroupPage extends React.Component {
           <div className="show-cards">
             {ready && started
             ?
-              this.renderUserCards([
-                {_id:1,type:"c-1",number:25},{_id:2,type:"c-2",number:5},{_id:3,type:"c-3",number:35},
-                {_id:4,type:"c-4",number:25},{_id:5,type:"c-5",number:25},{_id:6,type:"c-6",number:25},
-                {_id:7,type:"c-7",number:25}
-              ])
+              cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0
+                ?this.renderUserCards(cardPlacement.cardPicked)
+                :<div className="bttn-next-card">session in progress</div>
             :
               ready 
               ? 
@@ -490,6 +493,7 @@ export default withTracker((props) => {
   var dataReady;
   var group;
   var users;
+  var cardPlacements;
   // var feedbackCycle;
   // var currentFeedbackCycle;
   var handleGroup;
@@ -513,7 +517,7 @@ export default withTracker((props) => {
         // && handleFeedbackCycle.ready()
         ){
           group = Group.findOne({_id : props.match.params.id});
-
+          
           // var check = FeedbackCycle.findOne({
           //   groupId : props.match.params.id,
           //   creatorId : Meteor.userId(),
@@ -550,14 +554,23 @@ export default withTracker((props) => {
           //   dataReady = true;
           // }
 
-          users = Meteor.users.find(
-            {
-              $or : [ {"emails.address" : {$in:group.emails}  }, 
-              { "profile.emailAddress" : {$in:group.emails}}]
-            }
-          );
+          var handleCardPlacement = Meteor.subscribe('cardPlacement',{groupId:group._id},{}, {
+              onError: function (error) {
+                    console.log(error);
+              }
+          });
 
-          dataReady = true;
+          if(handleCardPlacement.ready()){
+            cardPlacements = CardPlacement.find({groupId:group._id}).fetch();
+            users = Meteor.users.find(
+              {
+                $or : [ {"emails.address" : {$in:group.emails}  }, 
+                { "profile.emailAddress" : {$in:group.emails}}]
+              }
+            );
+  
+            dataReady = true;
+          }
         }
     }
   return {
@@ -565,6 +578,7 @@ export default withTracker((props) => {
       group:group,
       // feedbackCycle:feedbackCycle,
       // currentFeedbackCycle:currentFeedbackCycle,
+      cardPlacements:cardPlacements,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };
