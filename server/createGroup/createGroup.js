@@ -8,11 +8,11 @@ Meteor.methods({
      throw (new Meteor.Error("group_creation_failed")); 
    }
 
-   FeedbackCycle.insert({
-    'groupId': groupId, 
-    'creatorId': Meteor.userId(), 
-    'from': now
-    });
+  //  FeedbackCycle.insert({
+  //   'groupId': groupId, 
+  //   'creatorId': Meteor.userId(), 
+  //   'from': now
+  //   });
 
    Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName, (err, result)=> {
     //  console.log("genGroupQuestionSet" , err, result);

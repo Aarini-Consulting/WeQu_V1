@@ -20,6 +20,27 @@ Meteor.methods({
         }
     },
 
+    'generate.card.from.csv': function() {
+        var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
+
+        if(lines.length > 0){
+            var holder={}
+            for (var i = 1; i < lines.length; i++) {
+                if(holder[lines[i][1]] && holder[lines[i][1]].cards){
+                    if(holder[lines[i][1]].cards && holder[lines[i][1]].cards.indexOf(lines[i][2]) < 0){
+                        holder[lines[i][1]].cards.push(lines[i][2]);
+                    }
+                }else{
+                    holder[lines[i][1]] = {
+                        cards:[lines[i][2]]
+                    };
+                }
+            }
+
+            return holder;
+        }
+    },
+
     'generate.self.rank': function(userId, groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
@@ -293,6 +314,22 @@ Meteor.methods({
             'firstSwipe': rankFirstSwipe,
             }
         });
+
+
+        var checkNotComplete = FeedbackRank.findOne(
+            {
+                groupId:groupCheck._id,
+                $or : [ {"isSelected":false}, 
+                        {"rank":{$exists: false}}
+                    ],
+            }
+        );
+
+        if(!checkNotComplete){
+            Group.update({"_id":groupId},
+            {'$set':{"isFinished":true}
+            });	
+        }
     },
 
     'start.game': function(groupId) {
@@ -353,6 +390,260 @@ Meteor.methods({
             
         }else{
             throw (new Meteor.Error("game_not_started_or_already_finished")); 
+        }
+    },
+    'combine.rank.data': function(groupId,userId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.isFinished){
+            throw (new Meteor.Error("group_not_finished")); 
+        }
+
+        if(!groupCheck.isActive){
+            throw (new Meteor.Error("group_not_started")); 
+        }
+
+        var userCheck = Meteor.users.findOne(Meteor.userId());
+
+        if(!userCheck){
+            throw (new Meteor.Error("unknown_user")); 
+        }
+
+        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': userId});
+        var rankOrder=[];
+        var combinedRank={};
+        if(!cardPlacementCheck){
+            var feedbackRankFromSelf = FeedbackRank.findOne({
+                'from': userId,
+                'to': userId,
+                'groupId': groupCheck._id,
+                "rank":{$exists: true}
+            });
+
+            if(feedbackRankFromSelf && feedbackRankFromSelf.rank){
+                var feedbackRankFromOthers = FeedbackRank.find({
+                    'from': {$ne:userId},
+                    'to': userId,
+                    'groupId': groupCheck._id,
+                    "rank":{$exists: true}
+                }).fetch();
+
+                var rankFromSelf = feedbackRankFromSelf.rank;
+                
+                //get rank from self rank
+                //For self rank, each rank quiz set consist of 6 unique sub categories from the main categories
+                //therefore, score point range is from 1 to 6
+                for(var r in rankFromSelf){
+                    if(combinedRank[r]){
+                        var average = (combinedRank[r] + rankFromSelf[r])/2 
+                        combinedRank[r]=average;
+                    }else{
+                        combinedRank[r]=rankFromSelf[r];
+                    }
+                }
+                //For other rank, each rank quiz set consist of 5 uniquely-selected sub categories from 6 main categories
+                //therefore, score point range is from 1 to 5, so need to convert the score to the same range (in this case 6)
+                feedbackRankFromOthers.forEach((feedbackRank, index, _arr) => {
+                    var rankFromOther = feedbackRank.rank;
+                    for(var r in rankFromOther){
+                        var converted = (rankFromOther[r]/Object.keys(rankFromOther).length) * 6;
+                        if(combinedRank[r]){
+                            var average = (combinedRank[r] + converted)/2 
+                            combinedRank[r]=average;
+                        }else{
+                            combinedRank[r]=converted;
+                        }
+                    }
+                });
+
+                var resultCategories = Meteor.call( 'generate.rank.category.from.csv');
+                var mainCatValues = Object.values(resultCategories);
+                var mainCatKeys = Object.keys(resultCategories);
+                //to array
+                for(var r in combinedRank){
+                    var mainCatIndex = mainCatValues.findIndex((cat) => {
+                        return cat.subCategory.indexOf(r) > -1;
+                    });
+                    rankOrder.push({"category":mainCatKeys[mainCatIndex], "subCategory":r,"value":combinedRank[r]});
+                }
+
+                //sort descending (highest value first)
+                rankOrder.sort((a, b) => {
+                    return b.value - a.value;
+                });
+            }else{
+                throw (new Meteor.Error("completed_self_rank_not_found")); 
+            }
+
+            CardPlacement.upsert({groupId:groupCheck._id, userId:userCheck._id}, 
+                {$set : { 
+                    "userId": userCheck._id,
+                    "groupId": groupCheck._id,
+                    "combinedRank":combinedRank,
+                    "rankOrder":rankOrder
+    
+                }
+            });
+        }
+
+        var readyForPicking = CardPlacement.find(
+            {
+                groupId:groupCheck._id,
+                cardPicked:{$exists: false}
+            }
+        ).fetch();
+
+        if(readyForPicking.length == groupCheck.emails.length){
+            readyForPicking.forEach((cp, index, _arr) => {
+                Meteor.call('pick.card', groupCheck._id,cp.userId);
+            });
+        }
+    },
+    'pick.card': function(groupId,userId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.isFinished){
+            throw (new Meteor.Error("group_not_finished")); 
+        }
+
+        if(!groupCheck.isActive){
+            throw (new Meteor.Error("group_not_started")); 
+        }
+
+        var userCheck = Meteor.users.findOne(userId);
+
+        if(!userCheck){
+            throw (new Meteor.Error("unknown_user")); 
+        }
+
+        var users = Meteor.users.find(
+            {"emails.0.address":{$in:groupCheck.emails}}
+        ).fetch();
+
+        if(users.length < 1){
+            throw new Meteor.Error("no_group_member_found");
+        }
+
+        var resultCategories = Meteor.call( 'generate.rank.category.from.csv');
+        var resultCards = Meteor.call( 'generate.card.from.csv');
+
+        if(resultCategories){
+            users.forEach(function(user, index, _arr) {
+                var cardPlacementCheck = CardPlacement.findOne({
+                    'groupId': groupId,'userId': userId,"combinedRank":{$exists: true},"rankOrder":{$exists: true}
+                });
+                if(cardPlacementCheck){
+                    var categories = JSON.parse(JSON.stringify(resultCategories));
+                    var top = cardPlacementCheck.rankOrder;
+                    var low = cardPlacementCheck.rankOrder.slice().reverse();
+
+                    var pickTop = 4;
+                    var pickLow = 3;
+
+                    var topPicked = []
+                    var lowPicked = [];
+                    var cardPicked = [];
+
+                    var categoryKeys = Object.keys(categories);
+
+                    // do {
+                        //get the first 4 category from the top
+                        top.some((topRank) => {
+                            if(topPicked.length < pickTop){
+                                var categoryIndex = categoryKeys.indexOf(topRank.category);
+                                if(categoryIndex > -1){
+                                    var subCategoryIndex = categories[topRank.category].subCategory.indexOf(topRank.subCategory)
+                                    var subCategoryCards = resultCards[topRank.subCategory].cards;
+
+                                    //check if cards from this subcategory still available to pick
+                                    if(subCategoryIndex > -1 && subCategoryCards.length > 0){
+                                        //selected
+                                        topPicked.push(topRank);
+
+                                        //pick card
+                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                        cardPicked.push(
+                                            {
+                                                category:topRank.category,
+                                                subCategory:topRank.subCategory, 
+                                                cardId:randomCard[0]
+                                            });
+
+                                        //removed from subcategory pool
+                                        categories[topRank.category].subCategory.splice(subCategoryIndex, 1);
+
+                                        //removed from main category pool
+                                        categoryKeys.splice(categoryIndex, 1);
+                                    }
+                                }
+                            }else{
+                                return false;
+                            }
+                        });
+                    // }
+                    // while (topPicked.length < pickTop);
+                    
+                    //refresh categoryKeys before getting the remaining 3 category from the bottom
+                    categoryKeys = Object.keys(categories);
+                    
+
+                    // do{
+                        //get the remaining 3 category from the bottom
+                        low.some((lowRank) => {
+                            if(lowPicked.length < pickLow){
+                                var categoryIndex = categoryKeys.indexOf(lowRank.category);
+                                if(categoryIndex > -1){
+                                    var subCategoryIndex = categories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
+                                    var subCategoryCards = resultCards[lowRank.subCategory].cards;
+
+                                    //check if cards from this subcategory still available to pick
+                                    if(subCategoryIndex > -1 && subCategoryCards.length > 0){
+                                        //selected
+                                        lowPicked.push(lowRank);
+                                        
+                                        //pick card
+                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                        cardPicked.push(
+                                            {
+                                                category:lowRank.category,
+                                                subCategory:lowRank.subCategory, 
+                                                cardId:randomCard[0]
+                                            });
+
+                                        //removed from subcategory pool
+                                        categories[lowRank.category].subCategory.splice(subCategoryIndex, 1);
+
+                                        //removed keys from main category keys pool
+                                        categoryKeys.splice(categoryIndex, 1);
+                                    }
+                                }
+                            }
+                            else{
+                                return false;
+                            }
+                        });
+                    // }
+                    // while (lowPicked.length < pickLow);
+                    var holder =  {"top":topPicked,"low":lowPicked};
+
+                    CardPlacement.update({groupId:groupCheck._id, userId:userCheck._id}, 
+                        {$set : { 
+                            "cardPicked": cardPicked,
+                        }
+                    });
+                }else{
+                    console.log("rank_not_combined_or_sorted");
+                }
+            });
+    
         }
     }
 });

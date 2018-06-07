@@ -181,9 +181,11 @@ class InviteGroup extends React.Component {
     var firstName = ReactDOM.findDOMNode(this.refs.firstName);
     var lastName = ReactDOM.findDOMNode(this.refs.lastName);
     var email = ReactDOM.findDOMNode(this.refs.email);
-    this.setState({
-      unsaved: (firstName.value || lastName.value || email.value),
-    });
+    if(firstName && lastName && email){
+      this.setState({
+        unsaved: (firstName.value || lastName.value || email.value),
+      });
+    }
   }
 
   handleChange(event) {
@@ -224,7 +226,8 @@ class InviteGroup extends React.Component {
       }
   }
 
-    handleBackArrowClick(){
+    handleBackArrowClick(event){
+      event.preventDefault();
     if(this.props.isEdit || (this.props.count && this.props.count > 0)){
         if(this.props.closeInviteGroup){
           this.props.closeInviteGroup();
@@ -461,6 +464,7 @@ class InviteGroup extends React.Component {
         )
       }
       else{
+        console.log(this.props.group)
         return (
           <div className="contentwrapper invite">   
             <div className="inviteform w-form">
@@ -468,17 +472,28 @@ class InviteGroup extends React.Component {
                     {this.props.isEdit 
                       ? 
                       <div>
-                      {this.props.group && !this.props.group.isStarted && !this.props.group.isFinished}
-                      <div>
-                        <a id="submitSend" className="invitebttn formbttn w-button" onClick={this.props.startGame}>Start game</a>
-                        <br/>
-                        <br/>
-                      </div>
-                      <div className="groupformtext">Group name</div>
-                      <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
-                      name="name" data-name="Name" maxLength="256" required="" 
-                      placeholder="group name" className="formstyle w-input" 
-                      required/>
+                        <div>
+                          {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
+                            <a id="submitSend" className="invitebttn formbttn w-button" onClick={this.props.startGame}>Start game</a>
+                          }
+                          {(this.props.group && this.props.group.isFinished) 
+                            ?
+                            <a id="submitSend" className="invitebttn formbttn w-button">
+                              Game Finished
+                            </a>
+                            :this.props.group.isActive &&
+                            <a id="submitSend" className="invitebttn formbttn w-button">
+                              Game Started
+                            </a>
+                          }          
+                          <br/>
+                          <br/>
+                        </div>
+                        <div className="groupformtext">Group name</div>
+                        <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
+                        name="name" data-name="Name" maxLength="256" required="" 
+                        placeholder="group name" className="formstyle w-input" 
+                        required/>
                       </div>
                       :
                       <div>
@@ -494,7 +509,7 @@ class InviteGroup extends React.Component {
                   
                   {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
                   
-
+                  {!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12">></div>
@@ -507,9 +522,10 @@ class InviteGroup extends React.Component {
                       <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
                         Female
                       </div> */}
-                      <input type="submit" id="submitAdd" defaultValue="add" className="invitebttn bttnmembr action w-button"/>
+                        <input type="submit" id="submitAdd" defaultValue="add" className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>
+                  }
 
                 {this.state.inviteStatus == 'sending' && 
                 <span className="sendingStatus">
