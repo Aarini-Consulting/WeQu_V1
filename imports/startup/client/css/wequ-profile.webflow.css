@@ -374,8 +374,6 @@
 }
 
 .formstyle {
-  height: 50px;
-  margin-bottom: 20px;
   border-style: solid;
   border-width: 0px 0px 1px;
   border-color: #000 #000 #fff;
@@ -469,7 +467,6 @@
   position: static;
   overflow: visible;
   width: 50%;
-  height: 50px;
   margin-right: auto;
   margin-left: auto;
   float: none;
@@ -517,21 +514,19 @@
 
 .invitebttn.bttnmembr.gender {
   width: auto;
-  min-height: 30px;
-  flex-basis: 12%;
-  margin-top: 0.5em;
+  height:auto;
+  flex-basis: 18%;
+  margin-top: 1em;
   margin-right:5px;
   margin-left:5px;
   padding: 2px 5px;
   border-width: 1px;
   border-radius: 5px;
-  line-height: 25px;
   font-weight: 200;
 }
 
 .invitebttn.bttnmembr.action {
   width: auto;
-  height: 30px;
   flex-basis: 12%;
   margin-top: 0.5em;
   margin-right:5px;
@@ -540,6 +535,10 @@
   border-style: none;
   border-radius: 0px;
   font-weight: 500;
+}
+
+.invitebttn.bttnmembr.action.delete {
+  flex-basis: 6%;
 }
 
 .invitebttn.bttnmembr.action:hover {
@@ -2844,6 +2843,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
+  margin-top:1em;
+  margin-bottom:1em;
+  padding:1em;
+}
+
+.tap-content.grey-bg{
+  background-color: #666666;
 }
 
 .tap-left {
@@ -2974,7 +2980,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .show-cards {
   display: flex;
   width: 80%;
-  height: 50px;
   padding-left:1em;
   padding-right:1em;
 }
@@ -3040,7 +3045,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .rank-shield-bg{
-  background-image: url('/img/ShieldLine.png');
+  background-image: url('/img/ShieldLine_v2.png');
   background-repeat: no-repeat;
   background-size:15em 15em;
   background-position: 50% 50%;
@@ -3068,7 +3073,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   border-radius: 100%;
   background-color: #202020;
   color: #299199;
@@ -3477,6 +3482,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-align: center;
 }
 
+.padding-wrapper {
+  padding-left:1em;
+  padding-right:1em;
+}
+
 .font-rate.f-em1{
   font-size: 1em;
   margin-top:1em;
@@ -3491,6 +3501,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color:#525252;
   font-size:0.5em;
   line-height: normal;
+  margin-top:0.5em;
 }
 
 .font-rate.f-bttn {

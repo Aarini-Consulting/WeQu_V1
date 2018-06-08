@@ -234,8 +234,10 @@ class GroupPage extends React.Component {
         return cp.userId == user._id;
       })
 
+      var odd = (index % 2) > 0;
+
       return(
-        <div className="tap-content w-clearfix" key={user._id}>
+        <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
           <div className="tap-left card">
             <div className={"font-card-username "+(ready ? "ready": "not-ready")}>
               {user.profile.firstName + " " + user.profile.lastName}
@@ -245,7 +247,9 @@ class GroupPage extends React.Component {
             {ready && started
             ?
               cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0
-                ?this.renderUserCards(cardPlacement.cardPicked)
+                ?this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
+                  return (Number(a.cardId) - Number(b.cardId));
+                }))
                 :<div className="bttn-next-card">session in progress</div>
             :
               ready 
@@ -360,7 +364,7 @@ class GroupPage extends React.Component {
       return(
         <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section className="section summary fontreleway groupbg">
+            <section className="section summary fontreleway groupbg fillHeight">
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   <a className="w-clearfix w-inline-block cursor-pointer" onClick={()=>{
@@ -389,7 +393,7 @@ class GroupPage extends React.Component {
                 </div>
 
               </div>
-              <div className="tabs w-tabs">
+              <div className="tabs w-tabs fillHeight">
                 <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                   <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
@@ -401,14 +405,14 @@ class GroupPage extends React.Component {
                   </a>
                   <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
-                    <div>Curate cards</div>
+                    <div>Draw cards</div>
                   </a>
                   {/* <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Get report</div>
                   </a> */}
                 </div>
-                <div className="w-tab-content">
+                <div className="w-tab-content fillHeight">
                   {tabContent}
                 </div>
               </div>
@@ -612,7 +616,7 @@ export default withTracker((props) => {
                 $or : [ {"emails.address" : {$in:group.emails}  }, 
                 { "profile.emailAddress" : {$in:group.emails}}]
               }
-            );
+            ).fetch();
   
             dataReady = true;
           }

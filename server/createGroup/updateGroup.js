@@ -49,6 +49,13 @@ Meteor.methods({
                             
                     'groupId': groupCheck._id,
                 })
+
+                Meteor.users.update({
+                    "$and": [ 
+                        {  '_id':user._id }, 
+                        {  'profile.selfRank': groupCheck._id} 
+                    ]}, 
+                    {$unset : { "profile.selfRank": "" }});
             });
         }
 

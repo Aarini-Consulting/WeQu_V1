@@ -58,7 +58,14 @@ class QuizRankPage extends React.Component {
                     }else{
                         return(
                             <div className="fillHeight weq-bg">
-                                <div className="font-rate">Please wait until gamemaster start the session</div>
+                                <div className="font-rate padding-wrapper">
+                                    DONE!
+                                    <br/><br/>
+                                    Thank you for completing the survey. 
+                                    <br/><br/>
+                                    You will use this app again when you play WeQ,<br/>
+                                    so remember to bring your phone to the session!
+                                </div>
                             </div>
                         )
                     }

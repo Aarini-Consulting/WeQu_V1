@@ -112,7 +112,9 @@ class QuizRankPlaceCards extends React.Component {
                         {this.props.currentUser && this.props.currentUser.profile &&
                             this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
                         }
-                        <div className="w-inline-block font-rate font-name-sub-header">Place your card face down with the following arrangement </div>
+                        <div className="w-inline-block font-rate font-name-sub-header">
+                        Write down the numbers on your WeQ playmat 
+                        </div>
                     </div>
                     <div className="rate-content">
                         {this.renderCards()}

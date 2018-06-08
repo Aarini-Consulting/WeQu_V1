@@ -48,8 +48,8 @@ class QuizRankWait extends React.Component {
             if(this.props.targetedForOthersFeedback){
                 return(
                     <div className="fillHeight weq-bg">
-                        <div className="font-rate">Sit back and relax, the others are evaluating you</div>
-                        <div className="font-rate">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
+                        <div className="font-rate padding-wrapper">Sit back and relax, the others are evaluating you</div>
+                        <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
                     </div>
                 )
             }else if(this.props.feedbackRank){
@@ -75,8 +75,8 @@ class QuizRankWait extends React.Component {
                         if(ready && !(everyoneReady)){
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate">Waiting for others to be ready</div>
-                                    <div className="font-rate">{this.props.otherFeedbackRanksReady.length}/{this.props.group.emails.length-1}</div>
+                                    <div className="font-rate padding-wrapper">Waiting for others to be ready</div>
+                                    <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksReady.length}/{this.props.group.emails.length-1}</div>
                                 </div>
                             )
                         }
@@ -86,15 +86,15 @@ class QuizRankWait extends React.Component {
                             var lastName = this.props.quizUser && this.props.quizUser.profile.lastName;
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate">The whole team will now rank:</div>
+                                    <div className="font-rate padding-wrapper">The whole team will now rank:</div>
                                     <br/>
-                                    <div className="font-rate">
+                                    <div className="font-rate padding-wrapper">
                                     {firstName+ " " + lastName}
                                     </div>
                                     <br/>
-                                    <div className="font-rate">You will have 60 seconds</div>
+                                    <div className="font-rate padding-wrapper">You will have 60 seconds</div>
                                     <br/>
-                                    <div className="font-rate">Sit back and relax {this.props.quizUser && this.props.quizUser.profile.firstName}</div>
+                                    <div className="font-rate padding-wrapper">Sit back and relax {this.props.quizUser && this.props.quizUser.profile.firstName}</div>
                                     <br/>
                                     <div className="w-block cursor-pointer">
                                         <div className="font-rate f-bttn w-inline-block noselect" onClick={this.confirmReadiness.bind(this)}>
@@ -108,7 +108,7 @@ class QuizRankWait extends React.Component {
                 }else{
                     return (
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate">
+                            <div className="font-rate padding-wrapper">
                             All done! 
                             Please wait until everyone in the group completes their self-ranking...
                             </div>
@@ -120,8 +120,8 @@ class QuizRankWait extends React.Component {
                 if (this.props.waitForOthersFeedback){
                     return(
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate">Waiting for others to be ready</div>
-                            <div className="font-rate">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
+                            <div className="font-rate padding-wrapper">Waiting for others to be ready</div>
+                            <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
                         </div>
                     )
                     
