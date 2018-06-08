@@ -388,13 +388,6 @@ class InviteGroup extends React.Component {
               </div>
               } */}
               {this.props.isEdit && !newInvite &&
-                this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
-                ?
-                <div className="invitebttn bttnmembr gender w-button selected noselect">
-                  <i className="far fa-envelope-open fa-margin-right"></i>
-                  active
-                </div>
-                :this.props.isEdit && !newInvite &&
                 <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
                   {resendIndex > -1 
                     ?
@@ -405,14 +398,13 @@ class InviteGroup extends React.Component {
                   resend
                 </div>
               }
-              <div className="invitebttn bttnmembr action w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+              <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
                 {deleteIndex > -1 
                     ?
                     <i className="fas fa-times fa-margin-right"></i>
                     :
                     <i className="fas fa-trash-alt fa-margin-right"></i>
                   }
-                Delete
               </div>
             </li>
           );
@@ -432,10 +424,10 @@ class InviteGroup extends React.Component {
       if(this.state.inviteSuccess){
         return (
           <div className="fillHeight flex-start">
-          <section className="fontreleway groupbg">
+          <section className="fontreleway groupbg fillHeight">
             {this.props.isEdit 
             ?
-            <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
+            <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext group">Awesome!
                 <br/>Your changes has been saved
                 {this.state.inviteSuccess && typeof this.state.inviteSuccess != "boolean" && this.state.inviteSuccess > 0 &&
@@ -445,10 +437,9 @@ class InviteGroup extends React.Component {
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>
             :
-            <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
+            <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext group">Awesome!
                 <br/>Your invitation is sent to {this.state.inviteSuccess} people
-                <br/>When they sign up, you can view their profiles
                 </div>
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>
@@ -498,7 +489,7 @@ class InviteGroup extends React.Component {
                       <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
                         Female
                       </div> */}
-                        <input type="submit" id="submitAdd" defaultValue="add" className="invitebttn bttnmembr action w-button"/>
+                         <input type="submit" id="submitAdd" defaultValue="+ Add this person" className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>
                   }
@@ -525,7 +516,7 @@ class InviteGroup extends React.Component {
                       // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                 }
                 {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
-                  <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save and confirm</a>
+                  <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save</a>
                 }
                 </form>
 

@@ -40,7 +40,7 @@ export default class Loading extends Component {
           return (
             <div className="fillHeight weq-bg">
               <div className="w-block noselect">
-                  <div className="font-rate">
+                  <div className="font-rate padding-wrapper">
                       Please wait...
                   </div>
               </div>

@@ -1,9 +1,9 @@
 
 //Customizing the verification template
 
-Accounts.emailTemplates.siteName = "WeQu";
+Accounts.emailTemplates.siteName = "WeQ";
 /*Accounts.emailTemplates.from     = "WeQu <info@wequ.co>";*/
-Accounts.emailTemplates.from = "WeQu <postmaster@wequ.co>";
+Accounts.emailTemplates.from = "WeQ <postmaster@wequ.co>";
 
 Accounts.emailTemplates.verifyEmail = {
   subject() {

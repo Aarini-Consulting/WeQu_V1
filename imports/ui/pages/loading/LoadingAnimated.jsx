@@ -6,7 +6,7 @@ export default class LoadingAnimated extends React.Component {
       <div className="fillHeight weq-bg">
         <div className="w-block noselect">
             <div className="ring animated"></div>
-            <div className="font-rate loading-font loading-text-top">
+            <div className="font-rate loading-font loading-text-top padding-wrapper">
                 Please wait... WeQ is generating your card numbers
             </div>
         </div>
