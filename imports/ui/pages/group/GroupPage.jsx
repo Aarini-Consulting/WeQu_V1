@@ -20,6 +20,7 @@ class GroupPage extends React.Component {
         inviteStatus:false,
         showInviteGroup:false,
         showConfirm:false,
+        showConfirmStart:false,
         showReopenConfirm:false,
         showInfo:false,
         sending:false,
@@ -161,11 +162,29 @@ class GroupPage extends React.Component {
     }
   }
 
+  confirmStartGame(){
+    this.setState({
+      showConfirmStart: true,
+    });
+  }
+
   startGame(){
-    console.log("start game");
     Meteor.call( 'start.game', this.props.group._id, (error, result)=>{
       if(error){
         console.log(error)
+        var msg;
+        if(error.error == "not_all_invitees_finished_survey"){
+          msg = 
+          (<div>All participants must complete the survey and be present before you can start the game.<br/> 
+          (Be sure to delete any members who will not be participating)</div>)
+        }else{
+          msg = error.error;
+        }
+        
+        this.setState({
+          showInfo: true,
+          showInfoMessage:msg
+        });
       }
     });
   }
@@ -355,15 +374,15 @@ class GroupPage extends React.Component {
                 </div>
                 <div className="fontreleway font-invite-title edit w-clearfix">
                   {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-                    <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.startGame.bind(this)}>Start game</a>
+                    <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
                   }
                   {(this.props.group && this.props.group.isFinished) 
                     ?
-                    <a id="submitSend" className="invitebttn w-button w-inline-block">
+                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
                       Game Finished
                     </a>
                     :this.props.group.isActive &&
-                    <a id="submitSend" className="invitebttn w-button w-inline-block">
+                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
                       Game Started
                     </a>
                   }          
@@ -483,6 +502,21 @@ class GroupPage extends React.Component {
                 message={this.state.showInfoMessage}
                 onCancel={() => {
                     this.setState({ showInfo: false });
+                }}/>
+              }
+
+              {this.state.showConfirmStart &&
+                <SweetAlert
+                type={"confirm"}
+                message={"Are the participants all present and ready?"}
+                confirmText={"Let's go!"}
+                cancelText={"Cancel"}
+                onCancel={() => {
+                    this.setState({ showConfirmStart: false });
+                }}
+                onConfirm={() => {
+                  this.setState({ showConfirmStart: false });
+                  this.startGame();
                 }}/>
               }
             </section>

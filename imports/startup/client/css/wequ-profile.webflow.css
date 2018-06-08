@@ -12,6 +12,10 @@
   margin-top: 2em;
 }
 
+.loading-text-top{
+  margin-top: 2em;
+}
+
 .loginwraper {
   position: fixed;
   left: 0px;
@@ -380,6 +384,10 @@
   color: #fff;
   font-size: 1em;
   text-align: left;
+}
+
+.group-name{
+  font-size: 2em;
 }
 
 .formstyle:focus {
@@ -2656,6 +2664,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-align: right;
   text-decoration: underline;
   flex-grow: 1;
+  font-size: 1em;
+  line-height: 1em;
 }
 
 .fontreleway.f-phase {
@@ -3032,7 +3042,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .rank-shield-bg{
   background-image: url('/img/ShieldLine.png');
   background-repeat: no-repeat;
-  background-size:150px 150px;
+  background-size:15em 15em;
   background-position: 50% 50%;
   /* background-position: 50% 50%;
   background-size: cover;
@@ -3044,11 +3054,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 40px;
-  height: 40px;
+  width: 3em;
+  height: 3em;
   margin-top: 0px;
-  margin-right: 15px;
-  margin-left: 15px;
+  margin-right: 1em;
+  margin-left: 1em;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -3059,47 +3069,57 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   -ms-flex-pack: center;
   justify-content: center;
   border: 1px solid #fff;
-  border-radius: 100px;
+  border-radius: 100%;
   background-color: #202020;
   color: #299199;
   font-size: 1.5em;
   text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top:auto;
+  margin-bottom:auto;
 }
 
 .font-number.virtue {
   background-color: #ea5184;
-  box-shadow: 0 0 6px 0 #202020;
+  box-shadow: 0 0 6px 0 rgba(32, 32, 32, 0.1);
   color: #fff;
 }
 
 .font-number.self_management {
   background-color: #7962a8;
-  box-shadow: 0 0 6px 0 #202020;
+  box-shadow: 0 0 6px 0 rgba(32, 32, 32, 0.1);
   color: #fff;
 }
 
 .font-number.communication {
   background-color: #299199;
-  box-shadow: 0 0 6px 0 #202020;
+  box-shadow: 0 0 6px 0 rgba(32, 32, 32, 0.1);
   color: #fff;
 }
 
 .font-number.teamwork {
   background-color: #e9682b;
-  box-shadow: 0 0 6px 0 #202020;
+  box-shadow: 0 0 6px 0 rgba(32, 32, 32, 0.1);
   color: #fff;
 }
 
 .font-number.leadership {
   background-color: #204d8a;
-  box-shadow: 0 0 6px 0 #202020;
+  box-shadow: 0 0 6px 0 rgba(32, 32, 32, 0.1);
   color: #fff;
 }
 
 .font-number.problem_solving {
   background-color: #308a4f;
-  box-shadow: 0 0 6px 0 #202020;
+  box-shadow: 0 0 6px 0 rgba(32, 32, 32, 0.1);
   color: #fff;
+}
+
+.font-number-main{
+  width: 4em;
+  height: 4em;
+  margin-left:0.5em;
+  margin-right:0.5em;
 }
 
 .fontreleway.f-c-invite {
@@ -3407,6 +3427,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin:auto;
 }
 
+.ring.animated {
+  background-image: url("/img/assets/Logo-Main_ring_animation.gif");
+}
+
+
 .section-name{
   display: -webkit-box;
   display: -webkit-flex;
@@ -3493,6 +3518,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color: #fff;
   font-size: 1.5em;
   margin-bottom: 2em;
+}
+
+.loading-font{
+  font-size: 1em;
 }
 
 .rate-content{

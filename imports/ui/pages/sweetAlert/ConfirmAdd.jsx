@@ -15,7 +15,10 @@ export default class ConfirmAdd extends React.Component {
                 <div className="fontreleway f-popup-title">The following actions need your confirmation</div>
                 <div className="msg-wrapper">
                     {this.props.inviteDatas.length > 0 &&
-                        <div className="fontreleway f-popup-title f-popup-msg">Added {this.props.inviteDatas.length} member</div>
+                    <div>
+                        <div className="fontreleway f-popup-title f-popup-msg">Add {this.props.inviteDatas.length} member</div>
+                        <div className="fontreleway f-popup-title f-popup-msg">Email invitation will be sent to all new member</div>
+                    </div>
                     }
 
                     {this.props.unsaved &&

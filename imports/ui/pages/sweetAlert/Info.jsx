@@ -22,7 +22,14 @@ export default class Info extends React.Component {
                     <div className="w-inline-block">
                         <div className="bttn-wrapper w-clearfix">
                             <div className="popup-bttn" onClick={this.props.onCancel}>
-                                <div className="fontreleway f-bttn">Ok</div>
+                                <div className="fontreleway f-bttn">{
+                                    this.props.btnText
+                                    ?
+                                    this.props.btnText
+                                    :
+                                    "OK"
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

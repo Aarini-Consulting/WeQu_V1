@@ -369,11 +369,11 @@ class InviteGroup extends React.Component {
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
               {readySurvey 
               ? 
-              <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
+              <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
                 survey completed
               </div>
               :
-              <div className="invitebttn bttnmembr gender w-clearfix noselect">
+              <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
                 survey incomplete
               </div>
               }
@@ -403,12 +403,6 @@ class InviteGroup extends React.Component {
                     <i className="far fa-envelope fa-margin-right"></i>
                   }
                   resend
-                </div>
-              }
-              {this.props.isEdit && newInvite &&
-                <div className="invitebttn bttnmembr gender w-button selected noselect">
-                <i className="fas fa-plus-circle fa-margin-right"></i>
-                new
                 </div>
               }
               <div className="invitebttn bttnmembr action w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
@@ -474,13 +468,13 @@ class InviteGroup extends React.Component {
                         <div className="groupformtext">Group name</div>
                         <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
                         name="name" data-name="Name" maxLength="256" required="" 
-                        placeholder="group name" className="formstyle w-input" 
+                        placeholder="group name" className="formstyle group-name w-input" 
                         required/>
                       </div>
                       :
                       <div>
                       <div className="groupformtext">What is the name of this group?</div>
-                      <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" 
+                      <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle group-name w-input" 
                       value={this.state.groupName} 
                       onChange={this.handleChange.bind(this)} required/>
                       </div>
