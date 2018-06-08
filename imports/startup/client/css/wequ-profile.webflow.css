@@ -3761,6 +3761,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 @media (max-width: 479px) {
+  .rank-shield-bg{
+    background-size:13em 13em;
+  }
+
+  .font-number {
+    font-size: 1.2em;
+  }
+
   .group-entry-left{
     width:100%;
     text-align: center;
