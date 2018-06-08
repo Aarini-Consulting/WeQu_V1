@@ -48,7 +48,7 @@ class QuizRankWait extends React.Component {
             if(this.props.targetedForOthersFeedback){
                 return(
                     <div className="fillHeight weq-bg">
-                        <div className="font-rate">Please standby, the others are evaluating your personalities</div>
+                        <div className="font-rate">Sit back and relax, the others are evaluating you</div>
                         <div className="font-rate">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
                     </div>
                 )
@@ -75,20 +75,30 @@ class QuizRankWait extends React.Component {
                         if(ready && !(everyoneReady)){
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate">Waiting for others to click ready</div>
+                                    <div className="font-rate">Waiting for others to be ready</div>
                                     <div className="font-rate">{this.props.otherFeedbackRanksReady.length}/{this.props.group.emails.length-1}</div>
                                 </div>
                             )
                         }
 
                         if(!ready){
+                            var firstName = this.props.quizUser && this.props.quizUser.profile.firstName;
+                            var lastName = this.props.quizUser && this.props.quizUser.profile.lastName;
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate">Press ready to proceed</div>
+                                    <div className="font-rate">The whole team will now rank:</div>
+                                    <br/>
+                                    <div className="font-rate">
+                                    {firstName+ " " + lastName}
+                                    </div>
+                                    <br/>
+                                    <div className="font-rate">You will have 60 seconds</div>
+                                    <br/>
+                                    <div className="font-rate">Sit back and relax {this.props.quizUser && this.props.quizUser.profile.firstName}</div>
                                     <br/>
                                     <div className="w-block cursor-pointer">
                                         <div className="font-rate f-bttn w-inline-block noselect" onClick={this.confirmReadiness.bind(this)}>
-                                            Ready
+                                            Proceed
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +108,10 @@ class QuizRankWait extends React.Component {
                 }else{
                     return (
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate">please wait for others to finish ranking themself</div>
+                            <div className="font-rate">
+                            All done! 
+                            Please wait until everyone in the group completes their self-ranking...
+                            </div>
                         </div>
                     );
                 }
@@ -107,17 +120,13 @@ class QuizRankWait extends React.Component {
                 if (this.props.waitForOthersFeedback){
                     return(
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate">Please wait other user completes their feedback</div>
+                            <div className="font-rate">Waiting for others to be ready</div>
                             <div className="font-rate">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
                         </div>
                     )
                     
                 }else{
-                    return (
-                        <div className="fillHeight weq-bg">
-                            <div className="font-rate">quiz is over</div>
-                        </div>
-                    );
+                    return false;
                 }   
             }
             
@@ -143,6 +152,7 @@ export default withTracker((props) => {
     var targetedForOthersFeedback = false;
     var waitForOthersFeedback;
     var previousFeedback;
+    var quizUser;
 
     if(props.user && props.user.profile.selfRank){
         groupId = props.user.profile.selfRank;
@@ -205,6 +215,8 @@ export default withTracker((props) => {
                         {groupId:group._id,to:uniqueQuizTargetOrder[0],isSelected:true
                     }).fetch();
 
+                    quizUser = Meteor.users.findOne(uniqueQuizTargetOrder[0]);
+
                 }else{
                     //previous feedback is incomplete
                     feedbackRank = FeedbackRank.findOne(
@@ -218,6 +230,9 @@ export default withTracker((props) => {
                     otherFeedbackRanksReady = FeedbackRank.find(
                         {groupId:group._id,to:previousFeedback.to,isSelected:true
                     }).fetch();
+
+                    quizUser = Meteor.users.findOne(previousFeedback.to);
+
                 }
 
                 waitForOthersFeedback = !feedbackRank && (otherFeedbackRanksGiven.length >= 1) && (otherFeedbackRanksGiven.length < (group.emails.length-1));
@@ -228,6 +243,7 @@ export default withTracker((props) => {
         }
     }
   return {
+      quizUser:quizUser,
       users:users,
       group:group,
       otherFeedbackRanksReady:otherFeedbackRanksReady,

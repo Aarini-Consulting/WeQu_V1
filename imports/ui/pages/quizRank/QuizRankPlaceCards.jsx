@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import Loading from '/imports/ui/pages/loading/Loading';
+import LoadingAnimated from '/imports/ui/pages/loading/LoadingAnimated';
 
 class QuizRankPlaceCards extends React.Component {
     constructor(props){
@@ -14,7 +14,7 @@ class QuizRankPlaceCards extends React.Component {
             start: undefined,
             elapsed:0,
             wait:3000
-          };
+        };
     }
 
     setTimer(bool){
@@ -87,7 +87,7 @@ class QuizRankPlaceCards extends React.Component {
                     <div className={`font-number ${ top4[1].category }`}>
                         {top4[1] && top4[1].cardId}
                     </div>
-                    <div className={`font-number ${ top4[0].category }`}>
+                    <div className={`font-number ${ top4[0].category } font-number-main`}>
                         {top4[0] && top4[0].cardId}
                     </div>
                     <div className={`font-number ${ top4[2].category }`}>
@@ -125,7 +125,7 @@ class QuizRankPlaceCards extends React.Component {
             );
         }else{
             return(
-                <Loading/>
+                <LoadingAnimated/>
             );
         }
     }

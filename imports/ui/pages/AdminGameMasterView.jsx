@@ -13,35 +13,31 @@ class AdminGameMasterView extends React.Component {
             selectedUser:undefined,
             selectedUserGroupList:[],
             selectedGroup:undefined,
-            matrixName1:"name1",
-            matrixName2:"name2",
-            matrixName3:"name3",
-            matrixName4:"name4",
-            matrixName5:"name5",
+            matrixName1:"Psychological Safety",
+            matrixName2:"Constructive Feedback",
+            matrixName3:"Cognitive Bias",
+            matrixName4:"Social Norms",
             matrixScore1:0,
             matrixScore2:0,
             matrixScore3:0,
             matrixScore4:0,
-            matrixScore5:0,
             matrixScoreMax:0,
         }
     }
 
     setEditTypeform(group, event){
         event.preventDefault();
-        if(group.typeformGraph){
+        if(group && group.typeformGraph){
             var matrix1 = group.typeformGraph[0];
             var matrix2 = group.typeformGraph[1];
             var matrix3 = group.typeformGraph[2];
             var matrix4 = group.typeformGraph[3];
-            var matrix5 = group.typeformGraph[4];
 
             this.setState({
                 matrixScore1:((matrix1 && matrix1.score) ? matrix1.score : 0),
                 matrixScore2:((matrix2 && matrix2.score) ? matrix2.score : 0),
                 matrixScore3:((matrix3 && matrix3.score) ? matrix3.score : 0),
                 matrixScore4:((matrix4 && matrix4.score) ? matrix4.score : 0),
-                matrixScore5:((matrix5 && matrix5.score) ? matrix5.score : 0),
                 matrixScoreMax:((matrix1 && matrix1.score) ? matrix1.total : 7)
             });
         }
@@ -57,16 +53,14 @@ class AdminGameMasterView extends React.Component {
             selectedUser:user,
             selectedUserGroupList:groups,
             selectedGroup:undefined,
-            matrixName1:"name1",
-            matrixName2:"name2",
-            matrixName3:"name3",
-            matrixName4:"name4",
-            matrixName5:"name5",
+            matrixName1:"Psychological Safety",
+            matrixName2:"Constructive Feedback",
+            matrixName3:"Cognitive Bias",
+            matrixName4:"Social Norms",
             matrixScore1:0,
             matrixScore2:0,
             matrixScore3:0,
             matrixScore4:0,
-            matrixScore5:0,
             matrixScoreMax:7,
         });
     }
@@ -78,7 +72,7 @@ class AdminGameMasterView extends React.Component {
     }
 
     handleTypeformScoreChange(stateName, event){
-        var value = event.target.value;
+        var value = (event.target.value);
         if(value < 0){
             value = 0;
         }
@@ -88,32 +82,49 @@ class AdminGameMasterView extends React.Component {
             }
         }
         this.setState({
-            [stateName]:Number(value)
+            [stateName]:(value)
         });
+    }
+
+    validateScore(stateName){
+        var valid = !isNaN(Number(this.state[stateName]));
+        if(valid){
+            return true;
+        }else{
+            this.setState({
+                [stateName]:0
+            });
+            return false;
+        }
     }
 
     handleTypeformSubmit(event){
         event.preventDefault();
-        var typeformGraph = [
-            {name:this.state.matrixName1,score:this.state.matrixScore1, total:this.state.matrixScoreMax},
-            {name:this.state.matrixName2,score:this.state.matrixScore2, total:this.state.matrixScoreMax},
-            {name:this.state.matrixName3,score:this.state.matrixScore3, total:this.state.matrixScoreMax},
-            {name:this.state.matrixName4,score:this.state.matrixScore4, total:this.state.matrixScoreMax},
-            {name:this.state.matrixName5,score:this.state.matrixScore5, total:this.state.matrixScoreMax},
-        ]
-
-        this.setState({
-            sending: true,
-        });
-
-        Meteor.call( 'set.typeform.graph', this.state.selectedGroup._id, typeformGraph, ( error, response ) => {
+        
+        if(this.validateScore("matrixScore1") && this.validateScore("matrixScore2") && this.validateScore("matrixScore3") 
+        && this.validateScore("matrixScore4") ){
+            var typeformGraph = [
+                {name:this.state.matrixName1,score:this.state.matrixScore1, total:this.state.matrixScoreMax},
+                {name:this.state.matrixName2,score:this.state.matrixScore2, total:this.state.matrixScoreMax},
+                {name:this.state.matrixName3,score:this.state.matrixScore3, total:this.state.matrixScoreMax},
+                {name:this.state.matrixName4,score:this.state.matrixScore4, total:this.state.matrixScoreMax},
+            ]
+    
             this.setState({
-              sending: false,
+                sending: true,
             });
-            if ( error ) {
-              console.log(error);
-            }
-        });
+    
+            Meteor.call( 'set.typeform.graph', this.state.selectedGroup._id, typeformGraph, ( error, response ) => {
+                this.setState({
+                  sending: false,
+                });
+                if ( error ) {
+                  console.log(error);
+                }
+            });
+        }else{
+            alert("invalid score");
+        }
     }
 
     handleCheckGameMaster(user, event) {
@@ -277,7 +288,7 @@ class AdminGameMasterView extends React.Component {
                                         </div>
                                         <div className="col-md-6">
                                             <label>Matrix 1 value</label>
-                                            <input className="w-input"  value={this.state.matrixScore1} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore1")}/>
+                                            <input className="w-input"  value={this.state.matrixScore1} type="text" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore1")}/>
                                         </div>
                                     </div>
 
@@ -288,7 +299,7 @@ class AdminGameMasterView extends React.Component {
                                         </div>
                                         <div className="col-md-6">
                                             <label>Matrix 2 value</label>
-                                            <input className="w-input"  value={this.state.matrixScore2} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore2")}/>
+                                            <input className="w-input"  value={this.state.matrixScore2} type="text" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore2")}/>
                                         </div>
                                     </div>
 
@@ -299,7 +310,7 @@ class AdminGameMasterView extends React.Component {
                                         </div>
                                         <div className="col-md-6">
                                             <label>Matrix 3 value</label>
-                                            <input className="w-input"  value={this.state.matrixScore3} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore3")}/>
+                                            <input className="w-input"  value={this.state.matrixScore3} type="text" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore3")}/>
                                         </div>
                                     </div>
 
@@ -310,18 +321,7 @@ class AdminGameMasterView extends React.Component {
                                         </div>
                                         <div className="col-md-6">
                                             <label>Matrix 4 value</label>
-                                            <input className="w-input"  value={this.state.matrixScore4} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore4")}/>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <label>Matrix 5 name</label>
-                                            <input className="w-input"  value={this.state.matrixName5} type="text" required onChange={this.handleTypeformNameChange.bind(this,"matrixName5")}/>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label>Matrix 5 value</label>
-                                            <input className="w-input"  value={this.state.matrixScore5} type="number" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore5")}/>
+                                            <input className="w-input"  value={this.state.matrixScore4} type="text" required onChange={this.handleTypeformScoreChange.bind(this,"matrixScore4")}/>
                                         </div>
                                     </div>
 
@@ -392,10 +392,12 @@ class AdminGameMasterView extends React.Component {
                 }
             }
             else{
+                if(Meteor.userId() || this.props.currentUser){
+                    Meteor.logout();
+                }
                 return(
                     <AdminLogin/>
                 )
-                
             }
         }
         else{

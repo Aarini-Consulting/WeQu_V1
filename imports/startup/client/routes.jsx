@@ -19,7 +19,7 @@ import CheckLoginVerified from './CheckLoginVerified';
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
 import Home from '/imports/ui/pages/Home';
 import QuizPage from '/imports/ui/pages/quiz/QuizPage';
-import QuizRankPage from '/imports/ui/pages/quizPregame/QuizRankPage';
+import QuizRankPage from '/imports/ui/pages/quizRank/QuizRankPage';
 import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
 import InvitePage from '/imports/ui/pages/invite/InvitePage';
 import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';

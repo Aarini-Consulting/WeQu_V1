@@ -8,6 +8,8 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
@@ -42,6 +44,7 @@ class QuizRankSelf extends React.Component {
             firstSwipe:undefined,
             savingData:false,
             quizOver:false,
+            showInfo:false
           };
     }
 
@@ -61,20 +64,39 @@ class QuizRankSelf extends React.Component {
                 if(currentStep < 0){
                     currentStep = 0;
                 }
-                console.log(currentStep);
+
+                if(currentStep == 0){
+                    this.setState({
+                        showInfo:true,
+                        showInfoMessage:
+                        <div>
+                            Describe Yourself
+                            <br/>
+                            <br/>
+                            Which qualities are most true about you?<br/>
+                            Sort the following words from top to bottom by dragging them up or down in the list.<br/>
+                            <br/>
+                            You have 60 seconds.
+                        </div>
+                    });
+                }
+
                 this.setState({
                     steps: nextProps.feedbackRank.rankItems,
                     items: nextProps.feedbackRank.rankItems[currentStep],
                     currentStep: currentStep
                 },()=>{
-                    this.setTimer(true);
+                    if(currentStep > 0){
+                        this.setTimer(true);
+                    }
                 });
             }else{
                 this.setState({
                     steps: undefined,
                     currentStep:-1,
                     firstSwipe:undefined,
-                    items:[]
+                    items:[],
+                    showInfo:false
                 });
                 this.setTimer(false);
             }
@@ -182,7 +204,9 @@ class QuizRankSelf extends React.Component {
                             <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                         </div>
                         <div className="rate-content">
-                            <div className="font-rate font-name-header f-white">Rank your qualities in 60 seconds</div>
+                            {/* <div className="font-rate font-name-header f-white">Describe yourself</div>
+                            <div className="font-rate font-name-header f-white">Sort the following qualities from top (more true) to bottom (less true)</div>
+                            <div className="font-rate font-name-header f-white">You have 60 seconds</div> */}
                             {this.state.steps && this.state.currentStep >= 0 &&
                                 <div className="font-rate font-name-header f-white">
                                     {(this.state.currentStep+1)+"/"+(Object.keys(this.state.steps).length)}
@@ -200,6 +224,17 @@ class QuizRankSelf extends React.Component {
                                 </div>
                             }  
                         </div>
+
+                        {this.state.showInfo &&
+                            <SweetAlert
+                            type={"info"}
+                            message={this.state.showInfoMessage}
+                            btnText={"Let's go!"}
+                            onCancel={() => {
+                                this.setState({ showInfo: false });
+                                this.setTimer(true);
+                            }}/>
+                        }
                     </section>
                 </div>
             );

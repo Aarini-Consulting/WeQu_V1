@@ -127,7 +127,15 @@ class Home extends React.Component {
                                     <div className="font-rate rank-separator-top">Welcome!</div>
                                 </div>
                                 <div className="w-block home-group-list-wrapper">
-                                    <img src="https://orig00.deviantart.net/798a/f/2012/319/2/9/nothing_to_do_here_gif_by_cartoonzack-d5l4eqj.gif"/>
+                                    <div className="fillHeight">
+                                    <br/>
+                                    <br/>
+                                        <div className="w-block noselect">
+                                            <div className="fontreleway f-popup-title">No group</div>
+                                            <div className="fontreleway f-popup-title">You must be a WeQ Certified Master Coach to create a new group</div>
+                                        </div>
+                                    </div>
+                                    {/* <img src="https://orig00.deviantart.net/798a/f/2012/319/2/9/nothing_to_do_here_gif_by_cartoonzack-d5l4eqj.gif"/> */}
                                 </div>
                             </section>
                         );

@@ -20,6 +20,7 @@ class GroupPage extends React.Component {
         inviteStatus:false,
         showInviteGroup:false,
         showConfirm:false,
+        showConfirmStart:false,
         showReopenConfirm:false,
         showInfo:false,
         sending:false,
@@ -161,13 +162,29 @@ class GroupPage extends React.Component {
     }
   }
 
+  confirmStartGame(){
+    this.setState({
+      showConfirmStart: true,
+    });
+  }
+
   startGame(){
-    console.log("start game");
     Meteor.call( 'start.game', this.props.group._id, (error, result)=>{
       if(error){
         console.log(error)
-      }else{
-        console.log("game started")
+        var msg;
+        if(error.error == "not_all_invitees_finished_survey"){
+          msg = 
+          (<div>All participants must complete the survey and be present before you can start the game.<br/> 
+          (Be sure to delete any members who will not be participating)</div>)
+        }else{
+          msg = error.error;
+        }
+        
+        this.setState({
+          showInfo: true,
+          showInfoMessage:msg
+        });
       }
     });
   }
@@ -193,8 +210,8 @@ class GroupPage extends React.Component {
   renderUserCards(cards){
     return cards.map((card, index) => {
       return(
-        <div className={"font-number "+card.type} key={card._id}>
-          {card.number}
+        <div className={`font-number ${ card.category }`} key={card.cardId}>
+          {card.cardId}
         </div>
       )
     });
@@ -210,8 +227,13 @@ class GroupPage extends React.Component {
       if(this.props.group.emailsSelfRankCompleted && this.props.group.emailsSelfRankCompleted.indexOf(email) > -1){
         readySelfRank = true;
       }
-      var ready = (readySurvey && readySelfRank);
+      var ready = (readySurvey);
       var started = this.props.group.isActive;
+
+      var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
+        return cp.userId == user._id;
+      })
+
       return(
         <div className="tap-content w-clearfix" key={user._id}>
           <div className="tap-left card">
@@ -222,11 +244,9 @@ class GroupPage extends React.Component {
           <div className="show-cards">
             {ready && started
             ?
-              this.renderUserCards([
-                {_id:1,type:"c-1",number:25},{_id:2,type:"c-2",number:5},{_id:3,type:"c-3",number:35},
-                {_id:4,type:"c-4",number:25},{_id:5,type:"c-5",number:25},{_id:6,type:"c-6",number:25},
-                {_id:7,type:"c-7",number:25}
-              ])
+              cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0
+                ?this.renderUserCards(cardPlacement.cardPicked)
+                :<div className="bttn-next-card">session in progress</div>
             :
               ready 
               ? 
@@ -300,7 +320,7 @@ class GroupPage extends React.Component {
       var tabContent;
 
       if(this.state.currentTab == "edit"){
-        tabContent = <InviteGroup isEdit={true} group={this.props.group} startGame={this.startGame.bind(this)}/>
+        tabContent = <InviteGroup isEdit={true} group={this.props.group}/>
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
@@ -352,9 +372,22 @@ class GroupPage extends React.Component {
                 <div className="fontreleway font-invite-title white w-clearfix">
                 {this.props.group.groupName}
                 </div>
-                {/* <div className="fontreleway font-invite-title edit w-clearfix">
-                  <span className="cursor-pointer" onClick={this.showInviteGroup.bind(this, true)}>Edit Group</span>
-                </div> */}
+                <div className="fontreleway font-invite-title edit w-clearfix">
+                  {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
+                    <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
+                  }
+                  {(this.props.group && this.props.group.isFinished) 
+                    ?
+                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+                      Game Finished
+                    </a>
+                    :this.props.group.isActive &&
+                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+                      Game Started
+                    </a>
+                  }          
+                </div>
+
               </div>
               <div className="tabs w-tabs">
                 <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
@@ -366,14 +399,14 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"survey")}>
                     <div>View survey</div>
                   </a>
-                  <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
+                  <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
                     <div>Curate cards</div>
                   </a>
-                  <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                  {/* <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Get report</div>
-                  </a>
+                  </a> */}
                 </div>
                 <div className="w-tab-content">
                   {tabContent}
@@ -471,6 +504,21 @@ class GroupPage extends React.Component {
                     this.setState({ showInfo: false });
                 }}/>
               }
+
+              {this.state.showConfirmStart &&
+                <SweetAlert
+                type={"confirm"}
+                message={"Are the participants all present and ready?"}
+                confirmText={"Let's go!"}
+                cancelText={"Cancel"}
+                onCancel={() => {
+                    this.setState({ showConfirmStart: false });
+                }}
+                onConfirm={() => {
+                  this.setState({ showConfirmStart: false });
+                  this.startGame();
+                }}/>
+              }
             </section>
         </div>
       ) 
@@ -490,6 +538,7 @@ export default withTracker((props) => {
   var dataReady;
   var group;
   var users;
+  var cardPlacements;
   // var feedbackCycle;
   // var currentFeedbackCycle;
   var handleGroup;
@@ -513,7 +562,7 @@ export default withTracker((props) => {
         // && handleFeedbackCycle.ready()
         ){
           group = Group.findOne({_id : props.match.params.id});
-
+          
           // var check = FeedbackCycle.findOne({
           //   groupId : props.match.params.id,
           //   creatorId : Meteor.userId(),
@@ -550,14 +599,23 @@ export default withTracker((props) => {
           //   dataReady = true;
           // }
 
-          users = Meteor.users.find(
-            {
-              $or : [ {"emails.address" : {$in:group.emails}  }, 
-              { "profile.emailAddress" : {$in:group.emails}}]
-            }
-          );
+          var handleCardPlacement = Meteor.subscribe('cardPlacement',{groupId:group._id},{}, {
+              onError: function (error) {
+                    console.log(error);
+              }
+          });
 
-          dataReady = true;
+          if(handleCardPlacement.ready()){
+            cardPlacements = CardPlacement.find({groupId:group._id}).fetch();
+            users = Meteor.users.find(
+              {
+                $or : [ {"emails.address" : {$in:group.emails}  }, 
+                { "profile.emailAddress" : {$in:group.emails}}]
+              }
+            );
+  
+            dataReady = true;
+          }
         }
     }
   return {
@@ -565,6 +623,7 @@ export default withTracker((props) => {
       group:group,
       // feedbackCycle:feedbackCycle,
       // currentFeedbackCycle:currentFeedbackCycle,
+      cardPlacements:cardPlacements,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };

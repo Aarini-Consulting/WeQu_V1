@@ -59,7 +59,10 @@ export default class ConfirmEdit extends React.Component {
                     }
 
                     {added.length > 0 &&
-                        <div className="fontreleway f-popup-title f-popup-msg">Added {added.length} member(s)</div>
+                        <div>
+                            <div className="fontreleway f-popup-title f-popup-msg">Add {added.length} member(s)</div>
+                            <div className="fontreleway f-popup-title f-popup-msg">Email invitation will be sent to all new member</div>
+                        </div>
                     }
 
                     {resend.length > 0 &&
