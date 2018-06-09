@@ -217,8 +217,11 @@ class GroupPage extends React.Component {
     });
   }
 
-  renderUsers(users){
-    return users.map((user, index) => {
+  renderUsers(){
+    console.log(this.props.group);
+    console.log(this.props.cardPlacements);
+    return this.props.users.map((user, index) => {
+      console.log(user);
       var email = user.emails[0].address;
       var readySurvey, readySelfRank;
       if(this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(email) > -1){
@@ -233,6 +236,8 @@ class GroupPage extends React.Component {
       var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
         return cp.userId == user._id;
       })
+
+      console.log(cardPlacement);
 
       var odd = (index % 2) > 0;
 
@@ -341,7 +346,7 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "card"){
         tabContent = 
         <div className="tap-content-wrapper">
-          {this.renderUsers(this.props.users)}
+          {this.renderUsers()}
           {!this.props.group.isActive &&
             <div className="tap-content w-clearfix">
               <div className="tap-left card">
