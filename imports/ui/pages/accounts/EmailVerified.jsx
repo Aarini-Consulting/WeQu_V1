@@ -47,7 +47,7 @@ class EmailVerified extends React.Component {
   
   render() {
       return (
-        <section className={"gradient" + (this.props.currentUser && this.props.currentUser.profile.gradient ? '' : currentUser.profile.gradient) + "whiteText alignCenter feed"}>
+        <section className={"gradient whiteText alignCenter feed"}>
           <br/> <br/>
           
           <div className="row">

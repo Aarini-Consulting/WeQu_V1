@@ -114,15 +114,15 @@ class SignUp extends React.Component {
 															<input className="emailfield w-input" maxLength="256" ref="lastName" placeholder="last name" required="required" type="text"/>
 															{this.props.user 
 															?
-															<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+															<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="email" style={{textTransform:"lowercase"}}
 															defaultValue={this.props.user.emails[0].address} disabled={true} required/>
 															:
 																this.props.email 
 																?
-																<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+																<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="email" style={{textTransform:"lowercase"}}
 																defaultValue={this.props.email} disabled={true} required/>
 																:
-																<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="text" style={{textTransform:"lowercase"}}
+																<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="email" style={{textTransform:"lowercase"}}
 																required/>
 															}
 															<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder="password" required="required" type="password"/>

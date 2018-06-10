@@ -57,8 +57,8 @@ class InviteGroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <section className="fontreleway groupbg">
-              <div className="emptymessage"><img className="image-6" src="/img/avatar.png"/>
+            <section className="fontreleway groupbg fillHeight">
+              <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar.png"/>
                 <div className="emptytext group">Hey, there is nobody here
                 </div>
                   <a className="invitebttn w-button step-invitebttn" onClick={this.showInviteGroup.bind(this,true)}>Create a group</a>
@@ -71,7 +71,21 @@ class InviteGroupPage extends React.Component {
         return (
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
-            <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)}/>
+            <section className="section summary fontreleway groupbg">
+              <div className="screentitlewrapper w-clearfix">
+                <div className="screentitlebttn back">
+                  {(this.props.groups && this.props.groups.length > 0) &&
+                    <a className="w-clearfix w-inline-block cursor-pointer" onClick={this.showInviteGroup.bind(this, false)}>
+                    <img className="image-7" src="/img/arrow.svg"/>
+                    </a>
+                  }
+                </div>
+                <div className="fontreleway font-invite-title w-clearfix">
+                  Create a new group
+                </div>
+              </div>
+              <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)}/>
+            </section>
           </div>
         );
       }else{

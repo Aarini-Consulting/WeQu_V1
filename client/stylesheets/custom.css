@@ -16,11 +16,6 @@
 	/* display: inline-block; */
 }
 
-.selected{
-	background:white !important;
-	color:black !important;
-}
-
 .width-half{
 	width: 60%
 }

@@ -15,7 +15,27 @@ GroupSchema = new SimpleSchema({
       label: "emails",
       optional: true
     },
+    "isActive":{
+      type: Boolean,
+      label: "session active"
+    },
+    "isFinished":{
+      type: Boolean,
+      label: "session finished"
+    },
+    "emailsSelfRankCompleted":{
+      type: [String],
+      label: "self rank Completed",
+      optional: true
+    },
 
+    "typeformGraph":{
+      type: [Object],
+      label: "typeformGraph",
+      blackbox:true,
+      optional: true
+    },
+    
     "arr_emails_existing":{
       type: [String],
       label: "emails",

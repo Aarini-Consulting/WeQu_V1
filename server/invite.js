@@ -64,7 +64,11 @@ Meteor.methods({
                 trialMember: true,
                 trial: true,
                 firstName: toName,
-                profile : { emailAddress : email, name: toName, gender: gender, inviteGender: gender_result }
+                profile : { emailAddress : email, 
+                  name: toName, 
+                  // gender: gender, 
+                  // inviteGender: gender_result 
+                }
               });
       // link = `invitation/${_id}`;
     } 

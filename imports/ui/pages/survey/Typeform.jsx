@@ -16,7 +16,7 @@ export default class NotFound extends React.Component {
             //   desired embed settings
             // test - https://oh2.typeform.com/to/oLBtn6
             // real - https://oh2.typeform.com/to/mrH6fP
-            typeformEmbed.makeWidget(el, "https://oh2.typeform.com/to/mrH6fP", {
+            typeformEmbed.makeWidget(el, "https://oh2.typeform.com/to/oLBtn6", {
                 hideFooter: true,
                 hideHeaders: true,
                 opacity: 0,

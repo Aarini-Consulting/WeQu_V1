@@ -17,7 +17,9 @@ import { Meteor } from 'meteor/meteor';
 import CheckLoginVerified from './CheckLoginVerified';
 
 import ScriptLogin from '/imports/ui/pages/ScriptLogin';
+import Home from '/imports/ui/pages/Home';
 import QuizPage from '/imports/ui/pages/quiz/QuizPage';
+import QuizRankPage from '/imports/ui/pages/quizRank/QuizRankPage';
 import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
 import InvitePage from '/imports/ui/pages/invite/InvitePage';
 import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
@@ -92,6 +94,23 @@ const CheckNotLoggedIn = class CheckNotLoggedIn extends React.Component {
   }
 }
 
+const AdminOnly = class AdminOnly extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    if(Meteor.userId() && Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
+      return (
+        this.props.childComponent
+      );
+    }else{
+      return(
+        <Redirect to="/404"/>
+      );
+    }
+  }
+}
+
 // const authenticate = (nextState, replace) => {
 //   if (!Meteor.loggingIn() && !Meteor.userId()) {
 //     // Session.set( "loginRedirect", nextState.location.pathname );
@@ -105,21 +124,23 @@ const CheckNotLoggedIn = class CheckNotLoggedIn extends React.Component {
 const App = () => (
   <Switch history={history}>
       {/* <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } /> */}
-      <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz/:uid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile/:uid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
-      <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} />
-      <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
+      {/* <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} /> */}
+      <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
+      {/* <Route exact path='/quiz' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} /> */}
+      {/* <Route exact path='/quiz/:uid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} /> */}
+      {/* <Route exact path='/quiz/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} /> */}
+      <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizRankPage {...props}/>} {...props}/>)} />
+      {/* <Route exact path='/profile' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} /> */}
+      {/* <Route exact path='/profile/:uid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} /> */}
+      {/* <Route exact path='/profile/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} /> */}
+      {/* <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} /> */}
+      <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
       <Route exact path='/settings/:type' render={(props) => (<CheckLoginVerified childComponent={<EditEntry {...props}/>} {...props}/>)} />
       <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
       <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
-      <Route exact path='/invitation/:id' component={InviteLanding}/>
+      {/* <Route exact path='/invitation/:id' component={InviteLanding}/> */}
       <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
       <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />

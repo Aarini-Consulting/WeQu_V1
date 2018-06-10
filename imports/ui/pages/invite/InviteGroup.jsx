@@ -20,7 +20,7 @@ class InviteGroup extends React.Component {
       this.state={
         inviteStatus:false,
         inviteSuccess:false,
-        gender:"Male",
+        // gender:"Male",
         groupName:"",
         inviteDatas:[],
         newInviteDatas:[],
@@ -43,7 +43,7 @@ class InviteGroup extends React.Component {
           var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
           if(emailsArray.indexOf(email) < 0){
             copyStateData.push({firstName:user.profile.firstName, 
-              lastName:user.profile.lastName, email:email, gender:user.profile.gender});
+              lastName:user.profile.lastName, email:email});
           }
         });
         this.setState({
@@ -181,9 +181,11 @@ class InviteGroup extends React.Component {
     var firstName = ReactDOM.findDOMNode(this.refs.firstName);
     var lastName = ReactDOM.findDOMNode(this.refs.lastName);
     var email = ReactDOM.findDOMNode(this.refs.email);
-    this.setState({
-      unsaved: (firstName.value || lastName.value || email.value),
-    });
+    if(firstName && lastName && email){
+      this.setState({
+        unsaved: (firstName.value || lastName.value || email.value),
+      });
+    }
   }
 
   handleChange(event) {
@@ -224,17 +226,26 @@ class InviteGroup extends React.Component {
       }
   }
 
-    handleBackArrowClick(){
+    handleBackArrowClick(event){
+      event.preventDefault();
     if(this.props.isEdit || (this.props.count && this.props.count > 0)){
-            this.props.closeInviteGroup();
+        if(this.props.closeInviteGroup){
+          this.props.closeInviteGroup();
+        }else{
+          this.setState({
+            inviteSuccess: false,
+            inviteStatus:false
+          });
         }
+            
+      }
     }
 
-    setGender(g){
-      this.setState({
-        gender: g,
-      });
-    }
+    // setGender(g){
+    //   this.setState({
+    //     gender: g,
+    //   });
+    // }
 
     deleteAction(index, deleteIndex, resendIndex, newInvite){
       if(newInvite && deleteIndex < 0){
@@ -315,8 +326,8 @@ class InviteGroup extends React.Component {
         });
       }else{
         var copyStateDataNew = this.state.newInviteDatas.slice();
-        copyStateDataNew.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
-        copyStateData.push({firstName:firstName, lastName:lastName, email:email, gender:this.state.gender});
+        copyStateDataNew.push({firstName:firstName, lastName:lastName, email:email});
+        copyStateData.push({firstName:firstName, lastName:lastName, email:email});
         this.setState({
           info:undefined,
           inviteDatas: copyStateData,
@@ -344,6 +355,11 @@ class InviteGroup extends React.Component {
           var deleteIndex = this.state.inviteDeleted.findIndex((deleted)=>{
             return data.email == deleted.email
           })
+
+          var readySurvey;
+          if(this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1){
+            readySurvey = true;
+          }
           
           return (
             <li className="invite-group-line-wrapper" key={data.email}>
@@ -351,7 +367,17 @@ class InviteGroup extends React.Component {
               <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
               <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
-              {data.gender == "Male" &&
+              {readySurvey 
+              ? 
+              <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
+                survey completed
+              </div>
+              :
+              <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
+                survey incomplete
+              </div>
+              }
+              {/* {data.gender == "Male" &&
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
                 Male
               </div>
@@ -360,15 +386,8 @@ class InviteGroup extends React.Component {
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
                 Female
               </div>
-              }
+              } */}
               {this.props.isEdit && !newInvite &&
-                this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1
-                ?
-                <div className="invitebttn bttnmembr gender w-button selected noselect">
-                  <i className="far fa-envelope-open fa-margin-right"></i>
-                  active
-                </div>
-                :this.props.isEdit && !newInvite &&
                 <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
                   {resendIndex > -1 
                     ?
@@ -379,20 +398,13 @@ class InviteGroup extends React.Component {
                   resend
                 </div>
               }
-              {this.props.isEdit && newInvite &&
-                <div className="invitebttn bttnmembr gender w-button selected noselect">
-                <i className="fas fa-plus-circle fa-margin-right"></i>
-                new
-                </div>
-              }
-              <div className="invitebttn bttnmembr action w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+              <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
                 {deleteIndex > -1 
                     ?
                     <i className="fas fa-times fa-margin-right"></i>
                     :
                     <i className="fas fa-trash-alt fa-margin-right"></i>
                   }
-                Delete
               </div>
             </li>
           );
@@ -412,10 +424,10 @@ class InviteGroup extends React.Component {
       if(this.state.inviteSuccess){
         return (
           <div className="fillHeight flex-start">
-          <section className="fontreleway groupbg">
+          <section className="fontreleway groupbg fillHeight">
             {this.props.isEdit 
             ?
-            <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
+            <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext group">Awesome!
                 <br/>Your changes has been saved
                 {this.state.inviteSuccess && typeof this.state.inviteSuccess != "boolean" && this.state.inviteSuccess > 0 &&
@@ -425,10 +437,9 @@ class InviteGroup extends React.Component {
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>
             :
-            <div className="emptymessage"><img className="image-6" src="/img/avatar_group_2.png"/>
+            <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext group">Awesome!
                 <br/>Your invitation is sent to {this.state.inviteSuccess} people
-                <br/>When they sign up, you can view their profiles
                 </div>
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>
@@ -439,129 +450,111 @@ class InviteGroup extends React.Component {
       }
       else{
         return (
-            <section className="section summary fontreleway groupbg">
-              <div className="screentitlewrapper w-clearfix">
-                <div className="screentitlebttn back">
-                  {(this.props.isEdit || (this.props.count != undefined && this.props.count > 0)) &&
-                    <a className="w-clearfix w-inline-block cursor-pointer" onClick={this.handleBackArrowClick.bind(this)}>
-                    <img className="image-7" src="/img/arrow.svg"/>
-                    </a>
+          <div className="contentwrapper invite">   
+            <div className="inviteform w-form">
+                <form ref="form" onSubmit={this.handleSubmit.bind(this)} name="email-form" data-name="Email Form" className="inviteformstyle groupform">
+                    {this.props.isEdit 
+                      ? 
+                      <div>
+                        <div className="groupformtext">Group name</div>
+                        <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
+                        name="name" data-name="Name" maxLength="256" required="" 
+                        placeholder="group name" className="formstyle group-name w-input" 
+                        required/>
+                      </div>
+                      :
+                      <div>
+                      <div className="groupformtext">What is the name of this group?</div>
+                      <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle group-name w-input" 
+                      value={this.state.groupName} 
+                      onChange={this.handleChange.bind(this)} required/>
+                      </div>
+                    }
+                  
+                  <div className="groupformtext">Who should belong to this group?</div>
+
+                  
+                  {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
+                  
+                  {!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&
+                  <ol className="w-list-unstyled">
+                    <li className="invite-group-line-wrapper w-clearfix">
+                      <div className="font f_12">></div>
+                      <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={true}/>
+                      <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={true}/>
+                      <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
+                      {/* <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
+                        Male
+                      </div>
+                      <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
+                        Female
+                      </div> */}
+                         <input type="submit" id="submitAdd" defaultValue="+ Add this person" className="invitebttn bttnmembr action w-button"/>
+                    </li>
+                  </ol>
                   }
-                </div>
-                <div className="fontreleway font-invite-title w-clearfix">
-                  {this.props.isEdit 
-                  ?
-                    "Edit"
-                  :
-                    "Create a new group"
-                  }
-                </div>
-              </div>
-              <div className="contentwrapper invite">   
-                <div className="inviteform w-form">
-                    <form ref="form" onSubmit={this.handleSubmit.bind(this)} name="email-form" data-name="Email Form" className="inviteformstyle groupform">
-                        {this.props.isEdit 
-                          ? 
-                          <div>
-                          <div className="groupformtext">Group name</div>
-                          <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
-                          name="name" data-name="Name" maxLength="256" required="" 
-                          placeholder="group name" className="formstyle w-input" 
-                          required/>
-                          </div>
-                          :
-                          <div>
-                          <div className="groupformtext">What is the name of this group?</div>
-                          <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle w-input" 
-                          value={this.state.groupName} 
-                          onChange={this.handleChange.bind(this)} required/>
-                          </div>
-                        }
-                      
-                      <div className="groupformtext">Who should belong to this group?</div>
 
-                      
-                      {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
-                      
-
-                      <ol className="w-list-unstyled">
-                        <li className="invite-group-line-wrapper w-clearfix">
-                          <div className="font f_12">></div>
-                          <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={true}/>
-                          <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={true}/>
-                          <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
-                          <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
-                            Male
-                          </div>
-                          <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
-                            Female
-                          </div>
-                          <input type="submit" id="submitAdd" defaultValue="add" className="invitebttn bttnmembr action w-button"/>
-                        </li>
-                      </ol>
-
-                    {this.state.inviteStatus == 'sending' && 
+                {this.state.inviteStatus == 'sending' && 
+                <span className="sendingStatus">
+                <img src="/img/status_sending.png"/>sending...
+                <br/><br/>
+                </span>
+                }
+                {this.state.inviteStatus == 'sent' && 
                     <span className="sendingStatus">
-                    <img src="/img/status_sending.png"/>sending...
+                    <img src="/img/status_sent.png"/>sent!
                     <br/><br/>
                     </span>
-                    }
-                    {this.state.inviteStatus == 'sent' && 
-                        <span className="sendingStatus">
-                        <img src="/img/status_sent.png"/>sent!
-                        <br/><br/>
-                        </span>
-                    }
-                    {this.state.inviteStatus == 'error' && 
-                        this.state.info &&
-                          <span className="sendingStatus">
-                          <img src="/img/status_error.png"/>{this.state.info}
-                          <br/><br/>
-                          </span>
-                          // :
-                          // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
-                    }
-                    {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
-                      <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save and confirm</a>
-                    }
-                    </form>
+                }
+                {this.state.inviteStatus == 'error' && 
+                    this.state.info &&
+                      <span className="sendingStatus">
+                      <img src="/img/status_error.png"/>{this.state.info}
+                      <br/><br/>
+                      </span>
+                      // :
+                      // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
+                }
+                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
+                  <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save</a>
+                }
+                </form>
 
-                    {this.state.showConfirm && 
-                      (this.props.isEdit 
-                      ?
-                        <SweetAlert
-                        type={"confirm-edit"}
-                        inviteDatas={this.state.inviteDatas}
-                        inviteDeleted={this.state.inviteDeleted}
-                        newInviteDatas={this.state.newInviteDatas}
-                        inviteResend={this.state.inviteResend}
-                        groupName={this.props.group.groupName}
-                        newName={this.state.groupName}
-                        unsaved={this.state.unsaved}
-                        onCancel={() => {
-                            this.setState({ showConfirm: false });
-                        }}
-                        onConfirm={() => {
-                          this.setState({ showConfirm: false });
-                          this.updateGroup();
-                        }}/>
-                      :
-                        <SweetAlert
-                        type={"confirm-add"}
-                        inviteDatas={this.state.inviteDatas}
-                        unsaved={this.state.unsaved}
-                        onCancel={() => {
-                            this.setState({ showConfirm: false });
-                        }}
-                        onConfirm={() => {
-                          this.setState({ showConfirm: false });
-                          this.createGroup();
-                        }}/>
-                      )
-                    }
-                </div>
-              </div>
-            </section>
+                {this.state.showConfirm && 
+                  (this.props.isEdit 
+                  ?
+                    <SweetAlert
+                    type={"confirm-edit"}
+                    inviteDatas={this.state.inviteDatas}
+                    inviteDeleted={this.state.inviteDeleted}
+                    newInviteDatas={this.state.newInviteDatas}
+                    inviteResend={this.state.inviteResend}
+                    groupName={this.props.group.groupName}
+                    newName={this.state.groupName}
+                    unsaved={this.state.unsaved}
+                    onCancel={() => {
+                        this.setState({ showConfirm: false });
+                    }}
+                    onConfirm={() => {
+                      this.setState({ showConfirm: false });
+                      this.updateGroup();
+                    }}/>
+                  :
+                    <SweetAlert
+                    type={"confirm-add"}
+                    inviteDatas={this.state.inviteDatas}
+                    unsaved={this.state.unsaved}
+                    onCancel={() => {
+                        this.setState({ showConfirm: false });
+                    }}
+                    onConfirm={() => {
+                      this.setState({ showConfirm: false });
+                      this.createGroup();
+                    }}/>
+                  )
+                }
+            </div>
+          </div>
         );
       }
     }else{
