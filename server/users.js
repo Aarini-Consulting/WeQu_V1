@@ -225,7 +225,7 @@ Meteor.methods({
         {$or : [
             { "emails": userMail},
             { "emailsSurveyed": userMail},
-            { "emailsSelfRankCompleted": oldMail}
+            { "emailsSelfRankCompleted": userMail}
           ] 
         }
       ).forEach(function(gr){
