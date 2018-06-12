@@ -201,9 +201,8 @@ class GroupPage extends React.Component {
         </div>);
       }
       return(
-        <div className="fillHeight">
-            <Menu location={this.props.location} history={this.props.history}/>
-            <section className="section summary fontreleway groupbg fillHeight">
+            <section className="section home fontreleway groupbg">
+              <Menu location={this.props.location} history={this.props.history}/>
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
                   <a className="w-clearfix w-inline-block cursor-pointer" onClick={()=>{
@@ -230,24 +229,23 @@ class GroupPage extends React.Component {
                     </a>
                   }          
                 </div>
-
               </div>
-              <div className="tabs w-tabs fillHeight">
-                <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
-                  <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
-                  onClick={this.toggleTabs.bind(this,"edit")}>
-                    <div>Edit group</div>
-                  </a>
-                  <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
-                  onClick={this.toggleTabs.bind(this,"survey")}>
-                    <div>View survey</div>
-                  </a>
-                  <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
-                  onClick={this.toggleTabs.bind(this,"card")}>
-                    <div>Draw cards</div>
-                  </a>
-                </div>
-                <div className="w-tab-content fillHeight">
+              <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
+                <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"edit")}>
+                  <div>Edit group</div>
+                </a>
+                <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"survey")}>
+                  <div>View survey</div>
+                </a>
+                <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"card")}>
+                  <div>Draw cards</div>
+                </a>
+              </div>
+              <div className="tabs w-tabs">
+                <div className="w-tab-content">
                   {tabContent}
                 </div>
               </div>
@@ -276,7 +274,6 @@ class GroupPage extends React.Component {
                 }}/>
               }
             </section>
-        </div>
       ) 
     }else{
       return(
