@@ -33,7 +33,6 @@ Meteor.methods({
 				userId = Accounts.createUser({
 					email: email,
 					password: _id,
-					trialMember: true,
 					trial: true,
 					firstName: data[i].firstName,
 					lastName: data[i].lastName,
@@ -46,10 +45,10 @@ Meteor.methods({
 				// Meteor.users.update({_id: userId}, {$set : { "services.invitationId": _id }});
 
 				// Updating the profile groupQuizPerson to true
-				let flag = true;
-				Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
-						console.log("updateProfileGroupQuizPerson",err,result);
-				}); 
+				// let flag = true;
+				// Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+				// 		console.log("updateProfileGroupQuizPerson",err,result);
+				// }); 
 			}
 
 		}

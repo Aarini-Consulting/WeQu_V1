@@ -2752,6 +2752,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-align: left;
 }
 
+.tabs.w-tabs{
+  width:100%;
+  flex-grow: 1;
+  overflow: auto;
+}
+
 .tap {
   display:inline-block;
   height: 40px;
