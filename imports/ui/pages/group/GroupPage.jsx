@@ -233,7 +233,7 @@ class GroupPage extends React.Component {
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                 <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"edit")}>
-                  <div>Edit group</div>
+                  <div>Manage group</div>
                 </a>
                 <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"survey")}>
