@@ -5,14 +5,25 @@
 Meteor.methods({
 
 	createAccount: function(data, emailVerification){
-		var userId = Accounts.createUser({
-			email: data.registerEmail,
-			password: data.registerPassword,
-			firstName: data.firstName,
-			lastName: data.lastName
-		}); 
+		var userId;
+		var verification = emailVerification;
+		var checkUser = Meteor.users.findOne({"emails.address" : data.registerEmail});
+		if(checkUser && checkUser.profile.trial){
+			verification = false;
+			userId = checkUser._id
+			data.userId = userId;
+			Meteor.call('updateProfileFromTrial', data);
+		}else{
+			userId = Accounts.createUser({
+				email: data.registerEmail,
+				password: data.registerPassword,
+				firstName: data.firstName,
+				lastName: data.lastName
+			}); 
+		}
+
 		if(userId) {
-			if(emailVerification){
+			if(verification){
 				Meteor.call( 'sendVerificationLink', userId);
 			}
 			else{
@@ -27,7 +38,6 @@ Meteor.methods({
 		else{
 			return false;
 		}
-		
 	},
 
     //Creating a method to send verification.

@@ -61,7 +61,6 @@ Meteor.methods({
       userId = Accounts.createUser({
                 email: email,
                 password: _id,
-                trialMember: true,
                 trial: true,
                 firstName: toName,
                 profile : { emailAddress : email, 
@@ -116,10 +115,10 @@ Meteor.methods({
     }
 
     // Updating the profile groupQuizPerson to false
-    let flag = false;
-    Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
-            console.log("updateProfileGroupQuizPerson",err,result);
-    });
+    // let flag = false;
+    // Meteor.call('updateProfileGroupQuizPerson', userId ,flag, function (err, result) {
+    //         console.log("updateProfileGroupQuizPerson",err,result);
+    // });
    
 
     var feedback = Feedback.findOne({ 'from': userId, 'to': Meteor.userId() });

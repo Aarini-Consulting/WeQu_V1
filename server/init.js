@@ -78,8 +78,8 @@ Meteor.startup(function () {
     // On Creating user gives a call back function
     Accounts.onCreateUser(function (options, user) {
         user.profile = options.profile || {};
-        user.profile.loginScript = 'init';
-        user.profile.gradient = Math.floor(Math.random() * 5) + 1;
+        // user.profile.loginScript = 'init';
+        // user.profile.gradient = Math.floor(Math.random() * 5) + 1;
         user.profile.firstName = options.firstName;
         user.profile.lastName = options.lastName;
 
@@ -87,8 +87,7 @@ Meteor.startup(function () {
             user.profile.userType = options.userType;
         }
 
-        if(options.trialMember){
-            user.profile.trialMember = options.trialMember;
+        if(options.trial){
             user.profile.trial = options.trial; // account created by user then set to false
         }
 
