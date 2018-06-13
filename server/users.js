@@ -92,7 +92,7 @@ Meteor.methods({
   'user.update.name'(firstName, lastName) {
     Meteor.users.update(Meteor.userId(), { 
       '$set': {
-          'profile.name': firstName,
+          // 'profile.name': firstName,
           'profile.firstName': firstName,
           'profile.lastName': lastName,
           } 

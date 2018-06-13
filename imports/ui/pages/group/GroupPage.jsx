@@ -245,9 +245,7 @@ class GroupPage extends React.Component {
                 </a>
               </div>
               <div className="tabs w-tabs">
-                <div className="w-tab-content">
                   {tabContent}
-                </div>
               </div>
 
               {this.state.showInfo &&
