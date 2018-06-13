@@ -2,6 +2,10 @@
   height: 100%;
 }
 
+.margin-bottom-menu{
+  margin-bottom:2em;
+}
+
 .rank-separator-bottom{
   margin: 5px auto;
   margin-bottom: 2em;

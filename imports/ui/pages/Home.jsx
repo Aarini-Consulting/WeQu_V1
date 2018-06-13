@@ -97,11 +97,18 @@ class Home extends React.Component {
                         return(
                             <section className="section home fontreleway">
                                 <div className="w-block home-top weq-bg">
-                                    <div className="screentitlewrapper w-clearfix">
-                                        <div className="fontreleway font-invite-title edit w-clearfix">
-                                        <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                    {isGameMaster
+                                    ?
+                                        <div className="margin-bottom-menu">
+                                        <Menu location={this.props.location} history={this.props.history}/>
                                         </div>
-                                    </div>
+                                    :
+                                        <div className="screentitlewrapper w-clearfix">
+                                            <div className="fontreleway font-invite-title edit w-clearfix">
+                                            <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                            </div>
+                                        </div>
+                                    }
                                     <div className="ring"></div>
                                     <div className="font-rate rank-separator-top">Welcome!</div>
                                     <div className="font-rate f-em1">Select a group below</div>
@@ -117,7 +124,7 @@ class Home extends React.Component {
                                 <div className="w-block home-top weq-bg">
                                     {isGameMaster
                                     ?
-                                        <div className="rank-separator-bottom">
+                                        <div className="margin-bottom-menu">
                                         <Menu location={this.props.location} history={this.props.history}/>
                                         </div>
                                     :
