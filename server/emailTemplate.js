@@ -40,6 +40,12 @@ Template.EmailChangeVerification.helpers({
     //Add any helper methods to enable default data in template
 });
 
+SSR.compileTemplate('GamemasterConfirmationEmail', Assets.getText('gamemaster-confirmation-email.html'));
+
+Template.GamemasterConfirmationEmail.helpers({
+    //Add any helper methods to enable default data in template
+});
+
 
 
 
