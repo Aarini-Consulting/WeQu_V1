@@ -23,6 +23,28 @@ Meteor.methods({
                     {  'profile.selfRank': groupId} 
                 ]}, 
                 {$unset : { "profile.selfRank": "" }});
+            
+            var updatedGroup =  Group.findOne(groupId);
+            var usersSurveyIncomplete = Meteor.users.find(
+                {$and : [ {"emails.address" : {$in:updatedGroup.emails} }, {"emails.address" : {$nin:updatedGroup.emailsSurveyed} }]}
+            ).fetch();
+
+            if(usersSurveyIncomplete.length < 1){
+                var groupCreator = Meteor.users.findOne(updatedGroup.creatorId);
+                var subject = `[WeQ] Group Survey Completed`;
+
+                var emailData = {
+                    'creatorEmail': groupCreator.emails[0].address,
+                    'creatorName' : (groupCreator.profile.firstName +" "+ groupCreator.profile.lastName) ,
+                    'groupId': updatedGroup._id,
+                    'groupName': updatedGroup.groupName
+                };
+                var body;
+                body = SSR.render('GroupSurveyCompletedEmail', emailData);
+
+                Meteor.call('sendEmail', "contact@weq.io", subject, body);
+            }
+            
                 
         }else{
             throw (new Meteor.Error("group_not_found")); 

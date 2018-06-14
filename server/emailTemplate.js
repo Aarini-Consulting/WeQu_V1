@@ -46,6 +46,18 @@ Template.GamemasterConfirmationEmail.helpers({
     //Add any helper methods to enable default data in template
 });
 
+SSR.compileTemplate('GroupCreationEmail', Assets.getText('group-creation-email.html'));
+
+Template.GroupCreationEmail.helpers({
+    //Add any helper methods to enable default data in template
+});
+
+SSR.compileTemplate('GroupSurveyCompletedEmail', Assets.getText('group-survey-completed-email.html'));
+
+Template.GroupSurveyCompletedEmail.helpers({
+    //Add any helper methods to enable default data in template
+});
+
 
 
 
