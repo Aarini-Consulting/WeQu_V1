@@ -12,7 +12,31 @@ class Settings extends React.Component {
         super(props);
         this.state={
             showConfirmDelete:false,
-            showDeleteInfoGameMaster:false
+            showDeleteInfoGameMaster:false,
+            consentSubs:false
+        }
+    }
+
+    toggleConsent (e) {
+        this.setState({
+            [e.target.name]: e.target.checked,
+        });
+        Meteor.call('updateConsent', e.target.checked);
+    }
+
+    componentWillMount(){
+        this.setDefaultValue(this.props);
+    }
+    
+    componentWillReceiveProps(nextProps){
+        this.setDefaultValue(nextProps);  
+    }
+
+    setDefaultValue(props){
+        if(props.dataReady && props.currentUser && props.currentUser.profile && props.currentUser.profile.consentSubs){
+            this.setState({
+                consentSubs: props.currentUser.profile.consentSubs.consentGiven,
+            });
         }
     }
 
@@ -85,6 +109,16 @@ class Settings extends React.Component {
             </li> */}
             <li className="list-item">
                 <div className="summarytext">
+                    <div className="fontreleway fontstatement">
+                            <input type="checkbox" ref="consentSubs" name="consentSubs"
+                            checked={this.state.consentSubs}
+                            onChange={this.toggleConsent.bind(this)}/>&nbsp; 
+                            I would like to receive team-boosting related information, offers, recommendations and updates from WeQ
+                    </div>
+                </div>
+            </li>
+            <li className="list-item">
+                <div className="summarytext">
                     <div className="fontreleway fontstatement cursor-pointer" onClick={this.showConfirmDelete.bind(this)}>
                     <u>DELETE MY ACCOUNT/DATA</u></div>
                 </div>
@@ -130,8 +164,17 @@ class Settings extends React.Component {
   }
 
   export default withTracker((props) => {
+    var dataReady = false;
+    var currentUser = Meteor.user();
+
+    if(Meteor.userId() && currentUser){
+        dataReady = true;
+    }else{
+        dataReady = true;
+    }
     return {
-        currentUser: Meteor.user(),
+        dataReady: dataReady,
+        currentUser: currentUser,
     };
   })(Settings);
   

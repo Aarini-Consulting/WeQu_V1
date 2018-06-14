@@ -259,9 +259,10 @@ Meteor.methods({
         }
 
         if(doUpdate){
-          Group.update({_id:gr._id},
-            {$set: gr},
-            {});
+          Group.update(
+            {_id:gr._id},
+            {$set: gr}
+          );
         }
       });
 
@@ -270,31 +271,27 @@ Meteor.methods({
           { "userId": currentUser._id},
           { "email": userMail}
           ] 
-        },
-        {});
+        });
 
       Feedback.remove(
         {$or : [
           { "from": currentUser._id},
           { "to": currentUser._id}
           ] 
-        },
-        {});
+        });
 
       FeedbackRank.remove(
         {$or : [
           { "from": currentUser._id},
           { "to": currentUser._id}
           ] 
-        },
-        {});
+        });
       
       CardPlacement.remove(
         {$or : [
           { "userId": currentUser._id},
           ] 
-        },
-        {});
+        });
 
       Meteor.users.remove({_id:Meteor.userId()});
     }else{

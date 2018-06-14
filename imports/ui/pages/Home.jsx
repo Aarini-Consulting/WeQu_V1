@@ -187,7 +187,7 @@ export default withTracker((props) => {
     var groups;
 
     if(Meteor.userId()){
-        if(Meteor.user()){
+        if(Meteor.user() && Meteor.user().emails){
             var email = Meteor.user().emails[0].address;
             handleGroup = Meteor.subscribe('group',{
                 "emails" : email 

@@ -18,7 +18,8 @@ Meteor.methods({
 				email: data.registerEmail,
 				password: data.registerPassword,
 				firstName: data.firstName,
-				lastName: data.lastName
+				lastName: data.lastName,
+				profile:{consentSubs:{consentGiven:data.consentSubs, lastUpdated:new Date()}}
 			}); 
 		}
 
