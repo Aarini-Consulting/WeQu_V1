@@ -212,10 +212,16 @@ class InviteGroup extends React.Component {
           info: 'Please enter a group name',
         });
       }
-      else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 2){
+      else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 5){
         this.setState({
           inviteStatus: 'error',
-          info: 'A group needs at least two group members',
+          info: 'A group needs at least 5 group members',
+        });
+      }
+      else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) > 12){
+        this.setState({
+          inviteStatus: 'error',
+          info: 'Maximum amount of members reached',
         });
       }else{
         this.checkUnsavedForm();
@@ -476,7 +482,7 @@ class InviteGroup extends React.Component {
                   
                   {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
                   
-                  {!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&
+                  {!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 12 &&
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12">></div>
