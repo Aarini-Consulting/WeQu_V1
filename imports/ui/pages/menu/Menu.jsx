@@ -24,24 +24,22 @@ export default class Menu extends React.Component {
     }
 
     render() {
+        console.log(window.location.hostname);
         return (
             <div className="menubar w-clearfix">
-                {Roles.userIsInRole( Meteor.userId(), 'GameMaster' )
-                ? 
+                <a onClick={this.decideAction.bind(this,"/")} 
+                className={"text fontreleway fontmenu _1 " + this.isCurrent("/")}>
+                    home
+                </a>
+                {Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) &&
                     <a onClick={this.decideAction.bind(this,"/invite-group")} 
                     className={"text fontreleway fontmenu _2 " + this.isCurrent("/invite-group")}>
                         groups
                     </a>
-                :   
-                    <a onClick={this.decideAction.bind(this,"/")} 
-                    className={"text fontreleway fontmenu _2 " + this.isCurrent("/")}>
-                        home
-                    </a>
                 }
-                
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
-                        settings
+                    settings
                 </a>
             </div>
         );

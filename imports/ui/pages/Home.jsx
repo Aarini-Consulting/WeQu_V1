@@ -59,6 +59,7 @@ class Home extends React.Component {
 
     render() {
         if(this.props.dataReady){
+            var isGameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
             if(this.props.currentUser && this.props.currentUser.profile  && !this.props.currentUser.profile.pictureUrl){
                 //create random gravatar image and store it in profile
                 var gravatar = init({
@@ -92,19 +93,22 @@ class Home extends React.Component {
                     );
                 }
                 else{
-                    if(Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
-                        return(
-                            <Redirect to="/invite-group"/>
-                        )
-                    }else if(this.props.groups && this.props.groups.length > 0){
+                    if(this.props.groups && this.props.groups.length > 0){
                         return(
                             <section className="section home fontreleway">
                                 <div className="w-block home-top weq-bg">
-                                    <div className="screentitlewrapper w-clearfix">
-                                        <div className="fontreleway font-invite-title edit w-clearfix">
-                                        <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                    {isGameMaster
+                                    ?
+                                        <div className="margin-bottom-menu">
+                                        <Menu location={this.props.location} history={this.props.history}/>
                                         </div>
-                                    </div>
+                                    :
+                                        <div className="screentitlewrapper w-clearfix">
+                                            <div className="fontreleway font-invite-title edit w-clearfix">
+                                            <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                            </div>
+                                        </div>
+                                    }
                                     <div className="ring"></div>
                                     <div className="font-rate rank-separator-top">Welcome!</div>
                                     <div className="font-rate f-em1">Select a group below</div>
@@ -118,11 +122,19 @@ class Home extends React.Component {
                         return(
                             <section className="section home fontreleway">
                                 <div className="w-block home-top weq-bg">
-                                    <div className="screentitlewrapper w-clearfix">
-                                        <div className="fontreleway font-invite-title edit w-clearfix">
-                                        <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                    {isGameMaster
+                                    ?
+                                        <div className="margin-bottom-menu">
+                                        <Menu location={this.props.location} history={this.props.history}/>
                                         </div>
-                                    </div>
+                                    :
+                                        <div className="screentitlewrapper w-clearfix">
+                                            <div className="fontreleway font-invite-title edit w-clearfix">
+                                            <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                            </div>
+                                        </div>
+                                    }
+                                    
                                     <div className="ring"></div>
                                     <div className="font-rate rank-separator-top">Welcome!</div>
                                 </div>
@@ -132,7 +144,9 @@ class Home extends React.Component {
                                     <br/>
                                         <div className="w-block noselect">
                                             <div className="fontreleway f-popup-title">No group</div>
-                                            <div className="fontreleway f-popup-title">You must be a WeQ Certified Master Coach to create a new group</div>
+                                            {!isGameMaster &&
+                                                <div className="fontreleway f-popup-title">You must be a WeQ Certified Master Coach to create a new group</div>
+                                            }
                                         </div>
                                     </div>
                                     {/* <img src="https://orig00.deviantart.net/798a/f/2012/319/2/9/nothing_to_do_here_gif_by_cartoonzack-d5l4eqj.gif"/> */}
@@ -173,7 +187,7 @@ export default withTracker((props) => {
     var groups;
 
     if(Meteor.userId()){
-        if(Meteor.user()){
+        if(Meteor.user() && Meteor.user().emails){
             var email = Meteor.user().emails[0].address;
             handleGroup = Meteor.subscribe('group',{
                 "emails" : email 

@@ -159,20 +159,25 @@ Meteor.methods({
 
     },
     addRoleGameMaster(userId){
-
-
-      if(!Roles.userIsInRole(Meteor.userId(),'admin')){
-       // TODO : Temporarily allowing for testing , uncomment it
-       // throw new Meteor.Error("Not allowed to assigned roles");
+      if(Roles.userIsInRole(userId,'admin')){
+       throw new Meteor.Error("Not allowed to assigned roles");
       }
+
+      var checkUser = Meteor.users.findOne({'_id':userId});
 
       if ( Roles.userIsInRole( userId, 'GameMaster' ) ) {
-        return Roles.removeUsersFromRoles( userId, 'GameMaster');
+        Roles.removeUsersFromRoles( userId, 'GameMaster');
       } else {
-        return Roles.addUsersToRoles(userId, "GameMaster" );
+        var email = checkUser.emails[0].address;
+        var subject = `Welcome to the WeQ Master Coach Community`;
+        var emailData = {
+        'firstName':checkUser.profile.firstName,
+        };
+        let body = SSR.render('GamemasterConfirmationEmail', emailData);
+        Roles.addUsersToRoles(userId, "GameMaster" );
+        Meteor.call('sendEmail', email, subject, body);
+        
       }
-      
-      return false;
     },
 
     addRoleGameMaster2(userId){
