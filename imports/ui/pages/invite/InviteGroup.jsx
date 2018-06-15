@@ -187,6 +187,10 @@ class InviteGroup extends React.Component {
           unsaved: (firstName.value || lastName.value || email.value),
         });
       }
+    }else{
+      this.setState({
+        unsaved: false
+      });
     }
   }
 
