@@ -460,6 +460,16 @@
   color:#fff;
 }
 
+.font.f_12.center {
+  display:block;
+  width:100%;
+  height:auto;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+  align-items: center;
+  text-align: center;
+}
+
 .invite-group-line-wrapper{
   display: -webkit-box;
   display: -webkit-flex;
