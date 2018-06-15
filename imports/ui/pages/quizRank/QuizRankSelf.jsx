@@ -123,7 +123,6 @@ class QuizRankSelf extends React.Component {
                 this.state.items.forEach((el,index,array) => {
                     rankObject[el]=(array.length - index)
                 });
-                console.log(rankObject);
                 Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
                     if(error){
                         console.log(error)
@@ -148,7 +147,6 @@ class QuizRankSelf extends React.Component {
     }
 
     quizFinished(){
-        console.log("it's over");
         this.setState({
             quizOver: true,
         });

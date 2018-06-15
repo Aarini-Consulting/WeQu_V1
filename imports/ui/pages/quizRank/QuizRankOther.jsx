@@ -82,7 +82,7 @@ class QuizRankOther extends React.Component {
             this.state.items.forEach((el,index,array) => {
                 rankObject[el]=(array.length - index)
             });
-            console.log(rankObject);
+
             Meteor.call( 'save.others.rank', this.props.feedbackRank.to, this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
                 if(error){
                     console.log(error)
@@ -95,7 +95,6 @@ class QuizRankOther extends React.Component {
     }
 
     quizFinished(){
-        console.log("it's over");
         this.setState({
             quizOver: true,
         });
@@ -151,7 +150,6 @@ class QuizRankOther extends React.Component {
                             <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                         </div>
                         <div className="rate-content">
-                            <div className="font-rate font-name-header f-white">{this.props.group.groupName}</div>
                             <div className="font-rate font-name-header f-white">Rank teammate's qualities in 60 seconds</div>
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
                         </div>
@@ -204,18 +202,6 @@ export default withTracker((props) => {
 
     if(handleGroup.ready()){
         group = Group.findOne({_id:groupId});
-        // users = Meteor.users.findOne(
-        //     {
-        //         $and : [ 
-        //             {$or : [ {"emails.address" : {$in:group.emails}  }, 
-        //                 { "profile.emailAddress" : {$in:group.emails}}
-        //             ]}, 
-        //             { "_id" : {$not:Meteor.userId()}}
-        //         ]
-        //     },{
-        //         sort: { "profile.firstName": 1 }
-        //     }
-        // );
         var handleFeedbackRank = Meteor.subscribe('feedbackRank',
         {groupId:groupId,
         from:Meteor.userId(),
@@ -239,7 +225,6 @@ export default withTracker((props) => {
             );
 
             currentUser = Meteor.user();
-            console.log(feedbackRank);
             dataReady = true;
         }
     }

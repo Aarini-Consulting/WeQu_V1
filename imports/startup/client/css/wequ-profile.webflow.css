@@ -2,6 +2,10 @@
   height: 100%;
 }
 
+.margin-bottom-menu{
+  margin-bottom:2em;
+}
+
 .rank-separator-bottom{
   margin: 5px auto;
   margin-bottom: 2em;
@@ -454,6 +458,16 @@
   align-items: flex-end;
   font-size: 1.2em;
   color:#fff;
+}
+
+.font.f_12.center {
+  display:block;
+  width:100%;
+  height:auto;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+  align-items: center;
+  text-align: center;
 }
 
 .invite-group-line-wrapper{
@@ -2400,7 +2414,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .popup-bttn {
   display: table-cell;
-  width: 40%;
+  min-width: 40%;
   min-height: 40px;
   min-width:4em;
   padding:0.5em;
@@ -2500,7 +2514,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-top: 1px solid #f3eeee;
   border-bottom: 0px none #f3eeee;
   background-color: #fff;
-  box-shadow: 0 0 15px 0 #f3eeee;
 }
 
 .footer-flex-container{
@@ -3473,7 +3486,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width: 100%;
   height: 7px;
   background-color: #cecece;
-  margin-bottom:2em;
+  margin-bottom:1.5em;
 }
 
 .actual-time {
@@ -3534,7 +3547,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .font-rate.font-name-header.f-white{
   color: #fff;
   font-size: 1.5em;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
 }
 
 .loading-font{

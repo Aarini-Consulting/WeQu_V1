@@ -100,7 +100,7 @@ class InviteGroupPage extends React.Component {
                 <div className="footersummary w-clearfix">
                   <div className="bttn-area-summary contact" >
                     <a className="button fontreleway bttncontact w-button" onClick={this.showInviteGroup.bind(this, true)}>
-                    Add new group
+                      Create new group
                     </a>
                   </div>
                 </div>

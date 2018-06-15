@@ -6,7 +6,25 @@ Meteor.methods({
 
     if(!groupId){
      throw (new Meteor.Error("group_creation_failed")); 
-   }
+    }
+
+    var groupCreator = Meteor.users.findOne(Meteor.userId());
+
+    var group = Group.findOne(groupId);
+
+    var subject = `[WeQ] Group Creation`;
+
+    var emailData = {
+        'creatorEmail': groupCreator.emails[0].address,
+        'creatorName' : (groupCreator.profile.firstName +" "+ groupCreator.profile.lastName) ,
+        'groupId': group._id,
+        'groupName': group.groupName
+    };
+    var body;
+    body = SSR.render('GroupCreationEmail', emailData);
+    
+
+    Meteor.call('sendEmail', "contact@weq.io", subject, body);
 
   //  FeedbackCycle.insert({
   //   'groupId': groupId, 
@@ -14,10 +32,7 @@ Meteor.methods({
   //   'from': now
   //   });
 
-   Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName, (err, result)=> {
-    //  console.log("genGroupQuestionSet" , err, result);
-      if(err){ return err}
-    });
+   Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName);
 
     return true;
 
