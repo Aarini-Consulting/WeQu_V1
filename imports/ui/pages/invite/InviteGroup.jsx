@@ -178,13 +178,15 @@ class InviteGroup extends React.Component {
   }
 
   checkUnsavedForm(){
-    var firstName = ReactDOM.findDOMNode(this.refs.firstName);
-    var lastName = ReactDOM.findDOMNode(this.refs.lastName);
-    var email = ReactDOM.findDOMNode(this.refs.email);
-    if(firstName && lastName && email){
-      this.setState({
-        unsaved: (firstName.value || lastName.value || email.value),
-      });
+    if((this.state.inviteDatas.length - this.state.inviteDeleted.length) < 12){
+      var firstName = ReactDOM.findDOMNode(this.refs.firstName);
+      var lastName = ReactDOM.findDOMNode(this.refs.lastName);
+      var email = ReactDOM.findDOMNode(this.refs.email);
+      if(firstName && lastName && email){
+        this.setState({
+          unsaved: (firstName.value || lastName.value || email.value),
+        });
+      }
     }
   }
 
