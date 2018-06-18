@@ -956,6 +956,10 @@ body {
   text-align: left;
 }
 
+.fontreleway.fontstatement.settings-group-header {
+  background-color: #f3eeee;
+}
+
 .fontreleway.fontstatement.fontexample {
   font-size: 1em;
   font-style: normal;
@@ -1788,9 +1792,15 @@ body {
 }
 
 .list-item {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 10px;
   border-bottom: 5px solid #f3eeee;
+}
+
+.list-item.settings-group-header {
+  background-color: #f3eeee;
+}
+.list-item.settings-group-header.white-border-top {
+  border-top: 5px solid #fff;
 }
 
 .list-item.listlast {

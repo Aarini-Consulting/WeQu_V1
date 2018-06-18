@@ -38,7 +38,7 @@ export default class Menu extends React.Component {
                 }
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
-                    settings
+                    Account
                 </a>
             </div>
         );

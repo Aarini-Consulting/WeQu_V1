@@ -105,7 +105,7 @@ class Home extends React.Component {
                                     :
                                         <div className="screentitlewrapper w-clearfix">
                                             <div className="fontreleway font-invite-title edit w-clearfix">
-                                            <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                            <Link className="cursor-pointer" to="/settings">Account</Link>
                                             </div>
                                         </div>
                                     }
@@ -130,7 +130,7 @@ class Home extends React.Component {
                                     :
                                         <div className="screentitlewrapper w-clearfix">
                                             <div className="fontreleway font-invite-title edit w-clearfix">
-                                            <Link className="cursor-pointer" to="/settings">Settings</Link>
+                                            <Link className="cursor-pointer" to="/settings">Account</Link>
                                             </div>
                                         </div>
                                     }
