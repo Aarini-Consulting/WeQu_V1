@@ -24,7 +24,6 @@ export default class Menu extends React.Component {
     }
 
     render() {
-        console.log(window.location.hostname);
         return (
             <div className="menubar w-clearfix">
                 <a onClick={this.decideAction.bind(this,"/")} 
