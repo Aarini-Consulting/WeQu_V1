@@ -143,7 +143,7 @@ class SignUp extends React.Component {
 												checked={this.state.consentTerms}
 												onChange={this.toggleConsent.bind(this)}
 												required/>&nbsp; 
-												I have read and agree to the <Link to="/terms" id="terms">Terms</Link> and <Link to="/privacy" id="privacyPolicy">Privacy Policy</Link>.
+												I have read and agree to the <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Terms</a> and <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Privacy Policy</a>.
 											</label>
 										</div>
 										<div className="formtext">

@@ -122,8 +122,6 @@ const App = () => (
       <Route exact path='/reset-password/:token' component={ResetPassword} />
       <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
-      <Route path='/terms' component={Terms}/>
-      <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />
       <Route exact path='/update-email/:token' component={VerifyUpdateEmail} />
       <Route path="/adminUser" component={AdminUser}/>
