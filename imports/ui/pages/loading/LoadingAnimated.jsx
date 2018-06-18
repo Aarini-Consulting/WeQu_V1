@@ -7,8 +7,12 @@ export default class LoadingAnimated extends React.Component {
         <div className="w-block noselect">
             <div className="ring animated"></div>
             <div className="font-rate loading-font loading-text-top padding-wrapper">
-                Please wait... WeQ is generating your card numbers
+                {this.props.placeCard 
+                ?"Please wait... WeQ is generating your card numbers"
+                :"Please wait..."
+                }
             </div>
+            
         </div>
       </div>
     );
