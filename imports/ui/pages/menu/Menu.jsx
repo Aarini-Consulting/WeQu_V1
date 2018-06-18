@@ -24,7 +24,6 @@ export default class Menu extends React.Component {
     }
 
     render() {
-        console.log(window.location.hostname);
         return (
             <div className="menubar w-clearfix">
                 <a onClick={this.decideAction.bind(this,"/")} 
@@ -39,7 +38,7 @@ export default class Menu extends React.Component {
                 }
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
-                    settings
+                    Account
                 </a>
             </div>
         );

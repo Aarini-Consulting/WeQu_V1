@@ -47,7 +47,7 @@ class EmailVerified extends React.Component {
   
   render() {
       return (
-        <section className={"gradient whiteText alignCenter feed"}>
+        <section className="fillHeight weq-bg">
           <br/> <br/>
           
           <div className="row">

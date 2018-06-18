@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
+import LoadingAnimated from '../loading/LoadingAnimated';
 
 class SignUp extends React.Component {
 	constructor(props){
@@ -105,7 +106,7 @@ class SignUp extends React.Component {
 			if(this.state.showLoading){
 				return(
 					<div className="loginwraper">
-							<Loading/>
+							<LoadingAnimated/>
 					</div>
 				);
 			}
@@ -138,21 +139,18 @@ class SignUp extends React.Component {
 										}
 										<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder="password" required="required" type="password"/>
 										<div className="formtext">
-											<label className="noselect cursor-pointer">
 												<input type="checkbox" ref="consentTerms" name="consentTerms" className="signup-consent"
 												checked={this.state.consentTerms}
 												onChange={this.toggleConsent.bind(this)}
 												required/>&nbsp; 
-												I have read and agree to the <Link to="/terms" id="terms">Terms</Link> and <Link to="/privacy" id="privacyPolicy">Privacy Policy</Link>.
-											</label>
+												I have read and agree to the <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Terms</a> and <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Privacy Policy</a>.
+
 										</div>
 										<div className="formtext">
-											<label className="noselect cursor-pointer">
 												<input type="checkbox" ref="consentSubs" name="consentSubs" className="signup-consent"
 												checked={this.state.consentSubs}
 												onChange={this.toggleConsent.bind(this)}/>&nbsp; 
 												I would like to receive team-boosting related information, offers, recommendations and updates from WeQ
-											</label>
 										</div>
 										<input className="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up"/>
 									</form>
@@ -165,8 +163,7 @@ class SignUp extends React.Component {
 				);
 			}
 			else{
-				return(<Loading/>);
-				
+				return(<Loading/>);	
 			}
     }
 }

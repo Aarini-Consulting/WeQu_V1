@@ -269,8 +269,7 @@
 }
 
 .heading {
-  margin-top: 0px;
-  margin-bottom: 30px;
+  margin-top: 1em;
   font-family: Raleway, sans-serif;
   font-size: 25px;
   font-weight: 400;
@@ -955,6 +954,10 @@ body {
   color: #a0a0a0;
   font-size: 1.4em;
   text-align: left;
+}
+
+.fontreleway.fontstatement.settings-group-header {
+  background-color: #f3eeee;
 }
 
 .fontreleway.fontstatement.fontexample {
@@ -1789,9 +1792,15 @@ body {
 }
 
 .list-item {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 10px;
   border-bottom: 5px solid #f3eeee;
+}
+
+.list-item.settings-group-header {
+  background-color: #f3eeee;
+}
+.list-item.settings-group-header.white-border-top {
+  border-top: 5px solid #fff;
 }
 
 .list-item.listlast {
