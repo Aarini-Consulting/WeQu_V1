@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
+import LoadingAnimated from '../loading/LoadingAnimated';
 
 class SignUp extends React.Component {
 	constructor(props){
@@ -105,7 +106,7 @@ class SignUp extends React.Component {
 			if(this.state.showLoading){
 				return(
 					<div className="loginwraper">
-							<Loading/>
+							<LoadingAnimated/>
 					</div>
 				);
 			}
@@ -165,8 +166,7 @@ class SignUp extends React.Component {
 				);
 			}
 			else{
-				return(<Loading/>);
-				
+				return(<Loading/>);	
 			}
     }
 }

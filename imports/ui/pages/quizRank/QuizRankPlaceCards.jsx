@@ -127,7 +127,7 @@ class QuizRankPlaceCards extends React.Component {
             );
         }else{
             return(
-                <LoadingAnimated/>
+                <LoadingAnimated placeCard={true}/>
             );
         }
     }

@@ -65,6 +65,13 @@ class QuizRankPage extends React.Component {
                                     <br/><br/>
                                     You will use this app again when you play WeQ,<br/>
                                     so remember to bring your phone to the session!
+                                    <br/>
+                                    <br/>
+                                </div>
+                                <div className="w-block cursor-pointer">
+                                    <Link className="font-rate f-bttn w-inline-block noselect" to={"/"}>
+                                        Home
+                                    </Link>
                                 </div>
                             </div>
                         )
