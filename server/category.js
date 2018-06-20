@@ -339,6 +339,14 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
+        if(groupCheck && groupCheck.emails && groupCheck.emails.length < 5){
+            throw (new Meteor.Error("not_enough_group_member")); 
+        }
+
+        if(groupCheck && groupCheck.emails && groupCheck.emails.length > 12){
+            throw (new Meteor.Error("too_much_group_member")); 
+        }
+
         if(!groupCheck.isActive && !groupCheck.isFinished){
             if(groupCheck.emailsSurveyed && groupCheck.emailsSurveyed.length == groupCheck.emails.length){
                 var users = Meteor.users.find(

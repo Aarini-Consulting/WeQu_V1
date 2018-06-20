@@ -42,9 +42,16 @@ class GroupPage extends React.Component {
   }
 
   confirmStartGame(){
-    this.setState({
-      showConfirmStart: true,
-    });
+    if(this.props.group && this.props.group.emails && this.props.group.emails.length >= 5){
+      this.setState({
+        showConfirmStart: true,
+      });
+    }else{
+      this.setState({
+        showInfo: true,
+        showInfoMessage:"group need at least 5 members"
+      });
+    }
   }
 
   startGame(){
@@ -93,11 +100,19 @@ class GroupPage extends React.Component {
 
       var odd = (index % 2) > 0;
 
+      var name;
+
+      if(user.profile.firstName && user.profile.lastName){
+        name = user.profile.firstName + " " + user.profile.lastName;
+      }else{
+        name = email;
+      }
+
       return(
         <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
           <div className="tap-left card">
             <div className={"font-card-username "+(readySurvey ? "ready": "not-ready")}>
-              {user.profile.firstName + " " + user.profile.lastName}
+              {name}
             </div>
           </div>
           <div className="show-cards">
@@ -190,7 +205,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "card"){
         tabContent = 
-        (<div className="tap-content-wrapper">
+        (<div className="tap-content-wrapper" ref="printTarget">
           {this.renderUsers()}
           {!this.props.group.isActive &&
             <div className="tap-content w-clearfix">
@@ -201,7 +216,7 @@ class GroupPage extends React.Component {
         </div>);
       }
       return(
-            <section className="section home fontreleway groupbg">
+            <section className="section home fontreleway groupbg" >
               <Menu location={this.props.location} history={this.props.history}/>
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
