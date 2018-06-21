@@ -206,6 +206,27 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "card"){
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
+          <button onClick={()=>{
+            Meteor.call('download.pdf',"myFirstPDF.pdf", (error, response) => {
+              if (error) {
+                console.log(error);
+              } else {
+                var JSZip = require("jszip");
+                var zip = new JSZip();
+                zip.file(response.fileName,response.base64,{base64:true});
+
+                zip.generateAsync({type:"blob"})
+                .then((blob) => {
+                  var link = document.createElement("a");
+                  link.download = response.fileName;
+                  link.href= window.URL.createObjectURL(blob);
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                });
+              }
+            });
+          }}>Get pdf</button>
           {this.renderUsers()}
           {!this.props.group.isActive &&
             <div className="tap-content w-clearfix">
