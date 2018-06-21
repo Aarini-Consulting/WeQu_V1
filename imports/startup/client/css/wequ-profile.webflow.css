@@ -1949,6 +1949,12 @@ body {
   height:100%;
 }
 
+.contactlist-wrapper.group-list {
+  height:calc(100% - 80px);
+  margin-bottom:80px;
+  overflow:auto;
+}
+
 .contactlist {
   display: inline-block;
   width: 100%;

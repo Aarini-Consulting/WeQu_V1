@@ -472,7 +472,7 @@ class InviteGroup extends React.Component {
                          <input type="submit" id="submitAdd" defaultValue="+ Add this person" className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>
-                  :
+                  :!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12 center">Maximum amount of group member reached</div>
