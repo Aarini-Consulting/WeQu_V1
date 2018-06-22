@@ -10,6 +10,7 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+import GroupReportPage from './GroupReportPage';
 
 class GroupPage extends React.Component {
   constructor(props){
@@ -190,6 +191,59 @@ class GroupPage extends React.Component {
     }
   }
 
+  downloadPdf(){
+    Meteor.call('download.pdf',"myFirstPDF.pdf", (error, response) => {
+      if (error) {
+        console.log(error);
+      } else {
+        var JSZip = require("jszip");
+        var zip = new JSZip();
+        zip.file(response.fileName,response.base64,{base64:true});
+
+        zip.generateAsync({type:"blob"})
+        .then((blob) => {
+          var link = document.createElement("a");
+          link.download = response.fileName;
+          link.href= window.URL.createObjectURL(blob);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      }
+    });
+  }
+
+  downloadPdfMulti(){
+    console.log(this.props.cardPlacements);
+    console.log(this.props.users);
+    // this.props.cardPlacements.forEach((cp)=>{
+
+    // })
+    // Meteor.call('download.multiple.pdf',"myFirstPDF.pdf", (error, response) => {
+    //   if (error) {
+    //     console.log(error);
+    //   } else {
+    //     console.log(response);
+    //     var JSZip = require("jszip");
+    //     var zip = new JSZip();
+
+    //     response.forEach(res => {
+    //       zip.file(res.fileName,res.base64,{base64:true});
+    //     });
+        
+    //     zip.generateAsync({type:"blob"})
+    //     .then((blob) => {
+    //       var link = document.createElement("a");
+    //       link.download = "myfirstZip.zip";
+    //       link.href= window.URL.createObjectURL(blob);
+    //       document.body.appendChild(link);
+    //       link.click();
+    //       document.body.removeChild(link);
+    //     });
+    //   }
+    // });
+  }
+
   render() {
     if(this.props.dataReady){
       var tabContent;
@@ -206,27 +260,7 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "card"){
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
-          <button onClick={()=>{
-            Meteor.call('download.pdf',"myFirstPDF.pdf", (error, response) => {
-              if (error) {
-                console.log(error);
-              } else {
-                var JSZip = require("jszip");
-                var zip = new JSZip();
-                zip.file(response.fileName,response.base64,{base64:true});
-
-                zip.generateAsync({type:"blob"})
-                .then((blob) => {
-                  var link = document.createElement("a");
-                  link.download = response.fileName;
-                  link.href= window.URL.createObjectURL(blob);
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                });
-              }
-            });
-          }}>Get pdf</button>
+          <button onClick={this.downloadPdf.bind(this)}>Get pdf</button>
           {this.renderUsers()}
           {!this.props.group.isActive &&
             <div className="tap-content w-clearfix">
@@ -235,6 +269,10 @@ class GroupPage extends React.Component {
             </div>
           }
         </div>);
+      }
+      else if(this.state.currentTab == "report"){
+        tabContent = 
+        (<GroupReportPage/>);
       }
       return(
             <section className="section home fontreleway groupbg" >
@@ -275,9 +313,13 @@ class GroupPage extends React.Component {
                 onClick={this.toggleTabs.bind(this,"survey")}>
                   <div>View survey</div>
                 </a>
-                <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
+                <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
                   <div>Draw cards</div>
+                </a>
+                <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"report")}>
+                  <div>Report</div>
                 </a>
               </div>
               <div className="tabs w-tabs">

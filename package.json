@@ -12,6 +12,7 @@
     "history": "^4.7.2",
     "html-pdf": "^2.2.0",
     "jquery": "^3.2.1",
+    "meteor-node-stubs": "^0.4.1",
     "node-pre-gyp": "^0.6.33",
     "object-assign": "^4.1.1",
     "radium": "^0.22.0",

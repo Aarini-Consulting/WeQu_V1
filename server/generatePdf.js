@@ -2,8 +2,8 @@ import ReactDOMServer from 'react-dom/server';
 import pdf from 'html-pdf';
 import fs from 'fs';
 
-
-import {PDFTest} from '/imports/ui/pages/pdfTest';
+// import {PDFTest} from '/imports/ui/pages/pdfTest';
+import {ReportPdf} from '/imports/ui/pages/group/ReportPdf';
 
 
 let module;
@@ -20,8 +20,9 @@ const getBase64String = (path) => {
 const generatePDF = (html, fileName) => {
   try {
     pdf.create(html, {
-      format: 'letter',
-      border: { top: '0.6in', right: '0.6in', bottom: '0.6in', left: '0.6in' },
+      format: 'A4',
+      border: { top: '0', right: '0', bottom: '0', left: '0' },
+      base: Meteor.absoluteUrl(),
     }).toFile(`./tmp/${fileName}`, (error, response) => {
       if (error) {
         module.reject(error);
@@ -59,9 +60,19 @@ export const generateComponentAsPDF = (options) => {
 Meteor.methods({
     'download.pdf' : function (fileName) {
       var propTest = { _id: 'HLMxoJvg2esP8NobR', title: 'test', body: 'hello world' };
-        return generateComponentAsPDF({ component: PDFTest, props: {propTest}, fileName })
+        return generateComponentAsPDF({ component: ReportPdf, props: {propTest}, fileName })
     },
     'download.multiple.pdf' : function (groupId) {
+      var fileName1 = "user1.pdf"
+      var report1 = Meteor.call('download.pdf',fileName1);
+      console.log("r1");
+      console.log(report1)
+      var fileName2 = "user2.pdf"
+      var report2 = Meteor.call('download.pdf',fileName2);
+      console.log("r2");
+      console.log(report2)
+
+      return [report1, report2]
       // let groupCheck = Group.findOne({'_id': groupId});
 
       // if(!groupCheck){

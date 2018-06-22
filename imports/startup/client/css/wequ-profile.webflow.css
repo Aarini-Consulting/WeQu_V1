@@ -2934,7 +2934,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin-bottom: 30px;
   padding-top: 0px;
   border-radius: 500px;
-  background-color: #525252;
+  /* background-color: #525252; */
 }
 
 .chart-graph.active {
