@@ -21,8 +21,10 @@ const generatePDF = (html, fileName) => {
   try {
     pdf.create(html, {
       format: 'A4',
+      orientation: "portrait",
       border: { top: '0', right: '0', bottom: '0', left: '0' },
       base: Meteor.absoluteUrl(),
+      type: "pdf"
     }).toFile(`./tmp/${fileName}`, (error, response) => {
       if (error) {
         module.reject(error);
