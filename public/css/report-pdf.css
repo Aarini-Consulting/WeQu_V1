@@ -739,75 +739,13 @@
 
 .icon._1 {
   position: absolute;
-  left: -0.9em;
-  top: -0.9em;
-  width: 3.5em;
-  height: 3.5em;
-}
-
-.icon._1.motivator {
-  left: -1.6em;
-  top: -2em;
-  width: 4em;
-  height: 4em;
-  border: 0em none #fff;
-}
-
-.icon._2 {
-  position: absolute;
-  left: 2.7em;
-  top: -0.9em;
-  width: 4em;
-  height: 4em;
-  border-color: #fff;
-}
-
-.icon._2.listening {
-  left: 4.8em;
-  top: -2em;
-  border-style: none;
-  border-width: 0em;
-  background-image: url('/img/report/Outgoing.png');
-  background-position: 0px 0px;
-  background-size: cover;
-}
-
-.icon._3 {
-  position: absolute;
-  left: 6.5em;
-  top: -0.9em;
-  border-style: none;
-}
-
-.icon._3.generous {
-  left: 11em;
-  top: -2em;
-  width: 4em;
-  height: 4em;
-  background-image: url('/img/report/Generous.png');
-  background-position: 50% 50%;
-  background-size: cover;
-}
-
-.icon._4 {
-  position: absolute;
-  left: -0.9em;
-  top: 2.8em;
-}
-
-.icon._4.assertive {
   left: -1.6em;
   top: 4.5em;
   width: 4em;
   height: 4em;
-  border-style: none;
-  border-width: 0em;
-  background-image: url('/img/report/Assertive.png');
-  background-position: 0px 0px;
-  background-size: cover;
 }
 
-.icon._5 {
+.icon._2 {
   position: absolute;
   left: 4.5em;
   top: 4.2em;
@@ -815,44 +753,80 @@
   height: 5em;
   border-style: none;
   border-width: 0em;
-  background-image: url('/img/report/Doer.png');
-  background-position: 0px 0px;
-  background-size: cover;
 }
 
-.icon._6 {
+.icon._3 {
   position: absolute;
-  left: 6.5em;
-  top: 2.9em;
-}
-
-.icon._6.analytical {
   left: 11em;
   top: 4.5em;
   width: 4em;
   height: 4em;
-  border-style: none;
-  border-width: 0em;
-  background-image: url('/img/report/Analytical.png');
-  background-position: 0px 0px;
-  background-size: cover;
+}
+
+.icon._4 {
+  position: absolute;
+  left: -1.6em;
+  top: -2em;
+  width: 4em;
+  height: 4em;
+}
+
+.icon._5 {
+  position: absolute;
+  width: 4em;
+  height: 4em;
+  left: 4.8em;
+  top: -2em;
+}
+
+.icon._6 {
+  position: absolute;
+  left: 11em;
+  top: -2em;
+  width: 4em;
+  height: 4em;
 }
 
 .icon._7 {
   position: absolute;
-  left: 2.8em;
-  top: 2.5em;
   right: 9em;
   bottom: 0em;
-}
-
-.icon._7.motivator {
   left: 4.8em;
   top: 3.6em;
   width: 4em;
   height: 4em;
   border-style: none;
   border-width: 0em;
+}
+
+.badge-doer{
+  background-image: url('/img/report/Doer.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badage-analytical {
+  background-image: url('/img/report/Analytical.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-listening {
+  background-image: url('/img/report/Outgoing.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-generous {
+  background-image: url('/img/report/Generous.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-assertive {
+  background-image: url('/img/report/Assertive.png');
+  background-position: 0px 0px;
+  background-size: cover;
 }
 
 .diagram-position-bottom {

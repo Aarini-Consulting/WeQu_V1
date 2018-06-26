@@ -192,25 +192,51 @@ class GroupPage extends React.Component {
   }
 
   downloadPdf(){
-    Meteor.call('download.pdf',"myFirstPDF.pdf", (error, response) => {
+    // Meteor.call('download.pdf',"myFirstPDF.pdf", (error, response) => {
+    //   if (error) {
+    //     console.log(error);
+    //   } else {
+    //     var JSZip = require("jszip");
+    //     var zip = new JSZip();
+    //     zip.file(response.fileName,response.base64,{base64:true});
+
+    //     zip.generateAsync({type:"blob"})
+    //     .then((blob) => {
+    //       var link = document.createElement("a");
+    //       link.download = response.fileName;
+    //       link.href= window.URL.createObjectURL(blob);
+    //       document.body.appendChild(link);
+    //       link.click();
+    //       document.body.removeChild(link);
+    //     });
+    //   }
+    // });
+    console.log("calling");
+    console.log(this.props.group._id);
+    Meteor.call('download.report.group.pdf',this.props.group._id, (error, response) => {
       if (error) {
         console.log(error);
       } else {
-        var JSZip = require("jszip");
-        var zip = new JSZip();
-        zip.file(response.fileName,response.base64,{base64:true});
+        if(response.results && Array.isArray(response.results)){
+          var JSZip = require("jszip");
+          var zip = new JSZip();
+          response.results.forEach((res)=>{
+            zip.file(res.fileName,res.base64,{base64:true});
+          });
 
-        zip.generateAsync({type:"blob"})
-        .then((blob) => {
-          var link = document.createElement("a");
-          link.download = response.fileName;
-          link.href= window.URL.createObjectURL(blob);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
+          zip.generateAsync({type:"blob"})
+          .then((blob) => {
+            var link = document.createElement("a");
+            link.download = response.zipName;
+            link.href= window.URL.createObjectURL(blob);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+        }
       }
     });
+    
   }
 
   downloadPdfMulti(){

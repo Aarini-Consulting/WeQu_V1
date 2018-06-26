@@ -424,7 +424,7 @@ Meteor.methods({
         var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': userId});
         var rankOrder=[];
         var combinedRank={};
-        if(!cardPlacementCheck){
+        if(cardPlacementCheck){
             var feedbackRankFromSelf = FeedbackRank.findOne({
                 'from': userId,
                 'to': userId,

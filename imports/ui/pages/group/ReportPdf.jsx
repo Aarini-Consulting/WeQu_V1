@@ -1,7 +1,6 @@
 import React from 'react';
-import InlineCss from 'react-inline-css';
 
-export const ReportPdf = () => (
+export const ReportPdf = (propData) => (
     <html>
         <head>
             <link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
@@ -16,8 +15,11 @@ export const ReportPdf = () => (
         <div className="a4-wrapper">
             <div className="section _1-greeting">
             <h1 className="h1">Hey</h1>
-            <h1 className="h1 username">Niels!</h1>
-            <h3 className="h3 subtitle">You&#x27;ve just played WeQ with your <strong>ING Hollywood Team</strong>. This is your report prepared by <strong>Bart Bouwers</strong>, WeQ Master Coach.</h3>
+            <h1 className="h1 username">{propData.firstName}</h1>
+            <h3 className="h3 subtitle">
+            You&#x27;ve just played WeQ with your <strong>{propData.groupName}</strong>. 
+            This is your report prepared by <strong>{propData.groupCreatorFirstName}&nbsp;{propData.groupCreatorLastName}</strong>, WeQ Master Coach.
+            </h3>
             </div>
             <div className="section _2-content">
             <div className="div-howtoread">
@@ -49,15 +51,15 @@ export const ReportPdf = () => (
                 <div className="diagram-wrapper w-clearfix">
                     <div className="diagram">
                     <div className="diagram-position">
-                        <div className="icon _6 analytical"></div>
-                        <div className="icon _5"></div>
-                        <div className="icon _4 assertive"></div>
-                        <div className="icon _1 motivator"></div>
-                        <div className="icon _3 generous"></div>
-                        <div className="icon _2 listening"></div>
+                        <div className={`icon _3 badge-${ propData.cardPicked[2].subCategory }`}></div> 
+                        <div className={`icon _2 badge-${ propData.cardPicked[0].subCategory }`}></div> 
+                        <div className={`icon _1 badge-${ propData.cardPicked[1].subCategory }`}></div> 
+                        <div className={`icon _4 badge-${ propData.cardPicked[6].subCategory }`}></div>
+                        <div className={`icon _6 badge-${ propData.cardPicked[4].subCategory }`}></div>
+                        <div className={`icon _5 badge-${ propData.cardPicked[5].subCategory }`}></div>
                     </div>
                     <div className="diagram-position-bottom">
-                        <div className="icon _7 motivator"></div>
+                    <div className={`icon _7 badge-${ propData.cardPicked[3].subCategory }`}></div>
                     </div>
                     </div>
                 </div>
@@ -76,7 +78,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category leadership">Motivator (37)</strong>
+                        <strong className="q-category leadership">{propData.cardPicked[0].subCategory}&nbsp;({propData.cardPicked[0].cardId})</strong>
                     </div>
                     <div className="q-icon motivator"></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -84,7 +86,7 @@ export const ReportPdf = () => (
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[0].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active"></div>
                     </div>
@@ -92,7 +94,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category selfmanagement">Doer (16)</strong>
+                        <strong className="q-category selfmanagement">{propData.cardPicked[1].subCategory}&nbsp;({propData.cardPicked[1].cardId}</strong>
                     </div>
                     <div className="q-icon doer"></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -100,7 +102,7 @@ export const ReportPdf = () => (
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a self-management">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[1].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active self-management"></div>
                     </div>
@@ -108,14 +110,14 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category problem-solving">Analytics (82)</strong></div>
+                        <strong className="q-category problem-solving">{propData.cardPicked[2].subCategory}&nbsp;({propData.cardPicked[2].cardId}</strong></div>
                     <div className="q-icon analytics"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a problem-solving">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[2].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active problem-solving"></div>
                     </div>
@@ -123,14 +125,14 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category teamwork">Assertive (40)</strong></div>
+                        <strong className="q-category teamwork">{propData.cardPicked[3].subCategory}&nbsp;({propData.cardPicked[3].cardId}</strong></div>
                     <div className="q-icon assertive"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a teamworjk">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[3].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active teamwork"></div>
                     </div>
@@ -138,14 +140,14 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category communication">Listening (32)</strong></div>
+                        <strong className="q-category communication">{propData.cardPicked[4].subCategory}&nbsp;({propData.cardPicked[4].cardId}</strong></div>
                     <div className="q-icon listening"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a communication">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[4].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active communication"></div>
                     </div>
@@ -153,14 +155,14 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category virtue">Generous (1)</strong></div>
+                        <strong className="q-category virtue">{propData.cardPicked[5].subCategory}&nbsp;({propData.cardPicked[5].cardId}</strong></div>
                     <div className="q-icon generous"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a virtue">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[5].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active virtue"></div>
                     </div>
@@ -168,14 +170,14 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category">Motivator (16)</strong></div>
+                        <strong className="q-category">{propData.cardPicked[6].subCategory}&nbsp;({propData.cardPicked[6].cardId}</strong></div>
                     <div className="q-icon motivator"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
                         <div className="bar-line actual"></div>
                     </div>
                     <div className="bar-value a">
-                        <div className="value-actual">3,0</div>
+                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[6].value).toPrecision(2)}</div>
                     </div>
                     <div className="bar-active"></div>
                     </div>

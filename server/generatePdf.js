@@ -1,8 +1,9 @@
 import ReactDOMServer from 'react-dom/server';
+import { Meteor } from 'meteor/meteor';
+import { Promise } from 'meteor/promise';
 import pdf from 'html-pdf';
 import fs from 'fs';
 
-// import {PDFTest} from '/imports/ui/pages/pdfTest';
 import {ReportPdf} from '/imports/ui/pages/group/ReportPdf';
 
 
@@ -60,9 +61,91 @@ export const generateComponentAsPDF = (options) => {
 
 
 Meteor.methods({
-    'download.pdf' : function (fileName) {
-      var propTest = { _id: 'HLMxoJvg2esP8NobR', title: 'test', body: 'hello world' };
-        return generateComponentAsPDF({ component: ReportPdf, props: {propTest}, fileName })
+    'download.report.group.pdf':function(groupId){
+      let groupCheck = Group.findOne({'_id': groupId});
+      
+      if(!groupCheck){
+          throw (new Meteor.Error("unknown_group")); 
+      }
+
+      if(groupCheck && !groupCheck.isActive){
+        throw (new Meteor.Error("group_inactive")); 
+      }
+
+      if(groupCheck && !groupCheck.isFinished){
+        throw (new Meteor.Error("group_session_not_done")); 
+      }
+
+      var zipName = groupCheck.groupName + "_report.zip";
+
+      var users = Meteor.users.find({$or : [ 
+        {"emails.address" : {$in:groupCheck.emails}  }, 
+        { "profile.emailAddress" : {$in:groupCheck.emails}}
+      ]}).fetch();
+
+      var results = [];
+      users.forEach((user) => {
+        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
+        if(cardPlacementCheck){
+          var fileName = user._id+".pdf";
+          var result = Meteor.call('download.report.individual.pdf',fileName, groupCheck._id);
+          results.push(result);
+        }
+      });
+
+      return {zipName:zipName,results:results};
+        
+    },
+    'download.report.individual.pdf' : function (fileName, groupId) {
+      let groupCheck = Group.findOne({'_id': groupId});
+      
+      if(!groupCheck){
+          throw (new Meteor.Error("unknown_group")); 
+      }
+
+      if(groupCheck && !groupCheck.isActive){
+        throw (new Meteor.Error("group_inactive")); 
+      }
+
+      if(groupCheck && !groupCheck.isFinished){
+        throw (new Meteor.Error("group_session_not_done")); 
+      }
+
+      var creator = Meteor.users.findOne({_id:groupCheck.creatorId});
+      if(!creator){
+        throw (new Meteor.Error("group_creator_not_found")); 
+      }
+
+      var user = Meteor.users.findOne({$or : [ 
+        {"emails.address" : {$in:groupCheck.emails}  }, 
+        { "profile.emailAddress" : {$in:groupCheck.emails}}
+      ]});
+
+      if(!user){
+        throw (new Meteor.Error("user_not_found")); 
+      }
+
+      var cp = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
+
+      var cardPickedData = []
+
+      cp.cardPicked.forEach((card) => {
+        var data = cp.rankOrder.find(function(element) {
+          return (element.category == card.category && element.subCategory == card.subCategory);
+        });
+        cardPickedData.push(data);
+      })
+
+      var propData = { 
+        firstName: user.profile.firstName, 
+        lastName: user.profile.lastName,
+        groupName: groupCheck.groupName,
+        groupCreatorFirstName: creator.profile.firstName,
+        groupCreatorLastName: creator.profile.lastName,
+        cardPicked: cp.cardPicked,
+        cardPickedData: cardPickedData };
+
+      return Promise.await(generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName }));
     },
     'download.multiple.pdf' : function (groupId) {
       var fileName1 = "user1.pdf"
