@@ -76,11 +76,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category leadership">Motivator (37)</strong>
-                        </div>
-                        </div>
                     </div>
                     <div className="q-icon motivator"></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -96,11 +92,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category selfmanagement">Doer (16)</strong>
-                        </div>
-                        </div>
                     </div>
                     <div className="q-icon doer"></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -116,11 +108,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category problem-solving">Analytics (82)</strong></div>
-                        </div>
-                        </div>
                     <div className="q-icon analytics"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
@@ -135,11 +123,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category teamwork">Assertive (40)</strong></div>
-                        </div>
-                        </div>
                     <div className="q-icon assertive"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
@@ -154,11 +138,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category communication">Listening (32)</strong></div>
-                        </div>
-                        </div>
                     <div className="q-icon listening"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
@@ -173,11 +153,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category virtue">Generous (1)</strong></div>
-                        </div>
-                        </div>
                     <div className="q-icon generous"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
@@ -192,11 +168,7 @@ export const ReportPdf = () => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <div className="table-wrapper">
-			            <div className="table-center-vertical">
                         <strong className="q-category">Motivator (16)</strong></div>
-                        </div>
-                        </div>
                     <div className="q-icon motivator"></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual">
