@@ -7,7 +7,7 @@
 }
 
 .section._1-greeting {
-  height: 12%;
+  height: 15%;
   padding: 1.5em 5% 0.5em;
   background-color: #fff;
 }
@@ -143,32 +143,10 @@
 .bar-active {
   position: relative;
   z-index: 0;
-  width: 50%;
   height: 100%;
   float: left;
   clear: left;
   border-radius: 500px;
-  background-color: #413970;
-}
-
-.bar-active.self-management {
-  background-color: #8e59af;
-}
-
-.bar-active.problem-solving {
-  background-color: #4c9f5b;
-}
-
-.bar-active.teamwork {
-  background-color: #f66006;
-}
-
-.bar-active.communication {
-  background-color: #56c0e0;
-}
-
-.bar-active.virtue {
-  background-color: #f15177;
 }
 
 .bar-team {
@@ -207,7 +185,6 @@
 
 .bar-value {
   position: absolute;
-  left: 45%;
   top: -0.5em;
   right: 0%;
   bottom: 0em;
@@ -231,7 +208,6 @@
   align-items: center;
   border: 1px solid #f8e7dd;
   border-radius: 500px;
-  background-color: #413970;
   color: #f8e7dd;
   font-size: 0.95em;
   text-align: center;
@@ -242,26 +218,6 @@
   width: 3em;
   height: 3em;
   border-top-color: #fef6e5;
-}
-
-.bar-value.a.self-management {
-  background-color: #834fa6;
-}
-
-.bar-value.a.problem-solving {
-  background-color: #439451;
-}
-
-.bar-value.a.teamworjk {
-  background-color: #f66006;
-}
-
-.bar-value.a.communication {
-  background-color: #56c0e0;
-}
-
-.bar-value.a.virtue {
-  background-color: #f15177;
 }
 
 .quality-name {
@@ -526,76 +482,10 @@
   margin-top:0.35em;
 }
 
-.q-icon.motivator {
-  width: 3.3em;
-  height: 3.3em;
-  margin-right: 0em;
-  background-image: url('/img/report/Motivator.png');
-  background-position: 50% 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.q-icon.doer {
-  width: 4em;
-  background-image: url('/img/report/Doer.png');
-  background-position: 0px 0px;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.q-icon.analytics {
-  background-image: url('/img/report/Analytical.png');
-  background-position: 50% 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.q-icon.assertive {
-  background-image: url('/img/report/Assertive.png');
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.q-icon.listening {
-  background-image: url('/img/report/Listening.png');
-  background-position: 50% 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.q-icon.generous {
-  background-image: url('/img/report/Generous.png');
-  background-position: 50% 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
 .q-category {
   position: absolute;
   color: #413970;
   font-size: 1.2em;
-}
-
-.q-category.selfmanagement {
-  color: #8e59af;
-}
-
-.q-category.problem-solving {
-  color: #56a966;
-}
-
-.q-category.teamwork {
-  color: #f66006;
-}
-
-.q-category.communication {
-  color: #56c0e0;
-}
-
-.q-category.virtue {
-  color: #f15177;
 }
 
 .value-actual {
@@ -720,21 +610,11 @@
 }
 
 .icon {
-  width: 3.2em;
-  height: 3.2em;
-  border: 0.1em solid #fff;
-  border-radius: 100px;
-}
-
-.icon.motivator {
   position: absolute;
   left: -1em;
   top: -1em;
   width: 2.3em;
   height: 2.3em;
-  background-image: url('/img/report/Motivator.png');
-  background-position: 0px 0px;
-  background-size: cover;
 }
 
 .icon._1 {
@@ -799,36 +679,6 @@
   border-width: 0em;
 }
 
-.badge-doer{
-  background-image: url('/img/report/Doer.png');
-  background-position: 0px 0px;
-  background-size: cover;
-}
-
-.badage-analytical {
-  background-image: url('/img/report/Analytical.png');
-  background-position: 0px 0px;
-  background-size: cover;
-}
-
-.badge-listening {
-  background-image: url('/img/report/Outgoing.png');
-  background-position: 0px 0px;
-  background-size: cover;
-}
-
-.badge-generous {
-  background-image: url('/img/report/Generous.png');
-  background-position: 50% 50%;
-  background-size: cover;
-}
-
-.badge-assertive {
-  background-image: url('/img/report/Assertive.png');
-  background-position: 0px 0px;
-  background-size: cover;
-}
-
 .diagram-position-bottom {
   position: relative;
   width: 100%;
@@ -845,7 +695,7 @@
 
 .next-demo {
   position: absolute;
-  left: 29em;
+  left: 31em;
   top: 2.2em;
   right: -5em;
   bottom: 0em;
@@ -900,4 +750,197 @@
   margin-right: auto;
   margin-left: auto;
 }
+
+.badge-generous {
+  background-image: url('/img/report/Generous.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-honest {
+  background-image: url('/img/report/Honest.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-patient {
+  background-image: url('/img/report/Patient.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-respectful {
+  background-image: url('/img/report/Respectful.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-reflective {
+  background-image: url('/img/report/Reflective.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-resilient {
+  background-image: url('/img/report/Resilient.png');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.badge-doer{
+  background-image: url('/img/report/Doer.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-accepts_criticism{
+  background-image: url('/img/report/Accepts_criticism.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-listening {
+  background-image: url('/img/report/Listening.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-humour {
+  background-image: url('/img/report/Humour.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-story_telling {
+  background-image: url('/img/report/Story_telling.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-outgoing {
+  background-image: url('/img/report/Outgoing.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-assertive {
+  background-image: url('/img/report/Assertive.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-connector {
+  background-image: url('/img/report/Connector.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-manage_conflict {
+  background-image: url('/img/report/Manage_conflict.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-reliable {
+  background-image: url('/img/report/Reliable.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-mentoring {
+  background-image: url('/img/report/Mentoring.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-motivator {
+  background-image: url('/img/report/Motivator.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-visionary {
+  background-image: url('/img/report/Visionary.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-empathetic {
+  background-image: url('/img/report/Empathetic.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-conceptual_thinking {
+  background-image: url('/img/report/Conceptual_thinking.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-creative {
+  background-image: url('/img/report/Creative.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-inquisitive {
+  background-image: url('/img/report/Inquisitive.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.badge-analytical {
+  background-image: url('/img/report/Analytical.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.category-virtue {
+  background-color: #f15177;
+}
+
+.category-self_management {
+  background-color: #8e59af;
+}
+
+.category-communication {
+  background-color: #56c0e0;
+}
+
+.category-teamwork {
+  background-color: #f66006;
+}
+
+.category-leadership {
+  background-color: #413970;
+}
+
+.category-problem_solving {
+  background-color: #4c9f5b;
+}
+
+.text-category-virtue {
+  color: #f15177;
+}
+
+.text-category-self_management {
+  color: #8e59af;
+}
+
+.text-category-communication {
+  color: #56c0e0;
+}
+
+.text-category-teamwork {
+  color: #f66006;
+}
+
+.text-category-leadership {
+  color: #413970;
+}
+
+.text-category-problem_solving {
+  color: #4c9f5b;
+}
+
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ReportPdf = (propData) => (
+export const ReportPdf = ({propData}) => (
     <html>
         <head>
             <link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
@@ -40,8 +40,8 @@ export const ReportPdf = (propData) => (
                 <div className="bar-team">
                     <div className="bar-line"></div>
                 </div>
-                <div className="bar-value">3,0</div>
-                <div className="bar-active"></div>
+                <div className="bar-value category-leadership" style={{left:45 + "%"}}>3,0</div>
+                <div className="bar-active category-leadership" style={{width:50 + "%"}}></div>
                 </div>
             </div>
             <div className="div-current w-clearfix">
@@ -78,112 +78,119 @@ export const ReportPdf = (propData) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category leadership">{propData.cardPicked[0].subCategory}&nbsp;({propData.cardPicked[0].cardId})</strong>
+                        <strong className={`q-category text-category-${ propData.cardPicked[0].category }`}>{propData.cardPicked[0].subCategory}&nbsp;({propData.cardPicked[0].cardId})</strong>
                     </div>
-                    <div className="q-icon motivator"></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[0].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[0].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a">
+                    <div className={`bar-value a category-${ propData.cardPicked[0].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[0].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[0].category }`} style={{width:Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category selfmanagement">{propData.cardPicked[1].subCategory}&nbsp;({propData.cardPicked[1].cardId}</strong>
+                        <strong className={`q-category text-category-${ propData.cardPicked[1].category }`}>{propData.cardPicked[1].subCategory}&nbsp;({propData.cardPicked[1].cardId})</strong>
                     </div>
-                    <div className="q-icon doer"></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[1].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[1].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[1].maxValue-propData.cardPickedData[1].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a self-management">
+                    <div className={`bar-value a category-${ propData.cardPicked[1].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[1].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active self-management"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[1].category }`} style={{width:Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category problem-solving">{propData.cardPicked[2].subCategory}&nbsp;({propData.cardPicked[2].cardId}</strong></div>
-                    <div className="q-icon analytics"></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[2].category }`}>{propData.cardPicked[2].subCategory}&nbsp;({propData.cardPicked[2].cardId})</strong></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[2].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[2].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a problem-solving">
+                    <div className={`bar-value a category-${ propData.cardPicked[2].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[2].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active problem-solving"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[2].category }`} style={{width:Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category teamwork">{propData.cardPicked[3].subCategory}&nbsp;({propData.cardPicked[3].cardId}</strong></div>
-                    <div className="q-icon assertive"></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[3].category }`}>{propData.cardPicked[3].subCategory}&nbsp;({propData.cardPicked[3].cardId})</strong></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[3].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[3].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a teamworjk">
+                    <div className={`bar-value a category-${ propData.cardPicked[3].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[3].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active teamwork"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[3].category }`} style={{width:Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category communication">{propData.cardPicked[4].subCategory}&nbsp;({propData.cardPicked[4].cardId}</strong></div>
-                    <div className="q-icon listening"></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[4].category }`}>{propData.cardPicked[4].subCategory}&nbsp;({propData.cardPicked[4].cardId})</strong></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[4].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[4].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a communication">
+                    <div className={`bar-value a category-${ propData.cardPicked[4].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[4].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active communication"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[4].category }`} style={{width:Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category virtue">{propData.cardPicked[5].subCategory}&nbsp;({propData.cardPicked[5].cardId}</strong></div>
-                    <div className="q-icon generous"></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[5].category }`}>{propData.cardPicked[5].subCategory}&nbsp;({propData.cardPicked[5].cardId})</strong></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[5].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[6].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a virtue">
+                    <div className={`bar-value a category-${ propData.cardPicked[5].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[5].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active virtue"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[5].category }`} style={{width:Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className="q-category">{propData.cardPicked[6].subCategory}&nbsp;({propData.cardPicked[6].cardId}</strong></div>
-                    <div className="q-icon motivator"></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[6].category }`}>{propData.cardPicked[6].subCategory}&nbsp;({propData.cardPicked[6].cardId})</strong></div>
+                    <div className={`q-icon badge-${ propData.cardPicked[6].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual">
+                    <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[6].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6).toPrecision(3) + 10 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className="bar-value a">
+                    <div className={`bar-value a category-${ propData.cardPicked[6].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3)-5) -5 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[6].value).toPrecision(2)}</div>
                     </div>
-                    <div className="bar-active"></div>
+                    <div className={`bar-active category-${ propData.cardPicked[6].category }`} style={{width:Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3) -5 + "%"}}></div>
                     </div>
                     <div className="chart-arrow"></div>
                 </div>
-                </div>
+            </div>
             </div>
             <div className="section-3">
                 <div className="h3 next">Next Session #2</div>
