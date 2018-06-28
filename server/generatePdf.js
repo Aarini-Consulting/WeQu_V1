@@ -25,7 +25,7 @@ const generatePDF = (html, fileName) => {
       orientation: "portrait",
       border: { top: '0', right: '0', bottom: '0', left: '0' },
       base: Meteor.absoluteUrl(),
-      type: "pdf"
+      type: "pdf",
     }).toFile(`./tmp/${fileName}`, (error, response) => {
       if (error) {
         module.reject(error);
@@ -66,10 +66,6 @@ Meteor.methods({
       
       if(!groupCheck){
           throw (new Meteor.Error("unknown_group")); 
-      }
-
-      if(groupCheck && !groupCheck.isActive){
-        throw (new Meteor.Error("group_inactive")); 
       }
 
       if(groupCheck && !groupCheck.isFinished){

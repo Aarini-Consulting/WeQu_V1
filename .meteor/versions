@@ -38,6 +38,7 @@ ejson@1.0.13
 email@1.1.18
 fastclick@1.0.13
 fourseven:scss@3.13.0
+gadicohen:phantomjs@0.0.2
 geojson-utils@1.0.10
 github@1.1.9
 harrison:papa-parse@1.1.1
