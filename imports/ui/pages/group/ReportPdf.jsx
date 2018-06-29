@@ -78,7 +78,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[0].category }`}>{propData.cardPicked[0].subCategory}&nbsp;({propData.cardPicked[0].cardId})</strong>
+                        <strong className={`q-category text-category-${ propData.cardPicked[0].category }`}>{propData.cardPicked[0].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[0].cardId})</strong>
                     </div>
                     <div className={`q-icon badge-${ propData.cardPicked[0].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -95,7 +95,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[1].category }`}>{propData.cardPicked[1].subCategory}&nbsp;({propData.cardPicked[1].cardId})</strong>
+                        <strong className={`q-category text-category-${ propData.cardPicked[1].category }`}>{propData.cardPicked[1].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[1].cardId})</strong>
                     </div>
                     <div className={`q-icon badge-${ propData.cardPicked[1].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -112,7 +112,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[2].category }`}>{propData.cardPicked[2].subCategory}&nbsp;({propData.cardPicked[2].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[2].category }`}>{propData.cardPicked[2].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[2].cardId})</strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[2].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[2].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
@@ -128,7 +128,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[3].category }`}>{propData.cardPicked[3].subCategory}&nbsp;({propData.cardPicked[3].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[3].category }`}>{propData.cardPicked[3].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[3].cardId})</strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[3].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[3].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
@@ -144,7 +144,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[4].category }`}>{propData.cardPicked[4].subCategory}&nbsp;({propData.cardPicked[4].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[4].category }`}>{propData.cardPicked[4].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[4].cardId})</strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[4].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[4].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
@@ -160,7 +160,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[5].category }`}>{propData.cardPicked[5].subCategory}&nbsp;({propData.cardPicked[5].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[5].category }`}>{propData.cardPicked[5].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[5].cardId})</strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[5].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[6].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
@@ -176,7 +176,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[6].category }`}>{propData.cardPicked[6].subCategory}&nbsp;({propData.cardPicked[6].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[6].category }`}>{propData.cardPicked[6].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[6].cardId})</strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[6].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{left:((Number.parseFloat(propData.cardPickedData[6].minValue*100/6).toPrecision(3)) - Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/12).toPrecision(3) + 5) + "%",
