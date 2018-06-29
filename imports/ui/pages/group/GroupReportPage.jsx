@@ -110,7 +110,13 @@ class GroupReportPage extends React.Component {
                                 <div className="a4">
                                 {this.state.loadingPreview 
                                     ?
-                                    "loading preview"
+                                    <div className="fillHeight weq-bg white-bg-color">
+                                        <div className="w-block noselect">
+                                            <div className="font-rate padding-wrapper">
+                                                Please wait...
+                                            </div>
+                                        </div>
+                                    </div>
                                     :this.state.preview 
                                         ?<img src={this.state.preview} alt="preview" width="300" height="420"/>
                                         :"error loading preview"
@@ -118,7 +124,9 @@ class GroupReportPage extends React.Component {
                                 </div>
                                 {this.state.generatingPdf 
                                 ?
-                                    "loading"
+                                    <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
+                                    Please wait....
+                                    </div>
                                 :
                                     <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
                                     Download Individual Report
@@ -130,11 +138,13 @@ class GroupReportPage extends React.Component {
                                 <br/>
                                 {this.state.generatingPdf 
                                 ?
-                                    "loading"
+                                    <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
+                                    Please wait....
+                                    </div>
                                 :
-                                    <a className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
+                                    <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
                                     Download All Report
-                                    </a>
+                                    </div>
                                 }
                             </div>
                         }

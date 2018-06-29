@@ -3378,7 +3378,9 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background-image: linear-gradient(180deg, #695686, #695686);
   background-position: 0px 0px;
 }
-
+.white-bg-color{
+  background-color:#fff;
+}
 .weq-bg {
   background-image: url('/img/assets/Background_white20.png');
   background-position: 50% 50%;
