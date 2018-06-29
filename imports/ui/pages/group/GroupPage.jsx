@@ -191,85 +191,6 @@ class GroupPage extends React.Component {
     }
   }
 
-  downloadPdf(){
-    // Meteor.call('download.pdf',"myFirstPDF.pdf", (error, response) => {
-    //   if (error) {
-    //     console.log(error);
-    //   } else {
-    //     var JSZip = require("jszip");
-    //     var zip = new JSZip();
-    //     zip.file(response.fileName,response.base64,{base64:true});
-
-    //     zip.generateAsync({type:"blob"})
-    //     .then((blob) => {
-    //       var link = document.createElement("a");
-    //       link.download = response.fileName;
-    //       link.href= window.URL.createObjectURL(blob);
-    //       document.body.appendChild(link);
-    //       link.click();
-    //       document.body.removeChild(link);
-    //     });
-    //   }
-    // });
-    console.log("calling");
-    console.log(this.props.group._id);
-    Meteor.call('download.report.group.pdf',this.props.group._id, (error, response) => {
-      if (error) {
-        console.log(error);
-      } else {
-        if(response.results && Array.isArray(response.results)){
-          var JSZip = require("jszip");
-          var zip = new JSZip();
-          response.results.forEach((res)=>{
-            zip.file(res.fileName,res.base64,{base64:true});
-          });
-
-          zip.generateAsync({type:"blob"})
-          .then((blob) => {
-            var link = document.createElement("a");
-            link.download = response.zipName;
-            link.href= window.URL.createObjectURL(blob);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          });
-        }
-      }
-    });
-    
-  }
-
-  downloadPdfMulti(){
-    console.log(this.props.cardPlacements);
-    console.log(this.props.users);
-    // this.props.cardPlacements.forEach((cp)=>{
-
-    // })
-    // Meteor.call('download.multiple.pdf',"myFirstPDF.pdf", (error, response) => {
-    //   if (error) {
-    //     console.log(error);
-    //   } else {
-    //     console.log(response);
-    //     var JSZip = require("jszip");
-    //     var zip = new JSZip();
-
-    //     response.forEach(res => {
-    //       zip.file(res.fileName,res.base64,{base64:true});
-    //     });
-        
-    //     zip.generateAsync({type:"blob"})
-    //     .then((blob) => {
-    //       var link = document.createElement("a");
-    //       link.download = "myfirstZip.zip";
-    //       link.href= window.URL.createObjectURL(blob);
-    //       document.body.appendChild(link);
-    //       link.click();
-    //       document.body.removeChild(link);
-    //     });
-    //   }
-    // });
-  }
-
   render() {
     if(this.props.dataReady){
       var tabContent;
@@ -286,7 +207,6 @@ class GroupPage extends React.Component {
       else if(this.state.currentTab == "card"){
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
-          <button onClick={this.downloadPdf.bind(this)}>Get pdf</button>
           {this.renderUsers()}
           {!this.props.group.isActive &&
             <div className="tap-content w-clearfix">
@@ -298,7 +218,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "report"){
         tabContent = 
-        (<GroupReportPage/>);
+        (<GroupReportPage groupId={this.props.match.params.id}/>);
       }
       return(
             <section className="section home fontreleway groupbg" >

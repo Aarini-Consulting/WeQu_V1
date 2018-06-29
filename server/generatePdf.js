@@ -18,14 +18,14 @@ const getBase64String = (path) => {
   }
 };
 
-const generatePDF = (html, fileName) => {
+const generatePDF = (html, fileName, dataType) => {
   try {
     pdf.create(html, {
-      format: 'A4',
+      format: "A4",
       orientation: "portrait",
-      border: { top: '0', right: '0', bottom: '0', left: '0' },
+      border: { top: "0", right: "0", bottom: "0", left: "0" },
       base: Meteor.absoluteUrl(),
-      type: "pdf",
+      type: dataType,
     }).toFile(`./tmp/${fileName}`, (error, response) => {
       if (error) {
         module.reject(error);
@@ -47,10 +47,10 @@ const getComponentAsHTML = (component, props) => {
   }
 };
 
-const handler = ({ component, props, fileName }, promise) => {
+const handler = ({ component, props, fileName, dataType }, promise) => {
   module = promise;
   const html = getComponentAsHTML(component, props);
-  if (html && fileName) generatePDF(html, fileName);
+  if (html && fileName) generatePDF(html, fileName, dataType);
 };
 
 export const generateComponentAsPDF = (options) => {
@@ -83,8 +83,7 @@ Meteor.methods({
       users.forEach((user) => {
         var cardPlacementCheck = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
         if(cardPlacementCheck){
-          var fileName = groupCheck.groupName + "_" + user.profile.firstName + "_" + user.profile.lastName + "_" + user._id +".pdf";
-          var result = Meteor.call('download.report.individual.pdf',fileName, groupCheck._id, user._id);
+          var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id);
           results.push(result);
         }
       });
@@ -92,7 +91,12 @@ Meteor.methods({
       return {zipName:zipName,results:results};
         
     },
-    'download.report.individual.pdf' : function (fileName, groupId, userId) {
+    'download.report.individual.pdf' : function (groupId, userId, dataType="pdf") {
+
+      if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
+        throw (new Meteor.Error("invalid_data_type"));
+      }
+
       let groupCheck = Group.findOne({'_id': groupId});
       
       if(!groupCheck){
@@ -122,6 +126,8 @@ Meteor.methods({
       if(!user){
         throw (new Meteor.Error("user_not_found")); 
       }
+
+      var fileName = groupCheck.groupName + "_" + user.profile.firstName + "_" + user.profile.lastName + "_" + user._id +"."+dataType;
 
       var individualCardPlacement = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
 
@@ -185,7 +191,11 @@ Meteor.methods({
         cardPicked: sortedCard,
         cardPickedData: cardPickedData };
 
-      return Promise.await(generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName }));
+      return Promise.await(generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName, dataType }));
+    },
+
+    'generate.preview' : function (groupId, userId) {
+      return Meteor.call('download.report.individual.pdf', groupId, userId, "png");
     },
 });
 
