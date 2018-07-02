@@ -1,18 +1,16 @@
 module.exports = {
   servers: {
     one: {
-      host: '52.29.222.185',
+      host: '52.28.201.144',
       username: 'ubuntu',
-      pem: '/\opt/\app-test-source/\WeQu_V1/\WeQu.pem',
+      pem: '/\opt/\WeQu_V1/\WeQu.pem',
       // password:
       // or leave blank for authenticate from ssh-agent
     }
   },
   meteor: {
     name: 'app-test',
-    path: '/\opt/\app-test-source/\WeQu_V1',
-    name: 'wequ',
-    path: '/Users/aarini/Documents/GitHub/\WeQu_V1',
+    path: '/\opt/\WeQu_V1',
     servers: {
       one: {}
     },
@@ -22,7 +20,7 @@ module.exports = {
     env: {
       ROOT_URL: 'http://app.weq.io',
       MAIL_URL: 'smtp://postmaster@weq.io:Feedback12@smtp.office365.com:587',
-	  MONGO_URL: 'mongodb://WeQuAdmin:JZR63MSg4KenTW38@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017/wequ?ssl=true&replicaSet=WeQu-Feedback-App-shard-0&authSource=admin'
+      MONGO_URL:'mongodb://WeQuAdmin:JZR63MSg4KenTW38@preprod-shard-00-00-tdmtm.mongodb.net:27017,preprod-shard-00-01-tdmtm.mongodb.net:27017,preprod-shard-00-02-tdmtm.mongodb.net:27017/wequ?ssl=true&replicaSet=Preprod-shard-0&authSource=admin'
 	},
 
     dockerImage: 'abernix/meteord',
