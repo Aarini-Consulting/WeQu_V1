@@ -69,7 +69,9 @@ class GroupReportPage extends React.Component {
     }
     selectUser(uid){
         this.setState({ loadingPreview: true, selectedUser: uid, preview:undefined },()=>{
-            this.generatePreview();
+            if(this.state.selectedUser){
+                this.generatePreview();
+            }
         });
     }
     generatePreview(){
