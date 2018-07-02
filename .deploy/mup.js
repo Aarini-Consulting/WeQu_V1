@@ -3,14 +3,14 @@ module.exports = {
     one: {
       host: '52.28.201.144',
       username: 'ubuntu',
-      pem: 'C:/\Users/\yohandi/\WeQu_V1/\WeQu.pem',
+      pem: '/\opt/\app-test-source/\WeQu_V1/\WeQu.pem',
       // password:
       // or leave blank for authenticate from ssh-agent
     }
   },
   meteor: {
     name: 'app-test',
-    path: 'C:/\Users/\yohandi/\WeQu_V1',
+    path: '/\opt/\app-test-source/\WeQu_V1',
     servers: {
       one: {}
     },
