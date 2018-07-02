@@ -26,7 +26,7 @@ const generatePDF = (html, fileName, dataType) => {
       border: { top: "0", right: "0", bottom: "0", left: "0" },
       base: Meteor.absoluteUrl(),
       type: dataType,
-    }).toFile(`./tmp/${fileName}`, (error, response) => {
+    }).toFile(("./tmp/"+fileName), (error, response) => {
       if (error) {
         module.reject(error);
       } else {
