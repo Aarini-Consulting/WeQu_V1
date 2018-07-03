@@ -3,39 +3,57 @@ import { Meteor } from 'meteor/meteor';
 import { Promise } from 'meteor/promise';
 import pdf from 'html-pdf';
 import fs from 'fs';
-
+import puppeteer from 'puppeteer'
 import {ReportPdf} from '/imports/ui/pages/group/ReportPdf';
 
-
-let module;
 
 const getBase64String = (path) => {
   try {
     const file = fs.readFileSync(path);
     return new Buffer(file).toString('base64');
   } catch (exception) {
-    module.reject(exception);
+    console.log(exception);
   }
 };
 
-const generatePDF = (html, fileName, dataType) => {
+const generatePDF = async (html, fileName) => {
   try {
-    pdf.create(html, {
-      format: "A4",
-      orientation: "portrait",
-      border: { top: "0", right: "0", bottom: "0", left: "0" },
-      base: Meteor.absoluteUrl(),
-      type: dataType,
-    }).toFile(("./tmp/"+fileName), (error, response) => {
-      if (error) {
-        module.reject(error);
-      } else {
-        module.resolve({ fileName, base64: getBase64String(response.filename) });
-        fs.unlink(response.filename);
-      }
-    });
+    var path = ("./tmp/"+fileName);
+    const browser = await puppeteer.launch()
+    const page = await browser.newPage()
+    await page.setContent(html)
+    await page.emulateMedia('screen');
+    var pdfBuffer = await page.pdf({
+      format:"A4",
+      printBackground:true,
+    })
+    await browser.close();
+
+    return { fileName: fileName, base64: pdfBuffer.toString('base64') };
+
   } catch (exception) {
-    module.reject(exception);
+    console.log(exception);
+  }
+};
+
+const generatePreview = async (html, fileName, dataType) => {
+  try {
+    var path = ("./tmp/"+fileName);
+    const browser = await puppeteer.launch()
+    const page = await browser.newPage()
+    await page.setContent(html)
+    await page.emulateMedia('screen');
+    
+    var result = await page.screenshot({
+      type:dataType,
+      encoding:"base64"
+    })
+    await browser.close();
+
+    return { fileName: fileName, base64: result };
+
+  } catch (exception) {
+    console.log(exception);
   }
 };
 
@@ -43,20 +61,21 @@ const getComponentAsHTML = (component, props) => {
   try {
     return ReactDOMServer.renderToStaticMarkup(component(props));
   } catch (exception) {
-    module.reject(exception);
+    console.log(exception);
   }
 };
 
-const handler = ({ component, props, fileName, dataType }, promise) => {
-  module = promise;
+const generateComponentAsPDF = async ({ component, props, fileName, dataType }) => {
   const html = getComponentAsHTML(component, props);
-  if (html && fileName) generatePDF(html, fileName, dataType);
-};
-
-export const generateComponentAsPDF = (options) => {
-  return new Promise((resolve, reject) => {
-    return handler(options, { resolve, reject });
-  });
+  if (html && fileName){
+    if(dataType === "pdf"){
+      return await generatePDF(html, fileName);
+    }else if(dataType === "png" || dataType === "jpeg"){
+      return await generatePreview(html, fileName, dataType);
+    }else{
+      throw (new Meteor.Error("invalid_data_type"));
+    }
+  }
 };
 
 
@@ -91,7 +110,7 @@ Meteor.methods({
       return {zipName:zipName,results:results};
         
     },
-    'download.report.individual.pdf' : function (groupId, userId, dataType="pdf") {
+    'download.report.individual.pdf' : async function (groupId, userId, dataType="pdf") {
 
       if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
         throw (new Meteor.Error("invalid_data_type"));
@@ -191,7 +210,7 @@ Meteor.methods({
         cardPicked: sortedCard,
         cardPickedData: cardPickedData };
 
-      return Promise.await(generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName, dataType }));
+      return (await generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName, dataType }));
     },
 
     'generate.preview' : function (groupId, userId) {
