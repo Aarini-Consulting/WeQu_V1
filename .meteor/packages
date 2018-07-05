@@ -6,7 +6,6 @@
 
 pauli:accounts-linkedin
 reactive-var@1.0.11
-fourseven:scss
 email@1.2.3
 u2622:persistent-session
 accounts-password@1.5.0
@@ -60,3 +59,4 @@ mizzao:user-status
 github-config-ui@1.0.0
 dynamic-import@0.3.0
 promise@0.10.1
+fourseven:scss

@@ -3,21 +3,21 @@ module.exports = {
     one: {
       host: '52.28.201.144',
       username: 'ubuntu',
-      pem: '/\opt/\app-test-puppeteer/\WeQu_V1/\WeQu.pem',
+      pem: '/\home/\yw/\Desktop/\WeQu_V1/\WeQu.pem',
     }
   },
 
   // Formerly named 'meteor'. Configuration for deploying the app
   app: {
     name: 'app-test',
-    path: '/\opt/\app-test-puppeteer/\WeQu_V1',
+    path: '/\home/\yw/\Desktop/\WeQu_V1',
     // (optional, default is meteor) Plugins can provide additional types
     type: 'meteor',
     docker: {
       // Change the image to 'kadirahq/meteord' if you
       // are using Meteor 1.3 or older
       // user 'zodern/meteor:root' otherwise
-      image: 'alekzonder/puppeteer:latest',
+      image: 'aarinidev1/meteor-puppeteer',
 	  
       // (optional) It is set to true when using a docker image
       // that supports it. Builds a new docker image containing the

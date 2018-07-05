@@ -19,7 +19,7 @@ const getBase64String = (path) => {
 const generatePDF = async (html, fileName) => {
   try {
     var path = ("./tmp/"+fileName);
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage()
     await page.setContent(html)
     await page.emulateMedia('screen');
@@ -39,7 +39,7 @@ const generatePDF = async (html, fileName) => {
 const generatePreview = async (html, fileName, dataType) => {
   try {
     var path = ("./tmp/"+fileName);
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage()
     await page.setContent(html)
     await page.emulateMedia('screen');
