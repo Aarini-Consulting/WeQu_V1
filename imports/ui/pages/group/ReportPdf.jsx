@@ -3,6 +3,7 @@ import React from 'react';
 export const ReportPdf = ({propData}) => (
     <html>
         <head>
+            <meta charset="UTF-8"/>
             <link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
             <link rel="stylesheet" type="text/css" href="/css/webflow.css"/>
             <link rel="stylesheet" type="text/css" href="/css/report-pdf.css"/>

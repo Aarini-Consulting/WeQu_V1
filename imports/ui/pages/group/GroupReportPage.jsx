@@ -93,12 +93,12 @@ class GroupReportPage extends React.Component {
                 <div>
                     <div className="user-name">
                         <div className="menu-name w-inline-block">
-                        <div className="report-name" onClick={this.selectUser.bind(this,false)}>All</div>
+                        <div className={"report-name "+ (this.state.selectedUser === false ? "active":"")} onClick={this.selectUser.bind(this,false)}>All</div>
                         </div>
                         {this.props.users &&
                             this.props.users.map((user) =>
                             <div className="menu-name w-inline-block cursor-pointer" key={user._id} onClick={this.selectUser.bind(this,user._id)}>
-                            <div className="report-name">{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
+                            <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
                             </div>
                         )
                         }

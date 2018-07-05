@@ -3711,7 +3711,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   word-break: break-all;
 }
 
-.report-name:hover {
+.report-name:hover,.report-name.active {
   background-color: rgba(252, 116, 129, .5);
 }
 

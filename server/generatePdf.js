@@ -20,8 +20,17 @@ const generatePDF = async (html, fileName) => {
   try {
     var path = ("./tmp/"+fileName);
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-    const page = await browser.newPage()
-    await page.setContent(html)
+    const page = await browser.newPage();
+    
+    await page.setRequestInterception(true);
+    // Capture first request only
+    page.once('request', request => {
+      // Fulfill request with HTML, and continue all subsequent requests
+      request.respond({body: html});
+      page.on('request', request => request.continue());
+    });
+    await page.goto('http://app-test.wequ.co/');
+
     await page.emulateMedia('screen');
     var pdfBuffer = await page.pdf({
       format:"A4",
@@ -40,12 +49,22 @@ const generatePreview = async (html, fileName, dataType) => {
   try {
     var path = ("./tmp/"+fileName);
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-    const page = await browser.newPage()
-    await page.setContent(html)
+    const page = await browser.newPage();
+    
+    await page.setRequestInterception(true);
+    // Capture first request only
+    page.once('request', request => {
+      // Fulfill request with HTML, and continue all subsequent requests
+      request.respond({body: html});
+      page.on('request', request => request.continue());
+    });
+    await page.goto('http://app-test.wequ.co/');
+
     await page.emulateMedia('screen');
     
     var result = await page.screenshot({
       type:dataType,
+      fullPage:true,
       encoding:"base64"
     })
     await browser.close();
