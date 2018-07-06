@@ -486,7 +486,7 @@
   position: absolute;
   color: #413970;
   font-size: 1.2em;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .value-actual {
@@ -521,8 +521,8 @@
   display:inline-block;
   color: #f66006;
   font-size: 1em;
-  width:10.25%;
-  margin-right:4%;
+  width:1%;
+  margin-right:14.25%;
   text-align:center;
 }
 
@@ -890,5 +890,4 @@
 .text-category-problem_solving {
   color: #4c9f5b;
 }
-
 
