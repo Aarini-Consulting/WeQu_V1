@@ -518,69 +518,16 @@
 }
 
 .font-legend {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  height: 100%;
-  float: left;
+  display:inline-block;
   color: #f66006;
   font-size: 1em;
+  width:10.25%;
+  margin-right:4%;
+  text-align:center;
 }
 
-.font-legend._1 {
-  display: block;
-}
-
-.font-legend._2 {
-  position: absolute;
-  display: block;
-  width: 40%;
-  float: left;
-  text-align: center;
-}
-
-.font-legend._4 {
-  position: absolute;
-  top: 0px;
-  right: 0em;
-  bottom: 0px;
-  display: block;
-  width: 80%;
-  float: left;
-  clear: none;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.font-legend._6 {
-  float: right;
-}
-
-.font-legend._5 {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  width: 40%;
-  float: right;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  text-align: justify;
-}
-
-.font-legend._3 {
-  position: absolute;
-  display: block;
-  width: 80%;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
+.font-legend.last{
+  margin-right:0;
 }
 
 .diagram-wrapper {

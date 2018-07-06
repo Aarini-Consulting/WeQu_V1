@@ -18,9 +18,11 @@ const getBase64String = (path) => {
 
 const generatePDF = async (html, fileName) => {
   try {
-    var path = ("./tmp/"+fileName);
+    var home = Meteor.absoluteUrl();
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
+
+    await page.setCacheEnabled(false);
     
     await page.setRequestInterception(true);
     // Capture first request only
@@ -29,7 +31,7 @@ const generatePDF = async (html, fileName) => {
       request.respond({body: html});
       page.on('request', request => request.continue());
     });
-    await page.goto('http://app-test.wequ.co/');
+    await page.goto(home);
 
     await page.emulateMedia('screen');
     var pdfBuffer = await page.pdf({
@@ -47,9 +49,11 @@ const generatePDF = async (html, fileName) => {
 
 const generatePreview = async (html, fileName, dataType) => {
   try {
-    var path = ("./tmp/"+fileName);
+    var home = Meteor.absoluteUrl();
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
+
+    await page.setCacheEnabled(false);
     
     await page.setRequestInterception(true);
     // Capture first request only
@@ -58,7 +62,7 @@ const generatePreview = async (html, fileName, dataType) => {
       request.respond({body: html});
       page.on('request', request => request.continue());
     });
-    await page.goto('http://app-test.wequ.co/');
+    await page.goto(home);
 
     await page.emulateMedia('screen');
     
@@ -228,7 +232,6 @@ Meteor.methods({
         groupCreatorLastName: creator.profile.lastName,
         cardPicked: sortedCard,
         cardPickedData: cardPickedData };
-
       return (await generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName, dataType }));
     },
 
