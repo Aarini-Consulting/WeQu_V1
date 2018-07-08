@@ -10,6 +10,7 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+import GroupReportPage from './GroupReportPage';
 
 class GroupPage extends React.Component {
   constructor(props){
@@ -42,9 +43,16 @@ class GroupPage extends React.Component {
   }
 
   confirmStartGame(){
-    this.setState({
-      showConfirmStart: true,
-    });
+    if(this.props.group && this.props.group.emails && this.props.group.emails.length >= 5){
+      this.setState({
+        showConfirmStart: true,
+      });
+    }else{
+      this.setState({
+        showInfo: true,
+        showInfoMessage:"group need at least 5 members"
+      });
+    }
   }
 
   startGame(){
@@ -93,11 +101,19 @@ class GroupPage extends React.Component {
 
       var odd = (index % 2) > 0;
 
+      var name;
+
+      if(user.profile.firstName && user.profile.lastName){
+        name = user.profile.firstName + " " + user.profile.lastName;
+      }else{
+        name = email;
+      }
+
       return(
         <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
           <div className="tap-left card">
             <div className={"font-card-username "+(readySurvey ? "ready": "not-ready")}>
-              {user.profile.firstName + " " + user.profile.lastName}
+              {name}
             </div>
           </div>
           <div className="show-cards">
@@ -190,7 +206,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "card"){
         tabContent = 
-        (<div className="tap-content-wrapper">
+        (<div className="tap-content-wrapper" ref="printTarget">
           {this.renderUsers()}
           {!this.props.group.isActive &&
             <div className="tap-content w-clearfix">
@@ -200,8 +216,12 @@ class GroupPage extends React.Component {
           }
         </div>);
       }
+      else if(this.state.currentTab == "report"){
+        tabContent = 
+        (<GroupReportPage groupId={this.props.match.params.id}/>);
+      }
       return(
-            <section className="section home fontreleway groupbg">
+            <section className="section home fontreleway groupbg" >
               <Menu location={this.props.location} history={this.props.history}/>
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
@@ -239,9 +259,13 @@ class GroupPage extends React.Component {
                 onClick={this.toggleTabs.bind(this,"survey")}>
                   <div>View survey</div>
                 </a>
-                <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
+                <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
                   <div>Draw cards</div>
+                </a>
+                <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"report")}>
+                  <div>Report</div>
                 </a>
               </div>
               <div className="tabs w-tabs">

@@ -93,7 +93,7 @@ class InviteGroupPage extends React.Component {
           <div className="fillHeight">
             <Menu location={this.props.location} history={this.props.history}/>
             <section className="section summary fontreleway groupbg">
-                <div className="contactlist-wrapper">
+                <div className="contactlist-wrapper group-list">
                   {this.renderGroupList()}
                 </div>
 

@@ -42,8 +42,7 @@ class InviteGroup extends React.Component {
         nextProps.users.forEach(function(user) {
           var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
           if(emailsArray.indexOf(email) < 0){
-            copyStateData.push({firstName:user.profile.firstName, 
-              lastName:user.profile.lastName, email:email});
+            copyStateData.push({email:email});
           }
         });
         this.setState({
@@ -179,12 +178,10 @@ class InviteGroup extends React.Component {
 
   checkUnsavedForm(){
     if((this.state.inviteDatas.length - this.state.inviteDeleted.length) < 12){
-      var firstName = ReactDOM.findDOMNode(this.refs.firstName);
-      var lastName = ReactDOM.findDOMNode(this.refs.lastName);
       var email = ReactDOM.findDOMNode(this.refs.email);
-      if(firstName && lastName && email){
+      if(email){
         this.setState({
-          unsaved: (firstName.value || lastName.value || email.value),
+          unsaved: email.value,
         });
       }
     }else{
@@ -218,12 +215,6 @@ class InviteGroup extends React.Component {
           info: 'Please enter a group name',
         });
       }
-      else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 5){
-        this.setState({
-          inviteStatus: 'error',
-          info: 'A group needs at least 5 group members',
-        });
-      }
       else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) > 12){
         this.setState({
           inviteStatus: 'error',
@@ -252,12 +243,6 @@ class InviteGroup extends React.Component {
             
       }
     }
-
-    // setGender(g){
-    //   this.setState({
-    //     gender: g,
-    //   });
-    // }
 
     deleteAction(index, deleteIndex, resendIndex, newInvite){
       if(newInvite && deleteIndex < 0){
@@ -321,9 +306,6 @@ class InviteGroup extends React.Component {
     addField(){
       var copyStateData = this.state.inviteDatas.slice();
       var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
-
-      var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
-      var lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
       var email = ReactDOM.findDOMNode(this.refs.email).value.trim().toString().toLowerCase();
 
       if(email == this.props.currentUser.emails[0].address.toString().toLowerCase()){
@@ -338,8 +320,8 @@ class InviteGroup extends React.Component {
         });
       }else{
         var copyStateDataNew = this.state.newInviteDatas.slice();
-        copyStateDataNew.push({firstName:firstName, lastName:lastName, email:email});
-        copyStateData.push({firstName:firstName, lastName:lastName, email:email});
+        copyStateDataNew.push({email:email});
+        copyStateData.push({email:email});
         this.setState({
           info:undefined,
           inviteDatas: copyStateData,
@@ -347,8 +329,6 @@ class InviteGroup extends React.Component {
           modifiedByUser: true
         });
 
-        ReactDOM.findDOMNode(this.refs.firstName).value="";
-        ReactDOM.findDOMNode(this.refs.lastName).value="";
         ReactDOM.findDOMNode(this.refs.email).value="";
       }
     }
@@ -376,8 +356,6 @@ class InviteGroup extends React.Component {
           return (
             <li className="invite-group-line-wrapper" key={data.email}>
               <div className="font f_12">{index+1}</div>
-              <input type="text" className="formstyle formuser fistName" disabled={true} value={data.firstName}/>
-              <input type="text" className="formstyle formuser lastName " disabled={true} value={data.lastName}/>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
               {readySurvey 
               ? 
@@ -389,16 +367,6 @@ class InviteGroup extends React.Component {
                 survey incomplete
               </div>
               }
-              {/* {data.gender == "Male" &&
-              <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
-                Male
-              </div>
-              }
-              {data.gender == "Female" && 
-              <div className="invitebttn bttnmembr gender w-clearfix selected noselect">
-                Female
-              </div>
-              } */}
               {this.props.isEdit && !newInvite &&
                 <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
                   {resendIndex > -1 
@@ -494,8 +462,6 @@ class InviteGroup extends React.Component {
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12">></div>
-                      <input type="text" className="formstyle formuser fistName w-input" maxLength="256" ref="firstName" placeholder="First name"  required={true}/>
-                      <input type="text" className="formstyle formuser lastName w-input" maxLength="256" ref="lastName" placeholder="Last name" required={true}/>
                       <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
                       {/* <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
                         Male
@@ -506,7 +472,7 @@ class InviteGroup extends React.Component {
                          <input type="submit" id="submitAdd" defaultValue="+ Add this person" className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>
-                  :
+                  :!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12 center">Maximum amount of group member reached</div>

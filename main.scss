@@ -226,6 +226,8 @@ section {
   @include flex-wrap(nowrap);
   @include justify-content(center);
   @include align-items(center);
+
+  overflow: auto;
 }
 
 .person {

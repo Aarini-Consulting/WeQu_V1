@@ -17,7 +17,6 @@ Meteor.methods({
 		    // gender= data[i].gender;
 
 			email = arr_emails[i];
-			toName = data[i].name;
 
 			var checkUser = Meteor.users.findOne(
 				{
@@ -36,7 +35,7 @@ Meteor.methods({
 					trial: true,
 					firstName: data[i].firstName,
 					lastName: data[i].lastName,
-					profile : { emailAddress : email, name: toName, 
+					profile : { emailAddress : email, 
 						// gender: gender, 
 						// inviteGender: gender_result 
 					}
