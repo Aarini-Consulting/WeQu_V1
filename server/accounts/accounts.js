@@ -12,6 +12,7 @@ Meteor.methods({
 			verification = false;
 			userId = checkUser._id
 			data.userId = userId;
+			Accounts.setPassword(checkUser._id, data.registerPassword);
 			Meteor.call('updateProfileFromTrial', data);
 		}else{
 			userId = Accounts.createUser({
