@@ -50,7 +50,7 @@ class GroupPage extends React.Component {
     }else{
       this.setState({
         showInfo: true,
-        showInfoMessage:"group need at least 5 members"
+        showInfoMessage:"Each group in a WeQ session must have at least 5 players"
       });
     }
   }

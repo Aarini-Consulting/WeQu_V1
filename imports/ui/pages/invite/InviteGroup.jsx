@@ -18,6 +18,7 @@ class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
+        info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
         // gender:"Male",
@@ -220,11 +221,20 @@ class InviteGroup extends React.Component {
           inviteStatus: 'error',
           info: 'Maximum amount of members reached',
         });
-      }else{
+      }
+      else if(!(this.props.group && this.props.group.isActive) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 5){
+        this.setState({
+          inviteStatus: 'error',
+          info: 'Each group in a WeQ session must have at least 5 players',
+        });
+      }
+      else{
         this.checkUnsavedForm();
   
         this.setState({
           showConfirm: true,
+          inviteStatus: false,
+          info: undefined,
         });
       }
   }
@@ -244,12 +254,16 @@ class InviteGroup extends React.Component {
       }
     }
 
-    deleteAction(index, deleteIndex, resendIndex, newInvite){
-      if(newInvite && deleteIndex < 0){
+    deleteAction(index, deleteIndex, resendIndex, newInviteIndex){
+      if(newInviteIndex > -1 && deleteIndex < 0){
+        var copyStateDataNew = this.state.newInviteDatas.slice();
+        copyStateDataNew.splice(newInviteIndex,1);
         var copyStateData = this.state.inviteDatas.slice();
         copyStateData.splice(index,1);
+
         this.setState({
           inviteDatas: copyStateData,
+          newInviteDatas: copyStateDataNew,
           modifiedByUser: true
         });
       }else{
@@ -265,7 +279,7 @@ class InviteGroup extends React.Component {
       }
     }
 
-    resendAction(index, deleteIndex, resendIndex, newInvite){
+    resendAction(index, deleteIndex, resendIndex){
       if(deleteIndex < 0){
         this.markToggle(index, resendIndex, "inviteResend");
       }
@@ -336,7 +350,7 @@ class InviteGroup extends React.Component {
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
-          var newInvite = this.state.newInviteDatas.find((newInvites)=>{
+          var newInviteIndex = this.state.newInviteDatas.findIndex((newInvites)=>{
               return data.email == newInvites.email
           })
 
@@ -367,8 +381,8 @@ class InviteGroup extends React.Component {
                 survey incomplete
               </div>
               }
-              {this.props.isEdit && !newInvite &&
-                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+              {this.props.isEdit && newInviteIndex < 0 &&
+                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex)}>
                   {resendIndex > -1 
                     ?
                     <i className="fas fa-check fa-margin-right"></i>
@@ -378,7 +392,7 @@ class InviteGroup extends React.Component {
                   resend
                 </div>
               }
-              <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+              <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInviteIndex)}>
                 {deleteIndex > -1 
                     ?
                     <i className="fas fa-times fa-margin-right"></i>
@@ -403,8 +417,8 @@ class InviteGroup extends React.Component {
     if(this.props.dataReady){
       if(this.state.inviteSuccess){
         return (
-          <div className="fillHeight flex-start">
-          <section className="fontreleway groupbg fillHeight">
+          <div className="fillHeight">
+          <section className="fontreleway fillHeight">
             {this.props.isEdit 
             ?
             <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
