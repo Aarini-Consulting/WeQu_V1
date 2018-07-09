@@ -69,7 +69,7 @@ class GroupReportPage extends React.Component {
     }
     selectUser(uid){
         this.setState({ loadingPreview: true, selectedUser: uid, preview:undefined },()=>{
-            if(this.state.selectedUser){
+            if(this.state.selectedUser && this.props.group && this.props.group.isFinished){
                 this.generatePreview();
             }
         });
@@ -89,71 +89,86 @@ class GroupReportPage extends React.Component {
     }
     render() {
         if(this.props.dataReady){
-            return (
-                <div>
-                    <div className="user-name">
-                        <div className="menu-name w-inline-block">
-                        <div className={"report-name "+ (this.state.selectedUser === false ? "active":"")} onClick={this.selectUser.bind(this,false)}>All</div>
-                        </div>
-                        {this.props.users &&
-                            this.props.users.map((user) =>
-                            <div className="menu-name w-inline-block cursor-pointer" key={user._id} onClick={this.selectUser.bind(this,user._id)}>
-                            <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
+            if(this.props.group){
+                return (
+                    <div>
+                        <div className="user-name">
+                            <div className="menu-name w-inline-block">
+                            <div className={"report-name "+ (this.state.selectedUser === false ? "active":"")} onClick={this.selectUser.bind(this,false)}>All</div>
                             </div>
-                        )
-                        }
-                    </div>
-                    <div className="report-content">
-                        <div className="report-active">
-                        {this.state.selectedUser 
-                            ?
-                            <div className="container-2 w-container">
-                                <br/>
-                                <div className="a4">
-                                {this.state.loadingPreview 
-                                    ?
-                                    <div className="fillHeight weq-bg white-bg-color">
-                                        <div className="w-block noselect">
-                                            <div className="font-rate padding-wrapper">
-                                                Please wait...
-                                            </div>
-                                        </div>
-                                    </div>
-                                    :this.state.preview 
-                                        ?<img src={this.state.preview} alt="preview" width="300" height="420"/>
-                                        :"error loading preview"
-                                }
+                            {this.props.users &&
+                                this.props.users.map((user) =>
+                                <div className="menu-name w-inline-block cursor-pointer" key={user._id} onClick={this.selectUser.bind(this,user._id)}>
+                                <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
                                 </div>
-                                {this.state.generatingPdf 
+                            )
+                            }
+                        </div>
+                        <div className="report-content">
+                            <div className="report-active">
+                            {this.props.group.isFinished
                                 ?
-                                    <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
-                                    Please wait....
+                                    this.state.selectedUser 
+                                    ?
+                                    <div className="container-2 w-container">
+                                        <br/>
+                                        <div className="a4">
+                                        {this.state.loadingPreview 
+                                            ?
+                                            <div className="fillHeight weq-bg white-bg-color">
+                                                <div className="w-block noselect">
+                                                    <div className="font-rate padding-wrapper">
+                                                        Please wait...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            :this.state.preview 
+                                                ?<img src={this.state.preview} alt="preview" width="300" height="420"/>
+                                                :"error loading preview"
+                                        }
+                                        </div>
+                                        {this.state.generatingPdf 
+                                        ?
+                                            <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
+                                            Please wait....
+                                            </div>
+                                        :
+                                            <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
+                                            Download Individual Report
+                                            </div>
+                                        }
+                                    </div>
+                                    :
+                                    <div className="container-2 w-container">
+                                        <br/>
+                                        {this.state.generatingPdf 
+                                        ?
+                                            <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
+                                            Please wait....
+                                            </div>
+                                        :
+                                            <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
+                                            Download All Report
+                                            </div>
+                                        }
                                     </div>
                                 :
-                                    <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
-                                    Download Individual Report
-                                    </div>
-                                }
+                                <div className="container-2 w-container">
+                                    <br/>
+                                    <div className="emptytext group">Report functionalities will be available when game is finished</div>
+                                </div>
+                            }
                             </div>
-                            :
-                            <div className="container-2 w-container">
-                                <br/>
-                                {this.state.generatingPdf 
-                                ?
-                                    <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
-                                    Please wait....
-                                    </div>
-                                :
-                                    <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
-                                    Download All Report
-                                    </div>
-                                }
-                            </div>
-                        }
                         </div>
                     </div>
+                );
+            }
+            else{
+                <div className="fillHeight">
+                  <div className="emptytext group">group not found</div>
                 </div>
-            );
+            }
+            
         }else{
             return(
                 <div className="fillHeight">
