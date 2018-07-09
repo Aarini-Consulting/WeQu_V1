@@ -10,6 +10,7 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+import GroupReportPage from './GroupReportPage';
 
 class GroupPage extends React.Component {
   constructor(props){
@@ -215,6 +216,10 @@ class GroupPage extends React.Component {
           }
         </div>);
       }
+      else if(this.state.currentTab == "report"){
+        tabContent = 
+        (<GroupReportPage groupId={this.props.match.params.id}/>);
+      }
       return(
             <section className="section home fontreleway groupbg" >
               <Menu location={this.props.location} history={this.props.history}/>
@@ -254,9 +259,13 @@ class GroupPage extends React.Component {
                 onClick={this.toggleTabs.bind(this,"survey")}>
                   <div>View survey</div>
                 </a>
-                <a className={"tap card w-inline-block w-tab-link tap-last " + (this.state.currentTab == "card" && "w--current")}
+                <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
                   <div>Draw cards</div>
+                </a>
+                <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"report")}>
+                  <div>Report</div>
                 </a>
               </div>
               <div className="tabs w-tabs">

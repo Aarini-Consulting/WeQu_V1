@@ -31,7 +31,7 @@ export default class AdminLogin extends React.Component {
 
             <center> Welcome to the admin login page </center>
             <div className="row" id="form"> 
-                <div className="col-xs-4 col-md-6 col-sm-6">
+                <div className="col-xs-12 col-md-12 col-sm-12">
                     <section className="signIn">
                         <div className="panel panel-default">
                             <form id="signIn" onSubmit={this.handleSubmit.bind(this)}>
