@@ -11,6 +11,12 @@ Meteor.methods({
             throw (new Meteor.Error("only owner can modify group")); 
         }
 
+        var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+
+        if(!gmCheck){
+        throw (new Meteor.Error("only_gamemaster_can_create_group")); 
+        }
+
         var newEmailInGroup = emailsArray.filter((email)=>{
             return groupCheck.emails.indexOf(email) < 0
         })
