@@ -3479,7 +3479,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  min-height: 80px;
+  min-height: 2.5em;
   padding-right: 2%;
   padding-left: 2%;
   -webkit-box-orient: vertical;
@@ -3503,7 +3503,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width: 100%;
   height: 7px;
   background-color: #cecece;
-  margin-bottom:1.5em;
 }
 
 .actual-time {
@@ -3548,6 +3547,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-weight: 600;
   text-decoration: none;
   border-radius: 500px;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
   background-color: #e4b139;
   -webkit-transition: -webkit-transform 200ms ease;
   transition: -webkit-transform 200ms ease;
@@ -3564,7 +3565,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .font-rate.font-name-header.f-white{
   color: #fff;
   font-size: 1.5em;
-  margin-bottom: 1.5em;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
 }
 
 .loading-font{
@@ -3574,8 +3576,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .rate-content{
   display:block;
   width: 90%;
-  margin: 5px auto;
-  margin-bottom:2em;
+  margin: 6px auto;
 }
 
 .rate-box {
@@ -3647,7 +3648,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  min-height: 60px;
+  min-height: 2em;
   margin-left: 0px;
   padding-right:25px;
   float: left;
