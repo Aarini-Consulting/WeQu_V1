@@ -21,7 +21,6 @@ class InviteGroup extends React.Component {
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
-        // gender:"Male",
         groupName:"",
         inviteDatas:[],
         newInviteDatas:[],

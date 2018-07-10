@@ -167,6 +167,23 @@ Meteor.methods({
 
       if ( Roles.userIsInRole( userId, 'GameMaster' ) ) {
         Roles.removeUsersFromRoles( userId, 'GameMaster');
+        var groupsCreated =  Group.find({creatorId: userId}).count();
+        //delete all group(and its associated data) created by this user 
+        if(groupsCreated > 0){
+          Group.find({creatorId: userId}).forEach((gr)=>{
+            FeedbackRank.remove(
+                { "groupId": gr._id}
+              );
+            
+            CardPlacement.remove(
+                { "groupId": gr._id},
+              );
+          });
+  
+          Group.remove(
+            { "creatorId": userId},
+          );
+        }
       } else {
         var email = checkUser.emails[0].address;
         var subject = `Welcome to the WeQ Master Coach Community`;
