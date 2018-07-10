@@ -17,7 +17,7 @@ export const ReportPdf = ({propData}) => (
         <div className="a4-wrapper">
             <div className="section _1-greeting">
             <h1 className="h1">Hey</h1>
-            <h1 className="h1 username">{propData.firstName}</h1>
+            <h1 className="h1 username">{propData.firstName},</h1>
             <h3 className="h3 subtitle">
             You&#x27;ve just played WeQ with your <strong>{propData.groupName}</strong>. 
             This is your report prepared by <strong>{propData.groupCreatorFirstName}&nbsp;{propData.groupCreatorLastName}</strong>, WeQ Master Coach.
@@ -86,11 +86,11 @@ export const ReportPdf = ({propData}) => (
                     <div className={`q-icon badge-${ propData.cardPicked[0].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6)+((propData.cardPickedData[0].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6).toPrecision(3) + "%"}}>
+                    left:(-100+((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6)+((propData.cardPickedData[0].minValue)*200/6)) + "%",
+                    width:Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[0].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[0].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[0].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[0].category }`} style={{width:Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -105,10 +105,10 @@ export const ReportPdf = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[1].maxValue-propData.cardPickedData[1].minValue)*100/6)+((propData.cardPickedData[1].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[1].maxValue-propData.cardPickedData[1].minValue)*100/6).toPrecision(3) + "%"}}>
+                    width:Number.parseFloat((propData.cardPickedData[1].maxValue-propData.cardPickedData[1].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[1].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[1].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[1].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[1].category }`} style={{width:Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -122,10 +122,10 @@ export const ReportPdf = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6)+((propData.cardPickedData[2].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6).toPrecision(3) + "%"}}>
+                    width:Number.parseFloat((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[2].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[2].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[2].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[2].category }`} style={{width:Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -139,10 +139,10 @@ export const ReportPdf = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6)+((propData.cardPickedData[3].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6).toPrecision(3) + "%"}}>
+                    width:Number.parseFloat((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[3].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[3].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[3].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[3].category }`} style={{width:Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -156,10 +156,10 @@ export const ReportPdf = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6)+((propData.cardPickedData[4].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6).toPrecision(3) + "%"}}>
+                    width:Number.parseFloat((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[4].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[4].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[4].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[4].category }`} style={{width:Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -173,10 +173,10 @@ export const ReportPdf = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6)+((propData.cardPickedData[5].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6).toPrecision(3) + "%"}}>
+                    width:Number.parseFloat((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[5].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[5].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[5].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[5].category }`} style={{width:Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -190,10 +190,10 @@ export const ReportPdf = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6)+((propData.cardPickedData[6].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6).toPrecision(3) + "%"}}>
+                    width:Number.parseFloat((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[6].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3))-12 + "%"}}>
+                    <div className={`bar-value a category-${ propData.cardPicked[6].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3))-8 + "%"}}>
                         <div className="value-actual">{Number.parseFloat(propData.cardPickedData[6].value).toPrecision(2)}</div>
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[6].category }`} style={{width:Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3)  + "%"}}></div>
@@ -210,7 +210,7 @@ export const ReportPdf = ({propData}) => (
             </div>
             <div className="section _3-footer">
             <div className="weq-logo"></div>
-            <div className="footer">WeQ - Nothing beats a kick-ass tem  |  Copyright 2018 WeQ B.V. | www.WeQ.io</div>
+            <div className="footer">WeQ - Nothing beats a kick-ass team  |  Copyright 2018 WeQ B.V. | www.WeQ.io</div>
             </div>
         </div>
         </body>
