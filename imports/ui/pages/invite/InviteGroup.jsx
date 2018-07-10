@@ -387,7 +387,7 @@ class InviteGroup extends React.Component {
                 survey incomplete
               </div>
               }
-              {this.props.isEdit && newInviteIndex < 0 &&
+              {this.props.isEdit && newInviteIndex < 0 && !this.props.group.isFinished &&
                 <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex)}>
                   {resendIndex > -1 
                     ?
@@ -398,6 +398,7 @@ class InviteGroup extends React.Component {
                   resend
                 </div>
               }
+              {!this.props.group.isFinished &&
               <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInviteIndex)}>
                 {deleteIndex > -1 
                     ?
@@ -406,6 +407,7 @@ class InviteGroup extends React.Component {
                     <i className="fas fa-trash-alt fa-margin-right"></i>
                   }
               </div>
+              }
             </li>
           );
         });
