@@ -35,16 +35,23 @@ class InviteGroup extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.isEdit && nextProps.group){
-      if(nextProps.users){
+      if(nextProps.group){
         var copyStateData = this.state.inviteDatas.slice();
-        var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
+        
+        if(!(nextProps.group.isActive || nextProps.group.isFinished)){
+          var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
-        nextProps.users.forEach(function(user) {
-          var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
-          if(emailsArray.indexOf(email) < 0){
+          nextProps.group.emails.forEach(function(email) {
+            if(emailsArray.indexOf(email) < 0){
+              copyStateData.push({email:email});
+            }
+          });
+        }else{
+          copyStateData = [];
+          nextProps.group.emails.forEach(function(email) {
             copyStateData.push({email:email});
-          }
-        });
+          });
+        }
         this.setState({
           info:undefined,
           groupName: nextProps.group.groupName,
@@ -578,26 +585,12 @@ export default withTracker((props) => {
 
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
-    if(props.isEdit && props.group){
-      var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {
-        onError: function (error) {
-                console.log(error);
-            }
-      });
-
-      if(handleUsers.ready()){
-        users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]},{ sort: { "profile.emailAddress": 1 }}).fetch();
-        dataReady = true;
-      }
-    }else{
-      dataReady = true;
-    }
+    dataReady = true;
     
   }
   return {
       count:count,
       currentUser: Meteor.user(),
-      users:users,
       dataReady:dataReady
   };
 })(InviteGroup);
