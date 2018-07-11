@@ -377,17 +377,18 @@ class InviteGroup extends React.Component {
             <li className="invite-group-line-wrapper" key={data.email}>
               <div className="font f_12">{index+1}</div>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
-              {readySurvey 
+              {this.props.group && readySurvey 
               ? 
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
                 survey completed
               </div>
-              :
-              <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
-                survey incomplete
-              </div>
+              :this.props.group 
+                &&
+                <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
+                  survey incomplete
+                </div>
               }
-              {this.props.isEdit && newInviteIndex < 0 && !this.props.group.isFinished &&
+              {this.props.isEdit && newInviteIndex < 0 && !(this.props.group && this.props.group.isFinished) &&
                 <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex)}>
                   {resendIndex > -1 
                     ?
@@ -398,7 +399,7 @@ class InviteGroup extends React.Component {
                   resend
                 </div>
               }
-              {!this.props.group.isFinished &&
+              {!(this.props.group && this.props.group.isFinished) &&
               <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInviteIndex)}>
                 {deleteIndex > -1 
                     ?
