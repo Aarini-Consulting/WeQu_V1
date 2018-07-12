@@ -18,9 +18,9 @@ class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
+        info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
-        // gender:"Male",
         groupName:"",
         inviteDatas:[],
         newInviteDatas:[],
@@ -35,16 +35,23 @@ class InviteGroup extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.isEdit && nextProps.group){
-      if(nextProps.users){
+      if(nextProps.group){
         var copyStateData = this.state.inviteDatas.slice();
-        var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
+        
+        if(!(nextProps.group.isActive || nextProps.group.isFinished)){
+          var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
 
-        nextProps.users.forEach(function(user) {
-          var email = (user.emails && user.emails[0].address) || user.profile.emailAddress;
-          if(emailsArray.indexOf(email) < 0){
+          nextProps.group.emails.forEach(function(email) {
+            if(emailsArray.indexOf(email) < 0){
+              copyStateData.push({email:email});
+            }
+          });
+        }else{
+          copyStateData = [];
+          nextProps.group.emails.forEach(function(email) {
             copyStateData.push({email:email});
-          }
-        });
+          });
+        }
         this.setState({
           info:undefined,
           groupName: nextProps.group.groupName,
@@ -220,11 +227,20 @@ class InviteGroup extends React.Component {
           inviteStatus: 'error',
           info: 'Maximum amount of members reached',
         });
-      }else{
+      }
+      else if(!(this.props.group && this.props.group.isActive) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 5){
+        this.setState({
+          inviteStatus: 'error',
+          info: 'Each group in a WeQ session must have at least 5 players',
+        });
+      }
+      else{
         this.checkUnsavedForm();
   
         this.setState({
           showConfirm: true,
+          inviteStatus: false,
+          info: undefined,
         });
       }
   }
@@ -244,12 +260,16 @@ class InviteGroup extends React.Component {
       }
     }
 
-    deleteAction(index, deleteIndex, resendIndex, newInvite){
-      if(newInvite && deleteIndex < 0){
+    deleteAction(index, deleteIndex, resendIndex, newInviteIndex){
+      if(newInviteIndex > -1 && deleteIndex < 0){
+        var copyStateDataNew = this.state.newInviteDatas.slice();
+        copyStateDataNew.splice(newInviteIndex,1);
         var copyStateData = this.state.inviteDatas.slice();
         copyStateData.splice(index,1);
+
         this.setState({
           inviteDatas: copyStateData,
+          newInviteDatas: copyStateDataNew,
           modifiedByUser: true
         });
       }else{
@@ -265,7 +285,7 @@ class InviteGroup extends React.Component {
       }
     }
 
-    resendAction(index, deleteIndex, resendIndex, newInvite){
+    resendAction(index, deleteIndex, resendIndex){
       if(deleteIndex < 0){
         this.markToggle(index, resendIndex, "inviteResend");
       }
@@ -336,7 +356,7 @@ class InviteGroup extends React.Component {
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
-          var newInvite = this.state.newInviteDatas.find((newInvites)=>{
+          var newInviteIndex = this.state.newInviteDatas.findIndex((newInvites)=>{
               return data.email == newInvites.email
           })
 
@@ -357,18 +377,19 @@ class InviteGroup extends React.Component {
             <li className="invite-group-line-wrapper" key={data.email}>
               <div className="font f_12">{index+1}</div>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
-              {readySurvey 
+              {this.props.group && readySurvey 
               ? 
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
                 survey completed
               </div>
-              :
-              <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
-                survey incomplete
-              </div>
+              :this.props.group 
+                &&
+                <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
+                  survey incomplete
+                </div>
               }
-              {this.props.isEdit && !newInvite &&
-                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+              {this.props.isEdit && newInviteIndex < 0 && !(this.props.group && this.props.group.isFinished) &&
+                <div className={"invitebttn bttnmembr action w-button "+ (resendIndex > -1 ? "active":"")} onClick ={this.resendAction.bind(this,index,deleteIndex,resendIndex)}>
                   {resendIndex > -1 
                     ?
                     <i className="fas fa-check fa-margin-right"></i>
@@ -378,7 +399,8 @@ class InviteGroup extends React.Component {
                   resend
                 </div>
               }
-              <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInvite)}>
+              {!(this.props.group && this.props.group.isFinished) &&
+              <div className="invitebttn bttnmembr action delete w-button"  onClick ={this.deleteAction.bind(this,index,deleteIndex,resendIndex,newInviteIndex)}>
                 {deleteIndex > -1 
                     ?
                     <i className="fas fa-times fa-margin-right"></i>
@@ -386,6 +408,7 @@ class InviteGroup extends React.Component {
                     <i className="fas fa-trash-alt fa-margin-right"></i>
                   }
               </div>
+              }
             </li>
           );
         });
@@ -403,8 +426,8 @@ class InviteGroup extends React.Component {
     if(this.props.dataReady){
       if(this.state.inviteSuccess){
         return (
-          <div className="fillHeight flex-start">
-          <section className="fontreleway groupbg fillHeight">
+          <div className="fillHeight">
+          <section className="fontreleway fillHeight">
             {this.props.isEdit 
             ?
             <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
@@ -565,26 +588,12 @@ export default withTracker((props) => {
 
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
-    if(props.isEdit && props.group){
-      var handleUsers = Meteor.subscribe('users',{$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]}, {
-        onError: function (error) {
-                console.log(error);
-            }
-      });
-
-      if(handleUsers.ready()){
-        users = Meteor.users.find({$or : [ {"emails.address" : {$in:props.group.emails}  }, { "profile.emailAddress" : {$in:props.group.emails}}]},{ sort: { "profile.emailAddress": 1 }}).fetch();
-        dataReady = true;
-      }
-    }else{
-      dataReady = true;
-    }
+    dataReady = true;
     
   }
   return {
       count:count,
       currentUser: Meteor.user(),
-      users:users,
       dataReady:dataReady
   };
 })(InviteGroup);

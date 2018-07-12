@@ -15,6 +15,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { Meteor } from 'meteor/meteor';
 
 import CheckLoginVerified from './CheckLoginVerified';
+import AdminOnly from './AdminOnly';
 
 import Home from '/imports/ui/pages/Home';
 import QuizRankPage from '/imports/ui/pages/quizRank/QuizRankPage';
@@ -26,17 +27,12 @@ import EditEntry from '/imports/ui/pages/settings/EditEntry';
 import NotFound from '/imports/ui/pages/NotFound';
 import NotAuthorized from '/imports/ui/pages/NotAuthorized';
 
-// import Test from '/imports/ui/pages/test';
-
 import Login from '/imports/ui/pages/accounts/Login';
 import RecoverPassword from '/imports/ui/pages/accounts/RecoverPassword';
 import SignUp from '/imports/ui/pages/accounts/SignUp';
 import VerifyEmail from '/imports/ui/pages/accounts/VerifyEmail';
 import VerifyUpdateEmail from '/imports/ui/pages/accounts/VerifyUpdateEmail';
 import ResetPassword from '/imports/ui/pages/accounts/ResetPassword';
-
-import Terms from '/imports/ui/pages/legal/Terms';
-import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
 
 import AdminUser from '/imports/ui/pages/AdminUser';
 
@@ -83,23 +79,6 @@ const CheckNotLoggedIn = class CheckNotLoggedIn extends React.Component {
     }else{
       return (
         this.props.childComponent
-      );
-    }
-  }
-}
-
-const AdminOnly = class AdminOnly extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    if(Meteor.userId() && Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
-      return (
-        this.props.childComponent
-      );
-    }else{
-      return(
-        <Redirect to="/404"/>
       );
     }
   }

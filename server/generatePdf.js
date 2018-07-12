@@ -220,7 +220,7 @@ Meteor.methods({
             minValue:minValue, 
             maxValue:maxValue};
         }
-
+        
         cardPickedData.push(cardData);
       })
 

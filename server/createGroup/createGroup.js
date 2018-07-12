@@ -1,6 +1,20 @@
 Meteor.methods({
   'createGroup' : function (groupName,data,arr_emails) {
     var now = new Date();
+
+    var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+
+    if(!gmCheck){
+      throw (new Meteor.Error("only_gamemaster_can_create_group")); 
+    }
+
+    if(!Array.isArray(arr_emails)){
+      throw (new Meteor.Error("invalid_parameter_emails_not_array"));
+    }
+
+    if(Array.isArray(arr_emails) && arr_emails.length < 5){
+      throw (new Meteor.Error("need_at_least_5_players"));
+    }
     
     let groupId = Group.insert({groupName: groupName,  emails:arr_emails , creatorId: Meteor.userId(),isActive:false, isFinished:false});
 

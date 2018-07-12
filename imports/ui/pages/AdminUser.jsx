@@ -23,17 +23,25 @@ class AdminUser extends React.Component {
     }
 
     handleCheckGameMaster(user, event) {
-        // const target = event.target;
-        // const value = target.type === 'checkbox' ? target.checked : target.value;
-        // const name = target.name;
-        // console.log(event);
-
-        Meteor.call('addRoleGameMaster', user._id , function (err, result) {
-            if(err){
-                console.log(err)
+        var callFunction = false;
+        if(Roles.userIsInRole(user._id,'GameMaster')){
+            if (confirm("Are you sure? Removing gamemaster status will permanently delete all group (and its associated data) created by "+user.profile.firstName+" "+user.profile.lastName)) {
+                callFunction = true;
+            } else {
+                callFunction = false
             }
-        });
-      }
+        }else{
+            callFunction = true;
+        }
+        
+        if(callFunction){
+            Meteor.call('addRoleGameMaster', user._id , function (err, result) {
+                if(err){
+                    console.log(err)
+                }
+            });
+        }
+    }
 
     renderEmailsVerified(user){
         if(user.emails && user.emails[0].verified){
