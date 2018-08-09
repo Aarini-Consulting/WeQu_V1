@@ -339,7 +339,7 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(groupCheck && groupCheck.emails && groupCheck.emails.length < 5){
+        if(groupCheck && groupCheck.emails && groupCheck.emails.length < 2){
             throw (new Meteor.Error("not_enough_group_member")); 
         }
 

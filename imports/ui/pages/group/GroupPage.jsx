@@ -43,14 +43,14 @@ class GroupPage extends React.Component {
   }
 
   confirmStartGame(){
-    if(this.props.group && this.props.group.emails && this.props.group.emails.length >= 5){
+    if(this.props.group && this.props.group.emails && this.props.group.emails.length >= 2){
       this.setState({
         showConfirmStart: true,
       });
     }else{
       this.setState({
         showInfo: true,
-        showInfoMessage:"Each group in a WeQ session must have at least 5 players"
+        showInfoMessage:"Each group in a WeQ session must have at least 2 players"
       });
     }
   }
