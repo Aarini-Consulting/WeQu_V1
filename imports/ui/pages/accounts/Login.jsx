@@ -57,7 +57,7 @@ class Login extends React.Component {
                                     
                                     <input className="emailfield w-input" maxLength="256" ref="loginPassword" placeholder="password" required type="password"/>
                                     <Link to="/recover-password" className="linktext">Forgotten password?</Link>
-                                    <input className="submit-button w-button" data-wait="Please wait..." type="submit" defaultValue="Log In With Email"/>
+                                    <input className="submit-button w-button" data-wait="Please wait..." type="submit" defaultValue="Log In"/>
                                 </form>
                                 <div id="error" className="errormsg"></div>
                                 </div>

@@ -145,7 +145,6 @@ button, .button {
 }
 
 input {
-  width: 100%;
   padding: 5px 0;
   margin: $h5 0;
 
@@ -157,6 +156,14 @@ input {
   border: none;
   border-bottom: 2px solid white;
   border-radius: 0px;
+}
+
+input[type="checkbox"]{
+  vertical-align: baseline;
+}
+
+input[type="checkbox"].signup-consent{
+  vertical-align: bottom
 }
 
 .avatar {
@@ -219,6 +226,8 @@ section {
   @include flex-wrap(nowrap);
   @include justify-content(center);
   @include align-items(center);
+
+  overflow: auto;
 }
 
 .person {

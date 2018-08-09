@@ -62,14 +62,18 @@ class EmailUpdateVerify extends React.Component {
 
     if(this.state.verifying){
       return (
-          <section className="gradient1 whiteText alignCenter feed">
+          <section className="fillHeight weq-bg">
+          <br/> <br/>
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
-              <p className="alert alert-warning">Verifying email....
-              </p>
+              <div className="alert alert-warning">
+              Verifying email....
+              </div>
             </div>
-            </div>
-          </section>
+            <div id="error"></div>
+            <div id="info"></div>
+          </div>
+        </section>
       )
     }
 

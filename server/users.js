@@ -92,7 +92,7 @@ Meteor.methods({
   'user.update.name'(firstName, lastName) {
     Meteor.users.update(Meteor.userId(), { 
       '$set': {
-          'profile.name': firstName,
+          // 'profile.name': firstName,
           'profile.firstName': firstName,
           'profile.lastName': lastName,
           } 
@@ -114,7 +114,8 @@ Meteor.methods({
       Group.find(
         {$or : [
             { "emails": oldMail},
-            { "emailsSurveyed": oldMail}
+            { "emailsSurveyed": oldMail},
+            { "emailsSelfRankCompleted": oldMail}
           ] 
         }
       ).forEach(function(gr){
@@ -134,6 +135,15 @@ Meteor.methods({
 
           if(check > -1){
             gr.emailsSurveyed[check] = email;
+            doUpdate = true;
+          }
+        }
+
+        if(gr.emailsSelfRankCompleted){
+          var check = gr.emailsSelfRankCompleted.indexOf(oldMail);
+
+          if(check > -1){
+            gr.emailsSelfRankCompleted[check] = email;
             doUpdate = true;
           }
         }
@@ -182,6 +192,19 @@ Meteor.methods({
         });
     }
   },
+  'user.set.self.rank'(id, groupId) {
+    let groupCheck = Group.findOne({_id:groupId});
+    let userCheck = Meteor.users.findOne(id);
+
+    var emailsSurveyed = groupCheck.emailsSurveyed;
+    if(!emailsSurveyed || (emailsSurveyed && emailsSurveyed.indexOf(userCheck.emails[0].address) == -1)){
+      Meteor.users.update(id, { 
+        '$set': {
+            'profile.selfRank': groupId,
+            } 
+        });
+    }
+  },
   'user.update.gender'(gender) {
     Meteor.users.update(Meteor.userId(), { 
       '$set': {
@@ -201,7 +224,8 @@ Meteor.methods({
       Group.find(
         {$or : [
             { "emails": userMail},
-            { "emailsSurveyed": userMail}
+            { "emailsSurveyed": userMail},
+            { "emailsSelfRankCompleted": userMail}
           ] 
         }
       ).forEach(function(gr){
@@ -225,10 +249,20 @@ Meteor.methods({
           }
         }
 
+        if(gr.emailsSelfRankCompleted){
+          var check = gr.emailsSelfRankCompleted.indexOf(userMail);
+
+          if(check > -1){
+            gr.emailsSelfRankCompleted.splice(check, 1);
+            doUpdate = true;
+          }
+        }
+
         if(doUpdate){
-          Group.update({_id:gr._id},
-            {$set: gr},
-            {});
+          Group.update(
+            {_id:gr._id},
+            {$set: gr}
+          );
         }
       });
 
@@ -237,16 +271,27 @@ Meteor.methods({
           { "userId": currentUser._id},
           { "email": userMail}
           ] 
-        },
-        {});
+        });
 
       Feedback.remove(
         {$or : [
           { "from": currentUser._id},
           { "to": currentUser._id}
           ] 
-        },
-        {});
+        });
+
+      FeedbackRank.remove(
+        {$or : [
+          { "from": currentUser._id},
+          { "to": currentUser._id}
+          ] 
+        });
+      
+      CardPlacement.remove(
+        {$or : [
+          { "userId": currentUser._id},
+          ] 
+        });
 
       Meteor.users.remove({_id:Meteor.userId()});
     }else{

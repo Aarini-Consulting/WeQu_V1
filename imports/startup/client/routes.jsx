@@ -15,21 +15,17 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { Meteor } from 'meteor/meteor';
 
 import CheckLoginVerified from './CheckLoginVerified';
+import AdminOnly from './AdminOnly';
 
-import ScriptLogin from '/imports/ui/pages/ScriptLogin';
-import QuizPage from '/imports/ui/pages/quiz/QuizPage';
-import ProfilePage from '/imports/ui/pages/profile/ProfilePage';
-import InvitePage from '/imports/ui/pages/invite/InvitePage';
+import Home from '/imports/ui/pages/Home';
+import QuizRankPage from '/imports/ui/pages/quizRank/QuizRankPage';
 import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
-import InviteLanding from '/imports/ui/pages/invitationLanding/InviteLanding';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
 import Settings from '/imports/ui/pages/settings/Settings';
 import EditEntry from '/imports/ui/pages/settings/EditEntry';
 import NotFound from '/imports/ui/pages/NotFound';
 import NotAuthorized from '/imports/ui/pages/NotAuthorized';
-
-// import Test from '/imports/ui/pages/test';
 
 import Login from '/imports/ui/pages/accounts/Login';
 import RecoverPassword from '/imports/ui/pages/accounts/RecoverPassword';
@@ -38,16 +34,12 @@ import VerifyEmail from '/imports/ui/pages/accounts/VerifyEmail';
 import VerifyUpdateEmail from '/imports/ui/pages/accounts/VerifyUpdateEmail';
 import ResetPassword from '/imports/ui/pages/accounts/ResetPassword';
 
-import Terms from '/imports/ui/pages/legal/Terms';
-import PrivacyPolicy from '/imports/ui/pages/legal/PrivacyPolicy';
-
 import AdminUser from '/imports/ui/pages/AdminUser';
 
 import '/imports/startup/client/css/fontawesome-all.min';
 import '/imports/startup/client/css/normalize';
 import '/imports/startup/client/css/webflow';
 import '/imports/startup/client/css/wequ-profile.webflow';
-import QuizSummary from '/imports/ui/pages/quiz/QuizSummary';
 import LinkedInPermission from '/imports/ui/pages/linkedIn/LinkedInPermission';
 import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
@@ -92,34 +84,16 @@ const CheckNotLoggedIn = class CheckNotLoggedIn extends React.Component {
   }
 }
 
-// const authenticate = (nextState, replace) => {
-//   if (!Meteor.loggingIn() && !Meteor.userId()) {
-//     // Session.set( "loginRedirect", nextState.location.pathname );
-//     replace({
-//       pathname: '/login',
-//       state: { nextPathname: nextState.location.pathname },
-//     });
-//   }
-// };
-
 const App = () => (
   <Switch history={history}>
-      {/* <Route name="script-login" path="/script-login" component={ ScriptLogin } onEnter={ authenticate } /> */}
-      <Route exact path='/' render={(props) => (<CheckLogin childComponent={<ScriptLogin {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz/:uid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizPage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile/:uid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
-      <Route exact path='/profile/:uid/:gid' render={(props) => (<CheckLoginVerified childComponent={<ProfilePage {...props}/>} {...props}/>)} />
-      <Route exact path='/invite' render={(props) => (<CheckLoginVerified childComponent={<InvitePage {...props}/>} {...props}/>)} />
-      <Route exact path='/invite-group' render={(props) => (<CheckLoginVerified childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
-      <Route exact path='/group/:id' render={(props) => (<CheckLoginVerified childComponent={<GroupPage {...props}/>} {...props}/>)} />
+      <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
+      <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizRankPage {...props}/>} {...props}/>)} />
+      <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
+      <Route exact path='/group/:id' render={(props) => (<AdminOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
       <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
       <Route exact path='/settings/:type' render={(props) => (<CheckLoginVerified childComponent={<EditEntry {...props}/>} {...props}/>)} />
       <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
       <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
-      <Route exact path='/invitation/:id' component={InviteLanding}/>
       <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
       <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
       <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
@@ -127,12 +101,8 @@ const App = () => (
       <Route exact path='/reset-password/:token' component={ResetPassword} />
       <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
       <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
-      {/* <Route exact path='/test' render={(props) => (<CheckLoginVerified childComponent={<QuizSummary {...props}/>} {...props}/>)} /> */}
-      <Route path='/terms' component={Terms}/>
-      <Route path='/privacy' component={PrivacyPolicy}/>
       <Route exact path='/verify-email/:token' component={VerifyEmail} />
       <Route exact path='/update-email/:token' component={VerifyUpdateEmail} />
-      {/* <Route path="/test" component={Test}/> */}
       <Route path="/adminUser" component={AdminUser}/>
       <Route path="/404" component={NotFound}/>
       <Route path="/401" component={NotAuthorized}/>

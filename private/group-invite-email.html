@@ -13,32 +13,37 @@
 			<!--div> Hi <b>{{to}},</b> </div -->
 
 		<!--	<div> {{from}}  invites you to the WeQ App. It helps you get to know your We-Qualities based on how your teammates see you. </div> -->
-			<div>Hi {{firstName}},</div>
-			<br>
-			<div>Please join your WeQ group by clicking this link:</div>
+			<div>Hi,</div>
+			<div>
+				<p>You are invited to join a WeQ group!</p>
+				<p>WeQ is the facilitated game that applies proven neuroscience to help empower teams to perform at their peak.</p>
+			</div>
+
+			<div>To sign up, please click this private link:</div>
 			<a href="{{link}}">{{link}}</a>
-			<br><br>
-			
-			<div>Then you will be asked to enter your group name: </div>
+			<br>
 
-			<div>"<b>{{groupName}}</b>"</div>
+			<p>You will take a brief survey. Because this survey is completely anonymous, 
+			<br>you must first enter your 'group name'.
 
-			<p> First, you will answer a few anonymous questions about your team.</p>
-			<p> Then you will take a short quiz about individual teammates, and about yourself.</p>
-			<p>Please complete at least one round of the quiz (12 questions) for each person in your group.</p>
-			<p>Based on the data gathered, we will personalize your WeQ session experience </p>
+			</p>
+			<p>Your group name is: <b>{{groupName}}</b>
+			<br>Please answer honestly, as this survey will be used to personalize your upcoming WeQ session.
+			<br> And don’t forget to bring your mobile phone to the session!
+			</p>
 			 
 			<div>
-			For questions about this app, reply to: <a href="mailto:contact@weq.io?subject=Group Invitation">contact@weq.io</a>.
+			Questions?
 			<br>
-			For questions about your WeQ session, reply to: <a href="mailto:{{creatorEmail}}?subject=Group Invitation">{{creatorEmail}}</a>.
+			For questions about this app, reply to: <a href="mailto:contact@weq.io?subject=[WeQ Facilitated Session - {{groupName}}]">contact@weq.io</a>.
+			<br>
+			For questions about your WeQ session, reply to: <a href="mailto:{{creatorEmail}}?subject=[WeQ Facilitated Session - {{groupName}}]">{{creatorEmail}}</a>.
 			<br>
 			</div>
 			<br>
 			<div> WeQ Team </div>
 			<div>"Nothing beats a kick-ass team"</div>
 			<div> <a href="https://www.weq.io/" target="_blank">www.weq.io</a></div>
-
 		</div>
 	</div>
 

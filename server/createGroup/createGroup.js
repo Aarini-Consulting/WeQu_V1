@@ -1,23 +1,52 @@
 Meteor.methods({
   'createGroup' : function (groupName,data,arr_emails) {
     var now = new Date();
+
+    var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+
+    if(!gmCheck){
+      throw (new Meteor.Error("only_gamemaster_can_create_group")); 
+    }
+
+    if(!Array.isArray(arr_emails)){
+      throw (new Meteor.Error("invalid_parameter_emails_not_array"));
+    }
+
+    if(Array.isArray(arr_emails) && arr_emails.length < 2){
+      throw (new Meteor.Error("need_at_least_2_players"));
+    }
     
-    let groupId = Group.insert({groupName: groupName,  emails:arr_emails , creatorId: Meteor.userId()});
+    let groupId = Group.insert({groupName: groupName,  emails:arr_emails , creatorId: Meteor.userId(),isActive:false, isFinished:false});
 
     if(!groupId){
      throw (new Meteor.Error("group_creation_failed")); 
-   }
+    }
 
-   FeedbackCycle.insert({
-    'groupId': groupId, 
-    'creatorId': Meteor.userId(), 
-    'from': now
-    });
+    var groupCreator = Meteor.users.findOne(Meteor.userId());
 
-   Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName, (err, result)=> {
-    //  console.log("genGroupQuestionSet" , err, result);
-      if(err){ return err}
-    });
+    var group = Group.findOne(groupId);
+
+    var subject = `[WeQ] Group Creation`;
+
+    var emailData = {
+        'creatorEmail': groupCreator.emails[0].address,
+        'creatorName' : (groupCreator.profile.firstName +" "+ groupCreator.profile.lastName) ,
+        'groupId': group._id,
+        'groupName': group.groupName
+    };
+    var body;
+    body = SSR.render('GroupCreationEmail', emailData);
+    
+
+    Meteor.call('sendEmail', "contact@weq.io", subject, body);
+
+  //  FeedbackCycle.insert({
+  //   'groupId': groupId, 
+  //   'creatorId': Meteor.userId(), 
+  //   'from': now
+  //   });
+
+   Meteor.call('genGroupQuestionSet', arr_emails , groupId , data, groupName);
 
     return true;
 
@@ -58,7 +87,6 @@ Meteor.methods({
           var emailData = {
             'creatorEmail': groupCreator.emails[0].address,
             'link': Meteor.absoluteUrl(link),
-            'firstName':d.firstName,
             'groupName': groupName
           };
       
@@ -93,53 +121,64 @@ Meteor.methods({
 
 
         //assign groupmember's connection and feedback question with each other
-        for (i = 0; i < arr_emails.length; i++) {
+    //     for (i = 0; i < arr_emails.length; i++) {
 
-          for (j = 0; j < arr_emails.length; j++) {            
+    //       for (j = 0; j < arr_emails.length; j++) {            
 
-            if(i != j){
-              user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
-              user2 = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[j]  }, { "profile.emailAddress" : arr_emails[j] }]} );
-              //check if feedback already exist
-              var check = Feedback.findOne({from : user._id , to: user2._id,groupId:groupId});
-              var checkConnection = Connections.findOne({inviteId : user._id , userId: user2._id,groupId:groupId});
+    //         if(i != j){
+    //           user = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[i]  }, { "profile.emailAddress" : arr_emails[i] }]} );
+    //           user2 = Meteor.users.findOne({$or : [ {"emails.address" : arr_emails[j]  }, { "profile.emailAddress" : arr_emails[j] }]} );
+    //           //check if feedback already exist
+    //           var check = Feedback.findOne({from : user._id , to: user2._id,groupId:groupId});
+    //           var checkConnection = Connections.findOne({inviteId : user._id , userId: user2._id,groupId:groupId});
 
-              if(!check){
-                var name = getUserName(user2.profile);
-                var gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
+    //           if(!check){
+    //             var name = getUserName(user2.profile);
+    //             var gender_result = user2.profile && user2.profile.gender ? user2.profile.gender : "He"
 
-                if (gender_result  == 'Male'){
-                  qset = genInitialQuestionSet(name, qdata.type1he, 12);
-                } else if (gender_result  == 'Female') {
-                  qset = genInitialQuestionSet(name, qdata.type1she, 12);
-                }
-                else{
-                  qset = genInitialQuestionSet(name, qdata.type1he, 12);
-                }
-                var _id = Random.secret();
+    //             if (gender_result  == 'Male'){
+    //               qset = genInitialQuestionSet(name, qdata.type1he, 12);
+    //             } else if (gender_result  == 'Female') {
+    //               qset = genInitialQuestionSet(name, qdata.type1she, 12);
+    //             }
+    //             else{
+    //               qset = genInitialQuestionSet(name, qdata.type1he, 12);
+    //             }
+    //             var _id = Random.secret();
 
-                var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset,
-                  invite : false, done: false ,
-                  groupName: groupName,
-                  groupId:groupId
-                 });
+    //             var fbId = Feedback.insert({_id: _id, from : user._id , to: user2._id , qset : qset,
+    //               invite : false, done: false ,
+    //               groupName: groupName,
+    //               groupId:groupId
+    //              });
 
-                 if(!checkConnection){
-                  Connections.insert( {
-                    email: user2.emails[0].address,
-                    userId : user2._id,
-                    groupId: groupId,
-                    inviteId : user._id,
-                    services : {invitationId: _id} 
-                  });
-                 }
+    //              if(!checkConnection){
+    //               Connections.insert( {
+    //                 email: user2.emails[0].address,
+    //                 userId : user2._id,
+    //                 groupId: groupId,
+    //                 inviteId : user._id,
+    //                 services : {invitationId: _id} 
+    //               });
+    //              }
 
-                 console.log(" \n Feedback id \n ", fbId );
-              }
-         }
+    //              console.log(" \n Feedback id \n ", fbId );
+    //           }
+    //      }
 
-       }
-     }
+    //    }
+    //  }
+
+       //create user's self rank feedback
+       var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
+
+      users.forEach(function(user, index, _arr) {
+        Meteor.call( 'generate.self.rank', user._id, groupCheck._id, (error, result)=>{
+          if(error){
+            console.log(error);
+          }
+        });
+      });
 
      }
       catch(e){
