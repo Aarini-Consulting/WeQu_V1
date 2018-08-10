@@ -228,10 +228,10 @@ class InviteGroup extends React.Component {
           info: 'Maximum amount of members reached',
         });
       }
-      else if(!(this.props.group && this.props.group.isActive) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 5){
+      else if(!(this.props.group && this.props.group.isActive) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 2){
         this.setState({
           inviteStatus: 'error',
-          info: 'Each group in a WeQ session must have at least 5 players',
+          info: 'Each group in a WeQ session must have at least 2 players',
         });
       }
       else{
