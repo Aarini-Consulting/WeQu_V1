@@ -376,7 +376,7 @@ class InviteGroup extends React.Component {
           return (
             <li className="invite-group-line-wrapper" key={data.email}>
               <div className="font f_12">{index+1}</div>
-              <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email}/>
+              <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email} autoComplete={"false"}/>
               {this.props.group && readySurvey 
               ? 
               <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
@@ -460,15 +460,15 @@ class InviteGroup extends React.Component {
                       ? 
                       <div>
                         <div className="groupformtext">Group name</div>
-                        <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)}
-                        name="name" data-name="Name" maxLength="256" required="" 
+                        <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)} autoComplete={"false"}
+                        maxLength="256" required="" 
                         placeholder="group name" className="formstyle group-name w-input" 
                         required/>
                       </div>
                       :
                       <div>
                       <div className="groupformtext">What is the name of this group?</div>
-                      <input type="text" ref="groupName" name="name" data-name="Name" maxLength="256" required="" placeholder="group name" className="formstyle group-name w-input" 
+                      <input type="text" ref="groupName" maxLength="256" required="" placeholder="group name" className="formstyle group-name w-input" autoComplete={"false"} 
                       value={this.state.groupName} 
                       onChange={this.handleChange.bind(this)} required/>
                       </div>
@@ -485,7 +485,7 @@ class InviteGroup extends React.Component {
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12">></div>
-                      <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" name="Email-2" placeholder="Email address" required={true}/>
+                      <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" placeholder="Email address" required={true} autoComplete={"false"}/>
                       {/* <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
                         Male
                       </div>
