@@ -596,18 +596,6 @@ body {
   color: #fdf8f8;
 }
 
-.menubar {
-  min-height: 50px;
-  width: 100%;
-  background-image: -webkit-linear-gradient(270deg, #383838, #383838);
-  background-image: linear-gradient(180deg, #383838, #383838);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: row;
-}
-
 .sectionname {
   margin-top: auto;
   padding-bottom: 10px;
@@ -3757,6 +3745,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   float: none;
   clear: none;
   border: 1px solid #525252;
+}
+
+.div-block-center{
+  width:100%;
 }
 
 @media (max-width: 991px) {

@@ -363,29 +363,30 @@ class AdminGameMasterView extends React.Component {
                 }
                 else{
                     return (
-                        <div className="col-md-12 col-sm-12 col-xs-12">
-                            <div className="widget widget-fullwidth widget-small">
-                                <div className="widget-head">
-                                    <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
-                                </div>
-                                <div className="table-responsive noSwipe">
-                                    <table className="table table-fw-widget table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th style={{width:"10%"}}>Name / Email</th>
-                                                <th style={{width:"10%"}}>Game Master</th>
-                                                <th style={{width:"20%"}}> No of Groups</th>
-                                                <th style={{width:"20%"}}>No of Users</th>
-                                                <th style={{width:"20%"}}></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="no-border-x">					
-                                            {this.renderGamemasterListUsers()}
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div className="fillHeight">
+                            <div className="widget-head">
+                                <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
+                            </div>
+                            <div className="tabs w-tabs noSwipe">
+                                <table className="table table-fw-widget table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th style={{width:"10%"}}>Name / Email</th>
+                                            <th style={{width:"10%"}}>Game Master</th>
+                                            <th style={{width:"20%"}}> No of Groups</th>
+                                            <th style={{width:"20%"}}>No of Users</th>
+                                            <th style={{width:"20%"}}></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="no-border-x overflow">					
+                                        {this.renderGamemasterListUsers()}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="div-block-center">
+                                <h1>Im a footer gm</h1>
                             </div>
                         </div>
                     );
