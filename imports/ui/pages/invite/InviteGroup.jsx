@@ -36,22 +36,10 @@ class InviteGroup extends React.Component {
   componentWillReceiveProps(nextProps){
     if(nextProps.isEdit && nextProps.group){
       if(nextProps.group){
-        var copyStateData = this.state.inviteDatas.slice();
-        
-        if(!(nextProps.group.isActive || nextProps.group.isFinished)){
-          var emailsArray = this.state.inviteDatas.map( (fields) => fields.email);
-
-          nextProps.group.emails.forEach(function(email) {
-            if(emailsArray.indexOf(email) < 0){
-              copyStateData.push({email:email});
-            }
-          });
-        }else{
-          copyStateData = [];
-          nextProps.group.emails.forEach(function(email) {
-            copyStateData.push({email:email});
-          });
-        }
+        var copyStateData = [];
+        nextProps.group.emails.forEach(function(email) {
+          copyStateData.push({email:email});
+        });
         this.setState({
           info:undefined,
           groupName: nextProps.group.groupName,
@@ -134,22 +122,18 @@ class InviteGroup extends React.Component {
             }
             
             this.setState({
-                inviteStatus: 'sent',
-                inviteSuccess:msg
-              });
+              inviteStatus: 'sent',
+              inviteSuccess:msg,
+              newInviteDatas:[],
+              inviteDeleted:[],
+              inviteResend:[],
+              resendFailed:0,
+              modifiedByUser:false,
+              modifiedByUser:false,
+              showConfirm:false,
+              unsaved:false
+            });
           }
-          
-          this.setState({
-            inviteDatas:[],
-            newInviteDatas:[],
-            inviteDeleted:[],
-            inviteResend:[],
-            resendFailed:0,
-            modifiedByUser:false,
-            modifiedByUser:false,
-            showConfirm:false,
-            unsaved:false
-          });
       }); 
     }
 
