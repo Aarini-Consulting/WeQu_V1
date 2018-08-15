@@ -22,6 +22,7 @@ class GroupPage extends React.Component {
         showConfirmStart:false,
         showReopenConfirm:false,
         showInfo:false,
+        showMatrixInfoPanel:undefined,
         sending:false,
         currentTab:"edit"
       }
@@ -73,6 +74,23 @@ class GroupPage extends React.Component {
           showInfoMessage:msg
         });
       }
+    });
+  }
+
+  toggleMatrixInfoPanel(skillName){
+    var matrix = this.state.showMatrixInfoPanel;
+
+    if(!matrix){
+      matrix = {};
+    }
+
+    if(matrix && matrix[skillName]){
+      matrix[skillName]=false;
+    }else{
+      matrix[skillName]=true;
+    }
+    this.setState({
+      showMatrixInfoPanel:matrix
     });
   }
 
@@ -164,27 +182,78 @@ class GroupPage extends React.Component {
         if(value > 0){
           leftPos = `calc(${ value }% - 40px)`;
         }
+
+        var infoText = undefined;
+
+        switch(skill.name){
+          case "Psychological Safety":
+            infoText = <div className="font-matric font-info">
+            Questions:<br/>
+            In this team, I feel like I can fail openly.<br/>
+            I know my colleagues’ positive characteristics and strengths very well.<br/>
+            I feel comfortable showing my vulnerability.
+            </div>
+            break;
+          case "Constructive Feedback":
+            infoText = <div className="font-matric font-info">
+            Questions:<br/>
+            In this team, members frequently exchange constructive feedback.<br/>
+            This team regularly recognises my achievements and successes.
+            </div>
+            break;
+          case "Cognitive Bias":
+            infoText = <div className="font-matric font-info">
+            Questions:<br/>
+            In this team, members often misunderstand my intensions and messages.
+            </div>
+            break;
+          case "Social Norms":
+            infoText = <div className="font-matric font-info">
+            Questions:<br/>
+            In meetings, one person or a small group tends to speak most of the time.<br/>
+            In this team, members withhold information that might be useful for others.<br/>
+            This team has a strong sense of collective success rather than just individual glory.
+            </div>
+            break;
+          default:
+            infoText = <div className="font-matric font-info">
+            There is currently no matrix information available.
+            </div>
+            break;
+        }
         
         return (
-          <div className="tap-content w-clearfix" key={skill.name}>
-            <div className="tap-left">
-              <div className="font-matric">
-                {skill.name}
+          <div key={skill.name}>
+            <div className="tap-content w-clearfix">
+              <div className="tap-left">
+                <div className="font-matric">
+                  {skill.name}
+                </div>
+                <div className="w-inline-block font-matric-info" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
+                <i className="fas fa-info-circle"></i>
+                </div>
               </div>
-            </div>
-            <div className="show-numbers">
-              <div className="chart-graph w-clearfix">
-                <div className="chart-graph active" style={{width:value + "%"}}></div>
-                <div className="chart-number" style={{left:leftPos}}>
-                  <div className="font-chart-nr">{formattedScore}</div>
+              <div className="show-numbers">
+                <div className="chart-graph w-clearfix">
+                  <div className="chart-graph bg"></div>
+                  <div className="chart-graph active" style={{width:value + "%"}}></div>
+                  <div className="chart-number" style={{left:leftPos}}>
+                    <div className="font-chart-nr">{formattedScore}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="tap-right">
+                <div className="font-matric">
+                  {formattedScore} / {total}
                 </div>
               </div>
             </div>
-            <div className="tap-right">
-              <div className="font-matric">
-                {formattedScore} / {total}
+            {this.state.showMatrixInfoPanel && this.state.showMatrixInfoPanel[skill.name] && infoText &&
+              <div className="w-block matric-info-panel">
+                {infoText}
               </div>
-            </div>
+            }
+            
           </div>
         );
       });

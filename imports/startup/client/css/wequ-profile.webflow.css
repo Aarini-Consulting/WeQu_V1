@@ -2877,8 +2877,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   align-items: center;
   flex-wrap: nowrap;
   margin-top:1em;
-  margin-bottom:1em;
-  padding:1em;
+  padding:1em 1em 0 1em;
 }
 
 .tap-content.grey-bg{
@@ -2889,6 +2888,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: flex;
   width: 20%;
   min-height: 50px;
+  align-items: center;
+  justify-content: center;
 }
 
 .font-matric {
@@ -2916,6 +2917,27 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   word-break:break-word;
 }
 
+.font-matric-info{
+  color: #fd9a3e;
+  cursor: pointer;
+}
+
+.font-matric.font-info {
+  font-size: 1.2em;
+  font-weight: normal;
+  text-decoration: none;
+  text-transform: none;
+  word-break:break-word;
+}
+
+.matric-info-panel{
+  color: #fd9a3e;
+  background-color: #474747;
+  padding:1em;
+  cursor: pointer;
+  margin-bottom:0.5em;
+}
+
 .show-numbers {
   display: flex;
   width: 70%;
@@ -2941,6 +2963,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   top: -15px;
   background-color: #fd9a3e;
   color: #e9682b;
+}
+.chart-graph.bg {
+  position: absolute;
+  top: -15px;
+  background-color: #474747;
+  width:100%;
+  color: #000;
 }
 
 .chart-number {
