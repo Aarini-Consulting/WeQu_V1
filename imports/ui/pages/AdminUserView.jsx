@@ -8,7 +8,7 @@ import Loading from '/imports/ui/pages/loading/Loading';
 import AdminLogin from '/imports/ui/pages/AdminLogin';
 import AdminGameMasterView from '/imports/ui/pages/AdminGameMasterView';
 
-class AdminUser extends React.Component {
+class AdminUserView extends React.Component {
     constructor(props){
         super(props);
     }
@@ -208,7 +208,7 @@ export default withTracker((props) => {
         listUsers: listUsers,
         dataReady:dataReady
     };
-})(AdminUser);
+})(AdminUserView);
   
   
   
