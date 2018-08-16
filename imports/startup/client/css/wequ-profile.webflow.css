@@ -2930,6 +2930,16 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   word-break:break-word;
 }
 
+.font-matric.font-close {
+  display: block;
+  position: absolute;
+  left:calc(95% - 2em);
+  min-height: auto;
+  width: auto;
+  float: right;
+  cursor: pointer;
+}
+
 .matric-info-panel{
   color: #fd9a3e;
   background-color: #474747;

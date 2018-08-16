@@ -249,7 +249,10 @@ class GroupPage extends React.Component {
               </div>
             </div>
             {this.state.showMatrixInfoPanel && this.state.showMatrixInfoPanel[skill.name] && infoText &&
-              <div className="w-block matric-info-panel">
+              <div className="w-block matric-info-panel" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
+                <div className="font-matric font-close">
+                  <i class="fa fa-window-close" aria-hidden="true"></i>
+                </div>
                 {infoText}
               </div>
             }
