@@ -3843,6 +3843,31 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   justify-content: center;
 }
 
+.user-pagination-nr {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.user-pagination-nr.font-t.font-pag {
+  position: relative;
+  display: block;
+  margin-right: 3px;
+  margin-left: 3px;
+  float: left;
+  clear: right;
+  border: 1px solid #26244b;
+  color: #26244b;
+  font-size: 1em;
+  text-align: center;
+}
+
+.user-pagination-nr.font-t.font-pag.font-pag-active {
+  background-color: #26244b;
+  color: #fff;
+}
+
 @media (max-width: 991px) {
   /*.sectionname {
     background-image: url('/img/Background_white20.png');

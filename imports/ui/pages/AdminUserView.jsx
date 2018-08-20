@@ -11,6 +11,10 @@ import AdminGameMasterView from '/imports/ui/pages/AdminGameMasterView';
 class AdminUserView extends React.Component {
     constructor(props){
         super(props);
+        this.state = { 
+            currentPageIndex:0,
+            resultPerPage:5
+        };
     }
 
     formatDate(date){
@@ -57,7 +61,13 @@ class AdminUserView extends React.Component {
 
     
     renderUserList(){
-        return this.props.listUsers.map((user) => {
+        var userList = this.props.listUsers;
+        if(this.state.currentPageIndex <= 0){
+            userList = userList.slice(0,this.state.resultPerPage);
+        }else{
+            userList = userList.slice((this.state.currentPageIndex*this.state.resultPerPage),((this.state.currentPageIndex*this.state.resultPerPage)+this.state.resultPerPage));
+        }
+        return userList.map((user) => {
             return (
                 <tr key={user._id}>
                     <td>{user && user.status && user.status.online 
@@ -148,7 +158,78 @@ class AdminUserView extends React.Component {
                 </tr>
             );
           });
-        
+    }
+
+    setCurrentPageIndex(index){
+        var max = Math.ceil(this.props.listUsers.length/this.state.resultPerPage)-1;
+        if(index < 0){
+            index = 0;
+        }
+        if(index > max){
+            index = max;
+        }
+        this.setState({ currentPageIndex: index });
+    }
+
+    renderPagination(){
+        var rows = [];
+        var pageCount = Math.ceil(this.props.listUsers.length/this.state.resultPerPage);
+        var initialStart = 0;
+        var initialSize = 10;
+        var initialThreshold = Math.round(initialSize*0.5+1);
+
+        var size;
+        var start;
+        if(this.state.currentPageIndex + 1 > initialThreshold){
+          size = this.state.currentPageIndex + 1 + (initialSize - initialThreshold);
+          start = size - initialSize;
+        }else{
+          size = initialSize;
+          start = initialStart;
+        }
+
+        if(size > pageCount){
+          size = pageCount;
+        }
+
+        if(start < 0){
+          start = 0;
+        }
+
+        rows.push(
+            <a key={"pagination-nav-prev"} onClick={this.setCurrentPageIndex.bind(this,(this.state.currentPageIndex-1))}> 
+                <div className="user-pagination-nr font-t font-pag  font-pag-active"> &#10096; </div> 
+            </a>
+        );
+
+        for (i = start; i < size; i++) {
+            if(i==this.state.currentPageIndex){
+                rows.push(
+                    <a key={"pagination-"+i}> 
+                    <div className="user-pagination-nr font-t font-pag  font-pag-active"> {i+1} </div> 
+                    </a>
+                );
+            }
+            else{
+                rows.push(
+                <a key={"pagination-"+i} onClick={this.setCurrentPageIndex.bind(this,i)}>
+                    <div className="user-pagination-nr font-t font-pag" >  {i+1} </div>
+                </a>
+                );
+            }
+        }
+
+        rows.push(
+            <a key={"pagination-nav-next"} onClick={this.setCurrentPageIndex.bind(this,(this.state.currentPageIndex+1))}> 
+                <div className="user-pagination-nr font-t font-pag  font-pag-active"> &#10097; </div> 
+            </a>
+        );
+
+        return (
+            <div className="w-inline-block">
+                {rows}
+            </div>
+        )
     }
     render() {
         if(this.props.dataReady){
@@ -177,7 +258,7 @@ class AdminUserView extends React.Component {
                         </table>
                     </div>
                     <div className="div-block-center">
-                        <h1>Im a footer</h1>
+                        {this.renderPagination()}
                     </div>
                 </div>
             );
