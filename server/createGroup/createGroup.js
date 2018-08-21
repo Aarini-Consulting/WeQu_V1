@@ -91,7 +91,7 @@ Meteor.methods({
           };
       
           let body = SSR.render('GroupInviteHtmlEmail', emailData);
-		      console.log("sending mail to: "+ d.email);
+		      // console.log("sending mail to: "+ d.email);
           Meteor.call('sendEmail', d.email, subject, body, function (err, result) {
             if(err){ return err};
           });
@@ -101,7 +101,7 @@ Meteor.methods({
         // #77 create user up front for arr_emails_notExisting 
        if(arr_emails.length > 0){
         Meteor.call('genGroupUserUpFront',  arr_emails , data, groupName, groupId, function (err, result) {
-          console.log("genGroupUserUpFront" , err, result);
+          // console.log("genGroupUserUpFront" , err, result);
           if(err){ return err};
         });
        }

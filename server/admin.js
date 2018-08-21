@@ -16,7 +16,7 @@ Meteor.startup(function () {
             var l =  lines[i];
             skill = l[0].trim()
             if(!skill2category[skill]) {
-                console.log("type1you: unknown skill", skill,  l.join(" "));
+                // console.log("type1you: unknown skill", skill,  l.join(" "));
                 continue;
             }
             qdata.type1you.push({_id: String(i), skill: skill, text: l[1]});
@@ -29,7 +29,7 @@ Meteor.startup(function () {
             skill = l[0].trim()
 
             if(!skill2category[skill]) {
-                console.log("type1he: unknown skill", skill, l.join(" "));
+                // console.log("type1he: unknown skill", skill, l.join(" "));
                 continue;
             }
             qdata.type1he.push({_id: String(i), skill: skill, text: l[1]});
@@ -41,7 +41,7 @@ Meteor.startup(function () {
             skill = l[0].trim()
 
             if(!skill2category[skill]) {
-                console.log("type1she: unknown skill", skill, l.join(" "));
+                // console.log("type1she: unknown skill", skill, l.join(" "));
                 continue;
             }
             qdata.type1she.push({_id: String(i), skill: skill, text: l[1]});
