@@ -31,7 +31,6 @@ class AdminUser extends React.Component {
     keyPressSearch(e){
         if(e.keyCode == 13){
             console.log(e.target.value);
-            // put the login here
         }
     }
 
@@ -91,9 +90,9 @@ class AdminUser extends React.Component {
                       <div className="tabs w-tabs">
                               {this.state.showGameMaster 
                               ?
-                              <AdminGameMasterView/>
+                              <AdminGameMasterView searchQuery={this.state.searchQuery}/>
                               :
-                              <AdminUserView/>
+                              <AdminUserView searchQuery={this.state.searchQuery}/>
                               }
                       </div>
                       {/* <center>
@@ -135,6 +134,3 @@ export default withTracker((props) => {
         dataReady:dataReady
     };
 })(AdminUser);
-  
-  
-  

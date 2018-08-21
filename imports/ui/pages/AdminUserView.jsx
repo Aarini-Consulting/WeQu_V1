@@ -278,10 +278,17 @@ export default withTracker((props) => {
                 console.log(error);
             }
 		});
-
+    var query = {};
+    if(props.searchQuery){
+        query = {$or : [ 
+            {"profile.firstName": {$regex:`.*${props.searchQuery}`}},
+            {"profile.lastName": {$regex:`.*${props.searchQuery}`}},
+            {"emails.address": {$regex:`.*${props.searchQuery}`}}
+        ]};
+    }
 
     if(handle.ready()){
-        listUsers = Meteor.users.find().fetch();
+        listUsers = Meteor.users.find(query).fetch();
         dataReady = true;
     }
     return {
