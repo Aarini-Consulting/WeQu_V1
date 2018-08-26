@@ -34,12 +34,12 @@ let setupAccounts = function(){
                     // Need _id of existing user record so this call must come
                     // after `Accounts.createUser` or `Accounts.onCreate`
                     Roles.addUsersToRoles(id, user.roles);
-                    console.log('default user created :', user.email);
+                    // console.log('default user created :', user.email);
                 }
 
             });
         }else{
-            console.log('skipping default user creation as the default users already created');
+            // console.log('skipping default user creation as the default users already created');
         }
 
 }

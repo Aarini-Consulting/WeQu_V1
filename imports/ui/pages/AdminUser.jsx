@@ -7,12 +7,14 @@ import { withTracker } from 'meteor/react-meteor-data';
 import Loading from '/imports/ui/pages/loading/Loading';
 import AdminLogin from '/imports/ui/pages/AdminLogin';
 import AdminGameMasterView from '/imports/ui/pages/AdminGameMasterView';
+import AdminUserView from '/imports/ui/pages/AdminUserView';
 
 class AdminUser extends React.Component {
     constructor(props){
         super(props);
         this.state={
           showGameMaster:false,
+          searchQuery:""
         }
     }
 
@@ -22,198 +24,76 @@ class AdminUser extends React.Component {
         });
     }
 
-    handleCheckGameMaster(user, event) {
-        var callFunction = false;
-        if(Roles.userIsInRole(user._id,'GameMaster')){
-            if (confirm("Are you sure? Removing gamemaster status will permanently delete all group (and its associated data) created by "+user.profile.firstName+" "+user.profile.lastName)) {
-                callFunction = true;
-            } else {
-                callFunction = false
-            }
-        }else{
-            callFunction = true;
-        }
-        
-        if(callFunction){
-            Meteor.call('addRoleGameMaster', user._id , function (err, result) {
-                if(err){
-                    console.log(err)
-                }
-            });
+    handleChangeSearch(e) {
+        this.setState({ searchQuery: e.target.value });
+     }
+  
+    keyPressSearch(e){
+        if(e.keyCode == 13){
+            console.log(e.target.value);
         }
     }
 
-    renderEmailsVerified(user){
-        if(user.emails && user.emails[0].verified){
-            return(
-                <span className="badge badge-success">YES</span>
-            )
-        }
-        else if(user.emails){
-            return(
-                <span className="badge badge-warning">NO</span>
-            );
-        }else{
-            return (
-                <span className="badge badge-default">NA</span>
-            )
-        }
+    handleClickSearch(){
+        console.log(this.state.searchQuery);
     }
-
-    
-    renderUserList(){
-        return this.props.listUsers.map((user) => {
-            return (
-                <tr key={user._id}>
-                    <td>{user && user.status && user.status.online 
-                        ?
-                        <span className="badge badge-success">&nbsp;</span>
-                        :
-                        <span className="badge badge-warning">&nbsp;</span>
-                        }
-                    </td>
-    
-                    <td className="user-avatar">
-                        <div><span className="status"></span>
-                        {user.profile && user.profile.pictureUrl
-                            ? <img className="img-circle" width="75" height="75" src={user.profile.pictureUrl}/>
-                            : <img className="img-circle" width="75" height="75" src="/img/profile/profile4.png"/>
-                        }
-                        </div>
-                    </td>
     
     
-                    <td id="user">
-                        {user.profile 
-                        ?
-                        <b className="text-capitalize">
-                            {user.profile.firstName}
-                            {user.profile.lastName}
-                        </b>
-                        :
-                        <b className="text-capitalize">
-                        admin user
-                        </b>
-                        }
-                        <br/>
-                        {user.profile && user.profile.publicProfileUrl &&
-                            <span className="badge">
-                            <a className="colorRed" href={user.profile.publicProfileUrl} target="_blank">{user.profile.publicProfileUrl}</a>
-                            </span>
-                        }
-                        <br/>
-                        {user.emails &&
-                        user.emails.map((email) =>
-                        <span className="badge badge-info" key={email.address}>
-                            <h5 className="pull-left"> {email.address}</h5>
-                        </span>
-                        )
-                        }
-                    </td>
-                    <td>
-                    <label className="switch">
-                        <input type="checkbox" checked={user.roles && user.roles.indexOf("GameMaster") > -1}
-                         onChange={this.handleCheckGameMaster.bind(this,user)}/>
-                        <div className="slider round"></div>
-                    </label>	
-                    </td>
-                    <td id="user">
-                        <span className="badge badge-info">
-                        {user.services.linkedin
-                        ? "LinkedIn"
-                        : "Wequ"
-                        }
-                        </span>
-    
-                        {user.roles &&
-                        user.roles.map((role) =>
-                        <span className="badge badge-info" key={role}>
-                            {role}
-                        </span>
-                        )
-                        }
-    
-                        {user.services.invitationId &&
-                        <span className="badge badge-info">
-                            Invited
-                        </span>
-                        }
-    
-                    </td>
-                    <td id="user">
-                        {this.renderEmailsVerified(user)}
-                    </td>
-                    <td id="user">{formatDate(user.createdAt)}</td>
-                    <td id="user">
-                    {user && user.status && user.status.lastLogin && user.status.lastLogin.date  
-                    ? formatDate(user.status.lastLogin.date)
-                    : "N/A"
-                    }
-                    </td>
-                </tr>
-            );
-          });
-        
-    }
     render() {
         if(this.props.dataReady){
             if(Meteor.userId() && this.props.currentUser && this.props.currentUser.emails[0].address == "admin@wequ.co"){
                 return (
                     <div className="fillHeight">
-                      <div className="menuBar">
-                          <a href="#" id="logout"> 
+                      <div className="div-block-center">
+                        <center> Welcome to the admin Dashboard </center>
+                        <a href="#" id="logout"> 
                           <img className="lg-icon" src="/img/login_button_deactive.png" />
-                          </a>
+                        </a>
+                      </div>
+                      
+                      <div className="tabs-menu w-tab-menu tap-underline gm">
+                        <div className="gm-search">
+                            <div className="gm-search-box">
+                                <input type="text" name="fname" onKeyDown={this.keyPressSearch.bind(this)} onChange={this.handleChangeSearch.bind(this)}/>
+                                <div className="gm-search-icon-container" onClick={this.handleClickSearch.bind(this)}>
+                                <i className="fa fa-search" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                      <a className={"tap gm w-inline-block w-tab-link " + (this.state.showGameMaster==false && "w--current")} onClick={this.setShowGameMaster.bind(this,false)}>
+                      <div>
+                      All Users
+                      </div>
+                      </a>
+
+                      <a className={"tap gm w-inline-block w-tab-link tap-last " + (this.state.showGameMaster==true && "w--current")} onClick={this.setShowGameMaster.bind(this,true)}>
+                      <div>
+                      GameMaster
+                      </div>
+                      </a>
+                            {/* <div className="tab row">
+                                <div className="col-md-4 col-sm-4 col-xs-4">
+                                <button className={"tablinks " + (this.state.showGameMaster && "active2")} id="view1" onClick={this.setShowGameMaster.bind(this,false)}>
+                                All Users
+                                </button>
+                                </div>
+                                <div className="col-md-4 col-sm-4 col-xs-4">
+                                <button className={"tablinks " + (!this.state.showGameMaster && "active2")} id="view2" onClick={this.setShowGameMaster.bind(this,true)}>
+                                GameMaster
+                                </button>
+                                </div>
+                                <div className="col-md-4 col-sm-4 col-xs-4"> </div>
+                            </div> */}
                       </div>
           
-                      <div className="row overflow"> 
-                          <div className="col-md-12 col-sm-12 col-xs-12">
-                              <center> Welcome to the admin Dashboard </center>
-                              <div className="tab row">
-                                  <div className="col-md-4 col-sm-4 col-xs-4">
-                                  <button className={"tablinks " + (this.state.showGameMaster && "active2")} id="view1" onClick={this.setShowGameMaster.bind(this,false)}>
-                                  All Users
-                                  </button>
-                                  </div>
-                                  <div className="col-md-4 col-sm-4 col-xs-4">
-                                  <button className={"tablinks " + (!this.state.showGameMaster && "active2")} id="view2" onClick={this.setShowGameMaster.bind(this,true)}>
-                                  GameMaster
-                                  </button>
-                                  </div>
-                                  <div className="col-md-4 col-sm-4 col-xs-4"> </div>
-                              </div>
+                      <div className="tabs w-tabs">
                               {this.state.showGameMaster 
                               ?
-                              <AdminGameMasterView/>
+                              <AdminGameMasterView searchQuery={this.state.searchQuery}/>
                               :
-                              <div className="col-md-12 col-sm-12 col-xs-12">
-                                  <div className="widget widget-fullwidth widget-small">
-                                      <div className="widget-head">
-                                          <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
-                                      </div>
-                                      <div className="table-responsive noSwipe">
-                                          <table className="table table-fw-widget table-hover">
-                                              <thead>
-                                                  <tr>
-                                                      <th></th>
-                                                      <th></th>
-                                                      <th style={{width:10 +"%"}}>Name / Email</th>
-                                                      <th style={{width:10 +"%"}}>Game Master</th>
-                                                      <th style={{width:10 +"%"}}>Type</th>
-                                                      <th style={{width:5 +"%"}}> Email Confirmed</th>
-                                                      <th style={{width:20 +"%"}}>Created</th>
-                                                      <th> Last Login</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody className="no-border-x">
-                                                  {this.renderUserList()}
-                                              </tbody>
-                                          </table>
-                                      </div>
-                                  </div>
-                              </div>
-                              }  
-                          </div>
+                              <AdminUserView searchQuery={this.state.searchQuery}/>
+                              }
                       </div>
                       {/* <center>
                       <button><a href="/adminAccountCreation"> Create test account  </a> </button>
@@ -254,6 +134,3 @@ export default withTracker((props) => {
         dataReady:dataReady
     };
 })(AdminUser);
-  
-  
-  

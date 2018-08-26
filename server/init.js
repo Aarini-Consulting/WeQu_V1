@@ -91,7 +91,7 @@ Meteor.startup(function () {
             user.profile.trial = options.trial; // account created by user then set to false
         }
 
-        console.log('----- \n onUserCreated ---------- \n', user);
+        // console.log('----- \n onUserCreated ---------- \n', user);
 
         return user;
 
