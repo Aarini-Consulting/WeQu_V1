@@ -22,6 +22,8 @@ class AdminGameMasterView extends React.Component {
             matrixScore3:0,
             matrixScore4:0,
             matrixScoreMax:0,
+            currentPageIndex:0,
+            resultPerPage:5
         }
     }
 
@@ -253,6 +255,78 @@ class AdminGameMasterView extends React.Component {
           });
     }
 
+    setCurrentPageIndex(index){
+        var max = Math.ceil(this.props.listUsers.length/this.state.resultPerPage)-1;
+        if(index < 0){
+            index = 0;
+        }
+        if(index > max){
+            index = max;
+        }
+        this.setState({ currentPageIndex: index });
+    }
+
+    renderPagination(){
+        var rows = [];
+        var pageCount = Math.ceil(this.props.listUsers.length/this.state.resultPerPage);
+        var initialStart = 0;
+        var initialSize = 10;
+        var initialThreshold = Math.round(initialSize*0.5+1);
+
+        var size;
+        var start;
+        if(this.state.currentPageIndex + 1 > initialThreshold){
+          size = this.state.currentPageIndex + 1 + (initialSize - initialThreshold);
+          start = size - initialSize;
+        }else{
+          size = initialSize;
+          start = initialStart;
+        }
+
+        if(size > pageCount){
+          size = pageCount;
+        }
+
+        if(start < 0){
+          start = 0;
+        }
+
+        rows.push(
+            <a key={"pagination-nav-prev"} onClick={this.setCurrentPageIndex.bind(this,(this.state.currentPageIndex-1))}> 
+                <div className="user-pagination-nr font-t font-pag  font-pag-active"> &#10096; </div> 
+            </a>
+        );
+
+        for (i = start; i < size; i++) {
+            if(i==this.state.currentPageIndex){
+                rows.push(
+                    <a key={"pagination-"+i}> 
+                    <div className="user-pagination-nr font-t font-pag  font-pag-active"> {i+1} </div> 
+                    </a>
+                );
+            }
+            else{
+                rows.push(
+                <a key={"pagination-"+i} onClick={this.setCurrentPageIndex.bind(this,i)}>
+                    <div className="user-pagination-nr font-t font-pag" >  {i+1} </div>
+                </a>
+                );
+            }
+        }
+
+        rows.push(
+            <a key={"pagination-nav-next"} onClick={this.setCurrentPageIndex.bind(this,(this.state.currentPageIndex+1))}> 
+                <div className="user-pagination-nr font-t font-pag  font-pag-active"> &#10097; </div> 
+            </a>
+        );
+
+        return (
+            <div className="w-inline-block">
+                {rows}
+            </div>
+        )
+    }
+
     render() {
         if(this.props.dataReady){
             if(Meteor.userId() && this.props.currentUser && this.props.currentUser.emails[0].address == "admin@wequ.co"){
@@ -363,29 +437,30 @@ class AdminGameMasterView extends React.Component {
                 }
                 else{
                     return (
-                        <div className="col-md-12 col-sm-12 col-xs-12">
-                            <div className="widget widget-fullwidth widget-small">
-                                <div className="widget-head">
-                                    <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
-                                </div>
-                                <div className="table-responsive noSwipe">
-                                    <table className="table table-fw-widget table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th style={{width:"10%"}}>Name / Email</th>
-                                                <th style={{width:"10%"}}>Game Master</th>
-                                                <th style={{width:"20%"}}> No of Groups</th>
-                                                <th style={{width:"20%"}}>No of Users</th>
-                                                <th style={{width:"20%"}}></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="no-border-x">					
-                                            {this.renderGamemasterListUsers()}
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div className="fillHeight">
+                            <div className="widget-head">
+                                <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
+                            </div>
+                            <div className="tabs w-tabs noSwipe">
+                                <table className="table table-fw-widget table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th style={{width:"10%"}}>Name / Email</th>
+                                            <th style={{width:"10%"}}>Game Master</th>
+                                            <th style={{width:"20%"}}> No of Groups</th>
+                                            <th style={{width:"20%"}}>No of Users</th>
+                                            <th style={{width:"20%"}}></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="no-border-x overflow">					
+                                        {this.renderGamemasterListUsers()}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="div-block-center">
+                                {this.renderPagination()}
                             </div>
                         </div>
                     );
@@ -417,9 +492,18 @@ export default withTracker((props) => {
         onError: function (error) {
                 console.log(error);
             }
-		});
+        });
+        
+    var query = {roles:{$elemMatch:{$eq:"GameMaster"}}};
+    if(props.searchQuery){
+        query["$or"] = [ 
+            {"profile.firstName": {$regex:`.*${props.searchQuery}`}},
+            {"profile.lastName": {$regex:`.*${props.searchQuery}`}},
+            {"emails.address": {$regex:`.*${props.searchQuery}`}}
+        ];
+    }
     if(handleUsers.ready()){
-        listUsers = Meteor.users.find({roles:{$elemMatch:{$eq:"GameMaster"}}}).fetch();
+        listUsers = Meteor.users.find(query).fetch();
         if(listUsers){
             handleGroup = Meteor.subscribe('group',
             {creatorId:{ $in: listUsers.map((user)=>{return user._id}) }},
