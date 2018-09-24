@@ -26,7 +26,7 @@ class QuizRankPage extends React.Component {
             surveyCompleted: true,
         });
 
-        Meteor.call('survey.typeform.completed', this.props.group._id , this.props.currentUser.emails[0].address,
+        Meteor.call('survey.typeform.completed', this.props.group._id , this.props.currentUser._id,
         (err, result) => {
             if(err){
             console.log(err);
@@ -125,10 +125,10 @@ export default withTracker((props) => {
 
         if(handleGroup.ready() && currentUser){
             group = Group.findOne({_id:props.match.params.gid});
-            var email = currentUser.emails[0].address;
-            isGroupMember = group && group.emails && group.emails.indexOf(email) > -1;
-            surveyCompleted = group && group.emailsSurveyed && group.emailsSurveyed.indexOf(email) > -1;
-            selfRankCompleted = group.emailsSelfRankCompleted && group.emailsSelfRankCompleted.indexOf(email) > -1;
+            var userId = currentUser._id;
+            isGroupMember = group && group.userIds && group.userIds.indexOf(userId) > -1;
+            surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
+            selfRankCompleted = group.userIdsSelfRankCompleted && group.userIdsSelfRankCompleted.indexOf(userId) > -1;
             dataReady = true;
         }
     }else{

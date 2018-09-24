@@ -24,9 +24,9 @@ class Home extends React.Component {
 
     renderGroups(){
         return this.props.groups.map((group, index) => {
-            var email = this.props.currentUser.emails[0].address;
+            var userId = this.props.currentUser._id;
             var readySurvey;
-            if(group.emailsSurveyed && group.emailsSurveyed.indexOf(email) > -1){
+            if(group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1){
               readySurvey = true;
             }
             var ready = (readySurvey);
@@ -187,10 +187,10 @@ export default withTracker((props) => {
     var groups;
 
     if(Meteor.userId()){
-        if(Meteor.user() && Meteor.user().emails){
-            var email = Meteor.user().emails[0].address;
+        if(Meteor.user()){
+            var userId = Meteor.user()._id;
             handleGroup = Meteor.subscribe('group',{
-                "emails" : email 
+                "userIds" : userId 
                 
             },{}, {
                 onError: function (error) {
@@ -200,8 +200,7 @@ export default withTracker((props) => {
 
             if(handleGroup.ready()){
                 groups = Group.find({
-                    "emails" : email 
-
+                    "userIds" : userId
                 },{
                     sort: { groupName: -1 }
                 }).fetch();

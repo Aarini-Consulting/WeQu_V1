@@ -93,8 +93,10 @@ Meteor.methods({
         }
 
         //get other members in the group
-        var users = Meteor.users.find(
-            {_id:{$ne:userId},"emails.0.address":{$in:groupCheck.emails}},
+        var users = Meteor.users.find({
+                $and : [{"_id":{$ne:userId}}, 
+                {"_id":{$in:groupCheck.userIds}}],
+            },
             {sort: { "profile.firstName": 1 }}
         ).fetch();
 
@@ -248,17 +250,17 @@ Meteor.methods({
         });
 
         if(Object.keys(rank).length == 24){
-            var emailsSelfRankCompleted = groupCheck.emailsSelfRankCompleted;
-            if(emailsSelfRankCompleted){
-                if(emailsSelfRankCompleted.indexOf(userCheck.emails[0].address) == -1){
-                    emailsSelfRankCompleted.push(userCheck.emails[0].address);
+            var userIdsSelfRankCompleted = groupCheck.userIdsSelfRankCompleted;
+            if(userIdsSelfRankCompleted){
+                if(userIdsSelfRankCompleted.indexOf(userCheck._id) == -1){
+                    userIdsSelfRankCompleted.push(userCheck._id);
                 }
             }else{
-                emailsSelfRankCompleted = [userCheck.emails[0].address];
+                userIdsSelfRankCompleted = [userCheck._id];
             }
 
             Group.update({_id:groupId}, 
-                {$set : { "emailsSelfRankCompleted": emailsSelfRankCompleted }});
+                {$set : { "userIdsSelfRankCompleted": userIdsSelfRankCompleted }});
         }
     },
 
@@ -339,19 +341,19 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(groupCheck && groupCheck.emails && groupCheck.emails.length < 2){
+        if(groupCheck && groupCheck.userIds && groupCheck.userIds.length < 2){
             throw (new Meteor.Error("not_enough_group_member")); 
         }
 
-        if(groupCheck && groupCheck.emails && groupCheck.emails.length > 12){
+        if(groupCheck && groupCheck.userIds && groupCheck.userIds.length > 12){
             throw (new Meteor.Error("too_much_group_member")); 
         }
 
         if(!groupCheck.isActive && !groupCheck.isFinished){
-            if(groupCheck.emailsSurveyed && groupCheck.emailsSurveyed.length == groupCheck.emails.length){
+            if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
                 var users = Meteor.users.find(
-                    {$and: [{"emails.0.address":{$in:groupCheck.emails}},
-                    {"emails.0.address":{$in:groupCheck.emailsSurveyed}}]},
+                    {$and: [{"_id":{$in:groupCheck.userIds}},
+                    {"_id":{$in:groupCheck.userIdsSurveyed}}]},
                     {sort: { "profile.firstName": 1 }}
                 ).fetch();
         
@@ -505,7 +507,7 @@ Meteor.methods({
             }
         ).fetch();
 
-        if(readyForPicking.length == groupCheck.emails.length){
+        if(readyForPicking.length == groupCheck.userIds.length){
             Meteor.call('pick.card', groupCheck._id);
         }
     },
@@ -525,7 +527,7 @@ Meteor.methods({
         }
 
         var users = Meteor.users.find(
-            {"emails.0.address":{$in:groupCheck.emails}}
+            {"_id":{$in:groupCheck.userIds}}
         ).fetch();
 
         if(users.length < 1){
