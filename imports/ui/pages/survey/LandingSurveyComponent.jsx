@@ -23,7 +23,7 @@ class LandingSurveyComponent extends React.Component {
       surveyCompleted: true,
     });
 
-    Meteor.call('survey.typeform.completed', this.props.group._id , this.props.currentUser.emails[0].address,
+    Meteor.call('survey.typeform.completed', this.props.group._id , this.props.currentUser._id,
     (err, result) => {
       if(err){
         console.log(err);
@@ -66,9 +66,9 @@ export default withTracker((props) => {
   var handleGroup;
 
   if(currentUser){
-    var email = currentUser.emails[0].address;
+    var userId = currentUser._id;
     handleGroup = Meteor.subscribe('group',{
-        "emails" : email 
+        "userIds" : userId
     },{}, {
         onError: function (error) {
               console.log(error);
@@ -82,7 +82,7 @@ export default withTracker((props) => {
             group = Group.findOne({_id:props.groupId});
         }
         
-        surveyCompleted = group && group.emailsSurveyed && group.emailsSurveyed.indexOf(email) > -1;
+        surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
         dataReady = true;
     }
   }

@@ -116,10 +116,9 @@ Meteor.methods({
 
       var zipName = groupCheck.groupName + "_report.zip";
 
-      var users = Meteor.users.find({$or : [ 
-        {"emails.address" : {$in:groupCheck.emails}  }, 
-        { "profile.emailAddress" : {$in:groupCheck.emails}}
-      ]}).fetch();
+      var users = Meteor.users.find({
+        "_id" : {$in:groupCheck.userIds}
+      }).fetch();
 
       var results = [];
       users.forEach((user) => {
@@ -159,10 +158,9 @@ Meteor.methods({
       }
 
       var user = Meteor.users.findOne({
-        _id:userId,
-        $or : [ 
-        {"emails.address" : {$in:groupCheck.emails}  }, 
-        { "profile.emailAddress" : {$in:groupCheck.emails}}
+        $and : [ 
+        {"_id" : {$in:groupCheck.userIds}}, 
+        {"_id" : userId}
       ]});
 
       if(!user){

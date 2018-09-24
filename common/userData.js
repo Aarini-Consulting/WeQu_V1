@@ -10,8 +10,8 @@ if (Meteor.isServer) {
 }
 
 
-if(Meteor.isDevelopment) {
-	if (Meteor.isClient) {
-		Meteor.subscribe("allUserData");
-	}
-}
+// if(Meteor.isDevelopment) {
+// 	if (Meteor.isClient) {
+// 		Meteor.subscribe("allUserData");
+// 	}
+// }

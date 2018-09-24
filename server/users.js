@@ -7,6 +7,10 @@
 // });
 import { Random } from 'meteor/random';
 
+Meteor.publish('usersFiltered', function(selector, options) {
+  return Meteor.users.find(selector, options);
+});
+
 Meteor.publish('users', function(selector, options) {
   return Meteor.users.find(selector, options);
 });
@@ -100,7 +104,6 @@ Meteor.methods({
   },
   'user.update.email'(currentUser, email) {
     var currentUser = Meteor.users.findOne({_id:currentUser._id});
-    var oldMail = currentUser.emails[0].address;
     var userId = currentUser._id;
 
     if(currentUser){
@@ -109,81 +112,6 @@ Meteor.methods({
       if(checkEmail.length > 0){
         throw new Meteor.Error("email already in use");
       }
-      
-      var updatedGroup = 0;
-      Group.find(
-        {$or : [
-            { "emails": oldMail},
-            { "emailsSurveyed": oldMail},
-            { "emailsSelfRankCompleted": oldMail}
-          ] 
-        }
-      ).forEach(function(gr){
-        var doUpdate = false;
-
-        if(gr.emails){
-          var check = gr.emails.indexOf(oldMail);
-
-          if(check > -1){
-            gr.emails[check] = email;
-            doUpdate = true;
-          }
-        }
-
-        if(gr.emailsSurveyed){
-          var check = gr.emailsSurveyed.indexOf(oldMail);
-
-          if(check > -1){
-            gr.emailsSurveyed[check] = email;
-            doUpdate = true;
-          }
-        }
-
-        if(gr.emailsSelfRankCompleted){
-          var check = gr.emailsSelfRankCompleted.indexOf(oldMail);
-
-          if(check > -1){
-            gr.emailsSelfRankCompleted[check] = email;
-            doUpdate = true;
-          }
-        }
-
-        if(doUpdate){
-          Group.update({_id:gr._id},
-            {$set: gr},
-            {},
-            (err,res) => {
-            if(err){
-              console.log(err);
-            }
-          });
-          updatedGroup = updatedGroup + 1;
-        }
-      });
-
-      updatedConn = 0;
-      Connections.find(
-        { "email": oldMail}, 
-      ).forEach(function(conn){
-        var doUpdate = false;
-
-        if(conn.email == oldMail){
-          conn.email = email;
-          doUpdate = true;
-        }
-
-        if(doUpdate){
-          Connections.update({_id:conn._id},
-            {$set: conn},
-            {},
-            (err,res) => {
-            if(err){
-              console.log(err);
-            }
-          });
-          updatedConn = updatedConn + 1;
-        }
-      });
       
       Meteor.users.update(userId, { 
         '$set': {
@@ -194,10 +122,9 @@ Meteor.methods({
   },
   'user.set.self.rank'(id, groupId) {
     let groupCheck = Group.findOne({_id:groupId});
-    let userCheck = Meteor.users.findOne(id);
 
-    var emailsSurveyed = groupCheck.emailsSurveyed;
-    if(!emailsSurveyed || (emailsSurveyed && emailsSurveyed.indexOf(userCheck.emails[0].address) == -1)){
+    var userIdsSurveyed = groupCheck.userIdsSurveyed;
+    if(!userIdsSurveyed || (userIdsSurveyed && userIdsSurveyed.indexOf(id) == -1)){
       Meteor.users.update(id, { 
         '$set': {
             'profile.selfRank': groupId,
@@ -214,7 +141,7 @@ Meteor.methods({
   },
   'user.delete'() {
     var currentUser = Meteor.users.findOne({_id:Meteor.userId()});
-    var userMail = currentUser.emails[0].address;
+    var userId = currentUser._id;
 
     if(currentUser){
       var groupOwnedByUser = Group.find({"creatorId":currentUser._id}).fetch();
@@ -223,37 +150,37 @@ Meteor.methods({
       }
       Group.find(
         {$or : [
-            { "emails": userMail},
-            { "emailsSurveyed": userMail},
-            { "emailsSelfRankCompleted": userMail}
+            { "userIds": userId},
+            { "userIdsSurveyed": userId},
+            { "userIdsSelfRankCompleted": userId}
           ] 
         }
       ).forEach(function(gr){
         var doUpdate = false;
 
-        if(gr.emails){
-          var check = gr.emails.indexOf(userMail);
+        if(gr.userIds){
+          var check = gr.userIds.indexOf(userId);
 
           if(check > -1){
-            gr.emails.splice(check, 1);
+            gr.userIds.splice(check, 1);
             doUpdate = true;
           }
         }
 
-        if(gr.emailsSurveyed){
-          var check = gr.emailsSurveyed.indexOf(userMail);
+        if(gr.userIdsSurveyed){
+          var check = gr.userIdsSurveyed.indexOf(userId);
 
           if(check > -1){
-            gr.emailsSurveyed.splice(check, 1);
+            gr.userIdsSurveyed.splice(check, 1);
             doUpdate = true;
           }
         }
 
-        if(gr.emailsSelfRankCompleted){
-          var check = gr.emailsSelfRankCompleted.indexOf(userMail);
+        if(gr.userIdsSelfRankCompleted){
+          var check = gr.userIdsSelfRankCompleted.indexOf(userId);
 
           if(check > -1){
-            gr.emailsSelfRankCompleted.splice(check, 1);
+            gr.userIdsSelfRankCompleted.splice(check, 1);
             doUpdate = true;
           }
         }
@@ -268,8 +195,7 @@ Meteor.methods({
 
       Connections.remove(
         {$or : [
-          { "userId": currentUser._id},
-          { "email": userMail}
+          { "userId": currentUser._id}
           ] 
         });
 

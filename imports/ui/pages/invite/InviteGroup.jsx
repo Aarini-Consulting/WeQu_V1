@@ -37,8 +37,8 @@ class InviteGroup extends React.Component {
     if(nextProps.isEdit && nextProps.group){
       if(nextProps.group){
         var copyStateData = [];
-        nextProps.group.emails.forEach(function(email) {
-          copyStateData.push({email:email});
+        nextProps.groupUsers.forEach(function(groupUser) {
+          copyStateData.push({email:groupUser.emails[0].address});
         });
         this.setState({
           info:undefined,
@@ -353,7 +353,7 @@ class InviteGroup extends React.Component {
           })
 
           var readySurvey;
-          if(this.props.group && this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(data.email) > -1){
+          if(this.props.group && this.props.group.userIdsSurveyed && this.props.groupUserEmailsSurveyed.indexOf(data.email) > -1){
             readySurvey = true;
           }
           
@@ -562,21 +562,36 @@ class InviteGroup extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var count;
-  var users;
+  var groupUsers=[];
+  var groupUsersSurveyed=[];
   var handleGroup = Meteor.subscribe('group',{creatorId: Meteor.userId()},{}, {
     onError: function (error) {
           console.log(error);
       }
   });
 
-
   if(handleGroup.ready()){
     count =  Group.find({creatorId: Meteor.userId()}).count();
-    dataReady = true;
+
+    if(props.group){
+      groupUsers = Meteor.users.find(
+        {
+          "_id" : {$in:props.group.userIds}
+        }).fetch();
+      
+      if(props.group.userIdsSurveyed){
+        groupUsersSurveyed = groupUsers.filter(user => props.group.userIdsSurveyed.indexOf(user._id) > -1);
+      }
+    }
     
+
+    dataReady = true;
   }
   return {
       count:count,
+      groupUsers: groupUsers,
+      groupUserEmails: groupUsers.map( (user) => user.emails[0].address),
+      groupUserEmailsSurveyed: groupUsersSurveyed.map( (user) => user.emails[0].address),
       currentUser: Meteor.user(),
       dataReady:dataReady
   };

@@ -1,20 +1,20 @@
 Meteor.methods({
-    'survey.typeform.completed' : function (groupId,email) {
+    'survey.typeform.completed' : function (groupId,userId) {
         let check = Group.findOne({_id:groupId});
 
         if(check){
-            var emailsSurveyed = [];
+            var userIdsSurveyed = [];
 
-            if(check.emailsSurveyed){
-                emailsSurveyed = check.emailsSurveyed;
+            if(check.userIdsSurveyed){
+                userIdsSurveyed = check.userIdsSurveyed;
             }
 
-            if(emailsSurveyed.indexOf(email) < 0){
-                emailsSurveyed.push(email);
+            if(userIdsSurveyed.indexOf(userId) < 0){
+                userIdsSurveyed.push(userId);
             }
 
             Group.update({"_id":groupId},
-                {'$set':{emailsSurveyed:emailsSurveyed}
+                {'$set':{userIdsSurveyed:userIdsSurveyed}
             });
 
             Meteor.users.update({
@@ -26,7 +26,7 @@ Meteor.methods({
             
             var updatedGroup =  Group.findOne(groupId);
             var usersSurveyIncomplete = Meteor.users.find(
-                {$and : [ {"emails.address" : {$in:updatedGroup.emails} }, {"emails.address" : {$nin:updatedGroup.emailsSurveyed} }]}
+                {$and : [ {"_id" : {$in:updatedGroup.userIds} }, {"_id" : {$nin:updatedGroup.userIdsSurveyed} }]}
             ).fetch();
 
             if(usersSurveyIncomplete.length < 1){
