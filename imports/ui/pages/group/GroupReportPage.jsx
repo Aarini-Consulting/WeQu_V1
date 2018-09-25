@@ -99,7 +99,13 @@ class GroupReportPage extends React.Component {
                             {this.props.users &&
                                 this.props.users.map((user) =>
                                 <div className="menu-name w-inline-block cursor-pointer" key={user._id} onClick={this.selectUser.bind(this,user._id)}>
-                                <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
+                                {user.profile.firstName && user.profile.lastName 
+                                    ?
+                                    <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
+                                    :
+                                    <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.emails[0].address}</div>
+                                }
+                                
                                 </div>
                             )
                             }
@@ -195,8 +201,7 @@ export default withTracker((props) => {
             group = Group.findOne({_id : props.groupId});
             users = Meteor.users.find(
             {
-                $or : [ {"emails.address" : {$in:group.emails}  }, 
-                { "profile.emailAddress" : {$in:group.emails}}]
+                "_id" : {$in:group.userIds}
             }
             ).fetch();
             dataReady = true;

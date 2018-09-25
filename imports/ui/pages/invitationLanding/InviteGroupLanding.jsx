@@ -21,7 +21,7 @@ class InviteGroupLanding extends React.Component {
           )
           
       }
-      else if(this.props.quizUser && this.props.group && this.props.group.emails.indexOf(this.props.match.params.email) > -1){ 
+      else if(this.props.quizUser && this.props.group && this.props.group.userIds.indexOf(this.props.quizUser._id) > -1){ 
         if(this.props.quizUser && !this.props.quizUser.profile.trial){
           if(Meteor.userId()){
             return (

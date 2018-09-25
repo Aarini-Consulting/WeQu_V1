@@ -49,23 +49,23 @@ class QuizRankWait extends React.Component {
                 return(
                     <div className="fillHeight weq-bg">
                         <div className="font-rate padding-wrapper">Sit back and relax, the others are evaluating you</div>
-                        <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
+                        <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.userIds.length-1}</div>
                     </div>
                 )
             }else if(this.props.feedbackRank){
                 var ready = this.props.feedbackRank.isSelected;
-                var everyoneReady = (this.props.otherFeedbackRanksReady && this.props.otherFeedbackRanksReady.length == (this.props.group.emails.length - 1));
-                if(this.props.group.emails.length == this.props.group.emailsSelfRankCompleted.length){
+                var everyoneReady = (this.props.otherFeedbackRanksReady && this.props.otherFeedbackRanksReady.length == (this.props.group.userIds.length - 1));
+                if(this.props.group.userIds.length == this.props.group.userIdsSelfRankCompleted.length){
                     // if((!ready && this.props.waitForOthersFeedback)){
                     //     return (
                     //     <div>
                     //         <h1>Please wait other user completes their feedback</h1>
-                    //         <h1>{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</h1>
+                    //         <h1>{this.props.otherFeedbackRanksGiven.length}/{this.props.group.userIds.length-1}</h1>
                     //     </div>
                     //     );
                     // }
                     if((ready && everyoneReady) 
-                    // || this.props.otherFeedbackRanksGiven.length < this.props.group.emails.length-1
+                    // || this.props.otherFeedbackRanksGiven.length < this.props.group.userIds.length-1
                     ){
                         return (
                             <QuizRankOther user={this.props.currentUser} group={this.props.group} feedbackRank={this.props.feedbackRank}/>
@@ -76,7 +76,7 @@ class QuizRankWait extends React.Component {
                             return(
                                 <div className="fillHeight weq-bg">
                                     <div className="font-rate padding-wrapper">Waiting for others to be ready</div>
-                                    <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksReady.length}/{this.props.group.emails.length-1}</div>
+                                    <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksReady.length}/{this.props.group.userIds.length-1}</div>
                                 </div>
                             )
                         }
@@ -121,7 +121,7 @@ class QuizRankWait extends React.Component {
                     return(
                         <div className="fillHeight weq-bg">
                             <div className="font-rate padding-wrapper">Waiting for others to be ready</div>
-                            <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.emails.length-1}</div>
+                            <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.userIds.length-1}</div>
                         </div>
                     )
                     
@@ -235,7 +235,7 @@ export default withTracker((props) => {
 
                 }
 
-                waitForOthersFeedback = !feedbackRank && (otherFeedbackRanksGiven.length >= 1) && (otherFeedbackRanksGiven.length < (group.emails.length-1));
+                waitForOthersFeedback = !feedbackRank && (otherFeedbackRanksGiven.length >= 1) && (otherFeedbackRanksGiven.length < (group.userIds.length-1));
 
                 currentUser = Meteor.user();
                 dataReady = true;

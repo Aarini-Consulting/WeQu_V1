@@ -44,7 +44,7 @@ class GroupPage extends React.Component {
   }
 
   confirmStartGame(){
-    if(this.props.group && this.props.group.emails && this.props.group.emails.length >= 2){
+    if(this.props.group && this.props.group.userIds && this.props.group.userIds.length >= 2){
       this.setState({
         showConfirmStart: true,
       });
@@ -106,9 +106,10 @@ class GroupPage extends React.Component {
 
   renderUsers(){
     return this.props.users.map((user, index) => {
+      var userId = user._id;
       var email = user.emails[0].address;
       var readySurvey;
-      if(this.props.group.emailsSurveyed && this.props.group.emailsSurveyed.indexOf(email) > -1){
+      if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
         readySurvey = true;
       }
       var started = this.props.group.isActive;
@@ -408,8 +409,7 @@ export default withTracker((props) => {
             cardPlacements = CardPlacement.find({groupId:group._id}).fetch();
             users = Meteor.users.find(
               {
-                $or : [ {"emails.address" : {$in:group.emails}  }, 
-                { "profile.emailAddress" : {$in:group.emails}}]
+                "_id" : {$in:group.userIds}
               }
             ).fetch();
   

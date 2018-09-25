@@ -1,6 +1,6 @@
 Meteor.methods({
 
-	genGroupUserUpFront(arr_emails, data, groupName, groupId){
+	genGroupUserUpFront(arr_emails, data){
 		if(!arr_emails){
 			throw (new Meteor.Error("genGroupUserUpFront Failed")); 
 		}	

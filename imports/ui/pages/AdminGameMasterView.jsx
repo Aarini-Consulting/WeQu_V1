@@ -181,7 +181,7 @@ class AdminGameMasterView extends React.Component {
             var groups = this.props.groups.filter((group)=>{return group.creatorId == user._id});
             var users = [];
             groups.forEach((group) => {
-                users = users.concat(group.emails);
+                users = users.concat(group.userIds);
             });
             //remove duplicate
             users = [...new Set(users)];
