@@ -5,14 +5,13 @@ GroupSchema = new SimpleSchema({
       type: String,
       label: "groupName"
     },
-    "emails":{
+    "userIds":{
       type: [String],
-      label: "emails",
+      label: "user id",
     },
-
-    "emailsSurveyed":{
+    "userIdsSurveyed":{
       type: [String],
-      label: "emails",
+      label: "user ids surveyed",
       optional: true
     },
     "isActive":{
@@ -23,7 +22,7 @@ GroupSchema = new SimpleSchema({
       type: Boolean,
       label: "session finished"
     },
-    "emailsSelfRankCompleted":{
+    "userIdsSelfRankCompleted":{
       type: [String],
       label: "self rank Completed",
       optional: true
@@ -33,18 +32,6 @@ GroupSchema = new SimpleSchema({
       type: [Object],
       label: "typeformGraph",
       blackbox:true,
-      optional: true
-    },
-    
-    "arr_emails_existing":{
-      type: [String],
-      label: "emails",
-      optional: true
-    },
-
-    "arr_emails_notExisting":{
-      type: [String],
-      label: "emails",
       optional: true
     },
 

@@ -1,5 +1,5 @@
 Meteor.methods({
-    'updateGroup' : function (group,groupName, data, emailsArray) {
+    'updateGroup' : function (group,groupName, data, arr_emails) {
         var groupId = group._id;
         let groupCheck = Group.findOne({_id:groupId});
         
@@ -17,35 +17,51 @@ Meteor.methods({
         throw (new Meteor.Error("only_gamemaster_can_create_group")); 
         }
 
-        var newEmailInGroup = emailsArray.filter((email)=>{
-            return groupCheck.emails.indexOf(email) < 0
+
+        //create user in db as necessary
+        Meteor.call('genGroupUserUpFront',  arr_emails , data, function (err, result) {
+            // console.log("genGroupUserUpFront" , err, result);
+            if(err){ return err};
+        });
+
+        //get users from email
+        var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
+        var userIds = users.map( (user) => user._id);
+
+        var newUserInGroup = userIds.filter((uid)=>{
+            return groupCheck.userIds.indexOf(uid) < 0
         })
 
-        var newData = data.filter((d)=>{
-            return groupCheck.emails.indexOf(d.email) < 0
-        })
+        //create new user's self rank feedback
+        newUserInGroup.forEach(function(user, index, _arr) {
+            Meteor.call( 'generate.self.rank', user._id, groupCheck._id, (error, result)=>{
+            if(error){
+                console.log(error);
+            }
+            });
+        });
 
-        var removedEmails = groupCheck.emails.filter((email)=>{
-            return emailsArray.indexOf(email) < 0
+        var removedUsers = groupCheck.userIds.filter((uid)=>{
+            return userIds.indexOf(uid) < 0
         })
-        var updatedEmailsSurveyed;
-        if(removedEmails && removedEmails.length > 0 && groupCheck.emailsSurveyed){
-            updatedEmailsSurveyed = groupCheck.emailsSurveyed.filter((email)=>{
-                return removedEmails.indexOf(email) < 0
+        var updatedUserIdsSurveyed;
+        if(removedUsers && removedUsers.length > 0 && groupCheck.userIdsSurveyed){
+            updatedUserIdsSurveyed = groupCheck.userIdsSurveyed.filter((uid)=>{
+                return removedUsers.indexOf(uid) < 0
             })
         }
 
-        var updatedEmailsSelfRankCompleted;
-        if(removedEmails && removedEmails.length > 0 && groupCheck.emailsSelfRankCompleted){
-            updatedEmailsSelfRankCompleted = groupCheck.emailsSelfRankCompleted.filter((email)=>{
-                return removedEmails.indexOf(email) < 0
+        var updatedUserIdsSelfRankCompleted;
+        if(removedUsers && removedUsers.length > 0 && groupCheck.userIdsSelfRankCompleted){
+            updatedUserIdsSelfRankCompleted = groupCheck.userIdsSelfRankCompleted.filter((uid)=>{
+                return removedUsers.indexOf(uid) < 0
             })
         }
         
 
-        if(removedEmails.length > 0){
+        if(removedUsers.length > 0){
             var users = Meteor.users.find(
-                {"emails.0.address":{$in:removedEmails}}
+                {"_id":{$in:removedUsers}}
             ).fetch();
 
             users.forEach((user) => {
@@ -66,27 +82,27 @@ Meteor.methods({
         }
 
         Group.update({"_id":groupId},
-        {'$set':{groupName: groupName,  emails:emailsArray , creatorId: group.creatorId}
+        {'$set':{groupName: groupName,  userIds:userIds , creatorId: group.creatorId}
         });
 
-        if(updatedEmailsSurveyed){
+        if(updatedUserIdsSurveyed){
             Group.update({"_id":groupId},
-            {'$set':{emailsSurveyed: updatedEmailsSurveyed}
+            {'$set':{userIdsSurveyed: updatedUserIdsSurveyed}
             });	
         }
 
-        if(updatedEmailsSelfRankCompleted){
+        if(updatedUserIdsSelfRankCompleted){
             Group.update({"_id":groupId},
-            {'$set':{emailsSelfRankCompleted: updatedEmailsSelfRankCompleted}
+            {'$set':{userIdsSelfRankCompleted: updatedUserIdsSelfRankCompleted}
             });	
         }
 
-        Meteor.call('genGroupQuestionSet', newEmailInGroup , groupId , newData, groupName, (err, result)=> {
-            //  console.log("genGroupQuestionSet" , err, result);
-                if(err){ return err}
-            });
+        // Meteor.call('genGroupQuestionSet', newEmailInGroup , groupId , newData, groupName, (err, result)=> {
+        //     //  console.log("genGroupQuestionSet" , err, result);
+        //         if(err){ return err}
+        //     });
         
-        return newEmailInGroup.length;
+        return newUserInGroup.length;
 
     },
     'resend.group.invite' : function (groupId,email) {
@@ -99,15 +115,17 @@ Meteor.methods({
                 throw (new Meteor.Error("group_creator_missing")); 
             }
 
-            if(check.emails.indexOf(email) < 0){
-                throw (new Meteor.Error("email_not_group_member")); 
-            }
-
             var emailTarget = Meteor.users.findOne({'emails.0.address': email});
 
             if(!emailTarget){
                 throw (new Meteor.Error("user_not_found")); 
             }
+
+            if(check.userIds.indexOf(emailTarget._id) < 0){
+                throw (new Meteor.Error("email_not_group_member")); 
+            }
+
+           
             
             var link = `group-invitation/${email}/${groupId}`
                 
@@ -121,6 +139,11 @@ Meteor.methods({
             };
         
             let body = SSR.render('GroupInviteHtmlEmail', emailData);
+
+            // Meteor.call('send.notification', (error, result) => {
+            //     console.log(error);
+            //     console.log(result);
+            // });
         
             Meteor.call('sendEmail', email, subject, body);
 

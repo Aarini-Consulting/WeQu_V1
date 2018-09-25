@@ -27,7 +27,7 @@ Meteor.startup(function () {
       } 
     );
 
-
+    
     Accounts.validateNewUser(function (user) {
         // TODO : On invited user onboarding , if his email id , already registered with the system .
         // Then copy the services object , update in existing account.
@@ -98,5 +98,42 @@ Meteor.startup(function () {
     });
 
    // Accounts.config({sendVerificationEmail: true, forbidClientAccountCreation: false});
+
+
+    //update old group db to new version
+    var oldGroups = Group.find({emails:{$exists: true}}).fetch();
+
+    if(oldGroups.length > 0){
+      oldGroups.forEach(function (group) {
+				var groupUsers = Meteor.users.find(
+          {
+            $or : [ {"emails.address" : {$in:group.emails}  }, 
+            { "profile.emailAddress" : {$in:group.emails}}]
+          }
+          ).fetch();
+        if(groupUsers.length > 0){
+          var userIds = groupUsers.map( (user) => user._id);
+          var userIdsSurveyed=[];
+          if(group.emailsSurveyed){
+            userIdsSurveyed = groupUsers.filter(user => (user && user.emails && user.emails.length > 0 && group.emailsSurveyed.indexOf(user.emails[0].address) > -1))
+                                    .map( (user) => user._id);
+          }
+          
+          var userIdsSelfRankCompleted=[];
+          if(group.emailsSelfRankCompleted){
+            userIdsSelfRankCompleted = groupUsers.filter(user => (user && user.emails && user.emails.length > 0 && group.emailsSelfRankCompleted.indexOf(user.emails[0].address) > -1))
+                                    .map( (user) => user._id);
+          }
+
+          Group.update({"_id": group._id}, 
+          {$set: {
+            "userIds": userIds,
+            "userIdsSurveyed": userIdsSurveyed,
+            "userIdsSelfRankCompleted": userIdsSelfRankCompleted
+          }},
+          {multi:false});
+        }
+			});
+    }
 
     });
