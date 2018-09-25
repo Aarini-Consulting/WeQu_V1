@@ -115,13 +115,13 @@ Meteor.startup(function () {
           var userIds = groupUsers.map( (user) => user._id);
           var userIdsSurveyed=[];
           if(group.emailsSurveyed){
-            userIdsSurveyed = groupUsers.filter(user => group.emailsSurveyed.indexOf(user.emails[0].address) > -1)
+            userIdsSurveyed = groupUsers.filter(user => (user && user.emails && user.emails.length > 0 && group.emailsSurveyed.indexOf(user.emails[0].address) > -1))
                                     .map( (user) => user._id);
           }
           
           var userIdsSelfRankCompleted=[];
           if(group.emailsSelfRankCompleted){
-            userIdsSelfRankCompleted = groupUsers.filter(user => group.emailsSelfRankCompleted.indexOf(user.emails[0].address) > -1)
+            userIdsSelfRankCompleted = groupUsers.filter(user => (user && user.emails && user.emails.length > 0 && group.emailsSelfRankCompleted.indexOf(user.emails[0].address) > -1))
                                     .map( (user) => user._id);
           }
 
