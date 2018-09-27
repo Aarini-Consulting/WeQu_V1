@@ -33,11 +33,6 @@ class AdminUser extends React.Component {
             console.log(e.target.value);
         }
     }
-
-    handleClickSearch(){
-        console.log(this.state.searchQuery);
-    }
-    
     
     render() {
         if(this.props.dataReady){
@@ -45,7 +40,6 @@ class AdminUser extends React.Component {
                 return (
                     <div className="fillHeight">
                       <div className="div-block-center">
-                        <center> Welcome to the admin Dashboard </center>
                         <a href="#" id="logout"> 
                           <img className="lg-icon" src="/img/login_button_deactive.png" />
                         </a>
@@ -55,7 +49,7 @@ class AdminUser extends React.Component {
                         <div className="gm-search">
                             <div className="gm-search-box">
                                 <input type="text" name="fname" onKeyDown={this.keyPressSearch.bind(this)} onChange={this.handleChangeSearch.bind(this)}/>
-                                <div className="gm-search-icon-container" onClick={this.handleClickSearch.bind(this)}>
+                                <div className="gm-search-icon-container">
                                 <i className="fa fa-search" aria-hidden="true"></i>
                                 </div>
                             </div>

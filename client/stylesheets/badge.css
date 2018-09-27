@@ -1,7 +1,8 @@
 /* badges are removed from bootstrap , so custom css added here ..  */
 
 .badge {
-  padding: 1px 9px 2px;
+  display:inline-block;
+  padding: 0.5em;
   font-size: 12.025px;
   font-weight: bold;
   white-space: nowrap;
