@@ -34,7 +34,7 @@ Meteor.methods({
 
         //create new user's self rank feedback
         newUserInGroup.forEach(function(user, index, _arr) {
-            Meteor.call( 'generate.self.rank', user._id, groupCheck._id, (error, result)=>{
+            Meteor.call( 'generate.self.rank', user, groupCheck._id, (error, result)=>{
             if(error){
                 console.log(error);
             }
