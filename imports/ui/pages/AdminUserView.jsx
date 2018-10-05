@@ -13,12 +13,12 @@ class AdminUserView extends React.Component {
         super(props);
         this.state = { 
             currentPageIndex:0,
-            resultPerPage:5
+            resultPerPage:10
         };
     }
 
     formatDate(date){
-      return date.toString();
+      return date.toLocaleDateString('nl-NL');
     }
 
     handleCheckGameMaster(user, event) {
@@ -70,48 +70,48 @@ class AdminUserView extends React.Component {
         return userList.map((user) => {
             return (
                 <tr key={user._id}>
-                    <td>{user && user.status && user.status.online 
+                    {/* <td>{user && user.status && user.status.online 
                         ?
                         <span className="badge badge-success">&nbsp;</span>
                         :
                         <span className="badge badge-warning">&nbsp;</span>
                         }
-                    </td>
+                    </td> */}
     
-                    <td className="user-avatar">
+                    {/* <td className="user-avatar">
                         <div><span className="status"></span>
                         {user.profile && user.profile.pictureUrl
                             ? <img className="img-circle" width="75" height="75" src={user.profile.pictureUrl}/>
                             : <img className="img-circle" width="75" height="75" src="/img/profile/profile4.png"/>
                         }
                         </div>
-                    </td>
+                    </td> */}
     
     
-                    <td id="user">
+                    <td>
                         {user.profile 
                         ?
-                        <b className="text-capitalize">
+                        <p>
                             {user.profile.firstName}
                             {user.profile.lastName}
-                        </b>
+                        </p>
                         :
-                        <b className="text-capitalize">
+                        <span className="badge badge-info">
                         admin user
-                        </b>
+                        </span>
                         }
-                        <br/>
+                    </td>
+                    <td>
                         {user.profile && user.profile.publicProfileUrl &&
                             <span className="badge">
                             <a className="colorRed" href={user.profile.publicProfileUrl} target="_blank">{user.profile.publicProfileUrl}</a>
                             </span>
                         }
-                        <br/>
                         {user.emails &&
                         user.emails.map((email) =>
-                        <span className="badge badge-info" key={email.address}>
-                            <h5 className="pull-left"> {email.address}</h5>
-                        </span>
+                        <p key={email.address}>
+                            {email.address}
+                        </p>
                         )
                         }
                     </td>
@@ -122,7 +122,7 @@ class AdminUserView extends React.Component {
                         <div className="slider round"></div>
                     </label>	
                     </td>
-                    <td id="user">
+                    {/* <td id="user">
                         <span className="badge badge-info">
                         {user.services.linkedin
                         ? "LinkedIn"
@@ -144,7 +144,7 @@ class AdminUserView extends React.Component {
                         </span>
                         }
     
-                    </td>
+                    </td> */}
                     <td id="user">
                         {this.renderEmailsVerified(user)}
                     </td>
@@ -242,14 +242,12 @@ class AdminUserView extends React.Component {
                         <table className="table table-fw-widget table-hover">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th style={{width:10 +"%"}}>Name / Email</th>
-                                    <th style={{width:10 +"%"}}>Game Master</th>
-                                    <th style={{width:10 +"%"}}>Type</th>
-                                    <th style={{width:5 +"%"}}> Email Confirmed</th>
-                                    <th style={{width:20 +"%"}}>Created</th>
-                                    <th> Last Login</th>
+                                    <th style={{textAlign:"center"}}>Name</th>
+                                    <th style={{textAlign:"center"}}>Email</th>
+                                    <th style={{textAlign:"center"}}>Game Master</th>
+                                    <th style={{textAlign:"center"}}> Email Confirmed</th>
+                                    <th style={{textAlign:"center"}}>Created</th>
+                                    <th style={{textAlign:"center"}}> Last Login</th>
                                 </tr>
                             </thead>
                             <tbody className="no-border-x overflow">
