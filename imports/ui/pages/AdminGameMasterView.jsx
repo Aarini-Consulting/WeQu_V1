@@ -23,7 +23,7 @@ class AdminGameMasterView extends React.Component {
             matrixScore4:0,
             matrixScoreMax:0,
             currentPageIndex:0,
-            resultPerPage:5
+            resultPerPage:10
         }
     }
 
@@ -177,7 +177,14 @@ class AdminGameMasterView extends React.Component {
     }
 
     renderGamemasterListUsers(){
-        return this.props.listUsers.map((user) => {
+        var userList = this.props.listUsers;
+        if(this.state.currentPageIndex <= 0){
+            userList = userList.slice(0,this.state.resultPerPage);
+        }else{
+            userList = userList.slice((this.state.currentPageIndex*this.state.resultPerPage),((this.state.currentPageIndex*this.state.resultPerPage)+this.state.resultPerPage));
+        }
+
+        return userList.map((user) => {
             var groups = this.props.groups.filter((group)=>{return group.creatorId == user._id});
             var users = [];
             groups.forEach((group) => {
@@ -187,48 +194,48 @@ class AdminGameMasterView extends React.Component {
             users = [...new Set(users)];
             return (
                 <tr key={user._id}>
-                    <td>{user.status.online 
+                    {/* <td>{user.status.online 
                         ?
                         <span className="badge badge-success">&nbsp;</span>
                         :
                         <span className="badge badge-warning">&nbsp;</span>
                         }
-                    </td>
+                    </td> */}
     
-                    <td className="user-avatar">
+                    {/* <td className="user-avatar">
                         <div><span className="status"></span>
                             {user.profile && user.profile.pictureUrl
                             ? <img className="img-circle" width="75" height="75" src={user.profile.pictureUrl}/>
                             : <img className="img-circle" width="75" height="75" src="/img/profile/profile4.png"/>
                             }
                         </div>
-                    </td>
+                    </td> */}
     
     
                     <td id="user">
                         {user.profile 
                         ?
-                        <b className="text-capitalize">
+                        <p>
                             {user.profile.firstName}
                             {user.profile.lastName}
-                        </b>
+                        </p>
                         :
-                        <b className="text-capitalize">
+                        <span className="badge badge-info">
                         admin user
-                        </b>
+                        </span>
                         }
-                        <br/>
+                    </td>
+                    <td id="user">
                         {user.profile && user.profile.publicProfileUrl &&
                             <span className="badge">
                             <a className="colorRed" href={user.profile.publicProfileUrl} target="_blank">{user.profile.publicProfileUrl}</a>
                             </span>
                         }
-                        <br/>
                         {user.emails &&
                         user.emails.map((email) =>
-                        <span className="badge badge-info" key={email.address}>
-                            <h5 className="pull-left"> {email.address}</h5>
-                        </span>
+                        <p key={email.address}>
+                            {email.address}
+                        </p>
                         )
                         }
                     </td>
@@ -445,13 +452,12 @@ class AdminGameMasterView extends React.Component {
                                 <table className="table table-fw-widget table-hover">
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th style={{width:"10%"}}>Name / Email</th>
-                                            <th style={{width:"10%"}}>Game Master</th>
-                                            <th style={{width:"20%"}}> No of Groups</th>
-                                            <th style={{width:"20%"}}>No of Users</th>
-                                            <th style={{width:"20%"}}></th>
+                                            <th style={{textAlign:"center"}}>Name </th>
+                                            <th style={{textAlign:"center"}}>Email</th>
+                                            <th style={{textAlign:"center"}}>Game Master</th>
+                                            <th style={{textAlign:"center"}}> No of Groups</th>
+                                            <th style={{textAlign:"center"}}>No of Users</th>
+                                            <th style={{textAlign:"center"}}></th>
                                         </tr>
                                     </thead>
                                     <tbody className="no-border-x overflow">					
