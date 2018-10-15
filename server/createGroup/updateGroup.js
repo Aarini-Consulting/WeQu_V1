@@ -19,7 +19,7 @@ Meteor.methods({
 
 
         //create user in db as necessary
-        Meteor.call('genGroupUserUpFront',  arr_emails , data, function (err, result) {
+        Meteor.call('genGroupUserUpFront',  arr_emails, undefined, data, function (err, result) {
             // console.log("genGroupUserUpFront" , err, result);
             if(err){ return err};
         });

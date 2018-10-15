@@ -1,8 +1,8 @@
 Meteor.methods({
 
-	genGroupUserUpFront(arr_emails, data){
-		if(!arr_emails){
-			throw (new Meteor.Error("genGroupUserUpFront Failed")); 
+	genGroupUserUpFront(arr_emails, arr_numbers, data){
+		if(!arr_emails && !arr_numbers){
+			throw (new Meteor.Error("no user to add")); 
 		}	
 
 		var data, index , i , j , link; 
@@ -51,6 +51,33 @@ Meteor.methods({
 			}
 
 		}
-	}
+		if(arr_numbers && arr_numbers.length > 0){
+			for (i = 0; i < arr_numbers.length; i++) {
+				var number = arr_numbers[i];
+	
+				var checkUser = Meteor.users.findOne(
+					{
+						$and : [ 
+							{$and : [ {"mobile.countryCode" : number.countryCode  }, 
+								{ "mobile.number" : number.number}
+							]},
+						]
+					}
+				);
+	
+				if(!checkUser){
+					var userId = Accounts.createUser({
+						username:number.number,
+						password: _id,
+					});
 
+					Meteor.users.update({_id: userId},
+						{$set: {
+							'mobile' : [{'countryCode':number.countryCode, 'number':number.number, 'verified':true}],
+						} 
+					});
+				}
+			}
+		}
+	}
 });
