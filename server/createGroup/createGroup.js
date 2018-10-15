@@ -159,14 +159,6 @@ Meteor.methods({
         });
       }  
     }
-
-    if(arr_numbers && arr_numbers.length > 0){
-      for(i=0;i<arr_numbers.length;i++){
-        Meteor.call('send.sms.invitation', arr_numbers[i].number, arr_numbers[i].link, function (err, result) {
-          if(err){ return err};
-        });
-      }  
-    }
     
     //create user's self rank feedback
     users.forEach(function(user, index, _arr) {

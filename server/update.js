@@ -1,6 +1,18 @@
   Meteor.methods({
         'updateProfileFromTrial' : function (data) {
-           return Meteor.users.update({_id: data.userId}, {$set: {'profile.firstName' : data.firstName ,
+          console.log(data);
+          //check if user is invited from sms
+          var checkUser = Meteor.users.findOne({_id:data._id});
+          if(checkUser && checkUser.mobile && checkUser.mobile.length > 0 && checkUser.mobile[0].number){
+            Meteor.users.update({_id: userId},
+              {$set: {
+                'emails.0.address':data.registerEmail,
+                'mobile.0.verified':true,
+              } 
+            });
+          }
+
+          return Meteor.users.update({_id: data.userId}, {$set: {'profile.firstName' : data.firstName ,
                                                                   'profile.lastName' : data.lastName ,
                                                                   'profile.trial': false,
                                                                   'profile.consentSubs':{consentGiven:data.consentSubs, lastUpdated:new Date()}
