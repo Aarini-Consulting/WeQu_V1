@@ -1,12 +1,15 @@
   Meteor.methods({
         'updateProfileFromTrial' : function (data) {
-          console.log(data);
           //check if user is invited from sms
-          var checkUser = Meteor.users.findOne({_id:data._id});
+          var checkUser = Meteor.users.findOne({_id:data.userId});
           if(checkUser && checkUser.mobile && checkUser.mobile.length > 0 && checkUser.mobile[0].number){
-            Meteor.users.update({_id: userId},
+            if(!checkUser.emails){
+              //add new email
+              Accounts.addEmail(checkUser._id, data.registerEmail);
+            }
+            
+            Meteor.users.update({_id: checkUser._id},
               {$set: {
-                'emails.0.address':data.registerEmail,
                 'mobile.0.verified':true,
               } 
             });
