@@ -17,10 +17,7 @@ Meteor.methods({
     }
 
     //create user in db as necessary
-    Meteor.call('genGroupUserUpFront',  arr_emails, undefined, data, function (err, result) {
-      // console.log("genGroupUserUpFront" , err, result);
-      if(err){ return err};
-    });
+    Meteor.call('genGroupUserUpFront',  arr_emails, undefined, data);
 
     //get users from email
     var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
@@ -95,10 +92,7 @@ Meteor.methods({
 
 
     //create user in db as necessary
-    Meteor.call('genGroupUserUpFront',  arr_emails, arr_numbers, undefined, function (err, result) {
-      // console.log("genGroupUserUpFront" , err, result);
-      if(err){ return err};
-    });
+    Meteor.call('genGroupUserUpFront',  arr_emails, arr_numbers, undefined);
 
     var arr_phoneNumbers = arr_numbers.map((num)=>{return num.number});
     var arr_countryCode = arr_numbers.map((num)=>{return num.countryCode});
