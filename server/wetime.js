@@ -1,3 +1,26 @@
+import { Meteor } from 'meteor/meteor';
+
+const { google } = require('googleapis');
+var getAccessToken = () => {
+    return new Promise(function(resolve, reject) {
+        var key = require('/wetime-firebase-service-account.json');
+        var jwtClient = new google.auth.JWT(
+        key.client_email,
+        null,
+        key.private_key,
+        "https://www.googleapis.com/auth/firebase.messaging",
+        null
+        );
+        jwtClient.authorize(function(err, tokens) {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve(tokens.access_token);
+        });
+    });
+}
+
 Meteor.methods({
     'update.selected.group' : function (groupId) {
         if(this.userId){
@@ -15,6 +38,47 @@ Meteor.methods({
                     'mobile' : [{'countryCode':countryCode, 'number':msisdn, 'verified':true}],
                 } 
             });
+        }
+    },
+    'update.deviceToken' : function (deviceToken) {
+        if(this.userId){
+            Meteor.users.update({_id: this.userId},
+                {$set: {
+                    'devices' : [{'deviceToken':deviceToken}],
+                } 
+            });
+        }
+    },
+    'send.push.notification' : async function () {
+        var token = await getAccessToken();
+
+        this.unblock();
+        var body = JSON.stringify({
+            "message":{
+                "notification" : {
+                    "body" : "This is an FCM notification message!",
+                    "title" : "FCM Message",
+                },
+                "token" : "chAlXP25Sdc:APA91bG1232F6OIS8bSXFXeyGc2_QW3zhMME8Vazc1TO_1bU2vPBIrZJONAP-tGs65A7yAmGrxAEWWoWKe2jHOgjTYKLBVL1Hl0elUn2oWLLLMziDec-lBdPvBdFfbYs1hDmQhm4cyQL",
+            }
+        });
+             
+        try{
+            console.log("HTTP call");
+            var result = HTTP.call( 'POST', 'https://fcm.googleapis.com/v1/projects/wetime-10a2d/messages:send', 
+            {
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization":`Bearer ${token}`,
+                },
+                content: body
+                
+            });
+            console.log(result);
+            return result;
+        }
+        catch(error){
+            return error;
         }
     },
     'send.verification.sms' : function (countryCode, phoneNumber) {
