@@ -51,13 +51,27 @@ Meteor.methods({
     },
     'send.push.notification' : async function () {
         var token = await getAccessToken();
-
+        console.log("OAUTH TOKEN");
+        console.log(token);
         this.unblock();
+
+        var bodyText ="Click me plssss!";
+        var titleText = "Call of WeTime";
+
         var body = JSON.stringify({
             "message":{
                 "notification" : {
-                    "body" : "This is an FCM notification message!",
-                    "title" : "FCM Message",
+                    "body" : bodyText,
+                    "title" : titleText,
+                },
+                "data" : {
+                    "body" : bodyText,
+                    "title" : titleText,
+                    "testPayload1" : "KAB-500L",
+                    "testPayload2" : "R-73M"
+                },
+                "android":{
+                    "priority":"high"
                 },
                 "token" : "chAlXP25Sdc:APA91bG1232F6OIS8bSXFXeyGc2_QW3zhMME8Vazc1TO_1bU2vPBIrZJONAP-tGs65A7yAmGrxAEWWoWKe2jHOgjTYKLBVL1Hl0elUn2oWLLLMziDec-lBdPvBdFfbYs1hDmQhm4cyQL",
             }
