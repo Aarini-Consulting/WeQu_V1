@@ -9,11 +9,13 @@ import {
   Route,
   Link,
   IndexRoute, 
-  browserHistory
+  browserHistory,
+  withRouter
 } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Meteor } from 'meteor/meteor';
-
+import { withTracker } from 'meteor/react-meteor-data';
+import {render} from 'react-dom';
 import CheckLoginVerified from './CheckLoginVerified';
 import AdminOnly from './AdminOnly';
 
@@ -43,7 +45,13 @@ import '/imports/startup/client/css/wequ-profile.webflow';
 import LinkedInPermission from '/imports/ui/pages/linkedIn/LinkedInPermission';
 import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
+import Loading from '/imports/ui/pages/loading/Loading';
+
 const history = createBrowserHistory();
+
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 //container component to check user's login status
 //if not logged in, redirect to login page
@@ -84,39 +92,141 @@ const CheckNotLoggedIn = class CheckNotLoggedIn extends React.Component {
   }
 }
 
-const App = () => (
-  <Switch history={history}>
-      <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
-      <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizRankPage {...props}/>} {...props}/>)} />
-      <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
-      <Route exact path='/group/:id' render={(props) => (<AdminOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
-      <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
-      <Route exact path='/settings/:type' render={(props) => (<CheckLoginVerified childComponent={<EditEntry {...props}/>} {...props}/>)} />
-      <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
-      <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
-      <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
-      <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
-      <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
-      <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
-      <Route exact path='/reset-password/:token' component={ResetPassword} />
-      <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
-      <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
-      <Route exact path='/verify-email/:token' component={VerifyEmail} />
-      <Route exact path='/update-email/:token' component={VerifyUpdateEmail} />
-      <Route path="/adminUser" component={AdminUser}/>
-      <Route path="/404" component={NotFound}/>
-      <Route path="/401" component={NotAuthorized}/>
-      <Route path="*" component={NotFound}/>
-  </Switch>
-)
+const App = class App extends React.Component {
+    
+  constructor(props) {
+    super(props);
+    this.state={
+      initialLocale:i18n.getLocale(),
+      languageLoaded:false,
+    }
+  }
 
+  componentWillReceiveProps(nextProps){
+    if(this.props.currentUser && !nextProps.currentUser){
+      //logout detected, set locale back to its initial locale
+      this.unsetLocale();
+    }
+    this.setLocale(nextProps);
+  }
+
+  componentDidMount(){
+    this.setLocale(this.props);
+  }
+
+  unsetLocale(){
+    i18n.setLocale(this.state.initialLocale);
+  }
+
+  setLocale(props){
+    //detect current locale
+    var locale = i18n.getLocale();
+    //e.g. locale = 'en-US';
+    var supportedLocale = ['nl-NL', 'en-US'];
+
+    //override detected locale with locale value from user profile
+    var user = props.currentUser;
+    if(user && user.profile && user.profile.locale){
+      locale = user.profile.locale;
+    }    
+
+    var languageCode = locale.split("-")[0];
+    if(supportedLocale.indexOf(locale) < 0){
+      //locale not listed as supported
+      //check locale lang to see if it match any of the supported lang
+      
+      if(languageCode == supportedLocale[0].split("-")[0]){
+        locale = supportedLocale[0];
+      }
+      else if(languageCode == supportedLocale[1].split("-")[0]){
+        locale = supportedLocale[1];
+      }else{
+        locale = supportedLocale[0];
+      }
+    }
+
+    i18n.setLocale(locale).then(() => {
+      this.setState({
+        languageLoaded:true
+      });
+    });
+
+    if(i18n.getLocale() == locale && !this.state.languageLoaded){
+      this.setState({
+        languageLoaded:true
+      });
+    }
+  }
+
+  componentWillUnmount(){
+    //on destroy, set locale back to original locale
+    this.unsetLocale();
+  }
+
+  render() {
+    if(this.state.languageLoaded){
+        return (
+          <div>
+          { /* Place to put layout codes here */ }
+          <Switch history={history}>
+              <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
+              <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizRankPage {...props}/>} {...props}/>)} />
+              <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
+              <Route exact path='/group/:id' render={(props) => (<AdminOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
+              <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
+              <Route exact path='/settings/:type' render={(props) => (<CheckLoginVerified childComponent={<EditEntry {...props}/>} {...props}/>)} />
+              <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
+              <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
+              <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
+              <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
+              <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
+              <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
+              <Route exact path='/reset-password/:token' component={ResetPassword} />
+              <Route exact path='/sign-up' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
+              <Route exact path='/sign-up/:id' render={(props) => (<CheckNotLoggedIn childComponent={<SignUp {...props}/>} {...props}/>)} />
+              <Route exact path='/verify-email/:token' component={VerifyEmail} />
+              <Route exact path='/update-email/:token' component={VerifyUpdateEmail} />
+              <Route path="/adminUser" component={AdminUser}/>
+              <Route path="/404" component={NotFound}/>
+              <Route path="/401" component={NotAuthorized}/>
+              <Route path="*" component={NotFound}/>
+          </Switch>
+          </div>
+        );
+    }
+    else{
+      return (
+        <div className="loginwraper">
+          <Loading/>
+        </div>
+      );
+    }
+  }
+};
+
+export const AppWrapper = withRouter(withTracker((props) => {
+  var dataReady = false;
+  var currentUser = Meteor.user();
+
+  if(Meteor.userId()){
+    if(currentUser){
+      dataReady = true;
+    }
+  }else{
+    dataReady = true;
+  }
+  return {
+    dataReady: dataReady,
+    currentUser: currentUser,
+  };
+})(App)); 
+  
 Meteor.startup(()=> {
   $(document).ready(()=>{
-    ReactDOM.render((
+    render((
       <BrowserRouter>
-        <App />
+        <AppWrapper />
       </BrowserRouter>
     ), document.getElementById('react-root'));   
   })                                                                                               
 });    
-   

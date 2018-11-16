@@ -8,6 +8,10 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class EditEntry extends React.Component {
 
   constructor(props) {
@@ -15,6 +19,7 @@ class EditEntry extends React.Component {
     this.state={
         updating:false,
         gender:undefined,
+        locale:i18n.getLocale(),
         showInfo:false,
         showInfoMessage:""
     }
@@ -42,13 +47,16 @@ class EditEntry extends React.Component {
     })
   }
 
+  localeChange(locale){
+    this.setState({
+        locale:locale,
+    })
+  }
+
   handleNameSubmit(event){
     event.preventDefault();
     var firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
     var lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
-
-    console.log(firstName);
-    console.log(lastName);
 
     if(firstName && lastName && firstName != "" && lastName != ""){
         this.setState({
@@ -111,6 +119,28 @@ class EditEntry extends React.Component {
             updating: true,
         });
         Meteor.call( 'user.update.gender', this.state.gender, ( error, response ) => {
+            this.setState({
+              updating: false,
+            });
+            if ( error ) {
+                console.log(error);
+                this.setState({ 
+                    showInfo: true,
+                    showInfoMessage:error.error
+                });
+            }else{
+                this.props.history.goBack();
+            }
+        });
+    }
+  }
+
+  handleLocaleSubmit(){
+    if(this.state.locale && this.state.locale != ""){
+        this.setState({
+            updating: true,
+        });
+        Meteor.call( 'user.set.locale', this.state.locale, ( error, response ) => {
             this.setState({
               updating: false,
             });
@@ -203,6 +233,34 @@ class EditEntry extends React.Component {
                       </div>
                     </div>
                     <input className="submit-button w-button" type="submit" value="Save Changes" onClick={this.handleGenderSubmit.bind(this)}/>
+                </div>
+            </div>
+        }
+        else if(type == "languages"){
+            title = "Languages"
+            content = 
+            <div className="settings-edit-wrapper">
+                <div className="fontreleway w-block">
+                    <label className="fontreleway edit settings title">Your Language: </label>
+                    <div className="form-radio-group">
+                      <div className="form-radio w-radio">
+                        <label className="field-label w-form-label">
+                          <input type="radio" name="locale" value="en-US" className="w-radio-input" 
+                          checked={this.state.locale == "en-US"}
+                          onChange={this.localeChange.bind(this,"en-US")}/>
+                          English
+                          </label>
+                      </div>
+                      <div className="form-radio w-radio">
+                        <label className="field-label w-form-label">
+                          <input type="radio" name="locale" value="nl-NL" className="w-radio-input"
+                          checked={this.state.locale == "nl-NL"}
+                          onChange={this.localeChange.bind(this,"nl-NL")}/>
+                          Nederlands
+                        </label>
+                      </div>
+                    </div>
+                    <input className="submit-button w-button" type="submit" value="Save Changes" onClick={this.handleLocaleSubmit.bind(this)}/>
                 </div>
             </div>
         } 

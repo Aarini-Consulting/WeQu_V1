@@ -3307,9 +3307,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .form-radio {
-  width: 85%;
-  float: right;
-  text-align: left;
+  text-align: right;
 }
 
 .radio-input{

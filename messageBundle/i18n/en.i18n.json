@@ -1,0 +1,31 @@
+{
+    "_locale": "en-US",
+    "_namespace": "weq",
+    "settings": {
+        "MyAccountTitle": "My account",
+        "AccountType": "Account Type: {$accountType}",
+        "AccountTypeAds":"Do you want to facilitate your own WeQ session? See if you're qualified for our {$link}",
+        "AccountTypeAdsCMC":"Certified Master Coach program",
+        "ChangeName":"Change your name",
+        "ChangeEmail":"Change your email",
+        "LanguagesTitle": "Language Settings",
+        "ChangeLanguage":"Change your language",
+        "MyConsentTitle":"My Consent",
+        "DeleteAccount":"Delete my account/data",
+        "Logout":"Logout"
+    },
+    "home": {
+        "Language": "Language",
+        "enUS": "English - U.S.",
+        "FogottenPassword":"Forgotten password?",
+        "Signup": "Signup with e-mail",
+        "LoginEmail":"Login",
+        "LoginLinkedIn":"Register or login with LinkedIn"
+    },
+    "endScreen":{
+        "Congrats":"Congratulations! You have played all trends !",
+        "QuestionInit":"To see all trend insights, please answer the following question(s) about yourself",
+        "ButtonShowQuestionsSingle":"Answer a question",
+        "ButtonShowQuestions":"Answer {$count} questions"
+    }
+}

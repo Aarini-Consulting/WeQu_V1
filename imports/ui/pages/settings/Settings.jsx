@@ -7,13 +7,18 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state={
             showConfirmDelete:false,
             showDeleteInfoGameMaster:false,
-            consentSubs:false
+            consentSubs:false,
+            locale:i18n.getLocale()
         }
     }
 
@@ -72,6 +77,8 @@ class Settings extends React.Component {
     render() {
     var gameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
     var admin = Roles.userIsInRole( Meteor.userId(), 'admin' );
+    var languageCode = this.state.locale.split("-")[0];
+
       return (
         <div className="fillHeight">
         <Menu location={this.props.location} history={this.props.history}/>
@@ -82,7 +89,7 @@ class Settings extends React.Component {
             <li className="list-item settings-group-header">
                 <div className="summarytext">
                     <div className="fontreleway fontstatement settings-group-header noselect">
-                    My Account
+                    <T>weq.settings.MyAccountTitle</T>
                     </div>
                 </div>
             </li>
@@ -92,20 +99,20 @@ class Settings extends React.Component {
                         ?
                         <div className="fontreleway fontstatement noselect">
                             <div className="w-block summarytext">
-                            Account Type: Supreme Leader
+                                {i18n.getTranslation("weq.settings.AccountType",{accountType:"Supreme Leader"})}
                             </div>
                         </div>
                         :gameMaster 
                             ?
                             <div className="fontreleway fontstatement noselect">
                                 <div className="w-block summarytext">
-                                Account Type: Team Admin
+                                    {i18n.getTranslation("weq.settings.AccountType",{accountType:"Team Admin"})}
                                 </div>
                             </div>
                             :
                             <div className="fontreleway fontstatement noselect">
                                 <div className="w-block summarytext">
-                                Account Type: Team Member
+                                    {i18n.getTranslation("weq.settings.AccountType",{accountType:"Team Member"})}
                                 </div>
                                 <div className="w-block summarytext-sub">Do you want to facilitate your own WeQ session? See if you're qualified for our 
                                 &nbsp;<a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank">Certified Coach training program</a></div>
@@ -119,7 +126,7 @@ class Settings extends React.Component {
                         <div className="w-block summarytext">
                             {getUserName(this.props.currentUser.profile)}
                         </div>
-                        <div className="w-block summarytext-sub">change your name</div>
+                        <div className="w-block summarytext-sub"><T>weq.settings.ChangeName</T></div>
                     </div>
                 </Link>
             </li>
@@ -129,14 +136,36 @@ class Settings extends React.Component {
                         <div className="w-block summarytext">
                         {this.props.currentUser.emails && this.props.currentUser.emails[0].address}
                         </div>
-                        <div className="w-block summarytext-sub">change your email address</div>
+                        <div className="w-block summarytext-sub"><T>weq.settings.ChangeEmail</T></div>
                     </div>
                 </Link>
             </li>
             <li className="list-item settings-group-header">
                 <div className="summarytext">
                     <div className="fontreleway fontstatement settings-group-header noselect">
-                    My Consents
+                    <T>weq.settings.LanguagesTitle</T>
+                    </div>
+                </div>
+            </li>
+            <li className="list-item">
+                <Link to="/settings/languages" className="summarytext">
+                    <div className="fontreleway fontstatement cursor-pointer">
+                        <div className="w-block summarytext">
+                        {languageCode == "en" &&
+                            "English"
+                        }
+                        {languageCode == "nl" &&
+                            "Nederlands"
+                        }
+                        </div>
+                        <div className="w-block summarytext-sub"><T>weq.settings.ChangeLanguage</T></div>
+                    </div>
+                </Link>
+            </li>
+            <li className="list-item settings-group-header">
+                <div className="summarytext">
+                    <div className="fontreleway fontstatement settings-group-header noselect">
+                    <T>weq.settings.MyConsentTitle</T>
                     </div>
                 </div>
             </li>
@@ -176,13 +205,13 @@ class Settings extends React.Component {
             <li className="list-item settings-group-header">
                 <div className="summarytext">
                     <div className="fontreleway fontstatement settings-group-header cursor-pointer" onClick={this.showConfirmDelete.bind(this)}>
-                    <u>DELETE MY ACCOUNT/DATA</u></div>
+                    <u><T>weq.settings.DeleteAccount</T></u></div>
                 </div>
             </li>
             <li className="list-item settings-group-header white-border-top">
                 <div className="summarytext">
                     <div className="fontreleway fontstatement settings-group-header cursor-pointer" onClick={this.logout.bind(this)}>
-                        <u>LOG OUT</u>
+                        <u><T>weq.settings.Logout</T></u>
                     </div>
                 </div>
             </li>

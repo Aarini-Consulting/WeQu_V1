@@ -60,3 +60,4 @@ github-config-ui@1.0.0
 dynamic-import@0.3.0
 promise@0.10.1
 fourseven:scss
+universe:i18n

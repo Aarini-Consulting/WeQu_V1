@@ -1,0 +1,31 @@
+{
+    "_locale": "nl-NL",
+    "_namespace": "weq",
+    "settings": {
+        "MyAccountTitle": "Mijn account",
+        "AccountType": "Account Type: {$accountType}",
+        "AccountTypeAds":"Do you want to facilitate your own WeQ session? See if you're qualified for our {$link}",
+        "AccountTypeAdsCMC":"Certified Master Coach program",
+        "ChangeName":"Naam wijzigen",
+        "ChangeEmail":"Email wijzigen",
+        "LanguagesTitle": "Taalinstellingen",
+        "ChangeLanguage":"Taal wijzigen",
+        "MyConsentTitle":"Mijn toestemmingen",
+        "DeleteAccount":"Account/Data verwijderen",
+        "Logout":"Uitloggen"
+    },
+    "home": {
+        "Language": "Language",
+        "enUS": "English - U.S.",
+        "FogottenPassword":"Wachtwoord vergeten?",
+        "Signup": "Aanmelden met e-mail",
+        "LoginEmail":"Log in",
+        "LoginLinkedIn":"Aanmelden of inloggen met LinkedIn"
+    },
+    "endScreen":{
+        "Congrats":"Proficiat! U heeft alle trends gespeeld !",
+        "QuestionInit":"Om alle trendinzichten te kunnen bekijken, vragen wij u deze vra(a)g(en) over uzelf te beantwoorden",
+        "ButtonShowQuestionsSingle":"Beantwoord een vragen",
+        "ButtonShowQuestions":"Beantwoord {$count} vra(a)g(en)"
+    }
+}
