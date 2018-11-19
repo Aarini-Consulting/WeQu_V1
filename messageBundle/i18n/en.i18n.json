@@ -14,7 +14,7 @@
         "ConsentPromo":"I would like to receive team-boosting related information, offers, recommendations and updates from WeQ",
         "Logout":"Logout"
     },
-    "settings.edit": {
+    "settingsEdit": {
         "VerificationSent": "Verification email sent!, Please follow the link in the email to change your email",
         "Updating": "updating...",
         "ErrorEmailSameOld": "new email is the same as the old one",
