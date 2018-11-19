@@ -1945,14 +1945,15 @@ body {
 }
 
 .contactlist-wrapper {
-  height:100%;
+  height:calc(100vh - 120px);
+  overflow:auto;
 }
 
-.contactlist-wrapper.group-list {
+/* .contactlist-wrapper.group-list {
   height:calc(100% - 80px);
   margin-bottom:80px;
   overflow:auto;
-}
+} */
 
 .contactlist {
   display: inline-block;
