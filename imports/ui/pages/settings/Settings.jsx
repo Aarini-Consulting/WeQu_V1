@@ -7,6 +7,8 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
+import {complexLinkTranslate} from '/imports/startup/client/complexLinkTranslate';
+
 import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
@@ -78,7 +80,7 @@ class Settings extends React.Component {
     var gameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
     var admin = Roles.userIsInRole( Meteor.userId(), 'admin' );
     var languageCode = this.state.locale.split("-")[0];
-
+    
       return (
         <div className="fillHeight">
         <Menu location={this.props.location} history={this.props.history}/>
@@ -114,8 +116,9 @@ class Settings extends React.Component {
                                 <div className="w-block summarytext">
                                     {i18n.getTranslation("weq.settings.AccountType",{accountType:"Team Member"})}
                                 </div>
-                                <div className="w-block summarytext-sub">Do you want to facilitate your own WeQ session? See if you're qualified for our 
-                                &nbsp;<a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank">Certified Coach training program</a></div>
+                                <div className="w-block summarytext-sub">
+                                    {complexLinkTranslate("settings.accountTypeAds")}
+                                </div>
                             </div>
                     }
                 </div>
@@ -174,7 +177,7 @@ class Settings extends React.Component {
                     <div className="fontreleway fontstatement">
                             <input type="checkbox" ref="consentSubs" name="consentSubs"
                             checked={true} disabled/>&nbsp; 
-                            I have read and agree to the <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Terms</a> and <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Privacy Policy</a>.
+                            {complexLinkTranslate("settings.consentTerms")}
                     </div>
                 </div>
             </li>
@@ -186,7 +189,7 @@ class Settings extends React.Component {
                             <input type="checkbox" ref="consentSubs" name="consentSubs"
                             checked={true}
                             disabled/>&nbsp;
-                            I have read and agree to the <a href="https://www.weq.io/policy/certified-master-coach-terms-and-conditions" target="_blank" id="terms">Certified Master Coach Terms and Conditions</a>.
+                            {complexLinkTranslate("settings.consentCMC")}
                     </div>
                 </div>
             </li>
@@ -198,7 +201,7 @@ class Settings extends React.Component {
                             <input type="checkbox" ref="consentSubs" name="consentSubs"
                             checked={this.state.consentSubs}
                             onChange={this.toggleConsent.bind(this)}/>&nbsp; 
-                            I would like to receive team-boosting related information, offers, recommendations and updates from WeQ
+                            <T>weq.settings.ConsentPromo</T>
                     </div>
                 </div>
             </li>
