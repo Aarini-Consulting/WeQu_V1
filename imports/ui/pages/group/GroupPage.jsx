@@ -94,6 +94,10 @@ class GroupPage extends React.Component {
     });
   }
 
+  getTypeFormResult(){
+    Meteor.call('get.response.typeform', 'oLBtn6');
+  }
+
   renderUserCards(cards){
     return cards.map((card, index) => {
       return(
@@ -163,6 +167,9 @@ class GroupPage extends React.Component {
       return(
         <div className="tap-content w-clearfix">
           <div className="font-matric">
+            <button className="tablinks" id="view1" onClick={this.getTypeFormResult.bind(this)}>
+                Get Typeform Score
+            </button>
             Please check again when survey is completed
           </div>
         </div>
