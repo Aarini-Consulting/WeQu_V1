@@ -47,6 +47,8 @@ import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import {getDefaultLocale} from '/imports/startup/client/getDefaultLocale';
+
 const history = createBrowserHistory();
 
 import i18n from 'meteor/universe:i18n';
@@ -97,7 +99,7 @@ const App = class App extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      initialLocale:i18n.getLocale(),
+      initialLocale:getDefaultLocale(),
       languageLoaded:false,
     }
   }
@@ -120,7 +122,7 @@ const App = class App extends React.Component {
 
   setLocale(props){
     //detect current locale
-    var locale = i18n.getLocale();
+    var locale = getDefaultLocale();
     //e.g. locale = 'en-US';
     var supportedLocale = ['nl-NL', 'en-US'];
 
@@ -129,8 +131,15 @@ const App = class App extends React.Component {
     if(user && user.profile && user.profile.locale){
       locale = user.profile.locale;
     }    
+    
+    var languageCode;
+    //check type of locale (e.g. "en" or "en-US")
+    if(locale.toString().length > 2){
+      languageCode = locale.split("-")[0];
+    }else{
+      languageCode = locale
+    }
 
-    var languageCode = locale.split("-")[0];
     if(supportedLocale.indexOf(locale) < 0){
       //locale not listed as supported
       //check locale lang to see if it match any of the supported lang
