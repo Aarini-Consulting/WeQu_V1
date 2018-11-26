@@ -25,19 +25,19 @@ export const ReportPdf = ({propData}) => (
             </div>
             <div className="section _2-content">
             <div className="div-howtoread">
-                <div className="box monitor w-clearfix">
+                {/* <div className="box monitor w-clearfix">
                 <div className="h4 monitor">Monitor your progress each <br/>time you play</div>
                 <div className="arrow-monitor"></div>
-                </div>
-                <div className="pointer"></div>
+                </div> */}
+                {/* <div className="pointer"></div> */}
                 <div className="h3 title-1">How to read this chart </div>
                 <div className="bar-wrapper w-clearfix">
-                <div className="arrow"></div>
+                {/* <div className="arrow"></div> */}
                 <div className="bar-howto">The lowest value of this <br/>Quality in your group</div>
                 <div className="bar-howto _3">Your current score <br/>(evaluated by you and others)</div>
-                <div className="bar-howto _4">Changes from <br/>previous session</div>
+                {/* <div className="bar-howto _4">Changes from <br/>previous session</div> */}
                 <div className="bar-howto _2">The highest value of this <br/>Quality in your group</div>
-                <div className="quality-name number">+1,4</div>
+                {/* <div className="quality-name number">+1,4</div> */}
                 <div className="quality-name">Quality name (Card#)</div>
                 <div className="bar-team">
                     <div className="bar-line"></div>
@@ -47,7 +47,7 @@ export const ReportPdf = ({propData}) => (
                 </div>
             </div>
             <div className="div-current w-clearfix">
-                <div className="h3 current">Current Session #1</div>
+                <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
                 <div className="div-diagram">
                 <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalise your session.</div>
                 <div className="diagram-wrapper w-clearfix">
@@ -95,7 +95,7 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[0].category }`} style={{width:Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
@@ -113,7 +113,7 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[1].category }`} style={{width:Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
@@ -130,7 +130,7 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[2].category }`} style={{width:Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
@@ -147,7 +147,7 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[3].category }`} style={{width:Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
@@ -164,7 +164,7 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[4].category }`} style={{width:Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
@@ -181,7 +181,7 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[5].category }`} style={{width:Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
@@ -198,13 +198,19 @@ export const ReportPdf = ({propData}) => (
                     </div>
                     <div className={`bar-active category-${ propData.cardPicked[6].category }`} style={{width:Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3)  + "%"}}></div>
                     </div>
-                    <div className="chart-arrow"></div>
+                    {/* <div className="chart-arrow"></div> */}
                 </div>
             </div>
             </div>
             <div className="section-3">
-                <div className="h3 next">Next Session #2</div>
-                <div className="h4 next">Create awareness of your progress and get feedback about 7 new Qualities.</div>
+                <div className="h3 next">Maintenance Sessions</div>
+                <div className="h4 next">
+                Don't lose the momentum! 
+                <br/>
+                Continue building healthy habits with our 1 hour maintenance sessions.
+                <br/>
+                Ask {propData.groupCreatorFirstName} for more information.
+                </div>
                 <div className="next-demo"></div>
             </div>
             </div>

@@ -1,0 +1,53 @@
+{
+    "_locale": "nl-NL",
+    "_namespace": "weq",
+    "settings": {
+        "MyAccountTitle": "Mijn account",
+        "AccountType": "Account Type: {$accountType}",
+        "AccountTypeAdsCMC":"Certified Coach training program",
+        "ChangeName":"Naam wijzigen",
+        "ChangeEmail":"Email wijzigen",
+        "LanguagesTitle": "Taalinstellingen",
+        "ChangeLanguage":"Taal wijzigen",
+        "MyConsentTitle":"Mijn toestemmingen",
+        "DeleteAccount":"Account/Data verwijderen",
+        "ConsentPromo":"Ik blijf graag per post op de hoogte van updates, aanbiedingen en nieuws van WeQ",
+        "Logout":"Uitloggen"
+    },
+    "settingsEdit": {
+        "VerificationSent": "Bevestiging email gestuurd! Volg de link in het bericht om je email te wijzigen",
+        "Updating": "updating...",
+        "ErrorEmailSameOld": "Nieuwe email is dezelfde als de huidige email",
+        "SaveChanges": "Wijzigen opslaan",
+        "TitleName": "Naam",
+        "CurrentName": "Huidige naam",
+        "NewInformationBelow": "Vul nieuwe gegeven onderin:",
+        "FirstName": "Voornaam",
+        "LastName": "Achternaam",
+        "ChangeName": "Naam wijzigen",
+        "TitleEmail": "Email",
+        "CurrentEmail":"Huidige email:",
+        "EmailAddress": "email addres",
+        "ChangeEmail": "Email wijzigen",
+        "TitleGender": "Geslacht",
+        "CurrentGender": "Uw geslacht:",
+        "GenderMale": "Man",
+        "GenderFemale": "Vrouw",
+        "TitleLanguage": "Taalinstellingen",
+        "CurrentLanguage": "Huidige taal:"
+    },
+    "home": {
+        "Language": "Language",
+        "enUS": "English - U.S.",
+        "FogottenPassword":"Wachtwoord vergeten?",
+        "Signup": "Aanmelden met e-mail",
+        "LoginEmail":"Log in",
+        "LoginLinkedIn":"Aanmelden of inloggen met LinkedIn"
+    },
+    "endScreen":{
+        "Congrats":"Proficiat! U heeft alle trends gespeeld !",
+        "QuestionInit":"Om alle trendinzichten te kunnen bekijken, vragen wij u deze vra(a)g(en) over uzelf te beantwoorden",
+        "ButtonShowQuestionsSingle":"Beantwoord een vragen",
+        "ButtonShowQuestions":"Beantwoord {$count} vra(a)g(en)"
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "_locale": "en-US",
+    "_namespace": "weq",
+    "settings": {
+        "MyAccountTitle": "My account",
+        "AccountType": "Account Type: {$accountType}",
+        "AccountTypeAdsCMC":"Certified Coach training program",
+        "ChangeName":"Change your name",
+        "ChangeEmail":"Change your email",
+        "LanguagesTitle": "Language Settings",
+        "ChangeLanguage":"Change your language",
+        "MyConsentTitle":"My Consent",
+        "DeleteAccount":"Delete my account/data",
+        "ConsentPromo":"I would like to receive team-boosting related information, offers, recommendations and updates from WeQ",
+        "Logout":"Logout"
+    },
+    "settingsEdit": {
+        "VerificationSent": "Verification email sent!, Please follow the link in the email to change your email",
+        "Updating": "updating...",
+        "ErrorEmailSameOld": "new email is the same as the old one",
+        "SaveChanges": "save changes",
+        "TitleName": "Name",
+        "CurrentName": "current name",
+        "NewInformationBelow": "Enter new information below:",
+        "FirstName": "first name",
+        "LastName": "last name",
+        "ChangeName": "change name",
+        "TitleEmail": "Email",
+        "CurrentEmail":"current email:",
+        "EmailAddress": "email address",
+        "ChangeEmail": "change email",
+        "TitleGender": "Gender",
+        "CurrentGender": "your gender:",
+        "GenderMale": "Male",
+        "GenderFemale": "Female",
+        "TitleLanguage": "Languages",
+        "CurrentLanguage": "current language:"
+    },
+    "home": {
+        "Language": "Language",
+        "enUS": "English - U.S.",
+        "FogottenPassword":"Forgotten password?",
+        "Signup": "Signup with e-mail",
+        "LoginEmail":"Login",
+        "LoginLinkedIn":"Register or login with LinkedIn"
+    },
+    "endScreen":{
+        "Congrats":"Congratulations! You have played all trends !",
+        "QuestionInit":"To see all trend insights, please answer the following question(s) about yourself",
+        "ButtonShowQuestionsSingle":"Answer a question",
+        "ButtonShowQuestions":"Answer {$count} questions"
+    }
+}

@@ -116,6 +116,7 @@ twbs:bootstrap@3.3.4
 u2622:persistent-session@0.4.4
 ui@1.0.12
 underscore@1.0.10
+universe:i18n@1.17.0
 url@1.2.0
 webapp@1.5.0
 webapp-hashing@1.0.9

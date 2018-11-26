@@ -64,7 +64,7 @@ class QuizRankPage extends React.Component {
                                     Thank you for completing the survey. 
                                     <br/><br/>
                                     You will use this app again when you play WeQ,<br/>
-                                    so remember to bring your phone to the session!
+                                    so remember to <b>bring your phone to the session!</b> 
                                     <br/>
                                     <br/>
                                 </div>
