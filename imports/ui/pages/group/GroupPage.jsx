@@ -95,7 +95,14 @@ class GroupPage extends React.Component {
   }
 
   getTypeFormResult(){
-    Meteor.call('get.response.typeform', 'oLBtn6');
+    Meteor.call('get.response.typeform', 'oLBtn6', this.props.group.createdAt, (error, result)=>{
+      if(error){
+        console.log(error);
+      }else{
+        console.log(result);
+      }
+      
+    });
   }
 
   renderUserCards(cards){

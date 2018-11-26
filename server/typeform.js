@@ -42,21 +42,30 @@ Meteor.methods({
             return error;
         }
     },
-    'get.response.typeform'(typeformId) {
+    'get.response.typeform'(typeformId,since=new Date()) {
         this.unblock();
-        console.log(typeformId);
+
+        if(since){
+            since = since.toISOString();
+        }
+
         try {
             var result = HTTP.call( 'GET', `https://api.typeform.com/forms/${typeformId}/responses`, 
             {
                 headers: {
                     "Authorization":`Bearer ${Meteor.settings.private.TypeFormPersonalToken}`,
+                },
+                params: {
+                    "since": since,
+                    "until": new Date().toISOString(),
+                    "completed": true,
+                    // "fields":["nRmD9U3cj8fO"]
                 }
                 
             });
             
-            console.log(result);
+            return result;
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
