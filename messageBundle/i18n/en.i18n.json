@@ -14,6 +14,21 @@
         "ConsentPromo":"I would like to receive team-boosting related information, offers, recommendations and updates from WeQ",
         "Logout":"Logout"
     },
+    "reportPdf":{
+        "Gretings": "Hi",
+        "TutorialTitle":"Hoe u deze graﬁek moet lezen",
+        "TutorialQualityName":"Kwaliteitsnaam (Kaart #)",
+        "TutorialLowestValue":"De laagste waarde van deze Kwaliteit in uw groep",
+        "TutorialHighestValue":"De hoogste waarde van deze Kwaliteit in uw groep",
+        "TutorialCurrentScore":"Uw huidige score",
+        "TutorialCurrentScoreBracket":"(beoordeeld door u en anderen)",
+        "CurrentSession":"Current Session - {$firstName} {$lastName}",
+        "GraphOpeningParagraph":"Based on your own data and feedback from others in your team, the WeQ system personalise your session.",
+        "FooterTitle":"Maintenance sessions",
+        "FooterTextLine1":"Don't lose the momentum!",
+        "FooterTextLine2":"Continue building healthy habits with our 1 hour maintenance sessions.",
+        "FooterTextLine3":"Ask {$groupCreatorFirstName} for more information."
+    },
     "settingsEdit": {
         "VerificationSent": "Verification email sent!, Please follow the link in the email to change your email",
         "Updating": "updating...",
