@@ -38,11 +38,20 @@
     },
     "home": {
         "Language": "Language",
-        "enUS": "English - U.S.",
+        "nlNL": "Nederlands - Nederland",
         "FogottenPassword":"Wachtwoord vergeten?",
         "Signup": "Aanmelden met e-mail",
         "LoginEmail":"Log in",
-        "LoginLinkedIn":"Aanmelden of inloggen met LinkedIn"
+        "LoginLinkedIn":"Aanmelden of inloggen met LinkedIn",
+        "Welcome":"Welkom",
+        "Account": "Account",
+        "GroupSelection": "Selecteer een groep hieronder",
+        "NoGroupSelection": "Geen groep gevonden",
+        "CertifiedCoach": "Je moet een WeQ Certified Master Coach zijn om een nieuwe groep aan te maken",
+        "CompletedSession": "Deze sessie is voltooid",
+        "LiveSession": "Deze sesssie is live. Begin nu",
+        "WaitForSession": "Even wachten tot de sessie begint",
+        "JustInvited": "Uitgenodig. Begin nu"
     },
     "endScreen":{
         "Congrats":"Proficiat! U heeft alle trends gespeeld !",
