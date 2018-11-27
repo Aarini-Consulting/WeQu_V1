@@ -130,7 +130,7 @@ export default withTracker((props) => {
         }
     });
     if(handleGroup.ready()){
-      groups = Group.find({creatorId: Meteor.userId()},{ sort: { groupName: -1 }}).fetch();
+      groups = Group.find({creatorId: Meteor.userId()},{ sort: { createdAt: -1 }}).fetch();
       dataReady = true;
     }
     return {

@@ -160,7 +160,7 @@ class InviteGroup extends React.Component {
           {
             this.setState({
               inviteStatus: 'error',
-              info: 'error sending email',
+              info: err.message,
             });
           }     
       }); 
@@ -508,9 +508,13 @@ class InviteGroup extends React.Component {
                       // :
                       // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                 }
-                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
-                  <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save</a>
+                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus == 'error' 
+                  ?
+                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleBackArrowClick.bind(this)}>Back to group list</a>
+                  :(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
+                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save</a>
                 }
+                
                 </form>
 
                 {this.state.showConfirm && 
