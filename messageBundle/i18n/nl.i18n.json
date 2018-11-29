@@ -14,6 +14,21 @@
         "ConsentPromo":"Ik blijf graag per post op de hoogte van updates, aanbiedingen en nieuws van WeQ",
         "Logout":"Uitloggen"
     },
+    "reportPdf":{
+        "Gretings": "Hoi",
+        "TutorialTitle":"Hoe u deze graﬁek moet lezen",
+        "TutorialQualityName":"Kwaliteitsnaam (Kaart #)",
+        "TutorialLowestValue":"De laagste waarde van deze Kwaliteit in uw groep",
+        "TutorialHighestValue":"De hoogste waarde van deze Kwaliteit in uw groep",
+        "TutorialCurrentScore":"Uw huidige score",
+        "TutorialCurrentScoreBracket":"(beoordeeld door u en anderen)",
+        "CurrentSession":"Huidige Sessie - {$firstName} {$lastName}",
+        "GraphOpeningParagraph":"Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie",
+        "FooterTitle":"Onderhoudssessies",
+        "FooterTextLine1":"Verlies het momentum niet! ",
+        "FooterTextLine2":"Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren",
+        "FooterTextLine3":"Stel uw vraag aan {$groupCreatorFirstName}  voor meer informatie!"
+    },
     "settingsEdit": {
         "VerificationSent": "Bevestiging email gestuurd! Volg de link in het bericht om je email te wijzigen",
         "Updating": "updating...",
@@ -37,17 +52,73 @@
         "CurrentLanguage": "Huidige taal:"
     },
     "home": {
-        "Language": "Language",
-        "enUS": "English - U.S.",
-        "FogottenPassword":"Wachtwoord vergeten?",
-        "Signup": "Aanmelden met e-mail",
-        "LoginEmail":"Log in",
-        "LoginLinkedIn":"Aanmelden of inloggen met LinkedIn"
+        "Welcome":"Welkom",
+        "Account": "Account",
+        "GroupSelection": "Selecteer een groep hieronder",
+        "NoGroupSelection": "Geen groep gevonden",
+        "CertifiedCoach": "Je moet een WeQ Certified Master Coach zijn om een nieuwe groep aan te maken",
+        "CompletedSession": "Deze sessie is voltooid",
+        "LiveSession": "Deze sesssie is live. Begin nu",
+        "WaitForSession": "Even wachten tot de sessie begint",
+        "JustInvited": "Uitgenodig. Begin nu"
     },
-    "endScreen":{
-        "Congrats":"Proficiat! U heeft alle trends gespeeld !",
-        "QuestionInit":"Om alle trendinzichten te kunnen bekijken, vragen wij u deze vra(a)g(en) over uzelf te beantwoorden",
-        "ButtonShowQuestionsSingle":"Beantwoord een vragen",
-        "ButtonShowQuestions":"Beantwoord {$count} vra(a)g(en)"
+    "inviteGroupPage":{
+        "CreateNew":"Nieuw groep toevoegen",
+        "NoGroup":"Hey, er is niemand hier"
+    },
+    "inviteGroup":{
+        "GroupName":"Groep naam",
+        "GroupNamePromptText":"Wat is de naam van dit groep?",
+        "GroupMemberPromptText":"wie zou in de groep moeten zitten?",
+        "PlaceholderEmailAddress":"email adres",
+        "PlaceholderGroupName":"groep naam",
+        "ButtonAddGroupMember":"Voeg toe aan de groep",
+        "ButtonSave":"Bewaren",
+        "SendingText":"Email sturen...",
+        "SentText":"Email verzonden",
+        "MaxNumberOfMember":"Maximum aantal van groepslid bereikt",
+        "ButtonBackToGroupList":"terug naar grouplijst",
+        "ErrorNoGroupName":"Voer een groepsnaam in",
+        "ErrorMaxNumberMember":"Maximum aantal van groepslid bereikt",
+        "ErrorMinNumberMember":"Elke groep in een WeQ-sessie moet minimaal 2 spelers hebben",
+        "ErrorUnknown":"Iets fout gegaan"
+    },
+    "confirmAdd":{
+        "ConfirmTitle":"De acties hieronder vermeld hebben uw bevestiging nodig",
+        "AddNewMember":"Voeg {$count} lid(leden) toe",
+        "EmailSendConfirmation":"E-mail uitnodiging zal naar alle nieuwe leden worden verzonden",
+        "UnsavedInput":"e-mail wijzigingen zijn niet opgeslagen",
+        "Cancel":"Annuleren",
+        "Proceed":"Doorgaan"
+    },
+    "confirmEdit":{
+        "ConfirmTitle":"De acties hieronder vermeld hebben uw bevestiging nodig",
+        "AddNewMember":"Voeg {$count} lid(leden) toe",
+        "RemoveMember":"{$count} lid(leden) verwijderd",
+        "EmailSendConfirmation":"E-mail uitnodiging zal naar alle nieuwe leden worden verzonden",
+        "EmailReminderConfirmation":"E-mail uitnodiging zal naar alle nieuwe leden worden verzonden",
+        "UnsavedInput":"e-mail wijzigingen zijn niet opgeslagen",
+        "GroupNameChanged":"Groepnaam gewijzigd",
+        "Cancel":"Annuleren",
+        "Proceed":"Doorgaan"
+    },
+    "groupPage":{
+        "PsychologicalSafety":"Psychological Safety",
+        "PsychologicalSafetyText1":"Ik kan me gemakkelijk kwetsbaar opstellen in dit team.",
+        "PsychologicalSafetyText2":"Ik ken de positieve eigenschappen en krachten van mijn collega's erg goed.",
+        "PsychologicalSafetyText3":"Ik voel dat ik openlijk fouten kan maken in dit team.",
+        "ConstructiveFeedback":"Constructive Feedback",
+        "ConstructiveFeedbackText1":"Mijn collega's worden gemakkelijk defensief wanneer ze toevallig kritiek ontvangen.",
+        "ConstructiveFeedbackText2":"Teamleden wisselen vaak constructieve feedback uit.",
+        "ConstructiveFeedbackText3":"Dit team erkent regelmatig wat ik bereikt heb en mijn successen.",
+        "CognitiveBias":"Control over Cognitive Bias",
+        "CognitiveBiasText1":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
+        "CognitiveBiasText2":"Een goed presterend team creëert minder fouten dan teams die middelmatig zijn.",
+        "CognitiveBiasText3":"In ons team stellen juniors regelmatig ideeën van seniors ter discussie.",
+        "SocialNorms":"Social Norms",
+        "SocialNormsText1":"In dit team houden teamleden informatie achter die bruikbaar kan zijn voor anderen.",
+        "SocialNormsText2":"Dit team heeft een groot gevoel van gezamenlijk succes in plaats van individueel succes.",
+        "SocialNormsText3":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
+        "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar"
     }
 }

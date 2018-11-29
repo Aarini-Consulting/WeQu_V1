@@ -8,6 +8,10 @@ import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 import InviteGroup from './InviteGroup';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class InviteGroupPage extends React.Component {
   constructor(props){
       super(props);
@@ -59,9 +63,10 @@ class InviteGroupPage extends React.Component {
             <Menu location={this.props.location} history={this.props.history}/>
             <section className="fontreleway groupbg fillHeight">
               <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar.png"/>
-                <div className="emptytext group">Hey, there is nobody here
+                <div className="emptytext group">
+                  <T>weq.inviteGroupPage.NoGroup</T>
                 </div>
-                  <a className="invitebttn w-button step-invitebttn" onClick={this.showInviteGroup.bind(this,true)}>Create a group</a>
+                <a className="invitebttn w-button step-invitebttn" onClick={this.showInviteGroup.bind(this,true)}><T>weq.inviteGroupPage.CreateNew</T></a>
               </div>
             </section>
           </div>
@@ -81,7 +86,7 @@ class InviteGroupPage extends React.Component {
                   }
                 </div>
                 <div className="fontreleway font-invite-title w-clearfix">
-                  Create a new group
+                  <T>weq.inviteGroupPage.CreateNew</T>
                 </div>
               </div>
               <InviteGroup closeInviteGroup={this.showInviteGroup.bind(this, false)}/>
@@ -100,7 +105,7 @@ class InviteGroupPage extends React.Component {
                 <div className="footersummary w-clearfix">
                   <div className="bttn-area-summary contact" >
                     <a className="button fontreleway bttncontact w-button" onClick={this.showInviteGroup.bind(this, true)}>
-                      Create new group
+                      <T>weq.inviteGroupPage.CreateNew</T>
                     </a>
                   </div>
                 </div>
@@ -130,7 +135,7 @@ export default withTracker((props) => {
         }
     });
     if(handleGroup.ready()){
-      groups = Group.find({creatorId: Meteor.userId()},{ sort: { groupName: -1 }}).fetch();
+      groups = Group.find({creatorId: Meteor.userId()},{ sort: { createdAt: -1 }}).fetch();
       dataReady = true;
     }
     return {

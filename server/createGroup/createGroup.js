@@ -29,8 +29,6 @@ Meteor.methods({
      throw (new Meteor.Error("group_creation_failed")); 
     }
 
-    Meteor.call('update.selected.group',groupId);
-
     var groupCreator = Meteor.users.findOne(Meteor.userId());
 
     var group = Group.findOne(groupId);
@@ -48,6 +46,11 @@ Meteor.methods({
     
 
     Meteor.call('sendEmail', "contact@weq.io", subject, body);
+
+    //create user's self rank feedback
+    users.forEach(function(user, index, _arr) {
+      Meteor.call( 'generate.self.rank', user._id, groupId);
+    });
 
     data.forEach((d)=>{
       var link = `group-invitation/${d.email}/${groupId}`
@@ -68,14 +71,8 @@ Meteor.methods({
       });
     })
 
-    //create user's self rank feedback
-    users.forEach(function(user, index, _arr) {
-      Meteor.call( 'generate.self.rank', user._id, groupId, (error, result)=>{
-        if(error){
-          console.log(error);
-        }
-      });
-    });
+    //experimental function for wetime app
+    // Meteor.call('update.selected.group',groupId);
 
     return true;
   },
