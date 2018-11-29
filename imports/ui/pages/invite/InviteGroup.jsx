@@ -576,6 +576,8 @@ export default withTracker((props) => {
   var count;
   var groupUsers=[];
   var groupUsersSurveyed=[];
+  var groupUserEmails=[];
+  var groupUserEmailsSurveyed=[];
   var handleGroup = Meteor.subscribe('group',{creatorId: Meteor.userId()},{}, {
     onError: function (error) {
           console.log(error);
@@ -594,6 +596,9 @@ export default withTracker((props) => {
       if(props.group.userIdsSurveyed){
         groupUsersSurveyed = groupUsers.filter(user => props.group.userIdsSurveyed.indexOf(user._id) > -1);
       }
+
+      groupUserEmails= groupUsers.map( (user) => user && user.emails && user.emails[0] && user.emails[0].address);
+      groupUserEmailsSurveyed= groupUsersSurveyed.map( (user) => user && user.emails && user.emails[0] && user.emails[0].address);
     }
     
 
@@ -602,8 +607,8 @@ export default withTracker((props) => {
   return {
       count:count,
       groupUsers: groupUsers,
-      groupUserEmails: groupUsers.map( (user) => user.emails[0].address),
-      groupUserEmailsSurveyed: groupUsersSurveyed.map( (user) => user.emails[0].address),
+      groupUserEmails: groupUserEmails,
+      groupUserEmailsSurveyed: groupUserEmailsSurveyed,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };
