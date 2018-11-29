@@ -52,12 +52,6 @@
         "CurrentLanguage": "current language:"
     },
     "home": {
-        "Language": "Language",
-        "enUS": "English - U.S.",
-        "FogottenPassword":"Forgotten password?",
-        "Signup": "Signup with e-mail",
-        "LoginEmail":"Login",
-        "LoginLinkedIn":"Register or login with LinkedIn",
         "Welcome":"Welcome",
         "Account": "Account",
         "GroupSelection": "Select a group below.",
@@ -69,10 +63,63 @@
         "JustInvited": "Just invited. Get started now."
 
     },
-    "endScreen":{
-        "Congrats":"Congratulations! You have played all trends !",
-        "QuestionInit":"To see all trend insights, please answer the following question(s) about yourself",
-        "ButtonShowQuestionsSingle":"Answer a question",
-        "ButtonShowQuestions":"Answer {$count} questions"
+    "inviteGroupPage":{
+        "CreateNew":"Create new group",
+        "NoGroup":"Hey, there is nobody here"
+    },
+    "inviteGroup":{
+        "GroupName":"Group name",
+        "GroupNamePromptText":"What is the name of this group?",
+        "GroupMemberPromptText":"Who should be in the group?",
+        "PlaceholderEmailAddress":"email adress",
+        "PlaceholderGroupName":"group name",
+        "ButtonAddGroupMember":"Add this person",
+        "ButtonSave":"Save",
+        "SendingText":"Sending...",
+        "SentText":"Email sent!",
+        "MaxNumberOfMember":"Maximum amount of group member reached",
+        "ButtonBackToGroupList":"Back to group list",
+        "ErrorNoGroupName":"Please enter a group name",
+        "ErrorMaxNumberMember":"Maximum amount of group member reached",
+        "ErrorMinNumberMember":"Each group in a WeQ session must have at least 2 players",
+        "ErrorUnknown":"Something went wrong"
+    },
+    "confirmAdd":{
+        "ConfirmTitle":"The following actions need your confirmation",
+        "AddNewMember":"Add {$count} member(s)",
+        "EmailSendConfirmation":"Email invitation will be sent to all new member(s)",
+        "UnsavedInput":"Email input not saved",
+        "Cancel":"Cancel",
+        "Proceed":"Proceed"
+    },
+    "confirmEdit":{
+        "ConfirmTitle":"The following actions need your confirmation",
+        "AddNewMember":"Add {$count} new member(s)",
+        "RemoveMember":"remove {$count} member(s)",
+        "EmailSendConfirmation":"Email invitation will be sent to all new member",
+        "EmailReminderConfirmation":"Send reminder to {$count} member(s)",
+        "UnsavedInput":"Email input not saved",
+        "GroupNameChanged":"Group name changed",
+        "Cancel":"Cancel",
+        "Proceed":"Proceed"
+    },
+    "groupPage":{
+        "PsychologicalSafety":"Psychological Safety",
+        "PsychologicalSafetyText1":"In this team, I feel like I can fail openly.",
+        "PsychologicalSafetyText2":"I know my colleagues’ positive characteristics and strengths very well.",
+        "PsychologicalSafetyText3":"In this team, I feel comfortable showing my vulnerability.",
+        "ConstructiveFeedback":"Constructive Feedback",
+        "ConstructiveFeedbackText1":"In this team, members frequently exchange constructive feedback",
+        "ConstructiveFeedbackText2":"This team regularly recognises my achievements and successes.",
+        "ConstructiveFeedbackText3":"My colleagues get easily defensive when they happen to receive criticism.",
+        "CognitiveBias":"Control over Cognitive Bias",
+        "CognitiveBiasText1":"I feel that my team prefers to maintain a harmony over being disturbed by conflicts.",
+        "CognitiveBiasText2":"A high-performing team creates less errors and mistakes than those which are mediocre",
+        "CognitiveBiasText3":"In our team, juniors regularly seek ideas from seniors.",
+        "SocialNorms":"Social Norms",
+        "SocialNormsText1":"In meetings, one person or a small group tends to speak most of the time.",
+        "SocialNormsText2":"In this team, members withhold information that might be useful for others.",
+        "SocialNormsText3":"This team has a strong sense of collective success rather than just individual glory.",
+        "NoMatrixInfo":"There is currently no matrix information available."
     }
 }
