@@ -139,6 +139,12 @@ Meteor.methods({
           } 
       });
   },
+  'user.set.locale'(locale) {
+    Meteor.users.update({_id: this.userId}, 
+      {$set: {
+        "profile.locale": locale,
+      }});
+  },
   'user.delete'() {
     var currentUser = Meteor.users.findOne({_id:Meteor.userId()});
     var userId = currentUser._id;

@@ -39,8 +39,8 @@
   margin-right: 3%;
   margin-left: 3%;
   padding: 3% 0% 3% 3%;
-  background-color: #fef7e8;
-  box-shadow: 0 14px 30px -4px rgba(246, 96, 6, .3);
+  background-color: #fff;
+  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, .3);
 }
 
 .h1 {
@@ -95,6 +95,7 @@
   float: left;
   font-size: 2em;
   font-weight: 500;
+  color:#5e5e5e;
 }
 
 .h3.next {
@@ -123,7 +124,7 @@
   margin-right: auto;
   margin-left: auto;
   border-radius: 50px;
-  background-color: #fef7e8;
+  background-color: #d5d5d5;
 }
 
 .bar-wrapper.actual {
@@ -133,7 +134,7 @@
   margin-top: 0%;
   margin-left: 5em;
   float: left;
-  background-color: #f8e7dd;
+  background-color: #d5d5d5;
 }
 
 .bar-wrapper.actual.legend {
@@ -147,6 +148,7 @@
   float: left;
   clear: left;
   border-radius: 500px;
+  background-color: #5e5e5e;
 }
 
 .bar-team {
@@ -162,8 +164,8 @@
   margin-right: auto;
   margin-left: auto;
   border-style: none solid;
-  border-width: 0px 1px;
-  border-color: #f8e7dd;
+  border-width: 0px 2px;
+  border-color: #fff;
 }
 
 .bar-team.actual {
@@ -174,13 +176,13 @@
 
 .bar-line {
   width: 100%;
-  margin-top: 0.3em;
-  border-top: 1px solid #f8e7dd;
+  margin-top: calc(0.3em - 1px);
+  border-top: 2px solid #fff;
 }
 
 .bar-line.actual {
   margin-top: 0.3em;
-  border-top-color: #fef6e5;
+  border-top-color: #fff;
 }
 
 .bar-value {
@@ -206,11 +208,12 @@
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 1px solid #f8e7dd;
+  border: 2px solid #fff;
   border-radius: 500px;
-  color: #f8e7dd;
+  color: #fff;
   font-size: 0.95em;
   text-align: center;
+  background-color: #000;
 }
 
 .bar-value.a {
@@ -354,7 +357,7 @@
   top: 7em;
   right: 0em;
   bottom: 0em;
-  width: 25%;
+  width: 35%;
   color: #413970;
   font-size: 1.2em;
 }
@@ -643,20 +646,24 @@
 
 .next-demo {
   position: absolute;
-  left: 31em;
+  left: 60%;
   top: 2.2em;
   right: -5em;
   bottom: 0em;
   z-index: 999;
   width: 35%;
   height: 85%;
-  background-image: url('/img/report/Report_grey.jpg');
+  background-image: url('/img/report/Report_grey.jpeg');
   background-position: 0px 0px;
   background-size: cover;
   box-shadow: 0 0 6px 0 rgba(246, 96, 6, .1);
   -webkit-transform: rotate(5deg);
   -ms-transform: rotate(5deg);
   transform: rotate(5deg);
+}
+
+.next-demo.nl {
+  background-image: url('/img/report/Report_grey_nl.jpeg');
 }
 
 .weq-logo {
@@ -843,7 +850,7 @@
   background-size: cover;
 }
 
-.category-virtue {
+/* .category-virtue {
   background-color: #f15177;
 }
 
@@ -865,7 +872,7 @@
 
 .category-problem_solving {
   background-color: #4c9f5b;
-}
+} */
 
 .text-category-virtue {
   color: #f15177;

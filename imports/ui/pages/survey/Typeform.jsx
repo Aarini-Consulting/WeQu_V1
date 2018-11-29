@@ -6,6 +6,10 @@ import * as typeformEmbed from '@typeform/embed';
 
 import Menu from '/imports/ui/pages/menu/Menu';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 export default class NotFound extends React.Component {
     componentDidMount(){
         var el = ReactDOM.findDOMNode(this.refs.typeform);
@@ -15,12 +19,37 @@ export default class NotFound extends React.Component {
             //   that will contain your typeform, the URL of your typeform, and your
             //   desired embed settings
             var typeformUrl;
+
+            //get locale and language code
+            var locale = i18n.getLocale();
+            var languageCode = locale.split("-")[0];
+            
+            var urlProd = {
+              "en":'https://oh2.typeform.com/to/RzcwbL',
+              "nl":'https://oh2.typeform.com/to/oLBtn6'
+            }
+
+            var urlTest = {
+              "en":'https://oh2.typeform.com/to/xPDY7T',
+              "nl":'https://oh2.typeform.com/to/OAKojL'
+            }
+
             if(window.location.hostname == "app.weq.io"){
               //production
-              typeformUrl="https://oh2.typeform.com/to/oLBtn6";
+              typeformUrl = urlProd[languageCode];
+
+              //if language code is not supported, use the english typeform as default.
+              if(!typeformUrl){
+                typeformUrl= urlProd["en"];
+              }
             }else{
               //test
-              typeformUrl="https://oh2.typeform.com/to/xPDY7T"
+              typeformUrl = urlTest[languageCode];
+
+              //if language code is not supported, use the english typeform as default.
+              if(!typeformUrl){
+                typeformUrl= urlTest["en"];
+              }
             }
             typeformEmbed.makeWidget(el, typeformUrl, {
                 hideFooter: true,
@@ -33,7 +62,7 @@ export default class NotFound extends React.Component {
     
     render() {
       return (
-        <div className="fillHeight">
+        <div className="fillHeight" style={{height:100+"vh"}}>
           <section style={{height:100+"%"}}ref="typeform">
           </section>
         </div>

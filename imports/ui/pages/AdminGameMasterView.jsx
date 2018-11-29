@@ -13,10 +13,10 @@ class AdminGameMasterView extends React.Component {
             selectedUser:undefined,
             selectedUserGroupList:[],
             selectedGroup:undefined,
-            matrixName1:"Psychological Safety",
-            matrixName2:"Constructive Feedback",
-            matrixName3:"Cognitive Bias",
-            matrixName4:"Social Norms",
+            matrixName1:"",
+            matrixName2:"",
+            matrixName3:"",
+            matrixName4:"",
             matrixScore1:0,
             matrixScore2:0,
             matrixScore3:0,
@@ -34,13 +34,23 @@ class AdminGameMasterView extends React.Component {
             var matrix2 = group.typeformGraph[1];
             var matrix3 = group.typeformGraph[2];
             var matrix4 = group.typeformGraph[3];
-
             this.setState({
                 matrixScore1:((matrix1 && matrix1.score) ? matrix1.score : 0),
                 matrixScore2:((matrix2 && matrix2.score) ? matrix2.score : 0),
                 matrixScore3:((matrix3 && matrix3.score) ? matrix3.score : 0),
                 matrixScore4:((matrix4 && matrix4.score) ? matrix4.score : 0),
-                matrixScoreMax:((matrix1 && matrix1.score) ? matrix1.total : 7)
+                matrixScoreMax:((matrix1 && matrix1.score) ? matrix1.total : 7),
+                matrixName1:((matrix1 && matrix1.name) ? matrix1.name : "??"),
+                matrixName2:((matrix1 && matrix2.name) ? matrix2.name : "??"),
+                matrixName3:((matrix1 && matrix3.name) ? matrix3.name : "??"),
+                matrixName4:((matrix1 && matrix4.name) ? matrix4.name : "??"),
+            });
+        }else{
+            this.setState({
+                matrixName1:"Psychological Safety",
+                matrixName2:"Constructive Feedback",
+                matrixName3:"Control over Cognitive Bias",
+                matrixName4:"Social Norms",
             });
         }
 
@@ -55,10 +65,10 @@ class AdminGameMasterView extends React.Component {
             selectedUser:user,
             selectedUserGroupList:groups,
             selectedGroup:undefined,
-            matrixName1:"Psychological Safety",
-            matrixName2:"Constructive Feedback",
-            matrixName3:"Cognitive Bias",
-            matrixName4:"Social Norms",
+            matrixName1:"",
+            matrixName2:"",
+            matrixName3:"",
+            matrixName4:"",
             matrixScore1:0,
             matrixScore2:0,
             matrixScore3:0,

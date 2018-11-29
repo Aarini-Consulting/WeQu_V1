@@ -10,6 +10,10 @@
     "verifyEmail": true
   },
   "private": {
+    "twillioVerificationApiKey":"ESDI1HGJzl9zRqIlTtQpJYNOLeOMPkWf",
+    "twillioNotificationAccountSid":"AC74f36619df4864c0420439b67ec60e39",
+    "twillioNotificationAuthKey":"6fc350176a9310668b9b97c28d452e3d",
+    "twillioNotificationSenderMsisdn":"+3197004880648",
     "LinkedInClientId":"758ew0beoeqe01",
     "LinkedInSecretId":"qwAMdc8wlJ3KxgY1",
     "postmail": "postmaster@wequ.co",

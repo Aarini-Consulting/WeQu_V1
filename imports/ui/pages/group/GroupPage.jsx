@@ -12,6 +12,10 @@ import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class GroupPage extends React.Component {
   constructor(props){
       super(props);
@@ -189,36 +193,42 @@ class GroupPage extends React.Component {
         switch(skill.name){
           case "Psychological Safety":
             infoText = <div className="font-matric font-info">
-            Questions:<br/>
-            In this team, I feel like I can fail openly.<br/>
-            I know my colleagues’ positive characteristics and strengths very well.<br/>
-            I feel comfortable showing my vulnerability.
+            <T>weq.groupPage.PsychologicalSafetyText1</T><br/>
+            <T>weq.groupPage.PsychologicalSafetyText2</T><br/>
+            <T>weq.groupPage.PsychologicalSafetyText3</T>
             </div>
             break;
           case "Constructive Feedback":
             infoText = <div className="font-matric font-info">
-            Questions:<br/>
-            In this team, members frequently exchange constructive feedback.<br/>
-            This team regularly recognises my achievements and successes.
+            <T>weq.groupPage.ConstructiveFeedbackText1</T><br/>
+            <T>weq.groupPage.ConstructiveFeedbackText2</T><br/>
+            <T>weq.groupPage.ConstructiveFeedbackText3</T>
             </div>
             break;
           case "Cognitive Bias":
             infoText = <div className="font-matric font-info">
-            Questions:<br/>
-            In this team, members often misunderstand my intensions and messages.
+            <T>weq.groupPage.CognitiveBiasText1</T><br/>
+            <T>weq.groupPage.CognitiveBiasText2</T><br/>
+            <T>weq.groupPage.CognitiveBiasText3</T>
+            </div>
+            break;
+          case "Control over Cognitive Bias":
+            infoText = <div className="font-matric font-info">
+            <T>weq.groupPage.CognitiveBiasText1</T><br/>
+            <T>weq.groupPage.CognitiveBiasText2</T><br/>
+            <T>weq.groupPage.CognitiveBiasText3</T>
             </div>
             break;
           case "Social Norms":
             infoText = <div className="font-matric font-info">
-            Questions:<br/>
-            In meetings, one person or a small group tends to speak most of the time.<br/>
-            In this team, members withhold information that might be useful for others.<br/>
-            This team has a strong sense of collective success rather than just individual glory.
+            <T>weq.groupPage.SocialNormsText1</T><br/>
+            <T>weq.groupPage.SocialNormsText2</T><br/>
+            <T>weq.groupPage.SocialNormsText3</T>
             </div>
             break;
           default:
             infoText = <div className="font-matric font-info">
-            There is currently no matrix information available.
+            <T>weq.groupPage.NoMatrixInfo</T>
             </div>
             break;
         }
@@ -252,7 +262,7 @@ class GroupPage extends React.Component {
             {this.state.showMatrixInfoPanel && this.state.showMatrixInfoPanel[skill.name] && infoText &&
               <div className="w-block matric-info-panel" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
                 <div className="font-matric font-close">
-                  <i class="fa fa-window-close" aria-hidden="true"></i>
+                  <i className="fa fa-window-close" aria-hidden="true"></i>
                 </div>
                 {infoText}
               </div>

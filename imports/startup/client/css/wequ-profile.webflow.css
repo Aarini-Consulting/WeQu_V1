@@ -1945,14 +1945,15 @@ body {
 }
 
 .contactlist-wrapper {
-  height:100%;
+  height:calc(100vh - 120px);
+  overflow:auto;
 }
 
-.contactlist-wrapper.group-list {
+/* .contactlist-wrapper.group-list {
   height:calc(100% - 80px);
   margin-bottom:80px;
   overflow:auto;
-}
+} */
 
 .contactlist {
   display: inline-block;
@@ -3307,9 +3308,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .form-radio {
-  width: 85%;
-  float: right;
-  text-align: left;
+  text-align: right;
 }
 
 .radio-input{
@@ -3775,8 +3774,50 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   float: left;
 }
 
+.report-active {
+  margin:1em;
+}
+
+.pdf-preview-loading{
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-family: Raleway, sans-serif;
+}
+
+.pdf-download-wrapper {
+  text-decoration: none;
+  width:350px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+
+  flex-direction: row;
+  font-family: Raleway, sans-serif;
+  font-size: 1em;
+  text-decoration: none;
+}
+
+.pdf-download-lang-select {
+  width:auto;
+  margin-right:1em;
+}
+
 .pdf-download-bttn {
-  width:300px;
+  flex-grow: 1;
   height:40px;
   border: 2px solid #ef476c;
   border-radius: 100px;

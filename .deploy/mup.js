@@ -57,14 +57,14 @@ module.exports = {
     one: {
       host: '52.28.201.144',
       username: 'ubuntu',
-      pem: '/\home/\yw/\Desktop/\WeQu_V1/\WeQu.pem',
+      pem: 'C:/\Users/\yohandi/\WeQu_V1/\WeQu.pem',
     }
   },
 
   // Formerly named 'meteor'. Configuration for deploying the app
   app: {
     name: 'app-test',
-    path: '/\home/\yw/\Desktop/\WeQu_V1',
+    path: 'C:/\Users/\yohandi/\WeQu_V1',
     // (optional, default is meteor) Plugins can provide additional types
     type: 'meteor',
     docker: {

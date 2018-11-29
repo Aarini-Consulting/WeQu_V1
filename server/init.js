@@ -28,52 +28,52 @@ Meteor.startup(function () {
     );
 
     
-    Accounts.validateNewUser(function (user) {
-        // TODO : On invited user onboarding , if his email id , already registered with the system .
-        // Then copy the services object , update in existing account.
+    // Accounts.validateNewUser(function (user) {
+    //     // TODO : On invited user onboarding , if his email id , already registered with the system .
+    //     // Then copy the services object , update in existing account.
 
         
         
 
-        if(user.services && user.services.linkedin && user.services.linkedin.emailAddress )
-        {
-          let email = user.services.linkedin.emailAddress;
-          let existingUser = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email  }]});
-          let exists = !existingUser ? false  :true ;
+    //     if(user.services && user.services.linkedin && user.services.linkedin.emailAddress )
+    //     {
+    //       let email = user.services.linkedin.emailAddress;
+    //       let existingUser = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email  }]});
+    //       let exists = !existingUser ? false  :true ;
 
-          if(exists){
-            let linkedin = user.services.linkedin ;
-           // user.services.linkedin = ""; // Doing this to avoid --- Duplicate id exists --- 
+    //       if(exists){
+    //         let linkedin = user.services.linkedin ;
+    //        // user.services.linkedin = ""; // Doing this to avoid --- Duplicate id exists --- 
            
-              Meteor.setTimeout(function () {
-              try{
-                 console.log("\n -------- linkedin ---------- \n ",linkedin);
-                 Meteor.users.update({_id: existingUser._id}, {$set: {'services.linkedin' : linkedin  } });         
-              }
-              catch(e){
-                console.log(e);
-              }
-             },2000);
-            // return false;
-             throw new Meteor.Error( user, "Error: User validation failed [403]");
-          }
-        }
-        else {
-          let email = `^${user.emails[0].address}$`;
-          let existingUser = Meteor.users.findOne({ "profile.emailAddress" : {'$regex' :email,$options:'i'}});
+    //           Meteor.setTimeout(function () {
+    //           try{
+    //              console.log("\n -------- linkedin ---------- \n ",linkedin);
+    //              Meteor.users.update({_id: existingUser._id}, {$set: {'services.linkedin' : linkedin  } });         
+    //           }
+    //           catch(e){
+    //             console.log(e);
+    //           }
+    //          },2000);
+    //         // return false;
+    //          throw new Meteor.Error( user, "Error: User validation failed [403]");
+    //       }
+    //     }
+    //     else {
+    //       let email = `^${user.emails[0].address}$`;
+    //       let existingUser = Meteor.users.findOne({ "profile.emailAddress" : {'$regex' :email,$options:'i'}});
 
-          let exists = !existingUser ? false  :true ;
+    //       let exists = !existingUser ? false  :true ;
 
-          if(exists){
-          // Normal User tries to signup with existing linked in id - Prevent Bug #3
-          throw new Meteor.Error( user, "Error: Email already exists ");            
-          }
+    //       if(exists){
+    //       // Normal User tries to signup with existing linked in id - Prevent Bug #3
+    //       throw new Meteor.Error( user, "Error: Email already exists ");            
+    //       }
 
-        }
+    //     }
 
-      return true;
+    //   return true;
 
-    });
+    // });
 
     // On Creating user gives a call back function
     Accounts.onCreateUser(function (options, user) {
