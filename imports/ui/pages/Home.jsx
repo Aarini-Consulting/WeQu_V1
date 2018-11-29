@@ -17,6 +17,10 @@ import {init} from '/imports/ui/pages/profile/minBlock';
 import Menu from '/imports/ui/pages/menu/Menu';
 import LandingSurveyComponent from './survey/LandingSurveyComponent';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class Home extends React.Component {
     constructor(props){
         super(props);
@@ -35,15 +39,15 @@ class Home extends React.Component {
             var status;
 
             if(finished){
-                status = <div className="w-inline-block group-entry-right s-4">This session is completed</div>;
+                status = <div className="w-inline-block group-entry-right s-4"><T>weq.home.CompletedSession</T></div>;
             }
             else if(started){
-                status = <div className="w-inline-block group-entry-right s-3">This session is live. Get started now.</div>;
+                status = <div className="w-inline-block group-entry-right s-3"><T>weq.home.LiveSession</T></div>;
             }
             else if(ready && !started){
-                status = <div className="w-inline-block group-entry-right s-2">Please wait until session starts.</div>
+                status = <div className="w-inline-block group-entry-right s-2"><T>weq.home.WaitForSession</T></div>
             }else if(!ready){
-                status = <div className="w-inline-block group-entry-right s-1">Just invited. Get started now.</div>
+                status = <div className="w-inline-block group-entry-right s-1"><T>weq.home.JustInvited</T></div>
             }
             return(
                 <div className="group-row cursor-pointer" key={group._id} 
@@ -105,13 +109,13 @@ class Home extends React.Component {
                                     :
                                         <div className="screentitlewrapper w-clearfix">
                                             <div className="fontreleway font-invite-title edit w-clearfix">
-                                            <Link className="cursor-pointer" to="/settings">Account</Link>
+                                            <Link className="cursor-pointer" to="/settings"><T>weq.home.Account</T></Link>
                                             </div>
                                         </div>
                                     }
                                     <div className="ring"></div>
-                                    <div className="font-rate rank-separator-top">Welcome!</div>
-                                    <div className="font-rate f-em1">Select a group below</div>
+                                    <div className="font-rate rank-separator-top"><T>weq.home.Welcome</T></div>
+                                    <div className="font-rate f-em1"><T>weq.home.GroupSelection</T></div>
                                 </div>
                                 <div className="w-block home-group-list-wrapper">
                                     {this.renderGroups()}
@@ -130,22 +134,22 @@ class Home extends React.Component {
                                     :
                                         <div className="screentitlewrapper w-clearfix">
                                             <div className="fontreleway font-invite-title edit w-clearfix">
-                                            <Link className="cursor-pointer" to="/settings">Account</Link>
+                                            <Link className="cursor-pointer" to="/settings"><T>weq.home.Account</T></Link>
                                             </div>
                                         </div>
                                     }
                                     
                                     <div className="ring"></div>
-                                    <div className="font-rate rank-separator-top">Welcome!</div>
+                                    <div className="font-rate rank-separator-top"><T>weq.home.Welcome</T></div>
                                 </div>
                                 <div className="w-block home-group-list-wrapper">
                                     <div style={{height:100+"%"}}>
                                     <br/>
                                     <br/>
                                         <div className="w-block noselect">
-                                            <div className="fontreleway f-popup-title">No group</div>
+                                            <div className="fontreleway f-popup-title"><T>weq.home.NoGroupSelection</T></div>
                                             {!isGameMaster &&
-                                                <div className="fontreleway f-popup-title">You must be a WeQ Certified Master Coach to create a new group</div>
+                                                <div className="fontreleway f-popup-title"><T>weq.home.CertifiedCoach</T></div>
                                             }
                                         </div>
                                     </div>
