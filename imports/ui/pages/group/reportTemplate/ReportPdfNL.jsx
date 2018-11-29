@@ -20,7 +20,7 @@ export const ReportPdfNL = ({propData}) => (
             <h1 className="h1 username">{propData.firstName},</h1>
             <h3 className="h3 subtitle">
             U heeft net WeQ met uw <strong>{propData.groupName}</strong> Team gespeeld. 
-            Dit is uw rapport die door <strong>{propData.groupCreatorFirstName}&nbsp;{propData.groupCreatorLastName}</strong> WeQ Master Coach is opgesteld
+            Dit is uw rapport die door <strong>{propData.groupCreatorFirstName}&nbsp;{propData.groupCreatorLastName}</strong> WeQ Master Coach is opgesteld.
             </h3>
             </div>
             <div className="section _2-content">
@@ -33,12 +33,12 @@ export const ReportPdfNL = ({propData}) => (
                 <div className="h3 title-1">Hoe u deze graﬁek moet lezen</div>
                 <div className="bar-wrapper w-clearfix">
                 {/* <div className="arrow"></div> */}
-                <div className="bar-howto">Kwaliteitsnaam (Kaart #)</div>
+                <div className="bar-howto">De laagste waarde <br/> van deze Kwaliteit in uw groep</div>
                 <div className="bar-howto _3">Uw huidige score<br/>(beoordeeld door u en anderen)</div>
                 {/* <div className="bar-howto _4">Changes from <br/>previous session</div> */}
-                <div className="bar-howto _2">De hoogste waarde van deze Kwaliteit in uw groep</div>
+                <div className="bar-howto _2">De hoogste waarde <br/> van deze Kwaliteit in uw groep</div>
                 {/* <div className="quality-name number">+1,4</div> */}
-                <div className="quality-name">De laagste waarde van deze Kwaliteit in uw groep</div>
+                <div className="quality-name">Kwaliteitsnaam (Kaart #)</div>
                 <div className="bar-team">
                     <div className="bar-line"></div>
                 </div>
@@ -49,7 +49,7 @@ export const ReportPdfNL = ({propData}) => (
             <div className="div-current w-clearfix">
                 <div className="h3 current">Huidige Sessie - {propData.firstName} {propData.lastName}</div>
                 <div className="div-diagram">
-                <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie</div>
+                <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie.</div>
                 <div className="diagram-wrapper w-clearfix">
                     <div className="diagram">
                     <div className="diagram-position">
@@ -205,11 +205,12 @@ export const ReportPdfNL = ({propData}) => (
             <div className="section-3">
                 <div className="h3 next">Onderhoudssessies</div>
                 <div className="h4 next">
-                Verlies het momentum niet!
-                <br/>
-                Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren
-                <br/>
-                Stel uw vraag aan {propData.groupCreatorFirstName}  voor meer informatie!
+                    Verlies het momentum niet!
+                    <br/>
+                    Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren.
+                    <br/>
+                    <br/>
+                    Stel uw vraag aan {propData.groupCreatorFirstName}  voor meer informatie!
                 </div>
                 <div className="next-demo nl"></div>
             </div>

@@ -139,7 +139,7 @@ class Home extends React.Component {
                                     <div className="font-rate rank-separator-top">Welcome!</div>
                                 </div>
                                 <div className="w-block home-group-list-wrapper">
-                                    <div className="fillHeight">
+                                    <div style={{height:100+"%"}}>
                                     <br/>
                                     <br/>
                                         <div className="w-block noselect">

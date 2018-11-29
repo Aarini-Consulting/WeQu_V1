@@ -207,7 +207,8 @@ export const ReportPdfEN = ({propData}) => (
                 <div className="h4 next">
                 Don't lose the momentum!
                 <br/>
-                Continue building healthy habits with our 1 hour maintenance sessions.
+                Continue building healthy habits with our <br/>1 hour maintenance sessions.
+                <br/>
                 <br/>
                 Ask {propData.groupCreatorFirstName} for more information.
                 </div>
