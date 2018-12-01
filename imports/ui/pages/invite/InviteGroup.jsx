@@ -39,10 +39,12 @@ class InviteGroup extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.isEdit && nextProps.group){
-      if(nextProps.group){
+      if(nextProps.dataReady && nextProps.group){
         var copyStateData = [];
         nextProps.groupUsers.forEach(function(groupUser) {
-          copyStateData.push({email:groupUser.emails[0].address});
+          if(groupUser && groupUser.emails && groupUser.emails[0]){
+            copyStateData.push({email:groupUser.emails[0].address});
+          }
         });
         this.setState({
           info:undefined,
@@ -206,19 +208,19 @@ class InviteGroup extends React.Component {
   handleSubmitButton(){
       if(!this.state.groupName){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: i18n.getTranslation("weq.inviteGroup.ErrorNoGroupName"),
         });
       }
       else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) > 12){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: i18n.getTranslation("weq.inviteGroup.MaxNumberOfMember"),
         });
       }
       else if(!(this.props.group && this.props.group.isActive) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 2){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: i18n.getTranslation("weq.inviteGroup.ErrorMinNumberMember"),
         });
       }
@@ -318,12 +320,12 @@ class InviteGroup extends React.Component {
 
       if(email == this.props.currentUser.emails[0].address.toString().toLowerCase()){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: 'cannot invite yourself',
         });
       }else if(emailsArray.indexOf(email) > -1){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: 'a user with the same email address is already a member of this group',
         });
       }else{
@@ -503,7 +505,7 @@ class InviteGroup extends React.Component {
                     <br/><br/>
                     </span>
                 }
-                {this.state.inviteStatus == 'error' && 
+                {(this.state.inviteStatus == 'error' || this.state.inviteStatus == 'warning') && 
                     this.state.info &&
                       <span className="sendingStatus">
                       <img src="/img/status_error.png"/>{this.state.info}
