@@ -2,6 +2,8 @@ Meteor.methods({
     'updateGroup' : function (group,groupName, data, arr_emails) {
         var groupId = group._id;
         let groupCheck = Group.findOne({_id:groupId});
+
+        var groupCreator = Meteor.users.findOne(Meteor.userId());
         
         if(!groupCheck){
         throw (new Meteor.Error("group doesn't exist")); 
@@ -26,23 +28,42 @@ Meteor.methods({
 
         //get users from email
         var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
-        var userIds = users.map( (user) => user._id);
+        var userIdsList = users.map( (user) => user._id);
 
-        var newUserInGroup = userIds.filter((uid)=>{
-            return groupCheck.userIds.indexOf(uid) < 0
+        var newUsersInGroup = users.filter((user)=>{
+            return groupCheck.userIds.indexOf(user._id) < 0
         })
 
+
         //create new user's self rank feedback
-        newUserInGroup.forEach(function(user, index, _arr) {
-            Meteor.call( 'generate.self.rank', user, groupCheck._id, (error, result)=>{
-            if(error){
-                console.log(error);
-            }
+        newUsersInGroup.forEach(function(user, index, _arr) {
+            Meteor.call( 'generate.self.rank', user._id, groupCheck._id, (error, result)=>{
+                if(error){
+                    console.log(error);
+                }
+            });
+            
+            var userEmail = user.emails[0].address;
+
+            var link = `group-invitation/${userEmail}/${groupCheck._id}`
+  
+            var subject = `[WeQ] Invitation to join the group "${groupCheck.groupName}"` ;
+            var message = `Please join the group by clicking the invitation link ${link}`
+        
+            var emailData = {
+              'creatorEmail': groupCreator.emails[0].address,
+              'link': Meteor.absoluteUrl(link),
+              'groupName': groupCheck.groupName
+            };
+        
+            let body = SSR.render('GroupInviteHtmlEmail', emailData);
+            Meteor.call('sendEmail', userEmail, subject, body, function (err, result) {
+              if(err){ return err};
             });
         });
 
         var removedUsers = groupCheck.userIds.filter((uid)=>{
-            return userIds.indexOf(uid) < 0
+            return userIdsList.indexOf(uid) < 0
         })
         var updatedUserIdsSurveyed;
         if(removedUsers && removedUsers.length > 0 && groupCheck.userIdsSurveyed){
@@ -82,7 +103,7 @@ Meteor.methods({
         }
 
         Group.update({"_id":groupId},
-        {'$set':{groupName: groupName,  userIds:userIds , creatorId: group.creatorId}
+        {'$set':{groupName: groupName,  userIds:userIdsList , creatorId: group.creatorId}
         });
 
         if(updatedUserIdsSurveyed){
@@ -102,7 +123,7 @@ Meteor.methods({
         //         if(err){ return err}
         //     });
         
-        return newUserInGroup.length;
+        return newUsersInGroup.length;
 
     },
     'resend.group.invite' : function (groupId,email) {
