@@ -5,6 +5,8 @@ import pdf from 'html-pdf';
 import fs from 'fs';
 import puppeteer from 'puppeteer'
 import {ReportPdf} from '/imports/ui/pages/group/ReportPdf';
+import {ReportPdfEN} from '/imports/ui/pages/group/reportTemplate/ReportPdfEN';
+import {ReportPdfNL} from '/imports/ui/pages/group/reportTemplate/ReportPdfNL';
 
 
 const getBase64String = (path) => {
@@ -103,7 +105,7 @@ const generateComponentAsPDF = async ({ component, props, fileName, dataType }) 
 
 
 Meteor.methods({
-    'download.report.group.pdf':function(groupId){
+    'download.report.group.pdf':function(groupId, languageCode){
       let groupCheck = Group.findOne({'_id': groupId});
       
       if(!groupCheck){
@@ -124,7 +126,7 @@ Meteor.methods({
       users.forEach((user) => {
         var cardPlacementCheck = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
         if(cardPlacementCheck){
-          var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id);
+          var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id, languageCode);
           results.push(result);
         }
       });
@@ -132,7 +134,8 @@ Meteor.methods({
       return {zipName:zipName,results:results};
         
     },
-    'download.report.individual.pdf' : async function (groupId, userId, dataType="pdf") {
+    'download.report.individual.pdf' : async function (groupId, userId, languageCode, dataType="pdf") {
+
 
       if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
         throw (new Meteor.Error("invalid_data_type"));
@@ -230,11 +233,21 @@ Meteor.methods({
         groupCreatorLastName: creator.profile.lastName,
         cardPicked: sortedCard,
         cardPickedData: cardPickedData };
-      return (await generateComponentAsPDF({ component: ReportPdf, props: {propData}, fileName, dataType }));
+
+      var reportTemplate = ReportPdf;
+      var reportTemplates = {
+        "en":ReportPdfEN, 
+        "nl":ReportPdfNL
+      }
+      
+      if(languageCode && reportTemplates[languageCode]){
+        reportTemplate = reportTemplates[languageCode];
+      }
+      return (await generateComponentAsPDF({ component: reportTemplate, props: {propData}, fileName, dataType }));
     },
 
-    'generate.preview' : function (groupId, userId) {
-      return Meteor.call('download.report.individual.pdf', groupId, userId, "png");
+    'generate.preview' : function (groupId, userId, languageCode) {
+      return Meteor.call('download.report.individual.pdf', groupId, userId, languageCode, "png");
     },
 });
 

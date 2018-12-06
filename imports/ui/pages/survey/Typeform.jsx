@@ -6,6 +6,10 @@ import * as typeformEmbed from '@typeform/embed';
 
 import Menu from '/imports/ui/pages/menu/Menu';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 export default class NotFound extends React.Component {
     componentDidMount(){
         var el = ReactDOM.findDOMNode(this.refs.typeform);
@@ -19,6 +23,7 @@ export default class NotFound extends React.Component {
             //get locale and language code
             var locale = i18n.getLocale();
             var languageCode = locale.split("-")[0];
+            
             var urlProd = {
               "en":'https://oh2.typeform.com/to/RzcwbL',
               "nl":'https://oh2.typeform.com/to/oLBtn6'
@@ -57,7 +62,7 @@ export default class NotFound extends React.Component {
     
     render() {
       return (
-        <div className="fillHeight">
+        <div className="fillHeight" style={{height:100+"vh"}}>
           <section style={{height:100+"%"}}ref="typeform">
           </section>
         </div>

@@ -1,9 +1,6 @@
 import React from 'react';
-import i18n from 'meteor/universe:i18n';
-const T = i18n.createComponent();
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 
-export const ReportPdf = ({propData}) => (
+export const ReportPdfNL = ({propData}) => (
     <html>
         <head>
             <meta charSet="UTF-8"/>
@@ -19,15 +16,11 @@ export const ReportPdf = ({propData}) => (
         <body>
         <div className="a4-wrapper">
             <div className="section _1-greeting">
-            <h1 className="h1"><T>weq.reportPdf.Gretings</T></h1>
+            <h1 className="h1">Hoi</h1>
             <h1 className="h1 username">{propData.firstName},</h1>
             <h3 className="h3 subtitle">
-            {complexLinkTranslate("reportPdf.OpeningParagraph",{
-                groupName: propData.groupName,
-                groupCreatorFirstName: propData.groupCreatorFirstName,
-                groupCreatorLastName: propData.groupCreatorLastName
-                })
-            }
+            U heeft net WeQ met uw <strong>{propData.groupName}</strong> Team gespeeld. 
+            Dit is uw rapport die door <strong>{propData.groupCreatorFirstName}&nbsp;{propData.groupCreatorLastName}</strong> WeQ Master Coach is opgesteld.
             </h3>
             </div>
             <div className="section _2-content">
@@ -37,15 +30,15 @@ export const ReportPdf = ({propData}) => (
                 <div className="arrow-monitor"></div>
                 </div> */}
                 {/* <div className="pointer"></div> */}
-                <div className="h3 title-1"><T>weq.reportPdf.TutorialTitle</T></div>
+                <div className="h3 title-1">Hoe u deze graﬁek moet lezen</div>
                 <div className="bar-wrapper w-clearfix">
                 {/* <div className="arrow"></div> */}
-                <div className="bar-howto"><T>weq.reportPdf.TutorialLowestValue</T></div>
-                <div className="bar-howto _3"><T>weq.reportPdf.TutorialCurrentScore</T><br/><T>weq.reportPdf.TutorialCurrentScoreBracket</T></div>
+                <div className="bar-howto">De laagste waarde <br/> van deze Kwaliteit in uw groep</div>
+                <div className="bar-howto _3">Uw huidige score<br/>(beoordeeld door u en anderen)</div>
                 {/* <div className="bar-howto _4">Changes from <br/>previous session</div> */}
-                <div className="bar-howto _2"><T>weq.reportPdf.TutorialHighestValue</T></div>
+                <div className="bar-howto _2">De hoogste waarde <br/> van deze Kwaliteit in uw groep</div>
                 {/* <div className="quality-name number">+1,4</div> */}
-                <div className="quality-name"><T>weq.reportPdf.TutorialQualityName</T></div>
+                <div className="quality-name">Kwaliteitsnaam (Kaart #)</div>
                 <div className="bar-team">
                     <div className="bar-line"></div>
                 </div>
@@ -54,9 +47,9 @@ export const ReportPdf = ({propData}) => (
                 </div>
             </div>
             <div className="div-current w-clearfix">
-                <div className="h3 current"><T firstName={propData.firstName} lastName={propData.lastName}>weq.reportPdf.CurrentSession</T></div>
+                <div className="h3 current">Huidige Sessie - {propData.firstName} {propData.lastName}</div>
                 <div className="div-diagram">
-                <div className="h4 current"><T>weq.reportPdf.GraphOpeningParagraph</T></div>
+                <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie.</div>
                 <div className="diagram-wrapper w-clearfix">
                     <div className="diagram">
                     <div className="diagram-position">
@@ -210,15 +203,16 @@ export const ReportPdf = ({propData}) => (
             </div>
             </div>
             <div className="section-3">
-                <div className="h3 next"><T>weq.reportPdf.FooterTitle</T></div>
+                <div className="h3 next">Onderhoudssessies</div>
                 <div className="h4 next">
-                <T>weq.reportPdf.FooterTextLine1</T>
-                <br/>
-                <T>weq.reportPdf.FooterTextLine2</T>
-                <br/>
-                <T groupCreatorFirstName={propData.groupCreatorFirstName}>weq.reportPdf.FooterTextLine3</T>
+                    Verlies het momentum niet!
+                    <br/>
+                    Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren.
+                    <br/>
+                    <br/>
+                    Stel uw vraag aan {propData.groupCreatorFirstName}  voor meer informatie!
                 </div>
-                <div className="next-demo"></div>
+                <div className="next-demo nl"></div>
             </div>
             </div>
             <div className="section _3-footer">

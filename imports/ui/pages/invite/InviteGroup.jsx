@@ -14,6 +14,10 @@ import Menu from '/imports/ui/pages/menu/Menu';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);
@@ -35,10 +39,12 @@ class InviteGroup extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(nextProps.isEdit && nextProps.group){
-      if(nextProps.group){
+      if(nextProps.dataReady && nextProps.group){
         var copyStateData = [];
         nextProps.groupUsers.forEach(function(groupUser) {
-          copyStateData.push({email:groupUser.emails[0].address});
+          if(groupUser && groupUser.emails && groupUser.emails[0]){
+            copyStateData.push({email:groupUser.emails[0].address});
+          }
         });
         this.setState({
           info:undefined,
@@ -92,7 +98,7 @@ class InviteGroup extends React.Component {
             console.log(err);
             this.setState({
               inviteStatus: 'error',
-              info: 'something went wrong',
+              info: i18n.getTranslation("weq.inviteGroup.ErrorUnknown"),
             });
           }else{
             var msg;
@@ -160,7 +166,7 @@ class InviteGroup extends React.Component {
           {
             this.setState({
               inviteStatus: 'error',
-              info: 'error sending email',
+              info: err.message,
             });
           }     
       }); 
@@ -202,20 +208,20 @@ class InviteGroup extends React.Component {
   handleSubmitButton(){
       if(!this.state.groupName){
         this.setState({
-          inviteStatus: 'error',
-          info: 'Please enter a group name',
+          inviteStatus: 'warning',
+          info: i18n.getTranslation("weq.inviteGroup.ErrorNoGroupName"),
         });
       }
       else if(this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) > 12){
         this.setState({
-          inviteStatus: 'error',
-          info: 'Maximum amount of members reached',
+          inviteStatus: 'warning',
+          info: i18n.getTranslation("weq.inviteGroup.MaxNumberOfMember"),
         });
       }
       else if(!(this.props.group && this.props.group.isActive) && this.state.inviteDatas && (this.state.inviteDatas.length - this.state.inviteDeleted.length) < 2){
         this.setState({
-          inviteStatus: 'error',
-          info: 'Each group in a WeQ session must have at least 2 players',
+          inviteStatus: 'warning',
+          info: i18n.getTranslation("weq.inviteGroup.ErrorMinNumberMember"),
         });
       }
       else{
@@ -314,12 +320,12 @@ class InviteGroup extends React.Component {
 
       if(email == this.props.currentUser.emails[0].address.toString().toLowerCase()){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: 'cannot invite yourself',
         });
       }else if(emailsArray.indexOf(email) > -1){
         this.setState({
-          inviteStatus: 'error',
+          inviteStatus: 'warning',
           info: 'a user with the same email address is already a member of this group',
         });
       }else{
@@ -443,7 +449,7 @@ class InviteGroup extends React.Component {
                     {this.props.isEdit 
                       ? 
                       <div>
-                        <div className="groupformtext">Group name</div>
+                        <div className="groupformtext"><T>weq.inviteGroup.GroupName</T></div>
                         <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)} autoComplete={"false"}
                         maxLength="256" required="" 
                         placeholder="group name" className="formstyle group-name w-input" 
@@ -451,14 +457,14 @@ class InviteGroup extends React.Component {
                       </div>
                       :
                       <div>
-                      <div className="groupformtext">What is the name of this group?</div>
-                      <input type="text" ref="groupName" maxLength="256" required="" placeholder="group name" className="formstyle group-name w-input" autoComplete={"false"} 
+                      <div className="groupformtext"><T>weq.inviteGroup.GroupNamePromptText</T></div>
+                      <input type="text" ref="groupName" maxLength="256" required="" placeholder={i18n.getTranslation("weq.inviteGroup.PlaceholderGroupName")} className="formstyle group-name w-input" autoComplete={"false"} 
                       value={this.state.groupName} 
                       onChange={this.handleChange.bind(this)} required/>
                       </div>
                     }
                   
-                  <div className="groupformtext">Who should belong to this group?</div>
+                  <div className="groupformtext"><T>weq.inviteGroup.GroupMemberPromptText</T></div>
 
                   
                   {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
@@ -469,37 +475,37 @@ class InviteGroup extends React.Component {
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
                       <div className="font f_12">></div>
-                      <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" placeholder="Email address" required={true} autoComplete={"false"}/>
+                      <input type="email" className="formstyle formuser formemail email w-input" maxLength="256" ref="email" placeholder={i18n.getTranslation("weq.inviteGroup.PlaceholderEmailAddress")} required={true} autoComplete={"false"}/>
                       {/* <div className={"invitebttn bttnmembr gender w-clearfix "+(this.state.gender == "Male" ? "selected" : "")} onClick ={this.setGender.bind(this,"Male")}>
                         Male
                       </div>
                       <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
                         Female
                       </div> */}
-                         <input type="submit" id="submitAdd" defaultValue="+ Add this person" className="invitebttn bttnmembr action w-button"/>
+                         <input type="submit" id="submitAdd" defaultValue={`+ ${i18n.getTranslation("weq.inviteGroup.ButtonAddGroupMember")}`} className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>
                   :!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&
                   <ol className="w-list-unstyled">
                     <li className="invite-group-line-wrapper w-clearfix">
-                      <div className="font f_12 center">Maximum amount of group member reached</div>
+                      <div className="font f_12 center"><T>weq.inviteGroup.MaxNumberOfMember</T></div>
                     </li>
                   </ol>
                   }
 
                 {this.state.inviteStatus == 'sending' && 
                 <span className="sendingStatus">
-                <img src="/img/status_sending.png"/>sending...
+                <img src="/img/status_sending.png"/><T>weq.inviteGroup.SendingText</T>
                 <br/><br/>
                 </span>
                 }
                 {this.state.inviteStatus == 'sent' && 
                     <span className="sendingStatus">
-                    <img src="/img/status_sent.png"/>sent!
+                    <img src="/img/status_sent.png"/><T>weq.inviteGroup.SentText</T>
                     <br/><br/>
                     </span>
                 }
-                {this.state.inviteStatus == 'error' && 
+                {(this.state.inviteStatus == 'error' || this.state.inviteStatus == 'warning') && 
                     this.state.info &&
                       <span className="sendingStatus">
                       <img src="/img/status_error.png"/>{this.state.info}
@@ -508,9 +514,17 @@ class InviteGroup extends React.Component {
                       // :
                       // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                 }
-                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
-                  <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>save</a>
+                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus == 'error' 
+                  ?
+                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleBackArrowClick.bind(this)}>
+                    <T>weq.inviteGroup.ButtonBackToGroupList</T>
+                    </a>
+                  :(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
+                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>
+                    <T>weq.inviteGroup.ButtonSave</T>
+                    </a>
                 }
+                
                 </form>
 
                 {this.state.showConfirm && 
@@ -564,6 +578,8 @@ export default withTracker((props) => {
   var count;
   var groupUsers=[];
   var groupUsersSurveyed=[];
+  var groupUserEmails=[];
+  var groupUserEmailsSurveyed=[];
   var handleGroup = Meteor.subscribe('group',{creatorId: Meteor.userId()},{}, {
     onError: function (error) {
           console.log(error);
@@ -582,6 +598,9 @@ export default withTracker((props) => {
       if(props.group.userIdsSurveyed){
         groupUsersSurveyed = groupUsers.filter(user => props.group.userIdsSurveyed.indexOf(user._id) > -1);
       }
+
+      groupUserEmails= groupUsers.map( (user) => user && user.emails && user.emails[0] && user.emails[0].address);
+      groupUserEmailsSurveyed= groupUsersSurveyed.map( (user) => user && user.emails && user.emails[0] && user.emails[0].address);
     }
     
 
@@ -590,8 +609,8 @@ export default withTracker((props) => {
   return {
       count:count,
       groupUsers: groupUsers,
-      groupUserEmails: groupUsers.map( (user) => user.emails[0].address),
-      groupUserEmailsSurveyed: groupUsersSurveyed.map( (user) => user.emails[0].address),
+      groupUserEmails: groupUserEmails,
+      groupUserEmailsSurveyed: groupUserEmailsSurveyed,
       currentUser: Meteor.user(),
       dataReady:dataReady
   };

@@ -4,7 +4,9 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import Report from '/imports/ui/pages/group/Report';
+
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
 
 class GroupReportPage extends React.Component {
     constructor(props){
@@ -13,12 +15,34 @@ class GroupReportPage extends React.Component {
           selectedUser:false,
           preview:undefined,
           loadingPreview:false,
-          generatingPdf:false
+          generatingPdf:false,
+          languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"}],
+          downloadIndividualLang:i18n.getLocale().split("-")[0],
+          downloadAllLang:i18n.getLocale().split("-")[0]
         }
     }
+
+    handleChangeIndividualLang(event) {
+        this.setState(
+            { 
+                downloadIndividualLang: event.target.value,
+                loadingPreview: true, 
+                preview:undefined 
+            },()=>{
+                if(this.state.selectedUser && this.props.group && this.props.group.isFinished){
+                    this.generatePreview(this.state.downloadIndividualLang);
+                }
+            }
+        );
+    }
+
+    handleChangeAllLang(event) {
+        this.setState({downloadAllLang: event.target.value});
+    }
+
     downloadPdfMulti(){
         this.setState({ generatingPdf: true });
-        Meteor.call('download.report.group.pdf',this.props.group._id, (error, response) => {
+        Meteor.call('download.report.group.pdf',this.props.group._id, this.state.downloadAllLang, (error, response) => {
           if (error) {
             console.log(error);
           } else {
@@ -46,7 +70,7 @@ class GroupReportPage extends React.Component {
 
     downloadPdf(){
         this.setState({ generatingPdf: true });
-        Meteor.call('download.report.individual.pdf',this.props.group._id, this.state.selectedUser, (error, response) => {
+        Meteor.call('download.report.individual.pdf',this.props.group._id, this.state.selectedUser, this.state.downloadIndividualLang, (error, response) => {
           if (error) {
             console.log(error);
           } else {
@@ -70,12 +94,12 @@ class GroupReportPage extends React.Component {
     selectUser(uid){
         this.setState({ loadingPreview: true, selectedUser: uid, preview:undefined },()=>{
             if(this.state.selectedUser && this.props.group && this.props.group.isFinished){
-                this.generatePreview();
+                this.generatePreview(this.state.downloadIndividualLang);
             }
         });
     }
-    generatePreview(){
-        Meteor.call('generate.preview',this.props.group._id, this.state.selectedUser, (error, response) => {
+    generatePreview(languageCode){
+        Meteor.call('generate.preview',this.props.group._id, this.state.selectedUser, languageCode, (error, response) => {
             if (error) {
               console.log(error);
             } else {
@@ -87,6 +111,15 @@ class GroupReportPage extends React.Component {
             this.setState({ loadingPreview: false });
           });
     }
+
+    renderLanguageList(){
+        return this.state.languages.map((val,index,array)=>{
+            return(
+                <option key={"select-lang"+index} value={val.code}>{val.name}</option>
+            );
+        })
+    }
+
     render() {
         if(this.props.dataReady){
             if(this.props.group){
@@ -117,11 +150,10 @@ class GroupReportPage extends React.Component {
                                     this.state.selectedUser 
                                     ?
                                     <div className="container-2 w-container">
-                                        <br/>
                                         <div className="a4">
                                         {this.state.loadingPreview 
                                             ?
-                                            <div className="fillHeight weq-bg white-bg-color">
+                                            <div className="weq-bg white-bg-color pdf-preview-loading">
                                                 <div className="w-block noselect">
                                                     <div className="font-rate padding-wrapper">
                                                         Please wait...
@@ -135,32 +167,47 @@ class GroupReportPage extends React.Component {
                                         </div>
                                         {this.state.generatingPdf 
                                         ?
-                                            <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
-                                            Please wait....
+                                            <div className="pdf-download-wrapper">
+                                                <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
+                                                Please wait....
+                                                </div>
                                             </div>
                                         :
-                                            <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
-                                            Download Individual Report
+                                            <div className="pdf-download-wrapper">
+                                                <select className="w-select w-inline-block pdf-download-lang-select" 
+                                                name="language" value={this.state.downloadIndividualLang} onChange={this.handleChangeIndividualLang.bind(this)}>
+                                                    {this.renderLanguageList()}
+                                                </select>
+                                                <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
+                                                Download Individual Report
+                                                </div>
                                             </div>
                                         }
                                     </div>
                                     :
                                     <div className="container-2 w-container">
-                                        <br/>
                                         {this.state.generatingPdf 
                                         ?
-                                            <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
-                                            Please wait....
+                                            <div className="pdf-download-wrapper">
+                                                <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
+                                                Please wait....
+                                                </div>
                                             </div>
                                         :
-                                            <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
-                                            Download All Report
+
+                                            <div className="pdf-download-wrapper">
+                                                <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                                                value={this.state.downloadAllLang} onChange={this.handleChangeAllLang.bind(this)}>
+                                                    {this.renderLanguageList()}
+                                                </select>
+                                                <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
+                                                Download All Report
+                                                </div>
                                             </div>
                                         }
                                     </div>
                                 :
                                 <div className="container-2 w-container">
-                                    <br/>
                                     <div className="emptytext group">Report functionalities will be available when game is finished</div>
                                 </div>
                             }
