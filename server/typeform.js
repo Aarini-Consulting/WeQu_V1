@@ -42,26 +42,104 @@ Meteor.methods({
             return error;
         }
     },
-    'get.response.typeform'(typeformId,since=new Date()) {
+    'calculate.typeform.score'(groupId, typeformResponses) {
+        console.log(typeformResponses.length);
+        console.log(groupId);
+        var checkGroup = Group.findOne({
+            _id : groupId,
+            creatorId: Meteor.userId()
+        });
+
+        var filteredByCurrentGroupName;
+
+        if(checkGroup && typeformResponses.length > 0){
+            filteredByCurrentGroupName = typeformResponses.filter((response) => {
+                var responseGroupName;
+                if(response.answers){
+                    
+                    var tempAnswer = response.answers.find((answer)=>{
+                        return answer.field && answer.field.type == "short_text";
+                    })
+
+                    responseGroupName = tempAnswer.text;
+                }
+
+                if(responseGroupName){
+                    responseGroupName = responseGroupName.toString().trim().toLowerCase();
+                    return responseGroupName == checkGroup.groupName.toString().trim().toLowerCase();
+                }else{
+                    return false;
+                }
+            });
+
+            console.log(filteredByCurrentGroupName.length);
+        }else{
+
+        }
+        
+          
+    },
+    'get.all.response.typeform'(groupId, typeformId,since=new Date()) {
+        var pageSize = 25;
+        var dateNow = new Date();
+        var endResult;
+        var result = Meteor.call('get.response.typeform', pageSize, typeformId, false, since, dateNow);
+
+        if(result && result.data){
+            endResult = result.data.items;
+            var pageCount = result.data.page_count;
+            if(pageCount > 1){
+                var lastResult = result.data.items && result.data.items.length > 0 && result.data.items[result.data.items.length-1];
+                for(var i = 0; i < pageCount; i++) {
+                    var tempResult;
+                    if(lastResult){
+                        tempResult = Meteor.call('get.response.typeform', pageSize, typeformId, lastResult.token, since, dateNow);
+                        lastResult = tempResult.data.items && tempResult.data.items.length > 0 && tempResult.data.items[tempResult.data.items.length-1];
+                    }
+                    
+
+                    if(tempResult && tempResult.data && tempResult.data.items && tempResult.data.items.length > 0){
+                        endResult = endResult.concat(tempResult.data.items);
+                        tempResult = false;
+                    }
+                }
+            }   
+        }
+
+        Meteor.call('calculate.typeform.score', groupId, endResult);
+
+        return endResult;
+    },
+    'get.response.typeform'(pageSize, typeformId,afterTokenValue,since=new Date(), until=new Date()) {
         this.unblock();
 
         if(since){
             since = since.toISOString();
         }
 
+        if(until){
+            until = until.toISOString();
+        }
+
         try {
+            var params = {
+                "since": since,
+                "until": until,
+                "completed": true,
+                "page_size": pageSize,
+                "sort": "submitted_at,asc"
+            }
+
+            if(afterTokenValue){
+                params.after = afterTokenValue;
+            }
+
             var result = HTTP.call( 'GET', `https://api.typeform.com/forms/${typeformId}/responses`, 
             {
                 headers: {
                     "Authorization":`Bearer ${Meteor.settings.private.TypeFormPersonalToken}`,
                 },
-                params: {
-                    "since": since,
-                    "until": new Date().toISOString(),
-                    "completed": true,
-                    // "fields":["nRmD9U3cj8fO"]
-                }
-                
+                params: params
             });
             
             return result;
