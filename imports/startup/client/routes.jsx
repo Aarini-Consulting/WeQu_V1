@@ -124,13 +124,13 @@ const App = class App extends React.Component {
     //detect current locale
     var locale = getDefaultLocale();
     //e.g. locale = 'en-US';
-    var supportedLocale = ['nl-NL', 'en-US'];
+    var supportedLocale = Meteor.settings.public.supportedLocale;
 
     //override detected locale with locale value from user profile
     var user = props.currentUser;
     if(user && user.profile && user.profile.locale){
       locale = user.profile.locale;
-    }    
+    }
     
     var languageCode;
     //check type of locale (e.g. "en" or "en-US")

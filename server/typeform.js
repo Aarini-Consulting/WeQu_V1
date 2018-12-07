@@ -1,85 +1,114 @@
 import { Meteor } from 'meteor/meteor';
 
-Meteor.methods({
-    //Creating a method to send verification.
-    'get.access.token.typeform'(redirect_uri,auth_code) {
-        this.unblock();
-        try{
-            var result = HTTP.call( 'POST', 'https://www.linkedin.com/oauth/v2/accessToken', 
-            {
-                params: {
-                "grant_type": "authorization_code",
-                "code":auth_code,
-                "redirect_uri":redirect_uri,
-                "client_id":Meteor.settings.private.LinkedInClientId,
-                "client_secret":Meteor.settings.private.LinkedInSecretId
-                }
-            });
+function getCategoryScoreFromString(scoreAsString){
+    var score = Number(scoreAsString);
 
-            return result;
-        }
-        catch(error){
-            return error;
-        }
-        
-    },
-    'get.oauth.typeform'(redirect_uri) {
-        this.unblock();
-        console.log(Meteor.settings.private.TypeFormClientId);
-        try {
-            var result = HTTP.call( 'GET', 'https://api.typeform.com/oauth/authorize', 
-            {
-                params: {
-                    "client_id": Meteor.settings.private.TypeFormClientId,
-                    "redirect_uri":"http://localhost:3000/callback",
-                    "scope":"responses:read"
-                    }
-            });
-            
-            console.log(result);
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
-    },
+    if(score < 3){
+        score = 3;
+    }
+
+    if(score > 24){
+        score = 24;
+    }
+
+    return score/3;
+
+}
+
+function averageCategoryScore(score, count){
+    if(score < 1){
+        return 0;
+    }else{
+        return score/count;
+    }
+}
+
+Meteor.methods({
     'calculate.typeform.score'(groupId, typeformResponses) {
-        console.log(typeformResponses.length);
-        console.log(groupId);
         var checkGroup = Group.findOne({
             _id : groupId,
             creatorId: Meteor.userId()
         });
 
-        var filteredByCurrentGroupName;
+        var scoreCostructiveFeedback = 0;
+        var scorePsychologicalSafety = 0;
+        var scoreSocialNorms = 0;
+        var scoreControlOverCognitiveBias = 0;
+        var validAnswerCount = 0;
 
         if(checkGroup && typeformResponses.length > 0){
-            filteredByCurrentGroupName = typeformResponses.filter((response) => {
-                var responseGroupName;
-                if(response.answers){
-                    
-                    var tempAnswer = response.answers.find((answer)=>{
-                        return answer.field && answer.field.type == "short_text";
-                    })
+            typeformResponses.filter((response) => {
+                //make sure response has a calculated score of 8 digit number, so it must be a number between 9.999.999 and 100.000.000
+                if(response.calculated && response.calculated.score && response.calculated.score > 9999999 && response.calculated.score < 100000000){
+                    var responseGroupName;
+                    if(response.answers){
+                        
+                        var tempAnswer = response.answers.find((answer)=>{
+                            return answer.field && answer.field.type == "short_text";
+                        })
 
-                    responseGroupName = tempAnswer.text;
-                }
+                        responseGroupName = tempAnswer.text;
+                    }
 
-                if(responseGroupName){
-                    responseGroupName = responseGroupName.toString().trim().toLowerCase();
-                    return responseGroupName == checkGroup.groupName.toString().trim().toLowerCase();
-                }else{
-                    return false;
+                    if(responseGroupName){
+                        responseGroupName = responseGroupName.toString().trim().toLowerCase();
+
+                        if(responseGroupName == checkGroup.groupName.toString().trim().toLowerCase()){
+                            validAnswerCount+=1;
+                            var scoreAsString = response.calculated.score.toString();
+
+                            scoreCostructiveFeedback += getCategoryScoreFromString(scoreAsString.substr(0, 2));
+                            scorePsychologicalSafety += getCategoryScoreFromString(scoreAsString.substr(2, 2));
+                            scoreSocialNorms += getCategoryScoreFromString(scoreAsString.substr(4, 2));
+                            scoreControlOverCognitiveBias += getCategoryScoreFromString(scoreAsString.substr(6, 2));
+
+                        }
+                    }
                 }
             });
 
-            console.log(filteredByCurrentGroupName.length);
-        }else{
+            var typeformGraph = [
+                {
+                    name:"Constructive Feedback",
+                    score:averageCategoryScore(scoreCostructiveFeedback,validAnswerCount), 
+                    total:8
+                },
+                {
+                    name:"Psychological Safety",
+                    score:averageCategoryScore(scorePsychologicalSafety,validAnswerCount), 
+                    total:8
+                },
+                {
+                    name:"Social Norms",
+                    score:averageCategoryScore(scoreSocialNorms,validAnswerCount), 
+                    total:8
+                },
+                {
+                    name:"Control over Cognitive Bias",
+                    score:averageCategoryScore(scoreControlOverCognitiveBias,validAnswerCount), 
+                    total:8
+                },
+            ]
+    
+            Meteor.call( 'set.typeform.graph', checkGroup._id, typeformGraph);
 
+            return true;
         }
-        
-          
     },
     'get.all.response.typeform'(groupId, typeformId,since=new Date()) {
+        var checkGroup = Group.findOne({
+            _id : groupId,
+            creatorId: Meteor.userId()
+        });
+
+        if(!checkGroup){
+            throw (new Meteor.Error("group_not_found")); 
+        }
+
+        if(!(checkGroup.userIds && checkGroup.userIdsSurveyed && checkGroup.userIds.length == checkGroup.userIdsSurveyed.length)){
+            throw (new Meteor.Error("not_all_finished_survey")); 
+        }
+
         var pageSize = 25;
         var dateNow = new Date();
         var endResult;
@@ -108,7 +137,7 @@ Meteor.methods({
 
         Meteor.call('calculate.typeform.score', groupId, endResult);
 
-        return endResult;
+        return true;
     },
     'get.response.typeform'(pageSize, typeformId,afterTokenValue,since=new Date(), until=new Date()) {
         this.unblock();

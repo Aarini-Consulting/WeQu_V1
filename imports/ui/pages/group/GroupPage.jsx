@@ -12,6 +12,8 @@ import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
 
+import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
+
 import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
@@ -99,13 +101,38 @@ class GroupPage extends React.Component {
   }
 
   getTypeFormResult(){
-    Meteor.call('get.all.response.typeform', this.props.group._id, 'oLBtn6', this.props.group.createdAt, (error, result)=>{
-      if(error){
-        console.log(error);
-      }else{
-        console.log(result);
+    if(this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+      var supportedLocale = Meteor.settings.public.supportedLocale;
+      for (var locale in supportedLocale) {
+        var languageCode = locale.split("-")[0];
+        var formIdTest = Meteor.settings.public.typeformTestFormCode;
+        var formIdProd =  Meteor.settings.public.typeformProdFormCode;
+
+        var formIdSelected;
+
+        if(window.location.hostname == "app.weq.io"){
+          formIdSelected = formIdProd[languageCode];
+          if(!formIdSelected){
+            formIdSelected = formIdProd["en"];
+          }
+        }else{
+          formIdSelected = formIdTest[languageCode];
+          if(!formIdSelected){
+            formIdSelected = formIdTest["en"];
+          }
+        }
+
+        console.log(formIdSelected);
+
+        Meteor.call('get.all.response.typeform', this.props.group._id, formIdSelected, this.props.group.createdAt, (error, result)=>{
+          if(error){
+            console.log(error);
+          }else{
+            console.log(result);
+          }
+        });
       }
-    });
+    }
   }
 
   renderUserCards(cards){
@@ -177,10 +204,16 @@ class GroupPage extends React.Component {
       return(
         <div className="tap-content w-clearfix">
           <div className="font-matric">
-            <button className="tablinks" id="view1" onClick={this.getTypeFormResult.bind(this)}>
+            {this.props.group && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length  
+            ?
+              <button className="tablinks" id="view1" onClick={this.getTypeFormResult.bind(this)}>
                 Get Typeform Score
-            </button>
-            Please check again when survey is completed
+              </button>
+            :
+              <div>
+                Please check again when survey is completed
+              </div>
+            }
           </div>
         </div>
       );
