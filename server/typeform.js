@@ -38,8 +38,14 @@ Meteor.methods({
 
         if(checkGroup && typeformResponses.length > 0){
             typeformResponses.filter((response) => {
-                //make sure response has a calculated score of 8 digit number, so it must be a number between 9.999.999 and 100.000.000
-                if(response.calculated && response.calculated.score && response.calculated.score > 9999999 && response.calculated.score < 100000000){
+                //make sure response has a calculated score of 8 digit number
+                var scoreAsString = response.calculated && response.calculated.score && response.calculated.score.toString();
+                
+                if(scoreAsString && scoreAsString.length == 7){
+                    scoreAsString = "0" + scoreAsString;
+                }
+
+                if(scoreAsString.length == 8){
                     var responseGroupName;
                     if(response.answers){
                         
@@ -55,13 +61,11 @@ Meteor.methods({
 
                         if(responseGroupName == checkGroup.groupName.toString().trim().toLowerCase()){
                             validAnswerCount+=1;
-                            var scoreAsString = response.calculated.score.toString();
 
-                            scoreCostructiveFeedback += getCategoryScoreFromString(scoreAsString.substr(0, 2));
-                            scorePsychologicalSafety += getCategoryScoreFromString(scoreAsString.substr(2, 2));
-                            scoreSocialNorms += getCategoryScoreFromString(scoreAsString.substr(4, 2));
-                            scoreControlOverCognitiveBias += getCategoryScoreFromString(scoreAsString.substr(6, 2));
-
+                            scoreControlOverCognitiveBias += getCategoryScoreFromString(scoreAsString.substr(0, 2));
+                            scoreSocialNorms += getCategoryScoreFromString(scoreAsString.substr(2, 2));
+                            scorePsychologicalSafety += getCategoryScoreFromString(scoreAsString.substr(4, 2));
+                            scoreCostructiveFeedback += getCategoryScoreFromString(scoreAsString.substr(6, 2));
                         }
                     }
                 }
@@ -95,7 +99,7 @@ Meteor.methods({
             return true;
         }
     },
-    'get.all.response.typeform'(groupId, typeformId,since=new Date()) {
+    'get.all.response.typeform'(groupId, typeformIds,since=new Date()) {
         var checkGroup = Group.findOne({
             _id : groupId,
             creatorId: Meteor.userId()
@@ -111,31 +115,40 @@ Meteor.methods({
 
         var pageSize = 25;
         var dateNow = new Date();
-        var endResult;
-        var result = Meteor.call('get.response.typeform', pageSize, typeformId, false, since, dateNow);
+        
+        var endResultCombined = [];
+        typeformIds.forEach((typeformId)=>{
+            var endResult=[];
+            var result = Meteor.call('get.response.typeform', pageSize, typeformId, false, since, dateNow);
 
-        if(result && result.data){
-            endResult = result.data.items;
-            var pageCount = result.data.page_count;
-            if(pageCount > 1){
-                var lastResult = result.data.items && result.data.items.length > 0 && result.data.items[result.data.items.length-1];
-                for(var i = 0; i < pageCount; i++) {
-                    var tempResult;
-                    if(lastResult){
-                        tempResult = Meteor.call('get.response.typeform', pageSize, typeformId, lastResult.token, since, dateNow);
-                        lastResult = tempResult.data.items && tempResult.data.items.length > 0 && tempResult.data.items[tempResult.data.items.length-1];
+            if(result && result.data){
+                endResult = result.data.items;
+                var pageCount = result.data.page_count;
+
+                //get the rest of the result in other pages
+                if(pageCount > 1){
+                    var lastResult = result.data.items && result.data.items.length > 0 && result.data.items[result.data.items.length-1];
+                    for(var i = 0; i < pageCount; i++) {
+                        var tempResult;
+                        if(lastResult){
+                            tempResult = Meteor.call('get.response.typeform', pageSize, typeformId, lastResult.token, since, dateNow);
+                            lastResult = tempResult.data.items && tempResult.data.items.length > 0 && tempResult.data.items[tempResult.data.items.length-1];
+                        }
+                        
+
+                        if(tempResult && tempResult.data && tempResult.data.items && tempResult.data.items.length > 0){
+                            endResult = endResult.concat(tempResult.data.items);
+                            tempResult = false;
+                        }
                     }
-                    
+                }   
+            }
+            if(Array.isArray(endResult)){
+                endResultCombined = endResultCombined.concat(endResult);
+            }
+        });
 
-                    if(tempResult && tempResult.data && tempResult.data.items && tempResult.data.items.length > 0){
-                        endResult = endResult.concat(tempResult.data.items);
-                        tempResult = false;
-                    }
-                }
-            }   
-        }
-
-        Meteor.call('calculate.typeform.score', groupId, endResult);
+        Meteor.call('calculate.typeform.score', groupId, endResultCombined);
 
         return true;
     },

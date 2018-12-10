@@ -31,7 +31,6 @@ export function typeformUrlSelector(type){
                 typeformUrl = `https://oh2.typeform.com/to/${formIdTest["en"]}`;
             }
         }
-
         return typeformUrl;
     }else{
         var formId;

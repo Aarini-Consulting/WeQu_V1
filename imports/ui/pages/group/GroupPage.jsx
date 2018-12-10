@@ -103,7 +103,10 @@ class GroupPage extends React.Component {
   getTypeFormResult(){
     if(this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
       var supportedLocale = Meteor.settings.public.supportedLocale;
-      for (var locale in supportedLocale) {
+
+      var formIds = [];
+
+      supportedLocale.forEach((locale)=>{
         var languageCode = locale.split("-")[0];
         var formIdTest = Meteor.settings.public.typeformTestFormCode;
         var formIdProd =  Meteor.settings.public.typeformProdFormCode;
@@ -122,16 +125,16 @@ class GroupPage extends React.Component {
           }
         }
 
-        console.log(formIdSelected);
+        formIds.push(formIdSelected);
+      });
 
-        Meteor.call('get.all.response.typeform', this.props.group._id, formIdSelected, this.props.group.createdAt, (error, result)=>{
-          if(error){
-            console.log(error);
-          }else{
-            console.log(result);
-          }
-        });
-      }
+      Meteor.call('get.all.response.typeform', this.props.group._id, formIds, this.props.group.createdAt, (error, result)=>{
+        if(error){
+          console.log(error);
+        }else{
+          console.log(result);
+        }
+      });
     }
   }
 
