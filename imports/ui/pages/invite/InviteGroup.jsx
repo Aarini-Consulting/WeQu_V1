@@ -368,14 +368,14 @@ class InviteGroup extends React.Component {
               <div className="font f_12">{index+1}</div>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email} autoComplete={"false"}/>
               {this.props.group && readySurvey 
-              ? 
-              <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
-                survey completed
+              ?
+              <div className="formstyle-header status">
+              <div className="font f_12 survey-completed">completed</div>
               </div>
               :this.props.group 
                 &&
-                <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
-                  survey incomplete
+                <div className="formstyle-header status">
+                <div className="font f_12 survey-incomplete">incompleted</div>
                 </div>
               }
               {this.props.isEdit && newInviteIndex < 0 && !(this.props.group && this.props.group.isFinished) &&
@@ -407,6 +407,22 @@ class InviteGroup extends React.Component {
     renderFieldTable(){
       return (
         <ol className="w-list-unstyled">
+          {this.props.group && this.props.isEdit
+          &&
+            <li className="invite-group-line-wrapper">
+              <div className="font f_12">#</div>
+              <div className="formstyle-header formemail">
+                <div className="font f_12">Email</div>
+              </div>
+              <div className="formstyle-header status">
+                <div className="font f_12">Survey Status</div>
+              </div>
+              <div className="formstyle-header actions">
+                <div className="font f_12">Actions</div>
+              </div>
+            </li>
+          }
+          
           {this.renderFields()}
         </ol>
       )

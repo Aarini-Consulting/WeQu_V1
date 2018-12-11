@@ -57,7 +57,8 @@ class QuizRankPage extends React.Component {
                         }
                     }else{
                         return(
-                            <div className="fillHeight weq-bg">
+                            <div className="fillHeight weq-bg survey-done-screen">
+                                <br/>
                                 <div className="font-rate padding-wrapper">
                                     DONE!
                                     <br/><br/>
