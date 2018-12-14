@@ -480,6 +480,7 @@ class InviteGroup extends React.Component {
                       </div>
                     }
                   
+                  <br/>
                   <div className="groupformtext"><T>weq.inviteGroup.GroupMemberPromptText</T></div>
 
                   

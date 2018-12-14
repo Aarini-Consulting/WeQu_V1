@@ -204,22 +204,27 @@ class GroupPage extends React.Component {
 
   renderSurveyGraph(skills){
     if(!skills || skills.length < 1){
-      return(
-        <div className="tap-content w-clearfix">
-          <div className="font-matric">
-            {this.props.group && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length  
-            ?
-              <button className="tablinks" id="view1" onClick={this.getTypeFormResult.bind(this)}>
-                Get Typeform Score
-              </button>
-            :
-              <div>
-                Please check again when survey is completed
+      if(this.props.group && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+        return(
+          <div className="create-chart-tab">
+              <div className="create-chart-wrapper">
+                <div className="create-chart-icon-wrapper">
+                  <i className="far fa-chart-bar"></i>
+                </div>
+                  
+                <div className="invitebttn create-chart w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
+                  Calculate survey result
+                </div>
               </div>
-            }
+            </div>
+        );
+      }else{
+        return(
+          <div className="font-matric">
+            Please check again when survey is completed
           </div>
-        </div>
-      );
+        )
+      }
     }
     else{
       return skills.map((skill, index) => {
@@ -357,30 +362,28 @@ class GroupPage extends React.Component {
               <Menu location={this.props.location} history={this.props.history}/>
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
-                  <a className="w-clearfix w-inline-block cursor-pointer" onClick={()=>{
+                  <a className="w-clearfix w-inline-block cursor-pointer arrow-left-white" onClick={()=>{
                     this.props.history.goBack();
                   }}>
-                  <img className="image-7" src="/img/arrow.svg"/>
+                  <i className="fas fa-arrow-left"></i>
                   </a>
                 </div>
                 <div className="fontreleway font-invite-title white w-clearfix">
                 {this.props.group.groupName}
                 </div>
-                <div className="fontreleway font-invite-title edit w-clearfix">
-                  {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-                    <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
-                  }
-                  {(this.props.group && this.props.group.isFinished) 
-                    ?
-                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                      Game Finished
-                    </a>
-                    :this.props.group.isActive &&
-                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                      Game Started
-                    </a>
-                  }          
-                </div>
+                {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
+                  <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
+                }
+                {(this.props.group && this.props.group.isFinished) 
+                  ?
+                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+                    Game Finished
+                  </a>
+                  :this.props.group.isActive &&
+                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+                    Game Started
+                  </a>
+                }
               </div>
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                 <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
@@ -393,11 +396,11 @@ class GroupPage extends React.Component {
                 </a>
                 <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
-                  <div>Draw cards</div>
+                  <div>Collect cards</div>
                 </a>
                 <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"report")}>
-                  <div>Report</div>
+                  <div>Download report</div>
                 </a>
               </div>
               <div className="tabs w-tabs">
