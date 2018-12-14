@@ -7,7 +7,16 @@
       "development": "http://app.wequ.co",
       "local": "localhost:3000"
     },
-    "verifyEmail": true
+    "verifyEmail": true,
+    "supportedLocale":["nl-NL","en-US"],
+    "typeformTestFormCode":{
+      "en":"XurSNo",
+      "nl":"lcFJw6"
+    },
+    "typeformProdFormCode":{
+      "en":"RzcwbL",
+      "nl":"oLBtn6"
+    }
   },
   "private": {
     "twillioVerificationApiKey":"ESDI1HGJzl9zRqIlTtQpJYNOLeOMPkWf",
@@ -16,6 +25,9 @@
     "twillioNotificationSenderMsisdn":"+3197004880648",
     "LinkedInClientId":"758ew0beoeqe01",
     "LinkedInSecretId":"qwAMdc8wlJ3KxgY1",
+    "TypeFormSecretId":"C9KhtaN5rqZHVKHhmdJSJU4RSJEr271hbvnEUBdBkHzE",
+    "TypeFormClientId":"CKMPSBaG1EfNFWbiM7YTiE37r4RtvyRHtzRpVDRbD4tW",
+    "TypeFormPersonalToken":"7GEgTL6cxwuhc98KHpRgz7NusmXq695p4HzgRwpxgePT",
     "postmail": "postmaster@wequ.co",
     "defaultUsers": [
       {
