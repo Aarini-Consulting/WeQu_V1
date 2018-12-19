@@ -58,6 +58,12 @@ Template.GroupSurveyCompletedEmail.helpers({
     //Add any helper methods to enable default data in template
 });
 
+SSR.compileTemplate('GroupSurveyCompletedEmailCmc', Assets.getText('group-survey-completed-email-cmc.html'));
+
+Template.GroupSurveyCompletedEmailCmc.helpers({
+    //Add any helper methods to enable default data in template
+});
+
 
 
 

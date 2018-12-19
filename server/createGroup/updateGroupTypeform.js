@@ -39,10 +39,21 @@ Meteor.methods({
                     'groupId': updatedGroup._id,
                     'groupName': updatedGroup.groupName
                 };
-                var body;
-                body = SSR.render('GroupSurveyCompletedEmail', emailData);
+                var body = SSR.render('GroupSurveyCompletedEmail', emailData);
 
                 Meteor.call('sendEmail', "contact@weq.io", subject, body);
+
+
+                var emailDataCmc = {
+                    'creatorEmail': groupCreator.emails[0].address,
+                    'creatorName' : (groupCreator.profile.firstName) ,
+                    'groupId': updatedGroup._id,
+                    'groupName': updatedGroup.groupName,
+                    'appLink':Meteor.absoluteUrl()
+                };
+                var bodyCmc = SSR.render('GroupSurveyCompletedEmailCmc', emailDataCmc);
+
+                Meteor.call('sendEmail', groupCreator.emails[0].address, subject, bodyCmc);
             }
             
                 
