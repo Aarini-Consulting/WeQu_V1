@@ -59,7 +59,6 @@ class InviteGroup extends React.Component {
   }
 
   updateGroup(){
-    var groupName = this.state.groupName;
     var inviteDatas = this.state.inviteDatas.filter((inviteData) => {
       var deleteIndex = this.state.inviteDeleted.findIndex((deleted)=>{
         return inviteData.email == deleted.email
@@ -72,7 +71,7 @@ class InviteGroup extends React.Component {
       }
     });
 
-    if(groupName && inviteDatas && inviteDatas.length >= 2){
+    if(inviteDatas && inviteDatas.length >= 2){
       var emailsArray = inviteDatas.map( (fields) => fields.email);
 
       this.setState({
@@ -92,7 +91,7 @@ class InviteGroup extends React.Component {
 
       resend.map( (resend) => this.resendInvite(resend.email));
       
-      Meteor.call('updateGroup', this.props.group, groupName, inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('updateGroup', this.props.group, inviteDatas, emailsArray , (err, res) => {
           if(err)
           {
             console.log(err);
@@ -465,15 +464,24 @@ class InviteGroup extends React.Component {
                     {this.props.isEdit 
                       ? 
                       <div>
-                        <div className="groupformtext"><T>weq.inviteGroup.GroupName</T></div>
-                        <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)} autoComplete={"false"}
-                        maxLength="256" required="" 
-                        placeholder="group name" className="formstyle group-name w-input" 
-                        required/>
+                        <div className="groupformtext">
+                          <T>weq.inviteGroup.GroupName</T>
+                          <div className="tooltip-tutorial">
+                            <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
+                            <span className="tooltiptext">Once created, The group name is not changeable as it is used to integrates with a third party service. </span>
+                          </div>
+                        </div>
+                        <p className="formstyle group-name noselect">{this.props.group.groupName}</p>
                       </div>
                       :
                       <div>
-                      <div className="groupformtext"><T>weq.inviteGroup.GroupNamePromptText</T></div>
+                      <div className="groupformtext">
+                        <T>weq.inviteGroup.GroupNamePromptText</T>
+                        <div className="tooltip-tutorial">
+                          <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
+                          <span className="tooltiptext">Choose a simple, yet unique group name.<br/>Once created, The group name is not changeable as it is used to integrates with a third party service. </span>
+                        </div>
+                      </div>
                       <input type="text" ref="groupName" maxLength="256" required="" placeholder={i18n.getTranslation("weq.inviteGroup.PlaceholderGroupName")} className="formstyle group-name w-input" autoComplete={"false"} 
                       value={this.state.groupName} 
                       onChange={this.handleChange.bind(this)} required/>

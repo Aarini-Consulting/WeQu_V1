@@ -427,6 +427,12 @@
   font-size: 2em;
 }
 
+.formstyle.group-name{
+  width:auto;
+  display:inline-block;
+  padding:8px 12px;
+}
+
 .formstyle.group-name.w-input{
   width:auto;
 }
@@ -450,6 +456,32 @@
 .formstyle.formuser.formemail {
   flex-basis: 30%;
   font-size: 1em;
+}
+
+.tooltip-tutorial {
+  display: inline-block;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.tooltip-tutorial .tooltiptext {
+  display: inline-block;
+  visibility: hidden;
+  width: auto;
+  background-color: #fff;
+  color: #000;
+  text-align: left;
+  border-radius: 6px;
+  padding: 1em;
+
+  position: absolute;
+  z-index: 1;
+
+  font-weight: normal;
+}
+
+.tooltip-tutorial:hover .tooltiptext {
+  visibility: visible;
 }
 
 .formradio {

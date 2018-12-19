@@ -1,5 +1,5 @@
 Meteor.methods({
-    'updateGroup' : function (group,groupName, data, arr_emails) {
+    'updateGroup' : function (group, data, arr_emails) {
         var groupId = group._id;
         let groupCheck = Group.findOne({_id:groupId});
 
@@ -103,7 +103,7 @@ Meteor.methods({
         }
 
         Group.update({"_id":groupId},
-        {'$set':{groupName: groupName,  userIds:userIdsList , creatorId: group.creatorId}
+        {'$set':{userIds:userIdsList , creatorId: group.creatorId}
         });
 
         if(updatedUserIdsSurveyed){
