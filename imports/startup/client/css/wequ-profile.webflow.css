@@ -3012,6 +3012,29 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color:#fff;
 }
 
+.survey-graph-footer-wrapper{
+  display: flex;
+  width:100%;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: right;
+}
+
+.survey-graph-footer{
+  padding: 1em;
+  text-align: left;
+}
+
+.invitebttn.create-chart.refresh {
+  width:auto;
+  color:#fd9a3e;
+  border-color: #fd9a3e;
+}
+
+.invitebttn.create-chart.refresh:hover {
+  background-color: #fd9a3e;
+  color:#fff;
+}
 
 .font-matric {
   display: -webkit-box;
@@ -3036,6 +3059,19 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-decoration: none;
   text-transform: uppercase;
   word-break:break-word;
+}
+
+.font-matric-refresh {
+  display:inline-block;
+  font-family: Raleway, sans-serif;
+  color: #fd9a3e;
+  font-size: 1.2em;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+  word-break:break-word;
+  margin-left:1em;
+  margin-right:1em;
 }
 
 .font-matric-info{
@@ -3963,6 +3999,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .div-block-center{
   width:100%;
+}
+
+.div-block-right{
+  display:block;
+  width:100%;
+  text-align: right;
 }
 
 .gm-search {

@@ -9,6 +9,8 @@ import { Creatable } from 'react-select';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
+import {formatErrMessage} from '/imports/startup/client/formatErrMessage.js';
+
 // import MultiSelect from './MultiSelect';
 // import '/imports/startup/client/react-select.css';
 
@@ -134,7 +136,6 @@ class InviteGroup extends React.Component {
               inviteResend:[],
               resendFailed:0,
               modifiedByUser:false,
-              modifiedByUser:false,
               showConfirm:false,
               unsaved:false
             });
@@ -165,7 +166,7 @@ class InviteGroup extends React.Component {
           {
             this.setState({
               inviteStatus: 'error',
-              info: err.message,
+              info: formatErrMessage(err.error),
             });
           }     
       }); 
@@ -539,12 +540,7 @@ class InviteGroup extends React.Component {
                       // :
                       // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                 }
-                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus == 'error' 
-                  ?
-                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleBackArrowClick.bind(this)}>
-                    <T>weq.inviteGroup.ButtonBackToGroupList</T>
-                    </a>
-                  :(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
+                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
                     <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>
                     <T>weq.inviteGroup.ButtonSave</T>
                     </a>

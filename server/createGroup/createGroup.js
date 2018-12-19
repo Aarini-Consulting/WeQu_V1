@@ -4,6 +4,18 @@ Meteor.methods({
 
     var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
 
+    var groupNameCheckOwn = Group.findOne({groupName : groupName, creatorId:this.userId});
+
+    var groupNameCheckOthers = Group.findOne({groupName : groupName, creatorId:{'$ne':this.userId}});
+
+    if(groupNameCheckOwn){
+      throw (new Meteor.Error("group_name_already_exist")); 
+    }
+
+    if(groupNameCheckOthers){
+      throw (new Meteor.Error("group_name_already_claimed_by_other_CMC")); 
+    }
+
     if(!gmCheck){
       throw (new Meteor.Error("only_gamemaster_can_create_group")); 
     }

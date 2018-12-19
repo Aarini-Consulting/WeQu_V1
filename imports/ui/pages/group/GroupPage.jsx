@@ -30,7 +30,8 @@ class GroupPage extends React.Component {
         showInfo:false,
         showMatrixInfoPanel:undefined,
         sending:false,
-        currentTab:"edit"
+        currentTab:"edit",
+        gettingTypeformResult:false
       }
   }
 
@@ -101,7 +102,11 @@ class GroupPage extends React.Component {
   }
 
   getTypeFormResult(){
-    if(this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+    if(!this.state.gettingTypeformResult && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+      this.setState({
+        gettingTypeformResult: true,
+      });
+
       var supportedLocale = Meteor.settings.public.supportedLocale;
 
       var formIds = [];
@@ -134,6 +139,10 @@ class GroupPage extends React.Component {
         }else{
           console.log(result);
         }
+
+        this.setState({
+          gettingTypeformResult: false,
+        });
       });
     }
   }
@@ -211,10 +220,17 @@ class GroupPage extends React.Component {
                 <div className="create-chart-icon-wrapper">
                   <i className="far fa-chart-bar"></i>
                 </div>
-                  
-                <div className="invitebttn create-chart w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
-                  Calculate survey result
-                </div>
+                {this.state.gettingTypeformResult 
+                  ?
+                  <div className="invitebttn create-chart w-button w-inline-block noselect">
+                    Loading...
+                  </div>
+                  :
+                  <div className="invitebttn create-chart w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
+                    Calculate survey result
+                  </div>
+                }
+                
               </div>
             </div>
         );
@@ -227,7 +243,7 @@ class GroupPage extends React.Component {
       }
     }
     else{
-      return skills.map((skill, index) => {
+      var skills = skills.map((skill, index) => {
         var leftPos = 0;
         var total = skill.total || 0;
         var score = skill.score || 0;
@@ -325,6 +341,34 @@ class GroupPage extends React.Component {
           </div>
         );
       });
+
+      return (
+        <div>
+          {skills}
+          <br/>
+          <br/>
+          <div className="div-block-right">
+              <div className="w-inline-block survey-graph-footer">
+                <div className="font-matric-refresh">
+                  {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
+                  <br/>
+                  completed the survey
+                </div>
+                {this.state.gettingTypeformResult 
+                  ?
+                  <div className="invitebttn create-chart refresh w-button w-inline-block noselect">
+                    Loading...
+                  </div>
+                  :
+                  <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
+                    Refresh
+                  </div>
+                }
+                
+              </div>
+            </div>
+        </div>
+        );
     }
   }
 
