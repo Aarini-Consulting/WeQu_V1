@@ -31,7 +31,7 @@ export default class NotFound extends React.Component {
     
     render() {
       return (
-        <div className="fillHeight" style={{height:100+"vh"}}>
+        <div className="fillHeight" style={{height:100+"%"}}>
           <section style={{height:100+"%",overflow:"auto"}}ref="typeform">
           </section>
         </div>

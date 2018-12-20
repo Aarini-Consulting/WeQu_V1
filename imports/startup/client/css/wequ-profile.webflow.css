@@ -456,6 +456,7 @@
 .formstyle.formuser.formemail {
   flex-basis: 30%;
   font-size: 1em;
+  padding: 8px 12px;
 }
 
 .tooltip-tutorial {
@@ -3771,6 +3772,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .rate-content{
   display:block;
   width: 90%;
+  height:100%;
   margin: 6px auto;
 }
 

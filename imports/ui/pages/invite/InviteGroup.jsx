@@ -408,7 +408,20 @@ class InviteGroup extends React.Component {
       return (
         <ol className="w-list-unstyled">
           {this.props.group && this.props.isEdit
-          &&
+          && 
+          (
+            this.props.group && (this.props.group.isActive || this.props.group.isFinished) 
+            ?
+            <li className="invite-group-line-wrapper">
+              <div className="font f_12">#</div>
+              <div className="formstyle-header formemail">
+                <div className="font f_12">Email</div>
+              </div>
+              <div className="formstyle-header status">
+                <div className="font f_12">Survey Status</div>
+              </div>
+            </li>
+            :
             <li className="invite-group-line-wrapper">
               <div className="font f_12">#</div>
               <div className="formstyle-header formemail">
@@ -421,6 +434,7 @@ class InviteGroup extends React.Component {
                 <div className="font f_12">Actions</div>
               </div>
             </li>
+          )
           }
           
           {this.renderFields()}
@@ -469,7 +483,7 @@ class InviteGroup extends React.Component {
                           <T>weq.inviteGroup.GroupName</T>
                           <div className="tooltip-tutorial">
                             <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
-                            <span className="tooltiptext">Once created, The group name is not changeable as it is used to integrates with a third party service. </span>
+                            <span className="tooltiptext">Once created, the group name is not changeable. </span>
                           </div>
                         </div>
                         <p className="formstyle group-name noselect">{this.props.group.groupName}</p>
@@ -480,7 +494,7 @@ class InviteGroup extends React.Component {
                         <T>weq.inviteGroup.GroupNamePromptText</T>
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
-                          <span className="tooltiptext">Choose a simple, yet unique group name.<br/>Once created, The group name is not changeable as it is used to integrates with a third party service. </span>
+                          <span className="tooltiptext">Choose a simple, yet unique group name.<br/>Once created, the group name is not changeable. </span>
                         </div>
                       </div>
                       <input type="text" ref="groupName" maxLength="256" required="" placeholder={i18n.getTranslation("weq.inviteGroup.PlaceholderGroupName")} className="formstyle group-name w-input" autoComplete={"false"} 

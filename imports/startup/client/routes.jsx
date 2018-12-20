@@ -175,7 +175,7 @@ const App = class App extends React.Component {
   render() {
     if(this.state.languageLoaded){
         return (
-          <div>
+          <div style={{height:100+"%"}}>
           { /* Place to put layout codes here */ }
           <Switch history={history}>
               <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />

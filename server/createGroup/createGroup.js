@@ -9,7 +9,7 @@ Meteor.methods({
     var groupNameCheckOthers = Group.findOne({groupName : groupName, creatorId:{'$ne':this.userId}});
 
     if(groupNameCheckOwn){
-      throw (new Meteor.Error("group_name_already_exist")); 
+      throw (new Meteor.Error(`group_name_"${groupName}"_already_exist`)); 
     }
 
     if(groupNameCheckOthers){
