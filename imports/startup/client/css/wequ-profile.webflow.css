@@ -3440,12 +3440,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  align-items: center;
   width:8em;
 }
 
 .form-radio {
-  text-align: right;
+  display: block;
 }
 
 .radio-input{

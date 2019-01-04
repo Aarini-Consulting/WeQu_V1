@@ -62,12 +62,14 @@ class AdminUserView extends React.Component {
     
     renderUserList(){
         var userList = this.props.listUsers;
+        var userNumber = 0;
         if(this.state.currentPageIndex <= 0){
             userList = userList.slice(0,this.state.resultPerPage);
         }else{
+            userNumber = this.state.currentPageIndex*this.state.resultPerPage;
             userList = userList.slice((this.state.currentPageIndex*this.state.resultPerPage),((this.state.currentPageIndex*this.state.resultPerPage)+this.state.resultPerPage));
         }
-        return userList.map((user) => {
+        return userList.map((user, index) => {
             return (
                 <tr key={user._id}>
                     {/* <td>{user && user.status && user.status.online 
@@ -87,7 +89,9 @@ class AdminUserView extends React.Component {
                         </div>
                     </td> */}
     
-    
+                    <td>
+                        {userNumber+index+1}
+                    </td>
                     <td>
                         {user.profile 
                         ?
@@ -114,13 +118,6 @@ class AdminUserView extends React.Component {
                         </p>
                         )
                         }
-                    </td>
-                    <td>
-                    <label className="switch">
-                        <input type="checkbox" checked={user.roles && user.roles.indexOf("GameMaster") > -1}
-                         onChange={this.handleCheckGameMaster.bind(this,user)}/>
-                        <div className="slider round"></div>
-                    </label>	
                     </td>
                     {/* <td id="user">
                         <span className="badge badge-info">
@@ -154,6 +151,13 @@ class AdminUserView extends React.Component {
                     ? this.formatDate(user.status.lastLogin.date)
                     : "N/A"
                     }
+                    </td>
+                    <td>
+                    <label className="switch">
+                        <input type="checkbox" checked={user.roles && user.roles.indexOf("GameMaster") > -1}
+                         onChange={this.handleCheckGameMaster.bind(this,user)}/>
+                        <div className="slider round"></div>
+                    </label>	
                     </td>
                 </tr>
             );
@@ -234,20 +238,18 @@ class AdminUserView extends React.Component {
     render() {
         if(this.props.dataReady){
             return (
-                <div className="fillHeight">
-                    <div className="widget-head">
-                        <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
-                    </div>
+                <div className="w-block">
                     <div className="tabs w-tabs noSwipe">
                         <table className="table table-fw-widget table-hover">
                             <thead>
                                 <tr>
+                                    <th style={{textAlign:"center"}}>#</th>
                                     <th style={{textAlign:"center"}}>Name</th>
                                     <th style={{textAlign:"center"}}>Email</th>
-                                    <th style={{textAlign:"center"}}>Game Master</th>
                                     <th style={{textAlign:"center"}}> Email Confirmed</th>
                                     <th style={{textAlign:"center"}}>Created</th>
                                     <th style={{textAlign:"center"}}> Last Login</th>
+                                    <th style={{textAlign:"center"}}>Game Master</th>
                                 </tr>
                             </thead>
                             <tbody className="no-border-x overflow">

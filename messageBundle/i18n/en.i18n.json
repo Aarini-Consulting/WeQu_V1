@@ -61,7 +61,6 @@
         "LiveSession": "This session is live. Get started now.",
         "WaitForSession": "Please wait until session starts.",
         "JustInvited": "Just invited. Get started now."
-
     },
     "inviteGroupPage":{
         "CreateNew":"Create new group",
