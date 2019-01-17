@@ -21,7 +21,7 @@ const SortableItem = SortableElement(({value, disabled}) =>
 
 const SortableList = SortableContainer(({items, disabled}) => {
   return (
-    <div className="w-block">
+    <div className="rate-box-container">
       {items.map((value, index) => (
         <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled}/>
       ))}
@@ -139,8 +139,7 @@ class QuizRankOther extends React.Component {
     render() {
         if(this.props.dataReady && !this.state.savingData){
             return (
-                <div className="fillHeight">
-                    <section className="section summary fontreleway purple-bg">
+                    <section className="ranker-container fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
                             {this.props.quizUser && this.props.quizUser.profile &&
                                 this.props.quizUser.profile.firstName +" "+ this.props.quizUser.profile.lastName
@@ -152,17 +151,18 @@ class QuizRankOther extends React.Component {
                         <div className="rate-content">
                             <div className="font-rate font-name-header f-white">Rank teammate's qualities in 60 seconds</div>
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
-                        </div>
-                        <div className="w-block cursor-pointer">
-                            <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                                    {this.props.users
-                                    ?"Next"
-                                    :"Done!"
-                                    }
+                        
+                            <div className="w-block cursor-pointer">
+                                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
+                                        {this.props.users
+                                        ?"Next"
+                                        :"Done!"
+                                        }
+                                </div>
                             </div>
                         </div>
+                        
                     </section>
-                </div>
             );
             
         }else{

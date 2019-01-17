@@ -23,7 +23,7 @@ const SortableItem = SortableElement(({value, disabled}) =>
 
 const SortableList = SortableContainer(({items, disabled}) => {
   return (
-    <div className="w-block">
+    <div className="rate-box-container">
       {items.map((value, index) => (
         <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled}/>
       ))}
@@ -191,8 +191,7 @@ class QuizRankSelf extends React.Component {
     render() {
         if(this.props.dataReady && !this.state.savingData){
             return (
-                <div className="fillHeight">
-                    <section className="section summary fontreleway purple-bg">
+                    <section className="ranker-container fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
                             {this.props.currentUser && this.props.currentUser.profile &&
                                 this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
@@ -211,17 +210,19 @@ class QuizRankSelf extends React.Component {
                                 </div>
                             }
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
+                            
+                            <div className="w-block cursor-pointer">
+                                {this.state.steps && this.state.currentStep >= 0 &&
+                                    <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
+                                        {this.state.currentStep < (Object.keys(this.state.steps).length-1)
+                                        ?"Next"
+                                        :"Done!"
+                                        }
+                                    </div>
+                                }  
+                            </div>
                         </div>
-                        <div className="w-block cursor-pointer">
-                            {this.state.steps && this.state.currentStep >= 0 &&
-                                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                                    {this.state.currentStep < (Object.keys(this.state.steps).length-1)
-                                    ?"Next"
-                                    :"Done!"
-                                    }
-                                </div>
-                            }  
-                        </div>
+                        
 
                         {this.state.showInfo &&
                             <SweetAlert
@@ -234,7 +235,6 @@ class QuizRankSelf extends React.Component {
                             }}/>
                         }
                     </section>
-                </div>
             );
             
         }else{

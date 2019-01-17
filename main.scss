@@ -107,6 +107,10 @@ h3 + h5 {
   width: 100% /* needed for Firefox */
 }
 
+.fillHeight.weq-bg{
+  overflow: auto;
+}
+
 .fillHeight.flex-start{
   -moz-box-pack: start;
   -ms-flex-pack: start;

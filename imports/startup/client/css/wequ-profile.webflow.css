@@ -2,6 +2,33 @@
   height: 100%;
 }
 
+.ranker-container {
+  display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+  display: -moz-box;      /* OLD: Firefox (buggy) */
+  display: -ms-flexbox;   /* MID: IE 10 */
+  display: -webkit-flex;  /* NEW, Chrome 21–28, Safari 6.1+ */
+  display: flex;          /* NEW: IE11, Chrome 29+, Opera 12.1+, Firefox 22+ */
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+
+  -webkit-box-align: center; -moz-box-align: center; /* OLD… */
+  -ms-flex-align: center; /* You know the drill now… */
+  -webkit-align-items: center;
+  align-items: center;
+
+  -webkit-box-pack: center; -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+
+  margin: 0;
+  height: 100%;
+}
+
 .margin-bottom-menu{
   margin-bottom:2em;
 }
@@ -3440,7 +3467,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  width:8em;
 }
 
 .form-radio {
@@ -3455,7 +3481,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-family: Raleway, sans-serif;
   color: #a0a0a0;
   font-size: 1em;
-  flex-basis: 4em;
 }
 
 .bttn.bttn-invite {
@@ -3770,14 +3795,19 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .rate-content{
   display:block;
-  width: 90%;
-  height:100%;
-  margin: 6px auto;
+  flex-grow: 1;
+  width: 100%;
+  margin: 6px 0;
+  overflow: auto;
+}
+
+.rate-box-container{
+  display: inline-block;
+  width:80%;
 }
 
 .rate-box {
   display: flex;
-  width: 90%;
   min-height: 60px;
   margin: 0.75em auto;
   -webkit-box-flex: 0;
