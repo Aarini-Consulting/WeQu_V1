@@ -1,5 +1,5 @@
 Meteor.methods({
-  'createGroup' : function (groupName,data,arr_emails, arr_numbers) {
+  'createGroup' : function (groupName,data,arr_emails) {
     var now = new Date();
 
     var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );

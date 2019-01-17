@@ -120,5 +120,41 @@
         "SocialNormsText2":"Dit team heeft een groot gevoel van gezamenlijk succes in plaats van individueel succes.",
         "SocialNormsText3":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
         "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar"
+    },
+    "rankItem":{
+        "generous":"genereus",
+        "honest":"eerlijk",
+        "patient":"geduldig",
+        "respectful":"respectvol",
+        "reflective":"reflectief",
+        "resilient":"veerkrachtig",
+        "doer":"doener",
+        "accepts_criticism":"omgaan met kritiek",
+        "listening":"luisteren",
+        "humour":"humor",
+        "story_telling":"verhalen vertellen",
+        "outgoing":"vlot",
+        "assertive":"assertief",
+        "connector":"verbinder",
+        "manage_conflict":"conflictbeheersing",
+        "reliable":"betrouwbaar",
+        "mentoring":"mentoring",
+        "motivator":"motivator",
+        "visionary":"visionaire",
+        "empathetic":"empathisch",
+        "conceptual_thinking":"conceptueel denken",
+        "creative":"creatief",
+        "inquisitive":"onderzoekend",
+        "analytical":"binaural"
+    },
+    "quizRankWait":{
+        "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you",
+        "WaitForOthers":"Waiting for others to be ready",
+        "TheWholeTeamWillRank":"The whole team will now rank:",
+        "YouWillHave60Secs":"You will have 60 seconds",
+        "TextForFirstName":"Sit back and relax {$firstName}",
+        "Proceed":"Proceed",
+        "MessageDoneLine1":"All done!",
+        "MessageDoneLine2":"Please wait until everyone in the group completes their self-ranking..."
     }
 }

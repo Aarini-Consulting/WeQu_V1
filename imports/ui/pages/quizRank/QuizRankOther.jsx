@@ -15,7 +15,7 @@ const SortableItem = SortableElement(({value, disabled}) =>
             <div className="rate-line"></div>
             <div className="rate-line"></div>
         </div>
-        <div className={"font-rate-quality noselect"}>{value.toString().replace("_"," ")}</div>
+        <div className={"font-rate-quality noselect"}>{i18n.getTranslation(`weq.rankItem.${value.toString()}`)}</div>
     </div>
 );
 

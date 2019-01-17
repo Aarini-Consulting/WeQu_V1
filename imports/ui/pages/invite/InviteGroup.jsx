@@ -24,6 +24,8 @@ class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
+        languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"},{name:"Français",code:"fr"}],
+        selectedEmailLanguage:i18n.getLocale().split("-")[0],
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
@@ -59,6 +61,14 @@ class InviteGroup extends React.Component {
       }
     }
   }
+
+  handleChangeEmailLang(event) {
+    this.setState(
+        { 
+            selectedEmailLanguage: event.target.value,
+        }
+    );
+}
 
   updateGroup(){
     var inviteDatas = this.state.inviteDatas.filter((inviteData) => {
@@ -343,6 +353,13 @@ class InviteGroup extends React.Component {
       }
     }
 
+    renderLanguageList(){
+      return this.state.languages.map((val,index,array)=>{
+          return(
+              <option key={"select-lang"+index} value={val.code}>{val.name}</option>
+          );
+      })
+    }
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
@@ -504,8 +521,19 @@ class InviteGroup extends React.Component {
                     }
                   
                   <br/>
-                  <div className="groupformtext"><T>weq.inviteGroup.GroupMemberPromptText</T></div>
 
+                  {!(this.props.group && this.props.group.isFinished) &&
+                    <div>
+                      <div className="groupformtext">Invite email language:</div>
+                      <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                      value={this.state.selectedEmailLanguage} onChange={this.handleChangeEmailLang.bind(this)}>
+                          {this.renderLanguageList()}
+                      </select>
+                      <br/>
+                    </div>
+                  }
+
+                  <div className="groupformtext"><T>weq.inviteGroup.GroupMemberPromptText</T></div>
                   
                   {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
                   
