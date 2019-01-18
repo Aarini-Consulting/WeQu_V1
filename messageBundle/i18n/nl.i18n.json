@@ -14,21 +14,6 @@
         "ConsentPromo":"Ik blijf graag per post op de hoogte van updates, aanbiedingen en nieuws van WeQ",
         "Logout":"Uitloggen"
     },
-    "reportPdf":{
-        "Gretings": "Hoi",
-        "TutorialTitle":"Hoe u deze graﬁek moet lezen",
-        "TutorialQualityName":"Kwaliteitsnaam (Kaart #)",
-        "TutorialLowestValue":"De laagste waarde van deze Kwaliteit in uw groep",
-        "TutorialHighestValue":"De hoogste waarde van deze Kwaliteit in uw groep",
-        "TutorialCurrentScore":"Uw huidige score",
-        "TutorialCurrentScoreBracket":"(beoordeeld door u en anderen)",
-        "CurrentSession":"Huidige Sessie - {$firstName} {$lastName}",
-        "GraphOpeningParagraph":"Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie",
-        "FooterTitle":"Onderhoudssessies",
-        "FooterTextLine1":"Verlies het momentum niet! ",
-        "FooterTextLine2":"Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren",
-        "FooterTextLine3":"Stel uw vraag aan {$groupCreatorFirstName}  voor meer informatie!"
-    },
     "settingsEdit": {
         "VerificationSent": "Bevestiging email gestuurd! Volg de link in het bericht om je email te wijzigen",
         "Updating": "updating...",

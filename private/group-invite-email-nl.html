@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Group Invitation Email</title>
+	<link href="styles.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage">
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<!--div> Hi <b>{{to}},</b> </div -->
+
+		<!--	<div> {{from}}  invites you to the WeQ App. It helps you get to know your We-Qualities based on how your teammates see you. </div> -->
+			<div>Hi,</div>
+			<div>
+				<p>You are invited to join a WeQ group!</p>
+			</div>
+
+			<div>Click this link to take a brief, anonymous survey:</div>
+			<a href="{{link}}">{{link}}</a>
+			<br>
+
+			<p> 
+				Enter your group name: <b>{{groupName}}</b>
+			</p>
+
+			<p>
+			IMPORTANT: This survey is anonymous. So you MUST enter your ‘group name’ correctly. Please answer questions honestly - the data is used to personalize your upcoming WeQ session.
+			<br><br> 
+			<b>And don’t forget to bring your mobile phone to the session!</b>
+			</p>
+			
+			<div>
+			Questions about the app? <a href="mailto:contact@weq.io?subject=[WeQ Facilitated Session - {{groupName}}]">contact@weq.io</a>.
+			<br>
+			Questions about your session? <a href="mailto:{{creatorEmail}}?subject=[WeQ Facilitated Session - {{groupName}}]">{{creatorEmail}}</a>.
+			<br>
+			</div>
+			<br>
+			<div> WeQ Team - "Nothing beats a kick-ass team" </div>
+			<br>
+			<div>WeQ is the facilitated workshop that applies proven neuroscience to help empower teams to perform at their peak.</div>
+			<div> <a href="https://www.weq.io/" target="_blank">www.weq.io</a></div>
+		</div>
+	</div>
+
+</body>
+</html>
