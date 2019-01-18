@@ -10,6 +10,12 @@ import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
@@ -68,16 +74,7 @@ class QuizRankSelf extends React.Component {
                 if(currentStep == 0){
                     this.setState({
                         showInfo:true,
-                        showInfoMessage:
-                        <div>
-                            Describe Yourself
-                            <br/>
-                            <br/>
-                            Which qualities are most true about you?<br/>
-                            Sort the following words from top to bottom by dragging them up or down in the list.<br/>
-                            <br/>
-                            You have 60 seconds.
-                        </div>
+                        showInfoMessage:complexLinkTranslate("quizRankSelf.PopUp")
                     });
                 }
 

@@ -3,17 +3,8 @@
 // To avoid merge conflict writing here .
 
 Meteor.startup(function () {
-
-    dbIndexes();
-
     setupAccounts();
-      
-
 });
-
-let dbIndexes = function(){
-    Meteor.users._ensureIndex({"emails[0].address": 1, "profile.firstName": 1, "profile.lastName": 1, "profile.uniqueId": 1, "profile.userType": 1});
-}
 
 let setupAccounts = function(){
 

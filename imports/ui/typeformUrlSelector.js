@@ -16,21 +16,26 @@ export function typeformUrlSelector(type){
 
         if(window.location.hostname == "app.weq.io"){
             //production
-            typeformUrl = `https://oh2.typeform.com/to/${formIdProd[languageCode]}`;
-
+            var formId = formIdProd[languageCode];
+            
             //if language code is not supported, use the english typeform as default.
-            if(!typeformUrl){
+            if(formId){
+                typeformUrl = `https://oh2.typeform.com/to/${formId}`;
+            }else{
                 typeformUrl = `https://oh2.typeform.com/to/${formIdProd["en"]}`;
             }
         }else{
             //test
-            typeformUrl = `https://oh2.typeform.com/to/${formIdTest[languageCode]}`;
+            var formId = formIdTest[languageCode];
 
             //if language code is not supported, use the english typeform as default.
-            if(!typeformUrl){
+            if(formId){
+                typeformUrl = `https://oh2.typeform.com/to/${formId}`;
+            }else{
                 typeformUrl = `https://oh2.typeform.com/to/${formIdTest["en"]}`;
             }
         }
+        console.log(typeformUrl);
         return typeformUrl;
     }else{
         var formId;

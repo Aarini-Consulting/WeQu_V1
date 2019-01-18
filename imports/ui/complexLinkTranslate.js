@@ -24,6 +24,16 @@ export function complexLinkTranslate(name, params){
                         You&#x27;ve just played WeQ with your <strong>{params && params.groupName}</strong>. 
                         This is your report prepared by <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach.
                     </React.Fragment>,
+                "quizRankSelf.PopUp":
+                    <React.Fragment>
+                        Describe Yourself
+                        <br/>
+                        <br/>
+                        Which qualities are most true about you?<br/>
+                        Sort the following words from top to bottom by dragging them up or down in the list.<br/>
+                        <br/>
+                        You have 60 seconds.
+                    </React.Fragment>,
                 "quizRankPage.FinishMessage":
                     <React.Fragment>
                         DONE!
@@ -55,6 +65,16 @@ export function complexLinkTranslate(name, params){
                 <React.Fragment>
                     U heeft net WeQ met uw <strong>{params && params.groupName}</strong> Team gespeeld. 
                     Dit is uw rapport die door <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong> WeQ Master Coach is opgesteld
+                </React.Fragment>,
+            "quizRankSelf.PopUp":
+                <React.Fragment>
+                    Describe Yourself
+                    <br/>
+                    <br/>
+                    Which qualities are most true about you?<br/>
+                    Sort the following words from top to bottom by dragging them up or down in the list.<br/>
+                    <br/>
+                    You have 60 seconds.
                 </React.Fragment>,
             "quizRankPage.FinishMessage":
                 <React.Fragment>
@@ -88,6 +108,16 @@ export function complexLinkTranslate(name, params){
                 <React.Fragment>
                     You&#x27;ve just played WeQ with your <strong>{params && params.groupName}</strong>. 
                     This is your report prepared by <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach.
+                </React.Fragment>,
+            "quizRankSelf.PopUp":
+                <React.Fragment>
+                    Describe Yourself
+                    <br/>
+                    <br/>
+                    Which qualities are most true about you?<br/>
+                    Sort the following words from top to bottom by dragging them up or down in the list.<br/>
+                    <br/>
+                    You have 60 seconds.
                 </React.Fragment>,
             "quizRankPage.FinishMessage":
                 <React.Fragment>

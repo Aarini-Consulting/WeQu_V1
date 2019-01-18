@@ -5,6 +5,9 @@ Template.htmlEmail.helpers({
 });
 
 SSR.compileTemplate('GroupInviteHtmlEmail', Assets.getText('group-invite-email.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-en', Assets.getText('group-invite-email.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-nl', Assets.getText('group-invite-email.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-fr', Assets.getText('group-invite-email.html'));
 
 Template.GroupInviteHtmlEmail.helpers({
     //Add any helper methods to enable default data in template

@@ -103,7 +103,7 @@ class InviteGroup extends React.Component {
 
       resend.map( (resend) => this.resendInvite(resend.email));
       
-      Meteor.call('updateGroup', this.props.group, inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('updateGroup', this.props.group, this.state.selectedEmailLanguage, inviteDatas, emailsArray , (err, res) => {
           if(err)
           {
             console.log(err);
@@ -165,7 +165,7 @@ class InviteGroup extends React.Component {
         inviteStatus: 'sending',
       });
   
-      Meteor.call('createGroup', groupName, this.state.inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('createGroup', groupName, this.state.selectedEmailLanguage, this.state.inviteDatas, emailsArray , (err, res) => {
         if(res){
           this.setState({
               inviteStatus: 'sent',
@@ -311,7 +311,7 @@ class InviteGroup extends React.Component {
 
     resendInvite(email){
       if(this.props.group){
-        Meteor.call('resend.group.invite', this.props.group._id, email , (err, res) => {
+        Meteor.call('resend.group.invite', this.props.group._id, this.state.selectedEmailLanguage, email , (err, res) => {
           if(err){
             this.setState({
               resendFailed: this.state.resendFailed + 1,

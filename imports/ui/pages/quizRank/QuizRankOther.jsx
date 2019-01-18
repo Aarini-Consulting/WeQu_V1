@@ -8,6 +8,11 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">

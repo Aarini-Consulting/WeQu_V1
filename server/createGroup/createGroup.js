@@ -1,5 +1,5 @@
 Meteor.methods({
-  'createGroup' : function (groupName,data,arr_emails) {
+  'createGroup' : function (groupName,language,data,arr_emails) {
     var now = new Date();
 
     var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
@@ -76,7 +76,8 @@ Meteor.methods({
         'groupName': groupName
       };
   
-      let body = SSR.render('GroupInviteHtmlEmail', emailData);
+      let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
+      console.log(body);
       // console.log("sending mail to: "+ d.email);
       Meteor.call('sendEmail', d.email, subject, body, function (err, result) {
         if(err){ return err};

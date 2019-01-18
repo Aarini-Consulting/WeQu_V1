@@ -1,5 +1,5 @@
 Meteor.methods({
-    'updateGroup' : function (group, data, arr_emails) {
+    'updateGroup' : function (group, language, data, arr_emails) {
         var groupId = group._id;
         let groupCheck = Group.findOne({_id:groupId});
 
@@ -56,7 +56,7 @@ Meteor.methods({
               'groupName': groupCheck.groupName
             };
         
-            let body = SSR.render('GroupInviteHtmlEmail', emailData);
+            let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
             Meteor.call('sendEmail', userEmail, subject, body, function (err, result) {
               if(err){ return err};
             });
@@ -126,7 +126,7 @@ Meteor.methods({
         return newUsersInGroup.length;
 
     },
-    'resend.group.invite' : function (groupId,email) {
+    'resend.group.invite' : function (groupId,language,email) {
         let check = Group.findOne({_id:groupId});
     
         if(check){
@@ -159,7 +159,7 @@ Meteor.methods({
             'groupName': check.groupName
             };
         
-            let body = SSR.render('GroupInviteHtmlEmail', emailData);
+            let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
 
             // Meteor.call('send.notification', (error, result) => {
             //     console.log(error);

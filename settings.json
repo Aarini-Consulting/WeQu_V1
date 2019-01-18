@@ -11,11 +11,13 @@
     "supportedLocale":["nl-NL","en-US","fr-FR"],
     "typeformTestFormCode":{
       "en":"XurSNo",
-      "nl":"lcFJw6"
+      "nl":"lcFJw6",
+      "fr":"iXkNwx"
     },
     "typeformProdFormCode":{
       "en":"RzcwbL",
-      "nl":"oLBtn6"
+      "nl":"oLBtn6",
+      "fr":"pFP5QI"
     }
   },
   "private": {
