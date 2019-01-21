@@ -51,39 +51,39 @@ export function complexLinkTranslate(name, params){
             var translation = {
             "settings.accountTypeAds":
                 <React.Fragment>
-                    Wilt u je eigen WeQ-sessie houden? Kijk naar onze <a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank">{i18n.getTranslation("weq.settings.AccountTypeAdsCMC")}</a>
+                    Wilt u uw eigen WeQ-sessie faciliteren? Kijk of u gekwalificeerd bent voor ons <a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank">Certified Coach-trainingsprogramma</a>
                 </React.Fragment>,
             "settings.consentTerms":
                 <React.Fragment>
-                    Ik heb de <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">algemene voorwarden</a> en <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">privacybeleid</a> gelezen en ik ga hiermee akkoord.
+                    Ik heb de <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">algemene voorwarden</a> en <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">privacybeleid</a> gelezen en ga hiermee akkoord.
                 </React.Fragment>,
             "settings.consentCMC":
                 <React.Fragment>
-                    Ik heb de <a href="https://www.weq.io/policy/certified-master-coach-terms-and-conditions" target="_blank" id="terms">Certified Master Coach voorwarden</a> gelezen en ik ga hiermee akkoord.
+                    Ik heb de <a href="https://www.weq.io/policy/certified-master-coach-terms-and-conditions" target="_blank" id="terms">Certified Master Coach voorwarden</a> gelezen en ga hiermee akkoord.
                 </React.Fragment>,
             "reportPdf.OpeningParagraph":
                 <React.Fragment>
-                    U heeft net WeQ met uw <strong>{params && params.groupName}</strong> Team gespeeld. 
-                    Dit is uw rapport die door <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong> WeQ Master Coach is opgesteld
+                    U hebt zojuist WeQ met <strong>{params && params.groupName}</strong> gespeeld. 
+                    Dit is uw rapport opgesteld door <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach
                 </React.Fragment>,
             "quizRankSelf.PopUp":
                 <React.Fragment>
-                    Describe Yourself
+                    Beschrijf Uzelf
                     <br/>
                     <br/>
-                    Which qualities are most true about you?<br/>
-                    Sort the following words from top to bottom by dragging them up or down in the list.<br/>
+                    Welke kwaliteiten passen het best bij u?<br/>
+                    Sorteer de volgende woorden van boven naar beneden door ze omhoog of omlaag in de lijst te slepen.<br/>
                     <br/>
-                    You have 60 seconds.
+                    U hebt 60 seconden.
                 </React.Fragment>,
             "quizRankPage.FinishMessage":
                 <React.Fragment>
-                    DONE!
+                    KLAAR!
                     <br/><br/>
-                    Thank you for completing the survey. 
+                    Bedankt voor het invullen van de enquête.
                     <br/><br/>
-                    You will use this app again when you play WeQ,<br/>
-                    so remember to <b>bring your phone to the session!</b> 
+                    U zult deze app de volgende keer dat u WeQ speelt weer nodig hebben,<br/>
+                    vergeet dus niet <b>uw telefoon mee te nemen naar de sessie!</b>
                     <br/>
                     <br/>
                 </React.Fragment>
@@ -94,39 +94,39 @@ export function complexLinkTranslate(name, params){
         var translation = {
             "settings.accountTypeAds":
                 <React.Fragment>
-                    Do you want to facilitate your own WeQ session? See if you're qualified for our <a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank">{i18n.getTranslation("weq.settings.AccountTypeAdsCMC")}</a>
+                    Voulez-vous animer votre propre session WeQ ? Voyez si vous êtes qualifié pour <a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank"> notre programme de formation de coach certifié</a>
                 </React.Fragment>,
             "settings.consentTerms":
                 <React.Fragment>
-                    I have read and agree to the <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Terms</a> and <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Privacy Policy</a>.
+                    J'ai lu et j'accepte les <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">conditions d'utilisation</a> et la <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">politique de confidentialité</a>.
                 </React.Fragment>,
             "settings.consentCMC":
                 <React.Fragment>
-                    I have read and agree to the <a href="https://www.weq.io/policy/certified-master-coach-terms-and-conditions" target="_blank" id="terms">Certified Master Coach Terms and Conditions</a>.
+                    J'ai lu et j'accepte les <a href="https://www.weq.io/policy/certified-master-coach-terms-and-conditions" target="_blank" id="terms">conditions générales du Master Coach certifié</a>
                 </React.Fragment>,
             "reportPdf.OpeningParagraph":
                 <React.Fragment>
-                    You&#x27;ve just played WeQ with your <strong>{params && params.groupName}</strong>. 
-                    This is your report prepared by <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach.
+                    Vous venez de jouer à WeQ avec <strong>{params && params.groupName}</strong>. 
+                    Ceci est votre compte-rendu préparé par <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, Master Coach WeQ.
                 </React.Fragment>,
             "quizRankSelf.PopUp":
                 <React.Fragment>
-                    Describe Yourself
+                    Décrivez-vous
                     <br/>
                     <br/>
-                    Which qualities are most true about you?<br/>
-                    Sort the following words from top to bottom by dragging them up or down in the list.<br/>
+                    Quelles qualités s’appliquent le plus à vous ? <br/>
+                    Classez les mots suivants de haut en bas en les faisant glisser vers le haut ou le bas de la liste.<br/>
                     <br/>
-                    You have 60 seconds.
+                    Vous avez 60 secondes.
                 </React.Fragment>,
             "quizRankPage.FinishMessage":
                 <React.Fragment>
-                    DONE!
+                    TERMINÉ !
                     <br/><br/>
-                    Thank you for completing the survey. 
+                    Merci d'avoir répondu aux questions. 
                     <br/><br/>
-                    You will use this app again when you play WeQ,<br/>
-                    so remember to <b>bring your phone to the session!</b> 
+                    Vous utiliserez cette application à nouveau lorsque vous jouerez à WeQ,<br/>
+                    alors n'oubliez pas <b>d'apporter votre téléphone à chaque session !</b>
                     <br/>
                     <br/>
                 </React.Fragment>

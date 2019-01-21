@@ -132,6 +132,11 @@
         "inquisitive":"inquisitive",
         "analytical":"analytical"
     },
+    "rankSelf":{
+        "ButtonGo":"Let's go!",
+        "ButtonNext":"Next",
+        "ButtonDone":"Done!"
+    },
     "quizRankWait":{
         "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you",
         "WaitForOthers":"Waiting for others to be ready",

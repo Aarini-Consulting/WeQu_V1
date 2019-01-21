@@ -2072,7 +2072,7 @@ body {
   padding-right:2.5%;
   text-align: left;
   cursor: default;
-  border-bottom: 5px solid #f3eeee;
+  border-bottom: 1px solid #000;
 }
 
 .contactlist.group {

@@ -136,8 +136,6 @@ class GroupPage extends React.Component {
       Meteor.call('get.all.response.typeform', this.props.group._id, formIds, this.props.group.createdAt, (error, result)=>{
         if(error){
           console.log(error);
-        }else{
-          console.log(result);
         }
 
         this.setState({
@@ -259,9 +257,11 @@ class GroupPage extends React.Component {
         }
 
         var infoText = undefined;
+        var skillName = undefined;
 
         switch(skill.name){
           case "Psychological Safety":
+            skillName = i18n.getTranslation("weq.groupPage.PsychologicalSafety");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.PsychologicalSafetyText1</T><br/>
             <T>weq.groupPage.PsychologicalSafetyText2</T><br/>
@@ -269,6 +269,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Constructive Feedback":
+            skillName = i18n.getTranslation("weq.groupPage.ConstructiveFeedback");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.ConstructiveFeedbackText1</T><br/>
             <T>weq.groupPage.ConstructiveFeedbackText2</T><br/>
@@ -276,6 +277,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Cognitive Bias":
+            skillName = i18n.getTranslation("weq.groupPage.CognitiveBias");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.CognitiveBiasText1</T><br/>
             <T>weq.groupPage.CognitiveBiasText2</T><br/>
@@ -283,6 +285,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Control over Cognitive Bias":
+            skillName = i18n.getTranslation("weq.groupPage.CognitiveBias");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.CognitiveBiasText1</T><br/>
             <T>weq.groupPage.CognitiveBiasText2</T><br/>
@@ -290,6 +293,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Social Norms":
+            skillName = i18n.getTranslation("weq.groupPage.SocialNorms");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.SocialNormsText1</T><br/>
             <T>weq.groupPage.SocialNormsText2</T><br/>
@@ -297,6 +301,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           default:
+            skillName = skill.name;
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.NoMatrixInfo</T>
             </div>
@@ -308,7 +313,7 @@ class GroupPage extends React.Component {
             <div className="tap-content w-clearfix">
               <div className="tap-left">
                 <div className="font-matric">
-                  {skill.name}
+                  {skillName}
                 </div>
                 <div className="w-inline-block font-matric-info" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
                 <i className="fas fa-info-circle"></i>

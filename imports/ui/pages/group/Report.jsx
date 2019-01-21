@@ -174,7 +174,7 @@ export default class Report extends React.Component{
                 </div>
                 <div className="section _3-footer">
                 <div className="weq-logo"></div>
-                <div className="footer">WeQ - Nothing beats a kick-ass tem  |  Copyright 2018 WeQ B.V. | www.WeQ.io</div>
+                <div className="footer">WeQ - Nothing beats a kick-ass tem  |  Copyright 2019 WeQ B.V. | www.WeQ.io</div>
                 </div>
             </div>
         );

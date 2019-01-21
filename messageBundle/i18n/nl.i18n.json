@@ -132,14 +132,19 @@
         "inquisitive":"onderzoekend",
         "analytical":"binaural"
     },
+    "rankSelf":{
+        "ButtonGo":"Let's go!",
+        "ButtonNext":"Volgende",
+        "ButtonDone":"Klaar!"
+    },
     "quizRankWait":{
-        "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you",
-        "WaitForOthers":"Waiting for others to be ready",
-        "TheWholeTeamWillRank":"The whole team will now rank:",
-        "YouWillHave60Secs":"You will have 60 seconds",
-        "TextForFirstName":"Sit back and relax {$firstName}",
-        "Proceed":"Proceed",
-        "MessageDoneLine1":"All done!",
-        "MessageDoneLine2":"Please wait until everyone in the group completes their self-ranking..."
+        "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u",
+        "WaitForOthers":"Wachten totdat de anderen klaar zijn",
+        "TheWholeTeamWillRank":"Het hele team zal nu de volgende persoon beoordelen:",
+        "YouWillHave60Secs":"U heeft 60 seconden",
+        "TextForFirstName":"Ga achterover zitten en ontspan u, {$firstName}",
+        "Proceed":"Doorgaan",
+        "MessageDoneLine1":"Helemaal klaar!",
+        "MessageDoneLine2":"Wacht alstublieft tot iedereen in de groep hun zelfbeoordeling voltooid heeft..."
     }
 }

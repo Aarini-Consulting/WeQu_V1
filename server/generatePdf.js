@@ -4,9 +4,9 @@ import { Promise } from 'meteor/promise';
 import pdf from 'html-pdf';
 import fs from 'fs';
 import puppeteer from 'puppeteer'
-import {ReportPdf} from '/imports/ui/pages/group/ReportPdf';
 import {ReportPdfEN} from '/imports/ui/pages/group/reportTemplate/ReportPdfEN';
 import {ReportPdfNL} from '/imports/ui/pages/group/reportTemplate/ReportPdfNL';
+import {ReportPdfFR} from '/imports/ui/pages/group/reportTemplate/ReportPdfFR';
 
 
 const getBase64String = (path) => {
@@ -234,14 +234,17 @@ Meteor.methods({
         cardPicked: sortedCard,
         cardPickedData: cardPickedData };
 
-      var reportTemplate = ReportPdf;
+      var reportTemplate;
       var reportTemplates = {
         "en":ReportPdfEN, 
-        "nl":ReportPdfNL
+        "nl":ReportPdfNL,
+        "fr":ReportPdfFR
       }
       
       if(languageCode && reportTemplates[languageCode]){
         reportTemplate = reportTemplates[languageCode];
+      }else{
+        reportTemplate = ReportPdfEN;
       }
       return (await generateComponentAsPDF({ component: reportTemplate, props: {propData}, fileName, dataType }));
     },

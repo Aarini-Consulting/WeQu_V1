@@ -212,8 +212,8 @@ class QuizRankSelf extends React.Component {
                                 {this.state.steps && this.state.currentStep >= 0 &&
                                     <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
                                         {this.state.currentStep < (Object.keys(this.state.steps).length-1)
-                                        ?"Next"
-                                        :"Done!"
+                                        ?i18n.getTranslation(`weq.rankSelf.ButtonNext`)
+                                        :i18n.getTranslation(`weq.rankSelf.ButtonDone`)
                                         }
                                     </div>
                                 }  
@@ -225,7 +225,7 @@ class QuizRankSelf extends React.Component {
                             <SweetAlert
                             type={"info"}
                             message={this.state.showInfoMessage}
-                            btnText={"Let's go!"}
+                            btnText={i18n.getTranslation(`weq.rankSelf.ButtonGo`)}
                             onCancel={() => {
                                 this.setState({ showInfo: false });
                                 this.setTimer(true);
