@@ -137,6 +137,11 @@
         "ButtonNext":"Next",
         "ButtonDone":"Done!"
     },
+    "rankOther":{
+        "Instruction":"Rank teammate's qualities in 60 seconds",
+        "ButtonNext":"Next",
+        "ButtonDone":"Done!"
+    },
     "quizRankWait":{
         "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you",
         "WaitForOthers":"Waiting for others to be ready",
@@ -146,5 +151,13 @@
         "Proceed":"Proceed",
         "MessageDoneLine1":"All done!",
         "MessageDoneLine2":"Please wait until everyone in the group completes their self-ranking..."
+    },
+    "quizRankPlaceCard":{
+        "Instruction":"Write down the numbers on your WeQ playmat",
+        "ButtonDone":"Done!"
+    },
+    "loadingAnimated":{
+        "PleaseWait":"Please wait...",
+        "PleaseWaitGenerating":"Please wait...WeQ is generating your card numbers"
     }
 }

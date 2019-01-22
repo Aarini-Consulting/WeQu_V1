@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import LoadingAnimated from '/imports/ui/pages/loading/LoadingAnimated';
 
+import i18n from 'meteor/universe:i18n';
+
 class QuizRankPlaceCards extends React.Component {
     constructor(props){
         super(props);
@@ -113,14 +115,14 @@ class QuizRankPlaceCards extends React.Component {
                             this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
                         }
                         <div className="w-inline-block font-rate font-name-sub-header">
-                        Write down the numbers on your WeQ playmat 
+                        {i18n.getTranslation("weq.quizRankPlaceCard.Instruction")} 
                         </div>
                     </div>
                     <div className="rate-content">
                         {this.renderCards()}
                     </div>
                     <div className="w-block cursor-pointer">
-                        <Link to="/" className="font-rate f-bttn w-inline-block noselect">Done!</Link>
+                        <Link to="/" className="font-rate f-bttn w-inline-block noselect">{i18n.getTranslation("weq.quizRankPlaceCard.ButtonDone")}</Link>
                     </div>
                     </section>
                 </div>

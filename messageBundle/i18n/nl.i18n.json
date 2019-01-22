@@ -137,6 +137,11 @@
         "ButtonNext":"Volgende",
         "ButtonDone":"Klaar!"
     },
+    "rankOther":{
+        "Instruction":"Classificeren de kwaliteiten van teamgenoten in 60 seconden",
+        "ButtonNext":"Volgende",
+        "ButtonDone":"Klaar!"
+    },
     "quizRankWait":{
         "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u",
         "WaitForOthers":"Wachten totdat de anderen klaar zijn",
@@ -146,5 +151,13 @@
         "Proceed":"Doorgaan",
         "MessageDoneLine1":"Helemaal klaar!",
         "MessageDoneLine2":"Wacht alstublieft tot iedereen in de groep hun zelfbeoordeling voltooid heeft..."
+    },
+    "quizRankPlaceCard":{
+        "Instruction":"Schrift de kaartnummers op uw 'WeQ playmat'",
+        "ButtonDone":"Klaar!"
+    },
+    "loadingAnimated":{
+        "PleaseWait":"Even geduld a.u.b....",
+        "PleaseWaitGenerating":" even geduld a.u.b....uw informatie wordt door WeQ gegenereerd"
     }
 }

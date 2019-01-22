@@ -154,14 +154,14 @@ class QuizRankOther extends React.Component {
                             <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                         </div>
                         <div className="rate-content">
-                            <div className="font-rate font-name-header f-white">Rank teammate's qualities in 60 seconds</div>
+                            <div className="font-rate font-name-header f-white">{i18n.getTranslation("weq.rankOther.Instruction")}</div>
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
                         
                             <div className="w-block cursor-pointer">
                                 <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
                                         {this.props.users
-                                        ?"Next"
-                                        :"Done!"
+                                        ?i18n.getTranslation("weq.rankOther.ButtonNext")
+                                        :i18n.getTranslation("weq.rankOther.ButtonDone")
                                         }
                                 </div>
                             </div>

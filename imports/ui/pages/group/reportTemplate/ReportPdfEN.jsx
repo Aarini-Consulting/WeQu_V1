@@ -50,7 +50,7 @@ export const ReportPdfEN = ({propData}) => (
             <div className="div-current w-clearfix">
                 <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
                 <div className="div-diagram">
-                <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalise your session.</div>
+                <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
                 <div className="diagram-wrapper w-clearfix">
                     <div className="diagram">
                     <div className="diagram-position">

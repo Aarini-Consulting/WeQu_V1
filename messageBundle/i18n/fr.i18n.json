@@ -134,7 +134,12 @@
     },
     "rankSelf":{
         "ButtonGo":"Allons-y !",
-        "ButtonNext":"après",
+        "ButtonNext":"Après",
+        "ButtonDone":"Terminé !"
+    },
+    "rankOther":{
+        "Instruction":"Classement des qualités de son coéquipier en 60 secondes",
+        "ButtonNext":"Après",
         "ButtonDone":"Terminé !"
     },
     "quizRankWait":{
@@ -146,5 +151,13 @@
         "Proceed":"Continuez",
         "MessageDoneLine1":"Terminé !",
         "MessageDoneLine2":"Veuillez attendre que tous les membres du groupe aient terminé leur auto-classement ..."
+    },
+    "quizRankPlaceCard":{
+        "Instruction":"Notez les numéros sur votre « WeQ playmat »",
+        "ButtonDone":"Terminé !"
+    },
+    "loadingAnimated":{
+        "PleaseWait":"Veuillez patienter...",
+        "PleaseWaitGenerating":"Veuillez patienter, WeQ génère vos numéros de carte"
     }
 }
