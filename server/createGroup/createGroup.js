@@ -77,7 +77,7 @@ Meteor.methods({
       };
   
       let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
-      console.log(body);
+      
       // console.log("sending mail to: "+ d.email);
       Meteor.call('sendEmail', d.email, subject, body, function (err, result) {
         if(err){ return err};

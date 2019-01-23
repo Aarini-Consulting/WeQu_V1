@@ -179,6 +179,83 @@ class GroupPage extends React.Component {
         name = email;
       }
 
+      if(readySurvey && started && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+        return(
+          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+            <div className="tap-left card">
+              <div className="font-card-username-cards ready">
+                {name}
+              </div>
+            </div>
+            <div className="show-cards">
+                {this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
+                  return (Number(a.cardId) - Number(b.cardId));
+                }))}
+            </div>
+          </div>
+        );
+      }
+      else{
+        return(
+          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+            <div className="tap-left card">
+              <div className={"font-card-username-cards not-ready"}>
+                {name}
+              </div>
+            </div>
+            <div className="show-cards">
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
+  }
+
+  renderUsersSurvey(){
+    return this.props.users.map((user, index) => {
+      var userId = user._id;
+      var email = user.emails[0].address;
+      var readySurvey;
+      if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
+        readySurvey = true;
+      }
+      var started = this.props.group.isActive;
+
+      var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
+        return cp.userId == user._id;
+      })
+
+      var odd = (index % 2) > 0;
+
+      var name;
+
+      if(user.profile.firstName && user.profile.lastName){
+        name = user.profile.firstName + " " + user.profile.lastName;
+      }else{
+        name = email;
+      }
+
       return(
         <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
           <div className="tap-left card">
@@ -189,18 +266,14 @@ class GroupPage extends React.Component {
           <div className="show-cards">
             {readySurvey && started
             ?
-              cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0
-                ?this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
-                  return (Number(a.cardId) - Number(b.cardId));
-                }))
-                :<div className="bttn-next-card">session in progress</div>
+              <div className="bttn-next-card">session in progress</div>
             :
               readySurvey 
               ? 
                 <div className="bttn-next-card">Ready!</div>
               : 
               <div>
-              {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
+                {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
               </div>
             }
           </div>
@@ -235,7 +308,8 @@ class GroupPage extends React.Component {
       }else{
         return(
           <div className="font-matric">
-            Please check again when survey is completed
+            Please check again when all surveys are completed
+            {this.renderUsersSurvey()}
           </div>
         )
       }
@@ -445,7 +519,7 @@ class GroupPage extends React.Component {
                 </a>
                 <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
-                  <div>Collect cards</div>
+                  <div>Prepare cards</div>
                 </a>
                 <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"report")}>
