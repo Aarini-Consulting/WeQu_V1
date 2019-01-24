@@ -1999,13 +1999,6 @@ body {
   flex:1 1 auto;
 }
 
-.bttn-area-summary {
-  width: 50%;
-  height: 100%;
-  float: left;
-  background-color: #fff;
-}
-
 .bttn-area-summary._2 {
   border-left: 1px solid #f3eeee;
 }
@@ -2040,17 +2033,28 @@ body {
 }
 
 .button.fontreleway.bttncontact {
+  height: auto;
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+  border: 2px solid #fff;
+  border-radius: 500px;
   background-color: transparent;
-  -webkit-transition: background-color 200ms ease;
-  transition: background-color 200ms ease;
-  color: #a0a0a0;
-  font-size: 1.4em;
-  line-height: 60px;
-  font-weight: 700;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  font-family: Raleway, sans-serif;
+  color: #fff;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .button.fontreleway.bttncontact:hover {
-  background-color: #f3eeee;
+  background-color: #fff;
+  color: rgba(0, 0, 0, .6);
 }
 
 .contactlist-wrapper {
@@ -2635,7 +2639,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   right: 0px;
   bottom: 0px;
   height: 80px;
-  border-top: 1px solid #f3eeee;
+  border-top: 1px solid #363636;
   border-bottom: 0px none #f3eeee;
   background-color: #fff;
 }
@@ -2665,9 +2669,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .bttn-area-summary {
   width: 50%;
   height: 100%;
-  background-color: #fff;
-  -webkit-transition: background-color 200ms ease;
-  transition: background-color 200ms ease;
+  background-image: -webkit-linear-gradient(270deg, #383838, #383838);
+  background-image: linear-gradient(180deg, #383838, #383838);
 
   display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
   display: -moz-box;      /* OLD: Firefox (buggy) */
