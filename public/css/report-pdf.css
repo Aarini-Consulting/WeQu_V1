@@ -489,7 +489,7 @@
   position: absolute;
   color: #413970;
   font-size: 1.2em;
-  word-break: break-word;
+  word-wrap: break-word;
 }
 
 .value-actual {

@@ -9,6 +9,8 @@ import { Creatable } from 'react-select';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
+import {formatErrMessage} from '/imports/startup/client/formatErrMessage.js';
+
 // import MultiSelect from './MultiSelect';
 // import '/imports/startup/client/react-select.css';
 
@@ -22,6 +24,8 @@ class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
+        languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"},{name:"Français",code:"fr"}],
+        selectedEmailLanguage:i18n.getLocale().split("-")[0],
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
@@ -58,8 +62,15 @@ class InviteGroup extends React.Component {
     }
   }
 
+  handleChangeEmailLang(event) {
+    this.setState(
+        { 
+            selectedEmailLanguage: event.target.value,
+        }
+    );
+}
+
   updateGroup(){
-    var groupName = this.state.groupName;
     var inviteDatas = this.state.inviteDatas.filter((inviteData) => {
       var deleteIndex = this.state.inviteDeleted.findIndex((deleted)=>{
         return inviteData.email == deleted.email
@@ -72,7 +83,7 @@ class InviteGroup extends React.Component {
       }
     });
 
-    if(groupName && inviteDatas && inviteDatas.length >= 2){
+    if(inviteDatas && inviteDatas.length >= 2){
       var emailsArray = inviteDatas.map( (fields) => fields.email);
 
       this.setState({
@@ -92,7 +103,7 @@ class InviteGroup extends React.Component {
 
       resend.map( (resend) => this.resendInvite(resend.email));
       
-      Meteor.call('updateGroup', this.props.group, groupName, inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('updateGroup', this.props.group, this.state.selectedEmailLanguage, inviteDatas, emailsArray , (err, res) => {
           if(err)
           {
             console.log(err);
@@ -135,7 +146,6 @@ class InviteGroup extends React.Component {
               inviteResend:[],
               resendFailed:0,
               modifiedByUser:false,
-              modifiedByUser:false,
               showConfirm:false,
               unsaved:false
             });
@@ -155,7 +165,7 @@ class InviteGroup extends React.Component {
         inviteStatus: 'sending',
       });
   
-      Meteor.call('createGroup', groupName, this.state.inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('createGroup', groupName, this.state.selectedEmailLanguage, this.state.inviteDatas, emailsArray , (err, res) => {
         if(res){
           this.setState({
               inviteStatus: 'sent',
@@ -166,7 +176,7 @@ class InviteGroup extends React.Component {
           {
             this.setState({
               inviteStatus: 'error',
-              info: err.message,
+              info: formatErrMessage(err.error),
             });
           }     
       }); 
@@ -301,7 +311,7 @@ class InviteGroup extends React.Component {
 
     resendInvite(email){
       if(this.props.group){
-        Meteor.call('resend.group.invite', this.props.group._id, email , (err, res) => {
+        Meteor.call('resend.group.invite', this.props.group._id, this.state.selectedEmailLanguage, email , (err, res) => {
           if(err){
             this.setState({
               resendFailed: this.state.resendFailed + 1,
@@ -343,6 +353,13 @@ class InviteGroup extends React.Component {
       }
     }
 
+    renderLanguageList(){
+      return this.state.languages.map((val,index,array)=>{
+          return(
+              <option key={"select-lang"+index} value={val.code}>{val.name}</option>
+          );
+      })
+    }
 
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
@@ -368,14 +385,14 @@ class InviteGroup extends React.Component {
               <div className="font f_12">{index+1}</div>
               <input type="email" className="formstyle formuser formemail email" disabled={true} value={data.email} autoComplete={"false"}/>
               {this.props.group && readySurvey 
-              ? 
-              <div className="invitebttn bttnmembr gender w-clearfix selected noselect disabled">
-                survey completed
+              ?
+              <div className="formstyle-header status">
+              <div className="font f_12 survey-completed">completed</div>
               </div>
               :this.props.group 
                 &&
-                <div className="invitebttn bttnmembr gender w-clearfix noselect disabled">
-                  survey incomplete
+                <div className="formstyle-header status">
+                <div className="font f_12 survey-incomplete">incompleted</div>
                 </div>
               }
               {this.props.isEdit && newInviteIndex < 0 && !(this.props.group && this.props.group.isFinished) &&
@@ -407,6 +424,36 @@ class InviteGroup extends React.Component {
     renderFieldTable(){
       return (
         <ol className="w-list-unstyled">
+          {this.props.group && this.props.isEdit
+          && 
+          (
+            this.props.group && (this.props.group.isActive || this.props.group.isFinished) 
+            ?
+            <li className="invite-group-line-wrapper">
+              <div className="font f_12">#</div>
+              <div className="formstyle-header formemail">
+                <div className="font f_12">Email</div>
+              </div>
+              <div className="formstyle-header status">
+                <div className="font f_12">Survey Status</div>
+              </div>
+            </li>
+            :
+            <li className="invite-group-line-wrapper">
+              <div className="font f_12">#</div>
+              <div className="formstyle-header formemail">
+                <div className="font f_12">Email</div>
+              </div>
+              <div className="formstyle-header status">
+                <div className="font f_12">Survey Status</div>
+              </div>
+              <div className="formstyle-header actions">
+                <div className="font f_12">Actions</div>
+              </div>
+            </li>
+          )
+          }
+          
           {this.renderFields()}
         </ol>
       )
@@ -449,23 +496,44 @@ class InviteGroup extends React.Component {
                     {this.props.isEdit 
                       ? 
                       <div>
-                        <div className="groupformtext"><T>weq.inviteGroup.GroupName</T></div>
-                        <input type="text" ref="groupName" value={this.state.groupName} onChange={this.handleChange.bind(this)} autoComplete={"false"}
-                        maxLength="256" required="" 
-                        placeholder="group name" className="formstyle group-name w-input" 
-                        required/>
+                        <div className="groupformtext">
+                          <T>weq.inviteGroup.GroupName</T>
+                          <div className="tooltip-tutorial">
+                            <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
+                            <span className="tooltiptext">Once created, the group name is not changeable. </span>
+                          </div>
+                        </div>
+                        <p className="formstyle group-name noselect">{this.props.group.groupName}</p>
                       </div>
                       :
                       <div>
-                      <div className="groupformtext"><T>weq.inviteGroup.GroupNamePromptText</T></div>
+                      <div className="groupformtext">
+                        <T>weq.inviteGroup.GroupNamePromptText</T>
+                        <div className="tooltip-tutorial">
+                          <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
+                          <span className="tooltiptext">Choose a simple, yet unique group name.<br/>Once created, the group name is not changeable. </span>
+                        </div>
+                      </div>
                       <input type="text" ref="groupName" maxLength="256" required="" placeholder={i18n.getTranslation("weq.inviteGroup.PlaceholderGroupName")} className="formstyle group-name w-input" autoComplete={"false"} 
                       value={this.state.groupName} 
                       onChange={this.handleChange.bind(this)} required/>
                       </div>
                     }
                   
-                  <div className="groupformtext"><T>weq.inviteGroup.GroupMemberPromptText</T></div>
+                  <br/>
 
+                  {!(this.props.group && this.props.group.isFinished) &&
+                    <div>
+                      <div className="groupformtext">Invite email language:</div>
+                      <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                      value={this.state.selectedEmailLanguage} onChange={this.handleChangeEmailLang.bind(this)}>
+                          {this.renderLanguageList()}
+                      </select>
+                      <br/>
+                    </div>
+                  }
+
+                  <div className="groupformtext"><T>weq.inviteGroup.GroupMemberPromptText</T></div>
                   
                   {this.state.inviteDatas && this.state.inviteDatas.length > 0 && this.renderFieldTable()}
                   
@@ -514,12 +582,7 @@ class InviteGroup extends React.Component {
                       // :
                       // <span className="sendingStatus"><img src="/img/status_error.png"/>error</span>
                 }
-                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus == 'error' 
-                  ?
-                    <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleBackArrowClick.bind(this)}>
-                    <T>weq.inviteGroup.ButtonBackToGroupList</T>
-                    </a>
-                  :(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
+                {(!this.props.isEdit || this.state.modifiedByUser) && this.state.inviteStatus != 'sending' &&
                     <a id="submitSend" className="invitebttn formbttn w-button" onClick ={this.handleSubmitButton.bind(this)}>
                     <T>weq.inviteGroup.ButtonSave</T>
                     </a>

@@ -8,6 +8,11 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
@@ -15,13 +20,13 @@ const SortableItem = SortableElement(({value, disabled}) =>
             <div className="rate-line"></div>
             <div className="rate-line"></div>
         </div>
-        <div className={"font-rate-quality noselect"}>{value.toString().replace("_"," ")}</div>
+        <div className={"font-rate-quality noselect"}>{i18n.getTranslation(`weq.rankItem.${value.toString()}`)}</div>
     </div>
 );
 
 const SortableList = SortableContainer(({items, disabled}) => {
   return (
-    <div className="w-block">
+    <div className="rate-box-container">
       {items.map((value, index) => (
         <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled}/>
       ))}
@@ -139,8 +144,7 @@ class QuizRankOther extends React.Component {
     render() {
         if(this.props.dataReady && !this.state.savingData){
             return (
-                <div className="fillHeight">
-                    <section className="section summary fontreleway purple-bg">
+                    <section className="ranker-container fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
                             {this.props.quizUser && this.props.quizUser.profile &&
                                 this.props.quizUser.profile.firstName +" "+ this.props.quizUser.profile.lastName
@@ -150,19 +154,20 @@ class QuizRankOther extends React.Component {
                             <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                         </div>
                         <div className="rate-content">
-                            <div className="font-rate font-name-header f-white">Rank teammate's qualities in 60 seconds</div>
+                            <div className="font-rate font-name-header f-white">{i18n.getTranslation("weq.rankOther.Instruction")}</div>
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
-                        </div>
-                        <div className="w-block cursor-pointer">
-                            <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                                    {this.props.users
-                                    ?"Next"
-                                    :"Done!"
-                                    }
+                        
+                            <div className="w-block cursor-pointer">
+                                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
+                                        {this.props.users
+                                        ?i18n.getTranslation("weq.rankOther.ButtonNext")
+                                        :i18n.getTranslation("weq.rankOther.ButtonDone")
+                                        }
+                                </div>
                             </div>
                         </div>
+                        
                     </section>
-                </div>
             );
             
         }else{

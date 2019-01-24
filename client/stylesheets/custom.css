@@ -64,6 +64,10 @@
 	}
 }
 
+.no-overflow{
+	overflow:hidden;
+}
+
 .overflow{
 	overflow:auto;
 }

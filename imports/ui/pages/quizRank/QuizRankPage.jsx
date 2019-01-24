@@ -13,6 +13,12 @@ import QuizRankWait from './QuizRankWait';
 
 import Typeform from '/imports/ui/pages/survey/Typeform';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+
 class QuizRankPage extends React.Component {
     constructor(props){
         super(props);
@@ -57,16 +63,10 @@ class QuizRankPage extends React.Component {
                         }
                     }else{
                         return(
-                            <div className="fillHeight weq-bg">
+                            <div className="fillHeight weq-bg survey-done-screen">
+                                <br/>
                                 <div className="font-rate padding-wrapper">
-                                    DONE!
-                                    <br/><br/>
-                                    Thank you for completing the survey. 
-                                    <br/><br/>
-                                    You will use this app again when you play WeQ,<br/>
-                                    so remember to <b>bring your phone to the session!</b> 
-                                    <br/>
-                                    <br/>
+                                    {complexLinkTranslate("quizRankPage.FinishMessage")}
                                 </div>
                                 <div className="w-block cursor-pointer">
                                     <Link className="font-rate f-bttn w-inline-block noselect" to={"/"}>

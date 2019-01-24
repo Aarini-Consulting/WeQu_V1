@@ -14,21 +14,6 @@
         "ConsentPromo":"I would like to receive team-boosting related information, offers, recommendations and updates from WeQ",
         "Logout":"Logout"
     },
-    "reportPdf":{
-        "Gretings": "Hi",
-        "TutorialTitle":"Hoe u deze graﬁek moet lezen",
-        "TutorialQualityName":"Kwaliteitsnaam (Kaart #)",
-        "TutorialLowestValue":"De laagste waarde van deze Kwaliteit in uw groep",
-        "TutorialHighestValue":"De hoogste waarde van deze Kwaliteit in uw groep",
-        "TutorialCurrentScore":"Uw huidige score",
-        "TutorialCurrentScoreBracket":"(beoordeeld door u en anderen)",
-        "CurrentSession":"Current Session - {$firstName} {$lastName}",
-        "GraphOpeningParagraph":"Based on your own data and feedback from others in your team, the WeQ system personalise your session.",
-        "FooterTitle":"Maintenance sessions",
-        "FooterTextLine1":"Don't lose the momentum!",
-        "FooterTextLine2":"Continue building healthy habits with our 1 hour maintenance sessions.",
-        "FooterTextLine3":"Ask {$groupCreatorFirstName} for more information."
-    },
     "settingsEdit": {
         "VerificationSent": "Verification email sent!, Please follow the link in the email to change your email",
         "Updating": "updating...",
@@ -61,7 +46,6 @@
         "LiveSession": "This session is live. Get started now.",
         "WaitForSession": "Please wait until session starts.",
         "JustInvited": "Just invited. Get started now."
-
     },
     "inviteGroupPage":{
         "CreateNew":"Create new group",
@@ -121,5 +105,59 @@
         "SocialNormsText2":"In this team, members withhold information that might be useful for others.",
         "SocialNormsText3":"This team has a strong sense of collective success rather than just individual glory.",
         "NoMatrixInfo":"There is currently no matrix information available."
+    },
+    "rankItem":{
+        "generous":"generous",
+        "honest":"honest",
+        "patient":"patient",
+        "respectful":"respectful",
+        "reflective":"reflective",
+        "resilient":"resilient",
+        "doer":"doer",
+        "accepts_criticism":"accepts criticism",
+        "listening":"listening",
+        "humour":"humour",
+        "story_telling":"story telling",
+        "outgoing":"outgoing",
+        "assertive":"assertive",
+        "connector":"connector",
+        "manage_conflict":"manage conflict",
+        "reliable":"reliable",
+        "mentoring":"mentoring",
+        "motivator":"motivator",
+        "visionary":"visionary",
+        "empathetic":"empathetic",
+        "conceptual_thinking":"conceptual thinking",
+        "creative":"creative",
+        "inquisitive":"inquisitive",
+        "analytical":"analytical"
+    },
+    "rankSelf":{
+        "ButtonGo":"Let's go!",
+        "ButtonNext":"Next",
+        "ButtonDone":"Done!"
+    },
+    "rankOther":{
+        "Instruction":"Rank teammate's qualities in 60 seconds",
+        "ButtonNext":"Next",
+        "ButtonDone":"Done!"
+    },
+    "quizRankWait":{
+        "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you",
+        "WaitForOthers":"Waiting for others to be ready",
+        "TheWholeTeamWillRank":"The whole team will now rank:",
+        "YouWillHave60Secs":"You will have 60 seconds",
+        "TextForFirstName":"Sit back and relax {$firstName}",
+        "Proceed":"Proceed",
+        "MessageDoneLine1":"All done!",
+        "MessageDoneLine2":"Please wait until everyone in the group completes their self-ranking..."
+    },
+    "quizRankPlaceCard":{
+        "Instruction":"Write down the numbers on your WeQ playmat",
+        "ButtonDone":"Done!"
+    },
+    "loadingAnimated":{
+        "PleaseWait":"Please wait...",
+        "PleaseWaitGenerating":"Please wait...WeQ is generating your card numbers"
     }
 }

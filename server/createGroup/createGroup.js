@@ -1,8 +1,20 @@
 Meteor.methods({
-  'createGroup' : function (groupName,data,arr_emails, arr_numbers) {
+  'createGroup' : function (groupName,language,data,arr_emails) {
     var now = new Date();
 
     var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+
+    var groupNameCheckOwn = Group.findOne({groupName : groupName, creatorId:this.userId});
+
+    var groupNameCheckOthers = Group.findOne({groupName : groupName, creatorId:{'$ne':this.userId}});
+
+    if(groupNameCheckOwn){
+      throw (new Meteor.Error(`group_name_"${groupName}"_already_exist`)); 
+    }
+
+    if(groupNameCheckOthers){
+      throw (new Meteor.Error("group_name_already_claimed_by_other_CMC")); 
+    }
 
     if(!gmCheck){
       throw (new Meteor.Error("only_gamemaster_can_create_group")); 
@@ -64,7 +76,8 @@ Meteor.methods({
         'groupName': groupName
       };
   
-      let body = SSR.render('GroupInviteHtmlEmail', emailData);
+      let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
+      
       // console.log("sending mail to: "+ d.email);
       Meteor.call('sendEmail', d.email, subject, body, function (err, result) {
         if(err){ return err};

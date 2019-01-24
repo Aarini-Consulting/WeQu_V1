@@ -16,7 +16,7 @@ class GroupReportPage extends React.Component {
           preview:undefined,
           loadingPreview:false,
           generatingPdf:false,
-          languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"}],
+          languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"},{name:"Français",code:"fr"}],
           downloadIndividualLang:i18n.getLocale().split("-")[0],
           downloadAllLang:i18n.getLocale().split("-")[0]
         }

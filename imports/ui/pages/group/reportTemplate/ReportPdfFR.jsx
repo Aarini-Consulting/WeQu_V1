@@ -1,7 +1,9 @@
 import React from 'react';
 import {calculateChartLineWidth} from '/imports/ui/pdfCalculateChartWidth';
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
 
-export const ReportPdfEN = ({propData}) => (
+export const ReportPdfFR = ({propData}) => (
     <html>
         <head>
             <meta charSet="UTF-8"/>
@@ -17,11 +19,11 @@ export const ReportPdfEN = ({propData}) => (
         <body>
         <div className="a4-wrapper">
             <div className="section _1-greeting">
-            <h1 className="h1">Hey</h1>
+            <h1 className="h1">Salut</h1>
             <h1 className="h1 username">{propData.firstName},</h1>
             <h3 className="h3 subtitle">
-                You&#x27;ve just played WeQ with your <strong>{propData.groupName}</strong>.
-                This is your report prepared by <strong>{propData.groupCreatorFirstName} {propData.groupCreatorLastName}</strong>, WeQ Master Coach.
+                Vous venez de jouer à WeQ avec votre <strong>{propData.groupName}</strong>. 
+                Voici votre rapport préparé par <strong>{propData.groupCreatorFirstName} {propData.groupCreatorLastName}</strong>, Master Coach WeQ.
             </h3>
             </div>
             <div className="section _2-content">
@@ -31,15 +33,15 @@ export const ReportPdfEN = ({propData}) => (
                 <div className="arrow-monitor"></div>
                 </div> */}
                 {/* <div className="pointer"></div> */}
-                <div className="h3 title-1">How to read this chart </div>
+                <div className="h3 title-1">Comment lire ce tableau :</div>
                 <div className="bar-wrapper w-clearfix">
                 {/* <div className="arrow"></div> */}
-                <div className="bar-howto">The lowest value of this <br/>Quality in your group</div>
-                <div className="bar-howto _3">Your current score <br/>(evaluated by you and others)</div>
+                <div className="bar-howto">La note la plus basse pour cette <br/>Qualité dans votre groupe.</div>
+                <div className="bar-howto _3">Votre score actuel<br/>(évalué par vous et les autres)</div>
                 {/* <div className="bar-howto _4">Changes from <br/>previous session</div> */}
-                <div className="bar-howto _2">The highest value of this <br/>Quality in your group</div>
+                <div className="bar-howto _2">La note la plus élevée pour cette <br/>Qualité dans votre groupe.</div>
                 {/* <div className="quality-name number">+1,4</div> */}
-                <div className="quality-name">Quality name (Card#)</div>
+                <div className="quality-name">Nom de la Qualité <br/> (n ° de carte#)</div>
                 <div className="bar-team">
                     <div className="bar-line"></div>
                 </div>
@@ -48,9 +50,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
             </div>
             <div className="div-current w-clearfix">
-                <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
+                <div className="h3 current">Session Actuelle - {propData.firstName} {propData.lastName}</div>
                 <div className="div-diagram">
-                <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
+                <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                 <div className="diagram-wrapper w-clearfix">
                     <div className="diagram">
                     <div className="diagram-position">
@@ -82,7 +84,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[0].category }`}>{propData.cardPicked[0].subCategory.replace("_", " ")} ({propData.cardPicked[0].cardId})</strong>
+                        <strong className={`q-category text-category-${ propData.cardPicked[0].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[0].subCategory}`)} ({propData.cardPicked[0].cardId})
+                        </strong>
                     </div>
                     <div className={`q-icon badge-${ propData.cardPicked[0].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -100,7 +104,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[1].category }`}>{propData.cardPicked[1].subCategory.replace("_", " ")} ({propData.cardPicked[1].cardId})</strong>
+                        <strong className={`q-category text-category-${ propData.cardPicked[1].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[1].subCategory}`)} ({propData.cardPicked[1].cardId})
+                        </strong>
                     </div>
                     <div className={`q-icon badge-${ propData.cardPicked[1].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
@@ -118,7 +124,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[2].category }`}>{propData.cardPicked[2].subCategory.replace("_", " ")} ({propData.cardPicked[2].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[2].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[2].subCategory}`)} ({propData.cardPicked[2].cardId})
+                        </strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[2].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
@@ -135,7 +143,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[3].category }`}>{propData.cardPicked[3].subCategory.replace("_", " ")} ({propData.cardPicked[3].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[3].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[3].subCategory}`)} ({propData.cardPicked[3].cardId})
+                        </strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[3].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
@@ -152,7 +162,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[4].category }`}>{propData.cardPicked[4].subCategory.replace("_", " ")} ({propData.cardPicked[4].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[4].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[4].subCategory}`)} ({propData.cardPicked[4].cardId})
+                        </strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[4].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
@@ -169,7 +181,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[5].category }`}>{propData.cardPicked[5].subCategory.replace("_", " ")} ({propData.cardPicked[5].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[5].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[5].subCategory}`)} ({propData.cardPicked[5].cardId})
+                        </strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[5].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
@@ -186,7 +200,9 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 <div className="chart-graph w-clearfix">
                     <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[6].category }`}>{propData.cardPicked[6].subCategory.replace("_", " ")} ({propData.cardPicked[6].cardId})</strong></div>
+                        <strong className={`q-category text-category-${ propData.cardPicked[6].category }`}>
+                        {i18n.getTranslation(`weq.rankItem.${propData.cardPicked[6].subCategory}`)} ({propData.cardPicked[6].cardId})
+                        </strong></div>
                     <div className={`q-icon badge-${ propData.cardPicked[6].subCategory }`}></div>
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
@@ -206,12 +222,12 @@ export const ReportPdfEN = ({propData}) => (
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
                 <div className="h4 next">
-                Don't lose the momentum!
+                Poursuivez sur votre lancée !
                 <br/>
-                Continue building healthy habits with our <br/>1 hour maintenance sessions.
+                Continuez à adopter des habitudes saines grâce à nos séances de suivi d’une heure.
                 <br/>
                 <br/>
-                Ask {propData.groupCreatorFirstName} for more information.
+                Pour plus d'informations, contactez {propData.groupCreatorFirstName}.
                 </div>
                 <div className="next-demo"></div>
             </div>

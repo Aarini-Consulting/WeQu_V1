@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'meteor/universe:i18n';
 
 export default class LoadingAnimated extends React.Component {
   render() {
@@ -8,8 +9,8 @@ export default class LoadingAnimated extends React.Component {
             <div className="ring animated"></div>
             <div className="font-rate loading-font loading-text-top padding-wrapper">
                 {this.props.placeCard 
-                ?"Please wait... WeQ is generating your card numbers"
-                :"Please wait..."
+                ?i18n.getTranslation("weq.loadingAnimated.PleaseWaitGenerating")
+                :i18n.getTranslation("weq.loadingAnimated.PleaseWait")
                 }
             </div>
             

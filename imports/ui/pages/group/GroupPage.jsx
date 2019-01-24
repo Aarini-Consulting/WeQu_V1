@@ -12,6 +12,8 @@ import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
 
+import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
+
 import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
@@ -28,7 +30,8 @@ class GroupPage extends React.Component {
         showInfo:false,
         showMatrixInfoPanel:undefined,
         sending:false,
-        currentTab:"edit"
+        currentTab:"edit",
+        gettingTypeformResult:false
       }
   }
 
@@ -98,6 +101,50 @@ class GroupPage extends React.Component {
     });
   }
 
+  getTypeFormResult(){
+    if(!this.state.gettingTypeformResult && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+      this.setState({
+        gettingTypeformResult: true,
+      });
+
+      var supportedLocale = Meteor.settings.public.supportedLocale;
+
+      var formIds = [];
+
+      supportedLocale.forEach((locale)=>{
+        var languageCode = locale.split("-")[0];
+        var formIdTest = Meteor.settings.public.typeformTestFormCode;
+        var formIdProd =  Meteor.settings.public.typeformProdFormCode;
+
+        var formIdSelected;
+
+        if(window.location.hostname == "app.weq.io"){
+          formIdSelected = formIdProd[languageCode];
+          if(!formIdSelected){
+            formIdSelected = formIdProd["en"];
+          }
+        }else{
+          formIdSelected = formIdTest[languageCode];
+          if(!formIdSelected){
+            formIdSelected = formIdTest["en"];
+          }
+        }
+
+        formIds.push(formIdSelected);
+      });
+
+      Meteor.call('get.all.response.typeform', this.props.group._id, formIds, this.props.group.createdAt, (error, result)=>{
+        if(error){
+          console.log(error);
+        }
+
+        this.setState({
+          gettingTypeformResult: false,
+        });
+      });
+    }
+  }
+
   renderUserCards(cards){
     return cards.map((card, index) => {
       return(
@@ -132,6 +179,83 @@ class GroupPage extends React.Component {
         name = email;
       }
 
+      if(readySurvey && started && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+        return(
+          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+            <div className="tap-left card">
+              <div className="font-card-username-cards ready">
+                {name}
+              </div>
+            </div>
+            <div className="show-cards">
+                {this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
+                  return (Number(a.cardId) - Number(b.cardId));
+                }))}
+            </div>
+          </div>
+        );
+      }
+      else{
+        return(
+          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+            <div className="tap-left card">
+              <div className={"font-card-username-cards not-ready"}>
+                {name}
+              </div>
+            </div>
+            <div className="show-cards">
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+              <div className={`font-number placeholder`}>
+                #
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
+  }
+
+  renderUsersSurvey(){
+    return this.props.users.map((user, index) => {
+      var userId = user._id;
+      var email = user.emails[0].address;
+      var readySurvey;
+      if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
+        readySurvey = true;
+      }
+      var started = this.props.group.isActive;
+
+      var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
+        return cp.userId == user._id;
+      })
+
+      var odd = (index % 2) > 0;
+
+      var name;
+
+      if(user.profile.firstName && user.profile.lastName){
+        name = user.profile.firstName + " " + user.profile.lastName;
+      }else{
+        name = email;
+      }
+
       return(
         <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
           <div className="tap-left card">
@@ -142,18 +266,14 @@ class GroupPage extends React.Component {
           <div className="show-cards">
             {readySurvey && started
             ?
-              cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0
-                ?this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
-                  return (Number(a.cardId) - Number(b.cardId));
-                }))
-                :<div className="bttn-next-card">session in progress</div>
+              <div className="bttn-next-card">session in progress</div>
             :
               readySurvey 
               ? 
                 <div className="bttn-next-card">Ready!</div>
               : 
               <div>
-              {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
+                {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
               </div>
             }
           </div>
@@ -164,16 +284,38 @@ class GroupPage extends React.Component {
 
   renderSurveyGraph(skills){
     if(!skills || skills.length < 1){
-      return(
-        <div className="tap-content w-clearfix">
+      if(this.props.group && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+        return(
+          <div className="create-chart-tab">
+              <div className="create-chart-wrapper">
+                <div className="create-chart-icon-wrapper">
+                  <i className="far fa-chart-bar"></i>
+                </div>
+                {this.state.gettingTypeformResult 
+                  ?
+                  <div className="invitebttn create-chart w-button w-inline-block noselect">
+                    Loading...
+                  </div>
+                  :
+                  <div className="invitebttn create-chart w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
+                    Calculate survey result
+                  </div>
+                }
+                
+              </div>
+            </div>
+        );
+      }else{
+        return(
           <div className="font-matric">
-            Please check again when survey is completed
+            Please check again when all surveys are completed
+            {this.renderUsersSurvey()}
           </div>
-        </div>
-      );
+        )
+      }
     }
     else{
-      return skills.map((skill, index) => {
+      var skills = skills.map((skill, index) => {
         var leftPos = 0;
         var total = skill.total || 0;
         var score = skill.score || 0;
@@ -189,9 +331,11 @@ class GroupPage extends React.Component {
         }
 
         var infoText = undefined;
+        var skillName = undefined;
 
         switch(skill.name){
           case "Psychological Safety":
+            skillName = i18n.getTranslation("weq.groupPage.PsychologicalSafety");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.PsychologicalSafetyText1</T><br/>
             <T>weq.groupPage.PsychologicalSafetyText2</T><br/>
@@ -199,6 +343,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Constructive Feedback":
+            skillName = i18n.getTranslation("weq.groupPage.ConstructiveFeedback");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.ConstructiveFeedbackText1</T><br/>
             <T>weq.groupPage.ConstructiveFeedbackText2</T><br/>
@@ -206,6 +351,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Cognitive Bias":
+            skillName = i18n.getTranslation("weq.groupPage.CognitiveBias");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.CognitiveBiasText1</T><br/>
             <T>weq.groupPage.CognitiveBiasText2</T><br/>
@@ -213,6 +359,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Control over Cognitive Bias":
+            skillName = i18n.getTranslation("weq.groupPage.CognitiveBias");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.CognitiveBiasText1</T><br/>
             <T>weq.groupPage.CognitiveBiasText2</T><br/>
@@ -220,6 +367,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           case "Social Norms":
+            skillName = i18n.getTranslation("weq.groupPage.SocialNorms");
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.SocialNormsText1</T><br/>
             <T>weq.groupPage.SocialNormsText2</T><br/>
@@ -227,6 +375,7 @@ class GroupPage extends React.Component {
             </div>
             break;
           default:
+            skillName = skill.name;
             infoText = <div className="font-matric font-info">
             <T>weq.groupPage.NoMatrixInfo</T>
             </div>
@@ -238,7 +387,7 @@ class GroupPage extends React.Component {
             <div className="tap-content w-clearfix">
               <div className="tap-left">
                 <div className="font-matric">
-                  {skill.name}
+                  {skillName}
                 </div>
                 <div className="w-inline-block font-matric-info" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
                 <i className="fas fa-info-circle"></i>
@@ -271,6 +420,34 @@ class GroupPage extends React.Component {
           </div>
         );
       });
+
+      return (
+        <div>
+          {skills}
+          <br/>
+          <br/>
+          <div className="div-block-right">
+              <div className="w-inline-block survey-graph-footer">
+                <div className="font-matric-refresh">
+                  {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
+                  <br/>
+                  completed the survey
+                </div>
+                {this.state.gettingTypeformResult 
+                  ?
+                  <div className="invitebttn create-chart refresh w-button w-inline-block noselect">
+                    Loading...
+                  </div>
+                  :
+                  <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
+                    Refresh
+                  </div>
+                }
+                
+              </div>
+            </div>
+        </div>
+        );
     }
   }
 
@@ -308,30 +485,28 @@ class GroupPage extends React.Component {
               <Menu location={this.props.location} history={this.props.history}/>
               <div className="screentitlewrapper w-clearfix">
                 <div className="screentitlebttn back">
-                  <a className="w-clearfix w-inline-block cursor-pointer" onClick={()=>{
+                  <a className="w-clearfix w-inline-block cursor-pointer arrow-left-white" onClick={()=>{
                     this.props.history.goBack();
                   }}>
-                  <img className="image-7" src="/img/arrow.svg"/>
+                  <i className="fas fa-arrow-left"></i>
                   </a>
                 </div>
                 <div className="fontreleway font-invite-title white w-clearfix">
                 {this.props.group.groupName}
                 </div>
-                <div className="fontreleway font-invite-title edit w-clearfix">
-                  {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-                    <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
-                  }
-                  {(this.props.group && this.props.group.isFinished) 
-                    ?
-                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                      Game Finished
-                    </a>
-                    :this.props.group.isActive &&
-                    <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                      Game Started
-                    </a>
-                  }          
-                </div>
+                {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
+                  <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
+                }
+                {(this.props.group && this.props.group.isFinished) 
+                  ?
+                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+                    Game Finished
+                  </a>
+                  :this.props.group.isActive &&
+                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+                    Game Started
+                  </a>
+                }
               </div>
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                 <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
@@ -344,11 +519,11 @@ class GroupPage extends React.Component {
                 </a>
                 <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
-                  <div>Draw cards</div>
+                  <div>Prepare cards</div>
                 </a>
                 <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"report")}>
-                  <div>Report</div>
+                  <div>Download report</div>
                 </a>
               </div>
               <div className="tabs w-tabs">

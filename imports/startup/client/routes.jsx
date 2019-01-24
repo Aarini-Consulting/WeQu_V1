@@ -52,6 +52,7 @@ import {getDefaultLocale} from '/imports/startup/client/getDefaultLocale';
 const history = createBrowserHistory();
 
 import i18n from 'meteor/universe:i18n';
+import ReportPdf from '/imports/ui/pages/group/ReportPdf';
 
 const T = i18n.createComponent();
 
@@ -124,13 +125,13 @@ const App = class App extends React.Component {
     //detect current locale
     var locale = getDefaultLocale();
     //e.g. locale = 'en-US';
-    var supportedLocale = ['nl-NL', 'en-US'];
+    var supportedLocale = Meteor.settings.public.supportedLocale;
 
     //override detected locale with locale value from user profile
     var user = props.currentUser;
     if(user && user.profile && user.profile.locale){
       locale = user.profile.locale;
-    }    
+    }
     
     var languageCode;
     //check type of locale (e.g. "en" or "en-US")
@@ -175,7 +176,7 @@ const App = class App extends React.Component {
   render() {
     if(this.state.languageLoaded){
         return (
-          <div>
+          <div style={{height:100+"%"}}>
           { /* Place to put layout codes here */ }
           <Switch history={history}>
               <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
@@ -187,6 +188,7 @@ const App = class App extends React.Component {
               <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
               <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
               <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
+              <Route exact path='/debug' component={ReportPdf}/>
               <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />

@@ -14,21 +14,6 @@
         "ConsentPromo":"Ik blijf graag per post op de hoogte van updates, aanbiedingen en nieuws van WeQ",
         "Logout":"Uitloggen"
     },
-    "reportPdf":{
-        "Gretings": "Hoi",
-        "TutorialTitle":"Hoe u deze graﬁek moet lezen",
-        "TutorialQualityName":"Kwaliteitsnaam (Kaart #)",
-        "TutorialLowestValue":"De laagste waarde van deze Kwaliteit in uw groep",
-        "TutorialHighestValue":"De hoogste waarde van deze Kwaliteit in uw groep",
-        "TutorialCurrentScore":"Uw huidige score",
-        "TutorialCurrentScoreBracket":"(beoordeeld door u en anderen)",
-        "CurrentSession":"Huidige Sessie - {$firstName} {$lastName}",
-        "GraphOpeningParagraph":"Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie",
-        "FooterTitle":"Onderhoudssessies",
-        "FooterTextLine1":"Verlies het momentum niet! ",
-        "FooterTextLine2":"Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren",
-        "FooterTextLine3":"Stel uw vraag aan {$groupCreatorFirstName}  voor meer informatie!"
-    },
     "settingsEdit": {
         "VerificationSent": "Bevestiging email gestuurd! Volg de link in het bericht om je email te wijzigen",
         "Updating": "updating...",
@@ -63,44 +48,44 @@
         "JustInvited": "Uitgenodig. Begin nu"
     },
     "inviteGroupPage":{
-        "CreateNew":"Nieuw groep toevoegen",
-        "NoGroup":"Hey, er is niemand hier"
+        "CreateNew":"Create new group",
+        "NoGroup":"Hey, there is nobody here"
     },
     "inviteGroup":{
-        "GroupName":"Groep naam",
-        "GroupNamePromptText":"Wat is de naam van dit groep?",
-        "GroupMemberPromptText":"wie zou in de groep moeten zitten?",
-        "PlaceholderEmailAddress":"email adres",
-        "PlaceholderGroupName":"groep naam",
-        "ButtonAddGroupMember":"Voeg toe aan de groep",
-        "ButtonSave":"Bewaren",
-        "SendingText":"Email sturen...",
-        "SentText":"Email verzonden",
-        "MaxNumberOfMember":"Maximum aantal van groepslid bereikt",
-        "ButtonBackToGroupList":"terug naar grouplijst",
-        "ErrorNoGroupName":"Voer een groepsnaam in",
-        "ErrorMaxNumberMember":"Maximum aantal van groepslid bereikt",
-        "ErrorMinNumberMember":"Elke groep in een WeQ-sessie moet minimaal 2 spelers hebben",
-        "ErrorUnknown":"Iets fout gegaan"
+        "GroupName":"Group name",
+        "GroupNamePromptText":"What is the name of this group?",
+        "GroupMemberPromptText":"Who should be in the group?",
+        "PlaceholderEmailAddress":"email adress",
+        "PlaceholderGroupName":"group name",
+        "ButtonAddGroupMember":"Add this person",
+        "ButtonSave":"Save",
+        "SendingText":"Sending...",
+        "SentText":"Email sent!",
+        "MaxNumberOfMember":"Maximum amount of group member reached",
+        "ButtonBackToGroupList":"Back to group list",
+        "ErrorNoGroupName":"Please enter a group name",
+        "ErrorMaxNumberMember":"Maximum amount of group member reached",
+        "ErrorMinNumberMember":"Each group in a WeQ session must have at least 2 players",
+        "ErrorUnknown":"Something went wrong"
     },
     "confirmAdd":{
-        "ConfirmTitle":"De acties hieronder vermeld hebben uw bevestiging nodig",
-        "AddNewMember":"Voeg {$count} lid(leden) toe",
-        "EmailSendConfirmation":"E-mail uitnodiging zal naar alle nieuwe leden worden verzonden",
-        "UnsavedInput":"e-mail wijzigingen zijn niet opgeslagen",
-        "Cancel":"Annuleren",
-        "Proceed":"Doorgaan"
+        "ConfirmTitle":"The following actions need your confirmation",
+        "AddNewMember":"Add {$count} member(s)",
+        "EmailSendConfirmation":"Email invitation will be sent to all new member(s)",
+        "UnsavedInput":"Email input not saved",
+        "Cancel":"Cancel",
+        "Proceed":"Proceed"
     },
     "confirmEdit":{
-        "ConfirmTitle":"De acties hieronder vermeld hebben uw bevestiging nodig",
-        "AddNewMember":"Voeg {$count} lid(leden) toe",
-        "RemoveMember":"{$count} lid(leden) verwijderd",
-        "EmailSendConfirmation":"E-mail uitnodiging zal naar alle nieuwe leden worden verzonden",
-        "EmailReminderConfirmation":"E-mail uitnodiging zal naar alle nieuwe leden worden verzonden",
-        "UnsavedInput":"e-mail wijzigingen zijn niet opgeslagen",
-        "GroupNameChanged":"Groepnaam gewijzigd",
-        "Cancel":"Annuleren",
-        "Proceed":"Doorgaan"
+        "ConfirmTitle":"The following actions need your confirmation",
+        "AddNewMember":"Add {$count} new member(s)",
+        "RemoveMember":"remove {$count} member(s)",
+        "EmailSendConfirmation":"Email invitation will be sent to all new member",
+        "EmailReminderConfirmation":"Send reminder to {$count} member(s)",
+        "UnsavedInput":"Email input not saved",
+        "GroupNameChanged":"Group name changed",
+        "Cancel":"Cancel",
+        "Proceed":"Proceed"
     },
     "groupPage":{
         "PsychologicalSafety":"Psychological Safety",
@@ -120,5 +105,59 @@
         "SocialNormsText2":"Dit team heeft een groot gevoel van gezamenlijk succes in plaats van individueel succes.",
         "SocialNormsText3":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
         "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar"
+    },
+    "rankItem":{
+        "generous":"genereus",
+        "honest":"eerlijk",
+        "patient":"geduldig",
+        "respectful":"respectvol",
+        "reflective":"reflectief",
+        "resilient":"veerkrachtig",
+        "doer":"doener",
+        "accepts_criticism":"omgaan met kritiek",
+        "listening":"luisteren",
+        "humour":"humor",
+        "story_telling":"verhalen vertellen",
+        "outgoing":"vlot",
+        "assertive":"assertief",
+        "connector":"verbinder",
+        "manage_conflict":"conflictbeheersing",
+        "reliable":"betrouwbaar",
+        "mentoring":"mentoring",
+        "motivator":"motivator",
+        "visionary":"visionaire",
+        "empathetic":"empathisch",
+        "conceptual_thinking":"conceptueel denken",
+        "creative":"creatief",
+        "inquisitive":"onderzoekend",
+        "analytical":"binaural"
+    },
+    "rankSelf":{
+        "ButtonGo":"Let's go!",
+        "ButtonNext":"Volgende",
+        "ButtonDone":"Klaar!"
+    },
+    "rankOther":{
+        "Instruction":"Classificeren de kwaliteiten van teamgenoten in 60 seconden",
+        "ButtonNext":"Volgende",
+        "ButtonDone":"Klaar!"
+    },
+    "quizRankWait":{
+        "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u",
+        "WaitForOthers":"Wachten totdat de anderen klaar zijn",
+        "TheWholeTeamWillRank":"Het hele team zal nu de volgende persoon beoordelen:",
+        "YouWillHave60Secs":"U heeft 60 seconden",
+        "TextForFirstName":"Ga achterover zitten en ontspan u, {$firstName}",
+        "Proceed":"Doorgaan",
+        "MessageDoneLine1":"Helemaal klaar!",
+        "MessageDoneLine2":"Wacht alstublieft tot iedereen in de groep hun zelfbeoordeling voltooid heeft..."
+    },
+    "quizRankPlaceCard":{
+        "Instruction":"Schrift de kaartnummers op uw 'WeQ playmat'",
+        "ButtonDone":"Klaar!"
+    },
+    "loadingAnimated":{
+        "PleaseWait":"Even geduld a.u.b....",
+        "PleaseWaitGenerating":" even geduld a.u.b....uw informatie wordt door WeQ gegenereerd"
     }
 }

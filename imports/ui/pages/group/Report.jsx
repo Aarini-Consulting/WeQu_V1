@@ -37,7 +37,7 @@ export default class Report extends React.Component{
                 <div className="div-current w-clearfix">
                     <div className="h3 current">Current Session #1</div>
                     <div className="div-diagram">
-                    <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalise your session,</div>
+                    <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session,</div>
                     <div className="diagram-wrapper w-clearfix">
                         <div className="diagram">
                         <div className="diagram-position">
@@ -174,7 +174,7 @@ export default class Report extends React.Component{
                 </div>
                 <div className="section _3-footer">
                 <div className="weq-logo"></div>
-                <div className="footer">WeQ - Nothing beats a kick-ass tem  |  Copyright 2018 WeQ B.V. | www.WeQ.io</div>
+                <div className="footer">WeQ - Nothing beats a kick-ass tem  |  Copyright 2019 WeQ B.V. | www.WeQ.io</div>
                 </div>
             </div>
         );

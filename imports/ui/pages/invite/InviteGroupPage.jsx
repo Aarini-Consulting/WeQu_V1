@@ -37,7 +37,7 @@ class InviteGroupPage extends React.Component {
               <div className="contactc w-row cursor-pointer">
                 <div className="column-4">
                   <div className="contactnamefield w-clearfix">
-                    <img src="/img/avatar.png" className="contactface"/>
+                    <img src="/img/Logo-Main_ring_animation.small.gif" className="contactface"/>
                   </div>
                   <div className="fontcontactname white">{group.groupName}</div>
                 </div>
