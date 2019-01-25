@@ -53,41 +53,41 @@ Meteor.methods({
 			}
 		}
 		//experimental function for wetime app
-		// if(arr_numbers && arr_numbers.length > 0){
-		// 	for (i = 0; i < arr_numbers.length; i++) {
-		// 		var number = arr_numbers[i];
-		// 		var numberMsisdn = number.number;
-		// 		var countryCode = number.countryCode;
-		// 		var link = arr_numbers[i].link;
+		if(arr_numbers && arr_numbers.length > 0){
+			for (i = 0; i < arr_numbers.length; i++) {
+				var number = arr_numbers[i];
+				var numberMsisdn = number.number;
+				var countryCode = number.countryCode;
+				var link = arr_numbers[i].link;
 				
-		// 		//convert msisdn back to number by replacing the country code with 0
-		// 		//the  +1 for the countryCode length is to compensate for the starting "+" symbol
-		// 		var numberOriginal =  "0"+numberMsisdn.substr(countryCode.length+1, numberMsisdn.length);
+				//convert msisdn back to number by replacing the country code with 0
+				//the  +1 for the countryCode length is to compensate for the starting "+" symbol
+				var numberOriginal =  "0"+numberMsisdn.substr(countryCode.length+1, numberMsisdn.length);
 
-		// 		var checkUser = Meteor.users.findOne(
-		// 			{
-		// 				$and : [ 
-		// 					{"mobile.countryCode" : number.countryCode  }, 
-		// 					{ "mobile.number" : numberOriginal}
-		// 				]
-		// 			}
-		// 		);
+				var checkUser = Meteor.users.findOne(
+					{
+						$and : [ 
+							{"mobile.countryCode" : number.countryCode  }, 
+							{ "mobile.number" : numberOriginal}
+						]
+					}
+				);
 	
-		// 		if(!checkUser){
-		// 			var userId = Accounts.createUser({
-		// 				username:number.number,
-		// 				password: _id,
-		// 			});
+				if(!checkUser){
+					var userId = Accounts.createUser({
+						username:number.number,
+						password: _id,
+					});
 
-		// 			Meteor.users.update({_id: userId},
-		// 				{$set: {
-		// 					'mobile' : [{'countryCode':number.countryCode, 'number':numberOriginal, 'verified':false}],
-		// 				} 
-		// 			});
+					Meteor.users.update({_id: userId},
+						{$set: {
+							'mobile' : [{'countryCode':number.countryCode, 'number':numberOriginal, 'verified':false}],
+						} 
+					});
 
-		// 			Meteor.call('send.sms.invitation', numberMsisdn, link);
-		// 		}
-		// 	}
-		// }
+					Meteor.call('send.sms.invitation', numberMsisdn, link);
+				}
+			}
+		}
 	}
 });

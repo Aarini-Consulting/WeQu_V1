@@ -84,13 +84,43 @@ Meteor.methods({
       });
     })
 
-    //experimental function for wetime app
-    // Meteor.call('update.selected.group',groupId);
+    //mark last updated group as selected
+    Meteor.call('update.selected.group',groupId);
 
     return true;
   },
-  'createGroupWeTime' : function (groupName,arr_emails, arr_numbers) {
+  'createGroupWeTime' : function (groupName,arr_emails, arr_numbers, language="en") {
     var now = new Date();
+
+    var groupNameCheckOwn = Group.findOne({groupName : groupName, creatorId:this.userId});
+
+    var groupNameCheckOthers = Group.findOne({groupName : groupName, creatorId:{'$ne':this.userId}});
+
+    if(groupNameCheckOwn){
+      throw (new Meteor.Error(`group_name_"${groupName}"_already_exist`)); 
+    }
+
+    if(groupNameCheckOthers){
+      throw (new Meteor.Error("group_name_already_claimed_by_other_CMC")); 
+    }
+
+    if(!Array.isArray(arr_emails)){
+      throw (new Meteor.Error("invalid_parameter_emails_not_array"));
+    }
+
+    var numberofPlayer = 0;
+
+    if(Array.isArray(arr_emails) && arr_emails.length > 0){
+      numberofPlayer+=arr_emails.length;
+    }
+
+    if(Array.isArray(arr_numbers) && arr_numbers.length > 0){
+      numberofPlayer+=arr_numbers.length;
+    }
+
+    if(numberofPlayer < 2){
+      throw (new Meteor.Error("need_at_least_2_players"));
+    }
 
     if(!Array.isArray(arr_emails)){
       throw (new Meteor.Error("invalid_parameter_emails_not_array"));
@@ -99,7 +129,6 @@ Meteor.methods({
     if(!Array.isArray(arr_numbers)){
       throw (new Meteor.Error("invalid_parameter_numbers_not_array"));
     }
-
 
     //create user in db as necessary
     Meteor.call('genGroupUserUpFront',  arr_emails, arr_numbers, undefined);
@@ -123,13 +152,11 @@ Meteor.methods({
      throw (new Meteor.Error("group_creation_failed")); 
     }
 
-    Meteor.call('update.selected.group',groupId);
-
     var groupCreator = Meteor.users.findOne(Meteor.userId());
 
     var group = Group.findOne(groupId);
 
-    var subject = `[WeTime] Group Creation`;
+    var subject = `[WeQ] Group Creation`;
 
     var emailData = {
         'creatorEmail': groupCreator.emails[0].address,
@@ -143,35 +170,33 @@ Meteor.methods({
 
     Meteor.call('sendEmail', "contact@weq.io", subject, body);
 
-    if(arr_emails && arr_emails.length > 0){
-      for(i=0;i<arr_emails.length;i++){
-        var link = `group-invitation/${arr_emails[i]}/${groupId}`
-    
-        var subject = `[WeTime] Invitation to join the group "${groupName}"` ;
-        var message = `Please join the group by clicking the invitation link ${link}`
-    
-        var emailData = {
-          'creatorEmail': groupCreator.emails[0].address,
-          'link': Meteor.absoluteUrl(link),
-          'groupName': groupName
-        };
-    
-        let body = SSR.render('GroupInviteHtmlEmail', emailData);
-        // console.log("sending mail to: "+ d.email);
-        Meteor.call('sendEmail', arr_emails[i], subject, body, function (err, result) {
-          if(err){ return err};
-        });
-      }  
-    }
-    
     //create user's self rank feedback
     users.forEach(function(user, index, _arr) {
-      Meteor.call( 'generate.self.rank', user._id, groupId, (error, result)=>{
-        if(error){
-          console.log(error);
-        }
-      });
+      Meteor.call( 'generate.self.rank', user._id, groupId);
     });
+
+    data.forEach((d)=>{
+      var link = `group-invitation/${d.email}/${groupId}`
+  
+      var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
+      var message = `Please join the group by clicking the invitation link ${link}`
+  
+      var emailData = {
+        'creatorEmail': groupCreator.emails[0].address,
+        'link': Meteor.absoluteUrl(link),
+        'groupName': groupName
+      };
+  
+      let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
+      
+      // console.log("sending mail to: "+ d.email);
+      Meteor.call('sendEmail', d.email, subject, body, function (err, result) {
+        if(err){ return err};
+      });
+    })
+
+    //mark last updated group as selected
+    Meteor.call('update.selected.group',groupId);
 
     return true;
   },
