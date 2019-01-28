@@ -50,6 +50,15 @@ class InviteGroup extends React.Component {
             copyStateData.push({email:groupUser.emails[0].address});
           }
         });
+
+        var language;
+
+        if(nextProps.group && nextProps.group.groupLanguage){
+          language = nextProps.group.groupLanguage;
+        }else{
+          language = i18n.getLocale().split("-")[0];
+        }
+
         this.setState({
           info:undefined,
           groupName: nextProps.group.groupName,
@@ -57,6 +66,7 @@ class InviteGroup extends React.Component {
           newInviteDatas:[],
           inviteDeleted:[],
           modifiedByUser: false,
+          selectedEmailLanguage:language,
         });
       }
     }

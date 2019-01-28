@@ -27,14 +27,17 @@ GroupSchema = new SimpleSchema({
       label: "self rank Completed",
       optional: true
     },
-
+    "groupLanguage":{
+      type: String,
+      label: "group language",
+      optional: true
+    },
     "typeformGraph":{
       type: [Object],
       label: "typeformGraph",
       blackbox:true,
       optional: true
     },
-
     "creatorId": {
         type: String,
         label: "creator",
@@ -45,7 +48,6 @@ GroupSchema = new SimpleSchema({
             } 
         }
     },
-
     "createdAt": {
       type: Date,
       label: "Date group created",
@@ -66,8 +68,6 @@ GroupSchema = new SimpleSchema({
         }
       }
     },
-
-
 })
 
 Group.attachSchema(GroupSchema);
