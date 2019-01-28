@@ -2881,6 +2881,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .tabs.w-tabs{
   width:100%;
+  height: 100%;
   flex-grow: 1;
   overflow: auto;
 }
@@ -2939,6 +2940,19 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-bottom: 1px solid #fd9a3e;
 }
 
+.tap.presentation{
+  color:#fd9a3e;
+}
+
+.tap.presentation.w--current {
+  background-color: #fd9a3e;
+  color:#fff;
+}
+
+.tap-underline.presentation {
+  border-bottom: 1px solid #fd9a3e;
+}
+
 .tap.card{
   color:#05a5d5;
 }
@@ -2951,6 +2965,20 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .tap-underline.card {
   border-bottom: 1px solid #05a5d5;
 }
+
+.tap.quiz{
+  color:#05a5d5;
+}
+
+.tap.quiz.w--current {
+  background-color: #05a5d5;
+  color:#fff;
+}
+
+.tap-underline.quiz {
+  border-bottom: 1px solid #05a5d5;
+}
+
 
 .tap.report{
   color:#fc808c;

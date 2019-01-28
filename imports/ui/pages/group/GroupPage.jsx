@@ -15,6 +15,8 @@ import GroupReportPage from './GroupReportPage';
 import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
 
 import i18n from 'meteor/universe:i18n';
+import GroupPresentation from './GroupPresentation';
+import GroupQuiz from './GroupQuiz';
 
 const T = i18n.createComponent();
 
@@ -23,6 +25,7 @@ class GroupPage extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
+        selectedGroupLanguage:i18n.getLocale().split("-")[0],
         showInviteGroup:false,
         showConfirm:false,
         showConfirmStart:false,
@@ -35,6 +38,17 @@ class GroupPage extends React.Component {
       }
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.group && nextProps.group.groupLanguage){
+      language = nextProps.group.groupLanguage;
+    }else{
+      language = i18n.getLocale().split("-")[0];
+    }
+
+    this.setState({
+      selectedGroupLanguage:language,
+    });
+  }
 
   showInviteGroup(bool){
     this.setState({
@@ -458,6 +472,10 @@ class GroupPage extends React.Component {
       if(this.state.currentTab == "edit"){
         tabContent = (<InviteGroup isEdit={true} group={this.props.group}/>);
       }
+      else if(this.state.currentTab == "presentation"){
+        tabContent = 
+        (<GroupPresentation language={this.state.selectedGroupLanguage}/>);
+      }
       else if(this.state.currentTab == "survey"){
         tabContent = 
         (<div className="tap-content-wrapper">
@@ -475,6 +493,10 @@ class GroupPage extends React.Component {
             </div>
           }
         </div>);
+      }
+      else if(this.state.currentTab == "quiz"){
+        tabContent = 
+        (<GroupQuiz language={this.state.selectedGroupLanguage}/>);
       }
       else if(this.state.currentTab == "report"){
         tabContent = 
@@ -513,6 +535,10 @@ class GroupPage extends React.Component {
                 onClick={this.toggleTabs.bind(this,"edit")}>
                   <div>Manage group</div>
                 </a>
+                <a className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"presentation")}>
+                  <div>Present</div>
+                </a>
                 <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"survey")}>
                   <div>View survey</div>
@@ -520,6 +546,10 @@ class GroupPage extends React.Component {
                 <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"card")}>
                   <div>Prepare cards</div>
+                </a>
+                <a className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
+                onClick={this.toggleTabs.bind(this,"quiz")}>
+                  <div>Do Quiz</div>
                 </a>
                 <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                 onClick={this.toggleTabs.bind(this,"report")}>

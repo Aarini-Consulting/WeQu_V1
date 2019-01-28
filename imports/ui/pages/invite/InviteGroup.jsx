@@ -25,7 +25,7 @@ class InviteGroup extends React.Component {
       super(props);
       this.state={
         languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"},{name:"Français",code:"fr"}],
-        selectedEmailLanguage:i18n.getLocale().split("-")[0],
+        selectedGroupLanguage:i18n.getLocale().split("-")[0],
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
@@ -66,16 +66,23 @@ class InviteGroup extends React.Component {
           newInviteDatas:[],
           inviteDeleted:[],
           modifiedByUser: false,
-          selectedEmailLanguage:language,
+          selectedGroupLanguage:language,
         });
       }
     }
   }
 
-  handleChangeEmailLang(event) {
+  handleChangeGroupLang(event) {
+    if(event.target.value && this.state.selectedGroupLanguage != event.target.value){
+      if(!this.state.modifiedByUser){
+        this.setState({
+          modifiedByUser: true
+        });
+      }
+    }
     this.setState(
         { 
-            selectedEmailLanguage: event.target.value,
+            selectedGroupLanguage: event.target.value,
         }
     );
 }
@@ -113,7 +120,7 @@ class InviteGroup extends React.Component {
 
       resend.map( (resend) => this.resendInvite(resend.email));
       
-      Meteor.call('updateGroup', this.props.group, this.state.selectedEmailLanguage, inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('updateGroup', this.props.group, this.state.selectedGroupLanguage, inviteDatas, emailsArray , (err, res) => {
           if(err)
           {
             console.log(err);
@@ -175,7 +182,7 @@ class InviteGroup extends React.Component {
         inviteStatus: 'sending',
       });
   
-      Meteor.call('createGroup', groupName, this.state.selectedEmailLanguage, this.state.inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('createGroup', groupName, this.state.selectedGroupLanguage, this.state.inviteDatas, emailsArray , (err, res) => {
         if(res){
           this.setState({
               inviteStatus: 'sent',
@@ -321,7 +328,7 @@ class InviteGroup extends React.Component {
 
     resendInvite(email){
       if(this.props.group){
-        Meteor.call('resend.group.invite', this.props.group._id, this.state.selectedEmailLanguage, email , (err, res) => {
+        Meteor.call('resend.group.invite', this.props.group._id, this.state.selectedGroupLanguage, email , (err, res) => {
           if(err){
             this.setState({
               resendFailed: this.state.resendFailed + 1,
@@ -534,9 +541,9 @@ class InviteGroup extends React.Component {
 
                   {!(this.props.group && this.props.group.isFinished) &&
                     <div>
-                      <div className="groupformtext">Invite email language:</div>
+                      <div className="groupformtext">Group language:</div>
                       <select className="w-select w-inline-block pdf-download-lang-select" name="language"
-                      value={this.state.selectedEmailLanguage} onChange={this.handleChangeEmailLang.bind(this)}>
+                      value={this.state.selectedGroupLanguage} onChange={this.handleChangeGroupLang.bind(this)}>
                           {this.renderLanguageList()}
                       </select>
                       <br/>
@@ -610,6 +617,8 @@ class InviteGroup extends React.Component {
                     newInviteDatas={this.state.newInviteDatas}
                     inviteResend={this.state.inviteResend}
                     groupName={this.props.group.groupName}
+                    groupLanguage={this.props.group.groupLanguage}
+                    groupLanguageNew={this.state.selectedGroupLanguage}
                     newName={this.state.groupName}
                     unsaved={this.state.unsaved}
                     onCancel={() => {
