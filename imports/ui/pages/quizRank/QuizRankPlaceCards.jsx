@@ -121,9 +121,6 @@ class QuizRankPlaceCards extends React.Component {
                     <div className="rate-content">
                         {this.renderCards()}
                     </div>
-                    <div className="w-block cursor-pointer">
-                        <Link to="/" className="font-rate f-bttn w-inline-block noselect">{i18n.getTranslation("weq.quizRankPlaceCard.ButtonDone")}</Link>
-                    </div>
                     </section>
                 </div>
             );

@@ -316,22 +316,6 @@ Meteor.methods({
             'firstSwipe': rankFirstSwipe,
             }
         });
-
-
-        var checkNotComplete = FeedbackRank.findOne(
-            {
-                groupId:groupCheck._id,
-                $or : [ {"isSelected":false}, 
-                        {"rank":{$exists: false}}
-                    ],
-            }
-        );
-
-        if(!checkNotComplete){
-            Group.update({"_id":groupId},
-            {'$set':{"isFinished":true}
-            });	
-        }
     },
 
     'start.game': function(groupId) {
@@ -371,6 +355,42 @@ Meteor.methods({
         
                 Group.update({_id:groupId}, 
                     {$set : { "isActive": true }});
+
+            }else{
+                throw (new Meteor.Error("not_all_invitees_finished_survey")); 
+            }
+            
+        }else{
+            throw (new Meteor.Error("game_already_started_or_finished")); 
+        }
+    },
+
+    'end.game': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.isActive && !groupCheck.isFinished){
+            if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+
+                var checkNotComplete = FeedbackRank.findOne(
+                    {
+                        groupId:groupCheck._id,
+                        $or : [ {"isSelected":false}, 
+                                {"rank":{$exists: false}}
+                            ],
+                    }
+                );
+        
+                if(!checkNotComplete){
+                    Group.update({"_id":groupId},
+                    {'$set':{"isFinished":true}
+                    });	
+                }else{
+                    throw (new Meteor.Error("not_all_invitees_finished_survey")); 
+                }
 
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 

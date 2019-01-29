@@ -437,10 +437,23 @@ class GroupPage extends React.Component {
 
       return (
         <div>
+          {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
+            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
+          }
+          {(this.props.group && this.props.group.isFinished) 
+            ?
+            <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+              Game Finished
+            </a>
+            :this.props.group.isActive &&
+            <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
+              Game Started
+            </a>
+          }
           {skills}
           <br/>
           <br/>
-          <div className="div-block-right">
+            <div className="div-block-right">
               <div className="w-inline-block survey-graph-footer">
                 <div className="font-matric-refresh">
                   {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
@@ -456,12 +469,11 @@ class GroupPage extends React.Component {
                   <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
                     Refresh
                   </div>
-                }
-                
+                }  
               </div>
-            </div>
+          </div>
         </div>
-        );
+      );
     }
   }
 
@@ -516,19 +528,6 @@ class GroupPage extends React.Component {
                 <div className="fontreleway font-invite-title white w-clearfix">
                 {this.props.group.groupName}
                 </div>
-                {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-                  <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
-                }
-                {(this.props.group && this.props.group.isFinished) 
-                  ?
-                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                    Game Finished
-                  </a>
-                  :this.props.group.isActive &&
-                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                    Game Started
-                  </a>
-                }
               </div>
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                 <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}

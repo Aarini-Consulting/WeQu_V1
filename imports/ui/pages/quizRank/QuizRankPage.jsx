@@ -8,7 +8,6 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 import QuizRankSelf from './QuizRankSelf';
-import QuizRankOther from './QuizRankOther';
 import QuizRankWait from './QuizRankWait';
 
 import Typeform from '/imports/ui/pages/survey/Typeform';
@@ -18,6 +17,7 @@ import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import QuizRankFinished from './QuizRankFinished';
 
 class QuizRankPage extends React.Component {
     constructor(props){
@@ -46,16 +46,19 @@ class QuizRankPage extends React.Component {
                 if(this.props.surveyCompleted || this.state.surveyCompleted){
                     if(this.props.group.isActive){
                         if(this.props.selfRankCompleted){
-                            if(this.props.group.isFinished){
-                                return(
-                                    <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
-                                )
-                            }else{
+                            if(this.props.feedbackRankIncomplete){
                                 return(
                                     <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
                                 )
+                            }else if(this.props.group.isFinished){
+                                return(
+                                    <QuizRankFinished/>
+                                )
+                            }else{
+                                return(
+                                    <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
+                                )
                             }
-                            
                         }else{
                             return (
                                 <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
@@ -102,6 +105,7 @@ export default withTracker((props) => {
     var currentUser;
     var surveyCompleted;
     var selfRankCompleted;
+    var feedbackRankIncomplete;
     var isGroupMember;
 
     if(props.user && props.user.profile.selfRank){
@@ -125,11 +129,32 @@ export default withTracker((props) => {
 
         if(handleGroup.ready() && currentUser){
             group = Group.findOne({_id:props.match.params.gid});
-            var userId = currentUser._id;
-            isGroupMember = group && group.userIds && group.userIds.indexOf(userId) > -1;
-            surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
-            selfRankCompleted = group.userIdsSelfRankCompleted && group.userIdsSelfRankCompleted.indexOf(userId) > -1;
-            dataReady = true;
+
+            var handleFeedbackRank = Meteor.subscribe('feedbackRank',
+            {groupId:group._id},
+            {
+                onError: function (error) {
+                        console.log(error);
+                }
+            });
+
+            if(handleFeedbackRank.ready()){
+                var userId = currentUser._id;
+                isGroupMember = group && group.userIds && group.userIds.indexOf(userId) > -1;
+                surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
+                selfRankCompleted = group.userIdsSelfRankCompleted && group.userIdsSelfRankCompleted.indexOf(userId) > -1;
+
+                feedbackRankIncomplete = FeedbackRank.findOne(
+                    {
+                        groupId:group._id,
+                        $or : [ {"isSelected":false}, 
+                                {"rank":{$exists: false}}
+                            ],
+                    }
+                );
+
+                dataReady = true;
+            }
         }
     }else{
         dataReady = true;
@@ -140,6 +165,7 @@ export default withTracker((props) => {
       currentUser:currentUser,
       surveyCompleted:surveyCompleted,
       selfRankCompleted:selfRankCompleted,
+      feedbackRankIncomplete:feedbackRankIncomplete,
       isGroupMember:isGroupMember,
       dataReady:dataReady,
   };

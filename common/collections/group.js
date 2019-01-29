@@ -48,6 +48,11 @@ GroupSchema = new SimpleSchema({
             } 
         }
     },
+    "currentGroupQuizId":{
+      type: String,
+      label: "group language",
+      optional: true
+    },
     "createdAt": {
       type: Date,
       label: "Date group created",
