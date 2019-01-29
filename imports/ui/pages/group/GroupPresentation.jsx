@@ -20,8 +20,8 @@ export default class GroupPresentation extends React.Component {
             {/* <iframe src={url}
             style={{width:100+"%", height:100+"%"}}></iframe> */}
 
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSI1SlYg41R5ayfZqDU7x3CuhKz0cHov4aaHULG24KRz7t5NAikFq41CJEsiizQijpjA4JdMfPMPmU5/embed?start=false&loop=false&delayms=3000" frameborder="0" 
-        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style={{width:100+"%", height:100+"%"}}>
+        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSI1SlYg41R5ayfZqDU7x3CuhKz0cHov4aaHULG24KRz7t5NAikFq41CJEsiizQijpjA4JdMfPMPmU5/embed?start=false&loop=false&delayms=3000" frameBorder="0" 
+        allowFullScreen="true" style={{width:100+"%", height:100+"%"}}>
         </iframe>
         </div>
     );

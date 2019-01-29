@@ -3861,6 +3861,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width: 100%;
   margin: 6px 0;
   overflow: auto;
+  text-align: center;
 }
 
 .rate-box-container{
@@ -4150,6 +4151,25 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background-color: #26244b;
   color: #fff;
 }
+
+.group-quiz-wrapper {
+  display: flex;
+  width:100%;
+  height:100%;
+  flex-direction: row;
+}
+
+.group-quiz-sidebar {
+  flex-basis: 15%;
+  overflow: auto;
+}
+
+.group-quiz-content {
+  flex-grow: 1;
+}
+
+
+
 
 @media (max-width: 991px) {
   /*.sectionname {

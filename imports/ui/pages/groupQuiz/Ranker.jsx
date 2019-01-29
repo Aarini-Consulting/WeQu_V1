@@ -7,10 +7,13 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
 import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
+import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
@@ -33,7 +36,7 @@ const SortableList = SortableContainer(({items, disabled}) => {
   );
 });
 
-class QuizRankOther extends React.Component {
+export default class Ranker extends React.Component {
     constructor(props){
         super(props);
         var timer = undefined;
@@ -44,23 +47,42 @@ class QuizRankOther extends React.Component {
             firstSwipe:undefined,
             savingData:false,
             quizOver:false,
+            showInfo:false
           };
+    }
+
+    componentDidMount(){
+        if(this.props.rankItems){
+            this.setState({
+                items: this.props.rankItems,
+            },()=>{
+                if(this.state.items.length > 0 && this.props.withTimer){
+                    this.setTimer(true);
+                }
+            });
+        }else{
+            this.setState({
+                firstSwipe:undefined,
+                items:[],
+            });
+            this.setTimer(false);
+        }
     }
 
     componentWillReceiveProps(nextProps){
         if(!this.props.dataReady && nextProps.dataReady){
-            if(nextProps.feedbackRank && nextProps.feedbackRank.rankItems){
+            if(nextProps.rankItems){
                 this.setState({
-                    items: nextProps.feedbackRank.rankItems[0],
-                    firstSwipe:undefined,
-                    savingData:false
+                    items: nextProps.rankItems,
                 },()=>{
-                    this.setTimer(true);
+                    if(items.length > 0 && nextProps.withTimer){
+                        this.setTimer(true);
+                    }
                 });
             }else{
                 this.setState({
                     firstSwipe:undefined,
-                    items:[]
+                    items:[],
                 });
                 this.setTimer(false);
             }
@@ -86,16 +108,15 @@ class QuizRankOther extends React.Component {
             this.state.items.forEach((el,index,array) => {
                 rankObject[el]=(array.length - index)
             });
-
-            Meteor.call( 'save.others.rank', this.props.feedbackRank.to, this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
-                if(error){
-                    console.log(error)
-                }else{
-                    this.quizFinished();
-                }
-            })
+            this.quizFinished();
+            // Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
+            //     if(error){
+            //         console.log(error)
+            //     }else{
+            //         this.quizFinished();
+            //     }
+            // });
         });
-        
     }
 
     quizFinished(){
@@ -121,7 +142,7 @@ class QuizRankOther extends React.Component {
     tick(){
         // This function is called every 1000 ms. It updates the 
         // elapsed counter. Calling setState causes the component to be re-rendered
-        if(this.state.elapsed <= 60000){
+        if(this.state.elapsed <= this.props.timerDuration){
              this.setState({elapsed: new Date() - this.state.start});
         }
         else{
@@ -141,31 +162,29 @@ class QuizRankOther extends React.Component {
     };
     
     render() {
-        if(this.props.dataReady && !this.state.savingData){
+        if(!this.state.savingData){
             return (
                     <section className="ranker-container fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
-                            {this.props.quizUser && this.props.quizUser.profile &&
-                                this.props.quizUser.profile.firstName +" "+ this.props.quizUser.profile.lastName
+                            {this.props.currentUser && this.props.currentUser.profile &&
+                                this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
                             }
                         </div>
                         <div className="div-time-100">
                             <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                         </div>
                         <div className="rate-content">
-                            <div className="font-rate font-name-header f-white">{i18n.getTranslation("weq.rankOther.Instruction")}</div>
+                            {/* <div className="font-rate font-name-header f-white">Describe yourself</div>
+                            <div className="font-rate font-name-header f-white">Sort the following qualities from top (more true) to bottom (less true)</div>
+                            <div className="font-rate font-name-header f-white">You have 60 seconds</div> */}
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
-                        
+                            
                             <div className="w-block cursor-pointer">
                                 <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                                        {this.props.users
-                                        ?i18n.getTranslation("weq.rankOther.ButtonNext")
-                                        :i18n.getTranslation("weq.rankOther.ButtonDone")
-                                        }
+                                    {i18n.getTranslation(`weq.rankSelf.ButtonDone`)}
                                 </div>
                             </div>
                         </div>
-                        
                     </section>
             );
             
@@ -177,67 +196,7 @@ class QuizRankOther extends React.Component {
     }
 }
 
-export default withTracker((props) => {
-    var dataReady;
-    var group;
-    var quizUser;
-    var currentUser;
-    var users;
-    var groupId;
-    var feedbackRank;
-
-    if(props.user && props.user.profile.selfRank){
-        groupId = props.user.profile.selfRank;
-        currentUser = props.user;
-    }else if(props.group){
-        groupId = props.group._id;
-        currentUser = Meteor.user();
-    }
-
-
-
-    var handleGroup = Meteor.subscribe('group',{_id:groupId},{}, {
-        onError: function (error) {
-              console.log(error);
-        }
-    });
-
-    
-
-    if(handleGroup.ready()){
-        group = Group.findOne({_id:groupId});
-        var handleFeedbackRank = Meteor.subscribe('feedbackRank',
-        {groupId:groupId,
-        from:Meteor.userId(),
-        to:props.feedbackRank.to},
-        {}, {
-            onError: function (error) {
-                    console.log(error);
-            }
-        });
-
-        if(handleFeedbackRank.ready()){
-            if(group){
-                feedbackRank = FeedbackRank.findOne({
-                    groupId:groupId,
-                    from:Meteor.userId(),
-                    to:props.feedbackRank.to});
-            }
-
-            quizUser = Meteor.users.findOne(
-                {_id:feedbackRank.to}
-            );
-
-            currentUser = Meteor.user();
-            dataReady = true;
-        }
-    }
-  return {
-      quizUser:quizUser,
-      users:users,
-      group:group,
-      feedbackRank:feedbackRank,
-      currentUser:currentUser,
-      dataReady:dataReady,
+Ranker.defaultProps = {
+    timerDuration: 60000,
+    withTimer: false
   };
-})(QuizRankOther);

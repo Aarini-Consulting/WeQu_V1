@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
