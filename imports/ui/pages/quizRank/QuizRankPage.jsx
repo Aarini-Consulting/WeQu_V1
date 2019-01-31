@@ -18,6 +18,7 @@ const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 import QuizRankFinished from './QuizRankFinished';
+import GroupQuizClientPage from '/imports/ui/pages/groupQuizClient/GroupQuizClientPage';
 
 class QuizRankPage extends React.Component {
     constructor(props){
@@ -54,7 +55,12 @@ class QuizRankPage extends React.Component {
                                 return(
                                     <QuizRankFinished/>
                                 )
-                            }else{
+                            }else if(this.props.group.currentGroupQuizId){
+                                return(
+                                    <GroupQuizClientPage group={this.props.group}/>
+                                )
+                            }
+                            else{
                                 return(
                                     <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
                                 )
