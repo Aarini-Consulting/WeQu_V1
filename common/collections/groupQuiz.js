@@ -1,19 +1,29 @@
 GroupQuiz = new Mongo.Collection("groupQuiz");
 
 GroupQuizSchema = new SimpleSchema({
-    "groupId":{
-      type: String,
-      label: "group id"
-    },
-    "type":{
+    "component":{
         type: String,
-        label: "groupName"
+        label: "quiz type"
     },
-    "results":{
-        type: [Object],
-        label: "group quiz result",
-        blackbox:true,
-        optional: true
+    "question":{
+      type: String,
+      label: "question",
+      optional: true
+    },
+    "answerOptions":{
+      type: [String],
+      label: "quiz answer options",
+      optional: true
+    },
+    "rankItems":{
+      type: [String],
+      label: "quiz rank items",
+      optional: true
+    },
+    "rankItemsLoadExternalField":{
+      type: String,
+      label: "get rankItems from outside this collection",
+      optional: true
     },
     "createdAt": {
       type: Date,

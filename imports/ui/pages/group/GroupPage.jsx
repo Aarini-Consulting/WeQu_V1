@@ -16,7 +16,7 @@ import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
 
 import i18n from 'meteor/universe:i18n';
 import GroupPresentation from './GroupPresentation';
-import GroupQuiz from './GroupQuiz';
+import GroupQuizPage from './GroupQuizPage';
 
 const T = i18n.createComponent();
 
@@ -508,7 +508,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "quiz"){
         tabContent = 
-        (<GroupQuiz language={this.state.selectedGroupLanguage}/>);
+        (<GroupQuizPage groupId={this.props.match.params.id} language={this.state.selectedGroupLanguage}/>);
       }
       else if(this.state.currentTab == "report"){
         tabContent = 

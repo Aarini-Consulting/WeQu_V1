@@ -1,20 +1,23 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 import Ranker from '/imports/ui/pages/groupQuiz/Ranker';
 import MultipleChoice from '/imports/ui/pages/groupQuiz/MultipleChoice';
 import OpenQuestion from '/imports/ui/pages/groupQuiz/OpenQuestion';
 import StarRating from '/imports/ui/pages/groupQuiz/StarRating';
+import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
 
-var defaultQuizList=[
-  {component:"MultipleChoice", question:"How often do you get compliment?", answerOptions:["one","two","three","four"] },
-  {component:"Ranker", question:"rank this stuff", rankItems:["one","two","three"] },
-  {component:"Ranker", question:"rank this stuff as well", rankItems:["I","II","III","IV"] }
-]
+// var defaultQuizList=[
+//   {component:"MultipleChoice", question:"How often do you get compliment?", answerOptions:["one","two","three","four"] },
+//   {component:"Ranker", question:"rank this stuff", rankItems:["one","two","three"] },
+//   {component:"Ranker", question:"rank this stuff as well", rankItems:["I","II","III","IV"] }
+// ]
 
-var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRating":StarRating};
+var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRating":StarRating,"StarRatingMultiple":StarRatingMultiple};
 
-export default class GroupQuiz extends React.Component {
+class GroupQuizPage extends React.Component {
   constructor(props) {
     super(props);
     this.state={
@@ -32,6 +35,9 @@ export default class GroupQuiz extends React.Component {
 
   quizSelect(quiz){
     if(!this.state.loading){
+      //manually add group id here
+      //group id is needed in one of the ranker that uses group member's name
+      quiz.groupId=this.props.groupId;
       if(this.state.selectedQuiz){
         //if quiz already selected, remove it first before selecting a new one via callback
         this.setState({
@@ -55,7 +61,7 @@ export default class GroupQuiz extends React.Component {
   }
 
   renderQuestionListSideBar(){
-    return defaultQuizList.map((quiz, index) => {
+    return this.props.groupQuizList.map((quiz, index) => {
       return(
         <div key={`groupQuiz-sidebar-${index}`} onClick={this.quizSelect.bind(this,quiz)}>
           {index}
@@ -72,11 +78,11 @@ export default class GroupQuiz extends React.Component {
 
     var groupQuizContent;
     
-    if(this.state.loading){
+    if(this.state.loading || !this.props.dataReady){
       return(
         <Loading/>
       )
-    }else{
+    }else if(this.props.groupQuizList && this.props.groupQuizList.length > 0){
       if(SelectedComponent){
         if(this.state.launchSelectedQuiz){
           groupQuizContent = 
@@ -109,8 +115,53 @@ export default class GroupQuiz extends React.Component {
               {groupQuizContent}
             </div>
         </div>
-    );
+      );
+    }else{
+      return (
+        <div className="tap-content-wrapper">
+            <div className="group-quiz-wrapper">
+              no group quiz found
+            </div>
+        </div>
+      );
     }
     
   }
 }
+
+export default withTracker((props) => {
+  var dataReady;
+  var groupQuizList=[];
+  var handleGroup = Meteor.subscribe('group',{_id : props.groupId},{}, {
+    onError: function (error) {
+          console.log(error);
+      }
+  });
+
+  if(handleGroup.ready()){
+    var group = Group.findOne({_id : props.groupId});
+    if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
+      var handleGroupQuiz = Meteor.subscribe('groupQuiz',
+      {
+        "_id" : {$in:group.groupQuizIdList}
+      },{}, {
+        onError: function (error) {
+              console.log(error);
+          }
+      });
+
+      if(handleGroupQuiz.ready()){
+        groupQuizList=GroupQuiz.find({_id : {$in:group.groupQuizIdList}}).fetch();
+
+        dataReady = true;
+      }
+    }else{
+      dataReady = true;
+    }
+  }
+  return {
+      groupQuizList:groupQuizList,
+      dataReady:dataReady
+  };
+})(GroupQuizPage);
+

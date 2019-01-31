@@ -16,7 +16,7 @@ export default class GroupPresentation extends React.Component {
     }
 
     return (
-        <div className="tap-content-wrapper">
+        <div className="tap-content-wrapper presentation">
             {/* <iframe src={url}
             style={{width:100+"%", height:100+"%"}}></iframe> */}
 

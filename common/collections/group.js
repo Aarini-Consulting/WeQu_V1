@@ -48,6 +48,11 @@ GroupSchema = new SimpleSchema({
             } 
         }
     },
+    "groupQuizIdList":{
+      type: [String],
+      label: "group quiz ids",
+      optional: true
+    },
     "currentGroupQuizId":{
       type: String,
       label: "group language",

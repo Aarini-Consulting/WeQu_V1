@@ -22,7 +22,7 @@ const SortableItem = SortableElement(({value, disabled}) =>
             <div className="rate-line"></div>
             <div className="rate-line"></div>
         </div>
-        <div className={"font-rate-quality noselect"}>{i18n.getTranslation(`weq.rankItem.${value.toString()}`)}</div>
+        <div className={"font-rate-quality noselect"}>{value.toString()}</div>
     </div>
 );
 
@@ -36,7 +36,7 @@ const SortableList = SortableContainer(({items, disabled}) => {
   );
 });
 
-export default class Ranker extends React.Component {
+class Ranker extends React.Component {
     constructor(props){
         super(props);
         var timer = undefined;
@@ -75,7 +75,7 @@ export default class Ranker extends React.Component {
                 this.setState({
                     items: nextProps.rankItems,
                 },()=>{
-                    if(items.length > 0 && nextProps.withTimer){
+                    if(this.state.items.length > 0 && nextProps.withTimer){
                         this.setTimer(true);
                     }
                 });
@@ -162,17 +162,19 @@ export default class Ranker extends React.Component {
     };
     
     render() {
-        if(!this.state.savingData){
+        if(!this.state.savingData && this.props.dataReady){
             return (
                     <section className="ranker-container fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
-                            {this.props.currentUser && this.props.currentUser.profile &&
-                                this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
+                            {this.props.group && this.props.group.groupName &&
+                                this.props.group.groupName
                             }
                         </div>
-                        <div className="div-time-100">
-                            <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
-                        </div>
+                        {this.props.withTimer &&
+                            <div className="div-time-100">
+                                <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
+                            </div>
+                        }
                         <div className="rate-content">
                             {/* <div className="font-rate font-name-header f-white">Describe yourself</div>
                             <div className="font-rate font-name-header f-white">Sort the following qualities from top (more true) to bottom (less true)</div>
@@ -200,3 +202,67 @@ Ranker.defaultProps = {
     timerDuration: 60000,
     withTimer: false
   };
+
+export default withTracker((props) => {
+    var dataReady;
+    var group;
+    var rankItems=props.rankItems;
+    var handleGroup = Meteor.subscribe('group',{_id : props.groupId},{}, {
+        onError: function (error) {
+                console.log(error);
+            }
+    });
+
+    if(handleGroup.ready()){
+        group = Group.findOne({_id : props.groupId});
+
+        if(props.rankItemsLoadExternalField && props.rankItemsLoadExternalField == "userFullName"){
+            if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
+                var handleUsers = Meteor.subscribe('users',
+                    {_id:
+                    {$in:group.userIds}
+                    }, 
+                    {}, {
+                    onError: function (error) {
+                            console.log(error);
+                        }
+                });
+                if(handleUsers.ready()){
+                    var users = Meteor.users.find(
+                        {
+                            "_id" : {$in:group.userIds}
+                        }
+                        ).fetch();
+                    
+                    if(users && users.length > 0){
+                        rankItems = users.map((user)=>{
+                            var firstName = user && user.profile && user.profile.firstName;
+                            if(!firstName){
+                                firstName = "";
+                            }
+                            var lastName = user && user.profile && user.profile.lastName;
+
+                            if(!lastName){
+                                lastName = "";
+                            }
+                            return (firstName + " " + lastName);
+                        });
+                    }
+                    else{
+                        rankItems = [];
+                    }
+                    dataReady = true;
+                }
+            }else{
+                dataReady = true;
+            }
+        }else{
+            dataReady = true;
+        }
+    }
+    return {
+        group:group,
+        rankItems:rankItems,
+        dataReady:dataReady
+    };
+})(Ranker);

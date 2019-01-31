@@ -3003,6 +3003,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-align: left;
 }
 
+.tap-content-wrapper.presentation{
+  padding:0
+}
+
 .tap-content{
   display: -webkit-box;
   display: -webkit-flex;
@@ -3881,6 +3885,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-radius: 3px;
   background-color: #fff;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .09);
+}
+
+.rate-box.selected {
+  background-color: #d4d0d0;
 }
 
 .rate-box:active {
