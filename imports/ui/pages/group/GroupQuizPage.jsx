@@ -57,6 +57,13 @@ class GroupQuizPage extends React.Component {
           launchSelectedQuiz:false
         });
       }
+
+      Meteor.call('set.group.quiz', this.props.groupId , quiz._id,
+        (err, result) => {
+          if(err){
+            console.log(err);
+          }
+      });
     }
   }
 
