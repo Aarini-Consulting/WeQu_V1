@@ -32,8 +32,7 @@ class GroupPage extends React.Component {
         showReopenConfirm:false,
         showInfo:false,
         showMatrixInfoPanel:undefined,
-        showPresentation:false,
-        presentationClickCount:0,
+        presentationFrameLoaded:false,
         sending:false,
         currentTab:"edit",
         gettingTypeformResult:false
@@ -58,19 +57,13 @@ class GroupPage extends React.Component {
     });
   }
 
+  frameIsLoaded(){
+    this.setState({
+        presentationFrameLoaded:true
+    });
+  }
+
   toggleTabs(tabName){
-    if(tabName == "presentation"){
-      var clickCount = this.state.presentationClickCount;
-      this.setState({
-        showPresentation:true,
-        presentationClickCount:clickCount+1
-      });
-    }else{
-      this.setState({
-        showPresentation:false,
-      });
-    }
-    
     if(this.state.currentTab != tabName){
       this.setState({
         currentTab:tabName,
@@ -521,7 +514,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "quiz"){
         tabContent = 
-        (<GroupQuizPage groupId={this.props.match.params.id} language={this.state.selectedGroupLanguage}/>);
+        (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
       else if(this.state.currentTab == "report"){
         tabContent = 
@@ -568,12 +561,12 @@ class GroupPage extends React.Component {
                   <div>Download report</div>
                 </a>
               </div>
-              <div className="tabs w-tabs"style={{display:this.state.showPresentation?"none":"block"}}>
+              <div className="tabs w-tabs"style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
                   {tabContent}
               </div>
-              {this.state.presentationClickCount > 0 &&
-                <div className="tabs w-tabs" style={{display:this.state.showPresentation?"block":"none"}}>
-                  <GroupPresentation language={this.state.selectedGroupLanguage} group={this.props.group}/>
+              {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
+                <div className="tabs w-tabs" style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
+                  <GroupPresentation language={this.state.selectedGroupLanguage} group={this.props.group} frameIsLoaded={this.frameIsLoaded.bind(this)}/>
                 </div>
               }
               

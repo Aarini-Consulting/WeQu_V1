@@ -22,14 +22,14 @@ class GroupQuizPage extends React.Component {
     super(props);
     this.state={
       selectedQuiz:undefined,
-      launchSelectedQuiz:false,
+      getQuizResult:false,
       loading:false
     }
   }
 
-  launchSelectedQuiz(){
+  getQuizResult(){
     this.setState({
-      launchSelectedQuiz:true
+      getQuizResult:true
     });
   }
 
@@ -37,13 +37,13 @@ class GroupQuizPage extends React.Component {
     if(!this.state.loading){
       //manually add group id here
       //group id is needed in one of the ranker that uses group member's name
-      quiz.groupId=this.props.groupId;
+      quiz.groupId=this.props.group._id;
       if(this.state.selectedQuiz){
         //if quiz already selected, remove it first before selecting a new one via callback
         this.setState({
           loading:true,
           selectedQuiz:undefined,
-          launchSelectedQuiz:false
+          getQuizResult:false
         },()=>{
           this.setState({
             selectedQuiz:quiz,
@@ -54,11 +54,11 @@ class GroupQuizPage extends React.Component {
         //no quiz selected so just go ahead and add one
         this.setState({
           selectedQuiz:quiz,
-          launchSelectedQuiz:false
+          getQuizResult:false
         });
       }
 
-      Meteor.call('set.group.quiz', this.props.groupId , quiz._id,
+      Meteor.call('set.group.quiz', this.props.group._id , quiz._id,
         (err, result) => {
           if(err){
             console.log(err);
@@ -78,6 +78,14 @@ class GroupQuizPage extends React.Component {
   }
 
   render() {
+    var readySurvey;
+    if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.length == this.props.group.userIds.length){
+      readySurvey = true;
+    }
+    var started = this.props.group.isActive;
+
+    var cardPlacement = this.props.cardPlacements.length == this.props.group.userIds.length;
+
     var SelectedComponent;
     if(this.state.selectedQuiz && this.state.selectedQuiz.component){
       SelectedComponent = components[this.state.selectedQuiz.component];
@@ -89,48 +97,55 @@ class GroupQuizPage extends React.Component {
       return(
         <Loading/>
       )
-    }else if(this.props.groupQuizList && this.props.groupQuizList.length > 0){
-      if(SelectedComponent){
-        if(this.state.launchSelectedQuiz){
-          groupQuizContent = 
-          <div className="group-quiz-content">
-            <SelectedComponent {...this.state.selectedQuiz}/>
-          </div>
+    }else if(readySurvey && started && cardPlacement){
+      if(this.props.groupQuizList && this.props.groupQuizList.length > 0){
+        if(SelectedComponent){
+          if(this.state.getQuizResult){
+            groupQuizContent = 
+            <div className="group-quiz-content">
+              <h1>quiz result</h1>
+            </div>
+          }else{
+            groupQuizContent = 
+            <div className="group-quiz-content">
+              <GroupQuizCmcLanding question={this.state.selectedQuiz.question} getQuizResult={this.getQuizResult.bind(this)}/>
+            </div> 
+          }
         }else{
           groupQuizContent = 
           <div className="group-quiz-content">
-            <GroupQuizCmcLanding question={this.state.selectedQuiz.question} launchQuiz={this.launchSelectedQuiz.bind(this)}/>
-          </div> 
+          {this.state.selectedQuiz
+            ?
+            "component not found"
+            :
+            "group quiz welcome"
+          }
+          </div>
         }
-      }else{
-        groupQuizContent = 
-        <div className="group-quiz-content">
-        {this.state.selectedQuiz
-          ?
-          "component not found"
-          :
-          "group quiz welcome"
-        }
-        </div>
-      }
-      return (
-        <div className="tap-content-wrapper">
-            <div className="group-quiz-wrapper">
-              <div className="group-quiz-sidebar">
-                {this.renderQuestionListSideBar()}
+        return (
+          <div className="tap-content-wrapper">
+              <div className="group-quiz-wrapper">
+                <div className="group-quiz-sidebar">
+                  {this.renderQuestionListSideBar()}
+                </div>
+                {groupQuizContent}
               </div>
-              {groupQuizContent}
-            </div>
-        </div>
-      );
-    }else{
-      return (
-        <div className="tap-content-wrapper">
-            <div className="group-quiz-wrapper">
-              no group quiz found
-            </div>
-        </div>
-      );
+          </div>
+        );
+      }else{
+        return (
+          <div className="tap-content-wrapper">
+              <div className="group-quiz-wrapper">
+                no group quiz found
+              </div>
+          </div>
+        );
+      }
+    }
+    else{
+      return(
+        <h1>You are not ready to start the quiz yet</h1>
+      )
     }
     
   }
@@ -139,32 +154,25 @@ class GroupQuizPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var groupQuizList=[];
-  var handleGroup = Meteor.subscribe('group',{_id : props.groupId},{}, {
-    onError: function (error) {
-          console.log(error);
-      }
-  });
 
-  if(handleGroup.ready()){
-    var group = Group.findOne({_id : props.groupId});
-    if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
-      var handleGroupQuiz = Meteor.subscribe('groupQuiz',
-      {
-        "_id" : {$in:group.groupQuizIdList}
-      },{}, {
-        onError: function (error) {
-              console.log(error);
-          }
-      });
+  var group = props.group;
+  if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
+    var handleGroupQuiz = Meteor.subscribe('groupQuiz',
+    {
+      "_id" : {$in:group.groupQuizIdList}
+    },{}, {
+      onError: function (error) {
+            console.log(error);
+        }
+    });
 
-      if(handleGroupQuiz.ready()){
-        groupQuizList=GroupQuiz.find({_id : {$in:group.groupQuizIdList}}).fetch();
+    if(handleGroupQuiz.ready()){
+      groupQuizList=GroupQuiz.find({_id : {$in:group.groupQuizIdList}}).fetch();
 
-        dataReady = true;
-      }
-    }else{
       dataReady = true;
     }
+  }else{
+    dataReady = true;
   }
   return {
       groupQuizList:groupQuizList,

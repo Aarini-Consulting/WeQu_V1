@@ -16,17 +16,13 @@ class GroupQuizClientPage extends React.Component {
   render() {
     if(this.props.dataReady){
         if(this.props.groupQuiz){
-            var quizData = trhis.props.groupQuiz;
+            var quizData = this.props.groupQuiz;
             quizData.groupId=this.props.group._id;
 
             var SelectedComponent = components[quizData.component];
 
             return (
-                <div className="fillHeight">
-                    <section className="section summary fontreleway weq-bg">
-                    <SelectedComponent {...quizData}/>
-                    </section>
-                </div>
+                <SelectedComponent {...quizData}/>
             );
         }else{
             return (
@@ -39,7 +35,9 @@ class GroupQuizClientPage extends React.Component {
         }
         
     }else{
-        <Loading/>
+        return(
+            <Loading/>
+        )
     }
     
   }
@@ -60,7 +58,7 @@ export default withTracker((props) => {
         });
   
         if(handleGroupQuiz.ready()){
-          groupQuiz=GroupQuiz.findOne({_id : {$in:group.currentGroupQuizId}});
+          groupQuiz=GroupQuiz.findOne({_id : group.currentGroupQuizId});
   
           dataReady = true;
         }

@@ -6,8 +6,8 @@ export default class GroupQuizCmcLanding extends React.Component {
         <section className="alignCenter">
             {this.props.question}
             <div className="w-block cursor-pointer">
-                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.props.launchQuiz}>
-                    {"Let's go"}
+                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.props.getQuizResult}>
+                    {"Get Result"}
                 </div>
             </div>
         </section>

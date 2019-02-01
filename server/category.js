@@ -429,10 +429,6 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(!groupCheck.isFinished){
-            throw (new Meteor.Error("group_not_finished")); 
-        }
-
         if(!groupCheck.isActive){
             throw (new Meteor.Error("group_not_started")); 
         }
@@ -536,10 +532,6 @@ Meteor.methods({
 
         if(!groupCheck){
             throw (new Meteor.Error("unknown_group")); 
-        }
-
-        if(!groupCheck.isFinished){
-            throw (new Meteor.Error("group_not_finished")); 
         }
 
         if(!groupCheck.isActive){
