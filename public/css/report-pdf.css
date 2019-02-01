@@ -898,3 +898,9 @@
   color: #4c9f5b;
 }
 
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
