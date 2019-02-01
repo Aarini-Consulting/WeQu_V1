@@ -29,16 +29,5 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("group_not_found")); 
         }
-    },
-    'set.group.presentation.slideNr'(groupId, slideNr) {
-        var groupCheck = Group.findOne({_id:groupId,creatorId:this.userId});
-
-        if(groupCheck){
-            Group.update({"_id":groupId},
-            {'$set':{currentGroupPresentationSlide:slideNr}
-            });
-        }else{
-            throw (new Meteor.Error("group_not_found")); 
-        }
-    },
+    }
 })

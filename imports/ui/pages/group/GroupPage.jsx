@@ -32,6 +32,8 @@ class GroupPage extends React.Component {
         showReopenConfirm:false,
         showInfo:false,
         showMatrixInfoPanel:undefined,
+        showPresentation:false,
+        presentationClickCount:0,
         sending:false,
         currentTab:"edit",
         gettingTypeformResult:false
@@ -57,6 +59,18 @@ class GroupPage extends React.Component {
   }
 
   toggleTabs(tabName){
+    if(tabName == "presentation"){
+      var clickCount = this.state.presentationClickCount;
+      this.setState({
+        showPresentation:true,
+        presentationClickCount:clickCount+1
+      });
+    }else{
+      this.setState({
+        showPresentation:false,
+      });
+    }
+    
     if(this.state.currentTab != tabName){
       this.setState({
         currentTab:tabName,
@@ -485,8 +499,7 @@ class GroupPage extends React.Component {
         tabContent = (<InviteGroup isEdit={true} group={this.props.group}/>);
       }
       else if(this.state.currentTab == "presentation"){
-        tabContent = 
-        (<GroupPresentation language={this.state.selectedGroupLanguage}/>);
+        tabContent = "";
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
@@ -555,9 +568,15 @@ class GroupPage extends React.Component {
                   <div>Download report</div>
                 </a>
               </div>
-              <div className="tabs w-tabs">
+              <div className="tabs w-tabs"style={{display:this.state.showPresentation?"none":"block"}}>
                   {tabContent}
               </div>
+              {this.state.presentationClickCount > 0 &&
+                <div className="tabs w-tabs" style={{display:this.state.showPresentation?"block":"none"}}>
+                  <GroupPresentation language={this.state.selectedGroupLanguage} group={this.props.group}/>
+                </div>
+              }
+              
 
               {this.state.showInfo &&
                 <SweetAlert
