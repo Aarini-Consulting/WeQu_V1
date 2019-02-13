@@ -35,7 +35,7 @@ class LandingSurveyComponent extends React.Component {
     if(this.props.dataReady){
         if(this.props.group && !(this.props.surveyCompleted || this.state.surveyCompleted)){
           return(
-            <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)}/>
+            <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)} groupLanguage={this.props.group.groupLanguage}/>
           )
         }else{
           return(

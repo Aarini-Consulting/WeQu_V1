@@ -80,7 +80,7 @@ class QuizRankPage extends React.Component {
                     
                 }else{
                     return(
-                        <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)}/>
+                        <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)} groupLanguage={this.props.group.groupLanguage}/>
                     )
                 }
             }else{

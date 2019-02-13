@@ -12,8 +12,6 @@ import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
 
-import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
-
 import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();

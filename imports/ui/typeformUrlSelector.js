@@ -3,14 +3,20 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-export function typeformUrlSelector(type){
-    //get locale and language code
-    var locale = i18n.getLocale();
-    var languageCode = locale.split("-")[0];
+export function typeformUrlSelector(type, groupLanguage){
+    var languageCode;
 
     var formIdTest = Meteor.settings.public.typeformTestFormCode;
     var formIdProd =  Meteor.settings.public.typeformProdFormCode;
 
+    if(groupLanguage){
+        languageCode = groupLanguage;
+    }else{
+        //get locale and language code
+        var locale = i18n.getLocale();
+        languageCode = locale.split("-")[0];
+    }
+    
     if(type=="url"){
         var typeformUrl;
 
@@ -35,7 +41,7 @@ export function typeformUrlSelector(type){
                 typeformUrl = `https://oh2.typeform.com/to/${formIdTest["en"]}`;
             }
         }
-        console.log(typeformUrl);
+
         return typeformUrl;
     }else{
         var formId;
