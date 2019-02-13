@@ -67,11 +67,28 @@ class GroupQuizPage extends React.Component {
     }
   }
 
-  renderQuestionListSideBar(){
+  renderQuestionList(){
     return this.props.groupQuizList.map((quiz, index) => {
+      var className = "group-quiz-list-item cursor-pointer";
+
+      if(this.state.selectedQuiz && this.state.selectedQuiz._id == quiz._id){
+        className = "group-quiz-list-item selected noselect"
+      }
       return(
-        <div key={`groupQuiz-sidebar-${index}`} onClick={this.quizSelect.bind(this,quiz)}>
-          {index}
+        <div className={className} 
+        key={`groupQuiz-list-${index}`} onClick={this.quizSelect.bind(this,quiz)}>
+          {index+1}
+        </div>
+      );
+    });
+  }
+
+  renderQuestionListPlaceholder(){
+    var dummyQuizList=[1,2,3,4,5,6,7,8,9,10];
+    return dummyQuizList.map((quiz, index) => {
+      return(
+        <div className={`group-quiz-list-item placeholder noselect`} key={`groupQuiz-list-${index}`}>
+            #
         </div>
       );
     });
@@ -118,15 +135,18 @@ class GroupQuizPage extends React.Component {
             ?
             "component not found"
             :
-            "group quiz welcome"
+              <div>
+                <div className="ring"></div>
+                <h1>Select quiz number above</h1>
+              </div>
           }
           </div>
         }
         return (
-          <div className="tap-content-wrapper">
+          <div className="tap-content-wrapper quiz">
               <div className="group-quiz-wrapper">
-                <div className="group-quiz-sidebar">
-                  {this.renderQuestionListSideBar()}
+                <div className="group-quiz-list">
+                  {this.renderQuestionList()}
                 </div>
                 {groupQuizContent}
               </div>
@@ -134,7 +154,7 @@ class GroupQuizPage extends React.Component {
         );
       }else{
         return (
-          <div className="tap-content-wrapper">
+          <div className="tap-content-wrapper quiz">
               <div className="group-quiz-wrapper">
                 no group quiz found
               </div>
@@ -144,7 +164,19 @@ class GroupQuizPage extends React.Component {
     }
     else{
       return(
-        <h1>You are not ready to start the quiz yet</h1>
+        <div className="tap-content-wrapper quiz">
+          <div className="group-quiz-wrapper">
+            <div className="group-quiz-list">
+              {this.renderQuestionListPlaceholder()}
+            </div>
+            <div className="group-quiz-content">
+              <div>
+                <div className="ring"></div>
+                <h1>You are not ready to start the quiz yet</h1>
+              </div>
+            </div>
+          </div>
+        </div>
       )
     }
     

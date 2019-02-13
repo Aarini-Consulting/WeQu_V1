@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
@@ -19,37 +18,10 @@ class MultipleChoice extends React.Component {
   constructor(props){
       super(props);
       this.state = {
-          items:[],
           savingData:false,
           quizOver:false,
           selectedIndex:-1
         };
-  }
-
-  componentDidMount(){
-      if(this.props.answerOptions){
-          this.setState({
-              items: this.props.answerOptions,
-          });
-      }else{
-          this.setState({
-              items:[],
-          });
-      }
-  }
-
-  componentWillReceiveProps(nextProps){
-      if(!this.props.dataReady && nextProps.dataReady){
-          if(nextProps.answerOptions){
-              this.setState({
-                  items: nextProps.answerOptions,
-              });
-          }else{
-              this.setState({
-                  items:[],
-              });
-          }
-      }
   }
 
   stepFinished(){
@@ -144,7 +116,6 @@ class MultipleChoice extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var group;
-  var answerOptions=props.answerOptions;
   var handleGroup = Meteor.subscribe('group',{_id : props.groupId},{}, {
       onError: function (error) {
               console.log(error);
@@ -158,7 +129,6 @@ export default withTracker((props) => {
   }
   return {
       group:group,
-      answerOptions:answerOptions,
       dataReady:dataReady
   };
 })(MultipleChoice);
