@@ -3701,6 +3701,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, .05);
   flex-grow: 1;
   overflow: auto;
+  overflow-y: overlay;
 }
 
 .group-row{
@@ -3732,6 +3733,17 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-family: Raleway, sans-serif;
   font-size: 0.8em;
   word-wrap:break-word;
+}
+
+.group-entry-left.header{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.group-entry-right.header{
+  font-size: 1.2em;
+  font-weight: bold;
+  padding-left:0.25em;
 }
 
 .group-entry-right.s-1 {
@@ -4237,6 +4249,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   justify-content: center;
 }
 
+.flex-column-fill-center{
+  display: flex;
+  width:100%;
+  height:100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
 
 
 
@@ -4396,6 +4416,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
     width:100%;
     text-align: center;
   }
+
+  .group-entry-right.header{
+    padding-left:0.5em;
+  }
+
   .column-3 {
     position: static;
     display: block;

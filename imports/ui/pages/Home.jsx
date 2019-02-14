@@ -64,20 +64,20 @@ class Home extends React.Component {
     render() {
         if(this.props.dataReady){
             var isGameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
-            if(this.props.currentUser && this.props.currentUser.profile  && !this.props.currentUser.profile.pictureUrl){
-                //create random gravatar image and store it in profile
-                var gravatar = init({
-                    divId          : "gravatar",
-                    time           : 200,
-                    randomColor    : false,
-                    pause           :true
-                  });
-                Meteor.call('store.profile.picture',gravatar.toDataURL(), (error, result) => {
-                    if(error){
-                        console.log(error);
-                    }
-                })
-            }
+            // if(this.props.currentUser && this.props.currentUser.profile  && !this.props.currentUser.profile.pictureUrl){
+            //     //create random gravatar image and store it in profile
+            //     var gravatar = init({
+            //         divId          : "gravatar",
+            //         time           : 200,
+            //         randomColor    : false,
+            //         pause           :true
+            //       });
+            //     Meteor.call('store.profile.picture',gravatar.toDataURL(), (error, result) => {
+            //         if(error){
+            //             console.log(error);
+            //         }
+            //     })
+            // }
             if(Roles.userIsInRole( Meteor.userId(), 'admin' )){
                 Session.set( "loggedOut", true);
                 Meteor.logout((error)=>{
@@ -115,7 +115,15 @@ class Home extends React.Component {
                                     }
                                     <div className="ring"></div>
                                     <div className="font-rate rank-separator-top"><T>weq.home.Welcome</T></div>
-                                    <div className="font-rate f-em1"><T>weq.home.GroupSelection</T></div>
+                                    <br/>
+                                    {/* <div className="font-rate f-em1"><T>weq.home.GroupSelection</T></div> */}
+
+                                    <div className="w-block home-group-list-wrapper">
+                                        <div className="group-row">
+                                            <div className="w-inline-block group-entry-left header">Group</div>
+                                            <div className="w-inline-block group-entry-right header">Session Status</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="w-block home-group-list-wrapper">
                                     {this.renderGroups()}

@@ -17,8 +17,9 @@ import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
-import QuizRankFinished from './QuizRankFinished';
 import GroupQuizClientPage from '/imports/ui/pages/groupQuizClient/GroupQuizClientPage';
+import SessionFinished from './SessionFinished';
+import SessionWait from './SessionWait';
 
 class QuizRankPage extends React.Component {
     constructor(props){
@@ -46,29 +47,33 @@ class QuizRankPage extends React.Component {
             if(this.props.isGroupMember){
                 if(this.props.surveyCompleted || this.state.surveyCompleted){
                     if(this.props.group.isActive){
-                        if(this.props.selfRankCompleted){
-                            if(this.props.feedbackRankIncomplete){
-                                return(
-                                    <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
-                                )
-                            }else if(this.props.group.isFinished){
-                                return(
-                                    <QuizRankFinished/>
-                                )
-                            }else if(this.props.group.currentGroupQuizId){
-                                return(
-                                    <GroupQuizClientPage group={this.props.group}/>
-                                )
-                            }
-                            else{
-                                return(
-                                    <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
-                                )
+                        if(this.props.group.isFinished){
+                            return(
+                                <SessionFinished/>
+                            )
+                        }else if(this.props.group.currentGroupQuizId){
+                            return(
+                                <GroupQuizClientPage group={this.props.group}/>
+                            )
+                        }else if(this.props.group.isPlaceCardActive){
+                            if(this.props.selfRankCompleted){
+                                if(this.props.feedbackRankIncomplete){
+                                    return(
+                                        <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
+                                    )
+                                }
+                                else{
+                                    return(
+                                        <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
+                                    )
+                                }
+                            }else{
+                                return (
+                                    <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
+                                );
                             }
                         }else{
-                            return (
-                                <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
-                            );
+                            <SessionWait/>
                         }
                     }else{
                         return(

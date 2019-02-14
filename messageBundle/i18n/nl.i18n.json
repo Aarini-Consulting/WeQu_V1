@@ -43,9 +43,9 @@
         "NoGroupSelection": "Geen groep gevonden",
         "CertifiedCoach": "Je moet een WeQ Certified Master Coach zijn om een nieuwe groep aan te maken",
         "CompletedSession": "Deze sessie is voltooid",
-        "LiveSession": "Deze sesssie is live. Begin nu",
-        "WaitForSession": "Even wachten tot de sessie begint",
-        "JustInvited": "Uitgenodig. Begin nu"
+        "LiveSession": "LIVE",
+        "WaitForSession": "Even geduld aub.",
+        "JustInvited": "Begin nu"
     },
     "inviteGroupPage":{
         "CreateNew":"Create new group",

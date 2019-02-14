@@ -83,7 +83,7 @@ class GroupPage extends React.Component {
   }
 
   startGame(){
-    Meteor.call( 'start.game', this.props.group._id, (error, result)=>{
+    Meteor.call( 'start.game.place.cards', this.props.group._id, (error, result)=>{
       if(error){
         console.log(error)
         var msg;
@@ -182,7 +182,7 @@ class GroupPage extends React.Component {
       if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
         readySurvey = true;
       }
-      var started = this.props.group.isActive;
+      var started = this.props.group.isPlaceCardActive;
 
       var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
         return cp.userId == user._id;
@@ -259,7 +259,6 @@ class GroupPage extends React.Component {
       if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
         readySurvey = true;
       }
-      var started = this.props.group.isActive;
 
       var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
         return cp.userId == user._id;
@@ -283,10 +282,7 @@ class GroupPage extends React.Component {
             </div>
           </div>
           <div className="show-cards">
-            {readySurvey && started
-            ?
-              <div className="bttn-next-card">session in progress</div>
-            :
+            {
               readySurvey 
               ? 
                 <div className="bttn-next-card">Ready!</div>
@@ -442,19 +438,6 @@ class GroupPage extends React.Component {
 
       return (
         <div>
-          {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
-          }
-          {(this.props.group && this.props.group.isFinished) 
-            ?
-            <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-              Game Finished
-            </a>
-            :this.props.group.isActive &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-              Game Started
-            </a>
-          }
           {skills}
           <br/>
           <br/>
@@ -499,10 +482,28 @@ class GroupPage extends React.Component {
         </div>);
       }
       else if(this.state.currentTab == "card"){
+        var readySurvey;
+        if(this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+          readySurvey = true;
+        }
+
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
+          {this.props.group && !this.props.group.isFinished && readySurvey &&
+            (
+              this.props.group.isPlaceCardActive 
+              ?
+              "In Progress"
+              :
+              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+            )
+          }
+          {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && readySurvey &&
+            <a id="submitSend" className="invitebttn w-button w-inline-block">stop</a>
+          }
+
           {this.renderUsers()}
-          {!this.props.group.isActive &&
+          {!this.props.group.isPlaceCardActive &&
             <div className="tap-content w-clearfix">
               <div className="tap-left card">
               </div>
@@ -526,7 +527,7 @@ class GroupPage extends React.Component {
                 <div className="tabs-menu-inner-wrapper">
                   <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
-                    <div>Manage group</div>
+                    <div>Manage session</div>
                   </a>
                   <a className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>

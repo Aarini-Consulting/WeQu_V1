@@ -318,7 +318,7 @@ Meteor.methods({
         });
     },
 
-    'start.game': function(groupId) {
+    'start.game.place.cards': function(groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
@@ -333,28 +333,41 @@ Meteor.methods({
             throw (new Meteor.Error("too_much_group_member")); 
         }
 
-        if(!groupCheck.isActive && !groupCheck.isFinished){
+        if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
-                var users = Meteor.users.find(
-                    {$and: [{"_id":{$in:groupCheck.userIds}},
-                    {"_id":{$in:groupCheck.userIdsSurveyed}}]},
-                    {sort: { "profile.firstName": 1 }}
-                ).fetch();
-        
-                if(users.length < 1){
-                    throw new Meteor.Error("no_group_member_found");
+                var feedbackRankCheck = FeedbackRank.findOne({
+                    'groupId': groupCheck._id,
+                    
+                });
+                
+                //feedbackrank does not exist for this group
+                if(!feedbackRankCheck){
+                    //generate rank
+                    var users = Meteor.users.find(
+                        {$and: [{"_id":{$in:groupCheck.userIds}},
+                        {"_id":{$in:groupCheck.userIdsSurveyed}}]},
+                        {sort: { "profile.firstName": 1 }}
+                    ).fetch();
+            
+                    if(users.length < 1){
+                        throw new Meteor.Error("no_group_member_found");
+                    }
+            
+                    users.forEach(function(user, index, _arr) {
+                        Meteor.call( 'generate.others.rank', user._id, groupCheck._id, (error, result)=>{
+                          if(error){
+                            console.log(error);
+                          }
+                        });
+                    });
                 }
         
-                users.forEach(function(user, index, _arr) {
-                    Meteor.call( 'generate.others.rank', user._id, groupCheck._id, (error, result)=>{
-                      if(error){
-                        console.log(error);
-                      }
-                    });
-                });
-        
-                Group.update({_id:groupId}, 
-                    {$set : { "isActive": true }});
+                Group.update({_id:groupId},
+                    {
+                        $set : {"isActive": true,"isPlaceCardActive": true},
+                        $unset : { "currentGroupQuizId": "" }
+                    } 
+                );
 
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 

@@ -34,8 +34,26 @@ Meteor.methods({
     //get users from email
     var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
     var userIds = users.map( (user) => user._id);
+
+    //get group quiz list
+    var groupQuiz = GroupQuiz.find().fetch();
+
+    var groupQuizIdList = []
+
+    if(groupQuiz.length >= 1){
+      groupQuizIdList = groupQuiz.map((gq)=>{return gq._id});
+    }
+
     //create group
-    let groupId = Group.insert({groupName: groupName,  userIds:userIds, groupLanguage:language, creatorId: Meteor.userId(),isActive:false, isFinished:false});
+    let groupId = Group.insert({
+      groupName: groupName,  
+      userIds:userIds,
+      groupLanguage:language,
+      creatorId: Meteor.userId(),
+      isActive:false,
+      isFinished:false,
+      groupQuizIdList:groupQuizIdList
+    });
 
     if(!groupId){
      throw (new Meteor.Error("group_creation_failed")); 

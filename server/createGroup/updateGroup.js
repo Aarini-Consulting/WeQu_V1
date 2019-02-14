@@ -177,8 +177,6 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("group doesn't exist")); 
         }
-
-        return false;
     }
 });
 

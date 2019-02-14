@@ -16,7 +16,12 @@ GroupSchema = new SimpleSchema({
     },
     "isActive":{
       type: Boolean,
-      label: "session active"
+      label: "session active",
+    },
+    "isPlaceCardActive":{
+      type: Boolean,
+      label: "place card session active",
+      optional: true
     },
     "isFinished":{
       type: Boolean,

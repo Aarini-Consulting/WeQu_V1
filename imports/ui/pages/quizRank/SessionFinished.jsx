@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import i18n from 'meteor/universe:i18n';
 
-export default class QuizRankFinished extends React.Component {
+export default class SessionFinished extends React.Component {
   render() {
     return (
         <div className="fillHeight">

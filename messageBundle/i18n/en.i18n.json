@@ -42,10 +42,10 @@
         "GroupSelection": "Select a group below.",
         "NoGroupSelection": "No group found.",
         "CertifiedCoach": "You must be a WeQ Certified Master Coach to create a new group.",
-        "CompletedSession": "This session is completed.",
-        "LiveSession": "This session is live. Get started now.",
-        "WaitForSession": "Please wait until session starts.",
-        "JustInvited": "Just invited. Get started now."
+        "CompletedSession": "Completed",
+        "LiveSession": "LIVE",
+        "WaitForSession": "Please wait",
+        "JustInvited": "Get started"
     },
     "inviteGroupPage":{
         "CreateNew":"Create new group",

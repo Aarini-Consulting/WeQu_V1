@@ -21,7 +21,7 @@ Meteor.methods({
         if(groupCheck){
             if(groupQuizCheck){
                 Group.update({"_id":groupId},
-                {'$set':{currentGroupQuizId:groupQuizId}
+                {'$set':{"isActive":true, "currentGroupQuizId":groupQuizId, "isPlaceCardActive":false}
                 });
             }else{
                 throw (new Meteor.Error("group_quiz_not_found")); 

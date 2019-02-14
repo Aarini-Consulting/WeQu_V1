@@ -9,6 +9,8 @@ import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
 // var defaultQuizList=[
 //   {component:"MultipleChoice", question:"How often do you get compliment?", answerOptions:["one","two","three","four"] },
 //   {component:"Ranker", question:"rank this stuff", rankItems:["one","two","three"] },
@@ -21,9 +23,37 @@ class GroupQuizPage extends React.Component {
   constructor(props) {
     super(props);
     this.state={
+      showConfirmStart:false,
+      selectedQuizOnConfirm:undefined,
       selectedQuiz:undefined,
       getQuizResult:false,
       loading:false
+    }
+  }
+
+  componentDidMount(){
+    this.setDefaultSelected(this.props);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setDefaultSelected(nextProps);
+  }
+
+  setDefaultSelected(props){
+    var currentGroupQuizId = props.group.currentGroupQuizId;
+    if(currentGroupQuizId){
+      if((this.state.selectedQuiz && this.state.selectedQuiz._id != currentGroupQuizId || !this.state.selectedQuiz)){
+
+        var newSelectedQuiz = props.groupQuizList.find((gq)=>{
+          return gq._id == currentGroupQuizId;
+        })
+
+        if(newSelectedQuiz){
+          this.setState({
+            selectedQuiz:newSelectedQuiz
+          });
+        }
+      }
     }
   }
 
@@ -33,38 +63,52 @@ class GroupQuizPage extends React.Component {
     });
   }
 
-  quizSelect(quiz){
+  quizSelectCheck(quiz){
     if(!this.state.loading){
-      //manually add group id here
-      //group id is needed in one of the ranker that uses group member's name
-      quiz.groupId=this.props.group._id;
-      if(this.state.selectedQuiz){
-        //if quiz already selected, remove it first before selecting a new one via callback
+      if(!this.props.group.currentGroupQuizId){
         this.setState({
-          loading:true,
-          selectedQuiz:undefined,
-          getQuizResult:false
-        },()=>{
-          this.setState({
-            selectedQuiz:quiz,
-            loading:false
-          });
+          showConfirmStart:true,
+          selectedQuizOnConfirm:quiz
         });
       }else{
-        //no quiz selected so just go ahead and add one
+        this.quizSelect(quiz);
+      }
+    }
+  }
+  
+
+  quizSelect(quiz){
+    //manually add group id here
+    //group id is needed in one of the ranker that uses group member's name
+    quiz.groupId=this.props.group._id;
+    if(this.state.selectedQuiz){
+      //if quiz already selected, remove it first before selecting a new one via callback
+      this.setState({
+        loading:true,
+        selectedQuiz:undefined,
+        getQuizResult:false
+      },()=>{
         this.setState({
           selectedQuiz:quiz,
-          getQuizResult:false
+          loading:false,
+          selectedQuizOnConfirm:undefined
         });
-      }
-
-      Meteor.call('set.group.quiz', this.props.group._id , quiz._id,
-        (err, result) => {
-          if(err){
-            console.log(err);
-          }
+      });
+    }else{
+      //no quiz selected so just go ahead and add one
+      this.setState({
+        selectedQuiz:quiz,
+        getQuizResult:false,
+        selectedQuizOnConfirm:undefined
       });
     }
+
+    Meteor.call('set.group.quiz', this.props.group._id , quiz._id,
+      (err, result) => {
+        if(err){
+          console.log(err);
+        }
+    });
   }
 
   renderQuestionList(){
@@ -76,7 +120,7 @@ class GroupQuizPage extends React.Component {
       }
       return(
         <div className={className} 
-        key={`groupQuiz-list-${index}`} onClick={this.quizSelect.bind(this,quiz)}>
+        key={`groupQuiz-list-${index}`} onClick={this.quizSelectCheck.bind(this,quiz)}>
           {index+1}
         </div>
       );
@@ -88,7 +132,7 @@ class GroupQuizPage extends React.Component {
     return dummyQuizList.map((quiz, index) => {
       return(
         <div className={`group-quiz-list-item placeholder noselect`} key={`groupQuiz-list-${index}`}>
-            #
+          #
         </div>
       );
     });
@@ -99,7 +143,6 @@ class GroupQuizPage extends React.Component {
     if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.length == this.props.group.userIds.length){
       readySurvey = true;
     }
-    var started = this.props.group.isActive;
 
     var cardPlacement = this.props.cardPlacements.length == this.props.group.userIds.length;
 
@@ -114,7 +157,7 @@ class GroupQuizPage extends React.Component {
       return(
         <Loading/>
       )
-    }else if(readySurvey && started && cardPlacement){
+    }else if(readySurvey){
       if(this.props.groupQuizList && this.props.groupQuizList.length > 0){
         if(SelectedComponent){
           if(this.state.getQuizResult){
@@ -140,6 +183,21 @@ class GroupQuizPage extends React.Component {
                 <h1>Select quiz number above</h1>
               </div>
           }
+
+          {this.state.showConfirmStart &&
+            <SweetAlert
+            type={"confirm"}
+            message={"Are the participants all present and ready?"}
+            confirmText={"Let's go!"}
+            cancelText={"Cancel"}
+            onCancel={() => {
+                this.setState({ showConfirmStart: false });
+            }}
+            onConfirm={() => {
+              this.setState({ showConfirmStart: false });
+              this.quizSelect(this.state.selectedQuizOnConfirm);
+            }}/>
+          }
           </div>
         }
         return (
@@ -155,9 +213,17 @@ class GroupQuizPage extends React.Component {
       }else{
         return (
           <div className="tap-content-wrapper quiz">
-              <div className="group-quiz-wrapper">
-                no group quiz found
+            <div className="group-quiz-wrapper">
+              <div className="group-quiz-list">
+                {this.renderQuestionListPlaceholder()}
               </div>
+              <div className="group-quiz-content">
+                <div>
+                  <div className="ring"></div>
+                  <h1>no group quiz found, please contact WeQ support</h1>
+                </div>
+              </div>
+            </div>
           </div>
         );
       }
@@ -211,4 +277,3 @@ export default withTracker((props) => {
       dataReady:dataReady
   };
 })(GroupQuizPage);
-
