@@ -3837,6 +3837,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color:#525252;
 }
 
+.font-rate.font-name-header.group-quiz-cmc-screen-question{
+  text-align: left;
+  padding: 1em 1em 0 1em;
+}
+
 .font-rate.font-name-sub-header {
   color:#525252;
   font-size:0.5em;
@@ -3914,6 +3919,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background-color: #d4d0d0;
 }
 
+.rate-box.star {
+  flex-direction:column;
+}
+
+.rate-box.star:active {
+  background-color: #fff;
+}
+
 .rate-hamburger {
   position: relative;
   display: -webkit-box;
@@ -3983,6 +3996,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-weight: 400;
   text-align: left;
   word-wrap:break-word;
+}
+
+.font-rate-quality.star {
+  padding:1em;
 }
 
 .user-name {
@@ -4120,6 +4137,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .div-block-center{
   width:100%;
+  text-align: center;
 }
 
 .div-block-right{
@@ -4257,6 +4275,19 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   justify-content: center;
 }
 
+.group-quiz-cmc-screen {
+  display: flex;
+  width:100%;
+  height:100%;
+  flex-direction: column;
+}
+
+.group-quiz-cmc-screen-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 
 

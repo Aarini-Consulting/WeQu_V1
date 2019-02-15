@@ -53,16 +53,12 @@ class OpenQuestion extends React.Component {
                       this.props.group.groupName
                   }
               </div>
-              {this.props.withTimer &&
-                  <div className="div-time-100">
-                      <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
-                  </div>
-              }
               <div className="rate-content">
                 <form onSubmit={this.stepFinished.bind(this)}>
                   <div className="rate-box-container">
-                    {this.props.question}
-                    <br/>
+                    <div className="font-rate font-name-header f-white">
+                        {this.props.question}
+                    </div>
                     <input className="emailfield w-input" maxLength="256" placeholder="your answer" type="text"
                     required/>
                   </div>

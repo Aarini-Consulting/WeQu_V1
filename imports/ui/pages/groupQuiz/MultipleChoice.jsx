@@ -88,20 +88,18 @@ class MultipleChoice extends React.Component {
                         this.props.group.groupName
                     }
                 </div>
-                {this.props.withTimer &&
-                    <div className="div-time-100">
-                        <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
-                    </div>
-                }
                 <div className="rate-content">
-                    <div className="rate-box-container">
-                      {this.renderAnswerOptions()}
-                    </div>
-                    <div className="w-block cursor-pointer">
-                        <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                            {i18n.getTranslation(`weq.rankSelf.ButtonDone`)}
-                        </div>
-                    </div>
+                  <div className="font-rate font-name-header f-white">
+                    {this.props.question}
+                  </div>
+                  <div className="rate-box-container">
+                    {this.renderAnswerOptions()}
+                  </div>
+                  <div className="w-block cursor-pointer">
+                      <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
+                          {i18n.getTranslation(`weq.rankSelf.ButtonDone`)}
+                      </div>
+                  </div>
                 </div>
             </section>
           );

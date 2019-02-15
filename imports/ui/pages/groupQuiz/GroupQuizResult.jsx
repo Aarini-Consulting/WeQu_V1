@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class GroupQuizCmcLanding extends React.Component {
+export default class GroupQuizResult extends React.Component {
   render() {
     return (
         <div className="group-quiz-cmc-screen">
@@ -15,14 +15,10 @@ export default class GroupQuizCmcLanding extends React.Component {
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center"
                   }}>
-              <h1>1/7</h1>
+              <h1>quiz chart here</h1>
             </div>
-            <div className="div-block-center cursor-pointer">
-              <div className="w-inline-block">
-                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.props.getQuizResult}>
-                  Get Result
-                </div>
-              </div>
+            <div className="font-rate font-name-header">
+              7/7
             </div>
         </div>
     );

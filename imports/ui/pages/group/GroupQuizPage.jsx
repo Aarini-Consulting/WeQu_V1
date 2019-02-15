@@ -10,6 +10,7 @@ import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding
 import Loading from '/imports/ui/pages/loading/Loading';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+import GroupQuizResult from '../groupQuiz/GroupQuizResult';
 
 // var defaultQuizList=[
 //   {component:"MultipleChoice", question:"How often do you get compliment?", answerOptions:["one","two","three","four"] },
@@ -163,7 +164,7 @@ class GroupQuizPage extends React.Component {
           if(this.state.getQuizResult){
             groupQuizContent = 
             <div className="group-quiz-content">
-              <h1>quiz result</h1>
+              <GroupQuizResult question={this.state.selectedQuiz.question}/>
             </div>
           }else{
             groupQuizContent = 

@@ -176,6 +176,9 @@ class Ranker extends React.Component {
                             </div>
                         }
                         <div className="rate-content">
+                            <div className="font-rate font-name-header f-white">
+                                {this.props.question}
+                            </div>
                             {/* <div className="font-rate font-name-header f-white">Describe yourself</div>
                             <div className="font-rate font-name-header f-white">Sort the following qualities from top (more true) to bottom (less true)</div>
                             <div className="font-rate font-name-header f-white">You have 60 seconds</div> */}
