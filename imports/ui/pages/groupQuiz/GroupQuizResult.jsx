@@ -10,7 +10,7 @@ export default class GroupQuizResult extends React.Component {
             <div className="group-quiz-cmc-screen-content" 
               style={{
                   // backgroundImage: "url('/img/radar-bg.png')",
-                  backgroundImage: "url('https://preview.redd.it/ie9xrkymglg21.png?width=960&crop=smart&auto=webp&s=fa0a08e3903c97ef87df8384b8984765c5292e97')",
+                  backgroundImage: "url('https://image.shutterstock.com/image-photo/disloyal-man-walking-his-girlfriend-450w-297886754.jpg')",
                   backgroundSize:"contain",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center"

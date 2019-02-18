@@ -17,13 +17,40 @@ import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 import Star from '/imports/ui/stars/Star';
 
 class StarRatingMultiple extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        ratings:undefined
+      };
+  }
+  stepFinished(){
+    this.setState({
+        savingData:true
+    },()=>{
+        this.props.submitAction(this.state.ratings);
+    });
+  }
+
+  setRating(line, value){
+    var current = this.state.ratings;
+    if(current){
+      current[line] = value;
+    }else{
+      current = {[line]:value};
+    }
+
+    this.setState({
+      ratings: current,
+    });
+  }
+
   renderRateEntry(){
-    return this.props.starItems.map((value, index) => {
+    return this.props.starItems.map((starQuestion, index) => {
       return(
-        <div className="rate-box star w-clearfix noselect" key={`star-rate-${index}-${value}`}>
-          <div className={"font-rate-quality star noselect"}>{value.toString()}</div>
+        <div className="rate-box star w-clearfix noselect" key={`star-rate-${index}-${starQuestion}`}>
+          <div className={"font-rate-quality star noselect"}>{starQuestion.toString()}</div>
           <div className={"font-rate-quality star"}>
-            <Star submitCallback={()=>{}} rating={0} inactive={false}/>
+            <Star submitCallback={(starValue)=>{this.setRating(starQuestion,starValue)}} rating={0} inactive={false}/>
           </div>
         </div>
       );
@@ -46,7 +73,8 @@ class StarRatingMultiple extends React.Component {
               {this.renderRateEntry()}
             </div>
             <div className="w-block cursor-pointer">
-                <input className="font-rate f-bttn w-inline-block noselect" type="submit" defaultValue={i18n.getTranslation(`weq.rankSelf.ButtonDone`)}/>
+                <input className="font-rate f-bttn w-inline-block noselect" type="submit" defaultValue={i18n.getTranslation(`weq.rankSelf.ButtonDone`)} 
+                onClick={this.stepFinished.bind(this)}/>
             </div>
         </div>
       </section>

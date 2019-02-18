@@ -8,38 +8,88 @@ import StarRating from '/imports/ui/pages/groupQuiz/StarRating';
 import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
+import AnswerSubmitted from './AnswerSubmitted';
 
 
 var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRating":StarRating,"StarRatingMultiple":StarRatingMultiple};
 
 class GroupQuizClientPage extends React.Component {
-  render() {
-    if(this.props.dataReady){
-        if(this.props.groupQuiz){
-            var quizData = this.props.groupQuiz;
-            quizData.groupId=this.props.group._id;
-
-            var SelectedComponent = components[quizData.component];
-
-            return (
-                <SelectedComponent {...quizData}/>
-            );
-        }else{
-            return (
-                <div className="fillHeight">
-                    <section className="section summary fontreleway weq-bg">
-                    selected quiz not found
-                    </section>
-                </div>
-            );
-        }
-        
-    }else{
-        return(
-            <Loading/>
-        )
+    constructor(props){
+        super(props);
+        this.state = {
+            groupQuizId:undefined,
+            changingQuiz:false
+        };
     }
-    
+
+    componentDidMount(){
+        if(this.props.dataReady && this.props.groupQuiz){
+            this.setState({ groupQuizId:this.props.groupQuiz._id });
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.dataReady && nextProps.groupQuiz){
+            //ensures that previous component is unmounted by rendering loading screen
+            if(this.state.groupQuizId && nextProps.groupQuiz._id != this.state.groupQuizId){
+                this.setState(
+                    { changingQuiz:true },
+                ()=>{
+                    this.setState({
+                        changingQuiz: false, 
+                        groupQuizId:this.props.groupQuiz._id
+                    });
+                });
+            }else{
+                this.setState({ groupQuizId:nextProps.groupQuiz._id });
+            }
+        }
+    }
+
+    submitAction(data){
+        console.log("submit answer");
+        console.log(data);
+        // Meteor.call( 'set.group.quiz.data', this.props.group._id, this.props.groupQuiz._id, data, (error, result)=>{
+        //     if(error){
+        //         console.log(error)
+        //     }else{
+        //         this.quizFinished();
+        //     }
+        // });
+    }
+
+    render() {
+        if(this.props.dataReady && !this.state.changingQuiz){
+            if(this.props.groupQuiz){
+                if(this.props.groupQuizData){
+                    return (
+                        <AnswerSubmitted/>
+                    );
+                }else{
+                    var groupQuiz = this.props.groupQuiz;
+                    groupQuiz.groupId=this.props.group._id;
+
+                    var SelectedComponent = components[groupQuiz.component];
+
+                    return (
+                        <SelectedComponent submitAction={this.submitAction.bind(this)} {...groupQuiz}/>
+                    );
+                }
+            }else{
+                return (
+                    <div className="fillHeight">
+                        <section className="section summary fontreleway weq-bg">
+                        selected quiz not found
+                        </section>
+                    </div>
+                );
+            }
+            
+        }else{
+            return(
+                <Loading/>
+            )
+        }
   }
 }
 
@@ -47,6 +97,7 @@ export default withTracker((props) => {
     var dataReady;
     var group = props.group;
     var groupQuiz;
+    var groupQuizData;
     if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
         var handleGroupQuiz = Meteor.subscribe('groupQuiz',
         {
@@ -59,8 +110,30 @@ export default withTracker((props) => {
   
         if(handleGroupQuiz.ready()){
           groupQuiz=GroupQuiz.findOne({_id : group.currentGroupQuizId});
-  
-          dataReady = true;
+
+          if(groupQuiz){
+            var handleGroupQuizData = Meteor.subscribe('groupQuizData',
+            {
+              "groupId": group._id,
+              "groupQuizId" : groupQuiz._id,
+              "creatorId": Meteor.userId()
+            },{}, {
+              onError: function (error) {
+                    console.log(error);
+                }
+            });
+
+            if(handleGroupQuizData.ready()){
+                groupQuizData=GroupQuizData.findOne({
+                    "groupId": group._id,
+                    "groupQuizId" : groupQuiz._id,
+                    "creatorId": Meteor.userId()
+                  });
+                dataReady = true;
+            }
+          }else{
+            dataReady = true;
+          }
         }
     }else{
         dataReady = true;

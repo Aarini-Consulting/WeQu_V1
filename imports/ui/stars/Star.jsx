@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import './rating.css'
 
@@ -78,7 +78,7 @@ class Star extends Component {
                 return (
                     <li 
                     className={star.className + " disabled" + (this.state.currentRating >= star.index+1 ? " is-active" : "")}
-                    style={{width:size+"%",paddingBottom:size+"%"}}
+                    style={{width:size+"%",paddingBottom:size/2+"%"}}
                     key={star.index}>
                     </li>
                 );
@@ -88,7 +88,7 @@ class Star extends Component {
                     className={star.className + (this.state.mouseOver >= star.index ? " is-active" 
                         : this.state.currentRating >= star.index+1 ? " is-active" : "")}
                     key={star.index}
-                    style={{width:size+"%",paddingBottom:size+"%"}}
+                    style={{width:size+"%",paddingBottom:size/2+"%"}}
                     onMouseOver={this.starMouseOver.bind(this, star)}
                     onMouseOut={this.starMouseOut.bind(this, star)}
                     onClick={this.starClick.bind(this, star)}>
@@ -116,13 +116,12 @@ Star.propTypes = {
 
 // Specifies the default values for props:
 Star.defaultProps = {
-  maxRating: 10,
+  maxRating: 5,
   inactive:false
 };
 
-export default createContainer(() => {
-
-  return {
-    currentUser: Meteor.user(),
-  };
-}, Star);
+export default withTracker((props) => {
+    return {
+        currentUser: Meteor.user(),
+    };
+  })(Star);

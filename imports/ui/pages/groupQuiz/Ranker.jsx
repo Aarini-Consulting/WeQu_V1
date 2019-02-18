@@ -109,13 +109,7 @@ class Ranker extends React.Component {
                 rankObject[el]=(array.length - index)
             });
             this.quizFinished();
-            // Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
-            //     if(error){
-            //         console.log(error)
-            //     }else{
-            //         this.quizFinished();
-            //     }
-            // });
+            this.props.submitAction(rankObject);
         });
     }
 
@@ -143,7 +137,7 @@ class Ranker extends React.Component {
         // This function is called every 1000 ms. It updates the 
         // elapsed counter. Calling setState causes the component to be re-rendered
         if(this.state.elapsed <= this.props.timerDuration){
-             this.setState({elapsed: new Date() - this.state.start});
+            this.setState({elapsed: new Date() - this.state.start});
         }
         else{
             this.stepFinished();

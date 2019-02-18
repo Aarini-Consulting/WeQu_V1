@@ -18,30 +18,32 @@ class OpenQuestion extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+        value:'',
         savingData:false,
         quizOver:false,
       };
   }
 
-  stepFinished(){
-    this.setState({
-        savingData:true
-    },()=>{
-        this.quizFinished();
-        // Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
-        //     if(error){
-        //         console.log(error)
-        //     }else{
-        //         this.quizFinished();
-        //     }
-        // });
-    });
+  stepFinished(event){
+    event.preventDefault();
+    if(this.state.value != ''){
+        this.setState({
+            savingData:true
+        },()=>{
+            this.quizFinished();
+            this.props.submitAction({answer:this.state.value});
+        });
+    }
   }
 
   quizFinished(){
       this.setState({
           quizOver: true,
       });
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
   }
 
   render() {
@@ -59,7 +61,7 @@ class OpenQuestion extends React.Component {
                     <div className="font-rate font-name-header f-white">
                         {this.props.question}
                     </div>
-                    <input className="emailfield w-input" maxLength="256" placeholder="your answer" type="text"
+                    <input className="emailfield w-input" maxLength="256" placeholder="your answer" type="text" value={this.state.value} onChange={this.handleChange.bind(this)}
                     required/>
                   </div>
                   <div className="w-block cursor-pointer">

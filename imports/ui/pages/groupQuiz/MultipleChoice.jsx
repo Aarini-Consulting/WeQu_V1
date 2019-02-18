@@ -16,27 +16,23 @@ import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 
 class MultipleChoice extends React.Component {
   constructor(props){
-      super(props);
-      this.state = {
-          savingData:false,
-          quizOver:false,
-          selectedIndex:-1
-        };
+    super(props);
+    this.state = {
+      savingData:false,
+      quizOver:false,
+      selectedIndex:-1
+    };
   }
 
   stepFinished(){
+    if(this.state.selectedIndex >= 0){
       this.setState({
-          savingData:true
+        savingData:true
       },()=>{
           this.quizFinished();
-          // Meteor.call( 'save.self.rank', this.props.group._id, rankObject, this.state.firstSwipe, (error, result)=>{
-          //     if(error){
-          //         console.log(error)
-          //     }else{
-          //         this.quizFinished();
-          //     }
-          // });
+          this.props.submitAction({selectedIndex:this.state.selectedIndex});
       });
+    }
   }
 
   quizFinished(){
@@ -54,9 +50,11 @@ class MultipleChoice extends React.Component {
   renderAnswerOptions(){
     return this.props.answerOptions.map((value, index) => {
       var className = "rate-box w-clearfix";
+      var icon =  <i className="far fa-square"></i>;
 
       if(index == this.state.selectedIndex){
-        className = className + " selected";
+        className = className + " mc selected";
+        icon = <i className="fas fa-check-square"></i>
       }
 
       if(this.state.quizOver){
@@ -69,9 +67,7 @@ class MultipleChoice extends React.Component {
         <div className={className} key={`mc-answer-${index}-${value}`}
         onClick={this.answerSelected.bind(this, index)}>
           <div className="rate-hamburger">
-              <div className="rate-line"></div>
-              <div className="rate-line"></div>
-              <div className="rate-line"></div>
+            {icon}
           </div>
           <div className={"font-rate-quality noselect"}>{value.toString()}</div>
         </div>

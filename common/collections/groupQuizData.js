@@ -1,6 +1,6 @@
-GroupQuizResult = new Mongo.Collection("groupQuizResult");
+GroupQuizData = new Mongo.Collection("groupQuizData");
 
-GroupQuizResultSchema = new SimpleSchema({
+GroupQuizDataSchema = new SimpleSchema({
     "groupId":{
       type: String,
       label: "group id"
@@ -9,8 +9,12 @@ GroupQuizResultSchema = new SimpleSchema({
         type: String,
         label: "group quiz id"
     },
+    "creatorId":{
+      type: String,
+      label: "creator id"
+    },
     "results":{
-        type: [Object],
+        type: Object,
         label: "group quiz result",
         blackbox:true,
         optional: true
@@ -37,4 +41,4 @@ GroupQuizResultSchema = new SimpleSchema({
     },
 })
 
-GroupQuizResult.attachSchema(GroupQuizResultSchema);
+GroupQuizData.attachSchema(GroupQuizDataSchema);

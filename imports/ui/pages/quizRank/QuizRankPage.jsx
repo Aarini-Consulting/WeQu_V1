@@ -73,7 +73,9 @@ class QuizRankPage extends React.Component {
                                 );
                             }
                         }else{
-                            <SessionWait/>
+                            return(
+                                <SessionWait/>
+                            )
                         }
                     }else{
                         return(
