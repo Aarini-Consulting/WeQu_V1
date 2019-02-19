@@ -48,7 +48,9 @@ class StarRatingMultiple extends React.Component {
     return this.props.starItems.map((starQuestion, index) => {
       return(
         <div className="rate-box star w-clearfix noselect" key={`star-rate-${index}-${starQuestion}`}>
-          <div className={"font-rate-quality star noselect"}>{starQuestion.toString()}</div>
+          <div className={"font-rate-quality star noselect"}>
+            {i18n.getTranslation(`weq.groupQuizAnswer.${starQuestion.toString()}`)}
+          </div>
           <div className={"font-rate-quality star"}>
             <Star submitCallback={(starValue)=>{this.setRating(starQuestion,starValue)}} rating={0} inactive={false}/>
           </div>
@@ -67,7 +69,7 @@ class StarRatingMultiple extends React.Component {
         </div>
         <div className="rate-content">
             <div className="font-rate font-name-header f-white">
-                {this.props.question}
+              {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
             </div>
             <div className="rate-box-container">
               {this.renderRateEntry()}

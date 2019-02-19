@@ -5,6 +5,11 @@ GroupQuizSchema = new SimpleSchema({
         type: String,
         label: "quiz type"
     },
+    "backgroundUrl":{
+      type: String,
+      label: "background image url",
+      optional: true
+    },
     "question":{
       type: String,
       label: "question",

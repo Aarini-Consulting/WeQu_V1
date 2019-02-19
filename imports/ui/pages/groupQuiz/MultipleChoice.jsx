@@ -69,7 +69,15 @@ class MultipleChoice extends React.Component {
           <div className="rate-hamburger">
             {icon}
           </div>
-          <div className={"font-rate-quality noselect"}>{value.toString()}</div>
+          <div className={"font-rate-quality noselect"}>
+            {this.props.answerOptionsLoadExternalField 
+            ?
+              value.toString()
+            :
+              i18n.getTranslation(`weq.groupQuizAnswer.${value.toString()}`)
+            }
+            
+          </div>
         </div>
       );
     });
@@ -86,7 +94,7 @@ class MultipleChoice extends React.Component {
                 </div>
                 <div className="rate-content">
                   <div className="font-rate font-name-header f-white">
-                    {this.props.question}
+                    {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
                   </div>
                   <div className="rate-box-container">
                     {this.renderAnswerOptions()}
@@ -110,6 +118,7 @@ class MultipleChoice extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var group;
+  var answerOptions=props.answerOptions;
   var handleGroup = Meteor.subscribe('group',{_id : props.groupId},{}, {
       onError: function (error) {
               console.log(error);
@@ -118,11 +127,54 @@ export default withTracker((props) => {
 
   if(handleGroup.ready()){
       group = Group.findOne({_id : props.groupId});
-      dataReady = true;
-      
+
+      if(props.answerOptionsLoadExternalField && props.answerOptionsLoadExternalField == "userFullName"){
+          if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
+              var handleUsers = Meteor.subscribe('users',
+                  {_id:
+                  {$in:group.userIds}
+                  }, 
+                  {}, {
+                  onError: function (error) {
+                          console.log(error);
+                      }
+              });
+              if(handleUsers.ready()){
+                  var users = Meteor.users.find(
+                      {
+                          "_id" : {$in:group.userIds}
+                      }
+                      ).fetch();
+                  
+                  if(users && users.length > 0){
+                      answerOptions = users.map((user)=>{
+                          var firstName = user && user.profile && user.profile.firstName;
+                          if(!firstName){
+                              firstName = "";
+                          }
+                          var lastName = user && user.profile && user.profile.lastName;
+
+                          if(!lastName){
+                              lastName = "";
+                          }
+                          return (firstName + " " + lastName);
+                      });
+                  }
+                  else{
+                      answerOptions = [];
+                  }
+                  dataReady = true;
+              }
+          }else{
+              dataReady = true;
+          }
+      }else{
+          dataReady = true;
+      }
   }
   return {
       group:group,
+      answerOptions:answerOptions,
       dataReady:dataReady
   };
 })(MultipleChoice);

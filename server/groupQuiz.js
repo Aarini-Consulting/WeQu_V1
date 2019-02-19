@@ -37,7 +37,8 @@ Meteor.methods({
     },
 
     'set.group.quiz.data'(groupId, groupQuizId, data) {
-        var groupCheck = Group.findOne({_id:groupId,creatorId:this.userId});
+        // var groupCheck = Group.findOne({_id:groupId,creatorId:this.userId});
+        var groupCheck = Group.findOne({_id:groupId});
         var groupQuizCheck = GroupQuiz.findOne({_id:groupQuizId});
 
         if(groupCheck){

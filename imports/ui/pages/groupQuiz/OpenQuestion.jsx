@@ -59,7 +59,7 @@ class OpenQuestion extends React.Component {
                 <form onSubmit={this.stepFinished.bind(this)}>
                   <div className="rate-box-container">
                     <div className="font-rate font-name-header f-white">
-                        {this.props.question}
+                      {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
                     </div>
                     <input className="emailfield w-input" maxLength="256" placeholder="your answer" type="text" value={this.state.value} onChange={this.handleChange.bind(this)}
                     required/>

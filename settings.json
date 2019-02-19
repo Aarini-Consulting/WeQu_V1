@@ -8,7 +8,7 @@
       "local": "localhost:3000"
     },
     "verifyEmail": true,
-    "supportedLocale":["nl-NL","en-US","fr-FR"],
+    "supportedLocale":["en-US","nl-NL","fr-FR"],
     "typeformTestFormCode":{
       "en":"XurSNo",
       "nl":"lcFJw6",

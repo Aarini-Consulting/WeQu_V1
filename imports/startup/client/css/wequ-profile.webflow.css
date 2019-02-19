@@ -572,6 +572,17 @@
   display: flex;
 }
 
+.game-status{
+  color: #fff;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  margin-left:1em;
+  margin-right:1em;
+}
+
 .invitebttn {
   position: static;
   overflow: visible;
@@ -3856,6 +3867,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-size: 1.2em;
   font-weight: 600;
   text-decoration: none;
+  border-width: 0px;
   border-radius: 500px;
   margin-top:0.5em;
   margin-bottom:0.5em;
@@ -4001,6 +4013,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-weight: 400;
   text-align: left;
   word-wrap:break-word;
+  padding-top:0.5em;
+  padding-bottom:0.5em;
 }
 
 .font-rate-quality.star {
@@ -4292,6 +4306,17 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.group-quiz-cmc-screen-content-text {
+  display:flex;
+  width: 100%;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  font-size:x-large;
+  z-index: 1;
 }
 
 

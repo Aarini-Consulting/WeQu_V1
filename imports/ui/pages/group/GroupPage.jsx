@@ -23,6 +23,7 @@ class GroupPage extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
+        initialLocale:i18n.getLocale(),
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
         showInviteGroup:false,
         showConfirm:false,
@@ -44,9 +45,33 @@ class GroupPage extends React.Component {
       language = i18n.getLocale().split("-")[0];
     }
 
-    this.setState({
-      selectedGroupLanguage:language,
-    });
+    if(language != this.state.selectedGroupLanguage){
+      var supportedLocale = Meteor.settings.public.supportedLocale;
+      var langObj;
+      supportedLocale.forEach((sl)=>{
+        var lang = sl.split("-")[0];
+        if(langObj){
+          langObj[lang] = sl;
+        }else{
+          langObj = {[lang]:sl}
+        }
+      });
+
+      if(langObj[language]){
+        i18n.setLocale(langObj[language]);
+      }
+
+      this.setState({
+        selectedGroupLanguage:language,
+      });
+    }
+  }
+
+  componentWillUnmount(){
+    var currentLocale = i18n.getLocale();
+    if(currentLocale != this.state.initialLocale){
+      i18n.setLocale(this.state.initialLocale);
+    }
   }
 
   showInviteGroup(bool){
@@ -82,7 +107,7 @@ class GroupPage extends React.Component {
     }
   }
 
-  startGame(){
+  startGamePlaceCards(){
     Meteor.call( 'start.game.place.cards', this.props.group._id, (error, result)=>{
       if(error){
         console.log(error)
@@ -95,6 +120,18 @@ class GroupPage extends React.Component {
           msg = error.error;
         }
         
+        this.setState({
+          showInfo: true,
+          showInfoMessage:msg
+        });
+      }
+    });
+  }
+
+  stopGamePlaceCards(){
+    Meteor.call( 'stop.game.place.cards', this.props.group._id, (error, result)=>{
+      if(error){
+        console.log(error);
         this.setState({
           showInfo: true,
           showInfoMessage:msg
@@ -489,18 +526,20 @@ class GroupPage extends React.Component {
 
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
+          <div className="tap-content w-clearfix">
           {this.props.group && !this.props.group.isFinished && readySurvey &&
             (
               this.props.group.isPlaceCardActive 
               ?
-              "In Progress"
+              <div className="w-inline-block game-status">In Progress</div>
               :
               <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
             )
           }
           {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && readySurvey &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block">stop</a>
+            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCards.bind(this)}>stop</a>
           }
+          </div>
 
           {this.renderUsers()}
           {!this.props.group.isPlaceCardActive &&
@@ -581,7 +620,7 @@ class GroupPage extends React.Component {
                 }}
                 onConfirm={() => {
                   this.setState({ showConfirmStart: false });
-                  this.startGame();
+                  this.startGamePlaceCards();
                 }}/>
               }
             </section>

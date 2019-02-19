@@ -28,16 +28,19 @@ class GroupQuizPage extends React.Component {
       selectedQuizOnConfirm:undefined,
       selectedQuiz:undefined,
       getQuizResult:false,
+      audienceResponseCount:0,
       loading:false
     }
   }
 
   componentDidMount(){
     this.setDefaultSelected(this.props);
+    this.calculateAudienceResponseCount(this.props);
   }
 
   componentWillReceiveProps(nextProps){
     this.setDefaultSelected(nextProps);
+    this.calculateAudienceResponseCount(nextProps);
   }
 
   setDefaultSelected(props){
@@ -55,6 +58,21 @@ class GroupQuizPage extends React.Component {
           });
         }
       }
+    }
+  }
+
+  calculateAudienceResponseCount(props){
+    if(this.state.selectedQuiz && props.groupQuizDataList.length > 0){
+      var selectedGroupQuizDataList = props.groupQuizDataList.filter((groupQuizData)=>{
+        return groupQuizData.groupQuizId == this.state.selectedQuiz._id
+      })
+      this.setState({
+        audienceResponseCount:selectedGroupQuizDataList.length
+      });
+    }else{
+      this.setState({
+        audienceResponseCount:0
+      });
     }
   }
 
@@ -145,8 +163,6 @@ class GroupQuizPage extends React.Component {
       readySurvey = true;
     }
 
-    var cardPlacement = this.props.cardPlacements.length == this.props.group.userIds.length;
-
     var SelectedComponent;
     if(this.state.selectedQuiz && this.state.selectedQuiz.component){
       SelectedComponent = components[this.state.selectedQuiz.component];
@@ -164,12 +180,22 @@ class GroupQuizPage extends React.Component {
           if(this.state.getQuizResult){
             groupQuizContent = 
             <div className="group-quiz-content">
-              <GroupQuizResult question={this.state.selectedQuiz.question}/>
+              <GroupQuizResult 
+              question={this.state.selectedQuiz.question} 
+              backgroundUrl={this.state.selectedQuiz.backgroundUrl}
+              audienceResponseCount={this.state.audienceResponseCount}
+              totalParticipant={this.props.group.userIds.length}/>
             </div>
           }else{
             groupQuizContent = 
             <div className="group-quiz-content">
-              <GroupQuizCmcLanding question={this.state.selectedQuiz.question} getQuizResult={this.getQuizResult.bind(this)}/>
+              <GroupQuizCmcLanding
+              question={this.state.selectedQuiz.question} 
+              backgroundUrl={this.state.selectedQuiz.backgroundUrl} 
+              getQuizResult={this.getQuizResult.bind(this)}
+              audienceResponseCount={this.state.audienceResponseCount}
+              totalParticipant={this.props.group.userIds.length}
+              />
             </div> 
           }
         }else{
@@ -253,6 +279,7 @@ class GroupQuizPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var groupQuizList=[];
+  var groupQuizDataList=[]
 
   var group = props.group;
   if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
@@ -268,13 +295,29 @@ export default withTracker((props) => {
     if(handleGroupQuiz.ready()){
       groupQuizList=GroupQuiz.find({_id : {$in:group.groupQuizIdList}}).fetch();
 
-      dataReady = true;
+      var handleGroupQuizData = Meteor.subscribe('groupQuizData',
+      {
+        "groupId": group._id,
+      },{}, {
+        onError: function (error) {
+              console.log(error);
+          }
+      });
+
+      if(handleGroupQuizData.ready()){
+        groupQuizDataList=GroupQuizData.find({
+          "groupId": group._id,
+        }).fetch();
+
+        dataReady = true;
+      }
     }
   }else{
     dataReady = true;
   }
   return {
       groupQuizList:groupQuizList,
+      groupQuizDataList:groupQuizDataList,
       dataReady:dataReady
   };
 })(GroupQuizPage);

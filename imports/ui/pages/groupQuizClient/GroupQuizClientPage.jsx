@@ -8,6 +8,7 @@ import StarRating from '/imports/ui/pages/groupQuiz/StarRating';
 import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
+import Error from '/imports/ui/pages/error/Error';
 import AnswerSubmitted from './AnswerSubmitted';
 
 
@@ -17,6 +18,7 @@ class GroupQuizClientPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            error:false,
             groupQuizId:undefined,
             changingQuiz:false
         };
@@ -47,48 +49,52 @@ class GroupQuizClientPage extends React.Component {
     }
 
     submitAction(data){
-        console.log("submit answer");
-        console.log(data);
-        // Meteor.call( 'set.group.quiz.data', this.props.group._id, this.props.groupQuiz._id, data, (error, result)=>{
-        //     if(error){
-        //         console.log(error)
-        //     }else{
-        //         this.quizFinished();
-        //     }
-        // });
+        Meteor.call( 'set.group.quiz.data', this.props.group._id, this.props.groupQuiz._id, data, (error, result)=>{
+            if(error){
+                this.setState({
+                    error: error
+                });
+            }
+        });
     }
 
     render() {
-        if(this.props.dataReady && !this.state.changingQuiz){
-            if(this.props.groupQuiz){
-                if(this.props.groupQuizData){
-                    return (
-                        <AnswerSubmitted/>
-                    );
+        if(this.state.error){
+            return (
+                <Error/>
+            );
+        }
+        else{
+            if(this.props.dataReady && !this.state.changingQuiz){
+                if(this.props.groupQuiz){
+                    if(this.props.groupQuizData){
+                        return (
+                            <AnswerSubmitted/>
+                        );
+                    }else{
+                        var groupQuiz = this.props.groupQuiz;
+                        groupQuiz.groupId=this.props.group._id;
+    
+                        var SelectedComponent = components[groupQuiz.component];
+    
+                        return (
+                            <SelectedComponent submitAction={this.submitAction.bind(this)} {...groupQuiz}/>
+                        );
+                    }
                 }else{
-                    var groupQuiz = this.props.groupQuiz;
-                    groupQuiz.groupId=this.props.group._id;
-
-                    var SelectedComponent = components[groupQuiz.component];
-
                     return (
-                        <SelectedComponent submitAction={this.submitAction.bind(this)} {...groupQuiz}/>
+                        <div className="fillHeight">
+                            <section className="section summary fontreleway weq-bg">
+                            selected quiz not found
+                            </section>
+                        </div>
                     );
                 }
             }else{
-                return (
-                    <div className="fillHeight">
-                        <section className="section summary fontreleway weq-bg">
-                        selected quiz not found
-                        </section>
-                    </div>
-                );
+                return(
+                    <Loading/>
+                )
             }
-            
-        }else{
-            return(
-                <Loading/>
-            )
         }
   }
 }
@@ -142,6 +148,7 @@ export default withTracker((props) => {
     
   return {
       dataReady:dataReady,
-      groupQuiz:groupQuiz
+      groupQuiz:groupQuiz,
+      groupQuizData:groupQuizData
   };
 })(GroupQuizClientPage);

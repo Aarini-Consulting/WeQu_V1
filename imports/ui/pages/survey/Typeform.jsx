@@ -17,15 +17,15 @@ export default class Typeform extends React.Component {
         var el = ReactDOM.findDOMNode(this.refs.typeform);
 
         if(el){
-            //   When instantiating a widget embed, you must provide the DOM element
-            //   that will contain your typeform, the URL of your typeform, and your
-            //   desired embed settings
-            typeformEmbed.makeWidget(el, typeformUrlSelector("url",this.props.groupLanguage), {
-              hideFooter: true,
-              hideHeaders: true,
-              opacity: 0,
-              onSubmit:this.props.onSubmitCallback
-            });
+          //   When instantiating a widget embed, you must provide the DOM element
+          //   that will contain your typeform, the URL of your typeform, and your
+          //   desired embed settings
+          typeformEmbed.makeWidget(el, typeformUrlSelector("url",this.props.groupLanguage), {
+            hideFooter: true,
+            hideHeaders: true,
+            opacity: 0,
+            onSubmit:this.props.onSubmitCallback
+          });
         }
     }
     

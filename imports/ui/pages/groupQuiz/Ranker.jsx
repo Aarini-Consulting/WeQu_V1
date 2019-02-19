@@ -15,22 +15,29 @@ const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 
-const SortableItem = SortableElement(({value, disabled}) =>
+const SortableItem = SortableElement(({value, disabled, rankItemsLoadExternalField}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
             <div className="rate-line"></div>
             <div className="rate-line"></div>
             <div className="rate-line"></div>
         </div>
-        <div className={"font-rate-quality noselect"}>{value.toString()}</div>
+        <div className={"font-rate-quality noselect"}>
+            {rankItemsLoadExternalField 
+            ?
+              value.toString()
+            :
+              i18n.getTranslation(`weq.groupQuizAnswer.${value.toString()}`)
+            }
+        </div>
     </div>
 );
 
-const SortableList = SortableContainer(({items, disabled}) => {
+const SortableList = SortableContainer(({items, disabled, rankItemsLoadExternalField}) => {
   return (
     <div className="rate-box-container">
       {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled}/>
+        <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled} rankItemsLoadExternalField={rankItemsLoadExternalField}/>
       ))}
     </div>
   );
@@ -171,12 +178,16 @@ class Ranker extends React.Component {
                         }
                         <div className="rate-content">
                             <div className="font-rate font-name-header f-white">
-                                {this.props.question}
+                                {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
                             </div>
                             {/* <div className="font-rate font-name-header f-white">Describe yourself</div>
                             <div className="font-rate font-name-header f-white">Sort the following qualities from top (more true) to bottom (less true)</div>
                             <div className="font-rate font-name-header f-white">You have 60 seconds</div> */}
-                            <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
+                            <SortableList 
+                            items={this.state.items} 
+                            onSortEnd={this.onSortEnd.bind(this)} 
+                            disabled={this.state.quizOver}
+                            rankItemsLoadExternalField={this.props.rankItemsLoadExternalField}/>
                             
                             <div className="w-block cursor-pointer">
                                 <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
