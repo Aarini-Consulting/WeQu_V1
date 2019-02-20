@@ -14,6 +14,7 @@ import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
 const SortableItem = SortableElement(({value, disabled, rankItemsLoadExternalField}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
@@ -176,8 +177,9 @@ class Ranker extends React.Component {
                                 <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                             </div>
                         }
-                        <div className="rate-content">
-                            <div className="font-rate font-name-header f-white">
+                        <div className="rate-content group-quiz-question-client">
+                            <GroupQuizClientImage backgroundUrl={this.props.backgroundUrl}/>
+                            <div className="font-rate font-name-header f-white group-quiz-question-client">
                                 {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
                             </div>
                             {/* <div className="font-rate font-name-header f-white">Describe yourself</div>

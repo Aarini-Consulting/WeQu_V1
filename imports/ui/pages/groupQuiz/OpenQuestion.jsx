@@ -13,19 +13,41 @@ import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
 class OpenQuestion extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        value:'',
+        value:undefined,
         savingData:false,
         quizOver:false,
       };
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.answerCount){
+      if(!this.state.value || this.state.value && this.state.value.length != nextProps.answerCount){
+        this.setDefaultValue(nextProps.answerCount);
+      }
+    }
+  }
+
+  setDefaultValue(answerCount){
+    var value=[];
+
+    for(i=0;i<answerCount;i++){
+      value.push("");
+    }
+
+    this.setState({
+      value: value,
+    });
+  }
+
   stepFinished(event){
     event.preventDefault();
+
     if(this.state.value != ''){
         this.setState({
             savingData:true
@@ -42,42 +64,70 @@ class OpenQuestion extends React.Component {
       });
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChange(index,event) {
+    var tempValueArray = this.state.value.slice();
+    tempValueArray[index] = event.target.value;
+
+    this.setState({value: tempValueArray});
+  }
+
+  renderInputFields(){
+    var fields=[];
+    for(index=0;index<this.props.answerCount;index++){
+      var required = false;
+      if(index == 0){
+        required = true;
+      }
+
+      fields.push(
+        <input className="group-quiz-open-question-field w-input" maxLength="256" placeholder="your answer" type="text"
+        key={`Open-Question-Answer-${this.props.groupId}-${index}`}
+        value={this.state.value[index]} onChange={this.handleChange.bind(this,index)} required={required} />
+      )
+    }
+
+    return fields;
   }
 
   render() {
     if(!this.state.savingData && this.props.dataReady){
-        return (
-          <section className="ranker-container fontreleway purple-bg">
-              <div className="section-name font-rate font-name-header">
-                  {this.props.group && this.props.group.groupName &&
-                      this.props.group.groupName
+      return (
+        <section className="ranker-container fontreleway purple-bg">
+            <div className="section-name font-rate font-name-header">
+                {this.props.group && this.props.group.groupName &&
+                    this.props.group.groupName
+                }
+            </div>
+            
+            <div className="rate-content group-quiz-question-client">
+              <GroupQuizClientImage backgroundUrl={this.props.backgroundUrl}/>
+              <div className="font-rate font-name-header f-white group-quiz-question-client">
+                {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
+              </div>
+              <form onSubmit={this.stepFinished.bind(this)}>
+                <div className="rate-box-container">
+                  {this.state.value &&
+                    this.renderInputFields()
                   }
-              </div>
-              <div className="rate-content">
-                <form onSubmit={this.stepFinished.bind(this)}>
-                  <div className="rate-box-container">
-                    <div className="font-rate font-name-header f-white">
-                      {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
-                    </div>
-                    <input className="emailfield w-input" maxLength="256" placeholder="your answer" type="text" value={this.state.value} onChange={this.handleChange.bind(this)}
-                    required/>
-                  </div>
-                  <div className="w-block cursor-pointer">
-                      <input className="font-rate f-bttn w-inline-block noselect" type="submit" defaultValue={i18n.getTranslation(`weq.rankSelf.ButtonDone`)}/>
-                  </div>
-                </form>
-              </div>
-          </section>
-        );
+                </div>
+                <div className="w-block cursor-pointer">
+                    <input className="font-rate f-bttn w-inline-block noselect" type="submit" defaultValue={i18n.getTranslation(`weq.rankSelf.ButtonDone`)}/>
+                </div>
+              </form>
+            </div>
+        </section>
+      );
     }else{
         return(
             <Loading/>
         );
     }
+  }
 }
-}
+
+OpenQuestion.defaultProps = {
+  answerCount: 1,
+};
 
 export default withTracker((props) => {
   var dataReady;

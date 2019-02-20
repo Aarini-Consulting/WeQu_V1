@@ -29,7 +29,7 @@ export default class GroupQuizCmcLanding extends React.Component {
             </div>
             <div className="group-quiz-cmc-screen-content" >
               <div style={style}></div>
-              <div className="group-quiz-cmc-screen-content-text">
+              <div className="group-quiz-cmc-screen-content-item">
                 <h1>{this.props.audienceResponseCount}/{this.props.totalParticipant}</h1>
               </div>
               

@@ -4,7 +4,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import Ranker from '/imports/ui/pages/groupQuiz/Ranker';
 import MultipleChoice from '/imports/ui/pages/groupQuiz/MultipleChoice';
 import OpenQuestion from '/imports/ui/pages/groupQuiz/OpenQuestion';
-import StarRating from '/imports/ui/pages/groupQuiz/StarRating';
 import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
@@ -12,7 +11,7 @@ import Error from '/imports/ui/pages/error/Error';
 import AnswerSubmitted from './AnswerSubmitted';
 
 
-var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRating":StarRating,"StarRatingMultiple":StarRatingMultiple};
+var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRatingMultiple":StarRatingMultiple};
 
 class GroupQuizClientPage extends React.Component {
     constructor(props){

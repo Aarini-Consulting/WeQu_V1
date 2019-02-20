@@ -3850,6 +3850,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .font-rate.font-name-header.group-quiz-cmc-screen-question{
   text-align: left;
+  font-size: 3em;
+  font-weight: bold;
   padding: 1em 1em 0 1em;
 }
 
@@ -3891,6 +3893,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin-bottom:0.5em;
 }
 
+.font-rate.font-name-header.f-white.group-quiz-question-client{
+  display: inline-block;
+  font-weight: bold;
+  text-align: left;
+  width:80%
+}
+
 .loading-font{
   font-size: 1em;
 }
@@ -3902,6 +3911,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin: 6px 0;
   overflow: auto;
   text-align: center;
+}
+
+.rate-content.group-quiz-question-client{
+  margin:0px;
 }
 
 .rate-box-container{
@@ -4308,7 +4321,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   justify-content: center;
 }
 
-.group-quiz-cmc-screen-content-text {
+.group-quiz-cmc-screen-content-item {
   display:flex;
   width: 100%;
   justify-content: center;
@@ -4319,6 +4332,26 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   z-index: 1;
 }
 
+.group-quiz-open-question-field {
+  margin-top: 1em;
+  border-style: 2px solid;
+  border-bottom-color: #b9b9b9;
+  font-family: Raleway, sans-serif;
+  text-align: left;
+  height: 35px;
+  color:#fff;
+  background-color: transparent;
+}
+
+.group-quiz-open-question-field:focus {
+  border-width: 2px;
+  border-color: #e4b139;
+}
+
+.group-quiz-graph-wrapper{
+  display:block;
+  background: transparent;
+}
 
 
 @media (max-width: 991px) {
@@ -4787,7 +4820,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   }
 
   .question{
-    padding:1em
+    padding:1em;
   }
 }
 
@@ -4803,6 +4836,17 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 @font-face {
   font-family: 'Raleway';
   src: url('/fonts/Raleway-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Italic.ttf') format('truetype');
+  font-style: italic;
 }

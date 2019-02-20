@@ -15,6 +15,7 @@ const T = i18n.createComponent();
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 
 import Star from '/imports/ui/stars/Star';
+import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
 class StarRatingMultiple extends React.Component {
   constructor(props){
@@ -52,7 +53,7 @@ class StarRatingMultiple extends React.Component {
             {i18n.getTranslation(`weq.groupQuizAnswer.${starQuestion.toString()}`)}
           </div>
           <div className={"font-rate-quality star"}>
-            <Star submitCallback={(starValue)=>{this.setRating(starQuestion,starValue)}} rating={0} inactive={false}/>
+            <Star submitCallback={(starValue)=>{this.setRating(starQuestion,starValue)}} rating={0} inactive={false} maxRating={this.props.starCount}/>
           </div>
         </div>
       );
@@ -67,17 +68,18 @@ class StarRatingMultiple extends React.Component {
                 this.props.group.groupName
             }
         </div>
-        <div className="rate-content">
-            <div className="font-rate font-name-header f-white">
-              {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
-            </div>
-            <div className="rate-box-container">
-              {this.renderRateEntry()}
-            </div>
-            <div className="w-block cursor-pointer">
-                <input className="font-rate f-bttn w-inline-block noselect" type="submit" defaultValue={i18n.getTranslation(`weq.rankSelf.ButtonDone`)} 
-                onClick={this.stepFinished.bind(this)}/>
-            </div>
+        <div className="rate-content group-quiz-question-client">
+          <GroupQuizClientImage backgroundUrl={this.props.backgroundUrl}/>
+          <div className="font-rate font-name-header f-white group-quiz-question-client">
+            {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
+          </div>
+          <div className="rate-box-container">
+            {this.renderRateEntry()}
+          </div>
+          <div className="w-block cursor-pointer">
+              <input className="font-rate f-bttn w-inline-block noselect" type="submit" defaultValue={i18n.getTranslation(`weq.rankSelf.ButtonDone`)} 
+              onClick={this.stepFinished.bind(this)}/>
+          </div>
         </div>
       </section>
     );

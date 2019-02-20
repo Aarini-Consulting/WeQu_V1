@@ -15,6 +15,11 @@ GroupQuizSchema = new SimpleSchema({
       label: "question",
       optional: true
     },
+    "answerCount":{
+      type: Number,
+      label: "amount of answer field",
+      optional: true
+    },
     "answerOptions":{
       type: [String],
       label: "quiz answer options",
@@ -25,9 +30,24 @@ GroupQuizSchema = new SimpleSchema({
       label: "quiz rank items",
       optional: true
     },
+    "starItems":{
+      type: [String],
+      label: "quiz star questions",
+      optional: true
+    },
+    "starCount":{
+      type: Number,
+      label: "amount of maximum star rating",
+      optional: true
+    },
     "rankItemsLoadExternalField":{
       type: String,
       label: "get rankItems from outside this collection",
+      optional: true
+    },
+    "answerOptionsLoadExternalField":{
+      type: String,
+      label: "get answerOptions from outside this collection",
       optional: true
     },
     "createdAt": {

@@ -13,6 +13,7 @@ import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
 class MultipleChoice extends React.Component {
   constructor(props){
@@ -92,8 +93,9 @@ class MultipleChoice extends React.Component {
                         this.props.group.groupName
                     }
                 </div>
-                <div className="rate-content">
-                  <div className="font-rate font-name-header f-white">
+                <div className="rate-content group-quiz-question-client">
+                  <GroupQuizClientImage backgroundUrl={this.props.backgroundUrl}/>
+                  <div className="font-rate font-name-header f-white group-quiz-question-client">
                     {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
                   </div>
                   <div className="rate-box-container">
