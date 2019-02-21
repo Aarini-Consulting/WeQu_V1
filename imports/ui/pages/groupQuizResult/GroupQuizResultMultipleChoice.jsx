@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import i18n from 'meteor/universe:i18n';
-import GroupQuizResultGraph from './GroupQuizResultGraph';
+import GroupQuizResultGraphVerticalBar from './GroupQuizResultGraphVerticalBar';
 import LoadingGraph from '/imports/ui/pages/loading/LoadingGraph';
 
 class GroupQuizResultMultipleChoice extends React.Component {
@@ -62,13 +62,13 @@ class GroupQuizResultMultipleChoice extends React.Component {
     }
 
     render() {
-        if(this.state.loading){
+        if(!this.props.dataReady || this.state.loading){
             return (
                 <LoadingGraph/>
             )
         }else if(this.state.data){
             return (
-                <GroupQuizResultGraph data={this.state.data} isEmpty={this.state.isEmpty}/>
+                <GroupQuizResultGraphVerticalBar data={this.state.data} isEmpty={this.state.isEmpty}/>
             );
         }else{
             return(
@@ -118,6 +118,8 @@ export default withTracker((props) => {
 
             dataReady = true;
         }
+    }else{
+        dataReady = true;
     }
     return {
         answerOptions:answerOptions,
