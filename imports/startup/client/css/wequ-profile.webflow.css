@@ -4351,6 +4351,21 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .group-quiz-graph-wrapper{
   display:block;
   background: transparent;
+  width:50%;
+}
+
+.group-quiz-graph-label,.group-quiz-graph-x-axis{
+  font-family: Raleway, sans-serif;
+}
+
+.group-quiz-graph-label{
+  font-weight: lighter;
+  font-size: 12px;
+}
+
+.group-quiz-graph-x-axis{
+  font-weight: bold;
+  font-size: 12px;
 }
 
 
@@ -4837,6 +4852,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   font-family: 'Raleway';
   src: url('/fonts/Raleway-Regular.ttf') format('truetype');
   font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Light.ttf') format('truetype');
+  font-weight: lighter;
 }
 
 @font-face {
