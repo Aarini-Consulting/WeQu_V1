@@ -1,17 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import Ranker from '/imports/ui/pages/groupQuiz/Ranker';
-import MultipleChoice from '/imports/ui/pages/groupQuiz/MultipleChoice';
-import OpenQuestion from '/imports/ui/pages/groupQuiz/OpenQuestion';
-import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
-import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
+import {quizComponent} from '/imports/startup/client/quizComponent';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Error from '/imports/ui/pages/error/Error';
 import AnswerSubmitted from './AnswerSubmitted';
-
-
-var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRatingMultiple":StarRatingMultiple};
 
 class GroupQuizClientPage extends React.Component {
     constructor(props){
@@ -74,7 +67,7 @@ class GroupQuizClientPage extends React.Component {
                         var groupQuiz = this.props.groupQuiz;
                         groupQuiz.groupId=this.props.group._id;
     
-                        var SelectedComponent = components[groupQuiz.component];
+                        var SelectedComponent = quizComponent(groupQuiz.component);
     
                         return (
                             <SelectedComponent submitAction={this.submitAction.bind(this)} {...groupQuiz}/>

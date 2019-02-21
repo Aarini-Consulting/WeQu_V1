@@ -1,10 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import Ranker from '/imports/ui/pages/groupQuiz/Ranker';
-import MultipleChoice from '/imports/ui/pages/groupQuiz/MultipleChoice';
-import OpenQuestion from '/imports/ui/pages/groupQuiz/OpenQuestion';
-import StarRatingMultiple from '/imports/ui/pages/groupQuiz/StarRatingMultiple';
+import {quizComponent} from '/imports/startup/client/quizComponent';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
 
@@ -17,8 +14,6 @@ import GroupQuizResult from '../groupQuiz/GroupQuizResult';
 //   {component:"Ranker", question:"rank this stuff as well", rankItems:["I","II","III","IV"] }
 // ]
 
-var components={"MultipleChoice":MultipleChoice,"Ranker":Ranker,"OpenQuestion":OpenQuestion,"StarRatingMultiple":StarRatingMultiple};
-
 class GroupQuizPage extends React.Component {
   constructor(props) {
     super(props);
@@ -26,51 +21,37 @@ class GroupQuizPage extends React.Component {
       showConfirmStart:false,
       selectedQuizOnConfirm:undefined,
       selectedQuiz:undefined,
+      selectedQuizResult:undefined,
       getQuizResult:false,
-      audienceResponseCount:0,
       loading:false
     }
   }
 
-  componentDidMount(){
-    this.setDefaultSelected(this.props);
-    this.calculateAudienceResponseCount(this.props);
-  }
-
   componentWillReceiveProps(nextProps){
-    this.setDefaultSelected(nextProps);
-    this.calculateAudienceResponseCount(nextProps);
+    if(nextProps.dataReady){
+      this.setDefaultSelected(nextProps);
+    }
   }
 
   setDefaultSelected(props){
     var currentGroupQuizId = props.group.currentGroupQuizId;
     if(currentGroupQuizId){
-      if((this.state.selectedQuiz && this.state.selectedQuiz._id != currentGroupQuizId || !this.state.selectedQuiz)){
+      if((this.state.selectedQuiz && this.state.selectedQuiz._id != currentGroupQuizId) || !this.state.selectedQuiz){
 
         var newSelectedQuiz = props.groupQuizList.find((gq)=>{
           return gq._id == currentGroupQuizId;
         })
 
         if(newSelectedQuiz){
+          newSelectedQuiz.groupId=props.group._id;
           this.setState({
             selectedQuiz:newSelectedQuiz
           });
         }
       }
-    }
-  }
-
-  calculateAudienceResponseCount(props){
-    if(this.state.selectedQuiz && props.groupQuizDataList.length > 0){
-      var selectedGroupQuizDataList = props.groupQuizDataList.filter((groupQuizData)=>{
-        return groupQuizData.groupQuizId == this.state.selectedQuiz._id
-      })
-      this.setState({
-        audienceResponseCount:selectedGroupQuizDataList.length
-      });
     }else{
       this.setState({
-        audienceResponseCount:0
+        selectedQuiz:undefined
       });
     }
   }
@@ -164,7 +145,7 @@ class GroupQuizPage extends React.Component {
 
     var SelectedComponent;
     if(this.state.selectedQuiz && this.state.selectedQuiz.component){
-      SelectedComponent = components[this.state.selectedQuiz.component];
+      SelectedComponent = quizComponent(this.state.selectedQuiz.component);
     }
 
     var groupQuizContent;
@@ -179,10 +160,10 @@ class GroupQuizPage extends React.Component {
           if(this.state.getQuizResult){
             groupQuizContent = 
             <div className="group-quiz-content">
-              <GroupQuizResult 
-              question={this.state.selectedQuiz.question} 
-              backgroundUrl={this.state.selectedQuiz.backgroundUrl}
-              audienceResponseCount={this.state.audienceResponseCount}
+              <GroupQuizResult
+              selectedQuiz={this.state.selectedQuiz}
+              selectedQuizResult={this.props.selectedGroupQuizDataList}
+              audienceResponseCount={this.props.selectedGroupQuizDataList.length}
               totalParticipant={this.props.group.userIds.length}/>
             </div>
           }else{
@@ -192,7 +173,7 @@ class GroupQuizPage extends React.Component {
               question={this.state.selectedQuiz.question} 
               backgroundUrl={this.state.selectedQuiz.backgroundUrl} 
               getQuizResult={this.getQuizResult.bind(this)}
-              audienceResponseCount={this.state.audienceResponseCount}
+              audienceResponseCount={this.props.selectedGroupQuizDataList.length}
               totalParticipant={this.props.group.userIds.length}
               />
             </div> 
@@ -278,7 +259,7 @@ class GroupQuizPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var groupQuizList=[];
-  var groupQuizDataList=[]
+  var selectedGroupQuizDataList=[]
 
   var group = props.group;
   if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
@@ -304,10 +285,13 @@ export default withTracker((props) => {
       });
 
       if(handleGroupQuizData.ready()){
-        groupQuizDataList=GroupQuizData.find({
-          "groupId": group._id,
-        }).fetch();
-
+        if(group.currentGroupQuizId){
+          selectedGroupQuizDataList=GroupQuizData.find({
+            "groupId": group._id,
+            "groupQuizId": group.currentGroupQuizId
+          }).fetch();  
+        }
+        
         dataReady = true;
       }
     }
@@ -316,7 +300,7 @@ export default withTracker((props) => {
   }
   return {
       groupQuizList:groupQuizList,
-      groupQuizDataList:groupQuizDataList,
+      selectedGroupQuizDataList:selectedGroupQuizDataList,
       dataReady:dataReady
   };
 })(GroupQuizPage);

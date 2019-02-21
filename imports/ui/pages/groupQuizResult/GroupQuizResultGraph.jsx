@@ -20,23 +20,38 @@ export default class GroupQuizResultGraph extends React.Component {
         var height = 300;
         var colorRange = ["#3e9f32","#6A62B3","#fd9a3e","#05a5d5","#6A1B58","fc808c"];
 
+        if(props.isEmpty){
+            colorRange = ["#d1d1d1"];
+        }
+
         
-        // data
-        var data = [[50, "red"], [100, "teal"], [125, "yellow"], [75, "purple"], [25, "green"]];
+        /* data format
+        var data = [
+            {amount:50, text:"red"},
+            {amount:100, text:"teal"},
+            {amount:125, text:"yellow"},
+            {amount:75, text:"purple"},
+            {amount:25, text:"green"}
+        ];
+        */
+
+        var data = props.data;
+
+        var dataTextArray = data.map((d)=>d.text);
         
         // scales
         var xScale = d3.scaleBand()
             .range([0, width])
             .padding(0.3)
-            .domain(['red','teal','yellow','purple','green']);
+            .domain(dataTextArray);
 
-        var yMax = d3.max(data, function(d){return d[0]});
+        var yMax = d3.max(data, function(d){return d.amount});
 
         var yScale = d3.scaleLinear()
             .domain([0, yMax])
             .range([height - margin.bottom, margin.top]);
 
-        var colorScale = d3.scaleOrdinal().domain(data).range(colorRange);
+        var colorScale = d3.scaleOrdinal().domain(dataTextArray).range(colorRange);
         
         var canvas = ReactDOM.findDOMNode(this.refs.groupQuizResultGraph);
         d3.select(canvas).select("svg").remove();
@@ -53,17 +68,17 @@ export default class GroupQuizResultGraph extends React.Component {
             .data(data)
             .enter().append('rect')
             .attr('x', (d, i) => { 
-                return xScale(d[1])
+                return xScale(d.text)
             })
             .attr('y', (d) => {
-                return yScale(d[0])
+                return yScale(d.amount)
             })
             .attr('width', xScale.bandwidth() - margin.left)
             .attr('height', (d) => {
-                return height - margin.bottom - yScale(d[0])
+                return height - margin.bottom - yScale(d.amount)
             })
             .attr('fill', (d) => {
-                return colorScale(d);
+                return colorScale(d.text);
             })
             .attr('margin-right', "0.5em")
             .attr('margin-left', "0.5em");
@@ -99,20 +114,20 @@ export default class GroupQuizResultGraph extends React.Component {
             .append("text")
             .attr("class","group-quiz-graph-label")
             .attr("x", ((d) => {
-                return xScale(d[1]) + (xScale.bandwidth()/2); 
+                return xScale(d.text) + (xScale.bandwidth()/2); 
             }))
             .attr("y", (d) => { 
-                return yScale(d[0]); 
+                return yScale(d.amount); 
             })
             .attr("dy", "-0.25em")
             .text((d) => {
-                return d[0]; 
+                return d.amount; 
             });
         
         //adjust label position
         svg.selectAll("text.group-quiz-graph-label")
             .attr("x", function(d) {
-                return xScale(d[1]) + (xScale.bandwidth()/2) - this.getBBox().width/2;
+                return xScale(d.text) + (xScale.bandwidth()/2) - this.getBBox().width/2;
             });
     }
 
