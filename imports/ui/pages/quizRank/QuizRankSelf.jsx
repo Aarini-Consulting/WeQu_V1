@@ -18,9 +18,7 @@ import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
-            <div className="rate-line"></div>
-            <div className="rate-line"></div>
-            <div className="rate-line"></div>
+            <i className="fas fa-bars"></i>
         </div>
         <div className={"font-rate-quality noselect"}>{i18n.getTranslation(`weq.rankItem.${value.toString()}`)}</div>
     </div>

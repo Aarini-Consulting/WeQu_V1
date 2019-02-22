@@ -113,8 +113,8 @@ class Home extends React.Component {
                                             </div>
                                         </div>
                                     }
-                                    <div className="ring"></div>
-                                    <div className="font-rate rank-separator-top"><T>weq.home.Welcome</T></div>
+                                    <div className="ring home"></div>
+                                    <div className="font-rate"><T>weq.home.Welcome</T></div>
                                     <br/>
                                     {/* <div className="font-rate f-em1"><T>weq.home.GroupSelection</T></div> */}
 
@@ -147,8 +147,8 @@ class Home extends React.Component {
                                         </div>
                                     }
                                     
-                                    <div className="ring"></div>
-                                    <div className="font-rate rank-separator-top"><T>weq.home.Welcome</T></div>
+                                    <div className="ring home"></div>
+                                    <div className="font-rate"><T>weq.home.Welcome</T></div>
                                 </div>
                                 <div className="w-block home-group-list-wrapper">
                                     <div style={{height:100+"%"}}>

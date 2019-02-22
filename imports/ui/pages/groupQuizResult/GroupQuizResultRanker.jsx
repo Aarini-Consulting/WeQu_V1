@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import i18n from 'meteor/universe:i18n';
-import GroupQuizResultGraphHorizontalBar from './GroupQuizResultGraphHorizontalBar';
 import LoadingGraph from '/imports/ui/pages/loading/LoadingGraph';
+import GroupQuizResultGraphRanker from './GroupQuizResultGraphRanker';
 
 class GroupQuizResultRanker extends React.Component {
     constructor(props){
@@ -27,31 +27,50 @@ class GroupQuizResultRanker extends React.Component {
             this.setState({
                 loading: true
             },()=>{
+                //using objects to temporarily store combined result information
+                var dataHolderCombinedResult = {};
                 var data;
+
+                //generate empty state for data array
                 if(props.selectedQuiz.rankItemsLoadExternalField){
                     data = props.rankItems.map((options)=>{
+                        dataHolderCombinedResult[options] = 0;
                         return {amount:0,text:options};
                     });
                 }else if(props.selectedQuiz.rankItems && props.selectedQuiz.rankItems.length > 0){
                     data = props.selectedQuiz.rankItems.map((options)=>{
-                        return {amount:0,text:i18n.getTranslation(`weq.groupQuizAnswer.${options}`)};
+                        dataHolderCombinedResult[options] = 0;
+                        return {amount:0,text:options};
                     });
                 }
-                
+
                 var isEmpty = false;
 
                 if(props.selectedQuizResult && props.selectedQuizResult.length > 0){
                     props.selectedQuizResult.forEach((quizResult) => {
-                        // var result = quizResult.results;
-                        // var keys = Object.keys(result);
+                        var individualResult = quizResult.results;
+                        if(individualResult){
+                            for (var key in individualResult) {
+                                if(typeof individualResult[key] == "number"){
+                                    dataHolderCombinedResult[key] = dataHolderCombinedResult[key] + individualResult[key];
+                                }
+                             }
+                        }
+                    });
 
-                        // keys.forEach((key)=>{
-                        //   Data
-                        // })
+                    //fill the data array with real amount (from temporary object) and text (translated if necessary)
+                    data = data.map((d)=>{
+                        var newAmount = dataHolderCombinedResult[d.text];
+                        if(props.selectedQuiz.rankItemsLoadExternalField){
+                            return  {amount:newAmount, text:d.text};
+                        }else{
+                            return {amount:newAmount,text:i18n.getTranslation(`weq.groupQuizAnswer.${d.text}`)};
+                        }
+                    });
 
-                        // if(data[selectedIndex]){
-                        //     data[selectedIndex].amount = data[selectedIndex].amount+1;
-                        // }
+                    //sort the data based on its amount
+                    data.sort((a, b) => {
+                        return b.amount - a.amount;
                     });
                 }else{
                     isEmpty = true;
@@ -73,7 +92,7 @@ class GroupQuizResultRanker extends React.Component {
           )
       }else if(this.state.data){
           return (
-              <GroupQuizResultGraphHorizontalBar data={this.state.data} isEmpty={this.state.isEmpty}/>
+              <GroupQuizResultGraphRanker data={this.state.data} isEmpty={this.state.isEmpty}/>
           );
       }else{
           return(
