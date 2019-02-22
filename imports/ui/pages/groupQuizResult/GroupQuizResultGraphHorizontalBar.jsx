@@ -9,7 +9,7 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
         this.updateChart(this.props);
     }
 
-    componentWillUpdate(nextProps) {  		
+    componentWillReceiveProps(nextProps) {  		
         this.updateChart(nextProps);
     }
 
