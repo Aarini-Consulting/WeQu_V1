@@ -206,5 +206,9 @@
         "Answer7C":"J'ai appris de nouveaux attributs positifs de mes collègues",
         "Answer7D":"Notre façon de gérer la communication pendant la session a été plus efficace que nos réunions d’équipe habituelles.",
         "Answer7E":"Je vois l'intérêt de cette session et souhaite le recommander à d'autres"
+    },
+    "groupQuizAnswerSubmitted":{
+        "TextLine1":"Merci",
+        "TextLine2":"Votre réponse est soumise"
     }
 }

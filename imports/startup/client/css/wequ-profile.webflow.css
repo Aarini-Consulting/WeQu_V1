@@ -3980,6 +3980,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color: #e3b045;
 }
 
+.rate-hamburger.mc.selected {
+  color: #fff;
+}
+
 .rate-line {
   display: -webkit-box;
   display: -webkit-flex;
@@ -4296,7 +4300,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .group-quiz-content {
   display: flex;
   flex-grow: 1;
-  background: #fff;
   flex-direction: column;
   justify-content: center;
 }
@@ -4367,7 +4370,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .group-quiz-graph.vertical.x-axis, .group-quiz-graph.horizontal.label{
   font-weight: bold;
-  font-size: 12px;
+  font-size: 9px;
 }
 
 .group-quiz-graph.ranker-wrapper{

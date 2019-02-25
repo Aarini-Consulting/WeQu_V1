@@ -159,7 +159,7 @@ class GroupQuizPage extends React.Component {
         if(SelectedComponent){
           if(this.state.getQuizResult){
             groupQuizContent = 
-            <div className="group-quiz-content">
+            <div className="group-quiz-content white-bg-color">
               <GroupQuizResult
               selectedQuiz={this.state.selectedQuiz}
               selectedQuizResult={this.props.selectedGroupQuizDataList}
@@ -168,7 +168,7 @@ class GroupQuizPage extends React.Component {
             </div>
           }else{
             groupQuizContent = 
-            <div className="group-quiz-content">
+            <div className="group-quiz-content white-bg-color">
               <GroupQuizCmcLanding
               question={this.state.selectedQuiz.question} 
               backgroundUrl={this.state.selectedQuiz.backgroundUrl} 
@@ -180,7 +180,7 @@ class GroupQuizPage extends React.Component {
           }
         }else{
           groupQuizContent = 
-          <div className="group-quiz-content">
+          <div className="group-quiz-content white-bg-color">
           {this.state.selectedQuiz
             ?
             "component not found"
@@ -224,7 +224,7 @@ class GroupQuizPage extends React.Component {
               <div className="group-quiz-list">
                 {this.renderQuestionListPlaceholder()}
               </div>
-              <div className="group-quiz-content">
+              <div className="group-quiz-content white-bg-color">
                 <div>
                   <div className="ring"></div>
                   <h1>no group quiz found, please contact WeQ support</h1>
@@ -242,7 +242,7 @@ class GroupQuizPage extends React.Component {
             <div className="group-quiz-list">
               {this.renderQuestionListPlaceholder()}
             </div>
-            <div className="group-quiz-content">
+            <div className="group-quiz-content white-bg-color">
               <div>
                 <div className="ring"></div>
                 <h1>You are not ready to start the quiz yet</h1>

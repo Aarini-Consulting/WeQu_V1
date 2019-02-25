@@ -7,11 +7,11 @@ export default class AnswerSubmitted extends React.Component {
     return (
         <div className="fillHeight">
             <div className="group-quiz-wrapper">
-              <div className="group-quiz-content">
+              <div className="group-quiz-content weq-bg">
                 <div>
-                    <h3>Thank you</h3>
+                    <h3>{i18n.getTranslation("weq.groupQuizAnswerSubmitted.TextLine1")}</h3>
                     <br/>
-                    <h3>Your answer is submitted</h3>
+                    <h3>{i18n.getTranslation("weq.groupQuizAnswerSubmitted.TextLine2")}</h3>
                     <br/>
                     <div className="ring animated"></div>
                 </div>

@@ -15,7 +15,7 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
 
     updateChart(props) {
         // options
-        var margin = {"top": 20, "right": 0, "bottom": 20, "left": 40 }
+        var margin = {"top": 20, "right": 12, "bottom": 20, "left": 40 }
         var width = 600;
         var height = 300;
         var colorRange = ["#3e9f32","#6A62B3","#fd9a3e","#05a5d5","#6A1B58","#fc808c"];
@@ -43,7 +43,10 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
         var dataAmountArray = data.map((d)=>d.amount);
         
         // scales
-        var xMax = d3.max(data, function(d){return d.amount});
+        var xMax = props.xMaxPoint;
+        if(!xMax || props.isEmpty){
+            xMax = d3.max(data, function(d){return d.amount});
+        }
 
         var xScale = d3.scaleLinear()
             .domain([0, xMax])
@@ -71,11 +74,7 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
             .data(data)
             .enter().append('rect')
             .attr('width', (d) => {
-                if(!d.amount || d.amount < 1){
-                    return 0;
-                }else{
-                    return xScale(d.amount);
-                }
+                return xScale(d.amount)-margin.left-margin.right;
             })
             .attr('x', (d) => {
                 return margin.left;
@@ -91,34 +90,23 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
             .attr('margin-left', "0.5em");
         
         // axes
-        // var xAxis = d3.axisBottom()
-        //     .scale(xScale)
-        //     .ticks(data.length)
-        //     // .tickFormat(d3.format('d'))
-        //     .tickFormat((d,i)=>
-        //         {
-        //             return d;
-        //         });
-
         var yAxis = d3.axisLeft()
             .scale(yScale)
             .ticks(data.length)
             // .tickFormat(d3.format('d'))
             .tickFormat((d,i)=>
                 {
-                    return dataAmountArray[i] + "%";
+                    return dataAmountArray[i];
                 });
         
-        //draw x-axis
-        // svg.append('g')
-        //     .attr("class", "group-quiz-graph-x-axis")
-        //     .attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
-        //     .call(xAxis);
-
+        //draw y-axis
         svg.append('g')
             .attr("class", "group-quiz-graph horizontal x-axis")
             .attr('transform', 'translate(' + [margin.left, 0] + ')')
-            .call(yAxis);
+            .call(yAxis)
+        .selectAll("text")
+            .style("text-anchor", "middle")
+            .attr("dx", "-0.5em");
 
         //place label
         svg.selectAll(".text")  		
@@ -136,12 +124,46 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
             .text((d) => {
                 return d.text; 
             });
+
         
-        // //adjust label position
-        // svg.selectAll("text.group-quiz-graph-label")
-        //     .attr("x", function(d) {
-        //         return xScale(d.text) + (xScale.bandwidth()/2) - this.getBBox().width/2;
-        //     });
+        //place star icon
+        svg.selectAll(".text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "fas fa-star")
+            .attr("x", ((d) => {
+                return xScale(d.amount)-margin.right;
+            }))
+            .attr("y", (d) => { 
+                return yScale(d.text); 
+            })
+            .attr("dy", yScale.bandwidth())
+            .attr("dx", -yScale.bandwidth() * 0.75)
+            .attr('font-size', function(d) { return yScale.bandwidth() * 1.25} )
+            .style('fill', '#A4872B')
+            .text((d) => {
+                return '\uf005'; 
+            });
+        
+        svg.selectAll(".text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "fas fa-star")
+            .attr("x", ((d) => {
+                return xScale(d.amount)-margin.right;
+            }))
+            .attr("y", (d) => { 
+                return yScale(d.text); 
+            })
+            .attr("dy", yScale.bandwidth() * 0.9)
+            .attr("dx", -yScale.bandwidth() * 0.6)
+            .attr('font-size', function(d) { return yScale.bandwidth()} )
+            .style('fill', '#D4AF37')
+            .text((d) => {
+                return '\uf005'; 
+            });
     }
 
     render() {

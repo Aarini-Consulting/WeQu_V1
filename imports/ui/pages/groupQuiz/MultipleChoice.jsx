@@ -51,10 +51,12 @@ class MultipleChoice extends React.Component {
   renderAnswerOptions(){
     return this.props.answerOptions.map((value, index) => {
       var className = "rate-box w-clearfix";
+      var classNameHamburger = "rate-hamburger";
       var icon =  <i className="far fa-square"></i>;
 
       if(index == this.state.selectedIndex){
         className = className + " mc selected";
+        classNameHamburger = classNameHamburger + " mc selected";
         icon = <i className="fas fa-check-square"></i>
       }
 
@@ -67,7 +69,7 @@ class MultipleChoice extends React.Component {
       return(
         <div className={className} key={`mc-answer-${index}-${value}`}
         onClick={this.answerSelected.bind(this, index)}>
-          <div className="rate-hamburger">
+          <div className={classNameHamburger}>
             {icon}
           </div>
           <div className={"font-rate-quality noselect"}>
@@ -88,13 +90,7 @@ class MultipleChoice extends React.Component {
       if(!this.state.savingData && this.props.dataReady){
           return (
             <section className="ranker-container fontreleway purple-bg">
-                <div className="section-name font-rate font-name-header">
-                    {this.props.group && this.props.group.groupName &&
-                        this.props.group.groupName
-                    }
-                </div>
                 <div className="rate-content group-quiz-question-client">
-                  <GroupQuizClientImage backgroundUrl={this.props.backgroundUrl}/>
                   <div className="font-rate font-name-header f-white group-quiz-question-client">
                     {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
                   </div>

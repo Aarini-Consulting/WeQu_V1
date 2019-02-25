@@ -219,7 +219,7 @@ class GroupPage extends React.Component {
       if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
         readySurvey = true;
       }
-      var started = this.props.group.isPlaceCardActive;
+      var startedOrFinished = (this.props.group.isPlaceCardActive || this.props.group.isPlaceCardFinished);
 
       var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
         return cp.userId == user._id;
@@ -235,7 +235,7 @@ class GroupPage extends React.Component {
         name = email;
       }
 
-      if(readySurvey && started && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+      if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
         return(
           <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
             <div className="tap-left card">

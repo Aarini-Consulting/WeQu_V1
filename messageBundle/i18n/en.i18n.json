@@ -205,6 +205,10 @@
         "Answer7B":"I learned how to give constructive feedback",
         "Answer7C":"I learned new, positive attributes of my colleagues",
         "Answer7D":"The way we handle communication during the session was more effective than our usual team meetings.",
-        "Answer7E":"I see value of this session and want to recommend it to others"
+        "Answer7E":"I see value of this session and would recommend it to others"
+    },
+    "groupQuizAnswerSubmitted":{
+        "TextLine1":"Thank you",
+        "TextLine2":"Your answer is submitted"
     }
 }

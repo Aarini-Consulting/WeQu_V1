@@ -63,13 +63,7 @@ class StarRatingMultiple extends React.Component {
   render() {
     return (
       <section className="ranker-container fontreleway purple-bg">
-        <div className="section-name font-rate font-name-header">
-            {this.props.group && this.props.group.groupName &&
-                this.props.group.groupName
-            }
-        </div>
         <div className="rate-content group-quiz-question-client">
-          <GroupQuizClientImage backgroundUrl={this.props.backgroundUrl}/>
           <div className="font-rate font-name-header f-white group-quiz-question-client">
             {i18n.getTranslation(`weq.groupQuizQuestion.${this.props.question}`)}
           </div>

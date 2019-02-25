@@ -206,5 +206,9 @@
         "Answer7C":"Ik heb nieuwe, positieve eigenschappen van mijn collega's geleerd.",
         "Answer7D":"De manier waarop we de communicatie tijdens de sessie afhandelen, was effectiever dan onze gebruikelijke teamvergaderingen.",
         "Answer7E":"Ik zie de waarde van deze sessie en wil hem aanbevelen aan anderen."
+    },
+    "groupQuizAnswerSubmitted":{
+        "TextLine1":"Bedankt",
+        "TextLine2":"Uw antwoord wordt ingediend"
     }
 }
