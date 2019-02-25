@@ -194,7 +194,7 @@ class GroupQuizPage extends React.Component {
           {this.state.showConfirmStart &&
             <SweetAlert
             type={"confirm"}
-            message={"Are the participants all present and ready?"}
+            message={"Everyone ready for interactive mode?"}
             confirmText={"Let's go!"}
             cancelText={"Cancel"}
             onCancel={() => {

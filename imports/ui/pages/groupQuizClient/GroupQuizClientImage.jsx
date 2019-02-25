@@ -11,7 +11,7 @@ export default class GroupQuizClientImage extends React.Component {
         width:100+"%",
         flexBasis:25+'vh',
         height:25+"vh",
-        backgroundImage: `url('${this.props.backgroundUrl}')`,
+        backgroundImage: `url('${backgroundUrl}'),url('/img/assets/Logo-Main_ring_animation.gif')`,
         backgroundSize:"cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center"

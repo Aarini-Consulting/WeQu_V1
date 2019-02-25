@@ -1197,7 +1197,7 @@ body {
 
 .fontreleway.f-popup-title.f-popup-msg {
   margin-bottom: 5px;
-  color: #f75f04;
+  color: #6a62b3;
   font-size: 1.2em;
   text-align: center;
 }
@@ -2606,10 +2606,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-bottom-left-radius: 0px;
   -webkit-transition: background-color 200ms ease;
   transition: background-color 200ms ease;
+  background-color: #6a62b3;
 }
 
 .popup-bttn.right:hover {
-  background-color: #f75f04;
+  background-color: #6a62b3;
 }
 
 .bttn-wrapper {

@@ -17,6 +17,9 @@ export default class Confirm extends React.Component {
                     {this.props.message}
                     </div>
                 </div>
+                <div className="msg-wrapper">
+                    <img src="/img/gameMaster/interactive.gif"/>
+                </div>
                 <div className="w-block align-center">
                     <div className="w-inline-block">
                         <div className="bttn-wrapper w-clearfix">

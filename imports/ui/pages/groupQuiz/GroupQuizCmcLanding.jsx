@@ -10,7 +10,7 @@ export default class GroupQuizCmcLanding extends React.Component {
       style = {
         width:100+"%",
         height:100+"%",
-        backgroundImage: `url('${this.props.backgroundUrl}')`,
+        backgroundImage: `url('${backgroundUrl}'),url('/img/assets/Logo-Main_ring_animation.gif')`,
         filter:"opacity(20%)",
         backgroundSize:"contain",
         backgroundRepeat: "no-repeat",
