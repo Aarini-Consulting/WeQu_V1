@@ -220,9 +220,13 @@ Meteor.methods({
         });
       
       CardPlacement.remove(
-        {$or : [
-          { "userId": currentUser._id},
-          ] 
+        {
+          "userId": currentUser._id
+        });
+
+      GroupQuizData.remove(
+        {
+          "creatorId": currentUser._id,
         });
 
       Meteor.users.remove({_id:Meteor.userId()});

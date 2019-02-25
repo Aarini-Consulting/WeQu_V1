@@ -1,0 +1,60 @@
+/* -----------------------------------------------------------------------------
+
+  COMPENENTS - RATING
+  
+----------------------------------------------------------------------------- */
+.c-rating {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width:100%;
+  justify-content: inherit;
+  list-style: none;
+  margin-left:auto;
+  margin-right:auto;
+  padding: 0;
+}
+
+.c-rating__item {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 1 3em;
+      -ms-flex: 0 1 3em;
+          flex: 0 1 3em;
+  background: url("/img/stars/icon_star_line.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  display:inline-block;
+  cursor: pointer;
+}
+
+.c-rating__item:hover,
+.c-rating__item.is-active {
+  background: url("/img/stars/icon_star_filled.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+
+.c-rating__item.disabled {
+  background: url("/img/stars/icon_star_line.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.c-rating__item.disabled.is-active {
+  cursor:default;
+  background: url("/img/stars/icon_star_filled.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.c-rating__item.disabled:hover{
+  cursor:default;
+}
+
+@media only screen and (max-width: 479px) {
+  .c-rating {
+    justify-content: space-evenly;
+  }
+}

@@ -1,5 +1,5 @@
 Meteor.methods({
-    'updateGroup' : function (group, language, data, arr_emails) {
+    'updateGroup' : function (group, language="en", data, arr_emails) {
         var groupId = group._id;
         let groupCheck = Group.findOne({_id:groupId});
 
@@ -103,18 +103,18 @@ Meteor.methods({
         }
 
         Group.update({"_id":groupId},
-        {'$set':{userIds:userIdsList , creatorId: group.creatorId}
+        {'$set':{userIds:userIdsList , creatorId: group.creatorId, groupLanguage:language}
         });
 
         if(updatedUserIdsSurveyed){
             Group.update({"_id":groupId},
-            {'$set':{userIdsSurveyed: updatedUserIdsSurveyed}
+            {'$set':{userIdsSurveyed: updatedUserIdsSurveyed, groupLanguage:language}
             });	
         }
 
         if(updatedUserIdsSelfRankCompleted){
             Group.update({"_id":groupId},
-            {'$set':{userIdsSelfRankCompleted: updatedUserIdsSelfRankCompleted}
+            {'$set':{userIdsSelfRankCompleted: updatedUserIdsSelfRankCompleted, groupLanguage:language}
             });	
         }
 
@@ -126,7 +126,7 @@ Meteor.methods({
         return newUsersInGroup.length;
 
     },
-    'resend.group.invite' : function (groupId,language,email) {
+    'resend.group.invite' : function (groupId,language="en",email) {
         let check = Group.findOne({_id:groupId});
     
         if(check){
@@ -146,7 +146,11 @@ Meteor.methods({
                 throw (new Meteor.Error("email_not_group_member")); 
             }
 
-           
+            if(check && check.groupLanguage != language){
+                Group.update({"_id":groupId},
+                    {'$set':{groupLanguage:language}
+                });
+            }
             
             var link = `group-invitation/${email}/${groupId}`
                 
@@ -173,8 +177,6 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("group doesn't exist")); 
         }
-
-        return false;
     }
 });
 

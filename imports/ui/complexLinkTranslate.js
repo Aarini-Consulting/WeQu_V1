@@ -5,7 +5,9 @@ const T = i18n.createComponent();
 
 export function complexLinkTranslate(name, params){
     var locale = i18n.getLocale();
-    if(locale == "en-US"){
+    var languageCode = locale.split("-")[0];
+
+    if(languageCode == "en"){
             var translation = {
                 "settings.accountTypeAds":
                     <React.Fragment>
@@ -47,7 +49,7 @@ export function complexLinkTranslate(name, params){
                     </React.Fragment>
             }
         return translation[name];
-    }else if(locale == "nl-NL"){
+    }else if(languageCode == "nl"){
             var translation = {
             "settings.accountTypeAds":
                 <React.Fragment>
@@ -90,7 +92,7 @@ export function complexLinkTranslate(name, params){
             }
         return translation[name];
     }
-    else if(locale == "fr-FR"){
+    else if(languageCode == "fr"){
         var translation = {
             "settings.accountTypeAds":
                 <React.Fragment>

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
 import i18n from 'meteor/universe:i18n';
 
@@ -16,9 +15,7 @@ const T = i18n.createComponent();
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
-            <div className="rate-line"></div>
-            <div className="rate-line"></div>
-            <div className="rate-line"></div>
+            <i className="fas fa-bars"></i>
         </div>
         <div className={"font-rate-quality noselect"}>{i18n.getTranslation(`weq.rankItem.${value.toString()}`)}</div>
     </div>

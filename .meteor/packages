@@ -54,7 +54,6 @@ wizonesolutions:moment-duration-format
 alanning:roles
 react-meteor-data
 http@1.4.0
-d3js:d3
 mizzao:user-status
 github-config-ui@1.0.0
 dynamic-import@0.3.0

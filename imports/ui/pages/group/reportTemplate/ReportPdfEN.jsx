@@ -8,11 +8,6 @@ export const ReportPdfEN = ({propData}) => (
             <link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
             <link rel="stylesheet" type="text/css" href="/css/webflow.css"/>
             <link rel="stylesheet" type="text/css" href="/css/report-pdf.css"/>
-            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
-            <script src="/js/webfont.js" type="text/javascript"></script>
-            <script type="text/javascript">{`
-                WebFont.load({google:{families: ["Raleway:200,regular,italic,500,800","Raleway:regular,800,900"]}});
-            `}</script>
         </head>
         <body>
         <div className="a4-wrapper">

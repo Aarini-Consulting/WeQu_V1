@@ -151,8 +151,9 @@ Meteor.methods({
         throw (new Meteor.Error("group_inactive")); 
       }
 
-      if(groupCheck && !groupCheck.isFinished){
-        throw (new Meteor.Error("group_session_not_done")); 
+      //check if place card session is complete
+      if(groupCheck && groupCheck.isPlaceCardFinished){
+        throw (new Meteor.Error("group_place_card_session_not_done")); 
       }
 
       var creator = Meteor.users.findOne({_id:groupCheck.creatorId});

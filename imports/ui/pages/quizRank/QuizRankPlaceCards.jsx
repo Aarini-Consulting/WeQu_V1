@@ -46,7 +46,7 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.dataReady && (!nextProps.cardPlacement || (nextProps.cardPlacement && !nextProps.cardPlacement.cardPicked))){
+        if(nextProps.dataReady && nextProps.group.isPlaceCardFinished && (!nextProps.cardPlacement || (nextProps.cardPlacement && !nextProps.cardPlacement.cardPicked))){
             Meteor.call( 'combine.rank.data', nextProps.group._id, Meteor.userId(), (error, result)=>{
                 if(error){
                     console.log(error)
@@ -120,9 +120,6 @@ class QuizRankPlaceCards extends React.Component {
                     </div>
                     <div className="rate-content">
                         {this.renderCards()}
-                    </div>
-                    <div className="w-block cursor-pointer">
-                        <Link to="/" className="font-rate f-bttn w-inline-block noselect">{i18n.getTranslation("weq.quizRankPlaceCard.ButtonDone")}</Link>
                     </div>
                     </section>
                 </div>

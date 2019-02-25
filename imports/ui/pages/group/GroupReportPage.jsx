@@ -208,7 +208,7 @@ class GroupReportPage extends React.Component {
                                     </div>
                                 :
                                 <div className="container-2 w-container">
-                                    <div className="emptytext group">Report functionalities will be available when game is finished</div>
+                                    <div className="emptytext group">Report functionalities will be available when "Prepare cards" is finished</div>
                                 </div>
                             }
                             </div>

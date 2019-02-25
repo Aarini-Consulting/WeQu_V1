@@ -28,17 +28,17 @@ export default class Menu extends React.Component {
             <div className="menubar w-clearfix">
                 <a onClick={this.decideAction.bind(this,"/")} 
                 className={"text fontreleway fontmenu _1 " + this.isCurrent("/")}>
-                    home
+                    Home
                 </a>
                 {Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) &&
                     <a onClick={this.decideAction.bind(this,"/invite-group")} 
                     className={"text fontreleway fontmenu _2 " + this.isCurrent("/invite-group")}>
-                        groups
+                        Groups
                     </a>
                 }
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
-                    Account
+                    Settings
                 </a>
             </div>
         );

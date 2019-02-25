@@ -6,15 +6,15 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import Menu from '/imports/ui/pages/menu/Menu';
+import MenuPresentation from '/imports/ui/pages/menu/MenuPresentation';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
 
-import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
-
 import i18n from 'meteor/universe:i18n';
+import GroupPresentation from './GroupPresentation';
+import GroupQuizPage from './GroupQuizPage';
 
 const T = i18n.createComponent();
 
@@ -23,22 +23,66 @@ class GroupPage extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
+        initialLocale:i18n.getLocale(),
+        selectedGroupLanguage:i18n.getLocale().split("-")[0],
         showInviteGroup:false,
         showConfirm:false,
         showConfirmStart:false,
         showReopenConfirm:false,
         showInfo:false,
         showMatrixInfoPanel:undefined,
+        presentationFrameLoaded:false,
         sending:false,
         currentTab:"edit",
         gettingTypeformResult:false
       }
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.group && nextProps.group.groupLanguage){
+      language = nextProps.group.groupLanguage;
+    }else{
+      language = i18n.getLocale().split("-")[0];
+    }
+
+    if(language != this.state.selectedGroupLanguage){
+      var supportedLocale = Meteor.settings.public.supportedLocale;
+      var langObj;
+      supportedLocale.forEach((sl)=>{
+        var lang = sl.split("-")[0];
+        if(langObj){
+          langObj[lang] = sl;
+        }else{
+          langObj = {[lang]:sl}
+        }
+      });
+
+      if(langObj[language]){
+        i18n.setLocale(langObj[language]);
+      }
+
+      this.setState({
+        selectedGroupLanguage:language,
+      });
+    }
+  }
+
+  componentWillUnmount(){
+    var currentLocale = i18n.getLocale();
+    if(currentLocale != this.state.initialLocale){
+      i18n.setLocale(this.state.initialLocale);
+    }
+  }
 
   showInviteGroup(bool){
     this.setState({
       showInviteGroup: bool,
+    });
+  }
+
+  frameIsLoaded(){
+    this.setState({
+        presentationFrameLoaded:true
     });
   }
 
@@ -63,8 +107,8 @@ class GroupPage extends React.Component {
     }
   }
 
-  startGame(){
-    Meteor.call( 'start.game', this.props.group._id, (error, result)=>{
+  startGamePlaceCards(){
+    Meteor.call( 'start.game.place.cards', this.props.group._id, (error, result)=>{
       if(error){
         console.log(error)
         var msg;
@@ -76,6 +120,18 @@ class GroupPage extends React.Component {
           msg = error.error;
         }
         
+        this.setState({
+          showInfo: true,
+          showInfoMessage:msg
+        });
+      }
+    });
+  }
+
+  stopGamePlaceCards(){
+    Meteor.call( 'stop.game.place.cards', this.props.group._id, (error, result)=>{
+      if(error){
+        console.log(error);
         this.setState({
           showInfo: true,
           showInfoMessage:msg
@@ -163,7 +219,7 @@ class GroupPage extends React.Component {
       if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
         readySurvey = true;
       }
-      var started = this.props.group.isActive;
+      var startedOrFinished = (this.props.group.isPlaceCardActive || this.props.group.isPlaceCardFinished);
 
       var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
         return cp.userId == user._id;
@@ -179,7 +235,7 @@ class GroupPage extends React.Component {
         name = email;
       }
 
-      if(readySurvey && started && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+      if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
         return(
           <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
             <div className="tap-left card">
@@ -240,7 +296,6 @@ class GroupPage extends React.Component {
       if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
         readySurvey = true;
       }
-      var started = this.props.group.isActive;
 
       var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
         return cp.userId == user._id;
@@ -264,10 +319,7 @@ class GroupPage extends React.Component {
             </div>
           </div>
           <div className="show-cards">
-            {readySurvey && started
-            ?
-              <div className="bttn-next-card">session in progress</div>
-            :
+            {
               readySurvey 
               ? 
                 <div className="bttn-next-card">Ready!</div>
@@ -426,7 +478,7 @@ class GroupPage extends React.Component {
           {skills}
           <br/>
           <br/>
-          <div className="div-block-right">
+            <div className="div-block-right">
               <div className="w-inline-block survey-graph-footer">
                 <div className="font-matric-refresh">
                   {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
@@ -442,12 +494,11 @@ class GroupPage extends React.Component {
                   <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
                     Refresh
                   </div>
-                }
-                
+                }  
               </div>
-            </div>
+          </div>
         </div>
-        );
+      );
     }
   }
 
@@ -458,6 +509,9 @@ class GroupPage extends React.Component {
       if(this.state.currentTab == "edit"){
         tabContent = (<InviteGroup isEdit={true} group={this.props.group}/>);
       }
+      else if(this.state.currentTab == "presentation"){
+        tabContent = "";
+      }
       else if(this.state.currentTab == "survey"){
         tabContent = 
         (<div className="tap-content-wrapper">
@@ -465,10 +519,30 @@ class GroupPage extends React.Component {
         </div>);
       }
       else if(this.state.currentTab == "card"){
+        var readySurvey;
+        if(this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
+          readySurvey = true;
+        }
+
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
+          <div className="tap-content w-clearfix">
+          {this.props.group && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
+            (
+              this.props.group.isPlaceCardActive 
+              ?
+              <div className="w-inline-block game-status">In Progress</div>
+              :
+              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+            )
+          }
+          {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
+            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCards.bind(this)}>stop</a>
+          }
+          </div>
+
           {this.renderUsers()}
-          {!this.props.group.isActive &&
+          {!this.props.group.isPlaceCardActive &&
             <div className="tap-content w-clearfix">
               <div className="tap-left card">
               </div>
@@ -476,59 +550,55 @@ class GroupPage extends React.Component {
           }
         </div>);
       }
+      else if(this.state.currentTab == "quiz"){
+        tabContent = 
+        (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
+      }
       else if(this.state.currentTab == "report"){
         tabContent = 
         (<GroupReportPage groupId={this.props.match.params.id}/>);
       }
       return(
             <section className="section home fontreleway groupbg" >
-              <Menu location={this.props.location} history={this.props.history}/>
-              <div className="screentitlewrapper w-clearfix">
-                <div className="screentitlebttn back">
-                  <a className="w-clearfix w-inline-block cursor-pointer arrow-left-white" onClick={()=>{
-                    this.props.history.goBack();
-                  }}>
-                  <i className="fas fa-arrow-left"></i>
-                  </a>
-                </div>
-                <div className="fontreleway font-invite-title white w-clearfix">
-                {this.props.group.groupName}
-                </div>
-                {this.props.group && !this.props.group.isActive && !this.props.group.isFinished &&
-                  <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start game</a>
-                }
-                {(this.props.group && this.props.group.isFinished) 
-                  ?
-                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                    Game Finished
-                  </a>
-                  :this.props.group.isActive &&
-                  <a id="submitSend" className="invitebttn w-button w-inline-block noselect disabled">
-                    Game Started
-                  </a>
-                }
-              </div>
+              <MenuPresentation location={this.props.location} history={this.props.history} groupName={this.props.group.groupName}/>
+
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
-                <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
-                onClick={this.toggleTabs.bind(this,"edit")}>
-                  <div>Manage group</div>
-                </a>
-                <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
-                onClick={this.toggleTabs.bind(this,"survey")}>
-                  <div>View survey</div>
-                </a>
-                <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
-                onClick={this.toggleTabs.bind(this,"card")}>
-                  <div>Prepare cards</div>
-                </a>
-                <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
-                onClick={this.toggleTabs.bind(this,"report")}>
-                  <div>Download report</div>
-                </a>
+                <div className="tabs-menu-inner-wrapper">
+                  <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"edit")}>
+                    <div>Manage session</div>
+                  </a>
+                  <a className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"presentation")}>
+                    <div>Present</div>
+                  </a>
+                  <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"survey")}>
+                    <div>View survey</div>
+                  </a>
+                  <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"card")}>
+                    <div>Prepare cards</div>
+                  </a>
+                  <a className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"quiz")}>
+                    <div>Do Quiz</div>
+                  </a>
+                  <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"report")}>
+                    <div>Download report</div>
+                  </a>
+                </div>
               </div>
-              <div className="tabs w-tabs">
+              <div className="tabs w-tabs"style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
                   {tabContent}
               </div>
+              {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
+                <div className="tabs w-tabs" style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
+                  <GroupPresentation language={this.state.selectedGroupLanguage} group={this.props.group} frameIsLoaded={this.frameIsLoaded.bind(this)}/>
+                </div>
+              }
+              
 
               {this.state.showInfo &&
                 <SweetAlert
@@ -542,7 +612,7 @@ class GroupPage extends React.Component {
               {this.state.showConfirmStart &&
                 <SweetAlert
                 type={"confirm"}
-                message={"Are the participants all present and ready?"}
+                message={"Everyone ready for interactive mode?"}
                 confirmText={"Let's go!"}
                 cancelText={"Cancel"}
                 onCancel={() => {
@@ -550,7 +620,7 @@ class GroupPage extends React.Component {
                 }}
                 onConfirm={() => {
                   this.setState({ showConfirmStart: false });
-                  this.startGame();
+                  this.startGamePlaceCards();
                 }}/>
               }
             </section>
@@ -558,7 +628,6 @@ class GroupPage extends React.Component {
     }else{
       return(
         <div className="fillHeight">
-          <Menu location={this.props.location} history={this.props.history}/>
           <Loading/>
         </div>
       );

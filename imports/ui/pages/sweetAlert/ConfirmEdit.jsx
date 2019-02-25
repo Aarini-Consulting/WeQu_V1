@@ -82,6 +82,11 @@ export default class ConfirmEdit extends React.Component {
                     {this.props.groupName && this.props.groupName != this.props.newName &&
                         <div className="fontreleway f-popup-title f-popup-msg"><T>weq.confirmEdit.GroupNameChanged</T></div>
                     }
+
+                    {((this.props.groupLanguage && this.props.groupLanguage != this.props.groupLanguageNew) || 
+                    (!this.props.groupLanguage && this.props.groupLanguageNew)) &&
+                        <div className="fontreleway f-popup-title f-popup-msg">Group language changed</div>
+                    }
                 </div>
 
                 <div className="w-block align-center">

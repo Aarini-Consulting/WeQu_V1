@@ -121,8 +121,6 @@ h3 + h5 {
 button, .button {
   width: 80%;
   padding: 18px 0;
-  margin: 20px 0;
-
   background: #345BB5;
   color: white;
   border: none;
@@ -148,19 +146,19 @@ button, .button {
   }
 }
 
-input {
-  padding: 5px 0;
-  margin: $h5 0;
+// input {
+//   padding: 5px 0;
+//   margin: $h5 0;
 
-  background: none;
-  color: white;
-  font-size: 18px;
-  text-align: center;
+//   background: none;
+//   color: white;
+//   font-size: 18px;
+//   text-align: center;
 
-  border: none;
-  border-bottom: 2px solid white;
-  border-radius: 0px;
-}
+//   border: none;
+//   border-bottom: 2px solid white;
+//   border-radius: 0px;
+// }
 
 input[type="checkbox"]{
   vertical-align: baseline;

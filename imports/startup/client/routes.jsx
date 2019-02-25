@@ -138,18 +138,25 @@ const App = class App extends React.Component {
     if(locale.toString().length > 2){
       languageCode = locale.split("-")[0];
     }else{
-      languageCode = locale
+      languageCode = locale;
     }
 
     if(supportedLocale.indexOf(locale) < 0){
       //locale not listed as supported
       //check locale lang to see if it match any of the supported lang
-      
-      if(languageCode == supportedLocale[0].split("-")[0]){
-        locale = supportedLocale[0];
-      }
-      else if(languageCode == supportedLocale[1].split("-")[0]){
-        locale = supportedLocale[1];
+
+      var langObj;
+      supportedLocale.forEach((sl)=>{
+        var lang = sl.split("-")[0];
+        if(langObj){
+          langObj[lang] = sl;
+        }else{
+          langObj = {[lang]:sl};
+        }
+      });
+
+      if(langObj[languageCode]){
+        locale = langObj[languageCode];
       }else{
         locale = supportedLocale[0];
       }
