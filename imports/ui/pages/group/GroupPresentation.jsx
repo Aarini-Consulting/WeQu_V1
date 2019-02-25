@@ -25,7 +25,10 @@ export default class GroupPresentation extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         if(this.state.loading && nextState.loading == false){
             return true;
-        }else{
+        }else if(this.props.language != nextProps.language){
+            return true;
+        }
+        else{
             return false;
         }
     }
@@ -46,16 +49,15 @@ export default class GroupPresentation extends React.Component {
 
     render() {
         var url;
-
         switch(this.props.language){
             case "nl":
-                url = "https://drive.google.com/file/d/1RdIxRawJ4Rne7xugygutcSzyBgEIQMGV/preview";
+                url = "https://docs.google.com/presentation/d/e/2PACX-1vQspkT7RaUB2ctimmizxRomjyeYuyCNs9iGdDNdq3puBsmq258tLbqe5qlxcYl256Mg7ToB-G1cix6R/embed?start=false&loop=false&delayms=3000";
                 break;
             case "fr":
-                url = "https://drive.google.com/file/d/1pyMgL8MADUZJib4_Xb_SmmxIJuQFky9R/preview";
+                url = "https://docs.google.com/presentation/d/e/2PACX-1vRAOs2duKEHmQ49qg-wha7P6HjjVWfNoZy_ZUVi8Xq9ViUpHvo-rFc5CFDYwbNTLJ3y1F9j0GiJMZdp/embed?start=false&loop=false&delayms=3000";
                 break;
             default:
-                url = "https://drive.google.com/file/d/1cETRcvpSpMJJ_xnthyFltyXJz19ZYA_x/preview";
+                url = "https://docs.google.com/presentation/d/e/2PACX-1vShJZoQRi1WagGk2WBLSZazkZm6do0NKmTeOfGznNf2pdJKKiPicqG2jAhNdtCTtezLGdVeqxzfiuoI/embed?start=false&loop=false&delayms=3000";
                 break;
         }
 
@@ -68,17 +70,15 @@ export default class GroupPresentation extends React.Component {
 
         return (
             <div className="tap-content-wrapper presentation">
-                {/* <iframe src={url}
-                style={{width:100+"%", height:100+"%"}}></iframe> */}
-            {this.state.loading &&
-                <Loading/>
-            }
-            <iframe 
-            ref="presentation"
-            src={`https://docs.google.com/presentation/d/e/2PACX-1vShJZoQRi1WagGk2WBLSZazkZm6do0NKmTeOfGznNf2pdJKKiPicqG2jAhNdtCTtezLGdVeqxzfiuoI/embed?start=false&loop=false&delayms=3000`} 
-            frameBorder="0" allowFullScreen="true" style={style}
-            onLoad={this.frameIsLoaded.bind(this)}>
-            </iframe>
+                {this.state.loading &&
+                    <Loading/>
+                }
+                <iframe 
+                ref="presentation"
+                src={url} 
+                frameBorder="0" allowFullScreen="true" style={style}
+                onLoad={this.frameIsLoaded.bind(this)}>
+                </iframe>
             </div>
         );
     }

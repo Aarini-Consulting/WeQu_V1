@@ -527,7 +527,7 @@ class GroupPage extends React.Component {
         tabContent = 
         (<div className="tap-content-wrapper" ref="printTarget">
           <div className="tap-content w-clearfix">
-          {this.props.group && !this.props.group.isFinished && readySurvey &&
+          {this.props.group && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
             (
               this.props.group.isPlaceCardActive 
               ?
@@ -536,7 +536,7 @@ class GroupPage extends React.Component {
               <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
             )
           }
-          {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && readySurvey &&
+          {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
             <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCards.bind(this)}>stop</a>
           }
           </div>

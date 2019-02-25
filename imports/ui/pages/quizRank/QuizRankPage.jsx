@@ -50,22 +50,22 @@ class QuizRankPage extends React.Component {
                         if(this.props.group.isFinished){
                             return(
                                 <SessionFinished/>
-                            )
+                            );
                         }else if(this.props.group.currentGroupQuizId){
                             return(
                                 <GroupQuizClientPage group={this.props.group}/>
-                            )
+                            );
                         }else if(this.props.group.isPlaceCardActive){
                             if(this.props.selfRankCompleted){
-                                if(this.props.feedbackRankIncomplete){
+                                if(this.props.group.isPlaceCardFinished){
                                     return(
-                                        <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
-                                    )
+                                        <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
+                                    );
                                 }
                                 else{
                                     return(
-                                        <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
-                                    )
+                                        <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
+                                    );
                                 }
                             }else{
                                 return (
@@ -75,7 +75,7 @@ class QuizRankPage extends React.Component {
                         }else{
                             return(
                                 <SessionWait/>
-                            )
+                            );
                         }
                     }else{
                         return(
@@ -118,7 +118,6 @@ export default withTracker((props) => {
     var currentUser;
     var surveyCompleted;
     var selfRankCompleted;
-    var feedbackRankIncomplete;
     var isGroupMember;
 
     if(props.user && props.user.profile.selfRank){
@@ -156,16 +155,6 @@ export default withTracker((props) => {
                 isGroupMember = group && group.userIds && group.userIds.indexOf(userId) > -1;
                 surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
                 selfRankCompleted = group.userIdsSelfRankCompleted && group.userIdsSelfRankCompleted.indexOf(userId) > -1;
-
-                feedbackRankIncomplete = FeedbackRank.findOne(
-                    {
-                        groupId:group._id,
-                        $or : [ {"isSelected":false}, 
-                                {"rank":{$exists: false}}
-                            ],
-                    }
-                );
-
                 dataReady = true;
             }
         }
@@ -178,7 +167,6 @@ export default withTracker((props) => {
       currentUser:currentUser,
       surveyCompleted:surveyCompleted,
       selfRankCompleted:selfRankCompleted,
-      feedbackRankIncomplete:feedbackRankIncomplete,
       isGroupMember:isGroupMember,
       dataReady:dataReady,
   };

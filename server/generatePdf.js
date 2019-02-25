@@ -152,16 +152,7 @@ Meteor.methods({
       }
 
       //check if place card session is complete
-      var feedbackRankIncomplete = FeedbackRank.findOne(
-        {
-            groupId:groupCheck._id,
-            $or : [ {"isSelected":false}, 
-                    {"rank":{$exists: false}}
-                ],
-        }
-      );
-
-      if(groupCheck && feedbackRankIncomplete){
+      if(groupCheck && groupCheck.isPlaceCardFinished){
         throw (new Meteor.Error("group_place_card_session_not_done")); 
       }
 

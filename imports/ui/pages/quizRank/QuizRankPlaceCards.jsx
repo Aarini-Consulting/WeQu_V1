@@ -46,7 +46,7 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.dataReady && (!nextProps.cardPlacement || (nextProps.cardPlacement && !nextProps.cardPlacement.cardPicked))){
+        if(nextProps.dataReady && nextProps.group.isPlaceCardFinished && (!nextProps.cardPlacement || (nextProps.cardPlacement && !nextProps.cardPlacement.cardPicked))){
             Meteor.call( 'combine.rank.data', nextProps.group._id, Meteor.userId(), (error, result)=>{
                 if(error){
                     console.log(error)

@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import Error from '/imports/ui/pages/error/Error';
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankOther from './QuizRankOther';
 
@@ -112,12 +113,11 @@ class QuizRankWait extends React.Component {
                     )
                     
                 }else{
-                    return false;
+                    return (
+                        <Error/>
+                    );
                 }   
             }
-            
-            
-            
         }else{
             return(
                 <Loading/>
