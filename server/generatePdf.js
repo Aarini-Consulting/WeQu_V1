@@ -112,7 +112,7 @@ Meteor.methods({
           throw (new Meteor.Error("unknown_group")); 
       }
 
-      if(groupCheck && !groupCheck.isFinished){
+      if(groupCheck && !groupCheck.isPlaceCardFinished){
         throw (new Meteor.Error("group_session_not_done")); 
       }
 
@@ -152,7 +152,7 @@ Meteor.methods({
       }
 
       //check if place card session is complete
-      if(groupCheck && groupCheck.isPlaceCardFinished){
+      if(groupCheck && !groupCheck.isPlaceCardFinished){
         throw (new Meteor.Error("group_place_card_session_not_done")); 
       }
 

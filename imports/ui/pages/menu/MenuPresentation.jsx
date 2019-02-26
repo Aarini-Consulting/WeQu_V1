@@ -30,7 +30,7 @@ export default class Menu extends React.Component {
     render() {
         return (
             <div className="div-block-center">
-                <div className="menubar w-clearfix">
+                <div className="menubar presentation w-clearfix">
                     <div className="screentitlebttn">
                         <a className="w-clearfix w-inline-block cursor-pointer menubar-bttn-white" onClick={()=>{
                         this.props.history.goBack();

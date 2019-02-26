@@ -728,6 +728,11 @@ body {
   flex-direction: row;
 }
 
+.menubar.presentation {
+  background-color: transparent;
+  background-image: none;
+}
+
 .hamburger-menu-open {
   display: block;
   position: absolute;
