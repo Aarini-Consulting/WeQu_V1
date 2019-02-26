@@ -29,7 +29,7 @@ class GroupReportPage extends React.Component {
                 loadingPreview: true, 
                 preview:undefined 
             },()=>{
-                if(this.state.selectedUser && this.props.group && this.props.group.isFinished){
+                if(this.state.selectedUser && this.props.group && this.props.group.isPlaceCardFinished){
                     this.generatePreview(this.state.downloadIndividualLang);
                 }
             }
@@ -93,7 +93,7 @@ class GroupReportPage extends React.Component {
     }
     selectUser(uid){
         this.setState({ loadingPreview: true, selectedUser: uid, preview:undefined },()=>{
-            if(this.state.selectedUser && this.props.group && this.props.group.isFinished){
+            if(this.state.selectedUser && this.props.group && this.props.group.isPlaceCardFinished){
                 this.generatePreview(this.state.downloadIndividualLang);
             }
         });
@@ -145,7 +145,7 @@ class GroupReportPage extends React.Component {
                         </div>
                         <div className="report-content">
                             <div className="report-active">
-                            {this.props.group.isFinished
+                            {this.props.group.isPlaceCardFinished
                                 ?
                                     this.state.selectedUser 
                                     ?
