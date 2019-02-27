@@ -69,7 +69,7 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
               return d.value;
             })
            ])
-           .range([10,100]);
+           .range([width/200,width/20]);
 
         cloud().size([width, height])
           .timeInterval(20)
