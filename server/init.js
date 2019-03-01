@@ -1,31 +1,49 @@
 
 Meteor.startup(function () {
 
+  // if (Meteor.isServer) {
+  //     Meteor.startup(function () {
+  //         WebApp.rawConnectHandlers.use(function (req, res, next) {
+  //             res.setHeader('cache-control', 'no-cache');
+  //             res.setHeader('expires', '0');
+  //             res.setHeader('Content-Type', 'text/html');
+  //             res.setHeader('charset', 'utf-8');
+  //             next();
+  //         });
+  //     });
+  // }
+
+  WebApp.rawConnectHandlers.use(function (req, res, next) {
+      res.setHeader('cache-control', 'no-cache');
+      res.setHeader('expires', '0');
+      next();
+  });
+
    //process.env.MONGO_URL="mongodb://WeQuAdmin:Saffr0n@86@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-01-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-02-tdmtm.mongodb.net:27017/admin?replicaSet=WeQu-Feedback-App-shard-0&ssl=true";
 
    // Linked in configuration
-   var clientId,secret;
-    if(Meteor.isDevelopment)
-    {
-        clientId = "81c7xemys60qav";
-        secret = "SrqKYk5zbL9nZ0xz";
-    }
-    if(Meteor.isProduction){
-        clientId = "758ew0beoeqe01";
-        secret = "qwAMdc8wlJ3KxgY1";
-    }
+  //  var clientId,secret;
+  //   if(Meteor.isDevelopment)
+  //   {
+  //       clientId = "81c7xemys60qav";
+  //       secret = "SrqKYk5zbL9nZ0xz";
+  //   }
+  //   if(Meteor.isProduction){
+  //       clientId = "758ew0beoeqe01";
+  //       secret = "qwAMdc8wlJ3KxgY1";
+  //   }
 
-    Accounts.loginServiceConfiguration.upsert({
-        service: 'linkedin'
-      }, 
-      {$set: {
-        service: 'linkedin',
-        clientId:clientId,
-        secret: secret,
-        loginStyle: 'popup'
-        }
-      } 
-    );
+  //   Accounts.loginServiceConfiguration.upsert({
+  //       service: 'linkedin'
+  //     }, 
+  //     {$set: {
+  //       service: 'linkedin',
+  //       clientId:clientId,
+  //       secret: secret,
+  //       loginStyle: 'popup'
+  //       }
+  //     } 
+  //   );
 
     
     // Accounts.validateNewUser(function (user) {
