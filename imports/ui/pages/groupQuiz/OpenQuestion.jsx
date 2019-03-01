@@ -73,6 +73,8 @@ class OpenQuestion extends React.Component {
 
   renderInputFields(){
     var fields=[];
+    var maxLength=25;
+
     for(index=0;index<this.props.answerCount;index++){
       var required = false;
       if(index == 0){
@@ -80,9 +82,19 @@ class OpenQuestion extends React.Component {
       }
 
       fields.push(
-        <input className="group-quiz-open-question-field w-input" maxLength="256" placeholder="your answer" type="text"
-        key={`Open-Question-Answer-${this.props.groupId}-${index}`}
-        value={this.state.value[index]} onChange={this.handleChange.bind(this,index)} required={required} />
+        <span>
+          <input className="group-quiz-open-question-field w-input" maxLength={maxLength} placeholder="your answer" type="text"
+          key={`Open-Question-Answer-${this.props.groupId}-${index}`}
+          value={this.state.value[index]} onChange={this.handleChange.bind(this,index)} required={required} />
+          {this.state.value[index] && this.state.value[index].length > 0 
+            ?
+            <p>{this.state.value[index].length}/{maxLength}</p>
+            :
+            <p>0/{maxLength}</p>
+          }
+          
+        </span>
+        
       )
     }
 
