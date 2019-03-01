@@ -595,7 +595,12 @@ class GroupPage extends React.Component {
               </div>
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
                 <div className="tabs w-tabs" style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
-                  <GroupPresentation language={this.state.selectedGroupLanguage} group={this.props.group} frameIsLoaded={this.frameIsLoaded.bind(this)}/>
+                  <GroupPresentation 
+                  language={this.state.selectedGroupLanguage} 
+                  group={this.props.group} 
+                  frameIsLoaded={this.frameIsLoaded.bind(this)}
+                  display={this.state.currentTab == "presentation"}
+                  />
                 </div>
               }
               
