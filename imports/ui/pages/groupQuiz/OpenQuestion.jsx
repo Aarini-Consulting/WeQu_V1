@@ -81,19 +81,19 @@ class OpenQuestion extends React.Component {
         required = true;
       }
 
+      var charLength = 0;
+
+      if(this.state.value[index] && this.state.value[index].length > 0){
+        charLength = this.state.value[index].length;
+      }
+
+
       fields.push(
-        <span>
-          <input className="group-quiz-open-question-field w-input" maxLength={maxLength} placeholder="your answer" type="text"
-          key={`Open-Question-Answer-${this.props.groupId}-${index}`}
+        <div className="group-quiz-open-question-field-container" key={`Open-Question-Answer-${this.props.groupId}-${index}`}>
+          <input className="group-quiz-open-question-field" maxLength={maxLength} placeholder="your answer" type="text"
           value={this.state.value[index]} onChange={this.handleChange.bind(this,index)} required={required} />
-          {this.state.value[index] && this.state.value[index].length > 0 
-            ?
-            <p>{this.state.value[index].length}/{maxLength}</p>
-            :
-            <p>0/{maxLength}</p>
-          }
-          
-        </span>
+          <div className="group-quiz-open-question-field-counter">{maxLength - charLength}</div>
+        </div>
         
       )
     }

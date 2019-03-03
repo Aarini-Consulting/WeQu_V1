@@ -4343,19 +4343,45 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   z-index: 1;
 }
 
+.group-quiz-open-question-field-container{
+  position: relative;
+} 
+
+.group-quiz-open-question-field-counter{
+  display:inline-block;
+  position: absolute;
+  margin-top:1em;
+  width:2em;
+  height: 2.25em;
+  line-height: 2.25em;
+  right:0;
+  color:#fff;
+} 
+
 .group-quiz-open-question-field {
+  display:inline-block;
+  width:100%;
+  padding-top:0.5em;
+  padding-left:0.5em;
+  padding-bottom:0.5em;
+  padding-right:2em;
   margin-top: 1em;
   border-style: 2px solid;
   border-bottom-color: #b9b9b9;
   font-family: Raleway, sans-serif;
   text-align: left;
-  height: 35px;
+  height: 2.25em;
   color:#fff;
   background-color: transparent;
 }
 
+.group-quiz-open-question-field::placeholder {
+  color:#b9b9b9;
+}
+
 .group-quiz-open-question-field:focus {
-  border-width: 2px;
+  outline: none;
+  border-style: 2px solid;
   border-color: #e4b139;
 }
 
