@@ -18,7 +18,7 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
         var margin = {"top": 20, "right": 12, "bottom": 20, "left": 40 }
         var width = 600;
         var height = 300;
-        var colorRange = ["#3e9f32","#6A62B3","#fd9a3e","#05a5d5","#6A1B58","#fc808c"];
+        var colorRange = ["#40BFBB","#6A62B3","#F95A37","#05a5d5","#6A1B58","#F54B73"];
 
         if(props.isEmpty){
             colorRange = ["#d1d1d1"];

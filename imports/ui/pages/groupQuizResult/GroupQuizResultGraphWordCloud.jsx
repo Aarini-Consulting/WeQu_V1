@@ -60,7 +60,7 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
             })
           }
 
-        var fill = d3.scaleOrdinal(["#3e9f32","#6A62B3","#fd9a3e","#05a5d5","#6A1B58","#fc808c"]);
+        var fill = d3.scaleOrdinal(["#40BFBB","#6A62B3","#F95A37","#05a5d5","#6A1B58","#F54B73"]);
 
         var word_entries = d3.entries(word_count);
 
