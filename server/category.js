@@ -112,8 +112,6 @@ Meteor.methods({
                 to:{$ne:userId}
             }
         );
-
-        console.log(feedbackRankOthersExist);
         
         //only run this block if no feedback to others found
         if(!feedbackRankOthersExist){
@@ -607,12 +605,13 @@ Meteor.methods({
         var resultCards = Meteor.call( 'generate.card.from.csv');
 
         if(resultCategories){
+            var categories = JSON.parse(JSON.stringify(resultCategories));
+
             users.forEach(function(user, index, _arr) {
                 var cardPlacementCheck = CardPlacement.findOne({
                     'groupId': groupId,'userId': user._id,"combinedRank":{$exists: true},"rankOrder":{$exists: true}
                 });
                 if(cardPlacementCheck){
-                    var categories = JSON.parse(JSON.stringify(resultCategories));
                     var top = cardPlacementCheck.rankOrder;
                     var low = cardPlacementCheck.rankOrder.slice().reverse();
 
@@ -653,6 +652,23 @@ Meteor.methods({
 
                                         //removed from main category pool
                                         categoryKeys.splice(categoryIndex, 1);
+                                    }else{
+                                         //no card available, refresh data and pick something random instead
+                                        var refreshedCategories = JSON.parse(JSON.stringify(resultCategories));
+                                        var subCategoryIndex = refreshedCategories[topRank.category].subCategory.indexOf(topRank.subCategory)
+                                        var subCategoryCards = resultCards[topRank.subCategory].cards;
+                                       
+                                        //selected
+                                        topPicked.push(topRank);
+
+                                        //pick card
+                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                        cardPicked.push(
+                                            {
+                                                category:topRank.category,
+                                                subCategory:topRank.subCategory, 
+                                                cardId:randomCard[0]
+                                            });
                                     }
                                 }
                             }else{
@@ -694,6 +710,23 @@ Meteor.methods({
 
                                         //removed keys from main category keys pool
                                         categoryKeys.splice(categoryIndex, 1);
+                                    }else{
+                                        //no card available, refresh data and pick something random instead
+                                        var refreshedCategories = JSON.parse(JSON.stringify(resultCategories));
+                                        var subCategoryIndex = refreshedCategories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
+                                        var subCategoryCards = resultCards[lowRank.subCategory].cards;
+
+                                        //selected
+                                        lowPicked.push(lowRank);
+                                        
+                                        //pick card
+                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                        cardPicked.push(
+                                            {
+                                                category:lowRank.category,
+                                                subCategory:lowRank.subCategory, 
+                                                cardId:randomCard[0]
+                                            });
                                     }
                                 }
                             }
