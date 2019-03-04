@@ -545,7 +545,7 @@ class InviteGroup extends React.Component {
                         Group language
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
-                          <span className="tooltiptext">Define the session language - invitation email, baseline survey, presentation and quiz questions.</span>
+                          <span className="tooltiptext">Define the session language (e.g. invitation email, baseline survey, presentation and quiz questions).</span>
                         </div>
                       </div>
                       <select className="w-select w-inline-block pdf-download-lang-select" name="language"

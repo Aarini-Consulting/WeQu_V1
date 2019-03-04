@@ -2923,6 +2923,9 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   height: 100%;
   flex-grow: 1;
   overflow: auto;
+  border-left:10px solid;
+  border-right:10px solid;
+  border-bottom:10px solid;
 }
 
 .tab-end-session{
@@ -2934,15 +2937,19 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .tap {
   display:inline-block;
   height: 40px;
-  border-top: 1px solid #000;
-  border-right: 1px none #000;
-  border-left: 1px solid #000;
+  border-top: 1px solid #333;
+  border-right: 1px none #333;
+  border-left: 1px solid #333;
   background-color: #3f3f3f;
   color: #fff;
 }
 
+.tap-underline{
+  border-bottom:10px solid;
+}
+
 .tap-last{
-  border-right: 1px solid #000;
+  border-right: 1px solid #333;
 }
 
 .tap.gm{
@@ -2955,62 +2962,63 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color:#fff;
 }
 
-.tap-underline.gm {
-  border-bottom: 1px solid #345BB5;
+.tap-underline.gm, .tabs.w-tabs.gm{
+  border-color: #345BB5;
 }
 
-.tap.edit.w--current {
+.tap.edit.w--current, .tap.edit:hover {
   background-color: #40BFBB;
   color:#fff;
 }
 
-.tap-underline.edit {
-  border-bottom: 1px solid #40BFBB;
+.tap-underline.edit, .tabs.w-tabs.edit {
+  border-color: #40BFBB;
 }
 
-.tap.survey.w--current {
+.tap.survey.w--current, .tap.survey:hover {
   background-color: #F95A37;
   color:#fff;
 }
 
-.tap-underline.survey {
-  border-bottom: 1px solid #F95A37;
+.tap-underline.survey, .tabs.w-tabs.survey{
+  border-color: #F95A37;
 }
 
-.tap.presentation.w--current {
+.tap.presentation.w--current, .tap.presentation:hover {
   background-color: #6A62B3;
   color:#fff;
 }
 
-.tap-underline.presentation {
-  border-bottom: 1px solid #6A62B3;
+.tap-underline.presentation, .tabs.w-tabs.presentation{
+  border-color: #6A62B3;
+  overflow: hidden;
 }
 
-.tap.card.w--current {
+.tap.card.w--current, .tap.card:hover {
   background-color: #05a5d5;
   color:#fff;
 }
 
-.tap-underline.card {
-  border-bottom: 1px solid #05a5d5;
+.tap-underline.card, .tabs.w-tabs.card{
+  border-color:#05a5d5;
 }
 
-.tap.quiz.w--current {
+.tap.quiz.w--current, .tap.quiz:hover {
   background-color: #F54B73;
   color:#fff;
 }
 
-.tap-underline.quiz {
-  border-bottom: 1px solid #F54B73;
+.tap-underline.quiz, .tabs.w-tabs.quiz{
+  border-color:#F54B73;
 }
 
-.tap.report.w--current {
-  background-color: #6A1B58;
+.tap.report.w--current, .tap.report:hover {
+  background-color:#6A1B58;
   color:#fff;
 }
 
-.tap-underline.report {
-  border-bottom: 1px solid #6A1B58;
+.tap-underline.report, .tabs.w-tabs.report {
+  border-color:#6A1B58;
 }
 
 .tap-content-wrapper{

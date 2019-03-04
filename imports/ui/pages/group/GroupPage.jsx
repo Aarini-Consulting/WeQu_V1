@@ -564,37 +564,37 @@ class GroupPage extends React.Component {
 
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                 <div className="tabs-menu-inner-wrapper">
-                  <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
+                  <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
                     <div>Manage session</div>
-                  </a>
-                  <a className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
+                  </div>
+                  <div className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>
-                    <div>Present</div>
-                  </a>
-                  <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
+                    <div>Present slide</div>
+                  </div>
+                  <div className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"survey")}>
                     <div>View survey</div>
-                  </a>
-                  <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
+                  </div>
+                  <div className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
                     <div>Prepare cards</div>
-                  </a>
-                  <a className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
+                  </div>
+                  <div className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"quiz")}>
-                    <div>Do Quiz</div>
-                  </a>
-                  <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                    <div>Do quiz</div>
+                  </div>
+                  <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>
-                  </a>
+                  </div>
                 </div>
               </div>
-              <div className="tabs w-tabs"style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
+              <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
                   {tabContent}
               </div>
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
-                <div className="tabs w-tabs" style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
+                <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
                   <GroupPresentation 
                   language={this.state.selectedGroupLanguage} 
                   group={this.props.group} 
