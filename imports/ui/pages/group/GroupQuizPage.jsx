@@ -114,11 +114,21 @@ class GroupQuizPage extends React.Component {
     return this.props.groupQuizList.map((quiz, index) => {
       var className = "group-quiz-list-item cursor-pointer";
 
+      if(this.props.groupQuizDataList.length > 0){
+        var quizAnswers = this.props.groupQuizDataList.filter((quizAnswer)=>{
+          return quizAnswer.groupQuizId == quiz._id;
+        })
+
+        if(quizAnswers.length == this.props.group.userIdsSurveyed.length){
+          className = "group-quiz-list-item done noselect";
+        }
+      }
+
       if(this.state.selectedQuiz && this.state.selectedQuiz._id == quiz._id){
-        className = "group-quiz-list-item selected noselect"
+        className = "group-quiz-list-item selected noselect";
       }
       return(
-        <div className={className} 
+        <div className={className}
         key={`groupQuiz-list-${index}`} onClick={this.quizSelectCheck.bind(this,quiz)}>
           {index+1}
         </div>
@@ -259,7 +269,8 @@ class GroupQuizPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var groupQuizList=[];
-  var selectedGroupQuizDataList=[]
+  var selectedGroupQuizDataList=[];
+  var groupQuizDataList=[];
 
   var group = props.group;
   if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
@@ -286,10 +297,14 @@ export default withTracker((props) => {
 
       if(handleGroupQuizData.ready()){
         if(group.currentGroupQuizId){
-          selectedGroupQuizDataList=GroupQuizData.find({
+          selectedGroupQuizDataList = GroupQuizData.find({
             "groupId": group._id,
             "groupQuizId": group.currentGroupQuizId
-          }).fetch();  
+          }).fetch();
+
+          groupQuizDataList = GroupQuizData.find({
+            "groupId": group._id,
+          }).fetch();
         }
         
         dataReady = true;
@@ -301,6 +316,7 @@ export default withTracker((props) => {
   return {
       groupQuizList:groupQuizList,
       selectedGroupQuizDataList:selectedGroupQuizDataList,
+      groupQuizDataList:groupQuizDataList,
       dataReady:dataReady
   };
 })(GroupQuizPage);

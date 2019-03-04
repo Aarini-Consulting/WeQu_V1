@@ -97,6 +97,7 @@ class QuizRankWait extends React.Component {
                         <div className="fillHeight weq-bg">
                             <div className="font-rate padding-wrapper">
                             <T>weq.quizRankWait.MessageDoneLine1</T>
+                            <br/>
                             <T>weq.quizRankWait.MessageDoneLine2</T>
                             </div>
                         </div>
