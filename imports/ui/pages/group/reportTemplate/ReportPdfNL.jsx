@@ -118,7 +118,7 @@ export const ReportPdfNL = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6)+((propData.cardPickedData[2].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
+                    width:calculateChartLineWidth(propData.cardPickedData[2].maxValue,propData.cardPickedData[2].minValue) + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
                     <div className={`bar-value a category-${ propData.cardPicked[2].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3))-8 + "%"}}>
@@ -135,7 +135,7 @@ export const ReportPdfNL = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6)+((propData.cardPickedData[3].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
+                    width:calculateChartLineWidth(propData.cardPickedData[3].maxValue,propData.cardPickedData[3].minValue) + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
                     <div className={`bar-value a category-${ propData.cardPicked[3].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3))-8 + "%"}}>
@@ -152,7 +152,7 @@ export const ReportPdfNL = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6)+((propData.cardPickedData[4].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
+                    width:calculateChartLineWidth(propData.cardPickedData[4].maxValue,propData.cardPickedData[4].minValue) + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
                     <div className={`bar-value a category-${ propData.cardPicked[4].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3))-8 + "%"}}>
@@ -169,7 +169,7 @@ export const ReportPdfNL = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6)+((propData.cardPickedData[5].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
+                    width:calculateChartLineWidth(propData.cardPickedData[5].maxValue,propData.cardPickedData[5].minValue) + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
                     <div className={`bar-value a category-${ propData.cardPicked[5].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3))-8 + "%"}}>
@@ -186,7 +186,7 @@ export const ReportPdfNL = ({propData}) => (
                     <div className="bar-wrapper actual w-clearfix">
                     <div className="bar-team actual" style={{
                     left:(-99+((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6)+((propData.cardPickedData[6].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
+                    width:calculateChartLineWidth(propData.cardPickedData[6].maxValue,propData.cardPickedData[6].minValue) + "%"}}>
                         <div className="bar-line actual"></div>
                     </div>
                     <div className={`bar-value a category-${ propData.cardPicked[6].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3))-8 + "%"}}>

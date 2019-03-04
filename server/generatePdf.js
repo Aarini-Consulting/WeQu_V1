@@ -33,7 +33,7 @@ const generatePDF = async (html, fileName) => {
       request.respond({body: html});
       page.on('request', request => request.continue());
     });
-    await page.goto(home);
+    await page.goto(home,{waitUntil: 'networkidle2'});
 
     await page.emulateMedia('screen');
     var pdfBuffer = await page.pdf({
@@ -64,7 +64,7 @@ const generatePreview = async (html, fileName, dataType) => {
       request.respond({body: html});
       page.on('request', request => request.continue());
     });
-    await page.goto(home);
+    await page.goto(home,{waitUntil: 'networkidle2'});
 
     await page.emulateMedia('screen');
     
