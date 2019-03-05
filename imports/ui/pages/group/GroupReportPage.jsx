@@ -74,6 +74,24 @@ class GroupReportPage extends React.Component {
           if (error) {
             console.log(error);
           } else {
+            // if(response.results && Array.isArray(response.results)){
+            //     var JSZip = require("jszip");
+            //     var zip = new JSZip();
+            //     response.results.forEach((res)=>{
+            //       zip.file(res.fileName,res.base64,{base64:true});
+            //     });
+      
+            //     zip.generateAsync({type:"blob"})
+            //     .then((blob) => {
+            //       var link = document.createElement("a");
+            //       link.download = response.zipName;
+            //       link.href= window.URL.createObjectURL(blob);
+            //       document.body.appendChild(link);
+            //       link.click();
+            //       document.body.removeChild(link);
+            //     });
+            // }
+
             var JSZip = require("jszip");
             var zip = new JSZip();
             zip.file(response.fileName,response.base64,{base64:true});

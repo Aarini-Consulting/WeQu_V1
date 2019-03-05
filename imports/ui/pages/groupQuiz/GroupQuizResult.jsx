@@ -32,9 +32,11 @@ export default class GroupQuizResult extends React.Component {
                 <GraphComponent selectedQuiz={this.props.selectedQuiz} selectedQuizResult={this.props.selectedQuizResult}/>
               </div>
             </div>
-            <div className="font-rate font-name-header">
-              {this.props.audienceResponseCount}/{this.props.totalParticipant}
-            </div>
+            {this.props.totalParticipant && this.props.audienceResponseCount &&
+              <div className="font-rate font-name-header">
+                {this.props.audienceResponseCount}/{this.props.totalParticipant}
+              </div>
+            }
         </div>
     );
   }

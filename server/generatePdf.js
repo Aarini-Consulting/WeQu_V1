@@ -7,6 +7,9 @@ import puppeteer from 'puppeteer'
 import {ReportPdfEN} from '/imports/ui/pages/group/reportTemplate/ReportPdfEN';
 import {ReportPdfNL} from '/imports/ui/pages/group/reportTemplate/ReportPdfNL';
 import {ReportPdfFR} from '/imports/ui/pages/group/reportTemplate/ReportPdfFR';
+import {GroupQuizReportPdf} from '/imports/ui/pages/group/reportTemplate/GroupQuizReportPdf';
+
+import i18n from 'meteor/universe:i18n';
 
 
 const getBase64String = (path) => {
@@ -90,8 +93,28 @@ const getComponentAsHTML = (component, props) => {
   }
 };
 
-const generateComponentAsPDF = async ({ component, props, fileName, dataType }) => {
-  const html = getComponentAsHTML(component, props);
+const generateComponentAsPDF = async ({ languageCode, component, props, fileName, dataType }) => {
+  var supportedLocale = Meteor.settings.public.supportedLocale;
+  var locale;
+  var langObj;
+  supportedLocale.forEach((sl)=>{
+    var lang = sl.split("-")[0];
+    if(langObj){
+      langObj[lang] = sl;
+    }else{
+      langObj = {[lang]:sl};
+    }
+  });
+
+  if(langObj[languageCode]){
+    locale = langObj[languageCode];
+  }else{
+    locale = supportedLocale[0];
+  }
+
+  const html = i18n.runWithLocale(locale, ()=>{
+    return getComponentAsHTML(component, props);
+  });
   if (html && fileName){
     if(dataType === "pdf"){
       return await generatePDF(html, fileName);
@@ -112,10 +135,6 @@ Meteor.methods({
           throw (new Meteor.Error("unknown_group")); 
       }
 
-      if(groupCheck && !groupCheck.isPlaceCardFinished){
-        throw (new Meteor.Error("group_session_not_done")); 
-      }
-
       var zipName = groupCheck.groupName + "_report.zip";
 
       var users = Meteor.users.find({
@@ -124,11 +143,8 @@ Meteor.methods({
 
       var results = [];
       users.forEach((user) => {
-        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
-        if(cardPlacementCheck){
-          var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id, languageCode);
-          results.push(result);
-        }
+        var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id, languageCode);
+        results.push(result);
       });
 
       return {zipName:zipName,results:results};
@@ -242,7 +258,35 @@ Meteor.methods({
       }else{
         reportTemplate = ReportPdfEN;
       }
-      return (await generateComponentAsPDF({ component: reportTemplate, props: {propData}, fileName, dataType }));
+
+      // if(dataType=="pdf"){
+      //   var results=[];
+      //   var cardQuizResult = await generateComponentAsPDF({ languageCode:languageCode, component: reportTemplate, props: {propData}, fileName, dataType });
+      //   results.push(cardQuizResult);
+
+      //   if(groupCheck.groupQuizIdList && groupCheck.groupQuizIdList.length > 0){
+      //     groupCheck.groupQuizIdList.forEach(quizId => {
+      //       var gqPropData = {}
+      //       gqPropData.selectedQuiz = GroupQuiz.findOne({_id : quizId});
+      //       gqPropData.selectedQuizResult = GroupQuizData.find({
+      //         "groupId": groupCheck._id,
+      //         "groupQuizId": quizId
+      //       }).fetch();
+
+      //       var gqFilename = gqPropData.question;
+
+      //       var groupQuizResult = await generateComponentAsPDF({ languageCode:languageCode, component: GroupQuizReportPdf, props: {gqPropData}, gqFilename, dataType });
+      //       results.push(groupQuizResult);
+      //     });
+      //   }
+
+      //   return results;
+
+      // }else{
+      //   return (await generateComponentAsPDF({ languageCode:languageCode, component: reportTemplate, props: {propData}, fileName, dataType }));
+      // }
+      return (await generateComponentAsPDF({ languageCode:languageCode, component: reportTemplate, props: {propData}, fileName, dataType }));
+      
     },
 
     'generate.preview' : function (groupId, userId, languageCode) {
