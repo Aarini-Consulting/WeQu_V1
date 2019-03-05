@@ -36,7 +36,7 @@ export default class GroupQuizCmcLanding extends React.Component {
             </div>
             <div className="div-block-center cursor-pointer">
               <div className="w-inline-block">
-                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.props.getQuizResult}>
+                <div className="font-rate f-bttn group-quiz-cmc-screen-button w-inline-block noselect" onClick={this.props.getQuizResult}>
                   Get Result
                 </div>
               </div>

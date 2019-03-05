@@ -137,14 +137,17 @@ class GroupQuizPage extends React.Component {
   }
 
   renderQuestionListPlaceholder(){
-    var dummyQuizList=[1,2,3,4,5,6,7,8,9,10];
-    return dummyQuizList.map((quiz, index) => {
-      return(
-        <div className={`group-quiz-list-item placeholder noselect`} key={`groupQuiz-list-${index}`}>
-          #
-        </div>
-      );
-    });
+    if(this.props.groupQuizIdList){
+      return this.props.groupQuizIdList.map((quiz, index) => {
+        return(
+          <div className={`group-quiz-list-item placeholder noselect`} key={`groupQuiz-list-${index}`}>
+            #
+          </div>
+        );
+      });
+    }else{
+      return false;    
+    }
   }
 
   render() {

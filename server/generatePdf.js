@@ -147,15 +147,6 @@ Meteor.methods({
           throw (new Meteor.Error("unknown_group")); 
       }
 
-      if(groupCheck && !groupCheck.isActive){
-        throw (new Meteor.Error("group_inactive")); 
-      }
-
-      //check if place card session is complete
-      // if(groupCheck && !groupCheck.isPlaceCardFinished){
-      //   throw (new Meteor.Error("group_place_card_session_not_done")); 
-      // }
-
       var creator = Meteor.users.findOne({_id:groupCheck.creatorId});
       if(!creator){
         throw (new Meteor.Error("group_creator_not_found")); 
