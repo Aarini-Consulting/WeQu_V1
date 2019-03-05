@@ -3897,6 +3897,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   transition: transform 200ms ease, -webkit-transform 200ms ease;
 }
 
+.font-rate.f-bttn.group-quiz-cmc-screen-button {
+  background-color: #F54B73
+}
+
 .font-rate.f-bttn:active {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
