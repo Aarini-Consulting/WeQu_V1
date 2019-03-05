@@ -152,9 +152,9 @@ Meteor.methods({
       }
 
       //check if place card session is complete
-      if(groupCheck && !groupCheck.isPlaceCardFinished){
-        throw (new Meteor.Error("group_place_card_session_not_done")); 
-      }
+      // if(groupCheck && !groupCheck.isPlaceCardFinished){
+      //   throw (new Meteor.Error("group_place_card_session_not_done")); 
+      // }
 
       var creator = Meteor.users.findOne({_id:groupCheck.creatorId});
       if(!creator){
@@ -173,67 +173,71 @@ Meteor.methods({
 
       var fileName = groupCheck.groupName + "_" + user.profile.firstName + "_" + user.profile.lastName + "_" + user._id +"."+dataType;
 
-      var individualCardPlacement = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
-
-      var collectiveCardPlacements = CardPlacement.find({'groupId': groupCheck._id}).fetch();
-
-      var cardPickedData = [];
-
-      //order the card picked by value
-      //the last 3 card are picked from an array of rank data that is ordered by value (highest to lowest)
-      //therefore, simply reversing it would do the trick
-      var top4 = individualCardPlacement.cardPicked.splice(0, 4);
-      var low3 = individualCardPlacement.cardPicked.reverse();
-
-      var sortedCard = top4.concat(low3);
-
-      sortedCard.forEach((card) => {
-        var cardData = individualCardPlacement.rankOrder.find(function(element) {
-          return (element.category == card.category && element.subCategory == card.subCategory);
-        });
-        var minValue;
-        var maxValue;
-        //get all values for this subCategory from everyone in the group
-        var valueHolder = [];
-        collectiveCardPlacements.forEach((ccp) => {
-          ccp.rankOrder.forEach((ro)=>{
-            if(ro.category == card.category && ro.subCategory == card.subCategory){
-              valueHolder.push(parseFloat(ro.value));
-            }
-          })
-        });
-        
-        //get minimum and max value for this subCategory from everyone in the group
-        minValue = Math.min(...valueHolder);
-        maxValue = Math.max(...valueHolder);
-
-        if((isNaN(parseFloat(minValue)) || !isFinite(minValue)) || (isNaN(parseFloat(maxValue)) || !isFinite(maxValue))){
-          minValue = 1;
-          maxValue = 1;
-        }
-
-        if(cardData){
-          cardData.minValue = minValue;
-          cardData.maxValue = maxValue;
-        }else{
-          cardData = {category:card.category,
-            subCategory:card.subCategory,
-            value:1,
-            minValue:minValue, 
-            maxValue:maxValue};
-        }
-        
-        cardPickedData.push(cardData);
-      })
-
       var propData = { 
         firstName: user.profile.firstName, 
         lastName: user.profile.lastName,
         groupName: groupCheck.groupName,
         groupCreatorFirstName: creator.profile.firstName,
-        groupCreatorLastName: creator.profile.lastName,
-        cardPicked: sortedCard,
-        cardPickedData: cardPickedData };
+        groupCreatorLastName: creator.profile.lastName
+      };
+        
+      if(groupCheck.isPlaceCardFinished){
+        var individualCardPlacement = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
+
+        var collectiveCardPlacements = CardPlacement.find({'groupId': groupCheck._id}).fetch();
+
+        var cardPickedData = [];
+
+        //order the card picked by value
+        //the last 3 card are picked from an array of rank data that is ordered by value (highest to lowest)
+        //therefore, simply reversing it would do the trick
+        var top4 = individualCardPlacement.cardPicked.splice(0, 4);
+        var low3 = individualCardPlacement.cardPicked.reverse();
+
+        var sortedCard = top4.concat(low3);
+
+        sortedCard.forEach((card) => {
+          var cardData = individualCardPlacement.rankOrder.find(function(element) {
+            return (element.category == card.category && element.subCategory == card.subCategory);
+          });
+          var minValue;
+          var maxValue;
+          //get all values for this subCategory from everyone in the group
+          var valueHolder = [];
+          collectiveCardPlacements.forEach((ccp) => {
+            ccp.rankOrder.forEach((ro)=>{
+              if(ro.category == card.category && ro.subCategory == card.subCategory){
+                valueHolder.push(parseFloat(ro.value));
+              }
+            })
+          });
+          
+          //get minimum and max value for this subCategory from everyone in the group
+          minValue = Math.min(...valueHolder);
+          maxValue = Math.max(...valueHolder);
+
+          if((isNaN(parseFloat(minValue)) || !isFinite(minValue)) || (isNaN(parseFloat(maxValue)) || !isFinite(maxValue))){
+            minValue = 1;
+            maxValue = 1;
+          }
+
+          if(cardData){
+            cardData.minValue = minValue;
+            cardData.maxValue = maxValue;
+          }else{
+            cardData = {category:card.category,
+              subCategory:card.subCategory,
+              value:1,
+              minValue:minValue, 
+              maxValue:maxValue};
+          }
+          
+          cardPickedData.push(cardData);
+        });
+
+        propData.cardPicked = sortedCard;
+        propData.cardPickedData = cardPickedData; 
+      }
 
       var reportTemplate;
       var reportTemplates = {

@@ -31,7 +31,6 @@ export default class ReportPdf extends React.Component {
                 {category:'problem_solving',subCategory:'inquisitive',value:6,minValue:4.2,maxValue:6},
             ]
         }
-        console.log(propData);
         return(
             <html>
                 <head>

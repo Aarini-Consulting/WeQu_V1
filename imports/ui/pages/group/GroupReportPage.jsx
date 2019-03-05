@@ -29,7 +29,7 @@ class GroupReportPage extends React.Component {
                 loadingPreview: true, 
                 preview:undefined 
             },()=>{
-                if(this.state.selectedUser && this.props.group && this.props.group.isPlaceCardFinished){
+                if(this.state.selectedUser && this.props.group){
                     this.generatePreview(this.state.downloadIndividualLang);
                 }
             }
@@ -93,7 +93,7 @@ class GroupReportPage extends React.Component {
     }
     selectUser(uid){
         this.setState({ loadingPreview: true, selectedUser: uid, preview:undefined },()=>{
-            if(this.state.selectedUser && this.props.group && this.props.group.isPlaceCardFinished){
+            if(this.state.selectedUser && this.props.group){
                 this.generatePreview(this.state.downloadIndividualLang);
             }
         });
@@ -124,17 +124,19 @@ class GroupReportPage extends React.Component {
         if(this.props.dataReady){
             if(this.props.group){
                 return (
-                    <div>
+                    <div className="report-page-container">
                         <div className="user-name">
                             <div className="menu-name w-inline-block">
-                            <div className={"report-name "+ (this.state.selectedUser === false ? "active":"")} onClick={this.selectUser.bind(this,false)}>All</div>
+                            <div className={"report-name "+ (this.state.selectedUser === false ? "active":"")} onClick={this.selectUser.bind(this,false)}>Group</div>
                             </div>
                             {this.props.users &&
                                 this.props.users.map((user) =>
                                 <div className="menu-name w-inline-block cursor-pointer" key={user._id} onClick={this.selectUser.bind(this,user._id)}>
                                 {user.profile.firstName && user.profile.lastName 
                                     ?
-                                    <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.profile.firstName}&nbsp;{user.profile.lastName}</div>
+                                    <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>
+                                        {user.profile.firstName}&nbsp;{user.profile.lastName}
+                                    </div>
                                     :
                                     <div className={"report-name "+ (this.state.selectedUser == user._id ? "active":"")}>{user.emails[0].address}</div>
                                 }
@@ -145,9 +147,7 @@ class GroupReportPage extends React.Component {
                         </div>
                         <div className="report-content">
                             <div className="report-active">
-                            {this.props.group.isPlaceCardFinished
-                                ?
-                                    this.state.selectedUser 
+                                {this.state.selectedUser 
                                     ?
                                     <div className="container-2 w-container">
                                         <div className="a4">
@@ -179,13 +179,17 @@ class GroupReportPage extends React.Component {
                                                     {this.renderLanguageList()}
                                                 </select>
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
-                                                Download Individual Report
+                                                Download
                                                 </div>
                                             </div>
                                         }
                                     </div>
                                     :
                                     <div className="container-2 w-container">
+                                        <div className="a4">
+                                            <img src="/img/report/group-preview.jpg" alt="preview" width="300" height="420"/>
+                                        </div>
+
                                         {this.state.generatingPdf 
                                         ?
                                             <div className="pdf-download-wrapper">
@@ -194,23 +198,19 @@ class GroupReportPage extends React.Component {
                                                 </div>
                                             </div>
                                         :
-
                                             <div className="pdf-download-wrapper">
+
                                                 <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                                                 value={this.state.downloadAllLang} onChange={this.handleChangeAllLang.bind(this)}>
                                                     {this.renderLanguageList()}
                                                 </select>
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
-                                                Download All Report
+                                                Download
                                                 </div>
                                             </div>
                                         }
                                     </div>
-                                :
-                                <div className="container-2 w-container">
-                                    <div className="emptytext group">Report functionalities will be available when "Prepare cards" is finished</div>
-                                </div>
-                            }
+                                }
                             </div>
                         </div>
                     </div>
