@@ -110,7 +110,12 @@ const App = class App extends React.Component {
       //logout detected, set locale back to its initial locale
       this.unsetLocale();
     }
-    this.setLocale(nextProps);
+
+    //only run setlocale on first time (to prevent overriding locale set from group page)
+    //I resorted to this hack because i18n.runWithLocale() doesn't seem to work on the client side of the app
+    if(!this.props.currentUser && nextProps.currentUser){
+      this.setLocale(nextProps);
+    }
   }
 
   componentDidMount(){
@@ -129,8 +134,10 @@ const App = class App extends React.Component {
 
     //override detected locale with locale value from user profile
     var user = props.currentUser;
+    var userHasLocale;
     if(user && user.profile && user.profile.locale){
       locale = user.profile.locale;
+      userHasLocale = true;
     }
     
     var languageCode;
@@ -160,6 +167,15 @@ const App = class App extends React.Component {
       }else{
         locale = supportedLocale[0];
       }
+    }
+
+    if(!userHasLocale){
+      //set user's locale
+      Meteor.call( 'user.set.locale', locale, ( error, response ) => {
+        if ( error ) {
+          console.log(error);
+        }
+      });
     }
 
     i18n.setLocale(locale).then(() => {

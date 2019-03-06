@@ -39,6 +39,17 @@ class EditEntry extends React.Component {
             gender:props.currentUser.profile.gender,
         })
     }
+    var user = props.currentUser;
+    var userLocale;
+    if(user && user.profile && user.profile.locale){
+      locale = user.profile.locale;
+    }
+
+    if(userLocale){
+        this.setState({
+            locale:userLocale,
+        })
+    }
   }
 
   genderChange(gender){

@@ -23,7 +23,6 @@ class GroupPage extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
-        initialLocale:i18n.getLocale(),
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
         showInviteGroup:false,
         showConfirm:false,
@@ -68,10 +67,13 @@ class GroupPage extends React.Component {
   }
 
   componentWillUnmount(){
-    var currentLocale = i18n.getLocale();
-    if(currentLocale != this.state.initialLocale){
-      i18n.setLocale(this.state.initialLocale);
+    
+    var userLocale = i18n.getLocale();
+    var user = this.props.currentUser;
+    if(user && user.profile && user.profile.locale){
+      userLocale = user.profile.locale;
     }
+    i18n.setLocale(userLocale);
   }
 
   showInviteGroup(bool){
