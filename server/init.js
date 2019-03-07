@@ -18,9 +18,7 @@ Meteor.startup(function () {
       res.setHeader('expires', '0');
       next();
   });
-
-   //process.env.MONGO_URL="mongodb://WeQuAdmin:Saffr0n@86@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-01-tdmtm.mongodb.net:27017,wequ-feedback-app-shard-00-02-tdmtm.mongodb.net:27017/admin?replicaSet=WeQu-Feedback-App-shard-0&ssl=true";
-
+  
    // Linked in configuration
   //  var clientId,secret;
   //   if(Meteor.isDevelopment)
@@ -45,59 +43,9 @@ Meteor.startup(function () {
   //     } 
   //   );
 
-    
-    // Accounts.validateNewUser(function (user) {
-    //     // TODO : On invited user onboarding , if his email id , already registered with the system .
-    //     // Then copy the services object , update in existing account.
-
-        
-        
-
-    //     if(user.services && user.services.linkedin && user.services.linkedin.emailAddress )
-    //     {
-    //       let email = user.services.linkedin.emailAddress;
-    //       let existingUser = Meteor.users.findOne({$or : [ {"emails.address" : email }, { "profile.emailAddress" : email  }]});
-    //       let exists = !existingUser ? false  :true ;
-
-    //       if(exists){
-    //         let linkedin = user.services.linkedin ;
-    //        // user.services.linkedin = ""; // Doing this to avoid --- Duplicate id exists --- 
-           
-    //           Meteor.setTimeout(function () {
-    //           try{
-    //              console.log("\n -------- linkedin ---------- \n ",linkedin);
-    //              Meteor.users.update({_id: existingUser._id}, {$set: {'services.linkedin' : linkedin  } });         
-    //           }
-    //           catch(e){
-    //             console.log(e);
-    //           }
-    //          },2000);
-    //         // return false;
-    //          throw new Meteor.Error( user, "Error: User validation failed [403]");
-    //       }
-    //     }
-    //     else {
-    //       let email = `^${user.emails[0].address}$`;
-    //       let existingUser = Meteor.users.findOne({ "profile.emailAddress" : {'$regex' :email,$options:'i'}});
-
-    //       let exists = !existingUser ? false  :true ;
-
-    //       if(exists){
-    //       // Normal User tries to signup with existing linked in id - Prevent Bug #3
-    //       throw new Meteor.Error( user, "Error: Email already exists ");            
-    //       }
-
-    //     }
-
-    //   return true;
-
-    // });
-
     // On Creating user gives a call back function
     Accounts.onCreateUser(function (options, user) {
         user.profile = options.profile || {};
-        // user.profile.loginScript = 'init';
-        // user.profile.gradient = Math.floor(Math.random() * 5) + 1;
         user.profile.firstName = options.firstName;
         user.profile.lastName = options.lastName;
 
@@ -109,49 +57,8 @@ Meteor.startup(function () {
             user.profile.trial = options.trial; // account created by user then set to false
         }
 
-        // console.log('----- \n onUserCreated ---------- \n', user);
-
         return user;
 
     });
-
-   // Accounts.config({sendVerificationEmail: true, forbidClientAccountCreation: false});
-
-
-    //update old group db to new version
-    var oldGroups = Group.find({emails:{$exists: true}}).fetch();
-
-    if(oldGroups.length > 0){
-      oldGroups.forEach(function (group) {
-				var groupUsers = Meteor.users.find(
-          {
-            $or : [ {"emails.address" : {$in:group.emails}  }, 
-            { "profile.emailAddress" : {$in:group.emails}}]
-          }
-          ).fetch();
-        if(groupUsers.length > 0){
-          var userIds = groupUsers.map( (user) => user._id);
-          var userIdsSurveyed=[];
-          if(group.emailsSurveyed){
-            userIdsSurveyed = groupUsers.filter(user => (user && user.emails && user.emails.length > 0 && group.emailsSurveyed.indexOf(user.emails[0].address) > -1))
-                                    .map( (user) => user._id);
-          }
-          
-          var userIdsSelfRankCompleted=[];
-          if(group.emailsSelfRankCompleted){
-            userIdsSelfRankCompleted = groupUsers.filter(user => (user && user.emails && user.emails.length > 0 && group.emailsSelfRankCompleted.indexOf(user.emails[0].address) > -1))
-                                    .map( (user) => user._id);
-          }
-
-          Group.update({"_id": group._id}, 
-          {$set: {
-            "userIds": userIds,
-            "userIdsSurveyed": userIdsSurveyed,
-            "userIdsSelfRankCompleted": userIdsSelfRankCompleted
-          }},
-          {multi:false});
-        }
-			});
-    }
 
     });

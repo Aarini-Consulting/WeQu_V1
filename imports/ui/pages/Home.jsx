@@ -5,12 +5,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Loading from './loading/Loading';
-// import ScriptLoginInit from './ScriptLoginInit'; 
 import EmailVerified from './accounts/EmailVerified';
-import Profile from './profile/Profile'; 
-import Invite from './invite/Invite';
-
-import {init} from '/imports/ui/pages/profile/minBlock';
 
 import Menu from '/imports/ui/pages/menu/Menu';
 import LandingSurveyComponent from './survey/LandingSurveyComponent';
