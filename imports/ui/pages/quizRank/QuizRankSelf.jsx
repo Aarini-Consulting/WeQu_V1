@@ -13,7 +13,7 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>

@@ -9,7 +9,7 @@ import { Creatable } from 'react-select';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
-import {formatErrMessage} from '/imports/startup/client/formatErrMessage.js';
+import {formatErrMessage} from '/imports/helper/formatErrMessage.js';
 
 // import MultiSelect from './MultiSelect';
 // import '/imports/startup/client/react-select.css';

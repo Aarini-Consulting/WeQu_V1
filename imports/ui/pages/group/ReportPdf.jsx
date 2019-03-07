@@ -1,8 +1,8 @@
 import React from 'react';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
-import {calculateChartLineWidth} from '/imports/ui/pdfCalculateChartWidth';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
+import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 
 export default class ReportPdf extends React.Component {
     render(){

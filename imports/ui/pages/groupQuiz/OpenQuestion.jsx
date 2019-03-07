@@ -12,7 +12,7 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
 class OpenQuestion extends React.Component {

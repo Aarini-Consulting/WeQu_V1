@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from 'meteor/universe:i18n';
-import {quizResultComponent} from '/imports/startup/client/quizComponent';
+import {quizResultComponent} from '/imports/helper/quizComponent';
 
 export default class GroupQuizResult extends React.Component {
   render() {

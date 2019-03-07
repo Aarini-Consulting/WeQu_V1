@@ -7,7 +7,7 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
 import i18n from 'meteor/universe:i18n';
 

@@ -16,7 +16,7 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import GroupQuizClientPage from '/imports/ui/pages/groupQuizClient/GroupQuizClientPage';
 import SessionFinished from './SessionFinished';
 import SessionWait from './SessionWait';

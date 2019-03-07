@@ -6,10 +6,8 @@ import { Link } from 'react-router-dom';
 
 import Loading from './loading/Loading';
 // import ScriptLoginInit from './ScriptLoginInit'; 
-import EmailVerified from './accounts/EmailVerified'; 
-import Quiz from './quiz/Quiz';
+import EmailVerified from './accounts/EmailVerified';
 import Profile from './profile/Profile'; 
-import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
 import Invite from './invite/Invite';
 
 import {init} from '/imports/ui/pages/profile/minBlock';

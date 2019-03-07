@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import {quizComponent} from '/imports/startup/client/quizComponent';
+import {quizComponent} from '/imports/helper/quizComponent';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
 

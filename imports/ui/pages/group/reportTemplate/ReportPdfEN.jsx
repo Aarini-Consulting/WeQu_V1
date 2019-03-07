@@ -1,5 +1,5 @@
 import React from 'react';
-import {calculateChartLineWidth} from '/imports/ui/pdfCalculateChartWidth';
+import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
