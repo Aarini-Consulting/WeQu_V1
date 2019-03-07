@@ -289,6 +289,31 @@ Meteor.methods({
       
     },
 
+    'download.report.group.quiz.pdf' : async function (groupId, quizId, languageCode, dataType="pdf") {
+      if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
+        throw (new Meteor.Error("invalid_data_type"));
+      }
+
+      let groupCheck = Group.findOne({'_id': groupId});
+      
+      if(!groupCheck){
+          throw (new Meteor.Error("unknown_group")); 
+      }
+
+        var propData = {}
+        propData.selectedQuiz = GroupQuiz.findOne({_id : quizId});
+        propData.selectedQuizResult = GroupQuizData.find({
+          "groupId": groupCheck._id,
+          "groupQuizId": quizId
+        }).fetch();
+
+        var reportTemplate = GroupQuizReportPdf;
+
+        var fileName = propData.selectedQuiz.question+"."+dataType;
+
+        return (await generateComponentAsPDF({ languageCode:languageCode, component: reportTemplate, props: {propData: propData}, fileName, dataType }));
+    },
+
     'generate.preview' : function (groupId, userId, languageCode) {
       return Meteor.call('download.report.individual.pdf', groupId, userId, languageCode, "png");
     },
