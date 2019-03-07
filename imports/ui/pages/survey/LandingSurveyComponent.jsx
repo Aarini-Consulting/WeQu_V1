@@ -5,9 +5,6 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import Menu from '/imports/ui/pages/menu/Menu';
-import Quiz from '/imports/ui/pages/quiz/Quiz';
-import SignUp from '../accounts/SignUp';
 import Typeform from '/imports/ui/pages/survey/Typeform';
 
 class LandingSurveyComponent extends React.Component {
