@@ -1,8 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import '/imports/startup/client/css/sweetalert';
-
 import Info from './Info';
 import Confirm from './Confirm';
 import ConfirmAdd from './ConfirmAdd';
