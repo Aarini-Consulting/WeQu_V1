@@ -60,6 +60,7 @@
   background-position: 50% 50%;
   background-size: cover;
   background-attachment: fixed;
+  color:#000;
 }
 
 .loginbox {
@@ -4479,6 +4480,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   word-wrap:break-word;
   padding-top:0.25em;
   padding-bottom:0.25em;
+}
+
+.info{
+	display: block;
+	color: black;
+  font-size: 1em;
+  text-align: left;
+  font-family: Raleway, sans-serif;
 }
 
 
