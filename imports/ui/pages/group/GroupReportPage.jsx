@@ -67,31 +67,31 @@ class GroupReportPage extends React.Component {
           this.setState({ generatingPdf: false });
         });
     }
+    //WiP WA-65
+    // downloadPdfTest(){
+    //     this.setState({ generatingPdf: true });
+    //     Meteor.call('download.report.group.quiz.pdf',this.props.group._id, "5c51abf1a81e1414f048a54e", this.state.downloadIndividualLang, (error, response) => {
+    //       if (error) {
+    //         console.log(error);
+    //       } else {
+    //         var JSZip = require("jszip");
+    //         var zip = new JSZip();
 
-    downloadPdfTest(){
-        this.setState({ generatingPdf: true });
-        Meteor.call('download.report.group.quiz.pdf',this.props.group._id, "5c51abf1a81e1414f048a54e", this.state.downloadIndividualLang, (error, response) => {
-          if (error) {
-            console.log(error);
-          } else {
-            var JSZip = require("jszip");
-            var zip = new JSZip();
-
-            zip.file(response.fileName,response.base64,{base64:true});
+    //         zip.file(response.fileName,response.base64,{base64:true});
     
-            zip.generateAsync({type:"blob"})
-            .then((blob) => {
-              var link = document.createElement("a");
-              link.download = response.fileName;
-              link.href= window.URL.createObjectURL(blob);
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            });
-          }
-          this.setState({ generatingPdf: false });
-        });
-    }
+    //         zip.generateAsync({type:"blob"})
+    //         .then((blob) => {
+    //           var link = document.createElement("a");
+    //           link.download = response.fileName;
+    //           link.href= window.URL.createObjectURL(blob);
+    //           document.body.appendChild(link);
+    //           link.click();
+    //           document.body.removeChild(link);
+    //         });
+    //       }
+    //       this.setState({ generatingPdf: false });
+    //     });
+    // }
 
     downloadPdf(){
         this.setState({ generatingPdf: true });
@@ -224,9 +224,6 @@ class GroupReportPage extends React.Component {
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
                                                 Download
                                                 </div>
-                                                {/* <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfTest.bind(this)}>
-                                                Download
-                                                </div> */}
                                             </div>
                                         }
                                     </div>
