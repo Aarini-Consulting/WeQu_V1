@@ -73,7 +73,7 @@ class OpenQuestion extends React.Component {
 
   renderInputFields(){
     var fields=[];
-    var maxLength=25;
+    var maxLength=40;
 
     for(index=0;index<this.props.answerCount;index++){
       var required = false;

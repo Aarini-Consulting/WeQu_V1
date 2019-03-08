@@ -12,17 +12,20 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
     }
 
     componentDidMount() {
-        this.drawWordCloud(this.props);
+      this.drawWordCloud(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {	
+    componentWillReceiveProps(nextProps) {
+      //only updates when number of "word" in the wordcloud chart changed 
+      if(!this.props.data || (this.props.data && nextProps.data && nextProps.data.length > this.props.data.length)){
         this.drawWordCloud(nextProps);
+      }
     }
 
     drawWordCloud(props){
         var canvas = this.graphRef.current;
         var width = canvas.offsetWidth;
-        var height = canvas.offsetWidth * 0.75;
+        var height = canvas.offsetWidth * 9/16;
 
         d3.select(canvas).select("svg").remove();
 
@@ -40,7 +43,7 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
 
         var word_count = {};
         // var words = text_string.split(/[ '\-\(\)\*":;\[\]|{},.!?]+/);
-        var words = text_string.split(",");
+        var words = text_string.split(this.props.arrayJoint);
           if (words.length == 1){
             word_count[words[0]] = 1;
           } else {
@@ -69,9 +72,9 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
               return d.value;
             })
            ])
-           .range([width/200,width/20]);
+           .range([width/500,width/50]);
 
-        cloud().size([width, height])
+        cloud().size([width*0.9, height*0.9])
           .timeInterval(20)
           .words(word_entries)
           .fontSize(function(d) { return xScale(+d.value); })
@@ -86,7 +89,9 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
               .attr("width", width)
               .attr("height", height)
             .append("g")
-              .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
+              .attr("transform", function(d){
+                return "translate(" + [width/2, height/2] + ")"
+              })
             .selectAll("text")
               .data(words)
             .enter().append("text")
@@ -101,6 +106,12 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
         }
 
         cloud().stop();
+
+        d3.selectAll("g")
+          .attr('transform', function(d, i) {
+            console.log(this.getBBox());
+            return "translate(" + [0, 0] + ")"
+          });
     }
     render() {
         return (
