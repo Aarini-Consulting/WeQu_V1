@@ -104,7 +104,7 @@
         "SocialNormsText1":"In dit team houden teamleden informatie achter die bruikbaar kan zijn voor anderen.",
         "SocialNormsText2":"Dit team heeft een groot gevoel van gezamenlijk succes in plaats van individueel succes.",
         "SocialNormsText3":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
-        "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar"
+        "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar."
     },
     "rankItem":{
         "generous":"genereus",
@@ -143,22 +143,21 @@
         "ButtonDone":"Klaar!"
     },
     "quizRankWait":{
-        "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u",
-        "WaitForOthers":"Wachten totdat de anderen klaar zijn",
+        "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u.",
+        "WaitForOthers":"Wachten totdat de anderen klaar zijn.",
         "TheWholeTeamWillRank":"Het hele team zal nu de volgende persoon beoordelen:",
-        "YouWillHave60Secs":"U heeft 60 seconden",
-        "TextForFirstName":"Ga achterover zitten en ontspan u, {$firstName}",
+        "YouWillHave60Secs":"U heeft 60 seconden.",
         "Proceed":"Doorgaan",
         "MessageDoneLine1":"Helemaal klaar!",
         "MessageDoneLine2":"Wacht alstublieft tot iedereen in de groep hun zelfbeoordeling voltooid heeft..."
     },
     "quizRankPlaceCard":{
-        "Instruction":"Schrift de kaartnummers op uw 'WeQ playmat'",
+        "Instruction":"Schrift de kaartnummers op uw 'WeQ playmat'.",
         "ButtonDone":"Klaar!"
     },
     "loadingAnimated":{
         "PleaseWait":"Even geduld a.u.b....",
-        "PleaseWaitGenerating":" even geduld a.u.b....uw informatie wordt door WeQ gegenereerd"
+        "PleaseWaitGenerating":" even geduld a.u.b....uw informatie wordt door WeQ gegenereerd."
     },
     "groupQuizQuestion":{
         "HowOftenCompliment":"Hoe vaak heb je de laatste 7 dagen complimenten van je collega’s gekregen?",

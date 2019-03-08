@@ -49,7 +49,7 @@
     },
     "inviteGroupPage":{
         "CreateNew":"Create new group",
-        "NoGroup":"Hey, there is nobody here"
+        "NoGroup":"Hey, there is nobody here."
     },
     "inviteGroup":{
         "GroupName":"Group name",
@@ -93,17 +93,17 @@
         "PsychologicalSafetyText2":"I know my colleagues’ positive characteristics and strengths very well.",
         "PsychologicalSafetyText3":"In this team, I feel comfortable showing my vulnerability.",
         "ConstructiveFeedback":"Constructive Feedback",
-        "ConstructiveFeedbackText1":"In this team, members frequently exchange constructive feedback",
+        "ConstructiveFeedbackText1":"In this team, members frequently exchange constructive feedback.",
         "ConstructiveFeedbackText2":"This team regularly recognises my achievements and successes.",
         "ConstructiveFeedbackText3":"My colleagues get easily defensive when they happen to receive criticism.",
         "CognitiveBias":"Control over Cognitive Bias",
         "CognitiveBiasText1":"I feel that my team prefers to maintain a harmony over being disturbed by conflicts.",
-        "CognitiveBiasText2":"A high-performing team creates less errors and mistakes than those which are mediocre",
+        "CognitiveBiasText2":"A high-performing team creates less errors and mistakes than those which are mediocre.",
         "CognitiveBiasText3":"In our team, juniors regularly seek ideas from seniors.",
         "SocialNorms":"Social Norms",
         "SocialNormsText1":"In meetings, one person or a small group tends to speak most of the time.",
         "SocialNormsText2":"In this team, members withhold information that might be useful for others.",
-        "SocialNormsText3":"This team has a strong sense of collective success rather than just individual glory.",
+        "SocialNormsText3":"This team has a strong sense of collective success rather than just personal gain.",
         "NoMatrixInfo":"There is currently no matrix information available."
     },
     "rankItem":{
@@ -138,27 +138,26 @@
         "ButtonDone":"Done!"
     },
     "rankOther":{
-        "Instruction":"Rank teammate's qualities in 60 seconds",
+        "Instruction":"Rank teammate's qualities in 60 seconds.",
         "ButtonNext":"Next",
         "ButtonDone":"Done!"
     },
     "quizRankWait":{
-        "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you",
-        "WaitForOthers":"Waiting for others to be ready",
+        "OthersEvaluatingYou":"Sit back and relax, the others are evaluating you.",
+        "WaitForOthers":"Waiting for others to be ready.",
         "TheWholeTeamWillRank":"The whole team will now rank:",
-        "YouWillHave60Secs":"You will have 60 seconds",
-        "TextForFirstName":"Sit back and relax {$firstName}",
+        "YouWillHave60Secs":"You will have 60 seconds.",
         "Proceed":"Proceed",
         "MessageDoneLine1":"All done!",
         "MessageDoneLine2":"Please wait until everyone in the group completes their self-ranking..."
     },
     "quizRankPlaceCard":{
-        "Instruction":"Write down the numbers on your WeQ playmat",
+        "Instruction":"Write down the numbers on your WeQ playmat.",
         "ButtonDone":"Done!"
     },
     "loadingAnimated":{
         "PleaseWait":"Please wait...",
-        "PleaseWaitGenerating":"Please wait...WeQ is generating your card numbers"
+        "PleaseWaitGenerating":"Please wait...WeQ is generating your card numbers."
     },
     "groupQuizQuestion":{
         "HowOftenCompliment":"How often did you get compliments from your colleagues in last 7 days?",

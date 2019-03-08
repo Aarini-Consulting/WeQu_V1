@@ -3014,12 +3014,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .tap.report.w--current, .tap.report:hover {
-  background-color:#6A1B58;
+  background-color:#37AC68;
   color:#fff;
 }
 
 .tap-underline.report, .tabs.w-tabs.report {
-  border-color:#6A1B58;
+  border-color:#37AC68;
 }
 
 .tap-content-wrapper{
@@ -4106,7 +4106,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .report-name:hover,.report-name.active {
-  background-color: #6A1B58;
+  background-color: #37AC68;
 }
 
 /* .report-name-text{

@@ -81,8 +81,6 @@ class QuizRankWait extends React.Component {
                                     <br/>
                                     <div className="font-rate padding-wrapper"><T>weq.quizRankWait.YouWillHave60Secs</T></div>
                                     <br/>
-                                    <div className="font-rate padding-wrapper"><T firstName={this.props.quizUser && this.props.quizUser.profile.firstName}>weq.quizRankWait.TextForFirstName</T></div>
-                                    <br/>
                                     <div className="w-block cursor-pointer">
                                         <div className="font-rate f-bttn w-inline-block noselect" onClick={this.confirmReadiness.bind(this)}>
                                             <T>weq.quizRankWait.Proceed</T>

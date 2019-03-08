@@ -7,7 +7,7 @@ var d3 = require("d3");
 export default class GroupQuizResultGraphRanker extends React.Component {
     renderRankCards(){
         if(this.props.data && this.props.data.length > 0){
-            var colorRange = ["#40BFBB","#6A62B3","#F95A37","#05a5d5","#6A1B58","#F54B73"];
+            var colorRange = ["#40BFBB","#6A62B3","#F95A37","#05a5d5","#37AC68","#F54B73"];
 
             var colorScale = d3.scaleOrdinal().domain(this.props.data.map((d)=>d.text)).range(colorRange);
 

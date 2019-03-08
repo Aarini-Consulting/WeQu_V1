@@ -143,11 +143,10 @@
         "ButtonDone":"Terminé !"
     },
     "quizRankWait":{
-        "OthersEvaluatingYou":"Asseyez-vous et détendez-vous, les autres sont en train de vous évaluer",
-        "WaitForOthers":"Attendez que les autres soient prêts",
+        "OthersEvaluatingYou":"Asseyez-vous et détendez-vous, les autres sont en train de vous évaluer.",
+        "WaitForOthers":"Attendez que les autres soient prêts.",
         "TheWholeTeamWillRank":"Toute l'équipe va maintenant se classer :",
-        "YouWillHave60Secs":"Vous aurez 60 secondes",
-        "TextForFirstName":"Asseyez-vous et détendez-vous {$firstName}",
+        "YouWillHave60Secs":"Vous aurez 60 secondes.",
         "Proceed":"Continuez",
         "MessageDoneLine1":"Terminé !",
         "MessageDoneLine2":"Veuillez attendre que tous les membres du groupe aient terminé leur auto-classement ..."
