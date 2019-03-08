@@ -63,7 +63,7 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
             })
           }
 
-        var fill = d3.scaleOrdinal(["#40BFBB","#6A62B3","#F95A37","#05a5d5","#37AC68","#F54B73"]);
+        // var fill = d3.scaleOrdinal(["#40BFBB","#6A62B3","#F95A37","#05a5d5","#37AC68","#F54B73"]);
 
         var word_entries = d3.entries(word_count);
 
@@ -97,7 +97,13 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
             .enter().append("text")
               .style("font-size", function(d) { return xScale(d.value) + "px"; })
               .style("font-family", "Raleway")
-              .style("fill", function(d, i) { return fill(i); })
+              .style("fill", function(d,i,words) {
+                var length = words.length;
+                if(length < 1){
+                  length = 1;
+                }
+                return d3.interpolateRainbow((i/length)); 
+              })
               .attr("text-anchor", "middle")
               .attr("transform", function(d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
