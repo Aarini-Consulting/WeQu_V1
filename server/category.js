@@ -406,11 +406,20 @@ Meteor.methods({
 
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
-                Group.update({_id:groupId},
-                    {
-                        $set : {"isPlaceCardActive": false}
-                    } 
-                );
+                if(groupCheck.currentGroupQuizId){
+                    Group.update({_id:groupId},
+                        {
+                            $set : {"isPlaceCardActive": false}
+                        } 
+                    );
+                }else{
+                    Group.update({_id:groupId},
+                        {
+                            $set : {"isActive":false,"isPlaceCardActive": false}
+                        } 
+                    );
+                }
+                
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 
             }
