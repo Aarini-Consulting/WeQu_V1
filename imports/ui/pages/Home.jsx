@@ -158,6 +158,7 @@ class Home extends React.Component {
                                     <SweetAlert
                                     type={"confirm"}
                                     message={`A group session "${this.state.popupSelectedGroup.groupName}" has begun`}
+                                    imageUrl={"/img/gameMaster/interactive.gif"}
                                     confirmText={"Join session now"}
                                     cancelText={"Not now"}
                                     onCancel={() => {

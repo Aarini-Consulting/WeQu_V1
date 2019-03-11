@@ -25,7 +25,7 @@ class GroupPage extends React.Component {
         inviteStatus:false,
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
         showInviteGroup:false,
-        showConfirm:false,
+        showConfirmStop:false,
         showConfirmStart:false,
         showReopenConfirm:false,
         showInfo:false,
@@ -127,6 +127,12 @@ class GroupPage extends React.Component {
           showInfoMessage:msg
         });
       }
+    });
+  }
+
+  stopGamePlaceCardConfirm(){
+    this.setState({
+      showConfirmStop: true,
     });
   }
 
@@ -539,7 +545,7 @@ class GroupPage extends React.Component {
             )
           }
           {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCards.bind(this)}>stop</a>
+            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
           }
           </div>
 
@@ -620,6 +626,7 @@ class GroupPage extends React.Component {
                 <SweetAlert
                 type={"confirm"}
                 message={"Everyone ready for interactive mode?"}
+                imageUrl={"/img/gameMaster/interactive.gif"}
                 confirmText={"Let's go!"}
                 cancelText={"Cancel"}
                 onCancel={() => {
@@ -628,6 +635,21 @@ class GroupPage extends React.Component {
                 onConfirm={() => {
                   this.setState({ showConfirmStart: false });
                   this.startGamePlaceCards();
+                }}/>
+              }
+
+              {this.state.showConfirmStop &&
+                <SweetAlert
+                type={"confirm"}
+                message={"Are you sure? You'll need to start over if you stop this now"}
+                confirmText={"Yes, stop this now"}
+                cancelText={"Cancel"}
+                onCancel={() => {
+                    this.setState({ showConfirmStop: false });
+                }}
+                onConfirm={() => {
+                  this.setState({ showConfirmStop: false });
+                  this.stopGamePlaceCards();
                 }}/>
               }
             </section>

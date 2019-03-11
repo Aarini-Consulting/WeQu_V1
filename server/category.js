@@ -406,6 +406,23 @@ Meteor.methods({
 
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+                FeedbackRank.update(
+                    {"groupId":groupCheck._id},
+                    {
+                        $unset : { 
+                            "rank": "",
+                            "firstSwipe":"",
+                            "isSelected":""
+                        }
+                    },
+                    {multi:true}
+                );
+                  
+                CardPlacement.remove(
+                    {
+                        "groupId": groupCheck._id
+                    });
+
                 if(groupCheck.currentGroupQuizId){
                     Group.update({_id:groupId},
                         {
@@ -415,7 +432,10 @@ Meteor.methods({
                 }else{
                     Group.update({_id:groupId},
                         {
-                            $set : {"isActive":false,"isPlaceCardActive": false}
+                            $set : {
+                                "isActive":false,
+                                "isPlaceCardActive": false
+                            }
                         } 
                     );
                 }

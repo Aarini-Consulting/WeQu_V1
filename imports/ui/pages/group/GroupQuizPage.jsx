@@ -208,6 +208,7 @@ class GroupQuizPage extends React.Component {
             <SweetAlert
             type={"confirm"}
             message={"Everyone ready for interactive mode?"}
+            imageUrl={"/img/gameMaster/interactive.gif"}
             confirmText={"Let's go!"}
             cancelText={"Cancel"}
             onCancel={() => {
