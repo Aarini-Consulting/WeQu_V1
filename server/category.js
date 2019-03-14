@@ -406,11 +406,44 @@ Meteor.methods({
 
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
-                Group.update({_id:groupId},
+                FeedbackRank.update(
+                    {"groupId":groupCheck._id},
                     {
-                        $set : {"isPlaceCardActive": false}
-                    } 
+                        $unset : { 
+                            "rank": "",
+                            "firstSwipe":"",
+                            "isSelected":""
+                        }
+                    },
+                    {multi:true}
                 );
+                  
+                CardPlacement.remove(
+                    {
+                        "groupId": groupCheck._id
+                    });
+
+                if(groupCheck.currentGroupQuizId){
+                    Group.update({_id:groupId},
+                        {
+                            $set : {
+                                "isPlaceCardActive": false,
+                                "userIdsSelfRankCompleted":[]
+                            }
+                        } 
+                    );
+                }else{
+                    Group.update({_id:groupId},
+                        {
+                            $set : {
+                                "isActive":false,
+                                "isPlaceCardActive": false,
+                                "userIdsSelfRankCompleted":[]
+                            }
+                        } 
+                    );
+                }
+                
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 
             }

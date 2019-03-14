@@ -133,9 +133,10 @@ const generatePDFFromUrl = async (url, fileName) => {
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
 
-    await page.goto(url,{waitUntil: 'networkidle2'});
+    await page.goto(url,{waitUntil: 'networkidle0'});
 
     await page.emulateMedia('screen');
+
     var pdfBuffer = await page.pdf({
       format:"A4",
       printBackground:true,
@@ -312,30 +313,30 @@ Meteor.methods({
       
     },
     //WiP WA-65 
-    // 'download.report.group.quiz.pdf' : async function (groupId, quizId, languageCode, dataType="pdf") {
-    //   if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
-    //     throw (new Meteor.Error("invalid_data_type"));
-    //   }
+    'download.report.group.quiz.pdf' : async function (groupId, quizId, languageCode, dataType="pdf") {
+      if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
+        throw (new Meteor.Error("invalid_data_type"));
+      }
 
-    //   let groupCheck = Group.findOne({'_id': groupId});
+      let groupCheck = Group.findOne({'_id': groupId});
       
-    //   if(!groupCheck){
-    //       throw (new Meteor.Error("unknown_group")); 
-    //   }
+      if(!groupCheck){
+          throw (new Meteor.Error("unknown_group")); 
+      }
 
-    //     var propData = {}
-    //     propData.selectedQuiz = GroupQuiz.findOne({_id : quizId});
-    //     propData.selectedQuizResult = GroupQuizData.find({
-    //       "groupId": groupCheck._id,
-    //       "groupQuizId": quizId
-    //     }).fetch();
+      var propData = {}
+      propData.selectedQuiz = GroupQuiz.findOne({_id : quizId});
+      propData.selectedQuizResult = GroupQuizData.find({
+        "groupId": groupCheck._id,
+        "groupQuizId": quizId
+      }).fetch();
 
-    //     var reportTemplate = GroupQuizReportPdf;
+      var reportTemplate = GroupQuizReportPdf;
 
-    //     var fileName = propData.selectedQuiz.question+"."+dataType;
-    //     return await generatePDFFromUrl("http://localhost:3000/",fileName);
-    // },
-
+      var fileName = propData.selectedQuiz.question+"."+dataType;
+      return await generatePDFFromUrl(`http://localhost:3000/group-quiz-result-print/${groupId}/${quizId}`,fileName);
+    },
+    
     'generate.preview' : function (groupId, userId, languageCode) {
       return Meteor.call('download.report.individual.pdf', groupId, userId, languageCode, "png");
     },

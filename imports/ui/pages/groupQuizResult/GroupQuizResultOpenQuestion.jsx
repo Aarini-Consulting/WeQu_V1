@@ -42,7 +42,7 @@ export default class GroupQuizResultOpenQuestion extends React.Component {
                     isEmpty = true;
                 }
 
-                var data = arrayHolder.join();
+                var data = arrayHolder.join('`');
 
                 this.setState({
                     loading: false,
@@ -60,7 +60,7 @@ export default class GroupQuizResultOpenQuestion extends React.Component {
             )
         }else if(this.state.data){
             return (
-                <GroupQuizResultGraphWordCloud data={this.state.data} isEmpty={this.state.isEmpty}/>
+                <GroupQuizResultGraphWordCloud data={this.state.data} isEmpty={this.state.isEmpty} arrayJoint="`"/>
             );
         }else{
             return(
