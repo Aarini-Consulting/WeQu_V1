@@ -5,9 +5,6 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import Menu from '/imports/ui/pages/menu/Menu';
-import Quiz from '/imports/ui/pages/quiz/Quiz';
-import SignUp from '../accounts/SignUp';
 import Typeform from '/imports/ui/pages/survey/Typeform';
 
 class LandingSurveyComponent extends React.Component {
@@ -35,7 +32,7 @@ class LandingSurveyComponent extends React.Component {
     if(this.props.dataReady){
         if(this.props.group && !(this.props.surveyCompleted || this.state.surveyCompleted)){
           return(
-            <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)}/>
+            <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)} groupLanguage={this.props.group.groupLanguage}/>
           )
         }else{
           return(

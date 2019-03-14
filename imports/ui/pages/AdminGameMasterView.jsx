@@ -27,6 +27,10 @@ class AdminGameMasterView extends React.Component {
         }
     }
 
+    formatDate(date){
+        return date.toLocaleDateString('nl-NL');
+      }
+
     setEditTypeform(group, event){
         event.preventDefault();
         if(group && group.typeformGraph){
@@ -169,6 +173,54 @@ class AdminGameMasterView extends React.Component {
         }
     }
 
+    renderGroupListName(groups){
+        return groups.map((group) => {
+            return(
+                <div key={group._id + "_name"}>
+                    {group.groupName}
+                </div>
+            )
+          });
+    }
+
+    renderGroupListUserCount(groups){
+        return groups.map((group) => {
+            return(
+                <div key={group._id + "_count"}>
+                    {group && group.userIds && group.userIds.length}
+                </div>
+            )
+          });
+    }
+
+    renderGroupListCreatedDate(groups){
+        return groups.map((group) => {
+            var createdAt = group.createdAt;
+
+            if(createdAt){
+                createdAt = this.formatDate(createdAt);
+            }else{
+                createdAt = "N/A"
+            }
+            return(
+                <div key={group._id + "_created"}>
+                    {createdAt}
+                </div>
+            )
+          });
+    }
+
+    renderGroupListGameFinished(groups){
+        return groups.map((group) => {
+            return(
+                <div key={group._id + "_isFinished"}>
+                    {group.isFinished}
+                </div>
+            )
+          });
+    }
+
+
     renderGroupListUser(){
         return this.state.selectedUserGroupList.map((group) => {
             return(
@@ -188,13 +240,15 @@ class AdminGameMasterView extends React.Component {
 
     renderGamemasterListUsers(){
         var userList = this.props.listUsers;
+        var userNumber = 0;
         if(this.state.currentPageIndex <= 0){
             userList = userList.slice(0,this.state.resultPerPage);
         }else{
+            userNumber = this.state.currentPageIndex*this.state.resultPerPage;
             userList = userList.slice((this.state.currentPageIndex*this.state.resultPerPage),((this.state.currentPageIndex*this.state.resultPerPage)+this.state.resultPerPage));
         }
 
-        return userList.map((user) => {
+        return userList.map((user, index) => {
             var groups = this.props.groups.filter((group)=>{return group.creatorId == user._id});
             var users = [];
             groups.forEach((group) => {
@@ -220,9 +274,11 @@ class AdminGameMasterView extends React.Component {
                             }
                         </div>
                     </td> */}
+                    <td>
+                        {userNumber+index+1}
+                    </td>
     
-    
-                    <td id="user">
+                    <td>
                         {user.profile 
                         ?
                         <p>
@@ -235,7 +291,7 @@ class AdminGameMasterView extends React.Component {
                         </span>
                         }
                     </td>
-                    <td id="user">
+                    <td>
                         {user.profile && user.profile.publicProfileUrl &&
                             <span className="badge">
                             <a className="colorRed" href={user.profile.publicProfileUrl} target="_blank">{user.profile.publicProfileUrl}</a>
@@ -250,22 +306,29 @@ class AdminGameMasterView extends React.Component {
                         }
                     </td>
                     <td>
+                    {this.renderGroupListName(groups)}								
+                    </td>
+                    <td>
+                    {this.renderGroupListUserCount(groups)}
+                    {/* {users.length} */}
+                    </td>
+                    <td>
+                    {this.renderGroupListCreatedDate(groups)}								
+                    </td>
+                    <td>
+                    {this.renderGroupListGameFinished(groups)}								
+                    </td>
+                    <td>
+                        <button className="tablinks" id="view1" onClick={this.setShowGrouplist.bind(this, user, groups)}>
+                            Edit Typeform Score
+                        </button>
+                    </td>
+                    <td>
                     <label className="switch">
                         <input type="checkbox" checked={user.roles && user.roles.indexOf("GameMaster") > -1}
                          onChange={this.handleCheckGameMaster.bind(this,user)}/>
                         <div className="slider round"></div>
                     </label>	
-                    </td>
-                    <td id="user">
-                    {groups.length}									
-                    </td>
-                    <td id="user">
-                    {users.length}
-                    </td>
-                    <td id="user">
-                        <button className="tablinks" id="view1" onClick={this.setShowGrouplist.bind(this, user, groups)}>
-                            Edit Typeform Score
-                        </button>
                     </td>
                 </tr>
             );
@@ -454,23 +517,23 @@ class AdminGameMasterView extends React.Component {
                 }
                 else{
                     return (
-                        <div className="fillHeight">
-                            <div className="widget-head">
-                                <div className="title"><strong>{this.props.listUsers.length}</strong> Users </div>
-                            </div>
-                            <div className="tabs w-tabs noSwipe">
-                                <table className="table table-fw-widget table-hover">
+                        <div className="w-block">
+                            <div className="noSwipe">
+                                <table className="table table-fw-widget table-hover no-overflow">
                                     <thead>
                                         <tr>
+                                            <th style={{textAlign:"center"}}>#</th>
                                             <th style={{textAlign:"center"}}>Name </th>
                                             <th style={{textAlign:"center"}}>Email</th>
-                                            <th style={{textAlign:"center"}}>Game Master</th>
-                                            <th style={{textAlign:"center"}}> No of Groups</th>
+                                            <th style={{textAlign:"center"}}> Group Name</th>
                                             <th style={{textAlign:"center"}}>No of Users</th>
+                                            <th style={{textAlign:"center"}}>Date Created</th>
+                                            <th style={{textAlign:"center"}}>Game Finished</th>
                                             <th style={{textAlign:"center"}}></th>
+                                            <th style={{textAlign:"center"}}>Game Master</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="no-border-x overflow">					
+                                    <tbody className="no-border-x no-overflow">					
                                         {this.renderGamemasterListUsers()}
                                     </tbody>
                                 </table>

@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Group Invitation Email</title>
+	<link href="styles.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage">
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<!--div> Hi <b>{{to}},</b> </div -->
+
+		<!--	<div> {{from}}  invites you to the WeQ App. It helps you get to know your We-Qualities based on how your teammates see you. </div> -->
+			<div>Bonjour,</div>
+			<div>
+				<p>Vous êtes invité à rejoindre un groupe WeQ !</p>
+			</div>
+
+			<div>Cliquez sur ce lien pour répondre à une bref questionnaire anonyme:</div>
+			<a href="{{link}}">{{link}}</a>
+			<br>
+
+			<p> 
+				Entrez le nom de votre groupe: <b>{{groupName}}</b>
+			</p>
+
+			<p>
+				IMPORTANT : Cette enquête est anonyme. Donc, vous DEVEZ entrer « votre nom de groupe » correctement. Veuillez répondre honnêtement aux questions. Les réponses seront utilisées pour personnaliser votre prochaine session WeQ.
+			<br><br> 
+			<b>Et n'oubliez pas d'apporter votre téléphone portable à chaque session !</b>
+			</p>
+			
+			<div>
+				Des questions sur l’application ? <a href="mailto:contact@weq.io?subject=[WeQ Facilitated Session - {{groupName}}]">contact@weq.io</a>.
+			<br>
+			Des questions sur la session ? <a href="mailto:{{creatorEmail}}?subject=[WeQ Facilitated Session - {{groupName}}]">{{creatorEmail}}</a>.
+			<br>
+			</div>
+			<br>
+			<div> L’Équipe WeQ - « Rien ne vaut une équipe qui gagne »</div>
+			<br>
+			<div>WeQ est l’atelier dirigé qui utilise les neurosciences prouvées pour aider les équipes à être au top de leurs performances.</div>
+			<div> <a href="https://www.weq.io/" target="_blank">www.weq.io</a></div>
+		</div>
+	</div>
+
+</body>
+</html>

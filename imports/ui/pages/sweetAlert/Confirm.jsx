@@ -17,6 +17,13 @@ export default class Confirm extends React.Component {
                     {this.props.message}
                     </div>
                 </div>
+
+                {this.props.imageUrl &&
+                    <div className="msg-wrapper">
+                        <img src={this.props.imageUrl}/>
+                    </div>
+                }
+
                 <div className="w-block align-center">
                     <div className="w-inline-block">
                         <div className="bttn-wrapper w-clearfix">

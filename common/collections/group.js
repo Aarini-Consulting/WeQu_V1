@@ -16,7 +16,17 @@ GroupSchema = new SimpleSchema({
     },
     "isActive":{
       type: Boolean,
-      label: "session active"
+      label: "session active",
+    },
+    "isPlaceCardActive":{
+      type: Boolean,
+      label: "place card session active",
+      optional: true
+    },
+    "isPlaceCardFinished":{
+      type: Boolean,
+      label: "place card session finished",
+      optional: true
     },
     "isFinished":{
       type: Boolean,
@@ -27,14 +37,17 @@ GroupSchema = new SimpleSchema({
       label: "self rank Completed",
       optional: true
     },
-
+    "groupLanguage":{
+      type: String,
+      label: "group language",
+      optional: true
+    },
     "typeformGraph":{
       type: [Object],
       label: "typeformGraph",
       blackbox:true,
       optional: true
     },
-
     "creatorId": {
         type: String,
         label: "creator",
@@ -45,7 +58,16 @@ GroupSchema = new SimpleSchema({
             } 
         }
     },
-
+    "groupQuizIdList":{
+      type: [String],
+      label: "group quiz ids",
+      optional: true
+    },
+    "currentGroupQuizId":{
+      type: String,
+      label: "group language",
+      optional: true
+    },
     "createdAt": {
       type: Date,
       label: "Date group created",
@@ -66,8 +88,6 @@ GroupSchema = new SimpleSchema({
         }
       }
     },
-
-
 })
 
 Group.attachSchema(GroupSchema);

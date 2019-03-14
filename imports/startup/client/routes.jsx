@@ -42,6 +42,7 @@ import '/imports/startup/client/css/fontawesome-all.min';
 import '/imports/startup/client/css/normalize';
 import '/imports/startup/client/css/webflow';
 import '/imports/startup/client/css/wequ-profile.webflow';
+import '/imports/startup/client/css/sweetalert';
 import LinkedInPermission from '/imports/ui/pages/linkedIn/LinkedInPermission';
 import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
@@ -52,6 +53,7 @@ import {getDefaultLocale} from '/imports/startup/client/getDefaultLocale';
 const history = createBrowserHistory();
 
 import i18n from 'meteor/universe:i18n';
+import ReportPdf from '/imports/ui/pages/group/ReportPdf';
 
 const T = i18n.createComponent();
 
@@ -105,15 +107,29 @@ const App = class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props.currentUser && !nextProps.currentUser){
-      //logout detected, set locale back to its initial locale
-      this.unsetLocale();
+    if(nextProps.dataReady){
+      if(this.props.currentUser && !nextProps.currentUser){
+        //logout detected, set locale back to its initial locale
+        this.unsetLocale();
+      }
+  
+      //run setlocale on first time (to prevent overriding locale set from group page)
+      //I resorted to this hack because i18n.runWithLocale() doesn't seem to work on the client side of the app
+      if(!this.props.currentUser && nextProps.currentUser){
+        this.setLocale(nextProps);
+      }else if(this.props.currentUser && this.props.currentUser.profile.locale && nextProps.currentUser){
+        var userChangedLanguage = this.props.currentUser.profile.locale != nextProps.currentUser.profile.locale;
+        if(userChangedLanguage){
+          this.setLocale(nextProps);
+        }
+      }
     }
-    this.setLocale(nextProps);
   }
 
   componentDidMount(){
-    this.setLocale(this.props);
+    if(this.props.dataReady){
+      this.setLocale(this.props);
+    }
   }
 
   unsetLocale(){
@@ -124,34 +140,52 @@ const App = class App extends React.Component {
     //detect current locale
     var locale = getDefaultLocale();
     //e.g. locale = 'en-US';
-    var supportedLocale = ['nl-NL', 'en-US'];
+    var supportedLocale = Meteor.settings.public.supportedLocale;
 
     //override detected locale with locale value from user profile
     var user = props.currentUser;
+    var userHasLocale;
     if(user && user.profile && user.profile.locale){
       locale = user.profile.locale;
-    }    
+      userHasLocale = true;
+    }
     
     var languageCode;
     //check type of locale (e.g. "en" or "en-US")
     if(locale.toString().length > 2){
       languageCode = locale.split("-")[0];
     }else{
-      languageCode = locale
+      languageCode = locale;
     }
 
     if(supportedLocale.indexOf(locale) < 0){
       //locale not listed as supported
       //check locale lang to see if it match any of the supported lang
-      
-      if(languageCode == supportedLocale[0].split("-")[0]){
-        locale = supportedLocale[0];
-      }
-      else if(languageCode == supportedLocale[1].split("-")[0]){
-        locale = supportedLocale[1];
+
+      var langObj;
+      supportedLocale.forEach((sl)=>{
+        var lang = sl.split("-")[0];
+        if(langObj){
+          langObj[lang] = sl;
+        }else{
+          langObj = {[lang]:sl};
+        }
+      });
+
+      if(langObj[languageCode]){
+        locale = langObj[languageCode];
       }else{
         locale = supportedLocale[0];
       }
+    }
+
+    if(!userHasLocale){
+      //set user's locale
+      Meteor.call( 'user.set.locale', locale, ( error, response ) => {
+        if ( error ) {
+          console.log(error);
+        }
+      });
     }
 
     i18n.setLocale(locale).then(() => {
@@ -167,15 +201,10 @@ const App = class App extends React.Component {
     }
   }
 
-  componentWillUnmount(){
-    //on destroy, set locale back to original locale
-    this.unsetLocale();
-  }
-
   render() {
     if(this.state.languageLoaded){
         return (
-          <div>
+          <div style={{height:100+"%"}}>
           { /* Place to put layout codes here */ }
           <Switch history={history}>
               <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
@@ -187,6 +216,7 @@ const App = class App extends React.Component {
               <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
               <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
               <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
+              {/* <Route exact path='/debug' component={ReportPdf}/> */}
               <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />

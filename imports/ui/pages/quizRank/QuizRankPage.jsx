@@ -3,15 +3,22 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 import QuizRankSelf from './QuizRankSelf';
-import QuizRankOther from './QuizRankOther';
 import QuizRankWait from './QuizRankWait';
 
 import Typeform from '/imports/ui/pages/survey/Typeform';
+
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
+import GroupQuizClientPage from '/imports/ui/pages/groupQuizClient/GroupQuizClientPage';
+import SessionFinished from './SessionFinished';
+import SessionWait from './SessionWait';
 
 class QuizRankPage extends React.Component {
     constructor(props){
@@ -39,34 +46,42 @@ class QuizRankPage extends React.Component {
             if(this.props.isGroupMember){
                 if(this.props.surveyCompleted || this.state.surveyCompleted){
                     if(this.props.group.isActive){
-                        if(this.props.selfRankCompleted){
-                            if(this.props.group.isFinished){
-                                return(
-                                    <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
-                                )
+                        if(this.props.group.isFinished){
+                            return(
+                                <SessionFinished/>
+                            );
+                        }else if(this.props.group.currentGroupQuizId){
+                            return(
+                                <GroupQuizClientPage group={this.props.group}/>
+                            );
+                        }else if(this.props.group.isPlaceCardActive){
+                            if(this.props.selfRankCompleted){
+                                if(this.props.group.isPlaceCardFinished){
+                                    return(
+                                        <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
+                                    );
+                                }
+                                else{
+                                    return(
+                                        <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
+                                    );
+                                }
                             }else{
-                                return(
-                                    <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
-                                )
+                                return (
+                                    <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
+                                );
                             }
-                            
                         }else{
-                            return (
-                                <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
+                            return(
+                                <SessionWait/>
                             );
                         }
                     }else{
                         return(
-                            <div className="fillHeight weq-bg">
+                            <div className="fillHeight weq-bg survey-done-screen">
+                                <br/>
                                 <div className="font-rate padding-wrapper">
-                                    DONE!
-                                    <br/><br/>
-                                    Thank you for completing the survey. 
-                                    <br/><br/>
-                                    You will use this app again when you play WeQ,<br/>
-                                    so remember to <b>bring your phone to the session!</b> 
-                                    <br/>
-                                    <br/>
+                                    {complexLinkTranslate("quizRankPage.FinishMessage")}
                                 </div>
                                 <div className="w-block cursor-pointer">
                                     <Link className="font-rate f-bttn w-inline-block noselect" to={"/"}>
@@ -80,7 +95,7 @@ class QuizRankPage extends React.Component {
                     
                 }else{
                     return(
-                        <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)}/>
+                        <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)} groupLanguage={this.props.group.groupLanguage}/>
                     )
                 }
             }else{
@@ -125,11 +140,22 @@ export default withTracker((props) => {
 
         if(handleGroup.ready() && currentUser){
             group = Group.findOne({_id:props.match.params.gid});
-            var userId = currentUser._id;
-            isGroupMember = group && group.userIds && group.userIds.indexOf(userId) > -1;
-            surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
-            selfRankCompleted = group.userIdsSelfRankCompleted && group.userIdsSelfRankCompleted.indexOf(userId) > -1;
-            dataReady = true;
+
+            var handleFeedbackRank = Meteor.subscribe('feedbackRank',
+            {groupId:group._id},
+            {
+                onError: function (error) {
+                        console.log(error);
+                }
+            });
+
+            if(handleFeedbackRank.ready()){
+                var userId = currentUser._id;
+                isGroupMember = group && group.userIds && group.userIds.indexOf(userId) > -1;
+                surveyCompleted = group && group.userIdsSurveyed && group.userIdsSurveyed.indexOf(userId) > -1;
+                selfRankCompleted = group.userIdsSelfRankCompleted && group.userIdsSelfRankCompleted.indexOf(userId) > -1;
+                dataReady = true;
+            }
         }
     }else{
         dataReady = true;

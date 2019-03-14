@@ -4,9 +4,11 @@ import { Promise } from 'meteor/promise';
 import pdf from 'html-pdf';
 import fs from 'fs';
 import puppeteer from 'puppeteer'
-import {ReportPdf} from '/imports/ui/pages/group/ReportPdf';
 import {ReportPdfEN} from '/imports/ui/pages/group/reportTemplate/ReportPdfEN';
 import {ReportPdfNL} from '/imports/ui/pages/group/reportTemplate/ReportPdfNL';
+import {ReportPdfFR} from '/imports/ui/pages/group/reportTemplate/ReportPdfFR';
+
+import i18n from 'meteor/universe:i18n';
 
 
 const getBase64String = (path) => {
@@ -18,7 +20,7 @@ const getBase64String = (path) => {
   }
 };
 
-const generatePDF = async (html, fileName) => {
+const generatePDFFromHtml = async (html, fileName) => {
   try {
     var home = Meteor.absoluteUrl();
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
@@ -33,7 +35,7 @@ const generatePDF = async (html, fileName) => {
       request.respond({body: html});
       page.on('request', request => request.continue());
     });
-    await page.goto(home);
+    await page.goto(home,{waitUntil: 'networkidle2'});
 
     await page.emulateMedia('screen');
     var pdfBuffer = await page.pdf({
@@ -48,6 +50,8 @@ const generatePDF = async (html, fileName) => {
     console.log(exception);
   }
 };
+
+
 
 const generatePreview = async (html, fileName, dataType) => {
   try {
@@ -64,7 +68,7 @@ const generatePreview = async (html, fileName, dataType) => {
       request.respond({body: html});
       page.on('request', request => request.continue());
     });
-    await page.goto(home);
+    await page.goto(home,{waitUntil: 'networkidle2'});
 
     await page.emulateMedia('screen');
     
@@ -90,16 +94,58 @@ const getComponentAsHTML = (component, props) => {
   }
 };
 
-const generateComponentAsPDF = async ({ component, props, fileName, dataType }) => {
-  const html = getComponentAsHTML(component, props);
+const generateComponentAsPDF = async ({ languageCode, component, props, fileName, dataType }) => {
+  var supportedLocale = Meteor.settings.public.supportedLocale;
+  var locale;
+  var langObj;
+  supportedLocale.forEach((sl)=>{
+    var lang = sl.split("-")[0];
+    if(langObj){
+      langObj[lang] = sl;
+    }else{
+      langObj = {[lang]:sl};
+    }
+  });
+
+  if(langObj[languageCode]){
+    locale = langObj[languageCode];
+  }else{
+    locale = supportedLocale[0];
+  }
+
+  const html = i18n.runWithLocale(locale, ()=>{
+    return getComponentAsHTML(component, props);
+  });
   if (html && fileName){
     if(dataType === "pdf"){
-      return await generatePDF(html, fileName);
+      return await generatePDFFromHtml(html, fileName);
     }else if(dataType === "png" || dataType === "jpeg"){
       return await generatePreview(html, fileName, dataType);
     }else{
       throw (new Meteor.Error("invalid_data_type"));
     }
+  }
+};
+
+const generatePDFFromUrl = async (url, fileName) => {
+  try {
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const page = await browser.newPage();
+
+    await page.goto(url,{waitUntil: 'networkidle0'});
+
+    await page.emulateMedia('screen');
+
+    var pdfBuffer = await page.pdf({
+      format:"A4",
+      printBackground:true,
+    })
+    await browser.close();
+
+    return { fileName: fileName, base64: pdfBuffer.toString('base64') };
+
+  } catch (exception) {
+    console.log(exception);
   }
 };
 
@@ -112,10 +158,6 @@ Meteor.methods({
           throw (new Meteor.Error("unknown_group")); 
       }
 
-      if(groupCheck && !groupCheck.isFinished){
-        throw (new Meteor.Error("group_session_not_done")); 
-      }
-
       var zipName = groupCheck.groupName + "_report.zip";
 
       var users = Meteor.users.find({
@@ -124,11 +166,8 @@ Meteor.methods({
 
       var results = [];
       users.forEach((user) => {
-        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
-        if(cardPlacementCheck){
-          var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id, languageCode);
-          results.push(result);
-        }
+        var result = Meteor.call('download.report.individual.pdf', groupCheck._id, user._id, languageCode);
+        results.push(result);
       });
 
       return {zipName:zipName,results:results};
@@ -145,14 +184,6 @@ Meteor.methods({
       
       if(!groupCheck){
           throw (new Meteor.Error("unknown_group")); 
-      }
-
-      if(groupCheck && !groupCheck.isActive){
-        throw (new Meteor.Error("group_inactive")); 
-      }
-
-      if(groupCheck && !groupCheck.isFinished){
-        throw (new Meteor.Error("group_session_not_done")); 
       }
 
       var creator = Meteor.users.findOne({_id:groupCheck.creatorId});
@@ -172,80 +203,87 @@ Meteor.methods({
 
       var fileName = groupCheck.groupName + "_" + user.profile.firstName + "_" + user.profile.lastName + "_" + user._id +"."+dataType;
 
-      var individualCardPlacement = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
-
-      var collectiveCardPlacements = CardPlacement.find({'groupId': groupCheck._id}).fetch();
-
-      var cardPickedData = [];
-
-      //order the card picked by value
-      //the last 3 card are picked from an array of rank data that is ordered by value (highest to lowest)
-      //therefore, simply reversing it would do the trick
-      var top4 = individualCardPlacement.cardPicked.splice(0, 4);
-      var low3 = individualCardPlacement.cardPicked.reverse();
-
-      var sortedCard = top4.concat(low3);
-
-      sortedCard.forEach((card) => {
-        var cardData = individualCardPlacement.rankOrder.find(function(element) {
-          return (element.category == card.category && element.subCategory == card.subCategory);
-        });
-        var minValue;
-        var maxValue;
-        //get all values for this subCategory from everyone in the group
-        var valueHolder = [];
-        collectiveCardPlacements.forEach((ccp) => {
-          ccp.rankOrder.forEach((ro)=>{
-            if(ro.category == card.category && ro.subCategory == card.subCategory){
-              valueHolder.push(parseFloat(ro.value));
-            }
-          })
-        });
-        
-        //get minimum and max value for this subCategory from everyone in the group
-        minValue = Math.min(...valueHolder);
-        maxValue = Math.max(...valueHolder);
-
-        if((isNaN(parseFloat(minValue)) || !isFinite(minValue)) || (isNaN(parseFloat(maxValue)) || !isFinite(maxValue))){
-          minValue = 1;
-          maxValue = 1;
-        }
-
-        if(cardData){
-          cardData.minValue = minValue;
-          cardData.maxValue = maxValue;
-        }else{
-          cardData = {category:card.category,
-            subCategory:card.subCategory,
-            value:1,
-            minValue:minValue, 
-            maxValue:maxValue};
-        }
-        
-        cardPickedData.push(cardData);
-      })
-
       var propData = { 
         firstName: user.profile.firstName, 
         lastName: user.profile.lastName,
         groupName: groupCheck.groupName,
         groupCreatorFirstName: creator.profile.firstName,
-        groupCreatorLastName: creator.profile.lastName,
-        cardPicked: sortedCard,
-        cardPickedData: cardPickedData };
+        groupCreatorLastName: creator.profile.lastName
+      };
+        
+      if(groupCheck.isPlaceCardFinished){
+        var individualCardPlacement = CardPlacement.findOne({'groupId': groupCheck._id,'userId': user._id});
 
-      var reportTemplate = ReportPdf;
+        var collectiveCardPlacements = CardPlacement.find({'groupId': groupCheck._id}).fetch();
+
+        var cardPickedData = [];
+
+        //order the card picked by value
+        //the last 3 card are picked from an array of rank data that is ordered by value (highest to lowest)
+        //therefore, simply reversing it would do the trick
+        var top4 = individualCardPlacement.cardPicked.splice(0, 4);
+        var low3 = individualCardPlacement.cardPicked.reverse();
+
+        var sortedCard = top4.concat(low3);
+
+        sortedCard.forEach((card) => {
+          var cardData = individualCardPlacement.rankOrder.find(function(element) {
+            return (element.category == card.category && element.subCategory == card.subCategory);
+          });
+          var minValue;
+          var maxValue;
+          //get all values for this subCategory from everyone in the group
+          var valueHolder = [];
+          collectiveCardPlacements.forEach((ccp) => {
+            ccp.rankOrder.forEach((ro)=>{
+              if(ro.category == card.category && ro.subCategory == card.subCategory){
+                valueHolder.push(parseFloat(ro.value));
+              }
+            })
+          });
+          
+          //get minimum and max value for this subCategory from everyone in the group
+          minValue = Math.min(...valueHolder);
+          maxValue = Math.max(...valueHolder);
+
+          if((isNaN(parseFloat(minValue)) || !isFinite(minValue)) || (isNaN(parseFloat(maxValue)) || !isFinite(maxValue))){
+            minValue = 1;
+            maxValue = 1;
+          }
+
+          if(cardData){
+            cardData.minValue = minValue;
+            cardData.maxValue = maxValue;
+          }else{
+            cardData = {category:card.category,
+              subCategory:card.subCategory,
+              value:1,
+              minValue:minValue, 
+              maxValue:maxValue};
+          }
+          
+          cardPickedData.push(cardData);
+        });
+
+        propData.cardPicked = sortedCard;
+        propData.cardPickedData = cardPickedData; 
+      }
+
+      var reportTemplate;
       var reportTemplates = {
         "en":ReportPdfEN, 
-        "nl":ReportPdfNL
+        "nl":ReportPdfNL,
+        "fr":ReportPdfFR
       }
       
       if(languageCode && reportTemplates[languageCode]){
         reportTemplate = reportTemplates[languageCode];
+      }else{
+        reportTemplate = ReportPdfEN;
       }
-      return (await generateComponentAsPDF({ component: reportTemplate, props: {propData}, fileName, dataType }));
+      return (await generateComponentAsPDF({ languageCode:languageCode, component: reportTemplate, props: {propData}, fileName, dataType }));
+      
     },
-
     'generate.preview' : function (groupId, userId, languageCode) {
       return Meteor.call('download.report.individual.pdf', groupId, userId, languageCode, "png");
     },

@@ -1,4 +1,7 @@
 import React from 'react';
+import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
 
 export const ReportPdfEN = ({propData}) => (
     <html>
@@ -7,11 +10,6 @@ export const ReportPdfEN = ({propData}) => (
             <link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
             <link rel="stylesheet" type="text/css" href="/css/webflow.css"/>
             <link rel="stylesheet" type="text/css" href="/css/report-pdf.css"/>
-            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
-            <script src="/js/webfont.js" type="text/javascript"></script>
-            <script type="text/javascript">{`
-                WebFont.load({google:{families: ["Raleway:200,regular,italic,500,800","Raleway:regular,800,900"]}});
-            `}</script>
         </head>
         <body>
         <div className="a4-wrapper">
@@ -20,7 +18,7 @@ export const ReportPdfEN = ({propData}) => (
             <h1 className="h1 username">{propData.firstName},</h1>
             <h3 className="h3 subtitle">
                 You&#x27;ve just played WeQ with your <strong>{propData.groupName}</strong>.
-                This is your report prepared by <strong>{propData.groupCreatorFirstName}&nbsp;{propData.groupCreatorLastName}</strong>, WeQ Master Coach.
+                This is your report prepared by <strong>{propData.groupCreatorFirstName} {propData.groupCreatorLastName}</strong>, WeQ Master Coach.
             </h3>
             </div>
             <div className="section _2-content">
@@ -49,161 +47,101 @@ export const ReportPdfEN = ({propData}) => (
             <div className="div-current w-clearfix">
                 <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
                 <div className="div-diagram">
-                <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalise your session.</div>
-                <div className="diagram-wrapper w-clearfix">
-                    <div className="diagram">
-                    <div className="diagram-position">
-                        <div className={`icon _3 badge-${ propData.cardPicked[2].subCategory }`}></div> 
-                        <div className={`icon _2 badge-${ propData.cardPicked[0].subCategory }`}></div> 
-                        <div className={`icon _1 badge-${ propData.cardPicked[1].subCategory }`}></div> 
-                        <div className={`icon _4 badge-${ propData.cardPicked[6].subCategory }`}></div>
-                        <div className={`icon _6 badge-${ propData.cardPicked[4].subCategory }`}></div>
-                        <div className={`icon _5 badge-${ propData.cardPicked[5].subCategory }`}></div>
+                    <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
+                    <div className="diagram-wrapper w-clearfix">
+                        {propData.cardPicked 
+                            ?
+                            <div className="diagram">
+                                <div className="diagram-position">
+                                    <div className={`icon _3 badge-${ propData.cardPicked[2].subCategory }`}></div> 
+                                    <div className={`icon _2 badge-${ propData.cardPicked[0].subCategory }`}></div> 
+                                    <div className={`icon _1 badge-${ propData.cardPicked[1].subCategory }`}></div> 
+                                    <div className={`icon _4 badge-${ propData.cardPicked[6].subCategory }`}></div>
+                                    <div className={`icon _6 badge-${ propData.cardPicked[4].subCategory }`}></div>
+                                    <div className={`icon _5 badge-${ propData.cardPicked[5].subCategory }`}></div>
+                                </div>
+                                <div className="diagram-position-bottom">
+                                    <div className={`icon _7 badge-${ propData.cardPicked[3].subCategory }`}></div>
+                                </div>
+                            </div>
+                            :
+                            <div className="diagram">
+                                <div className="diagram-position">
+                                    <div className="icon _3 badge-placeholder"></div> 
+                                    <div className="icon _2 badge-placeholder"></div> 
+                                    <div className="icon _1 badge-placeholder"></div> 
+                                    <div className="icon _4 badge-placeholder"></div>
+                                    <div className="icon _6 badge-placeholder"></div>
+                                    <div className="icon _5 badge-placeholder"></div>
+                                </div>
+                            
+                                <div className="diagram-position-bottom">
+                                    <div className={`icon _7 badge-placeholder`}></div>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div className="diagram-position-bottom">
-                    <div className={`icon _7 badge-${ propData.cardPicked[3].subCategory }`}></div>
-                    </div>
-                    </div>
-                </div>
                 </div>
                 <div className="div-current-chart">
-                <div className="chart-legend w-clearfix">
-                    <div className="h35"></div>
-                    <div className="bar-wrapper actual legend w-clearfix">
-                    <div className="font-legend">0</div>
-                    <div className="font-legend">1</div>
-                    <div className="font-legend">2</div>
-                    <div className="font-legend">3</div>
-                    <div className="font-legend">4</div>
-                    <div className="font-legend">5</div>
-                    <div className="font-legend last">6</div>
+                    <div className="chart-legend w-clearfix">
+                        <div className="h35"></div>
+                        <div className="bar-wrapper actual legend w-clearfix">
+                        <div className="font-legend">0</div>
+                        <div className="font-legend">1</div>
+                        <div className="font-legend">2</div>
+                        <div className="font-legend">3</div>
+                        <div className="font-legend">4</div>
+                        <div className="font-legend">5</div>
+                        <div className="font-legend last">6</div>
+                        </div>
                     </div>
+
+                    {propData.cardPicked && propData.cardPicked.length > 0 
+                    ? 
+                        propData.cardPicked.map((cp,index,array)=>{
+                            var cpData = propData.cardPickedData[index];
+                            return(
+                                <div className="chart-graph w-clearfix" key={cp.category+index}>
+                                    <div className="h35">
+                                        <strong className={`q-category text-category-${ cp.category }`}>
+                                            {i18n.getTranslation(`weq.rankItem.${cp.subCategory.toString()}`)} ({cp.cardId})
+                                        </strong>
+                                    </div>
+                                    <div className={`q-icon badge-${ cp.subCategory }`}></div>
+                                    <div className="bar-wrapper actual w-clearfix">
+                                    <div className="bar-team actual" style={{
+                                    left:(-100+((cpData.maxValue-cpData.minValue)*100/6)+((cpData.minValue)*200/6)) + "%",
+                                    width:calculateChartLineWidth(cpData.maxValue,cpData.minValue) + "%"}}>
+                                        <div className="bar-line actual"></div>
+                                    </div>
+                                    <div className={`bar-value a category-${ cp.category }`} style={{left:(Number.parseFloat(cpData.value*100/6).toPrecision(3))-8 + "%"}}>
+                                        <div className="value-actual">{Number.parseFloat(cpData.value).toPrecision(2)}</div>
+                                    </div>
+                                    <div className={`bar-active category-${ cp.category }`} style={{width:Number.parseFloat(cpData.value*100/6).toPrecision(3)  + "%"}}></div>
+                                    </div>
+                                    {/* <div className="chart-arrow"></div> */}
+                                </div>
+                            );
+                        })
+                    :
+                        [0,1,2,3,4,5,6].map((value)=>{
+                            return(
+                                <div className="chart-graph w-clearfix" key={"placeholder"+value}>
+                                    <div className="h35">
+                                        <strong className="q-category text-category-placeholder">###</strong>
+                                    </div>
+                                    <div className="q-icon badge-placeholder"></div>
+                                    <div className="bar-wrapper actual w-clearfix">
+                                    </div>
+                                    {/* <div className="chart-arrow"></div> */}
+                                </div>
+                            );
+                        })
+                    }
                 </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[0].category }`}>{propData.cardPicked[0].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[0].cardId})</strong>
-                    </div>
-                    <div className={`q-icon badge-${ propData.cardPicked[0].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-100+((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6)+((propData.cardPickedData[0].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[0].maxValue-propData.cardPickedData[0].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[0].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[0].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[0].category }`} style={{width:Number.parseFloat(propData.cardPickedData[0].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[1].category }`}>{propData.cardPicked[1].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[1].cardId})</strong>
-                    </div>
-                    <div className={`q-icon badge-${ propData.cardPicked[1].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[1].maxValue-propData.cardPickedData[1].minValue)*100/6)+((propData.cardPickedData[1].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[1].maxValue-propData.cardPickedData[1].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[1].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[1].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[1].category }`} style={{width:Number.parseFloat(propData.cardPickedData[1].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[2].category }`}>{propData.cardPicked[2].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[2].cardId})</strong></div>
-                    <div className={`q-icon badge-${ propData.cardPicked[2].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6)+((propData.cardPickedData[2].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[2].maxValue-propData.cardPickedData[2].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[2].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[2].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[2].category }`} style={{width:Number.parseFloat(propData.cardPickedData[2].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[3].category }`}>{propData.cardPicked[3].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[3].cardId})</strong></div>
-                    <div className={`q-icon badge-${ propData.cardPicked[3].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6)+((propData.cardPickedData[3].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[3].maxValue-propData.cardPickedData[3].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[3].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[3].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[3].category }`} style={{width:Number.parseFloat(propData.cardPickedData[3].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[4].category }`}>{propData.cardPicked[4].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[4].cardId})</strong></div>
-                    <div className={`q-icon badge-${ propData.cardPicked[4].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6)+((propData.cardPickedData[4].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[4].maxValue-propData.cardPickedData[4].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[4].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[4].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[4].category }`} style={{width:Number.parseFloat(propData.cardPickedData[4].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[5].category }`}>{propData.cardPicked[5].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[5].cardId})</strong></div>
-                    <div className={`q-icon badge-${ propData.cardPicked[5].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6)+((propData.cardPickedData[5].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[5].maxValue-propData.cardPickedData[5].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[5].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[5].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[5].category }`} style={{width:Number.parseFloat(propData.cardPickedData[5].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-                <div className="chart-graph w-clearfix">
-                    <div className="h35">
-                        <strong className={`q-category text-category-${ propData.cardPicked[6].category }`}>{propData.cardPicked[6].subCategory.replace("_", " ")}&nbsp;({propData.cardPicked[6].cardId})</strong></div>
-                    <div className={`q-icon badge-${ propData.cardPicked[6].subCategory }`}></div>
-                    <div className="bar-wrapper actual w-clearfix">
-                    <div className="bar-team actual" style={{
-                    left:(-99+((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6)+((propData.cardPickedData[6].minValue)*200/6)) + "%",
-                    width:Number.parseFloat((propData.cardPickedData[6].maxValue-propData.cardPickedData[6].minValue)*100/6).toPrecision(3) - 3 + "%"}}>
-                        <div className="bar-line actual"></div>
-                    </div>
-                    <div className={`bar-value a category-${ propData.cardPicked[6].category }`} style={{left:(Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3))-8 + "%"}}>
-                        <div className="value-actual">{Number.parseFloat(propData.cardPickedData[6].value).toPrecision(2)}</div>
-                    </div>
-                    <div className={`bar-active category-${ propData.cardPicked[6].category }`} style={{width:Number.parseFloat(propData.cardPickedData[6].value*100/6).toPrecision(3)  + "%"}}></div>
-                    </div>
-                    {/* <div className="chart-arrow"></div> */}
-                </div>
-            </div>
             </div>
             <div className="section-3">
-                <div className="h3 next">Maintenance Sessions</div>
+                <div className="h3 next">Booster Pack</div>
                 <div className="h4 next">
                 Don't lose the momentum!
                 <br/>
@@ -217,7 +155,7 @@ export const ReportPdfEN = ({propData}) => (
             </div>
             <div className="section _3-footer">
             <div className="weq-logo"></div>
-            <div className="footer">WeQ - Nothing beats a kick-ass team  |  Copyright 2018 WeQ B.V. | www.WeQ.io</div>
+            <div className="footer">WeQ - Nothing beats a kick-ass team  |  Copyright 2019 WeQ B.V. | www.WeQ.io</div>
             </div>
         </div>
         </body>

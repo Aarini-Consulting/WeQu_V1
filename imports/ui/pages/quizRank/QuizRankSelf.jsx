@@ -6,24 +6,27 @@ import { Link } from 'react-router-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
-import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
-            <div className="rate-line"></div>
-            <div className="rate-line"></div>
-            <div className="rate-line"></div>
+            <i className="fas fa-bars"></i>
         </div>
-        <div className={"font-rate-quality noselect"}>{value.toString().replace("_"," ")}</div>
+        <div className={"font-rate-quality noselect"}>{i18n.getTranslation(`weq.rankItem.${value.toString()}`)}</div>
     </div>
 );
 
 const SortableList = SortableContainer(({items, disabled}) => {
   return (
-    <div className="w-block">
+    <div className="rate-box-container">
       {items.map((value, index) => (
         <SortableItem key={`item-${index}`} index={index} value={value} disabled={disabled}/>
       ))}
@@ -68,16 +71,7 @@ class QuizRankSelf extends React.Component {
                 if(currentStep == 0){
                     this.setState({
                         showInfo:true,
-                        showInfoMessage:
-                        <div>
-                            Describe Yourself
-                            <br/>
-                            <br/>
-                            Which qualities are most true about you?<br/>
-                            Sort the following words from top to bottom by dragging them up or down in the list.<br/>
-                            <br/>
-                            You have 60 seconds.
-                        </div>
+                        showInfoMessage:complexLinkTranslate("quizRankSelf.PopUp")
                     });
                 }
 
@@ -191,8 +185,7 @@ class QuizRankSelf extends React.Component {
     render() {
         if(this.props.dataReady && !this.state.savingData){
             return (
-                <div className="fillHeight">
-                    <section className="section summary fontreleway purple-bg">
+                    <section className="ranker-container fontreleway purple-bg">
                         <div className="section-name font-rate font-name-header">
                             {this.props.currentUser && this.props.currentUser.profile &&
                                 this.props.currentUser.profile.firstName +" "+ this.props.currentUser.profile.lastName
@@ -211,30 +204,31 @@ class QuizRankSelf extends React.Component {
                                 </div>
                             }
                             <SortableList items={this.state.items} onSortEnd={this.onSortEnd.bind(this)} disabled={this.state.quizOver}/>
+                            
+                            <div className="w-block cursor-pointer">
+                                {this.state.steps && this.state.currentStep >= 0 &&
+                                    <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
+                                        {this.state.currentStep < (Object.keys(this.state.steps).length-1)
+                                        ?i18n.getTranslation(`weq.rankSelf.ButtonNext`)
+                                        :i18n.getTranslation(`weq.rankSelf.ButtonDone`)
+                                        }
+                                    </div>
+                                }  
+                            </div>
                         </div>
-                        <div className="w-block cursor-pointer">
-                            {this.state.steps && this.state.currentStep >= 0 &&
-                                <div className="font-rate f-bttn w-inline-block noselect" onClick={this.stepFinished.bind(this)}>
-                                    {this.state.currentStep < (Object.keys(this.state.steps).length-1)
-                                    ?"Next"
-                                    :"Done!"
-                                    }
-                                </div>
-                            }  
-                        </div>
+                        
 
                         {this.state.showInfo &&
                             <SweetAlert
                             type={"info"}
                             message={this.state.showInfoMessage}
-                            btnText={"Let's go!"}
+                            btnText={i18n.getTranslation(`weq.rankSelf.ButtonGo`)}
                             onCancel={() => {
                                 this.setState({ showInfo: false });
                                 this.setTimer(true);
                             }}/>
                         }
                     </section>
-                </div>
             );
             
         }else{

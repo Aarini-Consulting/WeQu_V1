@@ -64,6 +64,10 @@
 	}
 }
 
+.no-overflow{
+	overflow:hidden;
+}
+
 .overflow{
 	overflow:auto;
 }
@@ -421,13 +425,6 @@ button.close{
 .border0{
 	border: 0px
 }
-
-.info{
-	color: black;
-    font-size: 14px;
-    text-align: left;
-}
-
 
 /* end #55 - improve UI */
 

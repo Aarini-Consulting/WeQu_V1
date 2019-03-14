@@ -5,6 +5,9 @@ Template.htmlEmail.helpers({
 });
 
 SSR.compileTemplate('GroupInviteHtmlEmail', Assets.getText('group-invite-email.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-en', Assets.getText('group-invite-email.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-nl', Assets.getText('group-invite-email-nl.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-fr', Assets.getText('group-invite-email-fr.html'));
 
 Template.GroupInviteHtmlEmail.helpers({
     //Add any helper methods to enable default data in template
@@ -55,6 +58,12 @@ Template.GroupCreationEmail.helpers({
 SSR.compileTemplate('GroupSurveyCompletedEmail', Assets.getText('group-survey-completed-email.html'));
 
 Template.GroupSurveyCompletedEmail.helpers({
+    //Add any helper methods to enable default data in template
+});
+
+SSR.compileTemplate('GroupSurveyCompletedEmailCmc', Assets.getText('group-survey-completed-email-cmc.html'));
+
+Template.GroupSurveyCompletedEmailCmc.helpers({
     //Add any helper methods to enable default data in template
 });
 

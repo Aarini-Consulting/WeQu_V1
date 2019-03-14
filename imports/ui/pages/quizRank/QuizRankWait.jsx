@@ -3,21 +3,20 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
+import Error from '/imports/ui/pages/error/Error';
 import Loading from '/imports/ui/pages/loading/Loading';
-import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
-import QuizRankSelf from './QuizRankSelf';
 import QuizRankOther from './QuizRankOther';
 
-import Typeform from '/imports/ui/pages/survey/Typeform';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
 class QuizRankWait extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            feedbackRank: undefined,
-        };
     }
 
     confirmReadiness(){
@@ -28,27 +27,12 @@ class QuizRankWait extends React.Component {
           });
     }
 
-    // componentWillReceiveProps(nextProps){
-    //     if(nextProps.dataReady){
-    //         if(nextProps.feedbackRank){
-    //             if(){
-    //                 //do nothing because waiting for others
-    //             }else{
-    //                 this.setState({
-    //                     feedbackRank: nextProps.feedbackRank,
-    //                 });
-    //             }
-    //         }
-    //     }
-        
-    // }
-
     render() {
         if(this.props.dataReady){
             if(this.props.targetedForOthersFeedback){
                 return(
                     <div className="fillHeight weq-bg">
-                        <div className="font-rate padding-wrapper">Sit back and relax, the others are evaluating you</div>
+                        <div className="font-rate padding-wrapper"><T>weq.quizRankWait.OthersEvaluatingYou</T></div>
                         <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.userIds.length-1}</div>
                     </div>
                 )
@@ -75,7 +59,7 @@ class QuizRankWait extends React.Component {
                         if(ready && !(everyoneReady)){
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate padding-wrapper">Waiting for others to be ready</div>
+                                    <div className="font-rate padding-wrapper"><T>weq.quizRankWait.WaitForOthers</T></div>
                                     <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksReady.length}/{this.props.group.userIds.length-1}</div>
                                 </div>
                             )
@@ -86,19 +70,17 @@ class QuizRankWait extends React.Component {
                             var lastName = this.props.quizUser && this.props.quizUser.profile.lastName;
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate padding-wrapper">The whole team will now rank:</div>
+                                    <div className="font-rate padding-wrapper"><T>weq.quizRankWait.TheWholeTeamWillRank</T></div>
                                     <br/>
                                     <div className="font-rate padding-wrapper">
                                     {firstName+ " " + lastName}
                                     </div>
                                     <br/>
-                                    <div className="font-rate padding-wrapper">You will have 60 seconds</div>
-                                    <br/>
-                                    <div className="font-rate padding-wrapper">Sit back and relax {this.props.quizUser && this.props.quizUser.profile.firstName}</div>
+                                    <div className="font-rate padding-wrapper"><T>weq.quizRankWait.YouWillHave60Secs</T></div>
                                     <br/>
                                     <div className="w-block cursor-pointer">
                                         <div className="font-rate f-bttn w-inline-block noselect" onClick={this.confirmReadiness.bind(this)}>
-                                            Proceed
+                                            <T>weq.quizRankWait.Proceed</T>
                                         </div>
                                     </div>
                                 </div>
@@ -109,8 +91,9 @@ class QuizRankWait extends React.Component {
                     return (
                         <div className="fillHeight weq-bg">
                             <div className="font-rate padding-wrapper">
-                            All done! 
-                            Please wait until everyone in the group completes their self-ranking...
+                            <T>weq.quizRankWait.MessageDoneLine1</T>
+                            <br/>
+                            <T>weq.quizRankWait.MessageDoneLine2</T>
                             </div>
                         </div>
                     );
@@ -120,18 +103,17 @@ class QuizRankWait extends React.Component {
                 if (this.props.waitForOthersFeedback){
                     return(
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate padding-wrapper">Waiting for others to be ready</div>
+                            <div className="font-rate padding-wrapper"><T>weq.quizRankWait.WaitForOthers</T></div>
                             <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.userIds.length-1}</div>
                         </div>
                     )
                     
                 }else{
-                    return false;
+                    return (
+                        <Error/>
+                    );
                 }   
             }
-            
-            
-            
         }else{
             return(
                 <Loading/>
