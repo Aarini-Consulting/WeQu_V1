@@ -17,9 +17,6 @@ import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 class QuizRankWait extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            feedbackRank: undefined,
-        };
     }
 
     confirmReadiness(){
