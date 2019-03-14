@@ -11,6 +11,10 @@ import {GroupQuizReportPdf} from '/imports/ui/pages/group/reportTemplate/GroupQu
 
 import i18n from 'meteor/universe:i18n';
 
+import {quizResultGraphSelectorPdf} from '/imports/helper/quizResultGraphSelectorPdf';
+
+import {quizResultGraphDataCalculator} from '/imports/helper/quizResultGraphDataCalculator';
+
 
 const getBase64String = (path) => {
   try {
@@ -128,27 +132,27 @@ const generateComponentAsPDF = async ({ languageCode, component, props, fileName
   }
 };
 
-const generatePDFFromUrl = async (url, fileName) => {
-  try {
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-    const page = await browser.newPage();
+// const generatePDFFromUrl = async (url, fileName) => {
+//   try {
+//     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+//     const page = await browser.newPage();
+    
+//     await page.goto(url,{waitUntil: 'networkidle0'});
 
-    await page.goto(url,{waitUntil: 'networkidle0'});
+//     await page.emulateMedia('screen');
 
-    await page.emulateMedia('screen');
+//     var pdfBuffer = await page.pdf({
+//       format:"A4",
+//       printBackground:true,
+//     })
+//     await browser.close();
 
-    var pdfBuffer = await page.pdf({
-      format:"A4",
-      printBackground:true,
-    })
-    await browser.close();
+//     return { fileName: fileName, base64: pdfBuffer.toString('base64') };
 
-    return { fileName: fileName, base64: pdfBuffer.toString('base64') };
-
-  } catch (exception) {
-    console.log(exception);
-  }
-};
+//   } catch (exception) {
+//     console.log(exception);
+//   }
+// };
 
 
 Meteor.methods({
@@ -313,29 +317,35 @@ Meteor.methods({
       
     },
     //WiP WA-65 
-    'download.report.group.quiz.pdf' : async function (groupId, quizId, languageCode, dataType="pdf") {
-      if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
-        throw (new Meteor.Error("invalid_data_type"));
-      }
+    // 'download.report.group.quiz.pdf' : async function (groupId, quizId, languageCode, dataType="pdf") {
+    //   if(!(dataType == "pdf" || dataType == "png" || dataType == "jpeg")){
+    //     throw (new Meteor.Error("invalid_data_type"));
+    //   }
 
-      let groupCheck = Group.findOne({'_id': groupId});
+    //   let groupCheck = Group.findOne({'_id': groupId});
       
-      if(!groupCheck){
-          throw (new Meteor.Error("unknown_group")); 
-      }
+    //   if(!groupCheck){
+    //       throw (new Meteor.Error("unknown_group")); 
+    //   }
 
-      var propData = {}
-      propData.selectedQuiz = GroupQuiz.findOne({_id : quizId});
-      propData.selectedQuizResult = GroupQuizData.find({
-        "groupId": groupCheck._id,
-        "groupQuizId": quizId
-      }).fetch();
+    //   var propData = {}
+    //   propData.selectedQuiz = GroupQuiz.findOne({_id : quizId});
+    //   propData.selectedQuizResult = GroupQuizData.find({
+    //     "groupId": groupCheck._id,
+    //     "groupQuizId": quizId
+    //   }).fetch();
+    //   propData.graphComponent = quizResultGraphSelectorPdf("GroupQuizResultGraphVerticalBar");
+    //   propData.propsForGraph = quizResultGraphDataCalculator("test", propData.selectedQuiz, propData.selectedQuizResult);
 
-      var reportTemplate = GroupQuizReportPdf;
+    //   var reportTemplate = GroupQuizReportPdf;
 
-      var fileName = propData.selectedQuiz.question+"."+dataType;
-      return await generatePDFFromUrl(`http://localhost:3000/group-quiz-result-print/${groupId}/${quizId}`,fileName);
-    },
+    //   var fileName = propData.selectedQuiz.question+"."+dataType;
+
+      
+      
+    //   // return await generatePDFFromUrl(`http://localhost:3000/group-quiz-result-print/${groupId}/${quizId}`,fileName);
+    //   return (await generateComponentAsPDF({ languageCode:languageCode, component: reportTemplate, props: {propData}, fileName, dataType }));
+    // },
     
     'generate.preview' : function (groupId, userId, languageCode) {
       return Meteor.call('download.report.individual.pdf', groupId, userId, languageCode, "png");

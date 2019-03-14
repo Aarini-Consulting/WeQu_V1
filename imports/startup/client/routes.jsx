@@ -54,7 +54,7 @@ const history = createBrowserHistory();
 
 import i18n from 'meteor/universe:i18n';
 import ReportPdf from '/imports/ui/pages/group/ReportPdf';
-import GroupQuizReportPdf from '/imports/ui/pages/group/reportTemplate/GroupQuizReportPdf';
+// import GroupQuizReportPdfDebug from '/imports/ui/pages/group/reportTemplate/GroupQuizReportPdfDebug';
 
 const T = i18n.createComponent();
 
@@ -213,10 +213,10 @@ const App = class App extends React.Component {
               <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
               <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
               <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
+              {/* WIP WA-65 */}
               {/* <Route exact path='/debug' component={ReportPdf}/> */}
               {/* <Route exact path='/group-quiz-result-print/:id' render={(props) => (<CheckLoginVerified childComponent={<ReportPdf {...props}/>} {...props}/>)} />/> */}
-              <Route exact path='/group-quiz-result-print/:gid/:qid' component={GroupQuizReportPdf}/>
-              
+              {/* <Route exact path='/group-quiz-result-print/:gid/:qid' component={GroupQuizReportPdfDebug}/> */}
               <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />
