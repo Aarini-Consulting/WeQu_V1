@@ -26,11 +26,15 @@ class EditEntry extends React.Component {
   }
   
   componentDidMount(){
-    this.syncStateValue(this.props);
+      if(this.props.currentUser){
+        this.syncStateValue(this.props);
+      }
   }
 
   componentWillReceiveProps(nextProps){
-    this.syncStateValue(nextProps);
+      if(nextProps.currentUser){
+        this.syncStateValue(nextProps);
+      }
   }
 
   syncStateValue(props){
