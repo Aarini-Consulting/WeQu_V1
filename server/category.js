@@ -426,7 +426,10 @@ Meteor.methods({
                 if(groupCheck.currentGroupQuizId){
                     Group.update({_id:groupId},
                         {
-                            $set : {"isPlaceCardActive": false}
+                            $set : {
+                                "isPlaceCardActive": false,
+                                "userIdsSelfRankCompleted":[]
+                            }
                         } 
                     );
                 }else{
@@ -434,7 +437,8 @@ Meteor.methods({
                         {
                             $set : {
                                 "isActive":false,
-                                "isPlaceCardActive": false
+                                "isPlaceCardActive": false,
+                                "userIdsSelfRankCompleted":[]
                             }
                         } 
                     );
