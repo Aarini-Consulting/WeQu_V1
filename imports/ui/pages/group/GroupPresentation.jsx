@@ -5,6 +5,7 @@ export default class GroupPresentation extends React.Component {
     constructor(props) {
         super(props);
         this.mounted = false;
+        this.presentationRef = React.createRef();
         this.state={
           loading:true,
           loadedOnce:false
@@ -15,22 +16,26 @@ export default class GroupPresentation extends React.Component {
         this.mounted = true;
     }
 
+    componentDidUpdate(){
+        if(this.props.display){
+            if(this.presentationRef && this.presentationRef.current){
+                var presentationDOM = this.presentationRef.current;
+                var activeElement = document.activeElement;
+
+                var isFocused = (activeElement === presentationDOM);
+
+                if(!isFocused){
+                    presentationDOM.focus();
+                }
+            }
+        }
+    }
+
     componentDidMount(){
         //if frame is still not loaded after 5 secs, show it on the screen anyway so that user can see what the problem is
         setTimeout(() => {
             this.frameIsLoaded();
         },10000); 
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.loading && nextState.loading == false){
-            return true;
-        }else if(this.props.language != nextProps.language){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
     frameIsLoaded(){
@@ -74,7 +79,7 @@ export default class GroupPresentation extends React.Component {
                     <Loading/>
                 }
                 <iframe 
-                ref="presentation"
+                ref={this.presentationRef}
                 src={url} 
                 frameBorder="0" allowFullScreen="true" style={style}
                 onLoad={this.frameIsLoaded.bind(this)}>

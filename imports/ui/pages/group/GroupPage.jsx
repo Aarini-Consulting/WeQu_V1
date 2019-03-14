@@ -23,10 +23,9 @@ class GroupPage extends React.Component {
       super(props);
       this.state={
         inviteStatus:false,
-        initialLocale:i18n.getLocale(),
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
         showInviteGroup:false,
-        showConfirm:false,
+        showConfirmStop:false,
         showConfirmStart:false,
         showReopenConfirm:false,
         showInfo:false,
@@ -68,10 +67,13 @@ class GroupPage extends React.Component {
   }
 
   componentWillUnmount(){
-    var currentLocale = i18n.getLocale();
-    if(currentLocale != this.state.initialLocale){
-      i18n.setLocale(this.state.initialLocale);
+    
+    var userLocale = i18n.getLocale();
+    var user = this.props.currentUser;
+    if(user && user.profile && user.profile.locale){
+      userLocale = user.profile.locale;
     }
+    i18n.setLocale(userLocale);
   }
 
   showInviteGroup(bool){
@@ -125,6 +127,12 @@ class GroupPage extends React.Component {
           showInfoMessage:msg
         });
       }
+    });
+  }
+
+  stopGamePlaceCardConfirm(){
+    this.setState({
+      showConfirmStop: true,
     });
   }
 
@@ -437,7 +445,7 @@ class GroupPage extends React.Component {
         return (
           <div key={skill.name}>
             <div className="tap-content w-clearfix">
-              <div className="tap-left">
+              <div className="tap-left typeform-survey-graph">
                 <div className="font-matric">
                   {skillName}
                 </div>
@@ -445,18 +453,21 @@ class GroupPage extends React.Component {
                 <i className="fas fa-info-circle"></i>
                 </div>
               </div>
-              <div className="show-numbers">
+              <div className="show-numbers typeform-survey-graph">
                 <div className="chart-graph w-clearfix">
                   <div className="chart-graph bg"></div>
                   <div className="chart-graph active" style={{width:value + "%"}}></div>
                   <div className="chart-number" style={{left:leftPos}}>
                     <div className="font-chart-nr">{formattedScore}</div>
                   </div>
+                  {/* <div className="chart-number average" style={{left:50}}> */}
+                  {/* </div> */}
+                  
                 </div>
               </div>
-              <div className="tap-right">
+              <div className="tap-right typeform-survey-graph">
                 <div className="font-matric">
-                  {formattedScore} / {total}
+                  {total}
                 </div>
               </div>
             </div>
@@ -514,7 +525,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
-        (<div className="tap-content-wrapper">
+        (<div className="tap-content-wrapper typeform-survey-graph">
           {this.renderSurveyGraph(this.props.group.typeformGraph)}
         </div>);
       }
@@ -537,7 +548,7 @@ class GroupPage extends React.Component {
             )
           }
           {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCards.bind(this)}>stop</a>
+            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
           }
           </div>
 
@@ -564,38 +575,43 @@ class GroupPage extends React.Component {
 
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
                 <div className="tabs-menu-inner-wrapper">
-                  <a className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
+                  <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
                     <div>Manage session</div>
-                  </a>
-                  <a className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
+                  </div>
+                  <div className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>
-                    <div>Present</div>
-                  </a>
-                  <a className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
+                    <div>Present slide</div>
+                  </div>
+                  <div className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"survey")}>
                     <div>View survey</div>
-                  </a>
-                  <a className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
+                  </div>
+                  <div className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
                     <div>Prepare cards</div>
-                  </a>
-                  <a className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
+                  </div>
+                  <div className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"quiz")}>
-                    <div>Do Quiz</div>
-                  </a>
-                  <a className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
+                    <div>Do quiz</div>
+                  </div>
+                  <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>
-                  </a>
+                  </div>
                 </div>
               </div>
-              <div className="tabs w-tabs"style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
+              <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
                   {tabContent}
               </div>
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
-                <div className="tabs w-tabs" style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
-                  <GroupPresentation language={this.state.selectedGroupLanguage} group={this.props.group} frameIsLoaded={this.frameIsLoaded.bind(this)}/>
+                <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
+                  <GroupPresentation 
+                  language={this.state.selectedGroupLanguage} 
+                  group={this.props.group} 
+                  frameIsLoaded={this.frameIsLoaded.bind(this)}
+                  display={this.state.currentTab == "presentation"}
+                  />
                 </div>
               }
               
@@ -613,6 +629,7 @@ class GroupPage extends React.Component {
                 <SweetAlert
                 type={"confirm"}
                 message={"Everyone ready for interactive mode?"}
+                imageUrl={"/img/gameMaster/interactive.gif"}
                 confirmText={"Let's go!"}
                 cancelText={"Cancel"}
                 onCancel={() => {
@@ -621,6 +638,21 @@ class GroupPage extends React.Component {
                 onConfirm={() => {
                   this.setState({ showConfirmStart: false });
                   this.startGamePlaceCards();
+                }}/>
+              }
+
+              {this.state.showConfirmStop &&
+                <SweetAlert
+                type={"confirm"}
+                message={"Are you sure? You'll need to start over if you stop this now"}
+                confirmText={"Yes, stop this now"}
+                cancelText={"Cancel"}
+                onCancel={() => {
+                    this.setState({ showConfirmStop: false });
+                }}
+                onConfirm={() => {
+                  this.setState({ showConfirmStop: false });
+                  this.stopGamePlaceCards();
                 }}/>
               }
             </section>

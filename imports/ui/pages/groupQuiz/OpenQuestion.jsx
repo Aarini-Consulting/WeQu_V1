@@ -12,7 +12,7 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
 class OpenQuestion extends React.Component {
@@ -73,16 +73,28 @@ class OpenQuestion extends React.Component {
 
   renderInputFields(){
     var fields=[];
+    var maxLength=40;
+
     for(index=0;index<this.props.answerCount;index++){
       var required = false;
       if(index == 0){
         required = true;
       }
 
+      var charLength = 0;
+
+      if(this.state.value[index] && this.state.value[index].length > 0){
+        charLength = this.state.value[index].length;
+      }
+
+
       fields.push(
-        <input className="group-quiz-open-question-field w-input" maxLength="256" placeholder="your answer" type="text"
-        key={`Open-Question-Answer-${this.props.groupId}-${index}`}
-        value={this.state.value[index]} onChange={this.handleChange.bind(this,index)} required={required} />
+        <div className="group-quiz-open-question-field-container" key={`Open-Question-Answer-${this.props.groupId}-${index}`}>
+          <input className="group-quiz-open-question-field" maxLength={maxLength} placeholder="your answer" type="text"
+          value={this.state.value[index]} onChange={this.handleChange.bind(this,index)} required={required} />
+          <div className="group-quiz-open-question-field-counter">{maxLength - charLength}</div>
+        </div>
+        
       )
     }
 

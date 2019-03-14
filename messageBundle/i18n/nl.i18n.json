@@ -104,7 +104,7 @@
         "SocialNormsText1":"In dit team houden teamleden informatie achter die bruikbaar kan zijn voor anderen.",
         "SocialNormsText2":"Dit team heeft een groot gevoel van gezamenlijk succes in plaats van individueel succes.",
         "SocialNormsText3":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
-        "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar"
+        "NoMatrixInfo":"Er is tijdelijk geen info beschikbaar."
     },
     "rankItem":{
         "generous":"genereus",
@@ -130,7 +130,7 @@
         "conceptual_thinking":"conceptueel denken",
         "creative":"creatief",
         "inquisitive":"onderzoekend",
-        "analytical":"binaural"
+        "analytical":"Analytisch"
     },
     "rankSelf":{
         "ButtonGo":"Let's go!",
@@ -143,69 +143,68 @@
         "ButtonDone":"Klaar!"
     },
     "quizRankWait":{
-        "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u",
-        "WaitForOthers":"Wachten totdat de anderen klaar zijn",
+        "OthersEvaluatingYou":"Ga achterover zitten en ontspan u, de anderen evalueren u.",
+        "WaitForOthers":"Wachten totdat de anderen klaar zijn.",
         "TheWholeTeamWillRank":"Het hele team zal nu de volgende persoon beoordelen:",
-        "YouWillHave60Secs":"U heeft 60 seconden",
-        "TextForFirstName":"Ga achterover zitten en ontspan u, {$firstName}",
+        "YouWillHave60Secs":"U heeft 60 seconden.",
         "Proceed":"Doorgaan",
         "MessageDoneLine1":"Helemaal klaar!",
         "MessageDoneLine2":"Wacht alstublieft tot iedereen in de groep hun zelfbeoordeling voltooid heeft..."
     },
     "quizRankPlaceCard":{
-        "Instruction":"Schrift de kaartnummers op uw 'WeQ playmat'",
+        "Instruction":"Schrift de kaartnummers op uw 'WeQ playmat'.",
         "ButtonDone":"Klaar!"
     },
     "loadingAnimated":{
         "PleaseWait":"Even geduld a.u.b....",
-        "PleaseWaitGenerating":" even geduld a.u.b....uw informatie wordt door WeQ gegenereerd"
+        "PleaseWaitGenerating":" even geduld a.u.b....uw informatie wordt door WeQ gegenereerd."
     },
     "groupQuizQuestion":{
-        "HowOftenCompliment":"Hoe vaak krijg je een compliment?",
-        "IdealPraiseRatio":"Ideale ratio Lof:Kritiek op het werk?",
+        "HowOftenCompliment":"Hoe vaak heb je de laatste 7 dagen complimenten van je collega’s gekregen?",
+        "IdealPraiseRatio":"Wat is de ideale verhouding van 'lof : kritiek' op het werk?",
         "BestComplimentGiver":"Wie gaf het beste compliment?",
-        "TeamSharedGoal":"Wat is jullie gedeelde teamdoel?",
-        "RankDiscussionBehaviour":"Hoe ziet een effectieve discussie eruit? Beoordeel het antwoord.",
-        "HadToChoosePrefer":"Als ik moest kiezen, zou ik de voorkeur hebben om te",
-        "RankCriticismGiver":"Wiens kritiek is het moeilijkst om mee om te gaan?",
-        "BestCriticismGiver":"Wie is het best in kritiek geven?",
-        "RankBehaviourImprovement":"Welke van onderstaande gedragingen wil je starten?",
-        "EvaluateSession":"Evalueer de sessie"
+        "TeamSharedGoal":"Wat is het gezamenlijke doel van jullie team?",
+        "RankDiscussionBehaviour":"Een effectieve discussie vereist verschillende gedragingen. Zet op volgorde welk gedrag het belangrijkst is, van boven naar beneden.",
+        "HadToChoosePrefer":"Als ik moest kiezen, zou ik de voorkeur geven aan...",
+        "RankCriticismGiver":"Kritiek kan moeilijk zijn om te om te gaan, afhankelijk van wie het geeft. Zet op volgorde,  van boven naar beneden, van wie het het moeilijkt is om kritiek te krijgen.",
+        "BestCriticismGiver":"Wie gaf de beste kritiek?",
+        "RankBehaviourImprovement":"Welke van deze gedragingen wil je het liefst aan werken? Zet ze op volgorde van boven naar beneden.",
+        "EvaluateSession":"Hoe tevreden ben je met deze ervaring? Evalueer de sessie."
     },
     "groupQuizAnswer":{
-        "Answer1":"Geen",
+        "Answer1":"Geen enkele keer",
         "Answer1A":"Minder dan 3 keer",
         "Answer1B":"Tussen 3 tot 10 keer",
         "Answer1C":"Meer dan 10 keer",
-        "Answer2":"Lof : Kritiek = 1 : 3",
-        "Answer2A":"Lof : Kritiek = 1 : 1",
-        "Answer2B":"Lof : Kritiek = 3 : 1",
-        "Answer2C":"Lof : Kritiek = 5 : 1",
+        "Answer2":"1 : 3",
+        "Answer2A":"1 : 1",
+        "Answer2B":"3 : 1",
+        "Answer2C":"5 : 1",
         "Answer3":"Start een vergadering met een praatje.",
-        "Answer3A":"Begin meteen met praten over zaken doen.",
-        "Answer3B":"Leden nemen een gelijke wending tijdens een discussie.",
-        "Answer3C":"Het is goed om iemand te onderbreken wanneer hij/zij veel aan het woord is.",
+        "Answer3A":"Kom meteen ter zake in een vergadering.",
+        "Answer3B":"Zorg ervoor dat deelnemers evenveel aan het woord zijn tijdens een discussie.",
+        "Answer3C":"Het is vaak nodig om iemand te onderbreken wanneer hij/zij veel aan het woord is.",
         "Answer3D":"Meningsverschillen moeten tot een minimum worden beperkt.",
-        "Answer3E":"De leider moet de discussie starten eerst en tevens begeleiden.",
-        "Answer4":"Geef een moeilijke kritiek",
-        "Answer4A":"Krijg een moeilijke kritiek.",
+        "Answer3E":"Leiders moeten eerst spreken en de discussie richting geven.",
+        "Answer4":"Moeilijke en onplezierige kritiek geven.",
+        "Answer4A":"Moeilijke en onplezierige kritiek ontvangen.",
         "Answer5":"Mijn ouders",
         "Answer5A":"Mijn manager",
         "Answer5B":"Mijn echtgenoot",
         "Answer5C":"Mijn vrienden",
         "Answer5D":"Mijn collega's",
-        "Answer6":"In meetings, I'll try to talk a bit less.",
-        "Answer6A":"Ik zal meer werken aan het succes van het team dan aan mijn persoonlijke glorie.",
-        "Answer6B":"Tijdens vergaderingen zal ik vaker mijn gedachten uitspreken.",
+        "Answer6":"Tijdens vergaderingen zal ik minder proberen te spreken dan nu.",
+        "Answer6A":"Ik zal meer werken aan het succes van het team dan aan mijn persoonlijke winst.",
+        "Answer6B":"Ik zal mij meer uitspreken over problemen en issues, zonder angst om door anderen beoordeeld te worden.",
         "Answer6C":"Ik zal meer complimenten geven aan mijn collega's.",
         "Answer6D":"Ik zal proberen niet defensief te zijn als mijn collega's mij bekritiseren.",
         "Answer6E":"Andere doelen.",
-        "Answer7":"Ik voelde me veilig gesproken.",
-        "Answer7A":"Ik heb geleerd constructieve feedback te geven.",
-        "Answer7B":"Ik heb geleerd constructieve feedback te geven",
+        "Answer7":"Ik voelde me vrij om te zeggen wat ik wilde.",
+        "Answer7A":"Ik sprak over dingen die ik normaal niet met mijn team deel.",
+        "Answer7B":"Ik gaf en kreeg constructieve feedback.",
         "Answer7C":"Ik heb nieuwe, positieve eigenschappen van mijn collega's geleerd.",
         "Answer7D":"De manier waarop we de communicatie tijdens de sessie afhandelen, was effectiever dan onze gebruikelijke teamvergaderingen.",
-        "Answer7E":"Ik zie de waarde van deze sessie en wil hem aanbevelen aan anderen."
+        "Answer7E":"Ik zie de waarde van deze sessie en ga hem aanbevelen aan anderen."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Bedankt",

@@ -9,7 +9,7 @@ import { Creatable } from 'react-select';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Menu from '/imports/ui/pages/menu/Menu';
 
-import {formatErrMessage} from '/imports/startup/client/formatErrMessage.js';
+import {formatErrMessage} from '/imports/helper/formatErrMessage.js';
 
 // import MultiSelect from './MultiSelect';
 // import '/imports/startup/client/react-select.css';
@@ -541,7 +541,13 @@ class InviteGroup extends React.Component {
 
                   {!(this.props.group && this.props.group.isFinished) &&
                     <div>
-                      <div className="groupformtext">Group language:</div>
+                      <div className="groupformtext">
+                        Group language
+                        <div className="tooltip-tutorial">
+                          <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
+                          <span className="tooltiptext">Define the session language (e.g. invitation email, baseline survey, presentation and quiz questions).</span>
+                        </div>
+                      </div>
                       <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                       value={this.state.selectedGroupLanguage} onChange={this.handleChangeGroupLang.bind(this)}>
                           {this.renderLanguageList()}

@@ -706,6 +706,12 @@
   margin-left: auto;
 }
 
+.badge-placeholder {
+  background-image: url('/img/report/placeholder.jpeg');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
 .badge-generous {
   background-image: url('/img/report/Generous.png');
   background-position: 50% 50%;
@@ -873,6 +879,10 @@
 .category-problem_solving {
   background-color: #4c9f5b;
 } */
+
+.text-category-placeholder {
+  color: #c3c3c3;
+}
 
 .text-category-virtue {
   color: #f15177;

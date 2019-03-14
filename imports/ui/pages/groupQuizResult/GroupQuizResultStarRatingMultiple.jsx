@@ -55,6 +55,12 @@ export default class GroupQuizResultOpenQuestion extends React.Component {
                 data = data.map((d)=>{
                   var newAmount = dataHolderCombinedResult[d.text];
                   newAmount = newAmount/props.selectedQuizResult.length;
+
+                  if(typeof newAmount == "number" && newAmount > 0){
+                    newAmount = newAmount.toFixed(1);
+                  }else{
+                    newAmount = 0;
+                  }
                   return {amount:newAmount,text:i18n.getTranslation(`weq.groupQuizAnswer.${d.text}`)};
                 });
               }else{

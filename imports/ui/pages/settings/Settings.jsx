@@ -7,7 +7,7 @@ import Menu from '/imports/ui/pages/menu/Menu';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
 import i18n from 'meteor/universe:i18n';
 
@@ -32,11 +32,15 @@ class Settings extends React.Component {
     }
 
     componentWillMount(){
-        this.setDefaultValue(this.props);
+        if(this.props.dataReady){
+            this.setDefaultValue(this.props);
+        }
     }
     
     componentWillReceiveProps(nextProps){
-        this.setDefaultValue(nextProps);  
+        if(nextProps.dataReady){
+            this.setDefaultValue(nextProps);
+        }
     }
 
     setDefaultValue(props){
@@ -44,6 +48,22 @@ class Settings extends React.Component {
             this.setState({
                 consentSubs: props.currentUser.profile.consentSubs.consentGiven,
             });
+        }
+
+        var user = props.currentUser;
+        var userLocale;
+        if(user && user.profile && user.profile.locale){
+            userLocale = user.profile.locale;
+        }
+
+        if(userLocale){
+            this.setState({
+                locale:userLocale,
+            })
+        }else{
+            this.setState({
+                locale:i18n.getLocale(),
+            })
         }
     }
 
@@ -80,7 +100,6 @@ class Settings extends React.Component {
     var gameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
     var admin = Roles.userIsInRole( Meteor.userId(), 'admin' );
     var languageCode = this.state.locale.split("-")[0];
-    
       return (
         <div className="fillHeight">
         <Menu location={this.props.location} history={this.props.history}/>

@@ -5,17 +5,11 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Loading from './loading/Loading';
-// import ScriptLoginInit from './ScriptLoginInit'; 
-import EmailVerified from './accounts/EmailVerified'; 
-import Quiz from './quiz/Quiz';
-import Profile from './profile/Profile'; 
-import ScriptLoginAfterQuiz from './ScriptLoginAfterQuiz'; 
-import Invite from './invite/Invite';
-
-import {init} from '/imports/ui/pages/profile/minBlock';
+import EmailVerified from './accounts/EmailVerified';
 
 import Menu from '/imports/ui/pages/menu/Menu';
 import LandingSurveyComponent from './survey/LandingSurveyComponent';
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
 import i18n from 'meteor/universe:i18n';
 
@@ -24,6 +18,37 @@ const T = i18n.createComponent();
 class Home extends React.Component {
     constructor(props){
         super(props);
+        this.state={
+            showPopup:false,
+            popupSelectedGroup:undefined
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.props.groups && nextProps.groups && this.props.groups.length > 0 && nextProps.groups.length > 0){
+            var existingGroupsArray = this.props.groups.map((group)=>{
+                return group._id;
+            });
+            nextProps.groups.forEach((group, index)=>{
+                var oldIndex = existingGroupsArray.indexOf(group._id);
+                if(oldIndex > -1){
+                    var oldGroup = this.props.groups[oldIndex];
+                    if(oldGroup._id == group._id){
+                        var groupQuizStarted = !oldGroup.currentGroupQuizId && group.currentGroupQuizId;
+                        var placeCardStarted = !oldGroup.isPlaceCardActive && group.isPlaceCardActive;
+            
+                        if(groupQuizStarted || placeCardStarted){
+                            console.log("showpopup");
+                            console.log(group._id);
+                            this.setState({ 
+                                showPopup: true,
+                                popupSelectedGroup: group
+                            });
+                        }
+                    }
+                }
+            })
+        }
     }
 
     renderGroups(){
@@ -128,6 +153,28 @@ class Home extends React.Component {
                                 <div className="w-block home-group-list-wrapper">
                                     {this.renderGroups()}
                                 </div>
+
+                                {this.state.showPopup &&
+                                    <SweetAlert
+                                    type={"confirm"}
+                                    message={`A group session "${this.state.popupSelectedGroup.groupName}" has begun`}
+                                    imageUrl={"/img/gameMaster/interactive.gif"}
+                                    confirmText={"Join session now"}
+                                    cancelText={"Not now"}
+                                    onCancel={() => {
+                                        this.setState({ 
+                                            showPopup: false, 
+                                            popupSelectedGroup:undefined 
+                                        });
+                                    }}
+                                    onConfirm={() => {
+                                        // this.setState({ 
+                                        //     showPopup: false,
+                                        //     popupSelectedGroup:undefined
+                                        // });
+                                        this.props.history.push(`/quiz/${ this.state.popupSelectedGroup._id }`);
+                                    }}/>
+                                }
                             </section>
                         )
                     }else{

@@ -1,8 +1,8 @@
 import React from 'react';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
-import {calculateChartLineWidth} from '/imports/ui/pdfCalculateChartWidth';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
+import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 
 export default class ReportPdf extends React.Component {
     render(){
@@ -31,7 +31,6 @@ export default class ReportPdf extends React.Component {
                 {category:'problem_solving',subCategory:'inquisitive',value:6,minValue:4.2,maxValue:6},
             ]
         }
-        console.log(propData);
         return(
             <html>
                 <head>

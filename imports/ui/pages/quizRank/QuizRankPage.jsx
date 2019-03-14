@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import QuizRankPlaceCards from '/imports/ui/pages/quizRank/QuizRankPlaceCards';
@@ -16,7 +15,7 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import GroupQuizClientPage from '/imports/ui/pages/groupQuizClient/GroupQuizClientPage';
 import SessionFinished from './SessionFinished';
 import SessionWait from './SessionWait';

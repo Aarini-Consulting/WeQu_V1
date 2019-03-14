@@ -8,7 +8,7 @@ import Menu from '/imports/ui/pages/menu/Menu';
 
 import i18n from 'meteor/universe:i18n';
 
-import {typeformUrlSelector} from '/imports/ui/typeformUrlSelector';
+import {typeformUrlSelector} from '/imports/helper/typeformUrlSelector';
 
 const T = i18n.createComponent();
 

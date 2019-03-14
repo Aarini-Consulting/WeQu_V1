@@ -42,6 +42,7 @@ import '/imports/startup/client/css/fontawesome-all.min';
 import '/imports/startup/client/css/normalize';
 import '/imports/startup/client/css/webflow';
 import '/imports/startup/client/css/wequ-profile.webflow';
+import '/imports/startup/client/css/sweetalert';
 import LinkedInPermission from '/imports/ui/pages/linkedIn/LinkedInPermission';
 import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
@@ -106,15 +107,29 @@ const App = class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props.currentUser && !nextProps.currentUser){
-      //logout detected, set locale back to its initial locale
-      this.unsetLocale();
+    if(nextProps.dataReady){
+      if(this.props.currentUser && !nextProps.currentUser){
+        //logout detected, set locale back to its initial locale
+        this.unsetLocale();
+      }
+  
+      //run setlocale on first time (to prevent overriding locale set from group page)
+      //I resorted to this hack because i18n.runWithLocale() doesn't seem to work on the client side of the app
+      if(!this.props.currentUser && nextProps.currentUser){
+        this.setLocale(nextProps);
+      }else if(this.props.currentUser && this.props.currentUser.profile.locale && nextProps.currentUser){
+        var userChangedLanguage = this.props.currentUser.profile.locale != nextProps.currentUser.profile.locale;
+        if(userChangedLanguage){
+          this.setLocale(nextProps);
+        }
+      }
     }
-    this.setLocale(nextProps);
   }
 
   componentDidMount(){
-    this.setLocale(this.props);
+    if(this.props.dataReady){
+      this.setLocale(this.props);
+    }
   }
 
   unsetLocale(){
@@ -129,8 +144,10 @@ const App = class App extends React.Component {
 
     //override detected locale with locale value from user profile
     var user = props.currentUser;
+    var userHasLocale;
     if(user && user.profile && user.profile.locale){
       locale = user.profile.locale;
+      userHasLocale = true;
     }
     
     var languageCode;
@@ -162,6 +179,15 @@ const App = class App extends React.Component {
       }
     }
 
+    if(!userHasLocale){
+      //set user's locale
+      Meteor.call( 'user.set.locale', locale, ( error, response ) => {
+        if ( error ) {
+          console.log(error);
+        }
+      });
+    }
+
     i18n.setLocale(locale).then(() => {
       this.setState({
         languageLoaded:true
@@ -173,11 +199,6 @@ const App = class App extends React.Component {
         languageLoaded:true
       });
     }
-  }
-
-  componentWillUnmount(){
-    //on destroy, set locale back to original locale
-    this.unsetLocale();
   }
 
   render() {
@@ -195,7 +216,7 @@ const App = class App extends React.Component {
               <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>
               <Route exact path='/linkedin-handler' render={(props) => (<CheckLoginVerified childComponent={<LinkedInHandler {...props}/>} {...props}/>)} />/>
               <Route exact path='/group-invitation/:email/:id' component={InviteGroupLanding}/>
-              <Route exact path='/debug' component={ReportPdf}/>
+              {/* <Route exact path='/debug' component={ReportPdf}/> */}
               <Route exact path='/login' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route exact path='/login/:id' render={(props) => (<CheckNotLoggedIn childComponent={<Login {...props}/>} {...props}/>)} />
               <Route path='/recover-password' render={(props) => (<CheckNotLoggedIn childComponent={<RecoverPassword {...props}/>} {...props}/>)} />

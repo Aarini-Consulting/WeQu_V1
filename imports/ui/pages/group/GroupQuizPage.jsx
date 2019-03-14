@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import {quizComponent} from '/imports/startup/client/quizComponent';
+import {quizComponent} from '/imports/helper/quizComponent';
 import GroupQuizCmcLanding from '/imports/ui/pages/groupQuiz/GroupQuizCmcLanding';
 import Loading from '/imports/ui/pages/loading/Loading';
 
@@ -114,11 +114,21 @@ class GroupQuizPage extends React.Component {
     return this.props.groupQuizList.map((quiz, index) => {
       var className = "group-quiz-list-item cursor-pointer";
 
+      if(this.props.groupQuizDataList.length > 0){
+        var quizAnswers = this.props.groupQuizDataList.filter((quizAnswer)=>{
+          return quizAnswer.groupQuizId == quiz._id;
+        })
+
+        if(quizAnswers.length == this.props.group.userIdsSurveyed.length){
+          className = "group-quiz-list-item done noselect";
+        }
+      }
+
       if(this.state.selectedQuiz && this.state.selectedQuiz._id == quiz._id){
-        className = "group-quiz-list-item selected noselect"
+        className = "group-quiz-list-item selected noselect";
       }
       return(
-        <div className={className} 
+        <div className={className}
         key={`groupQuiz-list-${index}`} onClick={this.quizSelectCheck.bind(this,quiz)}>
           {index+1}
         </div>
@@ -127,14 +137,17 @@ class GroupQuizPage extends React.Component {
   }
 
   renderQuestionListPlaceholder(){
-    var dummyQuizList=[1,2,3,4,5,6,7,8,9,10];
-    return dummyQuizList.map((quiz, index) => {
-      return(
-        <div className={`group-quiz-list-item placeholder noselect`} key={`groupQuiz-list-${index}`}>
-          #
-        </div>
-      );
-    });
+    if(this.props.groupQuizIdList){
+      return this.props.groupQuizIdList.map((quiz, index) => {
+        return(
+          <div className={`group-quiz-list-item placeholder noselect`} key={`groupQuiz-list-${index}`}>
+            #
+          </div>
+        );
+      });
+    }else{
+      return false;    
+    }
   }
 
   render() {
@@ -195,6 +208,7 @@ class GroupQuizPage extends React.Component {
             <SweetAlert
             type={"confirm"}
             message={"Everyone ready for interactive mode?"}
+            imageUrl={"/img/gameMaster/interactive.gif"}
             confirmText={"Let's go!"}
             cancelText={"Cancel"}
             onCancel={() => {
@@ -259,7 +273,8 @@ class GroupQuizPage extends React.Component {
 export default withTracker((props) => {
   var dataReady;
   var groupQuizList=[];
-  var selectedGroupQuizDataList=[]
+  var selectedGroupQuizDataList=[];
+  var groupQuizDataList=[];
 
   var group = props.group;
   if(group.groupQuizIdList && group.groupQuizIdList.length > 0){
@@ -286,10 +301,14 @@ export default withTracker((props) => {
 
       if(handleGroupQuizData.ready()){
         if(group.currentGroupQuizId){
-          selectedGroupQuizDataList=GroupQuizData.find({
+          selectedGroupQuizDataList = GroupQuizData.find({
             "groupId": group._id,
             "groupQuizId": group.currentGroupQuizId
-          }).fetch();  
+          }).fetch();
+
+          groupQuizDataList = GroupQuizData.find({
+            "groupId": group._id,
+          }).fetch();
         }
         
         dataReady = true;
@@ -301,6 +320,7 @@ export default withTracker((props) => {
   return {
       groupQuizList:groupQuizList,
       selectedGroupQuizDataList:selectedGroupQuizDataList,
+      groupQuizDataList:groupQuizDataList,
       dataReady:dataReady
   };
 })(GroupQuizPage);

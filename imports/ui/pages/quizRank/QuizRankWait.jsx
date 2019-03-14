@@ -12,14 +12,11 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
-import {complexLinkTranslate} from '/imports/ui/complexLinkTranslate';
+import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
 class QuizRankWait extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            feedbackRank: undefined,
-        };
     }
 
     confirmReadiness(){
@@ -81,8 +78,6 @@ class QuizRankWait extends React.Component {
                                     <br/>
                                     <div className="font-rate padding-wrapper"><T>weq.quizRankWait.YouWillHave60Secs</T></div>
                                     <br/>
-                                    <div className="font-rate padding-wrapper"><T firstName={this.props.quizUser && this.props.quizUser.profile.firstName}>weq.quizRankWait.TextForFirstName</T></div>
-                                    <br/>
                                     <div className="w-block cursor-pointer">
                                         <div className="font-rate f-bttn w-inline-block noselect" onClick={this.confirmReadiness.bind(this)}>
                                             <T>weq.quizRankWait.Proceed</T>
@@ -97,6 +92,7 @@ class QuizRankWait extends React.Component {
                         <div className="fillHeight weq-bg">
                             <div className="font-rate padding-wrapper">
                             <T>weq.quizRankWait.MessageDoneLine1</T>
+                            <br/>
                             <T>weq.quizRankWait.MessageDoneLine2</T>
                             </div>
                         </div>

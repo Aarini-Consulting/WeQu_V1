@@ -26,17 +26,32 @@ class EditEntry extends React.Component {
   }
   
   componentDidMount(){
-    this.syncStateValue(this.props);
+      if(this.props.currentUser){
+        this.syncStateValue(this.props);
+      }
   }
 
   componentWillReceiveProps(nextProps){
-    this.syncStateValue(nextProps);
+      if(nextProps.currentUser){
+        this.syncStateValue(nextProps);
+      }
   }
 
   syncStateValue(props){
     if(props.currentUser.profile.gender){
         this.setState({
             gender:props.currentUser.profile.gender,
+        })
+    }
+    var user = props.currentUser;
+    var userLocale;
+    if(user && user.profile && user.profile.locale){
+      locale = user.profile.locale;
+    }
+
+    if(userLocale){
+        this.setState({
+            locale:userLocale,
         })
     }
   }

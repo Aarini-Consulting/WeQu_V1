@@ -27,14 +27,20 @@ export default class Menu extends React.Component {
         });
     }
 
+    backArrowClick(){
+        if(this.props.backArrowClick){
+            this.props.backArrowClick();
+        }else{
+            this.props.history.goBack();
+        }
+    }
+
     render() {
         return (
             <div className="div-block-center">
                 <div className="menubar presentation w-clearfix">
                     <div className="screentitlebttn">
-                        <a className="w-clearfix w-inline-block cursor-pointer menubar-bttn-white" onClick={()=>{
-                        this.props.history.goBack();
-                        }}>
+                        <a className="w-clearfix w-inline-block cursor-pointer menubar-bttn-white" onClick={this.backArrowClick.bind(this)}>
                         <i className="fas fa-arrow-left"></i>
                         </a>
                     </div>
