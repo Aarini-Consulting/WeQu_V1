@@ -20,7 +20,10 @@ export default class GroupQuizResultOpenQuestion extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        this.calculateData(nextProps);
+        //only updates when number of "word" in the wordcloud chart changed 
+        if(!this.props.selectedQuizResult || (this.props.selectedQuizResult && nextProps.selectedQuizResult && nextProps.selectedQuizResult.length > this.props.selectedQuizResult.length)){
+            this.calculateData(nextProps);
+        }
     }
 
     calculateData(props){

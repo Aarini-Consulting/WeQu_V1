@@ -112,12 +112,6 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
         }
 
         cloud().stop();
-
-        d3.selectAll("g")
-          .attr('transform', function(d, i) {
-            console.log(this.getBBox());
-            return "translate(" + [0, 0] + ")"
-          });
     }
     render() {
         return (

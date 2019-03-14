@@ -3032,6 +3032,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-align: left;
 }
 
+.tap-content-wrapper.typeform-survey-graph{
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 5em;
+}
+
 .tap-content-wrapper.presentation{
   padding:0
 }
@@ -3072,6 +3078,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   min-height: 50px;
   align-items: center;
   justify-content: center;
+}
+
+.tap-left.typeform-survey-graph{
+  width:30%
 }
 
 .create-chart-tab{
@@ -3186,7 +3196,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .font-matric.font-close {
   display: block;
   position: absolute;
-  left:calc(95% - 2em);
+  left:calc(85% - 2em);
   min-height: auto;
   width: auto;
   float: right;
@@ -3207,6 +3217,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   height: 50px;
   padding-left:1em;
   padding-right:1em;
+}
+
+.show-numbers.typeform-survey-graph{
+  width:65%
 }
 
 .chart-graph {
@@ -3237,12 +3251,20 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .chart-number {
   position: absolute;
-  top: -10px;
+  top: -40px;
   width: 40px;
   height: 40px;
-  border: 3px solid #525252;
-  border-radius: 200px;
+}
+
+.chart-number.average {
+  position: absolute;
+  top: -10px;
+  width: 8px;
   background-color: #F95A37;
+  height: 40px;
+  border-style: solid;
+  border-width: 0 3.25px;
+  border-color: #333333;
 }
 
 .font-chart-nr {
@@ -3260,7 +3282,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  color: #525252;
+  color: #F95A37;
   font-size: 1em;
   text-align: center;
 }
@@ -3269,6 +3291,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display: flex;
   width: 10%;
   min-height: 50px;
+}
+
+.tap-right.typeform-survey-graph{
+  width:5%
 }
 
 .font-card-username-cards {

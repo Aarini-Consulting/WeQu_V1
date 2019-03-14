@@ -445,7 +445,7 @@ class GroupPage extends React.Component {
         return (
           <div key={skill.name}>
             <div className="tap-content w-clearfix">
-              <div className="tap-left">
+              <div className="tap-left typeform-survey-graph">
                 <div className="font-matric">
                   {skillName}
                 </div>
@@ -453,18 +453,21 @@ class GroupPage extends React.Component {
                 <i className="fas fa-info-circle"></i>
                 </div>
               </div>
-              <div className="show-numbers">
+              <div className="show-numbers typeform-survey-graph">
                 <div className="chart-graph w-clearfix">
                   <div className="chart-graph bg"></div>
                   <div className="chart-graph active" style={{width:value + "%"}}></div>
                   <div className="chart-number" style={{left:leftPos}}>
                     <div className="font-chart-nr">{formattedScore}</div>
                   </div>
+                  {/* <div className="chart-number average" style={{left:50}}> */}
+                  {/* </div> */}
+                  
                 </div>
               </div>
-              <div className="tap-right">
+              <div className="tap-right typeform-survey-graph">
                 <div className="font-matric">
-                  {formattedScore} / {total}
+                  {total}
                 </div>
               </div>
             </div>
@@ -522,7 +525,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
-        (<div className="tap-content-wrapper">
+        (<div className="tap-content-wrapper typeform-survey-graph">
           {this.renderSurveyGraph(this.props.group.typeformGraph)}
         </div>);
       }
