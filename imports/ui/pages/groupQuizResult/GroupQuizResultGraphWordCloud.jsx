@@ -72,7 +72,7 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
               return d.value;
             })
            ])
-           .range([width/500,width/50]);
+           .range([width/300,width/50]);
 
         cloud().size([width*0.9, height*0.9])
           .timeInterval(20)
@@ -95,7 +95,8 @@ export default class GroupQuizResultGraphWordCloud extends React.Component {
             .selectAll("text")
               .data(words)
             .enter().append("text")
-              .style("font-size", function(d) { return xScale(d.value) + "px"; })
+              .style("font-size", function(d) {
+                return xScale(d.value) + "px"; })
               .style("font-family", "Raleway")
               .style("fill", function(d,i,words) {
                 var length = words.length;
