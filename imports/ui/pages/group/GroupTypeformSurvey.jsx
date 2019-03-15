@@ -310,7 +310,50 @@ export default class GroupTypeformSurvey extends React.Component {
           );
         }
       }
-    render() {
+
+      renderUsersSurvey(){
+        return this.props.users.map((user, index) => {
+          var userId = user._id;
+          var email = user.emails[0].address;
+          var readySurvey;
+          if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
+            readySurvey = true;
+          }
+    
+          var odd = (index % 2) > 0;
+    
+          var name;
+    
+          if(user.profile.firstName && user.profile.lastName){
+            name = user.profile.firstName + " " + user.profile.lastName;
+          }else{
+            name = email;
+          }
+    
+          return(
+            <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+              <div className="tap-left card">
+                <div className={"font-card-username "+(readySurvey ? "ready": "not-ready")}>
+                  {name}
+                </div>
+              </div>
+              <div className="show-cards">
+                {
+                  readySurvey 
+                  ? 
+                    <div className="bttn-next-card">Ready!</div>
+                  : 
+                  <div>
+                    {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
+                  </div>
+                }
+              </div>
+            </div>
+          )
+        });
+      }
+
+      render() {
         if(this.state.combinedResult){
             return (
                 <div className="tap-content-wrapper typeform-survey-graph">

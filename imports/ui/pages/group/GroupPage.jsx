@@ -235,52 +235,6 @@ class GroupPage extends React.Component {
     });
   }
 
-  renderUsersSurvey(){
-    return this.props.users.map((user, index) => {
-      var userId = user._id;
-      var email = user.emails[0].address;
-      var readySurvey;
-      if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
-        readySurvey = true;
-      }
-
-      var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
-        return cp.userId == user._id;
-      })
-
-      var odd = (index % 2) > 0;
-
-      var name;
-
-      if(user.profile.firstName && user.profile.lastName){
-        name = user.profile.firstName + " " + user.profile.lastName;
-      }else{
-        name = email;
-      }
-
-      return(
-        <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
-          <div className="tap-left card">
-            <div className={"font-card-username "+(readySurvey ? "ready": "not-ready")}>
-              {name}
-            </div>
-          </div>
-          <div className="show-cards">
-            {
-              readySurvey 
-              ? 
-                <div className="bttn-next-card">Ready!</div>
-              : 
-              <div>
-                {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
-              </div>
-            }
-          </div>
-        </div>
-      )
-    });
-  }
-
   render() {
     if(this.props.dataReady){
       var tabContent;
@@ -293,7 +247,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
-        (<GroupTypeformSurvey group={this.props.group}/>);
+        (<GroupTypeformSurvey group={this.props.group} users={this.props.users}/>);
       }
       else if(this.state.currentTab == "card"){
         var readySurvey;
