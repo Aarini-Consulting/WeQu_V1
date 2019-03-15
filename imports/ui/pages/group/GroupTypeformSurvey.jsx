@@ -273,26 +273,40 @@ export default class GroupTypeformSurvey extends React.Component {
               {skills}
               <br/>
               <br/>
-                <div className="div-block-right">
-                  <div className="w-inline-block survey-graph-footer">
+              <div className="tap-content-footer typeform-survey-graph">
+                  <div className="survey-graph-footer">
                     <div className="font-matric-refresh">
-                      {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
-                      <br/>
-                      completed the survey
+                      Average Score
                     </div>
-                    {this.state.gettingTypeformResult 
-                      ?
-                      <div className="invitebttn create-chart refresh w-button w-inline-block noselect">
-                        Loading...
+                    <div className="survey-graph-footer-legend noselect">
+                      <div className="chart-graph survey-graph-footer-legend ">
+                        <div className="chart-graph bg legend"></div>
+                        <div className="chart-number average" style={{left:`calc(${ 50 }% - 4px)`}}></div>
                       </div>
-                      :
-                      <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
-                        Refresh
-                      </div>
-                    }  
+                    </div>
                   </div>
               </div>
+              <br/>
+              <div className="tap-content-footer typeform-survey-graph">
+                <div className="survey-graph-footer">
+                  <div className="font-matric-refresh">
+                    {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
+                    <br/>
+                    completed the survey
+                  </div>
+                  {this.state.gettingTypeformResult 
+                    ?
+                    <div className="invitebttn create-chart refresh w-button w-inline-block noselect">
+                      Loading...
+                    </div>
+                    :
+                    <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
+                      Refresh
+                    </div>
+                  }  
+                </div>
             </div>
+          </div>
           );
         }
       }

@@ -3118,19 +3118,6 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color:#fff;
 }
 
-.survey-graph-footer-wrapper{
-  display: flex;
-  width:100%;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: right;
-}
-
-.survey-graph-footer{
-  padding: 1em;
-  text-align: left;
-}
-
 .invitebttn.create-chart.refresh {
   width:auto;
   color:#F95A37;
@@ -3167,7 +3154,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .font-matric-refresh {
-  display:inline-block;
+  display:flex;
   font-family: Raleway, sans-serif;
   color: #F95A37;
   font-size: 1.2em;
@@ -3175,8 +3162,9 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   text-decoration: none;
   text-transform: uppercase;
   word-wrap:break-word;
-  margin-left:1em;
-  margin-right:1em;
+  justify-content: left;
+  align-items: center;
+  flex-basis:50%;
 }
 
 .font-matric-info{
@@ -3295,6 +3283,32 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .tap-right.typeform-survey-graph{
   width:5%
+}
+
+.tap-content-footer.typeform-survey-graph{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.survey-graph-footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-basis:40%;
+}
+
+.survey-graph-footer-legend{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.chart-graph.survey-graph-footer-legend{
+  width:60px;
+}
+
+.chart-graph.bg.legend{
+  border-radius: none;
 }
 
 .font-card-username-cards {
