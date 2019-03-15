@@ -23,13 +23,37 @@ class AdminGameMasterView extends React.Component {
             matrixScore4:0,
             matrixScoreMax:0,
             currentPageIndex:0,
-            resultPerPage:10
+            resultPerPage:10,
+            loading:false
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.selectedUser){
+            var groups = nextProps.groups.filter((group)=>{return group.creatorId == this.state.selectedUser._id});
+            this.setState({selectedUserGroupList:groups});
         }
     }
 
     formatDate(date){
         return date.toLocaleDateString('nl-NL');
-      }
+    }
+
+    deleteGroup(group, event){
+        event.preventDefault();
+        this.setState({
+            loading:true
+        },()=>{
+            Meteor.call( 'delete.group', group._id, ( error, response ) => {
+                if ( error ) {
+                  console.log(error);
+                }
+                this.setState({
+                    loading:false
+                });
+            });
+        });
+    }
 
     setEditTypeform(group, event){
         event.preventDefault();
@@ -230,7 +254,12 @@ class AdminGameMasterView extends React.Component {
                     </td>
                     <td>
                     <button className="tablinks" id="view1" onClick={this.setEditTypeform.bind(this, group)}>
-                        Edit Typeform Score
+                    Edit Typeform Score
+                    </button>
+                    </td>
+                    <td>
+                    <button className="tablinks" id="view1" onClick={this.deleteGroup.bind(this, group)}>
+                    Delete Group
                     </button>
                     </td>
                 </tr>
@@ -320,7 +349,7 @@ class AdminGameMasterView extends React.Component {
                     </td>
                     <td>
                         <button className="tablinks" id="view1" onClick={this.setShowGrouplist.bind(this, user, groups)}>
-                            Edit Typeform Score
+                            Manage Groups
                         </button>
                     </td>
                     <td>
@@ -506,9 +535,11 @@ class AdminGameMasterView extends React.Component {
                                                 <th style={{width:"50%"}}></th>
                                             </tr>
                                         </thead>
-                                        <tbody className="no-border-x">					
+                                        {!this.state.loading && 
+                                            <tbody className="no-border-x">					
                                             {this.renderGroupListUser()}
-                                        </tbody>
+                                            </tbody>
+                                        }
                                     </table>
                                 </div>
                             </div>

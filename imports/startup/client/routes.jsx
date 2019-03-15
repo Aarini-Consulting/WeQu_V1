@@ -112,15 +112,17 @@ const App = class App extends React.Component {
         //logout detected, set locale back to its initial locale
         this.unsetLocale();
       }
-  
-      //run setlocale on first time (to prevent overriding locale set from group page)
-      //I resorted to this hack because i18n.runWithLocale() doesn't seem to work on the client side of the app
-      if(!this.props.currentUser && nextProps.currentUser){
-        this.setLocale(nextProps);
-      }else if(this.props.currentUser && this.props.currentUser.profile.locale && nextProps.currentUser){
-        var userChangedLanguage = this.props.currentUser.profile.locale != nextProps.currentUser.profile.locale;
-        if(userChangedLanguage){
+
+      if(nextProps.currentUser && nextProps.currentUser.profile){
+        //run setlocale on first time (to prevent overriding locale set from group page)
+        //I resorted to this hack because i18n.runWithLocale() doesn't seem to work on the client side of the app
+        if(!this.props.currentUser && nextProps.currentUser){
           this.setLocale(nextProps);
+        }else if(this.props.currentUser && this.props.currentUser.profile.locale && nextProps.currentUser){
+          var userChangedLanguage = this.props.currentUser.profile.locale != nextProps.currentUser.profile.locale;
+          if(userChangedLanguage){
+            this.setLocale(nextProps);
+          }
         }
       }
     }
