@@ -56,6 +56,7 @@ Meteor.methods({
                 //every set of this 6 sub-categories must have 1 randomly-selected sub-category from each category
                 //BUT sub-category that has been added to the set of 6 sub-categories CANNOT be used again for other set of 6 sub-categories
                 var steps={};
+                var activeWeights={};
                 for(var r in result){
                     var quiz = result[r];
                     var subCategory = quiz.subCategory;
@@ -67,6 +68,15 @@ Meteor.methods({
                         }else{
                             steps[i]=[randomSub[0]];
                         }
+
+                        if(activeWeights[i]){
+                            activeWeights[i][randomSub[0]] = 0;
+                        }else{
+                            activeWeights[i]=
+                                {
+                                    [randomSub[0]]: 0
+                                };
+                        }
                     }
                 }
 
@@ -77,6 +87,7 @@ Meteor.methods({
                 },
                 {$set: {
                     'rankItems': steps,
+                    'activeWeights': activeWeights
                     }
                 });
             }else{
@@ -132,7 +143,8 @@ Meteor.methods({
     
                     var categories = JSON.parse(JSON.stringify(result));
                     for(var i=0;i<numUser;i++){
-                        var items=[];
+                        var items=[]
+                        var activeWeights={};
                         var keys = Object.keys(categories);
                         for(var i2=0;i2<numOfSet;i2++){
                             if(keys.length >= 1){
@@ -145,6 +157,7 @@ Meteor.methods({
                                 var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
                                 
                                 items.push(randomSub[0]);
+                                activeWeights[randomSub[0]]=0;
                                 
                                 //if all subCategories from a category is already selected, delete the category
                                 if(subCategory.length == 0){
@@ -182,6 +195,7 @@ Meteor.methods({
                                 var subCategory = categories[randomKeys].subCategory;
                                 var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
                                 items.push(randomSub[0]);
+                                activeWeights[randomSub[0]]=0;
                                 
                                 if(subCategory.length == 0){
                                     delete categories[randomKeys];
@@ -197,6 +211,7 @@ Meteor.methods({
                         },
                         {$set: {
                             'rankItems': {0:items},
+                            'activeWeights': {0:activeWeights},
                             }
                         });
                 
@@ -342,6 +357,50 @@ Meteor.methods({
             Group.update({"_id":groupCheck._id},
                 {$set : {"isPlaceCardFinished": true}
             });	
+        }
+    },
+
+    'update.rank.weight': function(groupId,rankId,item,oldPosition, newPosition,currentStep=0) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+        
+        var currentRank = FeedbackRank.findOne({
+            'from': this.userId,
+            'groupId': groupCheck._id,
+            '_id':rankId
+        });
+        
+
+        if(!currentRank){
+            throw (new Meteor.Error("unknown_feedback_rank")); 
+        }
+
+        if(currentRank.activeWeights && currentRank.activeWeights[currentStep] && typeof currentRank.activeWeights[currentStep][item] == "number"){
+            var positiveMove = newPosition < oldPosition
+            var difference = Math.abs(newPosition - oldPosition);
+
+            var newValue=currentRank.activeWeights[currentStep][item];
+
+            if(positiveMove){
+                newValue += difference; 
+            }else{
+                newValue -= difference;
+            }
+
+            currentRank.activeWeights[currentStep][item] = newValue;
+            
+            FeedbackRank.update({
+                'from': this.userId,
+                'groupId': groupCheck._id,
+                '_id':rankId
+            },
+            {$set: {
+                'activeWeights': currentRank.activeWeights,
+                }
+            });
         }
     },
 

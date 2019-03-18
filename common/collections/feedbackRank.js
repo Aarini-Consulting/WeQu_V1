@@ -17,6 +17,10 @@ FeedbackRankSchema = new SimpleSchema({
 		type: Object,
 		blackbox:true
 	},
+	"activeWeights":{
+		type: Object,
+		blackbox:true
+	},
 	"rank":{
 		type: Object,
 		optional: true,
