@@ -177,6 +177,41 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("group doesn't exist")); 
         }
+    },
+    'delete.group' : function (groupId) {
+        var checkUser = Meteor.users.findOne({_id: this.userId});
+
+        if(checkUser && checkUser.roles && checkUser.roles[0] == "admin"){
+            let checkGroup = Group.findOne({_id:groupId});
+    
+            if(checkGroup){
+                FeedbackRank.remove(
+                {
+                    "groupId": checkGroup._id
+                });
+                
+                CardPlacement.remove(
+                {
+                    "groupId": checkGroup._id
+                });
+        
+                GroupQuizData.remove(
+                {
+                    "groupId": checkGroup._id
+                });
+
+                Group.remove(
+                    {
+                        "_id": checkGroup._id
+                    }
+                )
+            }else{
+                throw (new Meteor.Error("group doesn't exist")); 
+            }
+        }else{
+            throw (new Meteor.Error("unauthorized")); 
+        }
+        
     }
 });
 
