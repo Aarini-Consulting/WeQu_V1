@@ -70,11 +70,11 @@ Meteor.methods({
                         }
 
                         if(activeWeights[i]){
-                            activeWeights[i][randomSub[0]] = 0;
+                            activeWeights[i][randomSub[0]] = false;
                         }else{
                             activeWeights[i]=
                                 {
-                                    [randomSub[0]]: 0
+                                    [randomSub[0]]: false
                                 };
                         }
                     }
@@ -157,7 +157,7 @@ Meteor.methods({
                                 var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
                                 
                                 items.push(randomSub[0]);
-                                activeWeights[randomSub[0]]=0;
+                                activeWeights[randomSub[0]]=false;
                                 
                                 //if all subCategories from a category is already selected, delete the category
                                 if(subCategory.length == 0){
@@ -195,7 +195,7 @@ Meteor.methods({
                                 var subCategory = categories[randomKeys].subCategory;
                                 var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
                                 items.push(randomSub[0]);
-                                activeWeights[randomSub[0]]=0;
+                                activeWeights[randomSub[0]]=false;
                                 
                                 if(subCategory.length == 0){
                                     delete categories[randomKeys];
@@ -378,11 +378,14 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_feedback_rank")); 
         }
 
-        if(currentRank.activeWeights && currentRank.activeWeights[currentStep] && typeof currentRank.activeWeights[currentStep][item] == "number"){
+        if(currentRank.activeWeights && currentRank.activeWeights[currentStep]){
             var positiveMove = newPosition < oldPosition
             var difference = Math.abs(newPosition - oldPosition);
 
-            var newValue=currentRank.activeWeights[currentStep][item];
+            var newValue=0;
+            if(typeof currentRank.activeWeights[currentStep][item] == "number"){
+                newValue = currentRank.activeWeights[currentStep][item];
+            }
 
             if(positiveMove){
                 newValue += difference; 
