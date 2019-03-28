@@ -1,4 +1,4 @@
-export const CardPlacement =  new Mongo.Collection('cardPlacement');
+CardPlacement =  new Mongo.Collection('cardPlacement');
 
 CardPlacementSchema = new SimpleSchema({
 	"userId":{

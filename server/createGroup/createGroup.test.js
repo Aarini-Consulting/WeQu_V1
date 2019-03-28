@@ -7,10 +7,10 @@ import { Accounts } from 'meteor/accounts-base';
 import './createGroup'; // import all the methods that will be tested
 import StubCollections from 'meteor/hwillson:stub-collections';
 
-import {Group} from '/collections/group';
-import {GroupQuiz} from '/collections/groupQuiz';
-import {FeedbackRank} from '/collections/feedbackRank';
-import {CardPlacement} from '/collections/cardPlacement';
+import Group from '/collections/group';
+import GroupQuiz from '/collections/groupQuiz';
+import FeedbackRank from '/collections/feedbackRank';
+import CardPlacement from '/collections/cardPlacement';
 import '../emailTemplate';
 
 
@@ -24,7 +24,7 @@ if (Meteor.isServer) {
             
             beforeEach(function() {
                 resetDatabase();
-                StubCollections.stub([Group, GroupQuiz, FeedbackRank, CardPlacement]);
+                // StubCollections.stub([Group, GroupQuiz, FeedbackRank, CardPlacement]);
 
                 //create user
                 var emailGameMaster = Random.id(8)+'@sharklasers.com';
@@ -53,7 +53,7 @@ if (Meteor.isServer) {
     
             afterEach(function() {
                 resetDatabase();
-                StubCollections.restore();
+                // StubCollections.restore();
             });
     
             it('can create group', function() {

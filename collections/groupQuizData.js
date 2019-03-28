@@ -1,4 +1,4 @@
-export const GroupQuizData = new Mongo.Collection("groupQuizData");
+GroupQuizData = new Mongo.Collection("groupQuizData");
 
 GroupQuizDataSchema = new SimpleSchema({
     "groupId":{

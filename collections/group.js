@@ -1,4 +1,4 @@
-export const Group = new Mongo.Collection("group");
+Group = new Mongo.Collection("group");
 
 GroupSchema = new SimpleSchema({
     "groupName":{
