@@ -22,7 +22,7 @@
                                                                  } });
        },
        'updateConsent' : function (consent) {
-        return Meteor.users.update({_id: Meteor.userId()}, {$set: {
+        return Meteor.users.update({_id: this.userId}, {$set: {
                                                                'profile.consentSubs':{consentGiven:consent, lastUpdated:new Date()}
                                                               } });
       },

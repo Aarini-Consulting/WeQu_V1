@@ -1,4 +1,4 @@
-GroupQuiz = new Mongo.Collection("groupQuiz");
+export const GroupQuiz = new Mongo.Collection("groupQuiz");
 
 GroupQuizSchema = new SimpleSchema({
     "component":{

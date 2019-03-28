@@ -27,7 +27,7 @@ Meteor.methods({
     'calculate.typeform.score'(groupId, typeformResponses) {
         var checkGroup = Group.findOne({
             _id : groupId,
-            creatorId: Meteor.userId()
+            creatorId: this.userId
         });
 
         var scoreCostructiveFeedback = 0;
@@ -102,7 +102,7 @@ Meteor.methods({
     'get.all.response.typeform'(groupId, typeformIds,since=new Date()) {
         var checkGroup = Group.findOne({
             _id : groupId,
-            creatorId: Meteor.userId()
+            creatorId: this.userId
         });
 
         if(!checkGroup){

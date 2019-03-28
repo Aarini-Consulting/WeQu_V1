@@ -1,7 +1,7 @@
 
+import {sendEmail} from '../emailNotifications';
+
 Meteor.methods({
-
-
     'resetpassword': function (user) {
         var userid = Accounts.findUserByEmail(user.useremail)._id;
         Accounts.setPassword(userid, user.password);
@@ -52,20 +52,8 @@ Meteor.methods({
                 var subject="Welcome to WeQ";
                 var url=Meteor.settings.public.domain.int;
                 var body="Welcome<br> Your email address is now confirmed. <a href=\""+url+"\"> Click here </a> to go to your dashboard.<br><br><br><br>Happy Quotient<br>";
-                
 
-                Meteor.call('sendEmail', sendtoEmail, subject, body , function(err, result){
-                      if(err){
-                        console.log(err);
-                      }
-                      if(result)
-                      {
-                      console.log(result,'send notification message complete');
-                      }
-
-                });
-
-               
+                sendEmail(sendtoEmail, subject, body);
 
                 return currentUser._id;
             }

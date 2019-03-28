@@ -1,4 +1,4 @@
-Group = new Mongo.Collection("group");
+export const Group = new Mongo.Collection("group");
 
 GroupSchema = new SimpleSchema({
     "groupName":{
@@ -54,7 +54,7 @@ GroupSchema = new SimpleSchema({
         optional: true,
         autoValue: function() {
             if (this.isInsert) {
-                return Meteor.userId();
+                return this.userId;
             } 
         }
     },

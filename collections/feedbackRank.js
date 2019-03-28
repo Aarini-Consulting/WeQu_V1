@@ -1,4 +1,4 @@
-FeedbackRank =  new Mongo.Collection('feedbackRank');
+export const FeedbackRank =  new Mongo.Collection('feedbackRank');
 
 FeedbackRankSchema = new SimpleSchema({
 	"from":{
