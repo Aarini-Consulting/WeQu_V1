@@ -8,6 +8,9 @@ import LoadingAnimated from '/imports/ui/pages/loading/LoadingAnimated';
 
 import i18n from 'meteor/universe:i18n';
 
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
+
 class QuizRankPlaceCards extends React.Component {
     constructor(props){
         super(props);

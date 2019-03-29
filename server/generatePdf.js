@@ -10,6 +10,8 @@ import {ReportPdfFR} from '/imports/ui/pages/group/reportTemplate/ReportPdfFR';
 
 import i18n from 'meteor/universe:i18n';
 
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
 
 const getBase64String = (path) => {
   try {

@@ -20,6 +20,8 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
+import {Group} from '/collections/group';
+
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);

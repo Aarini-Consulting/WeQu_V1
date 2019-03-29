@@ -7,10 +7,10 @@ import { Accounts } from 'meteor/accounts-base';
 import './createGroup'; // import all the methods that will be tested
 import StubCollections from 'meteor/hwillson:stub-collections';
 
-import Group from '/collections/group';
-import GroupQuiz from '/collections/groupQuiz';
-import FeedbackRank from '/collections/feedbackRank';
-import CardPlacement from '/collections/cardPlacement';
+import {Group} from '/collections/group';
+import {GroupQuiz} from '/collections/groupQuiz';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
 import '../emailTemplate';
 
 
@@ -52,8 +52,10 @@ if (Meteor.isServer) {
             });
     
             afterEach(function() {
-                resetDatabase();
-                // StubCollections.restore();
+                // Group.remove();
+                // FeedbackRank.remove();
+                // CardPlacement.remove();
+
             });
     
             it('can create group', function() {
@@ -74,15 +76,16 @@ if (Meteor.isServer) {
                 emailArray.forEach(email => {
                     inviteDatas.push({"email":email});
                 });
-    
+
                 const createGroup = Meteor.server.method_handlers['createGroup'];
     
                 createGroup.apply(thisContext, [groupName, "nl", inviteDatas, emailArray]);
+
                 const getGroup = Group.findOne({"groupName": groupName});
     
                 chai.assert.exists(getGroup);
-                // chai.assert.strictEqual(getGroup.groupName, groupName);
-                // chai.assert.strictEqual(getGroup.userIds, emailArray.length);
+                chai.assert.strictEqual(getGroup.groupName, groupName);
+                chai.assert.strictEqual(getGroup.userIds.length, emailArray.length);
             });
         });
     });

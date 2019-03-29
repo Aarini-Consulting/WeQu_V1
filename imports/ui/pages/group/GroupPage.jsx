@@ -17,6 +17,9 @@ import GroupPresentation from './GroupPresentation';
 import GroupQuizPage from './GroupQuizPage';
 import GroupTypeformSurvey from './GroupTypeformSurvey';
 
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
+
 const T = i18n.createComponent();
 
 class GroupPage extends React.Component {

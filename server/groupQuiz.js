@@ -1,3 +1,6 @@
+import {Group} from '/collections/group';
+import {GroupQuiz} from '/collections/groupQuiz';
+
 Meteor.methods({
     'create.group.quiz'(component, question, answerOptions, rankItems, rankItemsLoadExternalField) {
         var newQuiz = {

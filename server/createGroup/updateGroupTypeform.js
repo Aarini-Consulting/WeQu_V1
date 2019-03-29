@@ -1,4 +1,5 @@
 import {sendEmail} from '../emailNotifications';
+import {Group} from '/collections/group';
 
 Meteor.methods({
     'survey.typeform.completed' : function (groupId,userId) {

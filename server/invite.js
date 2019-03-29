@@ -1,4 +1,7 @@
 import {sendEmail} from './emailNotifications';
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
 
 Meteor.methods({
     addRoleGameMaster(userId){

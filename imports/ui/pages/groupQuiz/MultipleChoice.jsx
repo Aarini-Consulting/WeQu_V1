@@ -15,6 +15,8 @@ const T = i18n.createComponent();
 import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
+import {Group} from '/collections/group';
+
 class MultipleChoice extends React.Component {
   constructor(props){
     super(props);

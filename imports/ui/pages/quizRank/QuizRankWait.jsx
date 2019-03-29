@@ -14,6 +14,9 @@ const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+
 class QuizRankWait extends React.Component {
     constructor(props){
         super(props);

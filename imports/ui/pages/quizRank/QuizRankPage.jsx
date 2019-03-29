@@ -20,6 +20,8 @@ import GroupQuizClientPage from '/imports/ui/pages/groupQuizClient/GroupQuizClie
 import SessionFinished from './SessionFinished';
 import SessionWait from './SessionWait';
 
+import {Group} from '/collections/group';
+
 class QuizRankPage extends React.Component {
     constructor(props){
         super(props);

@@ -1,6 +1,9 @@
 import {sendEmail, getGroupInviteHtmlTemplate} from '../emailNotifications';
 import { generateSelfRank } from '../category';
 
+import {Group} from '/collections/group';
+import {GroupQuiz} from '/collections/groupQuiz';
+
 export function genGroupUserUpFront(arr_emails, arr_numbers, data){
   if(!arr_emails && !arr_numbers){
     throw (new Meteor.Error("no user to add")); 

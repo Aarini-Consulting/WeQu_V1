@@ -15,6 +15,9 @@ const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">

@@ -4,6 +4,8 @@ import i18n from 'meteor/universe:i18n';
 import LoadingGraph from '/imports/ui/pages/loading/LoadingGraph';
 import GroupQuizResultGraphRanker from './GroupQuizResultGraphRanker';
 
+import {Group} from '/collections/group';
+
 class GroupQuizResultRanker extends React.Component {
     constructor(props){
         super(props);

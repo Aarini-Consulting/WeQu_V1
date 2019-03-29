@@ -2,6 +2,10 @@ import {genGroupUserUpFront} from './createGroup';
 import {sendEmail, getGroupInviteHtmlTemplate} from '../emailNotifications';
 import { generateSelfRank } from '../category';
 
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
+
 Meteor.methods({
     'updateGroup' : function (group, language="en", data, arr_emails) {
         var groupId = group._id;

@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Accounts } from 'meteor/accounts-base'
-
-import EmailVerified from './EmailVerified'; 
-
 class EmailUpdateVerify extends React.Component {
   constructor(props){
     super(props);

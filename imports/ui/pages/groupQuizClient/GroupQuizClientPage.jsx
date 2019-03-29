@@ -6,6 +6,8 @@ import Loading from '/imports/ui/pages/loading/Loading';
 import Error from '/imports/ui/pages/error/Error';
 import AnswerSubmitted from './AnswerSubmitted';
 
+import {GroupQuiz} from '/collections/groupQuiz';
+
 class GroupQuizClientPage extends React.Component {
     constructor(props){
         super(props);

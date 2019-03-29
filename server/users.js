@@ -8,6 +8,10 @@
 import { Random } from 'meteor/random';
 import {sendEmail} from './emailNotifications';
 
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
+
 Meteor.publish('usersFiltered', function(selector, options) {
   return Meteor.users.find(selector, options);
 });

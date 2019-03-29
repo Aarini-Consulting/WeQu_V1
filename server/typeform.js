@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import {Group} from '/collections/group';
 
 function getCategoryScoreFromString(scoreAsString){
     var score = Number(scoreAsString);

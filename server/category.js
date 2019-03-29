@@ -1,3 +1,7 @@
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
+
 function generateRankCategoryFromCsv() {
     var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
 
