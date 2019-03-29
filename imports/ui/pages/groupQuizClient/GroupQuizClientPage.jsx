@@ -7,6 +7,7 @@ import Error from '/imports/ui/pages/error/Error';
 import AnswerSubmitted from './AnswerSubmitted';
 
 import {GroupQuiz} from '/collections/groupQuiz';
+import {GroupQuizData} from '/collections/groupQuizData';
 
 class GroupQuizClientPage extends React.Component {
     constructor(props){

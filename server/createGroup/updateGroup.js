@@ -3,6 +3,7 @@ import {sendEmail, getGroupInviteHtmlTemplate} from '../emailNotifications';
 import { generateSelfRank } from '../category';
 
 import {Group} from '/collections/group';
+import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
 

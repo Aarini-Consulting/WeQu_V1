@@ -1,5 +1,6 @@
 import {Group} from '/collections/group';
 import {GroupQuiz} from '/collections/groupQuiz';
+import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
 

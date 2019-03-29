@@ -9,6 +9,7 @@ import { Random } from 'meteor/random';
 import {sendEmail} from './emailNotifications';
 
 import {Group} from '/collections/group';
+import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
 
