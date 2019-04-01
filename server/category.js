@@ -713,9 +713,12 @@ Meteor.methods({
                     var pickTop = 4;
                     var pickLow = 3;
 
-                    var topPicked = []
+                    var topPicked = [];
                     var lowPicked = [];
                     var cardPicked = [];
+
+                    var topPickedCategory = [];
+                    var lowPickedCategory = [];
 
                     var categoryKeys = Object.keys(categories);
 
@@ -723,7 +726,9 @@ Meteor.methods({
                     top.forEach((topRank) => {
                         if(topPicked.length < pickTop){
                             var categoryIndex = categoryKeys.indexOf(topRank.category);
-                            if(categoryIndex > -1){
+
+                            //check if category exist and no card from the same category has been picked yet
+                            if(categoryIndex > -1 && topPickedCategory.indexOf(topRank.category) < 0){
                                 var subCategoryIndex = categories[topRank.category].subCategory.indexOf(topRank.subCategory)
                                 var subCategoryCards = cardList[topRank.subCategory].cards;
 
@@ -732,7 +737,10 @@ Meteor.methods({
                                     //selected
                                     topPicked.push(topRank);
 
-                                    //pick card
+                                    //store selected category so we know which category is already picked
+                                    topPickedCategory.push(topRank.category);
+
+                                    //pick card and remove it from the pool
                                     var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
                                     cardPicked.push(
                                         {
@@ -740,12 +748,6 @@ Meteor.methods({
                                             subCategory:topRank.subCategory, 
                                             cardId:randomCard[0]
                                         });
-
-                                    //removed from subcategory pool
-                                    categories[topRank.category].subCategory.splice(subCategoryIndex, 1);
-
-                                    //removed from main category pool
-                                    categoryKeys.splice(categoryIndex, 1);
                                 }
                             }
                         }
@@ -758,7 +760,9 @@ Meteor.methods({
                     low.forEach((lowRank) => {
                         if(lowPicked.length < pickLow){
                             var categoryIndex = categoryKeys.indexOf(lowRank.category);
-                            if(categoryIndex > -1){
+                            
+                            //check if category exist and no card from the same category has been picked yet
+                            if(categoryIndex > -1 && lowPickedCategory.indexOf(lowRank.category) < 0){
                                 var subCategoryIndex = categories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
                                 var subCategoryCards = cardList[lowRank.subCategory].cards;
 
@@ -766,8 +770,11 @@ Meteor.methods({
                                 if(subCategoryIndex > -1 && subCategoryCards.length > 0){
                                     //selected
                                     lowPicked.push(lowRank);
+
+                                    //store selected category so we know which category is already picked
+                                    lowPickedCategory.push(lowRank.category);
                                     
-                                    //pick card
+                                    //pick card and remove it from the pool
                                     var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
                                     cardPicked.push(
                                         {
@@ -775,17 +782,11 @@ Meteor.methods({
                                             subCategory:lowRank.subCategory, 
                                             cardId:randomCard[0]
                                         });
-
-                                    //removed from subcategory pool
-                                    categories[lowRank.category].subCategory.splice(subCategoryIndex, 1);
-
-                                    //removed keys from main category keys pool
-                                    categoryKeys.splice(categoryIndex, 1);
                                 }
                             }
                         }
                     });
-                    var holder =  {"top":topPicked,"low":lowPicked};
+                    // var holder =  {"top":topPicked,"low":lowPicked};
 
                     CardPlacement.update({groupId:groupCheck._id, userId:user._id}, 
                         {$set : { 
