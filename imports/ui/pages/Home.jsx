@@ -40,8 +40,6 @@ class Home extends React.Component {
                         var placeCardStarted = !oldGroup.isPlaceCardActive && group.isPlaceCardActive;
             
                         if(groupQuizStarted || placeCardStarted){
-                            console.log("showpopup");
-                            console.log(group._id);
                             this.setState({ 
                                 showPopup: true,
                                 popupSelectedGroup: group

@@ -146,62 +146,50 @@ export function generateOthersRank(userId, groupId) {
 
             var categories = JSON.parse(JSON.stringify(result));
             for(var i=0;i<numUser;i++){
+                var selectedItemCategories=[];
                 var items=[]
                 var activeWeights={};
                 var keys = Object.keys(categories);
                 for(var i2=0;i2<numOfSet;i2++){
                     if(keys.length >= 1){
                         //select random category and remove it from the keys array to ensure that it won't be selected again on this set
-                        var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
-                        var randomCat =  categories[randomKeys];
-                        var subCategory = categories[randomKeys].subCategory;
+                        var randomKey = keys.splice(Math.floor(Math.random()*keys.length), 1);
+                        randomKey = randomKey[0];
 
-                        //select random category and remove it from the array to ensure that it won't be selected again on this set
+                        var subCategory = categories[randomKey].subCategory;
+
+                        //select random subCategory and remove it from the array to ensure that it won't be selected again on this set
                         var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                        
+                        selectedItemCategories.push(randomKey);
                         items.push(randomSub[0]);
+                        
                         activeWeights[randomSub[0]]=false;
                         
                         //if all subCategories from a category is already selected, delete the category
                         if(subCategory.length == 0){
-                            delete categories[randomKeys];
+                            delete categories[randomKey];
                         }
                     }else{
-                        //either all unique subCategory already selected or
-                        //current set already contains a subCategory from the surviving category data
-                        var currentSet = items[items.length-1];
-                        
-                        //load fresh copy of categories
+                        //all unique subCategory already selected
+                        //load fresh copy of categories and keys
                         categories = JSON.parse(JSON.stringify(result));
                         keys = Object.keys(categories);
 
-                        //removed keys that already selected in the current set
-                        for(var r in categories){
-                            var quiz = categories[r];
-                            var subCategory = quiz.subCategory;
-
-                            subCategory.some((subCat) => {
-                                if(currentSet.indexOf(subCat) > -1){
-                                    if(keys.indexOf(r) > -1){
-                                        keys.splice(keys.indexOf(r), 1);
-                                    }
-                                    return true;
-                                }else{
-                                    return false;
-                                }
-                            });
-                        }
-
+                        //removed keys that is already selected in the current set
+                        keys = keys.filter((key)=>{
+                            return selectedItemCategories.indexOf(key) == -1;
+                        });
+                        
                         //do the same thing again
-                        var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
-                        var randomCat =  categories[randomKeys];
-                        var subCategory = categories[randomKeys].subCategory;
+                        var randomKey = keys.splice(Math.floor(Math.random()*keys.length), 1);
+                        randomKey = randomKey[0];
+                        var subCategory = categories[randomKey].subCategory;
                         var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
                         items.push(randomSub[0]);
                         activeWeights[randomSub[0]]=false;
                         
                         if(subCategory.length == 0){
-                            delete categories[randomKeys];
+                            delete categories[randomKey];
                         }
                     }
                 }
