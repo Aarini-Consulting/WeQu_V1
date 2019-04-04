@@ -2764,6 +2764,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   margin-right: auto;
   width:100%;
 }
+
+.settings-item-container{
+  width:100%;
+  height: 100%;
+  overflow: auto;
+  padding-bottom:50px;
+}
+
 .settings-edit-wrapper{
   padding-left:5%;
   padding-right:5%;

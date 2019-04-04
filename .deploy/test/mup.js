@@ -40,7 +40,7 @@ module.exports = {
 
     },
     env: {
-      ROOT_URL: 'http://app-test.wequ.tech',
+      ROOT_URL: 'http://app-test.weq.io',
 	    MONGO_URL:'mongodb://WeQuAdmin:JZR63MSg4KenTW38@preprod-shard-00-00-tdmtm.mongodb.net:27017,preprod-shard-00-01-tdmtm.mongodb.net:27017,preprod-shard-00-02-tdmtm.mongodb.net:27017/wequ?ssl=true&replicaSet=Preprod-shard-0&authSource=admin'
     },
     // The maximum number of seconds it will wait

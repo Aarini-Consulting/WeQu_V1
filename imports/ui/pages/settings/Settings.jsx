@@ -105,7 +105,7 @@ class Settings extends React.Component {
         <Menu location={this.props.location} history={this.props.history}/>
         {this.props.currentUser 
         ?
-        <section>
+        <div className="settings-item-container">
         <ul className="w-list-unstyled">
             <li className="list-item settings-group-header">
                 <div className="summarytext">
@@ -263,7 +263,7 @@ class Settings extends React.Component {
             }}/>
         }
         
-        </section>
+        </div>
         :
         <Loading/>
         }
