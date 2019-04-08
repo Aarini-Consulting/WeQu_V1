@@ -4472,12 +4472,13 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .group-quiz-graph.vertical.label, .group-quiz-graph.horizontal.x-axis{
   font-weight: lighter;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .group-quiz-graph.vertical.x-axis, .group-quiz-graph.horizontal.label{
   font-weight: bold;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .group-quiz-graph.ranker-wrapper{
