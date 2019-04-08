@@ -154,12 +154,15 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
                 return xScale(d.text) + (xScale.bandwidth()/2) - this.getBBox().width/2;
             });
         
-        //adjust axis font size
-        svg.select("g.group-quiz-graph.vertical.x-axis")
-        .selectAll("g.tick")
-        .each(function(d, i){
-            d3.select(this).style("font-size",`${xAxisFontSize}px`);
-        });
+        if(xAxisFontSize != defaultXAxisFontSize){
+            //adjust axis font size
+            svg.select("g.group-quiz-graph.vertical.x-axis")
+            .selectAll("g.tick")
+            .each(function(d, i){
+                d3.select(this).style("font-size",`${xAxisFontSize}px`);
+            });
+        }
+        
 }
 
     render() {
