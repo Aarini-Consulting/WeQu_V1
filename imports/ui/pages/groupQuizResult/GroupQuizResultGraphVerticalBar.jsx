@@ -69,7 +69,7 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
         var maxAvailablePx = width;
 
         if(data.length > 0){
-            maxAvailablePx = (width/data.length) - 2;
+            maxAvailablePx = (width/data.length) - 10;
         }
 
         if(textLengthMaxPx > maxAvailablePx){
