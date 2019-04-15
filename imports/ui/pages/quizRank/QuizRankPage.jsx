@@ -26,8 +26,43 @@ class QuizRankPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            showMenu:false,
             surveyCompleted: false,
         };
+    }
+
+    toggleMenu(){
+        this.setState({
+            showMenu:!this.state.showMenu
+        });
+    }
+
+    selectLanguage(languageCode){
+        var supportedLocale = Meteor.settings.public.supportedLocale;
+        var langObj;
+
+        supportedLocale.forEach((sl)=>{
+            var lang = sl.split("-")[0];
+            if(langObj){
+                langObj[lang] = sl;
+            }else{
+                langObj = {[lang]:sl};
+            }
+        });
+
+        if(langObj[languageCode]){
+            locale = langObj[languageCode];
+        }else{
+            locale = supportedLocale[0];
+        }
+
+        Meteor.call( 'user.set.locale', locale, ( error, response ) => {
+            if ( error ) {
+              console.log(error);
+            }
+        });
+
+        this.toggleMenu();
     }
 
     typeformSubmitted(){
@@ -42,59 +77,100 @@ class QuizRankPage extends React.Component {
             }
         });
     }
+
+    renderMenuItem(){
+        return Meteor.settings.public.languages.map((lang,index)=>{
+            return (
+                <div key={lang.code+index} className="div-block-center" onClick={this.selectLanguage.bind(this,lang.code)}>
+                    <div className="flag-menu-item">
+                        <div className="flag-menu-item-icon">
+                            <img src={`/img/flags/${lang.code}.png`}/>
+                        </div>
+                        <div className="flag-menu-item-text">
+                            {lang.name}
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+    }
+
+    renderContent() {
+        if(this.props.group.isActive){
+            if(this.props.group.isFinished){
+                return(
+                    <SessionFinished/>
+                );
+            }else if(this.props.group.currentGroupQuizId){
+                return(
+                    <GroupQuizClientPage group={this.props.group}/>
+                );
+            }else if(this.props.group.isPlaceCardActive){
+                if(this.props.selfRankCompleted){
+                    if(this.props.group.isPlaceCardFinished){
+                        return(
+                            <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
+                        );
+                    }
+                    else{
+                        return(
+                            <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
+                        );
+                    }
+                }else{
+                    return (
+                        <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
+                    );
+                }
+            }else{
+                return(
+                    <SessionWait/>
+                );
+            }
+        }else{
+            return(
+                <div className="fillHeight weq-bg survey-done-screen">
+                    <br/>
+                    <div className="font-rate padding-wrapper">
+                        {complexLinkTranslate("quizRankPage.FinishMessage")}
+                    </div>
+                    <div className="w-block cursor-pointer">
+                        <Link className="font-rate f-bttn w-inline-block noselect" to={"/"}>
+                            Home
+                        </Link>
+                    </div>
+                </div>
+            )
+        }
+    }
     
     render() {
         if(this.props.dataReady){
             if(this.props.isGroupMember){
                 if(this.props.surveyCompleted || this.state.surveyCompleted){
-                    if(this.props.group.isActive){
-                        if(this.props.group.isFinished){
-                            return(
-                                <SessionFinished/>
-                            );
-                        }else if(this.props.group.currentGroupQuizId){
-                            return(
-                                <GroupQuizClientPage group={this.props.group}/>
-                            );
-                        }else if(this.props.group.isPlaceCardActive){
-                            if(this.props.selfRankCompleted){
-                                if(this.props.group.isPlaceCardFinished){
-                                    return(
-                                        <QuizRankPlaceCards user={this.props.currentUser} group={this.props.group}/>
-                                    );
-                                }
-                                else{
-                                    return(
-                                        <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
-                                    );
-                                }
-                            }else{
-                                return (
-                                    <QuizRankSelf user={this.props.currentUser} group={this.props.group}/>
-                                );
-                            }
-                        }else{
-                            return(
-                                <SessionWait/>
-                            );
-                        }
+                    var locale = i18n.getLocale();
+                    var languageCode;
+                    if(locale.toString().length > 2){
+                        languageCode = locale.split("-")[0];
                     }else{
-                        return(
-                            <div className="fillHeight weq-bg survey-done-screen">
-                                <br/>
-                                <div className="font-rate padding-wrapper">
-                                    {complexLinkTranslate("quizRankPage.FinishMessage")}
-                                </div>
-                                <div className="w-block cursor-pointer">
-                                    <Link className="font-rate f-bttn w-inline-block noselect" to={"/"}>
-                                        Home
-                                    </Link>
-                                </div>
-                            </div>
-                        )
+                        languageCode = locale;
                     }
-                    
-                    
+
+                    return(
+                        <div style={{height:100+"%"}}>
+                            <a className="w-clearfix quiz-flag" onClick={this.toggleMenu.bind(this)}>
+                                <img src={`/img/flags/${languageCode}.png`}/>
+                            </a>
+
+                            {this.renderContent()}
+
+                            {this.state.showMenu &&
+                                <div className="flag-menu-open">
+                                    {this.renderMenuItem()}
+                                </div>
+                            }
+                        </div>
+                    );
                 }else{
                     return(
                         <Typeform onSubmitCallback={this.typeformSubmitted.bind(this)} groupLanguage={this.props.group.groupLanguage}/>

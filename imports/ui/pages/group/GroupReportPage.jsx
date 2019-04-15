@@ -18,7 +18,7 @@ class GroupReportPage extends React.Component {
           preview:undefined,
           loadingPreview:false,
           generatingPdf:false,
-          languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"},{name:"Français",code:"fr"}],
+          languages:Meteor.settings.public.languages,
           downloadIndividualLang:i18n.getLocale().split("-")[0],
           downloadAllLang:i18n.getLocale().split("-")[0]
         }

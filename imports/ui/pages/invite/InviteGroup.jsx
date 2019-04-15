@@ -26,7 +26,7 @@ class InviteGroup extends React.Component {
   constructor(props){
       super(props);
       this.state={
-        languages:[{name:"English",code:"en"},{name:"Nederlands",code:"nl"},{name:"Français",code:"fr"}],
+        languages:Meteor.settings.public.languages,
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
         info:undefined,
         inviteStatus:false,
@@ -575,7 +575,7 @@ class InviteGroup extends React.Component {
                       <div className={"invitebttn bttnmembr gender w-clearfix " + (this.state.gender == "Female" ? "selected" : "")}  onClick ={this.setGender.bind(this,"Female")}>
                         Female
                       </div> */}
-                         <input type="submit" id="submitAdd" defaultValue={`+ ${i18n.getTranslation("weq.inviteGroup.ButtonAddGroupMember")}`} className="invitebttn bttnmembr action w-button"/>
+                         <input type="submit" id="submitAdd" value={`+ ${i18n.getTranslation("weq.inviteGroup.ButtonAddGroupMember")}`} className="invitebttn bttnmembr action w-button"/>
                     </li>
                   </ol>
                   :!(this.props.group && (this.props.group.isActive || this.props.group.isFinished)) &&

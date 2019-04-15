@@ -182,6 +182,9 @@ class Settings extends React.Component {
                         {languageCode == "fr" &&
                             "Français"
                         }
+                        {languageCode == "de" &&
+                            "Deutsch"
+                        }
                         </div>
                         <div className="w-block summarytext-sub"><T>weq.settings.ChangeLanguage</T></div>
                     </div>
