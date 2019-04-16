@@ -62,7 +62,7 @@ export default class GroupPresentation extends React.Component {
                 url = "https://docs.google.com/presentation/d/e/2PACX-1vRAOs2duKEHmQ49qg-wha7P6HjjVWfNoZy_ZUVi8Xq9ViUpHvo-rFc5CFDYwbNTLJ3y1F9j0GiJMZdp/embed?start=false&loop=false&delayms=3000";
                 break;
             case "de":
-                url = "https://docs.google.com/presentation/d/e/2PACX-1vRAOs2duKEHmQ49qg-wha7P6HjjVWfNoZy_ZUVi8Xq9ViUpHvo-rFc5CFDYwbNTLJ3y1F9j0GiJMZdp/embed?start=false&loop=false&delayms=3000";
+                url = "https://docs.google.com/presentation/d/e/2PACX-1vR3das6J8UVMR6Kf2XlDKupJXqAvTR7rK8NGnvGuzeyMjabsu1zGuNhMmmQu_Uv5HIPoc9hjBjSaNRP/embed?start=false&loop=false&delayms=3000";
                 break;
             default:
                 url = "https://docs.google.com/presentation/d/e/2PACX-1vShJZoQRi1WagGk2WBLSZazkZm6do0NKmTeOfGznNf2pdJKKiPicqG2jAhNdtCTtezLGdVeqxzfiuoI/embed?start=false&loop=false&delayms=3000";

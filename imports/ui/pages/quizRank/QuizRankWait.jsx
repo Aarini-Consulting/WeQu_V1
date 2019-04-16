@@ -65,7 +65,7 @@ class QuizRankWait extends React.Component {
                                     <div className="font-rate padding-wrapper"><T>weq.quizRankWait.WaitForOthers</T></div>
                                     <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksReady.length}/{this.props.group.userIds.length-1}</div>
                                 </div>
-                            )
+                            );
                         }
 
                         if(!ready){
@@ -87,7 +87,7 @@ class QuizRankWait extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            )
+                            );
                         }
                     }
                 }else{
@@ -109,8 +109,7 @@ class QuizRankWait extends React.Component {
                             <div className="font-rate padding-wrapper"><T>weq.quizRankWait.WaitForOthers</T></div>
                             <div className="font-rate padding-wrapper">{this.props.otherFeedbackRanksGiven.length}/{this.props.group.userIds.length-1}</div>
                         </div>
-                    )
-                    
+                    );
                 }else{
                     return (
                         <Error/>

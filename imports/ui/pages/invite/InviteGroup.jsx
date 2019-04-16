@@ -28,6 +28,7 @@ class InviteGroup extends React.Component {
       this.state={
         languages:Meteor.settings.public.languages,
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
+        selectedGroupType:"long",
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
@@ -69,6 +70,7 @@ class InviteGroup extends React.Component {
           inviteDeleted:[],
           modifiedByUser: false,
           selectedGroupLanguage:language,
+          selectedGroupType:nextProps.group.groupType
         });
       }
     }
@@ -87,7 +89,32 @@ class InviteGroup extends React.Component {
             selectedGroupLanguage: event.target.value,
         }
     );
-}
+
+    if(event.target.value && event.target.value != "en"){
+      this.setState(
+        { 
+            selectedGroupType: "long",
+        }
+      );
+    }
+  }
+
+  handleChangeGroupType(event) {
+    if(!this.props.group){
+      if(event.target.value && this.state.selectedGroupType != event.target.value){
+        if(!this.state.modifiedByUser){
+          this.setState({
+            modifiedByUser: true
+          });
+        }
+      }
+      this.setState(
+        { 
+            selectedGroupType: event.target.value,
+        }
+      );
+    }
+  }
 
   updateGroup(){
     var inviteDatas = this.state.inviteDatas.filter((inviteData) => {
@@ -184,7 +211,7 @@ class InviteGroup extends React.Component {
         inviteStatus: 'sending',
       });
   
-      Meteor.call('createGroup', groupName, this.state.selectedGroupLanguage, this.state.inviteDatas, emailsArray , (err, res) => {
+      Meteor.call('createGroup', groupName, this.state.selectedGroupLanguage, this.state.inviteDatas, emailsArray, this.state.selectedGroupType, (err, res) => {
         if(res){
           this.setState({
               inviteStatus: 'sent',
@@ -380,6 +407,14 @@ class InviteGroup extends React.Component {
       })
     }
 
+    renderGroupType(){
+      return [{type:"long", translation:"long"},{type:"short", translation:"short"}].map((val,index,array)=>{
+          return(
+              <option key={"select-type"+index} value={val.type}>{val.translation}</option>
+          );
+      })
+    }
+
     renderFields(){
       return this.state.inviteDatas.map((data, index) => {
           var newInviteIndex = this.state.newInviteDatas.findIndex((newInvites)=>{
@@ -554,6 +589,43 @@ class InviteGroup extends React.Component {
                       value={this.state.selectedGroupLanguage} onChange={this.handleChangeGroupLang.bind(this)}>
                           {this.renderLanguageList()}
                       </select>
+                      <br/>
+
+                      <div className="groupformtext">
+                        Group type
+                        <div className="tooltip-tutorial">
+                          <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
+                          <span className="tooltiptext">
+                          Define the type of the session. You can only set it once when creating the group for the first time.
+                          (Currently only available for "English" language)
+                          </span>
+                        </div>
+                      </div>
+                      {this.props.group 
+                        ?this.props.group && this.props.group.groupType 
+                          ?
+                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                          value={this.state.selectedGroupType} disabled={true}>
+                          {this.renderGroupType()}
+                          </select>
+                          :
+                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                          value={this.state.selectedGroupType} disabled={true}>
+                          {this.renderGroupType()}
+                          </select>
+                        : this.state.selectedGroupLanguage && this.state.selectedGroupLanguage == "en" 
+                          ?
+                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                          value={this.state.selectedGroupType} onChange={this.handleChangeGroupType.bind(this)}>
+                              {this.renderGroupType()}
+                          </select>
+                          :
+                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                          value={this.state.selectedGroupType} disabled={true}>
+                              {this.renderGroupType()}
+                          </select>
+                          
+                      }
                       <br/>
                     </div>
                   }

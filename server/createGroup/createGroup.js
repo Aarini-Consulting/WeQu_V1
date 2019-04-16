@@ -59,7 +59,7 @@ export function genGroupUserUpFront(arr_emails, arr_numbers, data){
 }
 
 Meteor.methods({
-  'createGroup' : function (groupName,language="en",data,arr_emails) {
+  'createGroup' : function (groupName,language="en",data,arr_emails,type) {
     var now = new Date();
     
     var gmCheck = Roles.userIsInRole( this.userId, 'GameMaster' );
@@ -88,6 +88,10 @@ Meteor.methods({
       throw (new Meteor.Error("need_at_least_2_players"));
     }
 
+    if(type != "short" && type != "long"){
+      throw (new Meteor.Error("invalid_type"));
+    }
+
     //create user in db as necessary
 
     genGroupUserUpFront(arr_emails, undefined, data);
@@ -113,7 +117,8 @@ Meteor.methods({
       creatorId: this.userId,
       isActive:false,
       isFinished:false,
-      groupQuizIdList:groupQuizIdList
+      groupQuizIdList:groupQuizIdList,
+      groupType:type
     });
 
     if(!groupId){
