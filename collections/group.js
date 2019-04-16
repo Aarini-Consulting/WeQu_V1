@@ -68,6 +68,11 @@ GroupSchema = new SimpleSchema({
       label: "group language",
       optional: true
     },
+    "groupType":{
+      type: String,
+      label: "group type",
+      optional: true
+    },
     "createdAt": {
       type: Date,
       label: "Date group created",
