@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import LoadingAnimated from '/imports/ui/pages/loading/LoadingAnimated';
+import SessionWait from './SessionWait';
 
 import i18n from 'meteor/universe:i18n';
 
@@ -109,7 +110,12 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     render() {
-        if(this.props.dataReady && Math.round(this.state.elapsed)  >= this.state.wait && this.props.cardPlacement && this.props.cardPlacement.cardPicked){
+        if(this.props.dataReady && this.props.group && this.props.group.groupType == "short"){
+            return(
+                <SessionWait/>
+            );
+        }
+        else if(this.props.dataReady && Math.round(this.state.elapsed)  >= this.state.wait && this.props.cardPlacement && this.props.cardPlacement.cardPicked){
             return (
                 <div className="fillHeight">
                     <section className="section summary fontreleway weq-bg">

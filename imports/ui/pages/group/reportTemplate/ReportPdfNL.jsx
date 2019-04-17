@@ -46,6 +46,11 @@ export const ReportPdfNL = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Huidige Sessie - {propData.firstName} {propData.lastName}</div>
+                
+                {propData.groupType == "short" 
+                ?
+                <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie.</div>
+                :
                 <div className="div-diagram">
                     <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie.</div>
                     <div className="diagram-wrapper w-clearfix">
@@ -82,7 +87,8 @@ export const ReportPdfNL = ({propData}) => (
                         }
                     </div>
                 </div>
-                <div className="div-current-chart">
+                }
+                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">

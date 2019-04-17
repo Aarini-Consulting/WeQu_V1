@@ -65,7 +65,11 @@ export default class GroupPresentation extends React.Component {
                 url = "https://docs.google.com/presentation/d/e/2PACX-1vR3das6J8UVMR6Kf2XlDKupJXqAvTR7rK8NGnvGuzeyMjabsu1zGuNhMmmQu_Uv5HIPoc9hjBjSaNRP/embed?start=false&loop=false&delayms=3000";
                 break;
             default:
-                url = "https://docs.google.com/presentation/d/e/2PACX-1vShJZoQRi1WagGk2WBLSZazkZm6do0NKmTeOfGznNf2pdJKKiPicqG2jAhNdtCTtezLGdVeqxzfiuoI/embed?start=false&loop=false&delayms=3000";
+                if(this.props.group && this.props.group.groupType == "short"){
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vRS3I0zHq194L-ovan3W_Cfe8eD29_yypYi5VVFWwj89yp3mpgpyDBrcBBUcMn1sorVKFFBH6X2TYWP/embed?start=false&loop=false&delayms=3000";
+                }else{
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vShJZoQRi1WagGk2WBLSZazkZm6do0NKmTeOfGznNf2pdJKKiPicqG2jAhNdtCTtezLGdVeqxzfiuoI/embed?start=false&loop=false&delayms=3000";
+                }
                 break;
         }
 

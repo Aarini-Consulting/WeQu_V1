@@ -46,12 +46,16 @@ export const ReportPdfFR = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Session Actuelle - {propData.firstName} {propData.lastName}</div>
+                {propData.groupType == "short" 
+                ?
+                <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
+                :
                 <div className="div-diagram">
-                    <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                     <div className="diagram-wrapper w-clearfix">
                         {propData.cardPicked 
                             ?
                             <div className="diagram">
+                                <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                                 <div className="diagram-position">
                                     <div className={`icon _3 badge-${ propData.cardPicked[2].subCategory }`}></div> 
                                     <div className={`icon _2 badge-${ propData.cardPicked[0].subCategory }`}></div> 
@@ -82,7 +86,8 @@ export const ReportPdfFR = ({propData}) => (
                         }
                     </div>
                 </div>
-                <div className="div-current-chart">
+                }
+                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">

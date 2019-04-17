@@ -3565,6 +3565,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color: #fff;
 }
 
+.card-shape{
+  height:5em;
+  border-radius: 0%;
+}
+
 .font-number-main{
   width: 4em;
   height: 4em;

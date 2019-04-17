@@ -106,7 +106,19 @@ Meteor.methods({
     var groupQuizIdList = []
 
     if(groupQuiz.length >= 1){
-      groupQuizIdList = groupQuiz.map((gq)=>{return gq._id});
+      var groupQuizQuestionForShort = ["HowOftenCompliment","BestComplimentGiver","BestCriticismGiver","RankBehaviourImprovement","EvaluateSession"]
+      var groupQuizIdListShort = [];
+
+      groupQuizIdList = groupQuiz.map((gq)=>{
+        if(groupQuizQuestionForShort.indexOf(gq.question) > -1){
+          groupQuizIdListShort.push(gq._id);
+        }
+        return gq._id
+      });
+
+      if(type == "short"){
+        groupQuizIdList = groupQuizIdListShort;
+      }
     }
 
     //create group

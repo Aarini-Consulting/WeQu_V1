@@ -152,10 +152,34 @@ class GroupPage extends React.Component {
   }
 
   renderUserCards(cards){
+    var shortMode = this.props.group && this.props.group.groupType == "short";
     return cards.map((card, index) => {
+      var className = `font-number ${ card.category }`;
+
+      if(shortMode){
+        className = `font-number ${ card.category } card-shape`;
+      }
+
       return(
-        <div className={`font-number ${ card.category }`} key={card.cardId}>
+        <div className={className} key={card.cardId}>
           {card.cardId}
+        </div>
+      )
+    });
+  }
+
+  renderUserCardsPlaceholder(){
+    var shortMode = this.props.group && this.props.group.groupType == "short";
+    return [1,2,3,4,5,6,7].map((index) => {
+      var className = `font-number placeholder`;
+
+      if(shortMode){
+        className = `font-number placeholder card-shape`;
+      }
+
+      return(
+        <div className={className} key={"placeholder-card-"+index}>
+          #
         </div>
       )
     });
@@ -186,6 +210,15 @@ class GroupPage extends React.Component {
       }
 
       if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+        var userCards;
+        if(this.props.group && this.props.group.groupType == "short"){
+          userCards = cardPlacement.cardPicked;
+        }else{
+          userCards = cardPlacement.cardPicked.sort((a, b)=>{
+            return (Number(a.cardId) - Number(b.cardId));
+          });
+        }
+
         return(
           <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
             <div className="tap-left card">
@@ -194,9 +227,9 @@ class GroupPage extends React.Component {
               </div>
             </div>
             <div className="show-cards">
-                {this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
-                  return (Number(a.cardId) - Number(b.cardId));
-                }))}
+                {
+                  this.renderUserCards(userCards)
+                }
             </div>
           </div>
         );
@@ -210,27 +243,7 @@ class GroupPage extends React.Component {
               </div>
             </div>
             <div className="show-cards">
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
+              {this.renderUserCardsPlaceholder()}
             </div>
           </div>
         );
