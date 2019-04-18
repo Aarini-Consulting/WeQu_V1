@@ -204,7 +204,8 @@
         "Answer7B":"I gave and received some constructive feedback.",
         "Answer7C":"I learned some new, positive attributes of my colleagues.",
         "Answer7D":"The way we handle communication during the session was more effective than our usual team meetings.",
-        "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others."
+        "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others.",
+        "Answer7F":"The coach was very good. I would recommend them."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Thank you",

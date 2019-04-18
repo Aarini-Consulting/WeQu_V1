@@ -134,5 +134,48 @@ export function complexLinkTranslate(name, params){
                 </React.Fragment>
         }
         return translation[name];
+    } 
+    else if(languageCode == "de"){
+        var translation = {
+            "settings.accountTypeAds":
+                <React.Fragment>
+                    Wollen Sie Ihre eigene WeQ Veranstaltung ausrichten? Schauen Sie ob Sie sich qualifizieren für unsere <a href="https://www.weq.io/Become-a-WeQ-Certified-Master-Coach" target="_blank">{i18n.getTranslation("weq.settings.AccountTypeAdsCMC")}</a>
+                </React.Fragment>,
+            "settings.consentTerms":
+                <React.Fragment>
+                    Ich habe gelesen, verstehe und akzeptiere die <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Bedingungen</a> und <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Datenschutzrichtlinien</a>.
+                </React.Fragment>,
+            "settings.consentCMC":
+                <React.Fragment>
+                    Ich habe gelesen, verstehe und akzeptiere die <a href="https://www.weq.io/policy/certified-master-coach-terms-and-conditions" target="_blank" id="terms">Certified Master Coach Allgemeine Geschäftsbedingungen</a>.
+                </React.Fragment>,
+            "reportPdf.OpeningParagraph":
+                <React.Fragment>
+                    You&#x27;ve just played WeQ with your <strong>{params && params.groupName}</strong>. 
+                    This is your report prepared by <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach.
+                </React.Fragment>,
+            "quizRankSelf.PopUp":
+                <React.Fragment>
+                    Beschreiben Sie sich selbst
+                    <br/>
+                    <br/>
+                    Welche Eigenschaften entsprechen Sie am meisten?<br/>
+                    Sortieren Sie die nächsten Worte in der Liste von oben nach unten mittels „drag and drop<br/>
+                    <br/>
+                    Sie haben 60 Sekunden Zeit.
+                </React.Fragment>,
+            "quizRankPage.FinishMessage":
+                <React.Fragment>
+                    Fertig!
+                    <br/><br/>
+                    Vielen dank, dass Sie an der Umfrage teilgenommen haben.
+                    <br/><br/>
+                    Sie werden diese App wieder benutzen wenn Sie WeQ spielen,<br/>
+                    also vergessen Sie nicht <b>Ihr Telefon zur Veranstaltung zu bringen</b>. 
+                    <br/>
+                    <br/>
+                </React.Fragment>
+        }
+    return translation[name];
     }
 }
