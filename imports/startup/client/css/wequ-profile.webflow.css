@@ -3100,6 +3100,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   padding:0
 }
 
+.tap-content-wrapper.card{
+  padding-top: 0;
+}
+
 .tap-content{
   display: -webkit-box;
   display: -webkit-flex;
@@ -3120,6 +3124,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   padding-left:1em;
   padding-top:1em;
   padding-bottom:1em;
+}
+
+.tap-content.card{
+  padding-top:0.5em;
+  padding-bottom:0.5em;
 }
 
 .tap-content.grey-bg{
@@ -3566,7 +3575,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .card-shape{
-  height:5em;
+  height:2.5em;
+  width:1.8em;
   border-radius: 0%;
 }
 

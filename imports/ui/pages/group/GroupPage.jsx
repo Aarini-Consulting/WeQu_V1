@@ -220,7 +220,7 @@ class GroupPage extends React.Component {
         }
 
         return(
-          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+          <div className={"tap-content card w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
             <div className="tap-left card">
               <div className="font-card-username-cards ready">
                 {name}
@@ -272,23 +272,28 @@ class GroupPage extends React.Component {
         }
 
         tabContent = 
-        (<div className="tap-content-wrapper" ref="printTarget">
-          <div className="tap-content w-clearfix">
+        (<div className="tap-content-wrapper card">
+          
           {this.props.group && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
             (
-              this.props.group.isPlaceCardActive 
-              ?
-              <div className="w-inline-block game-status">In Progress</div>
-              :
-              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+              <div className="tap-content w-clearfix">
+                {this.props.group.isPlaceCardActive 
+                ?
+                <div className="w-inline-block game-status">In Progress</div>
+                :
+                <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+                }
+              </div>
             )
           }
           {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
+            <div className="tap-content w-clearfix">
+              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
+            </div>
           }
-          </div>
 
           {this.renderUsers()}
+
           {!this.props.group.isPlaceCardActive &&
             <div className="tap-content w-clearfix">
               <div className="tap-left card">
