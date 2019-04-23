@@ -98,13 +98,9 @@
 }
 
 .h3.next {
-  position: absolute;
-  left: 6em;
-  top: 2em;
-  right: 0em;
-  bottom: 0em;
-  display: inline-block;
-  margin-bottom: 1em;
+  width:45%;
+  margin-left:2.4em;
+  margin-bottom: 0.5em;
   color: #413970;
   font-size: 2em;
   font-weight: 500;
@@ -354,12 +350,8 @@
 }
 
 .h4.next {
-  position: absolute;
-  left: 10em;
-  top: 7em;
-  right: 0em;
-  bottom: 0em;
-  width: 35%;
+  width: 45%;
+  margin-left:4em;
   color: #413970;
   font-size: 1.2em;
 }
@@ -669,6 +661,10 @@
 
 .next-demo.nl {
   background-image: url('/img/report/Report_grey_nl.jpeg');
+}
+
+.next-demo.short {
+  background-image: url('/img/report/Report_grey_short.jpeg');
 }
 
 .weq-logo {

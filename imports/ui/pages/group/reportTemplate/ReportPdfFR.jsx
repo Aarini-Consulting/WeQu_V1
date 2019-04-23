@@ -146,15 +146,27 @@ export const ReportPdfFR = ({propData}) => (
             </div>
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
-                <div className="h4 next">
-                Poursuivez sur votre lancée !
-                <br/>
-                Continuez à adopter des habitudes saines grâce à nos séances de suivi d’une heure.
-                <br/>
-                <br/>
-                Pour plus d'informations, contactez {propData.groupCreatorFirstName}.
-                </div>
-                <div className="next-demo"></div>
+                {propData.groupType == "short" 
+                    ?
+                    <div className="h4 next">
+                        Devenez un champion WeQ!
+                        <br/>
+                        Êtes-vous passionné par la construction d'une grande équipe?
+                        <br/>
+                        <br/>
+                        Et vous souhaitez animer des sessions WeQ? Demandez à votre entraîneur à propos du programme WeQ Champion ou envoyez un email à <a href="mailto:contact@weq.io">contact@weq.io</a>
+                    </div>
+                    :
+                    <div className="h4 next">
+                        Poursuivez sur votre lancée !
+                        <br/>
+                        Continuez à adopter des habitudes saines grâce à nos séances de suivi d’une heure.
+                        <br/>
+                        <br/>
+                        Pour plus d'informations, contactez {propData.groupCreatorFirstName}.
+                    </div>
+                }
+                <div className={`next-demo ${propData.groupType == "short" ? "short":""}`}></div>
             </div>
             </div>
             <div className="section _3-footer">
