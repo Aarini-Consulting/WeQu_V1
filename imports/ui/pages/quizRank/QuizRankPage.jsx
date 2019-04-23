@@ -83,9 +83,6 @@ class QuizRankPage extends React.Component {
             return (
                 <div key={lang.code+index} className="div-block-center" onClick={this.selectLanguage.bind(this,lang.code)}>
                     <div className="flag-menu-item">
-                        <div className="flag-menu-item-icon">
-                            <img src={`/img/flags/${lang.code}.png`}/>
-                        </div>
                         <div className="flag-menu-item-text">
                             {lang.name}
                         </div>
@@ -156,10 +153,14 @@ class QuizRankPage extends React.Component {
                         languageCode = locale;
                     }
 
+                    // var selectedLang = Meteor.settings.public.languages.find((lang)=>{
+                    //     return lang.code == languageCode;
+                    // })
+
                     return(
                         <div style={{height:100+"%"}}>
-                            <a className="w-clearfix quiz-flag" onClick={this.toggleMenu.bind(this)}>
-                                <img src={`/img/flags/${languageCode}.png`}/>
+                            <a className="w-clearfix quiz-toggle" onClick={this.toggleMenu.bind(this)}>
+                                <i className="fas fa-language fa-2x"></i>
                             </a>
 
                             {this.renderContent()}
