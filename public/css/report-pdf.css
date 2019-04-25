@@ -652,7 +652,7 @@
   height: 85%;
   background-image: url('/img/report/Report_grey.jpeg');
   background-position: 0px 0px;
-  background-size: cover;
+  background-size: contain;
   box-shadow: 0 0 6px 0 rgba(246, 96, 6, .1);
   -webkit-transform: rotate(5deg);
   -ms-transform: rotate(5deg);

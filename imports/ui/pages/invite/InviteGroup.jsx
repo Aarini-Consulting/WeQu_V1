@@ -592,7 +592,7 @@ class InviteGroup extends React.Component {
                       <br/>
 
                       <div className="groupformtext">
-                        Group type
+                        Session type
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
                           <span className="tooltiptext">
