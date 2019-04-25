@@ -1,4 +1,8 @@
-
+import {sendEmail} from './emailNotifications';
+import {Group} from '/collections/group';
+import {GroupQuizData} from '/collections/groupQuizData';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
 
 Meteor.methods({
     addRoleGameMaster(userId){
@@ -40,7 +44,8 @@ Meteor.methods({
         };
         let body = SSR.render('GamemasterConfirmationEmail', emailData);
         Roles.addUsersToRoles(userId, "GameMaster" );
-        Meteor.call('sendEmail', email, subject, body);
+        
+        sendEmail(email, subject, body);
         
       }
     },

@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 
-
 import Loading from '/imports/ui/pages/loading/Loading';
+
+import {Group} from '/collections/group';
+import {GroupQuiz} from '/collections/groupQuiz';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
 
 class AdminGameMasterView extends React.Component {
     constructor(props){

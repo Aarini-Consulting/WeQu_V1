@@ -4,14 +4,13 @@
 
 Meteor.methods({
 
-	createAccount: function(data, emailVerification){
+	createAccount: function(data, emailVerification=true){
 		var userId;
 		var verification = emailVerification;
 		var checkUser = Meteor.users.findOne({"emails.address" : data.registerEmail});
 		if(checkUser && checkUser.profile.trial){
 			verification = false;
-			userId = checkUser._id
-			data.userId = userId;
+			userId = checkUser._id;
 			Accounts.setPassword(checkUser._id, data.registerPassword);
 			Meteor.call('updateProfileFromTrial', data);
 		}else{

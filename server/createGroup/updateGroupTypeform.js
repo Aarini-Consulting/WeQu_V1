@@ -1,3 +1,6 @@
+import {sendEmail} from '../emailNotifications';
+import {Group} from '/collections/group';
+
 Meteor.methods({
     'survey.typeform.completed' : function (groupId,userId) {
         let check = Group.findOne({_id:groupId});
@@ -19,7 +22,7 @@ Meteor.methods({
 
             Meteor.users.update({
                 "$and": [ 
-                    {  '_id':Meteor.userId() }, 
+                    {  '_id':this.userId }, 
                     {  'profile.selfRank': groupId} 
                 ]}, 
                 {$unset : { "profile.selfRank": "" }});
@@ -41,8 +44,7 @@ Meteor.methods({
                 };
                 var body = SSR.render('GroupSurveyCompletedEmail', emailData);
 
-                Meteor.call('sendEmail', "contact@weq.io", subject, body);
-
+                sendEmail("contact@weq.io", subject, body)
 
                 var emailDataCmc = {
                     'creatorEmail': groupCreator.emails[0].address,
@@ -53,7 +55,7 @@ Meteor.methods({
                 };
                 var bodyCmc = SSR.render('GroupSurveyCompletedEmailCmc', emailDataCmc);
 
-                Meteor.call('sendEmail', groupCreator.emails[0].address, subject, bodyCmc);
+                sendEmail(groupCreator.emails[0].address, subject, bodyCmc);
             }
             
                 

@@ -4,6 +4,8 @@ import i18n from 'meteor/universe:i18n';
 import GroupQuizResultGraphVerticalBar from './GroupQuizResultGraphVerticalBar';
 import LoadingGraph from '/imports/ui/pages/loading/LoadingGraph';
 
+import {Group} from '/collections/group';
+
 class GroupQuizResultMultipleChoice extends React.Component {
     constructor(props){
         super(props);

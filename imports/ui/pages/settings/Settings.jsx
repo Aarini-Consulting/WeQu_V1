@@ -105,7 +105,7 @@ class Settings extends React.Component {
         <Menu location={this.props.location} history={this.props.history}/>
         {this.props.currentUser 
         ?
-        <section>
+        <div className="settings-item-container">
         <ul className="w-list-unstyled">
             <li className="list-item settings-group-header">
                 <div className="summarytext">
@@ -181,6 +181,9 @@ class Settings extends React.Component {
                         }
                         {languageCode == "fr" &&
                             "Français"
+                        }
+                        {languageCode == "de" &&
+                            "Deutsch"
                         }
                         </div>
                         <div className="w-block summarytext-sub"><T>weq.settings.ChangeLanguage</T></div>
@@ -263,7 +266,7 @@ class Settings extends React.Component {
             }}/>
         }
         
-        </section>
+        </div>
         :
         <Loading/>
         }

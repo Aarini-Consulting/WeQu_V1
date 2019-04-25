@@ -17,6 +17,9 @@ import GroupPresentation from './GroupPresentation';
 import GroupQuizPage from './GroupQuizPage';
 import GroupTypeformSurvey from './GroupTypeformSurvey';
 
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
+
 const T = i18n.createComponent();
 
 class GroupPage extends React.Component {
@@ -149,10 +152,34 @@ class GroupPage extends React.Component {
   }
 
   renderUserCards(cards){
+    var shortMode = this.props.group && this.props.group.groupType == "short";
     return cards.map((card, index) => {
+      var className = `font-number ${ card.category }`;
+
+      if(shortMode){
+        className = `font-number ${ card.category } card-shape`;
+      }
+
       return(
-        <div className={`font-number ${ card.category }`} key={card.cardId}>
+        <div className={className} key={card.cardId}>
           {card.cardId}
+        </div>
+      )
+    });
+  }
+
+  renderUserCardsPlaceholder(){
+    var shortMode = this.props.group && this.props.group.groupType == "short";
+    return [1,2,3,4,5,6,7].map((index) => {
+      var className = `font-number placeholder`;
+
+      if(shortMode){
+        className = `font-number placeholder card-shape`;
+      }
+
+      return(
+        <div className={className} key={"placeholder-card-"+index}>
+          #
         </div>
       )
     });
@@ -183,17 +210,26 @@ class GroupPage extends React.Component {
       }
 
       if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+        var userCards;
+        if(this.props.group && this.props.group.groupType == "short"){
+          userCards = cardPlacement.cardPicked;
+        }else{
+          userCards = cardPlacement.cardPicked.sort((a, b)=>{
+            return (Number(a.cardId) - Number(b.cardId));
+          });
+        }
+
         return(
-          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+          <div className={"tap-content card w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
             <div className="tap-left card">
               <div className="font-card-username-cards ready">
                 {name}
               </div>
             </div>
             <div className="show-cards">
-                {this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
-                  return (Number(a.cardId) - Number(b.cardId));
-                }))}
+                {
+                  this.renderUserCards(userCards)
+                }
             </div>
           </div>
         );
@@ -207,27 +243,7 @@ class GroupPage extends React.Component {
               </div>
             </div>
             <div className="show-cards">
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
+              {this.renderUserCardsPlaceholder()}
             </div>
           </div>
         );
@@ -256,23 +272,28 @@ class GroupPage extends React.Component {
         }
 
         tabContent = 
-        (<div className="tap-content-wrapper" ref="printTarget">
-          <div className="tap-content w-clearfix">
+        (<div className="tap-content-wrapper card">
+          
           {this.props.group && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
             (
-              this.props.group.isPlaceCardActive 
-              ?
-              <div className="w-inline-block game-status">In Progress</div>
-              :
-              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+              <div className="tap-content w-clearfix">
+                {this.props.group.isPlaceCardActive 
+                ?
+                <div className="w-inline-block game-status">In Progress</div>
+                :
+                <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+                }
+              </div>
             )
           }
           {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
+            <div className="tap-content w-clearfix">
+              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
+            </div>
           }
-          </div>
 
           {this.renderUsers()}
+
           {!this.props.group.isPlaceCardActive &&
             <div className="tap-content w-clearfix">
               <div className="tap-left card">

@@ -8,6 +8,9 @@ import Loading from '/imports/ui/pages/loading/Loading';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupQuizResult from '../groupQuiz/GroupQuizResult';
 
+import {GroupQuiz} from '/collections/groupQuiz';
+import {GroupQuizData} from '/collections/groupQuizData';
+
 // var defaultQuizList=[
 //   {component:"MultipleChoice", question:"How often do you get compliment?", answerOptions:["one","two","three","four"] },
 //   {component:"Ranker", question:"rank this stuff", rankItems:["one","two","three"] },

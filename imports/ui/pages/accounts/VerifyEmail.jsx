@@ -5,8 +5,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import { Accounts } from 'meteor/accounts-base'
 
-import EmailVerified from './EmailVerified'; 
-
 class EmailVerify extends React.Component {
   constructor(props){
     super(props);

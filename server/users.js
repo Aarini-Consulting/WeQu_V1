@@ -6,6 +6,12 @@
 //   return Meteor.users.find({});  
 // });
 import { Random } from 'meteor/random';
+import {sendEmail} from './emailNotifications';
+
+import {Group} from '/collections/group';
+import {GroupQuizData} from '/collections/groupQuizData';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
 
 Meteor.publish('usersFiltered', function(selector, options) {
   return Meteor.users.find(selector, options);
@@ -34,14 +40,14 @@ Meteor.methods({
     }
   },
   'change.email.verification.send'(email) {
-    if(Meteor.userId()){
-      var checkEmail = Meteor.users.find({_id:{$ne:Meteor.userId()},"emails.0.address":email}).fetch();
+    if(this.userId){
+      var checkEmail = Meteor.users.find({_id:{$ne:this.userId},"emails.0.address":email}).fetch();
 
       if(checkEmail.length > 0){
         throw new Meteor.Error("email already in use");
       }
 
-      var user = Meteor.users.findOne(Meteor.userId());
+      var user = Meteor.users.findOne(this.userId);
 
       if(user){
         var verificationToken = user.services.email.updateVerficationTokens && user.services.email.updateVerficationTokens[0];
@@ -80,13 +86,13 @@ Meteor.methods({
         };
         var subject = `[WeQ] Update Email`;
         let body = SSR.render('EmailChangeVerification', emailData);
-    
-        Meteor.call('sendEmail', email, subject, body);
+        
+        sendEmail(email, subject, body);
       }
     }
   },
   'store.profile.picture'(base64String) {
-    Meteor.users.update(Meteor.userId(), { 
+    Meteor.users.update(this.userId, { 
       '$set': {
           'profile.pictureUrl': base64String,
           'profile.pictureShape': "square"
@@ -94,7 +100,7 @@ Meteor.methods({
       });
   },
   'user.update.name'(firstName, lastName) {
-    Meteor.users.update(Meteor.userId(), { 
+    Meteor.users.update(this.userId, { 
       '$set': {
           // 'profile.name': firstName,
           'profile.firstName': firstName,
@@ -133,7 +139,7 @@ Meteor.methods({
     }
   },
   'user.update.gender'(gender) {
-    Meteor.users.update(Meteor.userId(), { 
+    Meteor.users.update(this.userId, { 
       '$set': {
           'profile.gender': gender,
           } 
@@ -146,7 +152,7 @@ Meteor.methods({
       }});
   },
   'user.delete'() {
-    var currentUser = Meteor.users.findOne({_id:Meteor.userId()});
+    var currentUser = Meteor.users.findOne({_id:this.userId});
     var userId = currentUser._id;
 
     if(currentUser){
@@ -229,7 +235,7 @@ Meteor.methods({
           "creatorId": currentUser._id,
         });
 
-      Meteor.users.remove({_id:Meteor.userId()});
+      Meteor.users.remove({_id:this.userId});
     }else{
       throw new Meteor.Error("unknown user");
     }

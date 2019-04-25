@@ -1,19 +1,28 @@
+import {genGroupUserUpFront} from './createGroup';
+import {sendEmail, getGroupInviteHtmlTemplate} from '../emailNotifications';
+import { generateSelfRank } from '../category';
+
+import {Group} from '/collections/group';
+import {GroupQuizData} from '/collections/groupQuizData';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
+
 Meteor.methods({
     'updateGroup' : function (group, language="en", data, arr_emails) {
         var groupId = group._id;
         let groupCheck = Group.findOne({_id:groupId});
 
-        var groupCreator = Meteor.users.findOne(Meteor.userId());
+        var groupCreator = Meteor.users.findOne(this.userId);
         
         if(!groupCheck){
         throw (new Meteor.Error("group doesn't exist")); 
         }
 
-        if(groupCheck.creatorId != Meteor.userId()){
+        if(groupCheck.creatorId != this.userId){
             throw (new Meteor.Error("only owner can modify group")); 
         }
 
-        var gmCheck = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+        var gmCheck = Roles.userIsInRole( this.userId, 'GameMaster' );
 
         if(!gmCheck){
         throw (new Meteor.Error("only_gamemaster_can_create_group")); 
@@ -21,10 +30,7 @@ Meteor.methods({
 
 
         //create user in db as necessary
-        Meteor.call('genGroupUserUpFront',  arr_emails, undefined, data, function (err, result) {
-            // console.log("genGroupUserUpFront" , err, result);
-            if(err){ return err};
-        });
+        genGroupUserUpFront(arr_emails, undefined, data);
 
         //get users from email
         var users = Meteor.users.find({$or : [ {"emails.address" : {$in:arr_emails}}, { "profile.emailAddress" : {$in:arr_emails} }]}).fetch();
@@ -37,11 +43,8 @@ Meteor.methods({
 
         //create new user's self rank feedback
         newUsersInGroup.forEach(function(user, index, _arr) {
-            Meteor.call( 'generate.self.rank', user._id, groupCheck._id, (error, result)=>{
-                if(error){
-                    console.log(error);
-                }
-            });
+
+            generateSelfRank(user._id, groupCheck._id);
             
             var userEmail = user.emails[0].address;
 
@@ -56,10 +59,9 @@ Meteor.methods({
               'groupName': groupCheck.groupName
             };
         
-            let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
-            Meteor.call('sendEmail', userEmail, subject, body, function (err, result) {
-              if(err){ return err};
-            });
+            let body = getGroupInviteHtmlTemplate(emailData, language);
+
+            sendEmail(userEmail, subject, body);
         });
 
         var removedUsers = groupCheck.userIds.filter((uid)=>{
@@ -163,14 +165,14 @@ Meteor.methods({
             'groupName': check.groupName
             };
         
-            let body = Meteor.call('getGroupInviteHtmlTemplate', emailData, language);
+            let body = getGroupInviteHtmlTemplate(emailData, language);
 
             // Meteor.call('send.notification', (error, result) => {
             //     console.log(error);
             //     console.log(result);
             // });
-        
-            Meteor.call('sendEmail', email, subject, body);
+
+            sendEmail(email, subject, body);
 
             return true;
 

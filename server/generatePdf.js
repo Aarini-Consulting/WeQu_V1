@@ -7,9 +7,12 @@ import puppeteer from 'puppeteer'
 import {ReportPdfEN} from '/imports/ui/pages/group/reportTemplate/ReportPdfEN';
 import {ReportPdfNL} from '/imports/ui/pages/group/reportTemplate/ReportPdfNL';
 import {ReportPdfFR} from '/imports/ui/pages/group/reportTemplate/ReportPdfFR';
+import {ReportPdfDE} from '/imports/ui/pages/group/reportTemplate/ReportPdfDE';
 
 import i18n from 'meteor/universe:i18n';
 
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
 
 const getBase64String = (path) => {
   try {
@@ -208,7 +211,8 @@ Meteor.methods({
         lastName: user.profile.lastName,
         groupName: groupCheck.groupName,
         groupCreatorFirstName: creator.profile.firstName,
-        groupCreatorLastName: creator.profile.lastName
+        groupCreatorLastName: creator.profile.lastName,
+        groupType:groupCheck.groupType
       };
         
       if(groupCheck.isPlaceCardFinished){
@@ -273,7 +277,8 @@ Meteor.methods({
       var reportTemplates = {
         "en":ReportPdfEN, 
         "nl":ReportPdfNL,
-        "fr":ReportPdfFR
+        "fr":ReportPdfFR,
+        "de":ReportPdfDE
       }
       
       if(languageCode && reportTemplates[languageCode]){

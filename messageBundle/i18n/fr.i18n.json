@@ -204,7 +204,8 @@
         "Answer7B":"J'ai appris à donner un retour constructif.",
         "Answer7C":"J'ai appris de nouvelles qualités positives sur mes collègues.",
         "Answer7D":"Notre façon de gérer la communication pendant la session a été plus efficace que nos réunions d’équipe habituelles.",
-        "Answer7E":"Je vois l'intérêt de cette session et souhaite la recommander à d'autres."
+        "Answer7E":"Je vois l'intérêt de cette session et souhaite la recommander à d'autres.",
+        "Answer7F":"L'entraîneur était très bon. Je les recommanderais."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Merci",

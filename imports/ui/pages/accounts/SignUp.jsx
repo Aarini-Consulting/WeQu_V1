@@ -21,20 +21,14 @@ class SignUp extends React.Component {
 		this.setState({
 			showLoading: true,
 		});
-		var emailVerification = true;
-		//signing up from group invitation link
-		//set newly created account's email as verified
-		if(this.props.email){
-			emailVerification = false;
-		}
 
-		Meteor.call('createAccount', data, emailVerification, (err, result) => {
-			this.setState({
-				showLoading: false,
-			});
-
+		Meteor.call('createAccount', data, (err, result) => {
 			if (err){
 				console.log(err);
+				this.setState({
+					showLoading: false,
+				});
+				
 				$('#error').text(err.message);
 			}
 			else if(result){
@@ -42,11 +36,17 @@ class SignUp extends React.Component {
 					if(err){
 						console.log(err);
 						$('#error').text(err.message);
+						this.setState({
+							showLoading: false,
+						});
 					}else{
 						this.props.history.replace('/');
 					}
 				}); 
 			}else{
+				this.setState({
+					showLoading: false,
+				});
 				$('#error').text("unknown error");
 			}
 		});
@@ -60,9 +60,14 @@ class SignUp extends React.Component {
 			var registerEmail = ReactDOM.findDOMNode(this.refs.registerEmail).value.trim();
 			var registerPassword = ReactDOM.findDOMNode(this.refs.registerPassword).value.trim();
 
-			var data =  {userId: this.props.user && this.props.user._id, firstName: firstName , lastName: lastName, 
-				registerEmail:registerEmail, registerPassword:registerPassword, consentSubs:this.state.consentSubs, 
-				consentTerms:this.state.consentTerms}
+			var data =  {
+				userId: this.props.user && this.props.user._id, 
+				firstName: firstName , 
+				lastName: lastName, 
+				registerEmail:registerEmail, 
+				registerPassword:registerPassword, 
+				consentSubs:this.state.consentSubs
+			}
 				
 			if(this.props.user){
 				this.setState({

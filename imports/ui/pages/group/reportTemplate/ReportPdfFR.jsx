@@ -46,12 +46,16 @@ export const ReportPdfFR = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Session Actuelle - {propData.firstName} {propData.lastName}</div>
+                {propData.groupType == "short" 
+                ?
+                <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
+                :
                 <div className="div-diagram">
-                    <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                     <div className="diagram-wrapper w-clearfix">
                         {propData.cardPicked 
                             ?
                             <div className="diagram">
+                                <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                                 <div className="diagram-position">
                                     <div className={`icon _3 badge-${ propData.cardPicked[2].subCategory }`}></div> 
                                     <div className={`icon _2 badge-${ propData.cardPicked[0].subCategory }`}></div> 
@@ -82,7 +86,8 @@ export const ReportPdfFR = ({propData}) => (
                         }
                     </div>
                 </div>
-                <div className="div-current-chart">
+                }
+                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">
@@ -141,15 +146,27 @@ export const ReportPdfFR = ({propData}) => (
             </div>
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
-                <div className="h4 next">
-                Poursuivez sur votre lancée !
-                <br/>
-                Continuez à adopter des habitudes saines grâce à nos séances de suivi d’une heure.
-                <br/>
-                <br/>
-                Pour plus d'informations, contactez {propData.groupCreatorFirstName}.
-                </div>
-                <div className="next-demo"></div>
+                {propData.groupType == "short" 
+                    ?
+                    <div className="h4 next">
+                        Devenez un champion WeQ!
+                        <br/>
+                        Êtes-vous passionné par la construction d'une grande équipe?
+                        <br/>
+                        <br/>
+                        Et vous souhaitez animer des sessions WeQ? Demandez à votre entraîneur à propos du programme WeQ Champion ou envoyez un email à <a href="mailto:contact@weq.io">contact@weq.io</a>
+                    </div>
+                    :
+                    <div className="h4 next">
+                        Poursuivez sur votre lancée !
+                        <br/>
+                        Continuez à adopter des habitudes saines grâce à nos séances de suivi d’une heure.
+                        <br/>
+                        <br/>
+                        Pour plus d'informations, contactez {propData.groupCreatorFirstName}.
+                    </div>
+                }
+                <div className={`next-demo ${propData.groupType == "short" ? "short":""}`}></div>
             </div>
             </div>
             <div className="section _3-footer">

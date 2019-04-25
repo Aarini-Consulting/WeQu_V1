@@ -61,3 +61,6 @@ promise@0.10.1
 fourseven:scss
 meteortesting:mocha
 universe:i18n
+dburles:factory
+xolvio:cleaner
+hwillson:stub-collections
