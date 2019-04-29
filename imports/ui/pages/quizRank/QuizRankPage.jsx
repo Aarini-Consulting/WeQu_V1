@@ -102,7 +102,20 @@ class QuizRankPage extends React.Component {
                 return(
                     <GroupQuizClientPage group={this.props.group}/>
                 );
-            }else if(this.props.group.isPlaceCardActive){
+            }
+            else if(this.props.group.isPlayCardActive){
+                if(this.props.group){
+                    return(
+                        <h1>Play card mode</h1>
+                    );
+                }
+                else{
+                    return(
+                        <QuizRankWait user={this.props.currentUser} group={this.props.group}/>
+                    );
+                }
+            }
+            else if(this.props.group.isPlaceCardActive){
                 if(this.props.selfRankCompleted){
                     if(this.props.group.isPlaceCardFinished){
                         return(

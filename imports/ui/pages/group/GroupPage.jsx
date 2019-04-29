@@ -307,9 +307,9 @@ class GroupPage extends React.Component {
         tabContent = 
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
-      // else if(this.state.currentTab == "play-cards"){
-      //   tabContent = (<PlayCardPage/>);
-      // }
+      else if(this.state.currentTab == "play-cards"){
+        tabContent = (<PlayCardPage/>);
+      }
       else if(this.state.currentTab == "report"){
         tabContent = 
         (<GroupReportPage groupId={this.props.match.params.id}/>);
@@ -342,10 +342,10 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
-                  {/* <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
+                  <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"play-cards")}>
                     <div>Play cards</div>
-                  </div> */}
+                  </div>
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>

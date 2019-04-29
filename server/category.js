@@ -502,6 +502,68 @@ Meteor.methods({
         }
     },
 
+    'start.game.play.cards': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(groupCheck && groupCheck.userIds && groupCheck.userIds.length < 2){
+            throw (new Meteor.Error("not_enough_group_member")); 
+        }
+
+        if(groupCheck && groupCheck.userIds && groupCheck.userIds.length > 12){
+            throw (new Meteor.Error("too_much_group_member")); 
+        }
+
+        if(!groupCheck.isFinished){
+            if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+                Group.update({_id:groupId},
+                    {
+                        $set : {
+                            "isActive": true,
+                            "isPlayCardActive": true,
+                            "isPlaceCardActive":false
+                        },
+                        $unset : { "currentGroupQuizId": "" }
+                    } 
+                );
+
+            }else{
+                throw (new Meteor.Error("not_all_invitees_finished_survey")); 
+            }
+            
+        }else{
+            throw (new Meteor.Error("game_already_started_or_finished")); 
+        }
+    },
+
+    'stop.game.play.cards': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.isFinished){
+            if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+                Group.update({_id:groupId},
+                    {
+                        $set : {
+                            "isPlayCardActive": false,
+                        }
+                    } 
+                );
+            }else{
+                throw (new Meteor.Error("not_all_invitees_finished_survey")); 
+            }
+            
+        }else{
+            throw (new Meteor.Error("game_already_started_or_finished")); 
+        }
+    },
+
     'end.game': function(groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
