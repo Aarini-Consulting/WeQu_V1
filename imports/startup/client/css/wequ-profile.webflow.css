@@ -2982,13 +2982,21 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .tabs-menu{
-  display:block;
+  display:flex;
   width:100%;
   text-align: center;
 }
 
-.tabs-menu-inner-wrapper{
+.tabs-menu-manage-session{
   display:inline-block;
+  position: absolute;
+}
+
+.tabs-menu-inner-wrapper{
+  display:inline;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .tabs.w-tabs{
@@ -3040,11 +3048,20 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .tap.edit.w--current, .tap.edit:hover {
-  background-color: #40BFBB;
+  background-color: #929292;
   color:#fff;
 }
 
 .tap-underline.edit, .tabs.w-tabs.edit {
+  border-color: #929292;
+}
+
+.tap.play-cards.w--current, .tap.play-cards:hover {
+  background-color: #40BFBB;
+  color:#fff;
+}
+
+.tap-underline.play-cards, .tabs.w-tabs.play-cards {
   border-color: #40BFBB;
 }
 

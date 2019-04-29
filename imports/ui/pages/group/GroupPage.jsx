@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import MenuPresentation from '/imports/ui/pages/menu/MenuPresentation';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
+import PlayCardPage from '/imports/ui/pages/playCard/PlayCardPage';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
@@ -306,6 +307,9 @@ class GroupPage extends React.Component {
         tabContent = 
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
+      // else if(this.state.currentTab == "play-cards"){
+      //   tabContent = (<PlayCardPage/>);
+      // }
       else if(this.state.currentTab == "report"){
         tabContent = 
         (<GroupReportPage groupId={this.props.match.params.id}/>);
@@ -315,11 +319,13 @@ class GroupPage extends React.Component {
               <MenuPresentation location={this.props.location} history={this.props.history} groupName={this.props.group.groupName}/>
 
               <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
-                <div className="tabs-menu-inner-wrapper">
+                <div className="tabs-menu-manage-session">
                   <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
                     <div>Manage session</div>
                   </div>
+                </div>
+                <div className="tabs-menu-inner-wrapper">
                   <div className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>
                     <div>Present slide</div>
@@ -336,6 +342,10 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
+                  {/* <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
+                  onClick={this.toggleTabs.bind(this,"play-cards")}>
+                    <div>Play cards</div>
+                  </div> */}
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>
