@@ -485,7 +485,6 @@ Meteor.methods({
                     Group.update({_id:groupId},
                         {
                             $set : {
-                                "isActive":false,
                                 "isPlaceCardActive": false,
                                 "userIdsSelfRankCompleted":[]
                             }
@@ -552,6 +551,7 @@ Meteor.methods({
                     {
                         $set : {
                             "isPlayCardActive": false,
+                            "userIdsSelfChooseCompleted":[]
                         }
                     } 
                 );

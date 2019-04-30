@@ -21,6 +21,7 @@ import SessionFinished from './SessionFinished';
 import SessionWait from './SessionWait';
 
 import {Group} from '/collections/group';
+import ChooseCardPage from '/imports/ui/pages/chooseCard/ChooseCardPage';
 
 class QuizRankPage extends React.Component {
     constructor(props){
@@ -106,7 +107,7 @@ class QuizRankPage extends React.Component {
             else if(this.props.group.isPlayCardActive){
                 if(this.props.group){
                     return(
-                        <h1>Play card mode</h1>
+                        <ChooseCardPage/>
                     );
                 }
                 else{

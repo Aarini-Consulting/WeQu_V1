@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import MenuPresentation from '/imports/ui/pages/menu/MenuPresentation';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
-import PlayCardPage from '/imports/ui/pages/playCard/PlayCardPage';
+import GroupPlayCardPage from './GroupPlayCardPage';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
@@ -308,7 +308,7 @@ class GroupPage extends React.Component {
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
       else if(this.state.currentTab == "play-cards"){
-        tabContent = (<PlayCardPage/>);
+        tabContent = (<GroupPlayCardPage group={this.props.group}/>);
       }
       else if(this.state.currentTab == "report"){
         tabContent = 
