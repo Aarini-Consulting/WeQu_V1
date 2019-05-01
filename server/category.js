@@ -1,6 +1,7 @@
 import {Group} from '/collections/group';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
+import { CardChosen } from '../collections/cardChosen';
 
 function generateRankCategoryFromCsv() {
     var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
@@ -209,6 +210,67 @@ export function generateOthersRank(userId, groupId) {
             }
         }else{
             console.log("error parsing csv")
+        }
+    }
+}
+
+export function generateCardsToChoose(userId, groupId) {
+    let groupCheck = Group.findOne({'_id': groupId});
+
+    if(!groupCheck){
+        throw (new Meteor.Error("unknown_group")); 
+    }
+    
+    var cardChosenSelfCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': userId});
+    if(!cardChosenSelfCheck){
+        var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': userId});
+
+        if(cardPlacementCheck && cardPlacementCheck.cardPicked && cardPlacementCheck.cardPicked.length == 7){
+            //choose card for themselves
+            CardChosen.upsert({
+                'from': userId,
+                'to': userId,
+                'groupId': groupCheck._id,
+                
+            },
+            {$set: {
+                'cardsToChoose': [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]],
+                }
+            });
+
+
+             //get other members in the group
+            var users = Meteor.users.find({
+                $and : [{"_id":{$ne:userId}}, 
+                {"_id":{$in:groupCheck.userIds}}],
+            },
+            {sort: { "profile.firstName": 1 }}
+            ).fetch();
+
+            if(users.length < 1){
+                throw new Meteor.Error("no_group_member_found");
+            }
+
+            for(var i=0;i<numUser;i++){
+                let cardChosenOtherCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': users[i]});
+                if(cardChosenOtherCheck && cardChosenOtherCheck.cardPicked && cardChosenOtherCheck.cardPicked.length == 7){
+                    //choose card for others
+                    CardChosen.upsert({
+                        'from': userId,
+                        'to': users[i],
+                        'groupId': groupCheck._id,
+                        
+                    },
+                    {$set: {
+                        'cardsToChoose': [cardChosenOtherCheck.cardPicked[2],cardChosenOtherCheck.cardPicked[3]],
+                        }
+                    });
+                }else{
+                    throw (new Meteor.Error("card_picked_number_invalid")); 
+                }
+            }
+        }else{
+            throw (new Meteor.Error("card_picked_number_invalid")); 
         }
     }
 }
@@ -516,8 +578,34 @@ Meteor.methods({
             throw (new Meteor.Error("too_much_group_member")); 
         }
 
+        var cardPlacementCheck = CardPlacement.find({'groupId': groupId}).fetch();
+
+        
+        var cardNotPicked = cardPlacementCheck.find((cp) => {
+            return !(cp.cardPicked && cardPicked.length == 7);
+        });
+
+        if(cardNotPicked){
+            throw (new Meteor.Error("not_everyone_finished_picking_card")); 
+        }
+
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+                var users = Meteor.users.find(
+                    {$and: [{"_id":{$in:groupCheck.userIds}},
+                    {"_id":{$in:groupCheck.userIdsSurveyed}}]},
+                    {sort: { "profile.firstName": 1 }}
+                ).fetch();
+
+                if(users.length < 1){
+                    throw new Meteor.Error("no_group_member_found");
+                }
+
+                //generate rank
+                users.forEach(function(user, index, _arr) {
+                    generateCardsToChoose(user._id,groupCheck._id);
+                });
+
                 Group.update({_id:groupId},
                     {
                         $set : {

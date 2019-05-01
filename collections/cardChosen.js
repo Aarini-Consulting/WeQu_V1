@@ -13,14 +13,16 @@ CardChosenSchema = new SimpleSchema({
 		type: String,
 		label: "groupId",
 	},
-	"cardIdToChoose":{
-		type: [String],
-		label: "cardId to choose",
-		optional: true
+	"cardsToChoose":{
+		type: [Object],
+		blackbox:true,
+		label: "cards to choose",
 	},
-	"cardIdChosen":{
-		type: String,
-		label: "cardId",
+	"cardChosen":{
+		type: Object,
+		blackbox:true,
+		label: "card chosen",
+		optional: true,
 	},
 	"createdAt": {
 		type: Date,

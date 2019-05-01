@@ -35,7 +35,16 @@ export default class ChooseCardPage extends React.Component {
                     </div>
                     <div className="rate-content">
                         <h1>how strong do you feel about it?</h1>
+                        <h1>{this.state.selectedCardId}</h1>
+                        <div className="slidecontainer">
+                            <input type="range" min="1" max="100" className="slider"/>
+                        </div>
+                        <div className="slidecontainer descriptor">
+                            <p>not strong</p>
+                            <p>very strong</p>
+                        </div>
                     </div>
+                    <button onClick={this.confirmCardSelected.bind(this)}>Confirm</button>
                 </section>
             );
         }else{
