@@ -1,18 +1,27 @@
 import React from 'react';
-import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class ChooseCardPage extends React.Component {
+import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
+import Loading from '/imports/ui/pages/loading/Loading';
+import SessionWait from '/imports/ui/pages/quizClient/SessionWait';
+
+import {CardChosen} from '/collections/cardChosen';
+
+import ChooseCardSelf from './ChooseCardSelf';
+
+class ChooseCardPage extends React.Component {
     constructor(props){
         super(props);
         this.state={
-          selectedCardId:undefined,
+          selectedCard:undefined,
           selectedCardConfirmed:false,
         }
     }
 
-    selectCard(cardNumber){
+    selectCard(card){
         this.setState({
-            selectedCardId:cardNumber
+            selectedCard:card
         });
     }
 
@@ -22,51 +31,79 @@ export default class ChooseCardPage extends React.Component {
         });
     }
 
-    renderCardToPick(){
-        
+    renderCardToChoose(cardsToChoose){
+        return cardsToChoose.map((card)=>{
+            return(
+                <div className="w-inline-block" key={card.cardId}>
+                    <button onClick={this.selectCard.bind(this,card)}>{card.subCategory}</button>
+                </div>
+            );
+        });
     }
 
     render() {
-        if(this.state.selectedCardId && this.state.selectedCardConfirmed){
+        if(this.props.dataReady){
+            if(this.props.cardChosenBySelf && !this.props.cardChosenBySelf.cardChosen){
+                return(
+                    <ChooseCardSelf group={this.props.group} cardChosenBySelf={this.props.cardChosenBySelf}/>
+                );
+            }
+            else if(this.props.cardChosenBySelf && this.props.cardChosenBySelf.cardChosen){
+                return(
+                    <ChooseCardWait group={this.props.group} cardChosenBySelf={this.props.cardChosenBySelf}/>
+                );
+            }
+        }else{
             return(
                 <section className="ranker-container fontreleway purple-bg">
-                    <div className="div-time-100">
-                        <div className="actual-time" style={{width:(Math.round(3000/1000)/60)*100 +"%"}}></div>
-                    </div>
-                    <div className="rate-content">
-                        <h1>how strong do you feel about it?</h1>
-                        <h1>{this.state.selectedCardId}</h1>
-                        <div className="slidecontainer">
-                            <input type="range" min="1" max="100" className="slider"/>
-                        </div>
-                        <div className="slidecontainer descriptor">
-                            <p>not strong</p>
-                            <p>very strong</p>
-                        </div>
-                    </div>
-                    <button onClick={this.confirmCardSelected.bind(this)}>Confirm</button>
-                </section>
-            );
-        }else{
-            return (
-                <section className="ranker-container fontreleway purple-bg">
-                    <div className="div-time-100">
-                        <div className="actual-time" style={{width:(Math.round(3000/1000)/60)*100 +"%"}}></div>
-                    </div>
-
-                    <div className="rate-content div-block-center">
-                        <div className="w-inline-block">
-                            <button onClick={this.selectCard.bind(this,"69")}>69</button>
-                        </div>
-                        <div className="w-inline-block">
-                            <button onClick={this.selectCard.bind(this,"96")}>96</button>
-                        </div>
-                    </div>
-
-                    <button onClick={this.confirmCardSelected.bind(this)}>next</button>
+                    <Loading/>
                 </section>
             );
         }
-        
     }
 }
+
+export default withTracker((props) => {
+    let dataReady;
+    let cardChosenBySelf;
+    let cardChosenByOthers;
+    let userId = Meteor.userId();
+
+    let handleCardChosen = Meteor.subscribe('cardChosen',
+        {
+            "groupId":props.group._id,
+            $or : [ {"from" : userId  }, 
+                { "to" : userId}
+            ]
+        },{}, {
+        onError: function (error) {
+              console.log(error);
+        }
+    });
+
+    if(handleCardChosen.ready()){
+        cardChosenBySelf = CardChosen.findOne(
+            {
+                "groupId":props.group._id,
+                $and : [ 
+                {"from" : userId  }, 
+                { "to" : userId}
+            ]});
+
+        cardChosenByOthers = CardChosen.find({
+            "groupId":props.group._id,
+            $and : [ 
+                {"from": { '$ne': userId } }, 
+                { "to" : userId}
+            ]
+        }).fetch();
+        
+        dataReady = true;
+    }
+
+    return {
+        cardChosenBySelf:cardChosenBySelf,
+        cardChosenByOthers:cardChosenByOthers,
+        dataReady:dataReady
+    };
+})(ChooseCardPage);
