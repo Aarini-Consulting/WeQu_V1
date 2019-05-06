@@ -342,10 +342,12 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
-                  <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
-                  onClick={this.toggleTabs.bind(this,"play-cards")}>
-                    <div>Play cards</div>
-                  </div>
+                  {this.props.group && this.props.group.groupType == "short" &&
+                    <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
+                    onClick={this.toggleTabs.bind(this,"play-cards")}>
+                      <div>Play cards</div>
+                    </div>
+                  }
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>

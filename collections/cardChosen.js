@@ -13,6 +13,10 @@ CardChosenSchema = new SimpleSchema({
 		type: String,
 		label: "groupId",
 	},
+	"cardChosenType":{
+		type: String,
+		label: "card chosen type",
+	},
 	"cardsToChoose":{
 		type: [Object],
 		blackbox:true,

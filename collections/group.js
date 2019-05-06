@@ -23,6 +23,16 @@ GroupSchema = new SimpleSchema({
       label: "play card session active",
       optional: true
     },
+    "playCardType":{
+      type: String,
+      label: "play card session type",
+      optional: true
+    },
+    "playCardTypeCompleted":{
+      type: [String],
+      label: "play card session type finished",
+      optional: true
+    },
     "isPlaceCardActive":{
       type: Boolean,
       label: "place card session active",

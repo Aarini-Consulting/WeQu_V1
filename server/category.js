@@ -214,27 +214,34 @@ export function generateOthersRank(userId, groupId) {
     }
 }
 
-export function generateCardsToChoose(userId, groupId) {
+export function generateCardsToChoose(userId, groupId, cardChosenType) {
     let groupCheck = Group.findOne({'_id': groupId});
 
     if(!groupCheck){
         throw (new Meteor.Error("unknown_group")); 
     }
     
-    var cardChosenSelfCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': userId});
+    var cardChosenSelfCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': userId,'cardChosenType':cardChosenType});
     if(!cardChosenSelfCheck){
         var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': userId});
 
         if(cardPlacementCheck && cardPlacementCheck.cardPicked && cardPlacementCheck.cardPicked.length == 7){
+            let cardsToChoose=[];
+            if(cardChosenType == "2"){
+                cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
+            }else if(cardChosenType == "3"){
+                cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
+            }
             //choose card for themselves
             CardChosen.upsert({
                 'from': userId,
                 'to': userId,
+                'cardChosenType': cardChosenType,
                 'groupId': groupCheck._id,
                 
             },
             {$set: {
-                'cardsToChoose': [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]],
+                'cardsToChoose': cardsToChoose
                 }
             });
 
@@ -251,20 +258,32 @@ export function generateCardsToChoose(userId, groupId) {
                 throw new Meteor.Error("no_group_member_found");
             }
 
-            for(var i=0;i<numUser;i++){
-                let cardChosenOtherCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': users[i]});
-                if(cardChosenOtherCheck && cardChosenOtherCheck.cardPicked && cardChosenOtherCheck.cardPicked.length == 7){
-                    //choose card for others
-                    CardChosen.upsert({
-                        'from': userId,
-                        'to': users[i],
-                        'groupId': groupCheck._id,
-                        
-                    },
-                    {$set: {
-                        'cardsToChoose': [cardChosenOtherCheck.cardPicked[2],cardChosenOtherCheck.cardPicked[3]],
+            for(var i=0;i<users.length;i++){
+                let targetUserId = users[i] && users[i]._id;
+                var cardPlacementCheckOther = CardPlacement.findOne({'groupId': groupId,'userId':targetUserId});
+                if(cardPlacementCheckOther && cardPlacementCheckOther.cardPicked && cardPlacementCheckOther.cardPicked.length == 7){
+                    var cardChosenOtherCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': targetUserId,'cardChosenType':cardChosenType});
+                    if(!cardChosenOtherCheck){
+                        //choose card for others
+                        let cardsToChoose=[];
+                        if(cardChosenType == "2"){
+                            cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
+                        }else if(cardChosenType == "3"){
+                            cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
                         }
-                    });
+
+                        CardChosen.upsert({
+                            'from': userId,
+                            'to': targetUserId,
+                            'cardChosenType': cardChosenType,
+                            'groupId': groupCheck._id,
+                            
+                        },
+                        {$set: {
+                            'cardsToChoose': cardsToChoose,
+                            }
+                        });
+                    }
                 }else{
                     throw (new Meteor.Error("card_picked_number_invalid")); 
                 }
@@ -499,6 +518,15 @@ Meteor.methods({
                     } 
                 );
 
+                //check if play card mode is ever used
+                if(groupCheck.playCardType){
+                    //check if last used play card mode completed, call "stop" function to remove all data related to it if it's not completed
+                    let playCardTypeCompleted = (groupCheck.playCardTypeCompleted && groupCheck.playCardTypeCompleted.indexOf(groupCheck.playCardType) > -1);
+                    if(!playCardTypeCompleted){
+                        Meteor.call('stop.game.play.cards', groupId, groupCheck.playCardType);
+                    }
+                }
+
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 
             }
@@ -563,11 +591,15 @@ Meteor.methods({
         }
     },
 
-    'start.game.play.cards': function(groupId) {
+    'start.game.play.cards': function(groupId, cardChosenType) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
             throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!cardChosenType || (cardChosenType != "2" && cardChosenType != "3")){
+            throw (new Meteor.Error("unknown_type_mode")); 
         }
 
         if(groupCheck && groupCheck.userIds && groupCheck.userIds.length < 2){
@@ -582,7 +614,7 @@ Meteor.methods({
 
         
         var cardNotPicked = cardPlacementCheck.find((cp) => {
-            return !(cp.cardPicked && cardPicked.length == 7);
+            return !(cp.cardPicked && cp.cardPicked.length == 7);
         });
 
         if(cardNotPicked){
@@ -603,7 +635,8 @@ Meteor.methods({
 
                 //generate rank
                 users.forEach(function(user, index, _arr) {
-                    generateCardsToChoose(user._id,groupCheck._id);
+                    console.log(user._id);
+                    generateCardsToChoose(user._id,groupCheck._id,cardChosenType);
                 });
 
                 Group.update({_id:groupId},
@@ -611,11 +644,17 @@ Meteor.methods({
                         $set : {
                             "isActive": true,
                             "isPlayCardActive": true,
+                            "playCardType": cardChosenType,
                             "isPlaceCardActive":false
                         },
                         $unset : { "currentGroupQuizId": "" }
                     } 
                 );
+
+                //if place card mode is not finished, call the "stop" function to remove all data about it as well
+                if(!groupCheck.isPlaceCardFinished){
+                    Meteor.call('stop.game.place.cards', groupId);
+                }
 
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 
@@ -626,21 +665,32 @@ Meteor.methods({
         }
     },
 
-    'stop.game.play.cards': function(groupId) {
+    'stop.game.play.cards': function(groupId,cardChosenType) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
             throw (new Meteor.Error("unknown_group")); 
         }
 
+        if(!cardChosenType || (cardChosenType != "2" && cardChosenType != "3")){
+            throw (new Meteor.Error("unknown_type_mode")); 
+        }
+
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+                CardChosen.remove(
+                    {
+                        "groupId": groupCheck._id,
+                        "cardChosenType":cardChosenType
+                    });
+
                 Group.update({_id:groupId},
                     {
                         $set : {
                             "isPlayCardActive": false,
                             "userIdsSelfChooseCompleted":[]
-                        }
+                        },
+                        $unset : { "cardChosenType": "" }
                     } 
                 );
             }else{
