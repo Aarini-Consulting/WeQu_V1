@@ -227,9 +227,9 @@ export function generateCardsToChoose(userId, groupId, cardChosenType) {
 
         if(cardPlacementCheck && cardPlacementCheck.cardPicked && cardPlacementCheck.cardPicked.length == 7){
             let cardsToChoose=[];
-            if(cardChosenType == "2"){
+            if(cardChosenType == "praise"){
                 cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
-            }else if(cardChosenType == "3"){
+            }else if(cardChosenType == "criticism"){
                 cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
             }
             //choose card for themselves
@@ -266,9 +266,9 @@ export function generateCardsToChoose(userId, groupId, cardChosenType) {
                     if(!cardChosenOtherCheck){
                         //choose card for others
                         let cardsToChoose=[];
-                        if(cardChosenType == "2"){
+                        if(cardChosenType == "praise"){
                             cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
-                        }else if(cardChosenType == "3"){
+                        }else if(cardChosenType == "criticism"){
                             cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
                         }
 
@@ -510,22 +510,22 @@ Meteor.methods({
                 users.forEach(function(user, index, _arr) {
                     generateOthersRank(user._id, groupCheck._id)
                 });
-        
-                Group.update({_id:groupId},
-                    {
-                        $set : {"isActive": true,"isPlaceCardActive": true},
-                        $unset : { "currentGroupQuizId": "" }
-                    } 
-                );
 
                 //check if play card mode is ever used
-                if(groupCheck.playCardType){
+                if(groupCheck.playCardTypeActive){
                     //check if last used play card mode completed, call "stop" function to remove all data related to it if it's not completed
                     let playCardTypeCompleted = (groupCheck.playCardTypeCompleted && groupCheck.playCardTypeCompleted.indexOf(groupCheck.playCardType) > -1);
                     if(!playCardTypeCompleted){
                         Meteor.call('stop.game.play.cards', groupId, groupCheck.playCardType);
                     }
                 }
+
+                Group.update({_id:groupId},
+                    {
+                        $set : {"isActive": true,"isPlaceCardActive": true},
+                        $unset : { "currentGroupQuizId": "" }
+                    } 
+                );
 
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 
@@ -598,7 +598,7 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(!cardChosenType || (cardChosenType != "2" && cardChosenType != "3")){
+        if(!cardChosenType || (cardChosenType != "praise" && cardChosenType != "criticism")){
             throw (new Meteor.Error("unknown_type_mode")); 
         }
 
@@ -608,6 +608,14 @@ Meteor.methods({
 
         if(groupCheck && groupCheck.userIds && groupCheck.userIds.length > 12){
             throw (new Meteor.Error("too_much_group_member")); 
+        }
+
+        if(!(groupCheck && groupCheck.playCardTypeList && groupCheck.playCardTypeList.length > 0)){
+            throw (new Meteor.Error("group_not_set_to_play_card")); 
+        }
+
+        if(!(groupCheck && groupCheck.playCardTypeList && groupCheck.playCardTypeList.indexOf(cardChosenType) > -1)){
+            throw (new Meteor.Error("type_not_assigned_to_this_group")); 
         }
 
         var cardPlacementCheck = CardPlacement.find({'groupId': groupId}).fetch();
@@ -635,27 +643,24 @@ Meteor.methods({
 
                 //generate rank
                 users.forEach(function(user, index, _arr) {
-                    console.log(user._id);
                     generateCardsToChoose(user._id,groupCheck._id,cardChosenType);
                 });
-
-                Group.update({_id:groupId},
-                    {
-                        $set : {
-                            "isActive": true,
-                            "isPlayCardActive": true,
-                            "playCardType": cardChosenType,
-                            "isPlaceCardActive":false
-                        },
-                        $unset : { "currentGroupQuizId": "" }
-                    } 
-                );
 
                 //if place card mode is not finished, call the "stop" function to remove all data about it as well
                 if(!groupCheck.isPlaceCardFinished){
                     Meteor.call('stop.game.place.cards', groupId);
                 }
 
+                Group.update({_id:groupId},
+                    {
+                        $set : {
+                            "isActive": true,
+                            "playCardTypeActive": cardChosenType,
+                            "isPlaceCardActive":false
+                        },
+                        $unset : { "currentGroupQuizId": "" }
+                    } 
+                );
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 
             }
@@ -687,10 +692,9 @@ Meteor.methods({
                 Group.update({_id:groupId},
                     {
                         $set : {
-                            "isPlayCardActive": false,
                             "userIdsSelfChooseCompleted":[]
                         },
-                        $unset : { "cardChosenType": "" }
+                        $unset : { "playCardTypeActive": "" }
                     } 
                 );
             }else{

@@ -102,7 +102,7 @@ class QuizClientPage extends React.Component {
                     <GroupQuizClientPage group={this.props.group}/>
                 );
             }
-            else if(this.props.group.isPlayCardActive){
+            else if(this.props.group.playCardTypeActive){
                 return(
                     <ChooseCardPage group={this.props.group}/>
                 );

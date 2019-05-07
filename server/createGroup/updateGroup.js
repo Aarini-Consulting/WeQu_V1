@@ -6,6 +6,7 @@ import {Group} from '/collections/group';
 import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
+import { CardChosen } from '/collections/cardChosen';
 
 Meteor.methods({
     'updateGroup' : function (group, language="en", data, arr_emails) {
@@ -193,6 +194,11 @@ Meteor.methods({
                 });
                 
                 CardPlacement.remove(
+                {
+                    "groupId": checkGroup._id
+                });
+
+                CardChosen.remove(
                 {
                     "groupId": checkGroup._id
                 });

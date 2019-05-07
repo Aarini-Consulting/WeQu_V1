@@ -103,7 +103,8 @@ Meteor.methods({
     //get group quiz list
     var groupQuiz = GroupQuiz.find().fetch();
 
-    var groupQuizIdList = []
+    var groupQuizIdList = [];
+    var playCardTypeList = [];
 
     if(groupQuiz.length >= 1){
       var groupQuizQuestionForShort = ["HowOftenCompliment","BestComplimentGiver","BestCriticismGiver","RankBehaviourImprovement","EvaluateSession"]
@@ -118,6 +119,7 @@ Meteor.methods({
 
       if(type == "short"){
         groupQuizIdList = groupQuizIdListShort;
+        playCardTypeList = ["praise","criticism"];
       }
     }
 
@@ -130,6 +132,7 @@ Meteor.methods({
       isActive:false,
       isFinished:false,
       groupQuizIdList:groupQuizIdList,
+      playCardTypeList:playCardTypeList,
       groupType:type
     });
 
