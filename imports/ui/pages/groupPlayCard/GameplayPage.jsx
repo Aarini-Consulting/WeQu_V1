@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import WelcomePage from './WelcomePage';
 
-import {CardChosen} from '/collections/cardChosen';
+import {PlayCard} from '/collections/playCard';
 
 class GameplayPage extends React.Component {
     constructor(props){
@@ -52,21 +52,21 @@ export default withTracker((props) => {
     let dataReady;
     let cardChosenBySelfDone=[];
 
-    let handleCardChosen = Meteor.subscribe('cardChosen',
+    let handlePlayCard = Meteor.subscribe('playCard',
         {
             "groupId":props.group._id,
-            "cardChosenType":props.group.playCardTypeActive
+            "playCardType":props.group.playCardTypeActive
         },{}, {
         onError: function (error) {
               console.log(error);
         }
     });
 
-    if(handleCardChosen.ready()){
-        let cardChosenBySelf = CardChosen.find(
+    if(handlePlayCard.ready()){
+        let cardChosenBySelf = PlayCard.find(
             { 
                 "groupId":props.group._id,
-                "cardChosenType":props.group.playCardTypeActive
+                "playCardType":props.group.playCardTypeActive
             }).fetch();
 
         cardChosenBySelfDone = cardChosenBySelf.filter((card)=>{

@@ -1,6 +1,6 @@
-export const CardChosen =  new Mongo.Collection('cardChosen');
+export const PlayCard =  new Mongo.Collection('playCard');
 
-CardChosenSchema = new SimpleSchema({
+PlayCardSchema = new SimpleSchema({
 	"from":{
 		type: String,
 		label: "from"
@@ -13,7 +13,7 @@ CardChosenSchema = new SimpleSchema({
 		type: String,
 		label: "groupId",
 	},
-	"cardChosenType":{
+	"playCardType":{
 		type: String,
 		label: "card chosen type",
 	},
@@ -51,4 +51,4 @@ CardChosenSchema = new SimpleSchema({
 
 })
 
-CardChosen.attachSchema(CardChosenSchema);
+PlayCard.attachSchema(PlayCardSchema);

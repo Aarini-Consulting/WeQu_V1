@@ -3,7 +3,7 @@ import {GroupQuiz} from '/collections/groupQuiz';
 import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
-import {CardChosen} from '/collections/cardChosen';
+import {PlayCard} from '/collections/playCard';
 
 Meteor.publish('cardPlacement', function(selector, options) {
     return CardPlacement.find(selector, options);
@@ -25,8 +25,8 @@ Meteor.publish('groupQuizData', function(selector, options) {
     return GroupQuizData.find(selector, options);
 });
 
-Meteor.publish('cardChosen', function(selector, options) {
-    return CardChosen.find(selector, options);
+Meteor.publish('playCard', function(selector, options) {
+    return PlayCard.find(selector, options);
 });
 
 Meteor.publish(null, function(){

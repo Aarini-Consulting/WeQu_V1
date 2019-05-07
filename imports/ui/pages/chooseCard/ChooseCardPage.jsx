@@ -6,7 +6,7 @@ import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SessionWait from '/imports/ui/pages/quizClient/SessionWait';
 
-import {CardChosen} from '/collections/cardChosen';
+import {PlayCard} from '/collections/playCard';
 
 import ChooseCardSelf from './ChooseCardSelf';
 
@@ -69,7 +69,7 @@ export default withTracker((props) => {
     let cardChosenByOthers;
     let userId = Meteor.userId();
 
-    let handleCardChosen = Meteor.subscribe('cardChosen',
+    let handlePlayCard = Meteor.subscribe('playCard',
         {
             "groupId":props.group._id,
             $or : [ {"from" : userId  }, 
@@ -81,8 +81,8 @@ export default withTracker((props) => {
         }
     });
 
-    if(handleCardChosen.ready()){
-        cardChosenBySelf = CardChosen.findOne(
+    if(handlePlayCard.ready()){
+        cardChosenBySelf = PlayCard.findOne(
             {
                 "groupId":props.group._id,
                 $and : [ 
@@ -90,7 +90,7 @@ export default withTracker((props) => {
                 { "to" : userId}
             ]});
 
-        cardChosenByOthers = CardChosen.find({
+        cardChosenByOthers = PlayCard.find({
             "groupId":props.group._id,
             $and : [ 
                 {"from": { '$ne': userId } }, 

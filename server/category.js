@@ -1,7 +1,7 @@
 import {Group} from '/collections/group';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
-import { CardChosen } from '../collections/cardChosen';
+import { PlayCard } from '/collections/playCard';
 
 function generateRankCategoryFromCsv() {
     var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
@@ -214,29 +214,29 @@ export function generateOthersRank(userId, groupId) {
     }
 }
 
-export function generateCardsToChoose(userId, groupId, cardChosenType) {
+export function generateCardsToChoose(userId, groupId, playCardType) {
     let groupCheck = Group.findOne({'_id': groupId});
 
     if(!groupCheck){
         throw (new Meteor.Error("unknown_group")); 
     }
     
-    var cardChosenSelfCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': userId,'cardChosenType':cardChosenType});
-    if(!cardChosenSelfCheck){
+    var playCardSelfCheck = PlayCard.findOne({'groupId': groupId,'from': userId,'to': userId,'playCardType':playCardType});
+    if(!playCardSelfCheck){
         var cardPlacementCheck = CardPlacement.findOne({'groupId': groupId,'userId': userId});
 
         if(cardPlacementCheck && cardPlacementCheck.cardPicked && cardPlacementCheck.cardPicked.length == 7){
             let cardsToChoose=[];
-            if(cardChosenType == "praise"){
+            if(playCardType == "praise"){
                 cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
-            }else if(cardChosenType == "criticism"){
+            }else if(playCardType == "criticism"){
                 cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
             }
             //choose card for themselves
-            CardChosen.upsert({
+            PlayCard.upsert({
                 'from': userId,
                 'to': userId,
-                'cardChosenType': cardChosenType,
+                'playCardType': playCardType,
                 'groupId': groupCheck._id,
                 
             },
@@ -262,20 +262,20 @@ export function generateCardsToChoose(userId, groupId, cardChosenType) {
                 let targetUserId = users[i] && users[i]._id;
                 var cardPlacementCheckOther = CardPlacement.findOne({'groupId': groupId,'userId':targetUserId});
                 if(cardPlacementCheckOther && cardPlacementCheckOther.cardPicked && cardPlacementCheckOther.cardPicked.length == 7){
-                    var cardChosenOtherCheck = CardChosen.findOne({'groupId': groupId,'from': userId,'to': targetUserId,'cardChosenType':cardChosenType});
-                    if(!cardChosenOtherCheck){
+                    var playCardOtherCheck = PlayCard.findOne({'groupId': groupId,'from': userId,'to': targetUserId,'playCardType':playCardType});
+                    if(!playCardOtherCheck){
                         //choose card for others
                         let cardsToChoose=[];
-                        if(cardChosenType == "praise"){
+                        if(playCardType == "praise"){
                             cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
-                        }else if(cardChosenType == "criticism"){
+                        }else if(playCardType == "criticism"){
                             cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
                         }
 
-                        CardChosen.upsert({
+                        PlayCard.upsert({
                             'from': userId,
                             'to': targetUserId,
-                            'cardChosenType': cardChosenType,
+                            'playCardType': playCardType,
                             'groupId': groupCheck._id,
                             
                         },
@@ -591,14 +591,14 @@ Meteor.methods({
         }
     },
 
-    'start.game.play.cards': function(groupId, cardChosenType) {
+    'start.game.play.cards': function(groupId, playCardType) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(!cardChosenType || (cardChosenType != "praise" && cardChosenType != "criticism")){
+        if(!playCardType || (playCardType != "praise" && playCardType != "criticism")){
             throw (new Meteor.Error("unknown_type_mode")); 
         }
 
@@ -614,7 +614,7 @@ Meteor.methods({
             throw (new Meteor.Error("group_not_set_to_play_card")); 
         }
 
-        if(!(groupCheck && groupCheck.playCardTypeList && groupCheck.playCardTypeList.indexOf(cardChosenType) > -1)){
+        if(!(groupCheck && groupCheck.playCardTypeList && groupCheck.playCardTypeList.indexOf(playCardType) > -1)){
             throw (new Meteor.Error("type_not_assigned_to_this_group")); 
         }
 
@@ -643,7 +643,7 @@ Meteor.methods({
 
                 //generate rank
                 users.forEach(function(user, index, _arr) {
-                    generateCardsToChoose(user._id,groupCheck._id,cardChosenType);
+                    generateCardsToChoose(user._id,groupCheck._id,playCardType);
                 });
 
                 //if place card mode is not finished, call the "stop" function to remove all data about it as well
@@ -655,7 +655,7 @@ Meteor.methods({
                     {
                         $set : {
                             "isActive": true,
-                            "playCardTypeActive": cardChosenType,
+                            "playCardTypeActive": playCardType,
                             "isPlaceCardActive":false
                         },
                         $unset : { "currentGroupQuizId": "" }
@@ -670,23 +670,23 @@ Meteor.methods({
         }
     },
 
-    'stop.game.play.cards': function(groupId,cardChosenType) {
+    'stop.game.play.cards': function(groupId,playCardType) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(!cardChosenType || (cardChosenType != "2" && cardChosenType != "3")){
+        if(!playCardType || (playCardType != "2" && playCardType != "3")){
             throw (new Meteor.Error("unknown_type_mode")); 
         }
 
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
-                CardChosen.remove(
+                PlayCard.remove(
                     {
                         "groupId": groupCheck._id,
-                        "cardChosenType":cardChosenType
+                        "playCardType":playCardType
                     });
 
                 Group.update({_id:groupId},
