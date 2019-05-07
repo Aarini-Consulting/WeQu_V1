@@ -8,77 +8,116 @@ import Loading from '/imports/ui/pages/loading/Loading';
 export default class ChooseCardSelf extends React.Component {
     constructor(props){
         super(props);
+        var timer = undefined;
         this.state={
-          selectedCard:undefined,
-          selectedCardConfirmed:false,
+            start: undefined,
+            elapsed:0,
+            selectedCard:undefined,
+            showGrading:false
         }
+    }
+
+    setTimer(bool){
+        if(bool){
+            this.setState({
+                start: new Date(),
+                elapsed: 0
+            },()=>{
+                this.timer = setInterval(this.tick.bind(this), 1000);
+            });
+        }else{
+            clearInterval(this.timer);
+        }
+    }
+
+    tick(){
+        // This function is called every 1000 ms. It updates the 
+        // elapsed counter. Calling setState causes the component to be re-rendered
+        if(this.state.elapsed <= this.props.timerDuration){
+            this.setState({elapsed: new Date() - this.state.start});
+        }
+        else{
+            this.stepFinished();
+        }
+    }
+
+    stepFinished(){
+        this.setTimer(false);
+
+        this.setState({
+            savingData:true
+        },()=>{
+            console.log("time's up");
+        });
+    }
+
+    componentDidMount(){
+        this.setTimer(true);
+    }
+
+    componentWillUnmount(){
+        // componentDidMount is called by react when the component 
+        // has been rendered on the page. We can set the interval here:
+        if(this.timer){
+            this.setTimer(false);
+        }
+        
     }
 
     selectCard(card){
         this.setState({
-            selectedCard:card
+            selectedCard:card,
+            showGrading:true
         });
     }
 
-    confirmCardSelected(){
-        if(this.state.selectedCard){
-            this.setState({
-                selectedCardConfirmed:true
-            });
-        }
-    }
-
     submitAnswer(){
-        if(this.state.selectedCard && this.state.selectedCardConfirmed){
+        if(this.state.selectedCard){
             console.log("submit answer");
         }
     }
 
     renderCardToChoose(cardsToChoose){
-        return cardsToChoose.map((card)=>{
+        return cardsToChoose.map((card, index)=>{
+            let selected=" ";
+
+            if(this.state.selectedCard && this.state.selectedCard.cardId == card.cardId){
+                selected=" selected ";
+            }
             return(
-                <div className="w-inline-block" key={card.cardId}>
-                    <button onClick={this.selectCard.bind(this,card)}>{card.subCategory}</button>
+                <div className={`play-card-client-option${selected}bg-${card.category}`} key={card.cardId} onClick={this.selectCard.bind(this,card)}>
+                    {index+3}
                 </div>
             );
         });
     }
 
     render() {
-        if(this.state.selectedCard && this.state.selectedCardConfirmed){
-            return(
-                <section className="ranker-container fontreleway purple-bg">
-                    <div className="div-time-100">
-                        <div className="actual-time" style={{width:(Math.round(3000/1000)/60)*100 +"%"}}></div>
-                    </div>
-                    <div className="rate-content">
-                        <h1>how strong do you feel about it?</h1>
-                        <h1>{this.state.selectedCard.subCategory}</h1>
-                        <div className="slidecontainer">
-                            <input type="range" min="1" max="100" className="slider"/>
-                        </div>
-                        <div className="slidecontainer descriptor">
-                            <p>not strong</p>
-                            <p>very strong</p>
-                        </div>
-                    </div>
-                    <button onClick={this.submitAnswer.bind(this)}>Confirm</button>
-                </section>
-            );
-        }else{
-            return (
-                <section className="ranker-container fontreleway purple-bg">
-                    <div className="div-time-100">
-                        <div className="actual-time" style={{width:(Math.round(3000/1000)/60)*100 +"%"}}></div>
-                    </div>
+        return (
+            <section className="ranker-container fontreleway">
+                <div className="div-time-100">
+                    <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
+                </div>
+                <div className="play-card-client-text">
+                    Read your cards 3 &amp; 4 which one suits <b>YOU</b> more?
+                    <br/><br/>
+                    (you have 60 seconds)
+                </div>
 
-                    <div className="rate-content div-block-center">
-                        {this.renderCardToChoose(this.props.cardChosenBySelf.cardsToChoose)}
-                    </div>
+                <div className="rate-content div-block-center">
+                    {this.renderCardToChoose(this.props.cardChosenBySelf.cardsToChoose)}
+                </div>
 
-                    <button onClick={this.confirmCardSelected.bind(this)}>next</button>
-                </section>
-            );
-        }
+                {this.state.showGrading &&
+                    <SweetAlert
+                    type={"play-card-grade"}
+                    />
+                }
+            </section>
+        );
     }
 }
+
+ChooseCardSelf.defaultProps = {
+    timerDuration: 60000,
+};

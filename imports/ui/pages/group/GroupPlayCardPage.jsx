@@ -13,14 +13,14 @@ class GroupPlayCardPage extends React.Component {
         }
     }
 
-    confirmStartGame(cardChosenType){
+    confirmStartGame(){
         this.setState({
             showConfirmStart: true,
         });
     }
 
-    startGamePlayCards(cardChosenType){
-        Meteor.call( 'start.game.play.cards', this.props.group._id, cardChosenType, (error, result)=>{
+    startGamePlayCards(cardPlayType){
+        Meteor.call( 'start.game.play.cards', this.props.group._id, cardPlayType, (error, result)=>{
           if(error){
             console.log(error)
           }
