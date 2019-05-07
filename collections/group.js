@@ -18,14 +18,14 @@ GroupSchema = new SimpleSchema({
       type: Boolean,
       label: "session active",
     },
-    "isPlayCardActive":{
-      type: Boolean,
-      label: "play card session active",
-      optional: true
-    },
-    "playCardType":{
+    "playCardTypeActive":{
       type: String,
       label: "play card session type",
+      optional: true
+    },
+    "playCardTypeList":{
+      type: [String],
+      label: "play card type list",
       optional: true
     },
     "playCardTypeCompleted":{
