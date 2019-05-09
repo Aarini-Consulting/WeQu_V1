@@ -8,7 +8,7 @@ import SessionWait from '/imports/ui/pages/quizClient/SessionWait';
 
 import {PlayCard} from '/collections/playCard';
 
-import ChooseCardSelf from './ChooseCardSelf';
+import ChooseCard from './ChooseCard';
 
 class ChooseCardPage extends React.Component {
     constructor(props){
@@ -43,15 +43,48 @@ class ChooseCardPage extends React.Component {
 
     render() {
         if(this.props.dataReady){
-            if(this.props.cardChosenBySelf && !this.props.cardChosenBySelf.cardChosen){
-                return(
-                    <ChooseCardSelf group={this.props.group} cardChosenBySelf={this.props.cardChosenBySelf}/>
-                );
-            }
-            else if(this.props.cardChosenBySelf && this.props.cardChosenBySelf.cardChosen){
-                return(
-                    <ChooseCardWait group={this.props.group} cardChosenBySelf={this.props.cardChosenBySelf}/>
-                );
+            if(this.props.cardChosenSelfGroupDoneCount < this.props.group.userIds.length ){
+                //do self rank
+                if(this.props.cardChosenBySelf && !this.props.cardChosenBySelf.cardChosen){
+                    return(
+                        <ChooseCard group={this.props.group} selectedPlayCard={this.props.cardChosenBySelf} forSelf={true}/>
+                    );
+                }else{
+                    return(
+                        <div className="fillHeight weq-bg">
+                            <div className="font-rate padding-wrapper">others are selecting...</div>
+                            <div className="font-rate padding-wrapper">Sit back and relax</div>
+                            <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
+                        </div>
+                    );
+                }
+            }else if(this.props.cardChosenSelfGroupDoneCount == this.props.group.userIds.length){
+                //do turn taking
+                if(this.props.chooseCardForOther){
+                    if(!this.props.chooseCardForOther.cardChosen){
+                        return(
+                            <ChooseCard 
+                            group={this.props.group} 
+                            selectedPlayCard={this.props.chooseCardForOther} 
+                            selectedCardOwner={this.props.chooseCardForOtherOwner}
+                            forSelf={false} 
+                            />
+                        );
+                    }else{
+                        return(
+                            <div className="fillHeight weq-bg">
+                                <div className="font-rate padding-wrapper">others are selecting...</div>
+                                <div className="font-rate padding-wrapper">Sit back and relax</div>
+                                <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
+                            </div>
+                        );
+                    }
+                }else{
+                    return(
+                        <SessionWait/>
+                    )
+                }
+                
             }
         }else{
             return(
@@ -66,15 +99,16 @@ class ChooseCardPage extends React.Component {
 export default withTracker((props) => {
     let dataReady;
     let cardChosenBySelf;
-    let cardChosenByOthers;
+    let chooseCardForOther;
+    let chooseCardForOtherOwner;
+    let targetedForOthersFeedback=false;
+    let cardChosenSelfGroupDoneCount = 0;
+    let chooseCardForOtherGroupDoneCount = 0;
     let userId = Meteor.userId();
 
     let handlePlayCard = Meteor.subscribe('playCard',
         {
             "groupId":props.group._id,
-            $or : [ {"from" : userId  }, 
-                { "to" : userId}
-            ]
         },{}, {
         onError: function (error) {
               console.log(error);
@@ -82,28 +116,78 @@ export default withTracker((props) => {
     });
 
     if(handlePlayCard.ready()){
-        cardChosenBySelf = PlayCard.findOne(
+        let allPlayCards = PlayCard.find(
             {
-                "groupId":props.group._id,
-                $and : [ 
-                {"from" : userId  }, 
-                { "to" : userId}
-            ]});
-
-        cardChosenByOthers = PlayCard.find({
             "groupId":props.group._id,
-            $and : [ 
-                {"from": { '$ne': userId } }, 
-                { "to" : userId}
-            ]
+            },
+            {sort: { "createdAt": 1 }
         }).fetch();
+
+        let turnTakingOrderUserIds = [];
+        let turnTakingCardTarget={};
+
+        //get last playCard object that current user finished with "card choosing"
+        var lastOtherPlayCardSelected = PlayCard.findOne(
+            {groupId:props.group._id,from:Meteor.userId(),to:{$ne:Meteor.userId()},cardChosen:{$exists: true},
+        },
+        {sort: { "updatedAt": -1 }}
+        );
+
+        allPlayCards.forEach((playCard)=>{
+            //get card set for yourself
+            if(playCard.from == userId && playCard.to == userId){
+                cardChosenBySelf = playCard;
+            }
+
+            //calculate how many users in the same group are done with their own card set
+            if(playCard.from == playCard.to && playCard.cardChosen){
+                cardChosenSelfGroupDoneCount += 1;
+            }
+
+            //on the last playcard object that user finished with "card choosing"
+            //calculate how many users in the same group are also done with "card choosing" 
+            //for the same user that the last playcard object points to
+            if(lastOtherPlayCardSelected && lastOtherPlayCardSelected.to == playCard.to && playCard.cardChosen){
+                chooseCardForOtherGroupDoneCount +=1;
+            }
+
+            //get data for turn taking
+            if(playCard.from == userId && playCard.from != playCard.to && !playCard.discussionFinished){
+                turnTakingOrderUserIds.push(playCard.to);
+                turnTakingCardTarget[playCard.to] = playCard;
+            }
+        });
+
+        //self choosing is done
+        if(cardChosenSelfGroupDoneCount == props.group.userIds.length){
+            //select other user to be evaluated
+            if(turnTakingOrderUserIds.length > 0){
+                //don't select user unless discussionFinished is true or no user is ever selected before
+                if(!lastOtherPlayCardSelected || (lastOtherPlayCardSelected && lastOtherPlayCardSelected.discussionFinished)){
+                    if(turnTakingOrderUserIds[0] == userId){
+                        chooseCardForOther = undefined;
+                        targetedForOthersFeedback = true;
+                    }else{
+                        chooseCardForOther = turnTakingCardTarget[turnTakingOrderUserIds[0]];
+                        chooseCardForOtherOwner = Meteor.users.findOne(chooseCardForOther.to);
+                    }
+                }else if(lastOtherPlayCardSelected){
+                    chooseCardForOther = lastOtherPlayCardSelected;
+                    chooseCardForOtherOwner = Meteor.users.findOne(lastOtherPlayCardSelected.to);
+                }
+            }
+        }
         
         dataReady = true;
     }
 
     return {
         cardChosenBySelf:cardChosenBySelf,
-        cardChosenByOthers:cardChosenByOthers,
+        cardChosenSelfGroupDoneCount:cardChosenSelfGroupDoneCount,
+        chooseCardForOther:chooseCardForOther,
+        chooseCardForOtherOwner:chooseCardForOtherOwner,
+        chooseCardForOtherGroupDoneCount:chooseCardForOtherGroupDoneCount,
+        targetedForOthersFeedback:targetedForOthersFeedback,
         dataReady:dataReady
     };
 })(ChooseCardPage);

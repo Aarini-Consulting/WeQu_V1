@@ -9,23 +9,14 @@ export default class PlayCardGrade extends React.Component {
         this.state={
             smile: this.defaultSmile.slice(),
             selectedIndex:-1,
-            triggerSubmit:false,
             error:false
         }
-    }
-
-    reset(){
-        this.setState({
-            smile: this.defaultSmile.slice(),
-            triggerSubmit:false,
-            error:false
-        });
     }
 
     smileClick(index){
         var tempSmile = this.state.smile.slice();
         var newValue = !tempSmile[index];
-        if(newValue === true && !this.state.triggerSubmit){
+        if(newValue === true && this.state.selectedIndex < 0){
             tempSmile = this.defaultSmile.slice();
             tempSmile[index] = newValue;
 
@@ -37,11 +28,12 @@ export default class PlayCardGrade extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(prevState.selectedIndex === -1 && this.state.selectedIndex > -1 && !prevState.triggerSubmit){
-            alert("triggerSubmit");
-            this.setState({
-                triggerSubmit:true
-            });
+        if(prevState.selectedIndex === -1 && this.state.selectedIndex > -1){
+            //trying to call the function here, after smileys condition are updated
+            //but it is not working because this block is executed before changes in the conditions are rendered on screen
+            //apart from 'componentDidMount' (only called once when component is rendered for first time) 
+            //react don't have any hooks for event that fires after component is rendered
+            this.props.submitAction(((this.state.selectedIndex + 1)/this.state.smile.length))
         }
     }
 

@@ -29,6 +29,10 @@
   height: 100%;
 }
 
+.ranker-container.timeout-warning{
+  background-color: #FFED8B;
+}
+
 .margin-bottom-menu{
   margin-bottom:2em;
 }
@@ -4016,6 +4020,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .actual-time {
   height: 100%;
   background-color: #e3b045;
+}
+
+.actual-time.timeout-warning {
+  background-color: #ff0000;
 }
 
 .font-rate {

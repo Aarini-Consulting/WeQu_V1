@@ -6,9 +6,9 @@ import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import Loading from '/imports/ui/pages/loading/Loading';
 import SessionWait from '/imports/ui/pages/quizClient/SessionWait';
 
-import ChooseCardSelf from './ChooseCardSelf';
+import ChooseCard from './ChooseCard';
 
-class ChooseCardPage extends React.Component {
+class ChooseCardWait extends React.Component {
     constructor(props){
         super(props);
     }

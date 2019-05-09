@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import Loading from '/imports/ui/pages/loading/Loading';
 
-export default class ChooseCardSelf extends React.Component {
+export default class ChooseCard extends React.Component {
     constructor(props){
         super(props);
         var timer = undefined;
@@ -13,7 +13,9 @@ export default class ChooseCardSelf extends React.Component {
             start: undefined,
             elapsed:0,
             selectedCard:undefined,
-            showGrading:false
+            showGrading:false,
+            timeoutWarning:false,
+            savingData:false
         }
     }
 
@@ -45,7 +47,7 @@ export default class ChooseCardSelf extends React.Component {
         this.setTimer(false);
 
         this.setState({
-            savingData:true
+            timeoutWarning:true
         },()=>{
             console.log("time's up");
         });
@@ -71,9 +73,19 @@ export default class ChooseCardSelf extends React.Component {
         });
     }
 
-    submitAnswer(){
+    submitAnswer(grade){
         if(this.state.selectedCard){
-            console.log("submit answer");
+            this.setTimer(false);
+
+            this.setState({
+                savingData:true
+            },()=>{
+                Meteor.call( 'play.card.save.choice', this.props.group._id, this.props.selectedPlayCard._id, this.state.selectedCard, grade, (error, result)=>{
+                    if(error){
+                        console.log(error)
+                    }
+                });
+            });
         }
     }
 
@@ -92,25 +104,63 @@ export default class ChooseCardSelf extends React.Component {
         });
     }
 
-    render() {
-        return (
-            <section className="ranker-container fontreleway">
-                <div className="div-time-100">
-                    <div className="actual-time" style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
-                </div>
+    renderInstruction(){
+        if(this.props.forSelf){
+            return this.renderInstructionSelf();
+        }else{
+            return this.renderInstructionOther();
+        }
+    }
+
+    renderInstructionSelf(){
+        switch(this.props.selectedPlayCard.playCardType){
+            case "praise":
+            return(
                 <div className="play-card-client-text">
-                    Read your cards 3 &amp; 4 which one suits <b>YOU</b> more?
-                    <br/><br/>
-                    (you have 60 seconds)
+                        Read your cards 3 &amp; 4 which one suits <b>YOU</b> more?
+                        <br/><br/>
+                        (you have 60 seconds)
+                    </div>
+            );
+            case "criticism":
+            break;
+        }
+    }
+
+
+    renderInstructionOther(){
+        var firstName = this.props.selectedPlayCardOwner && this.props.selectedPlayCardOwner.profile.firstName;
+        var lastName = this.props.selectedPlayCardOwner && this.props.selectedPlayCardOwner.profile.lastName;
+        switch(this.props.selectedPlayCard.playCardType){
+            case "praise":
+            return(
+                <div className="play-card-client-text">
+                    Which card statement suits {firstName} {lastName} more?
                 </div>
+            );
+            case "criticism":
+            break;
+        }
+    }
+
+    render() {
+        var timeoutWarning=this.state.timeoutWarning ? "timeout-warning" : "";
+        return (
+            <section className={`ranker-container ${timeoutWarning} fontreleway`}>
+                <div className="div-time-100">
+                    <div className={`actual-time ${timeoutWarning}`} style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
+                </div>
+                
+                {this.renderInstruction()}
 
                 <div className="rate-content div-block-center">
-                    {this.renderCardToChoose(this.props.cardChosenBySelf.cardsToChoose)}
+                    {this.renderCardToChoose(this.props.selectedPlayCard.cardsToChoose)}
                 </div>
 
                 {this.state.showGrading &&
                     <SweetAlert
                     type={"play-card-grade"}
+                    submitAction={this.submitAnswer.bind(this)}
                     />
                 }
             </section>
@@ -118,6 +168,6 @@ export default class ChooseCardSelf extends React.Component {
     }
 }
 
-ChooseCardSelf.defaultProps = {
+ChooseCard.defaultProps = {
     timerDuration: 60000,
 };

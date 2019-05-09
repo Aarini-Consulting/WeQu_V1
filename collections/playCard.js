@@ -28,6 +28,15 @@ PlayCardSchema = new SimpleSchema({
 		label: "card chosen",
 		optional: true,
 	},
+	"cardGrade":{
+		type:Number,
+		label:"card grade",
+		optional:true
+	},
+	"discussionFinished":{
+		type: Boolean,
+		label: "card discussion finished",
+	},
 	"createdAt": {
 		type: Date,
 		label: "Date created",
