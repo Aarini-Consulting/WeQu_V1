@@ -151,16 +151,16 @@ export function complexLinkTranslate(name, params){
                 </React.Fragment>,
             "reportPdf.OpeningParagraph":
                 <React.Fragment>
-                    You&#x27;ve just played WeQ with your <strong>{params && params.groupName}</strong>. 
-                    This is your report prepared by <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach.
+                    Du hast gerade WeQ gespielt mit <strong>{params && params.groupName}</strong>. 
+                    Dieser Report wurde erstellt von <strong>{params && params.groupCreatorFirstName}&nbsp;{params && params.groupCreatorLastName}</strong>, WeQ Master Coach.
                 </React.Fragment>,
             "quizRankSelf.PopUp":
                 <React.Fragment>
                     Beschreiben Sie sich selbst
                     <br/>
                     <br/>
-                    Welche Eigenschaften entsprechen Sie am meisten?<br/>
-                    Sortieren Sie die nächsten Worte in der Liste von oben nach unten mittels „drag and drop<br/>
+                    Welchen Eigenschaften entsprechen Sie am meisten?<br/>
+                    Sortieren Sie die nächsten Worte in der Liste von oben nach unten mittels „drag and drop“<br/>
                     <br/>
                     Sie haben 60 Sekunden Zeit.
                 </React.Fragment>,
