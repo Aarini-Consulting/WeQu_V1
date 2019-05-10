@@ -19,6 +19,19 @@ export default class ChooseCard extends React.Component {
         }
     }
 
+    resetState(){
+        this.setState({
+            start: undefined,
+            elapsed:0,
+            selectedCard:undefined,
+            showGrading:false,
+            timeoutWarning:false,
+            savingData:false
+        },()=>{
+            this.setTimer(true);
+        });
+    }
+
     setTimer(bool){
         if(bool){
             this.setState({
@@ -66,6 +79,12 @@ export default class ChooseCard extends React.Component {
         
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.selectedPlayCard && prevProps.selectedPlayCard._id && this.props.selectedPlayCard && this.props.selectedPlayCard._id != prevProps.selectedPlayCard._id) {
+          this.resetState();
+        }
+      }
+
     selectCard(card){
         this.setState({
             selectedCard:card,
@@ -74,18 +93,20 @@ export default class ChooseCard extends React.Component {
     }
 
     submitAnswer(grade){
+        Meteor.call( 'play.card.save.choice', this.props.group._id, this.props.selectedPlayCard._id, this.state.selectedCard, grade, (error, result)=>{
+            if(error){
+                console.log(error)
+            }
+        });
+    }
+
+    submitAction(grade){
         if(this.state.selectedCard){
             this.setTimer(false);
 
             this.setState({
                 savingData:true
-            },()=>{
-                Meteor.call( 'play.card.save.choice', this.props.group._id, this.props.selectedPlayCard._id, this.state.selectedCard, grade, (error, result)=>{
-                    if(error){
-                        console.log(error)
-                    }
-                });
-            });
+            },this.submitAnswer(grade));
         }
     }
 
@@ -135,7 +156,7 @@ export default class ChooseCard extends React.Component {
             case "praise":
             return(
                 <div className="play-card-client-text">
-                    Which card statement suits {firstName} {lastName} more?
+                    Which card statement suits <b>{firstName} {lastName}</b> more?
                 </div>
             );
             case "criticism":
@@ -160,7 +181,7 @@ export default class ChooseCard extends React.Component {
                 {this.state.showGrading &&
                     <SweetAlert
                     type={"play-card-grade"}
-                    submitAction={this.submitAnswer.bind(this)}
+                    submitAction={this.submitAction.bind(this)}
                     />
                 }
             </section>

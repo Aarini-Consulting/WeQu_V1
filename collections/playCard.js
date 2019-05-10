@@ -23,7 +23,7 @@ PlayCardSchema = new SimpleSchema({
 		label: "cards to choose",
 	},
 	"cardChosen":{
-		type: Object,
+		type: [Object],
 		blackbox:true,
 		label: "card chosen",
 		optional: true,

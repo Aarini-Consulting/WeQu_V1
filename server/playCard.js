@@ -198,19 +198,29 @@ Meteor.methods({
             throw (new Meteor.Error("game_already_started_or_finished")); 
         }
     },
-    'play.card.save.choice': function(groupId, playCardId, choice, grade) {
+    'play.card.save.choice': function(groupId, playCardId, choice, grade=0) {
         let groupCheck = Group.findOne({'_id': groupId});
 
         if(!groupCheck){
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(!playCardType || (playCardType != "2" && playCardType != "3")){
-            throw (new Meteor.Error("unknown_type_mode")); 
+        let playCardCheck = PlayCard.findOne({'_id': playCardId,'groupId':groupId});
+
+        if(!playCardCheck){
+            throw (new Meteor.Error("unknown_playcard")); 
         }
 
         if(!groupCheck.isFinished){
-            
+
+            PlayCard.update({_id:playCardId},
+                {
+                    $set : {
+                        "cardChosen":[choice],
+                        "grade":grade
+                    }
+                } 
+            );
             
         }else{
             throw (new Meteor.Error("game_already_started_or_finished")); 
