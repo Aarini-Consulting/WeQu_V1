@@ -188,9 +188,14 @@ export default withTracker((props) => {
             //get data for turn taking
             if(playCardNotFinished.from != playCardNotFinished.to){
                 turnTakingOrderUserIds.push(playCardNotFinished.to);
-                turnTakingCardTarget[playCardNotFinished.to] = playCardNotFinished;
+                if(playCardNotFinished.from == userId){
+                    turnTakingCardTarget[playCardNotFinished.to] = playCardNotFinished;
+                }
             }
         });
+
+        //remove duplicate from turn takin array
+        turnTakingOrderUserIds = [...new Set(turnTakingOrderUserIds)];
 
         //self choosing is done
         if(cardChosenSelfGroupDoneCount == props.group.userIds.length){

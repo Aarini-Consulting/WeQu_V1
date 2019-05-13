@@ -36,6 +36,7 @@ PlayCardSchema = new SimpleSchema({
 	"discussionFinished":{
 		type: Boolean,
 		label: "card discussion finished",
+		optional:true
 	},
 	"createdAt": {
 		type: Date,

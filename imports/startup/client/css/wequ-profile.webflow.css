@@ -2720,6 +2720,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width:100%;
   height:3.5em;
   justify-content: space-between;
+  margin-bottom:1em;
 }
 
 .play-card-smile-line{
@@ -2727,7 +2728,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-bottom: 2px solid #969696;
   position: absolute;
   left:25%;
-  bottom:calc(1.75em + 17px);
+  padding-top:1.75em;
   z-index: -1;
 }
 

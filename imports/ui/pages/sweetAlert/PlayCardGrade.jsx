@@ -13,10 +13,14 @@ export default class PlayCardGrade extends React.Component {
         }
     }
 
+    submitClick(){
+        this.props.submitAction(((this.state.selectedIndex + 1)/this.state.smile.length));
+    }
+
     smileClick(index){
         var tempSmile = this.state.smile.slice();
         var newValue = !tempSmile[index];
-        if(newValue === true && this.state.selectedIndex < 0){
+        if(newValue === true){
             tempSmile = this.defaultSmile.slice();
             tempSmile[index] = newValue;
 
@@ -24,16 +28,6 @@ export default class PlayCardGrade extends React.Component {
                 smile:tempSmile,
                 selectedIndex:index
             });
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState){
-        if(prevState.selectedIndex === -1 && this.state.selectedIndex > -1){
-            //trying to call the function here, after smileys condition are updated
-            //but it is not working because this block is executed before changes in the conditions are rendered on screen
-            //apart from 'componentDidMount' (only called once when component is rendered for first time) 
-            //react don't have any hooks for event that fires after component is rendered
-            this.props.submitAction(((this.state.selectedIndex + 1)/this.state.smile.length))
         }
     }
 
@@ -71,6 +65,20 @@ export default class PlayCardGrade extends React.Component {
                     <div className="play-card-smile-line"></div>
                     {this.renderSmile()}
                 </div>
+                
+                {this.state.selectedIndex > -1 &&
+                    <div className="w-block align-center">
+                        <div className="w-inline-block">
+                            <div className="bttn-wrapper w-clearfix">
+                                <div className="popup-bttn" onClick={this.submitClick.bind(this)}>
+                                    <div className="fontreleway f-bttn">
+                                        Submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
             </div> 
         );
