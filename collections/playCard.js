@@ -28,9 +28,10 @@ PlayCardSchema = new SimpleSchema({
 		label: "card chosen",
 		optional: true,
 	},
-	"cardGrade":{
+	"grade":{
 		type:Number,
 		label:"card grade",
+		decimal:true,
 		optional:true
 	},
 	"discussionFinished":{

@@ -24,21 +24,26 @@ class GameplayPage extends React.Component {
                 </React.Fragment>
             );
         }else if(this.props.chooseCardForOtherOwner){
-            var firstName = this.props.chooseCardForOtherOwner.profile.firstName;
-            var lastName = this.props.chooseCardForOtherOwner.profile.lastName;
-            var personName = (firstName ? firstName : "")+(lastName ? lastName : "");
             return(
-                <PersonTurnPage groupType={this.props.groupType} 
-                personName={personName} 
-                cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount} 
+                <PersonTurnPage 
+                playCardType={this.props.group.playCardTypeActive}
+                groupId={this.props.group._id}
+                chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
+                cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
                 totalUser={this.props.group.userIds.length}
                 result={this.props.selectedUserCardResult}
                 />
             );
-        }else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && this.props.chooseCardForOtherOwne){
+        }else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && !this.props.chooseCardForOtherOwner){
             return(
                 <React.Fragment>
-                    <h1>we are done here</h1>
+                    <h1>Hurray!</h1>
+                    You completed the round!
+
+                    <ul>
+                        <li>Go to quiz section to reflect on your feedback experience</li>
+                        <li>Once you're done with the quizzes, you may continue the next round</li>
+                    </ul>
                 </React.Fragment>
             );
         }

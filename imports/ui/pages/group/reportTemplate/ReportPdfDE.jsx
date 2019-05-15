@@ -3,7 +3,7 @@ import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
-export const ReportPdfEN = ({propData}) => (
+export const ReportPdfDE = ({propData}) => (
     <html>
         <head>
             <meta charSet="UTF-8"/>

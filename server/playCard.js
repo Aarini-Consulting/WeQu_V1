@@ -56,9 +56,9 @@ export function generateCardsToChoose(userId, groupId, playCardType) {
                         //choose card for others
                         let cardsToChoose=[];
                         if(playCardType == "praise"){
-                            cardsToChoose = [cardPlacementCheck.cardPicked[2],cardPlacementCheck.cardPicked[3]];
+                            cardsToChoose = [cardPlacementCheckOther.cardPicked[2],cardPlacementCheckOther.cardPicked[3]];
                         }else if(playCardType == "criticism"){
-                            cardsToChoose = [cardPlacementCheck.cardPicked[4],cardPlacementCheck.cardPicked[5],cardPlacementCheck.cardPicked[6]];
+                            cardsToChoose = [cardPlacementCheckOther.cardPicked[4],cardPlacementCheckOther.cardPicked[5],cardPlacementCheckOther.cardPicked[6]];
                         }
 
                         PlayCard.upsert({
@@ -225,5 +225,20 @@ Meteor.methods({
         }else{
             throw (new Meteor.Error("game_already_started_or_finished")); 
         }
+    },
+    'play.card.finish.discussion': function(groupId, playCardType, targetUserId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+        
+        PlayCard.update({'playCardType':playCardType,'groupId':groupId,'to':targetUserId, 'from':{$ne:targetUserId}},
+            {
+                $set : {
+                    "discussionFinished":true
+                }
+            } 
+        );
     },
 });
