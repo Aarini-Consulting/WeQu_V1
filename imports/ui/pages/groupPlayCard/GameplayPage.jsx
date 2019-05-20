@@ -13,6 +13,14 @@ class GameplayPage extends React.Component {
         super(props);
     }
 
+    nextRound(){
+        Meteor.call( 'play.card.next.round', this.props.group._id,(error, result)=>{
+            if(error){
+              console.log(error)
+            }
+        });
+    }
+
     render() {
         if(this.props.cardChosenBySelfDoneCount < this.props.group.userIds.length){
             return(
@@ -44,6 +52,17 @@ class GameplayPage extends React.Component {
                         <li>Go to quiz section to reflect on your feedback experience</li>
                         <li>Once you're done with the quizzes, you may continue the next round</li>
                     </ul>
+                    {this.props.group && this.props.group.playCardTypeList && this.props.group.playCardTypeList.length > 0 &&
+                        (!this.props.group.playCardTypeCompleted || 
+                            (this.props.group.playCardTypeCompleted && this.props.group.playCardTypeCompleted.length < this.props.group.playCardTypeList.length)
+                        )
+                        &&
+                        <div className="div-block-center">
+                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.nextRound.bind(this)}>
+                                Next round
+                            </div>
+                        </div>
+                    }
                 </React.Fragment>
             );
         }
@@ -104,9 +123,10 @@ export default withTracker((props) => {
                 });
 
                 cardChosenByOtherDoneCount = selectedUserCardResult.length;
+            }else{
+                Meteor.call('play.card.check.completed', props.group._id,props.group.playCardTypeActive);
             }
         }
-
         dataReady = true
     }
 

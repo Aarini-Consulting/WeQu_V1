@@ -238,7 +238,72 @@ Meteor.methods({
                 $set : {
                     "discussionFinished":true
                 }
-            } 
+            },
+            {multi:true}
         );
+
+        //check if all card that needs to be discussed are done
+        Meteor.call('play.card.check.completed', groupId,playCardType);
     },
+    'play.card.check.completed': function(groupId, playCardType) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!groupCheck.playCardTypeCompleted || groupCheck.playCardTypeCompleted && groupCheck.playCardTypeCompleted.indexOf(playCardType) < 0){
+            
+            let playCardFinishedCount = PlayCard.find(
+                {'playCardType':playCardType,'groupId':groupId,"discussionFinished":true}
+            ).count();
+            
+            if(playCardFinishedCount == (Math.pow(groupCheck.userIds.length, 2)-groupCheck.userIds.length)){
+                var playCardTypeCompleted = [];
+                if(groupCheck.playCardTypeCompleted && groupCheck.playCardTypeCompleted.length > 0){
+                    playCardTypeCompleted = groupCheck.playCardTypeCompleted;
+                }
+    
+                if(playCardTypeCompleted.indexOf(playCardType) < 0){
+                    playCardTypeCompleted.push(playCardType);
+                }
+    
+                Group.update({'_id':groupId},
+                {
+                    $set : {
+                        "playCardTypeCompleted":playCardTypeCompleted
+                    }
+                }
+                );
+            }
+        }
+    },
+    'play.card.next.round': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+        
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(groupCheck.playCardTypeActive && 
+            groupCheck.playCardTypeCompleted && 
+            groupCheck.playCardTypeCompleted.indexOf(groupCheck.playCardTypeActive) > -1)
+        {
+            var currentIndex = groupCheck.playCardTypeList.indexOf(groupCheck.playCardTypeActive);
+            var nextIndex = currentIndex + 1;
+            if(nextIndex < groupCheck.playCardTypeList.length){
+                Group.update({'_id':groupId},
+                    {
+                        $set : {
+                            "playCardTypeActive":groupCheck.playCardTypeList[nextIndex]
+                        }
+                    }
+                );
+
+                groupCheck.userIds.forEach((userId, index, _arr) => {
+                    generateCardsToChoose(userId,groupCheck._id,groupCheck.playCardTypeList[nextIndex]);
+                });
+            }
+        }
+    }
 });

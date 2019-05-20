@@ -75,12 +75,14 @@ class ChooseCardPage extends React.Component {
                             <div className="fillHeight weq-bg">
                                 <div className="font-rate padding-wrapper">others are selecting...</div>
                                 <div className="font-rate padding-wrapper">Sit back and relax</div>
-                                <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
+                                <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
                             </div>
                         );
                     }else{
                         return(
-                            <h1>Please wait until next turn start</h1>
+                            <div className="fillHeight weq-bg">
+                                <div className="font-rate padding-wrapper">Please wait until next turn start</div>
+                            </div>
                         );
                     }
                 }else if(this.props.targetedForOthersFeedback){
@@ -137,6 +139,7 @@ export default withTracker((props) => {
     let handlePlayCard = Meteor.subscribe('playCard',
         {
             "groupId":props.group._id,
+            "playCardType":props.group.playCardTypeActive
         },{}, {
         onError: function (error) {
               console.log(error);
@@ -147,6 +150,7 @@ export default withTracker((props) => {
         let allPlayCardsNotFinished = PlayCard.find(
             {
             "groupId":props.group._id,
+            "playCardType":props.group.playCardTypeActive,
             'discussionFinished':{$exists: false}
             },
             {sort: { "createdAt": 1 }
@@ -157,7 +161,11 @@ export default withTracker((props) => {
 
         //get last playCard object that current user finished with "card choosing"
         var lastOtherPlayCardSelected = PlayCard.findOne(
-            {groupId:props.group._id,from:Meteor.userId(),to:{$ne:Meteor.userId()},cardChosen:{$exists: true},
+            {"groupId":props.group._id,
+            "from":Meteor.userId(),
+            "to":{$ne:Meteor.userId()},
+            "cardChosen":{$exists: true},
+            'discussionFinished':{$exists: false}
         },
         {sort: { "updatedAt": -1 }}
         );
@@ -181,7 +189,10 @@ export default withTracker((props) => {
             //on the last playcard object that user finished with "card choosing"
             //calculate how many users in the same group are also done with "card choosing" 
             //for the same user that the last playcard object points to
-            if(lastOtherPlayCardSelected && lastOtherPlayCardSelected.to == playCardNotFinished.to && playCardNotFinished.cardChosen){
+            if(lastOtherPlayCardSelected && 
+                lastOtherPlayCardSelected.to != lastOtherPlayCardSelected.from && 
+                lastOtherPlayCardSelected.to == playCardNotFinished.to && 
+                playCardNotFinished.cardChosen){
                 chooseCardForOtherGroupDoneCount +=1;
             }
 

@@ -138,13 +138,19 @@ export default class ChooseCard extends React.Component {
             case "praise":
             return(
                 <div className="play-card-client-text">
-                        Read your cards 3 &amp; 4 which one suits <b>YOU</b> more?
+                    Read your cards 3 &amp; 4 which one suits <b>YOU</b> more?
+                    <br/><br/>
+                    (you have 60 seconds)
+                </div>
+            );
+            case "criticism":
+                return(
+                    <div className="play-card-client-text">
+                        Choose which of these cards <b>YOU</b> could improve the most?
                         <br/><br/>
                         (you have 60 seconds)
                     </div>
-            );
-            case "criticism":
-            break;
+                );
         }
     }
 
@@ -154,13 +160,17 @@ export default class ChooseCard extends React.Component {
         var lastName = this.props.selectedPlayCardOwner && this.props.selectedPlayCardOwner.profile.lastName;
         switch(this.props.selectedPlayCard.playCardType){
             case "praise":
-            return(
-                <div className="play-card-client-text">
-                    Which card statement suits <b>{firstName} {lastName}</b> more?
-                </div>
-            );
+                return(
+                    <div className="play-card-client-text">
+                        Which card statement suits <b>{firstName} {lastName}</b> more?
+                    </div>
+                );
             case "criticism":
-            break;
+                return(
+                    <div className="play-card-client-text">
+                        Which card do you think <b>{firstName} {lastName}</b> could improve?
+                    </div>
+                );
         }
     }
 
