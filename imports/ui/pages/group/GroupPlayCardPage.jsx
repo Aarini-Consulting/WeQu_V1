@@ -99,7 +99,7 @@ export default withTracker((props) => {
             //check if any mode is ever completed
             if(props.group.playCardTypeCompleted && props.group.playCardTypeCompleted.length > 0){
                 //choose the last one completed
-                selectedCardType = props.group.playCardTypeCompleted[props.group.playCardTypeCompleted.length-1];
+                selectedCardType = props.group.playCardTypeCompleted[(props.group.playCardTypeCompleted.length-1)];
                 //check if all play card mode is completed
                 if(props.group.playCardTypeCompleted.length == props.group.playCardTypeList.length){
                     //set value to indicate all mode is completed
@@ -108,6 +108,10 @@ export default withTracker((props) => {
             }else{
                 //no mode is completed, select the first one
                 selectedCardType = props.group.playCardTypeList[0];
+
+
+                //TODO:
+                //check if any mode is ever attempted and continue where they left it off
             }
         }
     }

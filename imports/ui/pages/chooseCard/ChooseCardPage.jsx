@@ -49,13 +49,19 @@ class ChooseCardPage extends React.Component {
                     return(
                         <ChooseCard group={this.props.group} selectedPlayCard={this.props.cardChosenBySelf} forSelf={true}/>
                     );
-                }else{
+                }else if(this.props.cardChosenSelfGroupDoneCount > 0){
                     return(
                         <div className="fillHeight weq-bg">
                             <div className="font-rate padding-wrapper">others are selecting...</div>
                             <div className="font-rate padding-wrapper">Sit back and relax</div>
                             <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
                         </div>
+                    );
+                }else{
+                    return(
+                        <section className="ranker-container fontreleway purple-bg">
+                            <Loading/>
+                        </section>
                     );
                 }
             }else if(this.props.cardChosenSelfGroupDoneCount == this.props.group.userIds.length){
@@ -71,13 +77,20 @@ class ChooseCardPage extends React.Component {
                             />
                         );
                     }else if(this.props.chooseCardForOtherGroupDoneCount < this.props.group.userIds.length ){
-                        return(
-                            <div className="fillHeight weq-bg">
-                                <div className="font-rate padding-wrapper">others are selecting...</div>
-                                <div className="font-rate padding-wrapper">Sit back and relax</div>
-                                <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
-                            </div>
-                        );
+                        if(this.props.chooseCardForOtherGroupDoneCount > 0){
+                            return(
+                                <div className="fillHeight weq-bg">
+                                    <div className="font-rate padding-wrapper">others are selecting...</div>
+                                    <div className="font-rate padding-wrapper">Sit back and relax</div>
+                                    <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
+                                </div>
+                            );
+                        }else{
+                            <section className="ranker-container fontreleway purple-bg">
+                                <Loading/>
+                            </section>
+                        }
+                        
                     }else{
                         return(
                             <div className="fillHeight weq-bg">

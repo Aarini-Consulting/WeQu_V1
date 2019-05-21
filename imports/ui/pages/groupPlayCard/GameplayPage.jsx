@@ -43,6 +43,11 @@ class GameplayPage extends React.Component {
                 />
             );
         }else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && !this.props.chooseCardForOtherOwner){
+            let nextRoundAvailable = this.props.group && this.props.group.playCardTypeList && this.props.group.playCardTypeList.length > 0 &&
+            (!this.props.group.playCardTypeCompleted || 
+                (this.props.group.playCardTypeCompleted && this.props.group.playCardTypeCompleted.length < this.props.group.playCardTypeList.length)
+            );
+
             return(
                 <React.Fragment>
                     <h1>Hurray!</h1>
@@ -50,12 +55,12 @@ class GameplayPage extends React.Component {
 
                     <ul>
                         <li>Go to quiz section to reflect on your feedback experience</li>
-                        <li>Once you're done with the quizzes, you may continue the next round</li>
+                        {nextRoundAvailable
+                            &&
+                            <li>Once you're done with the quizzes, you may continue the next round</li>
+                        }
                     </ul>
-                    {this.props.group && this.props.group.playCardTypeList && this.props.group.playCardTypeList.length > 0 &&
-                        (!this.props.group.playCardTypeCompleted || 
-                            (this.props.group.playCardTypeCompleted && this.props.group.playCardTypeCompleted.length < this.props.group.playCardTypeList.length)
-                        )
+                    {nextRoundAvailable
                         &&
                         <div className="div-block-center">
                             <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.nextRound.bind(this)}>

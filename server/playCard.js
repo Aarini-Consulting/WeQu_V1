@@ -170,25 +170,12 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        if(!playCardType || (playCardType != "2" && playCardType != "3")){
-            throw (new Meteor.Error("unknown_type_mode")); 
-        }
-
         if(!groupCheck.isFinished){
             if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
-                PlayCard.remove(
-                    {
-                        "groupId": groupCheck._id,
-                        "playCardType":playCardType
-                    });
-
                 Group.update({_id:groupId},
                     {
-                        $set : {
-                            "userIdsSelfChooseCompleted":[]
-                        },
                         $unset : { "playCardTypeActive": "" }
-                    } 
+                    }
                 );
             }else{
                 throw (new Meteor.Error("not_all_invitees_finished_survey")); 

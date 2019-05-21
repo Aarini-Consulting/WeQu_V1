@@ -36,11 +36,7 @@ Meteor.methods({
 
                 //check if play card mode is ever used
                 if(groupCheck.playCardTypeActive){
-                    //check if last used play card mode completed, call "stop" function to remove all data related to it if it's not completed
-                    let playCardTypeCompleted = (groupCheck.playCardTypeCompleted && groupCheck.playCardTypeCompleted.indexOf(groupCheck.playCardType) > -1);
-                    if(!playCardTypeCompleted){
-                        Meteor.call('stop.game.play.cards', groupId,groupCheck.playCardType);
-                    }
+                    Meteor.call('stop.game.play.cards', groupId,groupCheck.playCardTypeActive);
                 }
 
                 Group.update({"_id":groupId},

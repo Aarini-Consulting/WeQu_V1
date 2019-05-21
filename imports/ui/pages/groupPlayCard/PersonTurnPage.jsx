@@ -5,6 +5,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import {PlayCard} from '/collections/playCard';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
+import i18n from 'meteor/universe:i18n';
+import Loading from '../loading/Loading';
+
 class PersonTurnPage extends React.Component {
     constructor(props){
         super(props);
@@ -98,11 +101,14 @@ class PersonTurnPage extends React.Component {
                 let highlight = this.state.showTargetAnswer && targetPlayCard 
                 && targetPlayCard.cardChosen && targetPlayCard.cardChosen[0]
                 && targetPlayCard.cardChosen[0].cardId == card.cardId;
+                let languageCode = i18n.getLocale().split("-")[0];
+                let backgroundUrl = `https://s3-eu-west-1.amazonaws.com/wequ/cards/${languageCode}/card(${card.cardId}).png`;
 
                 return (
                     <div className={`play-card-list-container ${highlight ? "highlight" : ""}`} key={`card-${card.cardId}`}>
-                        <h1>{card.cardId}</h1>
-                        <div>
+                        {/* <h1>{card.cardId}</h1> */}
+                        <img className={`play-card-display ${highlight ? "highlight" : ""}`} src={`${backgroundUrl}`}/>
+                        <div className="play-card-user-list">
                             {this.renderCardUserList(card.cardId, userIdList, gradeList)}
                         </div>
                     </div>
@@ -117,14 +123,12 @@ class PersonTurnPage extends React.Component {
         return userIdList.map((userId, index)=>{
             let grade = gradeList && gradeList[index] && Math.ceil(gradeList[index]*3);
             return (
-                <div key={`user-${cardId}-${index}`}>
+                <div className="play-card-user-list-entry" key={`user-${cardId}-${index}`}>
                     {grade &&
                         <div className="play-card-list-user-grade">
                             <img src={`/img/playCard/smile-${grade}.png`}/>
-                        </div>
-                        
+                        </div>   
                     }
-                    
                     {this.props.resultUserNames[userId]}
                 </div>
             );
@@ -146,7 +150,7 @@ class PersonTurnPage extends React.Component {
                             {this.renderResult()}
                         </div>
                         
-                        <div className="div-block-center">
+                        <div className="button-action-person-turn">
                             {this.state.showTargetAnswer 
                             ?
                             <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishDiscussion.bind(this)}>
@@ -167,7 +171,7 @@ class PersonTurnPage extends React.Component {
                         <h1>Now it's {personName}'s turn</h1>
                         {this.renderInstruction(playCardType, personName)}
 
-                        <div className="div-block-center">
+                        <div className="button-action-person-turn">
                             {this.props.cardChosenByOtherDoneCount == this.props.totalUser-1 &&
                                 <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.showResult.bind(this)}>
                                     Reveal Result
@@ -182,7 +186,9 @@ class PersonTurnPage extends React.Component {
             }
         }else{
             return(
-                <h1>loading</h1>
+                <React.Fragment>
+                    <Loading/>
+                </React.Fragment>
             )
         }
     }
@@ -194,7 +200,7 @@ export default withTracker((props) => {
     let resultUserNames={};
     let firstName = props.chooseCardForOtherOwner.profile.firstName;
     let lastName = props.chooseCardForOtherOwner.profile.lastName;
-    let personName = (firstName ? firstName : "")+(lastName ? lastName : "");
+    let personName = (firstName ? firstName : "")+" "+(lastName ? lastName : "");
     let targetPlayCard;
 
     if(props.result && props.result.length > 0){
@@ -226,7 +232,7 @@ export default withTracker((props) => {
                 resultUserData.forEach((user)=>{
                     let firstName = user.profile.firstName;
                     let lastName = user.profile.lastName;
-                    let personName = (firstName ? firstName : "")+(lastName ? lastName : "");
+                    let personName = (firstName ? firstName : "")+" "+(lastName ? lastName : "");
                     resultUserNames[user._id] = personName;
                 })
             }

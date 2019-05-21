@@ -4683,8 +4683,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .play-card-counter-wrapper {
   position:absolute;
-  right:1em;
-  bottom:1em;
+  right:2em;
+  bottom:2.75em;
 }
 
 .play-card-counter {
@@ -4759,16 +4759,48 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .play-card-list-container{
   display:flex;
   flex-direction: row;
+  padding:1em;
+  border-radius: 5px;
 }
 
 .play-card-list-container.highlight{
-  background-color: yellow;
+  background-color: #fefbe2;
 }
 
 .play-card-list-user-grade{
   display: inline-block;
   width:1em;
+  margin-right:1em;
 }
+
+.play-card-display{
+  width:10vw;
+  background: transparent  url('/img/assets/Background_white20.png') no-repeat scroll center center;
+  border-radius: 5px;
+}
+.play-card-display.highlight{
+  border: 0.5em solid #fae232;
+}
+
+.play-card-user-list{
+  flex-grow:1;
+  margin-left:2em;
+}
+
+.play-card-user-list-entry{
+  display: block;
+}
+
+.button-action-person-turn{
+  display:block;
+  width:100%;
+  text-align:center;
+  position:fixed;
+  bottom:2em;
+  left:0px;
+}
+
+
 @media (max-width: 991px) {
   /*.sectionname {
     background-image: url('/img/Background_white20.png');
