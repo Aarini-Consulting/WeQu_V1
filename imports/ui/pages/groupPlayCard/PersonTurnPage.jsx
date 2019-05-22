@@ -87,20 +87,31 @@ class PersonTurnPage extends React.Component {
         let targetPlayCard = this.props.targetPlayCard;
         if(targetPlayCard && targetPlayCard.cardsToChoose){
             return targetPlayCard.cardsToChoose.map((card)=>{
-                var resultFiltered = this.props.result.filter((res)=>{
+                let resultFiltered = this.props.result.filter((res)=>{
                     return res.cardChosen && res.cardChosen[0] && res.cardChosen[0].cardId == card.cardId;
                 });
 
-                var gradeList=[];
+                let gradeList=[];
+
+                let highlight = this.state.showTargetAnswer && targetPlayCard 
+                && targetPlayCard.cardChosen && targetPlayCard.cardChosen[0]
+                && targetPlayCard.cardChosen[0].cardId == card.cardId;
+
+                if(highlight){
+                    //when result is revealed, put target playcard in the list of result
+                    resultFiltered.push(targetPlayCard);
+                }
+
+                //sort the data descending based on its grade
+                resultFiltered.sort((a, b) => {
+                    return b.grade - a.grade;
+                });
 
                 let userIdList = resultFiltered.map((res)=>{
                     gradeList.push(res.grade);
                     return res.from;
                 });
 
-                let highlight = this.state.showTargetAnswer && targetPlayCard 
-                && targetPlayCard.cardChosen && targetPlayCard.cardChosen[0]
-                && targetPlayCard.cardChosen[0].cardId == card.cardId;
                 let languageCode = i18n.getLocale().split("-")[0];
                 let backgroundUrl = `https://s3-eu-west-1.amazonaws.com/wequ/cards/${languageCode}/card(${card.cardId}).png`;
 
@@ -122,14 +133,25 @@ class PersonTurnPage extends React.Component {
     renderCardUserList(cardId, userIdList, gradeList){
         return userIdList.map((userId, index)=>{
             let grade = gradeList && gradeList[index] && Math.ceil(gradeList[index]*3);
+            let targetPlayCard = this.props.targetPlayCard;
+
+            let highlight = false;
+
+            let username = this.props.resultUserNames[userId];
+
+            if(userId == targetPlayCard.from && userId == targetPlayCard.to){
+                highlight = true;
+                username = this.props.personName;
+            }
+
             return (
-                <div className="play-card-user-list-entry" key={`user-${cardId}-${index}`}>
+                <div className={`play-card-user-list-entry ${highlight ? "highlight" : ""}`} key={`user-${cardId}-${index}`}>
                     {grade &&
                         <div className="play-card-list-user-grade">
                             <img src={`/img/playCard/smile-${grade}.png`}/>
                         </div>   
                     }
-                    {this.props.resultUserNames[userId]}
+                    {username}
                 </div>
             );
         });
@@ -172,9 +194,14 @@ class PersonTurnPage extends React.Component {
                         {this.renderInstruction(playCardType, personName)}
 
                         <div className="button-action-person-turn">
-                            {this.props.cardChosenByOtherDoneCount == this.props.totalUser-1 &&
+                            {this.props.cardChosenByOtherDoneCount == (this.props.totalUser-1) 
+                                ?
                                 <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.showResult.bind(this)}>
                                     Reveal Result
+                                </div>
+                                :
+                                <div className="font-rate f-bttn play-card wait w-inline-block noselect">
+                                    Waiting for result
                                 </div>
                             }
                         </div>

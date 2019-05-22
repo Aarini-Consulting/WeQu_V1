@@ -26,6 +26,9 @@ class GameplayPage extends React.Component {
             return(
                 <React.Fragment>
                     <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
+                    <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.props.confirmStartGame}>
+                        Get Started
+                    </div>
                     <div className="play-card-counter-wrapper">
                         <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
                     </div>
@@ -62,7 +65,7 @@ class GameplayPage extends React.Component {
                     </ul>
                     {nextRoundAvailable
                         &&
-                        <div className="div-block-center">
+                        <div className="button-action-person-turn">
                             <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.nextRound.bind(this)}>
                                 Next round
                             </div>

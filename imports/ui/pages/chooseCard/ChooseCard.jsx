@@ -110,6 +110,12 @@ export default class ChooseCard extends React.Component {
         }
     }
 
+    cancelAction(){
+        this.setState({
+            showGrading:false
+        });
+    }
+
     renderCardToChoose(cardsToChoose){
         return cardsToChoose.map((card, index)=>{
             let selected=" ";
@@ -181,6 +187,10 @@ export default class ChooseCard extends React.Component {
                 <div className="div-time-100">
                     <div className={`actual-time ${timeoutWarning}`} style={{width:(Math.round(this.state.elapsed/1000)/60)*100 +"%"}}></div>
                 </div>
+
+                {this.state.timeoutWarning &&
+                    <div className="timeout-warning-text">Time's up!</div>
+                }
                 
                 {this.renderInstruction()}
 
@@ -191,6 +201,7 @@ export default class ChooseCard extends React.Component {
                 {this.state.showGrading &&
                     <SweetAlert
                     type={"play-card-grade"}
+                    cancelAction={this.cancelAction.bind(this)}
                     submitAction={this.submitAction.bind(this)}
                     />
                 }

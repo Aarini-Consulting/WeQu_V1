@@ -37,7 +37,7 @@ export default class WelcomePage extends React.Component {
                 <h1>{groupType}</h1>
                 {this.renderInstruction(groupType)}
                 {!this.props.inGameplay &&
-                    <div className="div-block-center">
+                    <div className="button-action-person-turn">
                         <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.props.confirmStartGame}>
                             Get Started
                         </div>

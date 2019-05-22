@@ -2645,12 +2645,35 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   background-repeat: no-repeat;
 }
 
+.popup-container{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width:100vw;
+  height:100vh;
+  position:fixed;
+  top:0px;
+  left:0px;
+}
+
+.popup-container > .sweet-alert{
+  margin-top:0px;
+  top:auto;
+}
+
+.popup-close {
+  position: absolute;
+  right:0.5em;
+  top:5px;
+}
+
 .popup-bttn {
   display: table-cell;
   min-width: 40%;
   min-height: 40px;
   min-width:4em;
-  padding:0.5em;
+  padding:0.5em 1em;
   height:100%;
   margin-right: auto;
   margin-left: auto;
@@ -2720,7 +2743,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   width:100%;
   height:3.5em;
   justify-content: space-between;
-  margin-bottom:1em;
+  margin-bottom:3.5em;
 }
 
 .play-card-smile-line{
@@ -2739,6 +2762,15 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border:2px solid #969696;
   padding:2px;
   background-color: #fff;
+}
+
+.play-card-smile-text{
+  display:block;
+  line-height: 1;
+  font-family: Raleway, sans-serif;
+  margin-top:0.5em;
+  text-align: center;
+  width:5em;
 }
 
 .cream{
@@ -4024,7 +4056,24 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .actual-time.timeout-warning {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
   background-color: #ff0000;
+  height:2.5em;
+  z-index:1;
+}
+
+.timeout-warning-text {
+  position:absolute;
+  top:0.25em;
+  left:0px;
+  width:100%;
+  color: #fff;
+  font-size:1.5em;
+  text-transform: uppercase;
+  z-index:1;
 }
 
 .font-rate {
@@ -4087,6 +4136,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .font-rate.f-bttn.play-card {
   background-color: #40BFBB;
+}
+
+.font-rate.f-bttn.play-card.wait {
+  background-color: #cfcfcf;
+  cursor: none;
 }
 
 .font-rate.f-bttn:active {
@@ -4774,7 +4828,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .play-card-display{
-  width:10vw;
+  width:15em;
   background: transparent  url('/img/assets/Background_white20.png') no-repeat scroll center center;
   border-radius: 5px;
 }
@@ -4784,11 +4838,18 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .play-card-user-list{
   flex-grow:1;
-  margin-left:2em;
+  margin-left:1.5em;
 }
 
 .play-card-user-list-entry{
   display: block;
+  padding-left:0.5em;
+  padding-right:0.5em;
+}
+
+.play-card-user-list-entry.highlight{
+  background-color:  #fae232;
+  font-weight: bold;
 }
 
 .button-action-person-turn{

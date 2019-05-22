@@ -8,6 +8,7 @@ export default class PlayCardGrade extends React.Component {
         this.defaultSmile = [false,false,false];
         this.state={
             smile: this.defaultSmile.slice(),
+            smileText: ["not really","medium amount","very strongly"],
             selectedIndex:-1,
             error:false
         }
@@ -36,14 +37,21 @@ export default class PlayCardGrade extends React.Component {
           let clickEvent = this.smileClick.bind(this,index);
           if(val){
             return(
-                <div className="play-card-smile" key={`smile-${index}`} onClick={clickEvent}>
-                <img src={`/img/playCard/smile-${index+1}.png`}/>
+                <div key={`smile-${index}`}>
+                    <div className="play-card-smile" onClick={clickEvent}>
+                    <img src={`/img/playCard/smile-${index+1}.png`}/>
+                    </div>
+                    <span className="play-card-smile-text">{this.state.smileText[index]}</span>
                 </div>
+                
             );
           }else{
             return(
-                <div className="play-card-smile" key={`smile-${index}`} onClick={clickEvent}>
-                <img src={`/img/playCard/smile-${index+1}-grey.png`}/>
+                <div key={`smile-${index}`}>
+                    <div className="play-card-smile"  onClick={clickEvent}>
+                    <img src={`/img/playCard/smile-${index+1}-grey.png`}/>         
+                    </div>
+                    <span className="play-card-smile-text">{this.state.smileText[index]}</span>
                 </div>
             );
           }
@@ -52,9 +60,12 @@ export default class PlayCardGrade extends React.Component {
 
   render() {
         return (
-            <div>
+            <div className="popup-container">
             <div className="sweet-overlay" tabIndex="-1" style={{opacity: 1.34, display: "block"}}></div>
-            <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block', marginTop: -16.5+ "em"}}>
+            <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block'}}>
+                <span className="popup-close fontreleway f-popup-title f-popup-msg" onClick={this.props.cancelAction}>
+                    <i className="fas fa-times"></i>
+                </span>
                 <div className="msg-wrapper">
                     <div className="fontreleway f-popup-title f-popup-msg">
                     How strongly do you feel about that?
