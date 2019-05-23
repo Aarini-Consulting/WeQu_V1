@@ -213,6 +213,37 @@ Meteor.methods({
             throw (new Meteor.Error("game_already_started_or_finished")); 
         }
     },
+    'play.card.self.finish.discussion': function(groupId) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        let playCardType = groupCheck.playCardType;
+
+        groupCheck.userIds.forEach((userId)=>{
+            let playCardCheck = PlayCard.findOne(
+                {
+                    'playCardType':playCardType,
+                    'groupId':groupId,
+                    'to':userId,
+                    'from':userId,
+                    "discussionFinished":true
+                }
+            );
+
+            if(!playCardCheck){
+                PlayCard.update({'playCardType':playCardType,'groupId':groupId,'to':userId,'from':userId},
+                    {
+                        $set : {
+                            "discussionFinished":true
+                        }
+                    }
+                );
+            }
+        });
+    },
     'play.card.finish.discussion': function(groupId, playCardType, targetUserId) {
         let groupCheck = Group.findOne({'_id': groupId});
 

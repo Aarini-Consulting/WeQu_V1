@@ -43,6 +43,9 @@ class ChooseCardPage extends React.Component {
 
     render() {
         if(this.props.dataReady){
+            let selfRankDone = this.props.cardChosenSelfGroupDoneCount == this.props.group.userIds.length;
+            let selfRankFinished = selfRankDone && this.props.cardChosenBySelfDiscussionFinishedCount == this.props.group.userIds.length;
+
             if(this.props.cardChosenSelfGroupDoneCount < this.props.group.userIds.length ){
                 //do self rank
                 if(this.props.cardChosenBySelf && !this.props.cardChosenBySelf.cardChosen){
@@ -64,9 +67,9 @@ class ChooseCardPage extends React.Component {
                         </section>
                     );
                 }
-            }else if(this.props.cardChosenSelfGroupDoneCount == this.props.group.userIds.length){
+            }else if(selfRankDone){
                 //do turn taking
-                if(this.props.chooseCardForOther){
+                if(selfRankFinished && this.props.chooseCardForOther){
                     if(!this.props.chooseCardForOther.cardChosen){
                         return(
                             <ChooseCard 
@@ -76,13 +79,13 @@ class ChooseCardPage extends React.Component {
                             forSelf={false} 
                             />
                         );
-                    }else if(this.props.chooseCardForOtherGroupDoneCount < this.props.group.userIds.length ){
+                    }else if(this.props.chooseCardForOtherGroupDoneCount < this.props.group.userIds.length-1 ){
                         if(this.props.chooseCardForOtherGroupDoneCount > 0){
                             return(
                                 <div className="fillHeight weq-bg">
                                     <div className="font-rate padding-wrapper">others are selecting...</div>
                                     <div className="font-rate padding-wrapper">Sit back and relax</div>
-                                    <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
+                                    <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount)}/{(this.props.group.userIds.length-1)}</div>
                                 </div>
                             );
                         }else{
@@ -98,7 +101,7 @@ class ChooseCardPage extends React.Component {
                             </div>
                         );
                     }
-                }else if(this.props.targetedForOthersFeedback){
+                }else if(selfRankFinished && this.props.targetedForOthersFeedback){
                     if(this.props.cardChosenByOtherGroupDoneCount < this.props.group.userIds.length-1){
                         var firstName = this.props.currentUser && this.props.currentUser.profile.firstName;
                         return(
@@ -144,6 +147,7 @@ export default withTracker((props) => {
     let chooseCardForOtherOwner;
     let targetedForOthersFeedback=false;
     let cardChosenSelfGroupDoneCount = 0;
+    let cardChosenBySelfDiscussionFinishedCount=0;
     let chooseCardForOtherGroupDoneCount = 0;
     let cardChosenByOtherGroupDoneCount = 0;
     let userId = Meteor.userId();
@@ -160,11 +164,10 @@ export default withTracker((props) => {
     });
 
     if(handlePlayCard.ready()){
-        let allPlayCardsNotFinished = PlayCard.find(
+        let allPlayCards = PlayCard.find(
             {
             "groupId":props.group._id,
             "playCardType":props.group.playCardTypeActive,
-            'discussionFinished':{$exists: false}
             },
             {sort: { "createdAt": 1 }
         }).fetch();
@@ -183,19 +186,22 @@ export default withTracker((props) => {
         {sort: { "updatedAt": -1 }}
         );
 
-        allPlayCardsNotFinished.forEach((playCardNotFinished)=>{
+        allPlayCards.forEach((playCard)=>{
             //get card set for yourself
-            if(playCardNotFinished.from == userId && playCardNotFinished.to == userId){
-                cardChosenBySelf = playCardNotFinished;
+            if(playCard.from == userId && playCard.to == userId){
+                cardChosenBySelf = playCard;
             }
 
             //calculate how many users in the same group are done with their own card set
-            if(playCardNotFinished.from == playCardNotFinished.to && playCardNotFinished.cardChosen){
+            if(playCard.from == playCard.to && playCard.cardChosen){
                 cardChosenSelfGroupDoneCount += 1;
+                if(playCard.discussionFinished){
+                    cardChosenBySelfDiscussionFinishedCount += 1;
+                }
             }
 
             
-            if(playCardNotFinished.from != userId && playCardNotFinished.to == userId && playCardNotFinished.cardChosen){
+            if(playCard.from != userId && playCard.to == userId && playCard.cardChosen && !playCard.discussionFinished){
                 cardChosenByOtherGroupDoneCount += 1;
             }
 
@@ -204,16 +210,17 @@ export default withTracker((props) => {
             //for the same user that the last playcard object points to
             if(lastOtherPlayCardSelected && 
                 lastOtherPlayCardSelected.to != lastOtherPlayCardSelected.from && 
-                lastOtherPlayCardSelected.to == playCardNotFinished.to && 
-                playCardNotFinished.cardChosen){
+                lastOtherPlayCardSelected.to == playCard.to && 
+                playCard.cardChosen && 
+                !playCard.discussionFinished){
                 chooseCardForOtherGroupDoneCount +=1;
             }
 
             //get data for turn taking
-            if(playCardNotFinished.from != playCardNotFinished.to){
-                turnTakingOrderUserIds.push(playCardNotFinished.to);
-                if(playCardNotFinished.from == userId){
-                    turnTakingCardTarget[playCardNotFinished.to] = playCardNotFinished;
+            if(playCard.from != playCard.to && !playCard.discussionFinished){
+                turnTakingOrderUserIds.push(playCard.to);
+                if(playCard.from == userId){
+                    turnTakingCardTarget[playCard.to] = playCard;
                 }
             }
         });
@@ -240,13 +247,13 @@ export default withTracker((props) => {
                 }
             }
         }
-        
         dataReady = true;
     }
 
     return {
         currentUser:currentUser,
         cardChosenBySelf:cardChosenBySelf,
+        cardChosenBySelfDiscussionFinishedCount:cardChosenBySelfDiscussionFinishedCount,
         cardChosenSelfGroupDoneCount:cardChosenSelfGroupDoneCount,
         cardChosenByOtherGroupDoneCount:cardChosenByOtherGroupDoneCount,
         chooseCardForOther:chooseCardForOther,

@@ -63,9 +63,9 @@ class PersonTurnPage extends React.Component {
         if(playCardType == "praise"){
             return (
                 <div>
-                    <ul>
-                        <li><b>{personName}</b>: read cards 3 and 4 out loud</li>
-                        <li>everyone in group will choose which card is more applicable to {personName}</li>
+                    <ul className="play-card-page-list">
+                        <li><span><b>{personName}</b>: read cards 3 and 4 out loud</span></li>
+                        <li><span>everyone in group will choose which card is more applicable to {personName}</span></li>
                     </ul>
                     <img src={'/img/playCard/instruction-praise.jpg'}/>
                 </div>
@@ -73,9 +73,9 @@ class PersonTurnPage extends React.Component {
         }else if(playCardType == "criticism"){
             return(
                 <div>
-                    <ul>
-                        <li><b>{personName}</b>: read cards 5, 6, and 7 out loud</li>
-                        <li>everyone in group will choose which card is more applicable to <b>{personName}</b></li>
+                    <ul className="play-card-page-list">
+                        <li><span><b>{personName}</b>: read cards 5, 6, and 7 out loud</span></li>
+                        <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b></span></li>
                     </ul>
                     <img src={'/img/playCard/instruction-criticism.jpg'}/>
                 </div>
@@ -117,7 +117,6 @@ class PersonTurnPage extends React.Component {
 
                 return (
                     <div className={`play-card-list-container ${highlight ? "highlight" : ""}`} key={`card-${card.cardId}`}>
-                        {/* <h1>{card.cardId}</h1> */}
                         <img className={`play-card-display ${highlight ? "highlight" : ""}`} src={`${backgroundUrl}`}/>
                         <div className="play-card-user-list">
                             {this.renderCardUserList(card.cardId, userIdList, gradeList)}
@@ -164,9 +163,9 @@ class PersonTurnPage extends React.Component {
             if(this.state.showResult){
                 return(
                     <React.Fragment>
-                        <h1>Result</h1>
-                        <ul>
-                            <li><b>{personName}</b>: Ask 2 people to explain their choice, and mostly listen to the feedback. <b>{personName}</b> may ask followup questions</li>
+                        <div className="play-card-page-title">Result</div>
+                        <ul className="play-card-page-list">
+                            <li><span><b>{personName}</b>: Ask 2 people to explain their choice, and mostly listen to the feedback. <b>{personName}</b> may ask followup questions</span></li>
                         </ul>
                         <div className={"play-card-list-result-row"}>
                             {this.renderResult()}
@@ -190,7 +189,7 @@ class PersonTurnPage extends React.Component {
             }else{
                 return(
                     <React.Fragment>
-                        <h1>Now it's {personName}'s turn</h1>
+                        <div className="play-card-page-title">Now it's {personName}'s turn</div>
                         {this.renderInstruction(playCardType, personName)}
 
                         <div className="button-action-person-turn">
