@@ -125,7 +125,7 @@ export default withTracker((props) => {
 
                 if(playCardCheck){
                     //call start function to resume game
-                    Meteor.call( 'start.game.play.cards', props.group._id, playCardCheck.playCardType, (error, result)=>{
+                    Meteor.call( 'resume.game.play.cards', props.group._id, playCardCheck.playCardType, (error, result)=>{
                         if(error){
                             console.log(error)
                         }

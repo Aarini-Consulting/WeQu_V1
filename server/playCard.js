@@ -138,10 +138,74 @@ Meteor.methods({
                 users.forEach(function(user, index, _arr) {
                     generateCardsToChoose(user._id,groupCheck._id,playCardType);
                 });
+                
+                Group.update({_id:groupId},
+                    {
+                        $set : {
+                            "isActive": true,
+                            "playCardTypeActive": playCardType,
+                            "isPlaceCardActive":false
+                        },
+                        $unset : { "currentGroupQuizId": "" }
+                    } 
+                );
+            }else{
+                throw (new Meteor.Error("not_all_invitees_finished_survey")); 
+            }
+            
+        }else{
+            throw (new Meteor.Error("game_already_started_or_finished")); 
+        }
+    },
 
-                //if place card mode is not finished, call the "stop" function to remove all data about it as well
-                if(!groupCheck.isPlaceCardFinished){
-                    Meteor.call('stop.game.place.cards', groupId);
+    'resume.game.play.cards': function(groupId, playCardType) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+
+        if(!playCardType || (playCardType != "praise" && playCardType != "criticism")){
+            throw (new Meteor.Error("unknown_type_mode")); 
+        }
+
+        if(groupCheck && groupCheck.userIds && groupCheck.userIds.length < 2){
+            throw (new Meteor.Error("not_enough_group_member")); 
+        }
+
+        if(groupCheck && groupCheck.userIds && groupCheck.userIds.length > 12){
+            throw (new Meteor.Error("too_much_group_member")); 
+        }
+
+        if(!(groupCheck && groupCheck.playCardTypeList && groupCheck.playCardTypeList.length > 0)){
+            throw (new Meteor.Error("group_not_set_to_play_card")); 
+        }
+
+        if(!(groupCheck && groupCheck.playCardTypeList && groupCheck.playCardTypeList.indexOf(playCardType) > -1)){
+            throw (new Meteor.Error("type_not_assigned_to_this_group")); 
+        }
+
+        var cardPlacementCheck = CardPlacement.find({'groupId': groupId}).fetch();
+
+        
+        var cardNotPicked = cardPlacementCheck.find((cp) => {
+            return !(cp.cardPicked && cp.cardPicked.length == 7);
+        });
+
+        if(cardNotPicked){
+            throw (new Meteor.Error("not_everyone_finished_picking_card")); 
+        }
+
+        if(!groupCheck.isFinished){
+            if(groupCheck.userIdsSurveyed && groupCheck.userIdsSurveyed.length == groupCheck.userIds.length){
+                var users = Meteor.users.find(
+                    {$and: [{"_id":{$in:groupCheck.userIds}},
+                    {"_id":{$in:groupCheck.userIdsSurveyed}}]},
+                    {sort: { "profile.firstName": 1 }}
+                ).fetch();
+
+                if(users.length < 1){
+                    throw new Meteor.Error("no_group_member_found");
                 }
 
                 Group.update({_id:groupId},
