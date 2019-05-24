@@ -91,11 +91,20 @@ class GameplayPage extends React.Component {
                         }
                     </ul>
                     {nextRoundAvailable
-                        &&
+                        ?
                         <div className="button-action-person-turn">
                             <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" 
                             onClick={this.nextRound.bind(this)}>
                                 Next round
+                            </div>
+                        </div>
+                        :
+                        <div className="button-action-person-turn">
+                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer">
+                                Show result of "Praise"
+                            </div>
+                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer">
+                                Show result of "Criticism"
                             </div>
                         </div>
                     }

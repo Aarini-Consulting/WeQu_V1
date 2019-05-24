@@ -125,7 +125,7 @@ export default class ChooseCard extends React.Component {
             }
             return(
                 <div className={`play-card-client-option${selected}bg-${card.category}`} key={card.cardId} onClick={this.selectCard.bind(this,card)}>
-                    {index+3}
+                    {index+5}
                 </div>
             );
         });

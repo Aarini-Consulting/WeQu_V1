@@ -112,7 +112,7 @@ class QuizRankWait extends React.Component {
                     );
                 }else{
                     return (
-                        <Error/>
+                        <Loading/>
                     );
                 }   
             }

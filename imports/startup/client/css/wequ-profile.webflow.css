@@ -4178,6 +4178,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .rate-content.group-quiz-question-client{
   margin:0px;
+  padding-top:2em;
 }
 
 .rate-box-container{
@@ -4749,6 +4750,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .play-card-client-text {
   display: block;
   width: 90%;
+  font-size: 1.5em;
   margin:2em auto 1em;
   text-align: left;
 }
@@ -4818,6 +4820,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .play-card-list-container.highlight{
+  border-radius: 10px;
   background-color: #fefbe2;
 }
 
@@ -4840,14 +4843,14 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .play-card-user-list{
   flex-grow:1;
-  margin-left:1.5em;
 }
 
 .play-card-user-list-entry{
   display: block;
   font-size: 1.5em;
-  padding-left:0.5em;
+  padding-left:1em;
   padding-right:0.5em;
+  margin-bottom:0.5em;
 }
 
 .play-card-user-list-entry.highlight{
@@ -4883,7 +4886,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .play-card-page-list{
   font-size: 1em;
   font-family: Raleway, sans-serif;
-  margin-bottom:5em;
+  margin-bottom:7.5vh;
 }
 
 .play-card-page-list li{
