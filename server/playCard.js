@@ -220,7 +220,7 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        let playCardType = groupCheck.playCardType;
+        let playCardType = groupCheck.playCardTypeActive;
 
         groupCheck.userIds.forEach((userId)=>{
             let playCardCheck = PlayCard.findOne(
@@ -276,7 +276,7 @@ Meteor.methods({
                 {'playCardType':playCardType,'groupId':groupId,"discussionFinished":true}
             ).count();
             
-            if(playCardFinishedCount == (Math.pow(groupCheck.userIds.length, 2)-groupCheck.userIds.length)){
+            if(playCardFinishedCount == (Math.pow(groupCheck.userIds.length, 2))){
                 var playCardTypeCompleted = [];
                 if(groupCheck.playCardTypeCompleted && groupCheck.playCardTypeCompleted.length > 0){
                     playCardTypeCompleted = groupCheck.playCardTypeCompleted;

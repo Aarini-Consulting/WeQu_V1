@@ -14,7 +14,9 @@ export default class WelcomePage extends React.Component {
                     <li><span>turn over and read cards 3 and 4</span></li>
                     <li><span>this may be difficult, but you must choose the card that you think is more applicable to <b>you</b></span></li>
                 </ul>
-                <img src={'/img/playCard/instruction-praise.jpg'}/>
+                <div className="div-block-center">
+                    <img src={'/img/playCard/instruction-praise.jpg'}/>
+                </div>
             </div>
             );
         }else if(groupType == "criticism"){
@@ -24,7 +26,9 @@ export default class WelcomePage extends React.Component {
                         <li><span>turn over and read cards 5, 6, and 7</span></li>
                         <li><span>choose which of these cards is something you think <b>you could improve most</b></span></li>
                     </ul>
-                    <img src={'/img/playCard/instruction-criticism.jpg'}/>
+                    <div className="div-block-center">
+                        <img src={'/img/playCard/instruction-criticism.jpg'}/>
+                    </div>
                 </div>
             );
         }

@@ -4829,8 +4829,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .play-card-display{
   width:15em;
+  height:22.5em;
   background: transparent  url('/img/assets/Background_white20.png') no-repeat scroll center center;
-  border-radius: 5px;
+  border-radius: 10px;
+  border:1px solid #000;
 }
 .play-card-display.highlight{
   border: 0.5em solid #fae232;
@@ -4843,6 +4845,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 
 .play-card-user-list-entry{
   display: block;
+  font-size: 1.5em;
   padding-left:0.5em;
   padding-right:0.5em;
 }
@@ -4862,11 +4865,12 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .play-card-page-title{
-  font-size: 2em;
+  font-size: 3em;
   font-weight:bold;
   text-align: center;
   text-transform: uppercase;
   margin-bottom:1em;
+  margin-top: 1em;
 }
 
 .play-card-page-subtitle{
@@ -4879,6 +4883,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .play-card-page-list{
   font-size: 1em;
   font-family: Raleway, sans-serif;
+  margin-bottom:5em;
 }
 
 .play-card-page-list li{

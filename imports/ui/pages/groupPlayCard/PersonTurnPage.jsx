@@ -67,7 +67,9 @@ class PersonTurnPage extends React.Component {
                         <li><span><b>{personName}</b>: read cards 3 and 4 out loud</span></li>
                         <li><span>everyone in group will choose which card is more applicable to {personName}</span></li>
                     </ul>
-                    <img src={'/img/playCard/instruction-praise.jpg'}/>
+                    <div className="div-block-center">
+                        <img src={'/img/playCard/instruction-praise.jpg'}/>
+                    </div>
                 </div>
             );
         }else if(playCardType == "criticism"){
@@ -77,7 +79,9 @@ class PersonTurnPage extends React.Component {
                         <li><span><b>{personName}</b>: read cards 5, 6, and 7 out loud</span></li>
                         <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b></span></li>
                     </ul>
-                    <img src={'/img/playCard/instruction-criticism.jpg'}/>
+                    <div className="div-block-center">
+                        <img src={'/img/playCard/instruction-criticism.jpg'}/>
+                    </div>
                 </div>
             );
         }
