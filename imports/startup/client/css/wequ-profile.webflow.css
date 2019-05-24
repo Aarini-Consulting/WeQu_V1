@@ -3206,6 +3206,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   color:#000;
 }
 
+.tap-content-wrapper.play-card-finish{
+  background: #d5f1f0;
+  color:#000;
+}
+
 .tap-content{
   display: -webkit-box;
   display: -webkit-flex;

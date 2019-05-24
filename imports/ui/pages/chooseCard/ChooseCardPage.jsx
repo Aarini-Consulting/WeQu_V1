@@ -57,7 +57,7 @@ class ChooseCardPage extends React.Component {
                         <div className="fillHeight weq-bg">
                             <div className="font-rate padding-wrapper">others are selecting...</div>
                             <div className="font-rate padding-wrapper">Sit back and relax</div>
-                            <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount-1)}/{(this.props.group.userIds.length-1)}</div>
+                            <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount)}/{(this.props.group.userIds.length)}</div>
                         </div>
                     );
                 }else{
@@ -97,7 +97,7 @@ class ChooseCardPage extends React.Component {
                     }else{
                         return(
                             <div className="fillHeight weq-bg">
-                                <div className="font-rate padding-wrapper">Please wait until next turn start</div>
+                                <div className="font-rate padding-wrapper">Please wait until next turn starts</div>
                             </div>
                         );
                     }
@@ -118,7 +118,7 @@ class ChooseCardPage extends React.Component {
                         return(
                             <div className="fillHeight weq-bg">
                                 <div className="font-rate padding-wrapper">Everyone has picked a card for you.</div>
-                                <div className="font-rate padding-wrapper">Please wait until next turn start</div>
+                                <div className="font-rate padding-wrapper">Please wait until next turn starts</div>
                             </div>
                         );
                     }

@@ -64,8 +64,8 @@ class PersonTurnPage extends React.Component {
             return (
                 <div>
                     <ul className="play-card-page-list">
-                        <li><span><b>{personName}</b>: read cards 3 and 4 out loud</span></li>
-                        <li><span>everyone in group will choose which card is more applicable to {personName}</span></li>
+                        <li><span><b>{personName}</b>: read cards 3 and 4 out loud.</span></li>
+                        <li><span>everyone in group will choose which card is more applicable to {personName}.</span></li>
                     </ul>
                     <div className="div-block-center">
                         <img src={'/img/playCard/instruction-praise.jpg'}/>
@@ -76,8 +76,8 @@ class PersonTurnPage extends React.Component {
             return(
                 <div>
                     <ul className="play-card-page-list">
-                        <li><span><b>{personName}</b>: read cards 5, 6, and 7 out loud</span></li>
-                        <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b></span></li>
+                        <li><span><b>{personName}</b>: read cards 5, 6, and 7 out loud.</span></li>
+                        <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b>.</span></li>
                     </ul>
                     <div className="div-block-center">
                         <img src={'/img/playCard/instruction-criticism.jpg'}/>
@@ -169,7 +169,7 @@ class PersonTurnPage extends React.Component {
                     <React.Fragment>
                         <div className="play-card-page-title">Result</div>
                         <ul className="play-card-page-list">
-                            <li><span><b>{personName}</b>: Ask 2 people to explain their choice, and mostly listen to the feedback. <b>{personName}</b> may ask followup questions</span></li>
+                            <li><span><b>{personName}</b>: Ask 2 people to explain their choice, and mostly listen to the feedback. <b>{personName}</b> may ask followup questions.</span></li>
                         </ul>
                         <div className={"play-card-list-result-row"}>
                             {this.renderResult()}

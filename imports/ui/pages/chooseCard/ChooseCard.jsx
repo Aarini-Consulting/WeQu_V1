@@ -120,12 +120,20 @@ export default class ChooseCard extends React.Component {
         return cardsToChoose.map((card, index)=>{
             let selected=" ";
 
+            var displayNumber=index;
+
+            if(this.props.selectedPlayCard.playCardType == "praise"){
+                displayNumber = index+3;
+            }else if(this.props.selectedPlayCard.playCardType == "criticism"){
+                displayNumber = index+5;
+            }
+
             if(this.state.selectedCard && this.state.selectedCard.cardId == card.cardId){
                 selected=" selected ";
             }
             return(
                 <div className={`play-card-client-option${selected}bg-${card.category}`} key={card.cardId} onClick={this.selectCard.bind(this,card)}>
-                    {index+5}
+                    {displayNumber}
                 </div>
             );
         });

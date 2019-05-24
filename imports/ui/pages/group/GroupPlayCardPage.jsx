@@ -38,9 +38,7 @@ class GroupPlayCardPage extends React.Component {
                 if(selectedCardType){
                     if(this.props.selectedCardTypeActive){
                         return (
-                            <div className="tap-content-wrapper play-card">
-                                <GameplayPage group={this.props.group} groupType={selectedCardType}/>
-                            </div>
+                            <GameplayPage group={this.props.group} groupType={selectedCardType}/>
                         );
                     }else{
                         return (

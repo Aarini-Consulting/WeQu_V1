@@ -208,7 +208,7 @@
         "Answer7F":"Der Trainer war gut. Ich kann ihn weiterempfehlen."
     },
     "groupQuizAnswerSubmitted":{
-        "TextLine1":"Danke",
-        "TextLine2":"Ihre Antwort wird eingereicht"
+        "TextLine1":"Danke.",
+        "TextLine2":"Ihre Antwort wird eingereicht."
     }
 }

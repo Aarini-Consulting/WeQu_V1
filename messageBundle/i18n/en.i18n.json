@@ -208,7 +208,7 @@
         "Answer7F":"The coach was very good. I would recommend them."
     },
     "groupQuizAnswerSubmitted":{
-        "TextLine1":"Thank you",
-        "TextLine2":"Your answer is submitted"
+        "TextLine1":"Thank you.",
+        "TextLine2":"Your answer is submitted."
     }
 }

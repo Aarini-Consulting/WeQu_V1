@@ -32,7 +32,8 @@ class GameplayPage extends React.Component {
     render() {
         if(this.props.cardChosenBySelfDoneCount < this.props.group.userIds.length){
             return(
-                <React.Fragment>
+                <div className="tap-content-wrapper play-card">
+                    <React.Fragment>
                     <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
                     <div className="button-action-person-turn">
                         <div className="font-rate f-bttn play-card wait w-inline-block noselect">
@@ -42,35 +43,40 @@ class GameplayPage extends React.Component {
                     <div className="play-card-counter-wrapper">
                         <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
                     </div>
-                </React.Fragment>
+                    </React.Fragment>
+                </div>
             );
         }
         else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && 
             this.props.cardChosenBySelfDiscussionFinished < this.props.group.userIds.length){
             return(
-                <React.Fragment>
-                    <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
-                    <div className="button-action-person-turn">
-                        <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishPlayCardSelf.bind(this)}>
-                            Next
+                <div className="tap-content-wrapper play-card">
+                    <React.Fragment>
+                        <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
+                        <div className="button-action-person-turn">
+                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishPlayCardSelf.bind(this)}>
+                                Next
+                            </div>
                         </div>
-                    </div>
-                    <div className="play-card-counter-wrapper">
-                        <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
-                    </div>
-                </React.Fragment>
+                        <div className="play-card-counter-wrapper">
+                            <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
+                        </div>
+                    </React.Fragment>
+                </div>
             );
         }
         else if(this.props.chooseCardForOtherOwner){
             return(
-                <PersonTurnPage 
-                playCardType={this.props.group.playCardTypeActive}
-                groupId={this.props.group._id}
-                chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
-                cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
-                totalUser={this.props.group.userIds.length}
-                result={this.props.selectedUserCardResult}
-                />
+                <div className="tap-content-wrapper play-card">
+                    <PersonTurnPage 
+                    playCardType={this.props.group.playCardTypeActive}
+                    groupId={this.props.group._id}
+                    chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
+                    cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
+                    totalUser={this.props.group.userIds.length}
+                    result={this.props.selectedUserCardResult}
+                    />
+                </div>
             );
         }else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && !this.props.chooseCardForOtherOwner){
             let nextRoundAvailable = this.props.group && this.props.group.playCardTypeList && this.props.group.playCardTypeList.length > 0 &&
@@ -79,36 +85,29 @@ class GameplayPage extends React.Component {
             );
 
             return(
-                <React.Fragment>
-                    <div className="play-card-page-title">Hurray!</div>
-                    <div className="play-card-page-subtitle">You completed the round!</div>
+                <div className="tap-content-wrapper play-card-finish">
+                    <React.Fragment>
+                        <div className="play-card-page-title">Hurray!</div>
+                        <div className="play-card-page-subtitle">You completed the round!</div>
 
-                    <ul className="play-card-page-list">
-                        <li><span>Go to quiz section to reflect on your feedback experience</span></li>
+                        <ul className="play-card-page-list">
+                            <li><span>Go to quiz section to reflect on your feedback experience.</span></li>
+                            {nextRoundAvailable
+                                &&
+                                <li><span>Once you're done with the quizzes, you may continue the next round.</span></li>
+                            }
+                        </ul>
                         {nextRoundAvailable
                             &&
-                            <li><span>Once you're done with the quizzes, you may continue the next round</span></li>
+                            <div className="button-action-person-turn">
+                                <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" 
+                                onClick={this.nextRound.bind(this)}>
+                                    Next round
+                                </div>
+                            </div>
                         }
-                    </ul>
-                    {nextRoundAvailable
-                        ?
-                        <div className="button-action-person-turn">
-                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" 
-                            onClick={this.nextRound.bind(this)}>
-                                Next round
-                            </div>
-                        </div>
-                        :
-                        <div className="button-action-person-turn">
-                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer">
-                                Show result of "Praise"
-                            </div>
-                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer">
-                                Show result of "Criticism"
-                            </div>
-                        </div>
-                    }
-                </React.Fragment>
+                    </React.Fragment>
+                </div>
             );
         }
     }
