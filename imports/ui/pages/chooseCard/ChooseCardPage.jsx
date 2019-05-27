@@ -239,11 +239,15 @@ export default withTracker((props) => {
                         targetedForOthersFeedback = true;
                     }else{
                         chooseCardForOther = turnTakingCardTarget[turnTakingOrderUserIds[0]];
-                        chooseCardForOtherOwner = Meteor.users.findOne(chooseCardForOther.to);
+                        if(chooseCardForOther){
+                            chooseCardForOtherOwner = Meteor.users.findOne(chooseCardForOther.to);
+                        }
                     }
                 }else if(lastOtherPlayCardSelected){
                     chooseCardForOther = lastOtherPlayCardSelected;
-                    chooseCardForOtherOwner = Meteor.users.findOne(lastOtherPlayCardSelected.to);
+                    if(chooseCardForOther){
+                        chooseCardForOtherOwner = Meteor.users.findOne(lastOtherPlayCardSelected.to);
+                    }
                 }
             }
         }

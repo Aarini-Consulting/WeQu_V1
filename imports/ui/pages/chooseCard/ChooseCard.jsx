@@ -61,8 +61,6 @@ export default class ChooseCard extends React.Component {
 
         this.setState({
             timeoutWarning:true
-        },()=>{
-            console.log("time's up");
         });
     }
 

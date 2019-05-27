@@ -8,6 +8,8 @@ import WelcomePage from './WelcomePage';
 import {PlayCard} from '/collections/playCard';
 import PersonTurnPage from './PersonTurnPage';
 
+import Loading from '../loading/Loading';
+
 class GameplayPage extends React.Component {
     constructor(props){
         super(props);
@@ -30,85 +32,91 @@ class GameplayPage extends React.Component {
     }
 
     render() {
-        if(this.props.cardChosenBySelfDoneCount < this.props.group.userIds.length){
-            return(
-                <div className="tap-content-wrapper play-card">
-                    <React.Fragment>
-                    <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
-                    <div className="button-action-person-turn">
-                        <div className="font-rate f-bttn play-card wait w-inline-block noselect">
-                            Waiting for result
-                        </div>
-                    </div>
-                    <div className="play-card-counter-wrapper">
-                        <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
-                    </div>
-                    </React.Fragment>
-                </div>
-            );
-        }
-        else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && 
-            this.props.cardChosenBySelfDiscussionFinished < this.props.group.userIds.length){
-            return(
-                <div className="tap-content-wrapper play-card">
-                    <React.Fragment>
+        if(this.props.dataReady){
+            if(this.props.cardChosenBySelfDoneCount < this.props.group.userIds.length){
+                return(
+                    <div className="tap-content-wrapper play-card">
+                        <React.Fragment>
                         <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
                         <div className="button-action-person-turn">
-                            <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishPlayCardSelf.bind(this)}>
-                                Next
+                            <div className="font-rate f-bttn play-card wait w-inline-block noselect">
+                                Waiting for result
                             </div>
                         </div>
                         <div className="play-card-counter-wrapper">
                             <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
                         </div>
-                    </React.Fragment>
-                </div>
-            );
-        }
-        else if(this.props.chooseCardForOtherOwner){
-            return(
-                <div className="tap-content-wrapper play-card">
-                    <PersonTurnPage 
-                    playCardType={this.props.group.playCardTypeActive}
-                    groupId={this.props.group._id}
-                    chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
-                    cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
-                    totalUser={this.props.group.userIds.length}
-                    result={this.props.selectedUserCardResult}
-                    />
-                </div>
-            );
-        }else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && !this.props.chooseCardForOtherOwner){
-            let nextRoundAvailable = this.props.group && this.props.group.playCardTypeList && this.props.group.playCardTypeList.length > 0 &&
-            (!this.props.group.playCardTypeCompleted || 
-                (this.props.group.playCardTypeCompleted && this.props.group.playCardTypeCompleted.length < this.props.group.playCardTypeList.length)
-            );
-
-            return(
-                <div className="tap-content-wrapper play-card-finish">
-                    <React.Fragment>
-                        <div className="play-card-page-title">Hurray!</div>
-                        <div className="play-card-page-subtitle">You completed the round!</div>
-
-                        <ul className="play-card-page-list">
-                            <li><span>Go to quiz section to reflect on your feedback experience.</span></li>
-                            {nextRoundAvailable
-                                &&
-                                <li><span>Once you're done with the quizzes, you may continue the next round.</span></li>
-                            }
-                        </ul>
-                        {nextRoundAvailable
-                            &&
+                        </React.Fragment>
+                    </div>
+                );
+            }
+            else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && 
+                this.props.cardChosenBySelfDiscussionFinished < this.props.group.userIds.length){
+                return(
+                    <div className="tap-content-wrapper play-card">
+                        <React.Fragment>
+                            <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
                             <div className="button-action-person-turn">
-                                <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" 
-                                onClick={this.nextRound.bind(this)}>
-                                    Next round
+                                <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishPlayCardSelf.bind(this)}>
+                                    Next
                                 </div>
                             </div>
-                        }
-                    </React.Fragment>
-                </div>
-            );
+                            <div className="play-card-counter-wrapper">
+                                <div className="play-card-counter">{this.props.cardChosenBySelfDoneCount}/{this.props.group.userIds.length}</div>
+                            </div>
+                        </React.Fragment>
+                    </div>
+                );
+            }
+            else if(this.props.chooseCardForOtherOwner){
+                return(
+                    <div className="tap-content-wrapper play-card">
+                        <PersonTurnPage 
+                        playCardType={this.props.group.playCardTypeActive}
+                        groupId={this.props.group._id}
+                        chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
+                        cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
+                        totalUser={this.props.group.userIds.length}
+                        result={this.props.selectedUserCardResult}
+                        />
+                    </div>
+                );
+            }else if(this.props.cardChosenBySelfDoneCount == this.props.group.userIds.length && !this.props.chooseCardForOtherOwner){
+                let nextRoundAvailable = this.props.group && this.props.group.playCardTypeList && this.props.group.playCardTypeList.length > 0 &&
+                (!this.props.group.playCardTypeCompleted || 
+                    (this.props.group.playCardTypeCompleted && this.props.group.playCardTypeCompleted.length < this.props.group.playCardTypeList.length)
+                );
+    
+                return(
+                    <div className="tap-content-wrapper play-card-finish">
+                        <React.Fragment>
+                            <div className="play-card-page-title">Hurray!</div>
+                            <div className="play-card-page-subtitle">You completed the round!</div>
+    
+                            <ul className="play-card-page-list">
+                                <li><span>Go to quiz section to reflect on your feedback experience.</span></li>
+                                {nextRoundAvailable
+                                    &&
+                                    <li><span>Once you're done with the quizzes, you may continue the next round.</span></li>
+                                }
+                            </ul>
+                            {nextRoundAvailable
+                                &&
+                                <div className="button-action-person-turn">
+                                    <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" 
+                                    onClick={this.nextRound.bind(this)}>
+                                        Next round
+                                    </div>
+                                </div>
+                            }
+                        </React.Fragment>
+                    </div>
+                );
+            }
+        }else{
+            return(
+                <Loading/>
+            )
         }
     }
 }
@@ -175,7 +183,7 @@ export default withTracker((props) => {
                 Meteor.call('play.card.check.completed', props.group._id,props.group.playCardTypeActive);
             }
         }
-        dataReady = true
+        dataReady = true;
     }
 
     return {

@@ -154,7 +154,7 @@ class PersonTurnPage extends React.Component {
                             <img src={`/img/playCard/smile-${grade}.png`}/>
                         </div>   
                     }
-                    {username}
+                    <span>{username}</span>
                 </div>
             );
         });
