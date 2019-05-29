@@ -280,7 +280,7 @@ class GroupPage extends React.Component {
               <div className="tap-content w-clearfix">
                 {this.props.group.isPlaceCardActive 
                 ?
-                <div className="w-inline-block game-status">In Progress</div>
+                <div className="w-inline-block game-status">Waiting for participants...</div>
                 :
                 <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
                 }
