@@ -3069,6 +3069,7 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   border-left:10px solid;
   border-right:10px solid;
   border-bottom:10px solid;
+  border-top:10px solid;
 }
 
 .tab-end-session{

@@ -318,7 +318,7 @@ class GroupPage extends React.Component {
             <section className="section home fontreleway groupbg" >
               <MenuPresentation location={this.props.location} history={this.props.history} groupName={this.props.group.groupName}/>
 
-              <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
+              <div className={"tabs-menu w-tab-menu"}>
                 <div className="tabs-menu-manage-session">
                   <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>

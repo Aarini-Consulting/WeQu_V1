@@ -181,7 +181,7 @@ const App = class App extends React.Component {
       }
     }
 
-    if(!userHasLocale){
+    if(!userHasLocale && Meteor.userId()){
       //set user's locale
       Meteor.call( 'user.set.locale', locale, ( error, response ) => {
         if ( error ) {
