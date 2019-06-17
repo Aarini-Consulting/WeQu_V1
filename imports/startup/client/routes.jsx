@@ -48,6 +48,8 @@ import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import {detectIE} from '/imports/helper/detectIE.js';
+
 import {getDefaultLocale} from '/imports/startup/client/getDefaultLocale';
 
 const history = createBrowserHistory();
@@ -204,7 +206,21 @@ const App = class App extends React.Component {
   }
 
   render() {
-    if(this.state.languageLoaded){
+    var ie = detectIE();
+    if(ie && ie < 12){
+      return(
+        <div className="fillHeight weq-bg">
+          <div className="w-block noselect">
+              <div className="font-rate padding-wrapper">
+                  Sorry, we don't support this version of browser anymore.
+                  <br/>
+                  Please use a recent version of Chrome/Firefox/Safari instead.
+              </div>
+          </div>
+        </div>
+      )
+    }
+    else if(this.state.languageLoaded){
         return (
           <div style={{height:100+"%"}}>
           { /* Place to put layout codes here */ }
