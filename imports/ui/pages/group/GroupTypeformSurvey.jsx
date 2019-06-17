@@ -238,6 +238,11 @@ export default class GroupTypeformSurvey extends React.Component {
                     <i className="fas fa-info-circle"></i>
                     </div>
                   </div>
+                  <div className="tap-right typeform-survey-graph">
+                    <div className="font-matric">
+                      {1}
+                    </div>
+                  </div>
                   <div className="show-numbers typeform-survey-graph">
                     <div className="chart-graph w-clearfix">
                       <div className="chart-graph bg"></div>

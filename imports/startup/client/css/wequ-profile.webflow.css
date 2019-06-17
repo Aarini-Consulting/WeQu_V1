@@ -3379,7 +3379,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .show-numbers.typeform-survey-graph{
-  width:65%
+  width:65%;
+  padding:0;
 }
 
 .chart-graph {
@@ -3453,7 +3454,8 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .tap-right.typeform-survey-graph{
-  width:5%
+  width:5%;
+  text-align:center;
 }
 
 .tap-content-footer.typeform-survey-graph{
