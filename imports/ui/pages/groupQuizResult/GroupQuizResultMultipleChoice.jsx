@@ -70,7 +70,8 @@ class GroupQuizResultMultipleChoice extends React.Component {
             )
         }else if(this.state.data){
             return (
-                <GroupQuizResultGraphVerticalBar data={this.state.data} isEmpty={this.state.isEmpty}/>
+                <GroupQuizResultGraphVerticalBar data={this.state.data} isEmpty={this.state.isEmpty} 
+                question={this.props.selectedQuiz && this.props.selectedQuiz.question}/>
             );
         }else{
             return(

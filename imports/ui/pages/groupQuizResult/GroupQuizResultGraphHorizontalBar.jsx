@@ -4,7 +4,7 @@ import i18n from 'meteor/universe:i18n';
 
 var d3 = require("d3");
 
-export default class GroupQuizResultGraphVerticalBar extends React.Component {
+export default class GroupQuizResultGraphHorizontalBar extends React.Component {
     componentDidMount() {	
         this.updateChart(this.props);
     }
