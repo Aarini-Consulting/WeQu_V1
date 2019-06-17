@@ -8,6 +8,7 @@ import ConfirmEdit from './ConfirmEdit';
 import ConfirmCloseCycle from './ConfirmCloseCycle';
 import ConfirmReopenCycle from './ConfirmReopenCycle';
 import PlayCardGrade from './PlayCardGrade';
+import QuizSelectNameSelf from './QuizSelectNameSelf';
 
 export default class SweetAlert extends React.Component {
 
@@ -49,6 +50,11 @@ export default class SweetAlert extends React.Component {
     else if(this.props.type == "play-card-grade"){
         return (
             <PlayCardGrade {...this.props}/>
+        );
+    }
+    else if(this.props.type == "quiz-select-name-self"){
+        return (
+            <QuizSelectNameSelf {...this.props}/>
         );
     }
     else{
