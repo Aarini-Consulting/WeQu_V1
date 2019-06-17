@@ -29,8 +29,19 @@ Meteor.methods({
 
         if(groupCheck){
             if(groupQuizCheck){
+                //if place card mode is not finished, call the "stop" function to remove all data about it as well
+                if(!groupCheck.isPlaceCardFinished){
+                    Meteor.call('stop.game.place.cards', groupId);
+                }
+
+                //check if play card mode is ever used
+                if(groupCheck.playCardTypeActive){
+                    Meteor.call('stop.game.play.cards', groupId,groupCheck.playCardTypeActive);
+                }
+
                 Group.update({"_id":groupId},
-                {'$set':{"isActive":true, "currentGroupQuizId":groupQuizId, "isPlaceCardActive":false}
+                {
+                    '$set':{"isActive":true, "currentGroupQuizId":groupQuizId, "isPlaceCardActive":false}
                 });
             }else{
                 throw (new Meteor.Error("group_quiz_not_found")); 

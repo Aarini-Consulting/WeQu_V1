@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router';
 import { withTracker } from 'meteor/react-meteor-data';
 
+import EmailVerified from './EmailVerified';
+
 class EmailUpdateVerify extends React.Component {
   constructor(props){
     super(props);
@@ -14,7 +16,7 @@ class EmailUpdateVerify extends React.Component {
   	}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.verifyEmailChange(this.props.token)
   }
 
@@ -24,23 +26,24 @@ class EmailUpdateVerify extends React.Component {
 
   verifyEmailChange(token){
     var verified = this.props.currentUser && this.props.currentUser.emails[0].verified;
-    if(!this.state.verifying && !verified){
+    if(!this.state.verifying && verified){
       this.setState({
           verifying: true,
+        },()=>{
+          Meteor.call('change.email.verify', token, ( error ) =>{
+            if ( error ) {
+              console.log(error);
+              this.setState({
+                errorMessage: error.message
+              });
+            } 
+            else{
+              this.setState({
+                verified: true
+              });
+            }
         });
-
-        Meteor.call('change.email.verify', token, ( error ) =>{
-        if ( error ) {
-          console.log(error);
-          this.setState({
-            errorMessage: error.reason
-          });
-        } 
-        else{
-          this.setState({
-            verified: true
-          });
-        }
+        
         this.setState({
             verifying: false
           });
@@ -111,7 +114,7 @@ class EmailUpdateVerify extends React.Component {
           </section>
       )
     }
-    // return (<EmailVerified/>);
+    return false;
   }
 }
 

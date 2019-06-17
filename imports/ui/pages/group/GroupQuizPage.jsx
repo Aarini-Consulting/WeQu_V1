@@ -312,6 +312,10 @@ export default withTracker((props) => {
           groupQuizDataList = GroupQuizData.find({
             "groupId": group._id,
           }).fetch();
+        }else{
+          groupQuizDataList = GroupQuizData.find({
+            "groupId": group._id,
+          }).fetch();
         }
         
         dataReady = true;

@@ -89,14 +89,6 @@ class InviteGroup extends React.Component {
             selectedGroupLanguage: event.target.value,
         }
     );
-
-    if(event.target.value && event.target.value != "en"){
-      this.setState(
-        { 
-            selectedGroupType: "long",
-        }
-      );
-    }
   }
 
   handleChangeGroupType(event) {
@@ -597,12 +589,11 @@ class InviteGroup extends React.Component {
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
                           <span className="tooltiptext">
                           Define the type of the session. You can only set it once when creating the group for the first time.
-                          (Currently only available for "English" language)
                           </span>
                         </div>
                       </div>
                       {this.props.group 
-                        ?this.props.group && this.props.group.groupType 
+                        ?this.props.group && this.props.group.groupType
                           ?
                           <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                           value={this.state.selectedGroupType} disabled={true}>
@@ -613,17 +604,12 @@ class InviteGroup extends React.Component {
                           value={this.state.selectedGroupType} disabled={true}>
                           {this.renderGroupType()}
                           </select>
-                        : this.state.selectedGroupLanguage && this.state.selectedGroupLanguage == "en" 
-                          ?
+                        : 
                           <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                           value={this.state.selectedGroupType} onChange={this.handleChangeGroupType.bind(this)}>
                               {this.renderGroupType()}
                           </select>
-                          :
-                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
-                          value={this.state.selectedGroupType} disabled={true}>
-                              {this.renderGroupType()}
-                          </select>
+                          
                           
                       }
                       <br/>

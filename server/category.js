@@ -1,6 +1,7 @@
 import {Group} from '/collections/group';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
+import { PlayCard } from '/collections/playCard';
 
 function generateRankCategoryFromCsv() {
     var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
@@ -429,7 +430,12 @@ Meteor.methods({
                 users.forEach(function(user, index, _arr) {
                     generateOthersRank(user._id, groupCheck._id)
                 });
-        
+
+                //check if play card mode is ever used
+                if(groupCheck.playCardTypeActive){
+                    Meteor.call('stop.game.play.cards', groupId, groupCheck.playCardTypeActive);
+                }
+
                 Group.update({_id:groupId},
                     {
                         $set : {"isActive": true,"isPlaceCardActive": true},
@@ -485,7 +491,6 @@ Meteor.methods({
                     Group.update({_id:groupId},
                         {
                             $set : {
-                                "isActive":false,
                                 "isPlaceCardActive": false,
                                 "userIdsSelfRankCompleted":[]
                             }
@@ -501,7 +506,6 @@ Meteor.methods({
             throw (new Meteor.Error("game_already_started_or_finished")); 
         }
     },
-
     'end.game': function(groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 

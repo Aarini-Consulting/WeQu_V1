@@ -20,7 +20,7 @@ import CheckLoginVerified from './CheckLoginVerified';
 import AdminOnly from './AdminOnly';
 
 import Home from '/imports/ui/pages/Home';
-import QuizRankPage from '/imports/ui/pages/quizRank/QuizRankPage';
+import QuizClientPage from '/imports/ui/pages/quizClient/QuizClientPage';
 import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
@@ -181,7 +181,7 @@ const App = class App extends React.Component {
       }
     }
 
-    if(!userHasLocale){
+    if(!userHasLocale && Meteor.userId()){
       //set user's locale
       Meteor.call( 'user.set.locale', locale, ( error, response ) => {
         if ( error ) {
@@ -210,7 +210,7 @@ const App = class App extends React.Component {
           { /* Place to put layout codes here */ }
           <Switch history={history}>
               <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
-              <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizRankPage {...props}/>} {...props}/>)} />
+              <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizClientPage {...props}/>} {...props}/>)} />
               <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
               <Route exact path='/group/:id' render={(props) => (<AdminOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
               <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />

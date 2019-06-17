@@ -54,18 +54,31 @@ export default class GroupPresentation extends React.Component {
 
     render() {
         var url;
+        var shortGroup = this.props.group && this.props.group.groupType == "short";
         switch(this.props.language){
             case "nl":
-                url = "https://docs.google.com/presentation/d/e/2PACX-1vQspkT7RaUB2ctimmizxRomjyeYuyCNs9iGdDNdq3puBsmq258tLbqe5qlxcYl256Mg7ToB-G1cix6R/embed?start=false&loop=false&delayms=3000";
+                if(shortGroup){
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vRx9BnajREdaAg9t0ftJOM1YhtwrbcKs-vAGGge-HO4Hx7uSS1T4Qf9fAUKftFzN71fqne4eowr8QvV/embed?start=false&loop=false&delayms=3000";
+                }else{
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vQspkT7RaUB2ctimmizxRomjyeYuyCNs9iGdDNdq3puBsmq258tLbqe5qlxcYl256Mg7ToB-G1cix6R/embed?start=false&loop=false&delayms=3000";
+                }
                 break;
             case "fr":
-                url = "https://docs.google.com/presentation/d/e/2PACX-1vRAOs2duKEHmQ49qg-wha7P6HjjVWfNoZy_ZUVi8Xq9ViUpHvo-rFc5CFDYwbNTLJ3y1F9j0GiJMZdp/embed?start=false&loop=false&delayms=3000";
+                if(shortGroup){
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vR1AyItUfC3CT2LQB7RzyOerpmsalSUj2Ev7aTa9ahraLDlk1fuAb4Sa4OfCtH32J49b4zd0qdXTHOj/embed?start=false&loop=false&delayms=3000";
+                }else{
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vRAOs2duKEHmQ49qg-wha7P6HjjVWfNoZy_ZUVi8Xq9ViUpHvo-rFc5CFDYwbNTLJ3y1F9j0GiJMZdp/embed?start=false&loop=false&delayms=3000";
+                }
                 break;
             case "de":
-                url = "https://docs.google.com/presentation/d/e/2PACX-1vR3das6J8UVMR6Kf2XlDKupJXqAvTR7rK8NGnvGuzeyMjabsu1zGuNhMmmQu_Uv5HIPoc9hjBjSaNRP/embed?start=false&loop=false&delayms=3000";
+                if(shortGroup){
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vTX1NjseqjQ0YEwa3YK2WbVcZB0tAR99pTEfMYZn6HtNhgXxRhp9IpAyjnLIk5-NoO_vlmhaNic1UWq/embed?start=false&loop=false&delayms=3000";
+                }else{
+                    url = "https://docs.google.com/presentation/d/e/2PACX-1vR3das6J8UVMR6Kf2XlDKupJXqAvTR7rK8NGnvGuzeyMjabsu1zGuNhMmmQu_Uv5HIPoc9hjBjSaNRP/embed?start=false&loop=false&delayms=3000";
+                }   
                 break;
             default:
-                if(this.props.group && this.props.group.groupType == "short"){
+                if(shortGroup){
                     url = "https://docs.google.com/presentation/d/e/2PACX-1vRS3I0zHq194L-ovan3W_Cfe8eD29_yypYi5VVFWwj89yp3mpgpyDBrcBBUcMn1sorVKFFBH6X2TYWP/embed?start=false&loop=false&delayms=3000";
                 }else{
                     url = "https://docs.google.com/presentation/d/e/2PACX-1vShJZoQRi1WagGk2WBLSZazkZm6do0NKmTeOfGznNf2pdJKKiPicqG2jAhNdtCTtezLGdVeqxzfiuoI/embed?start=false&loop=false&delayms=3000";

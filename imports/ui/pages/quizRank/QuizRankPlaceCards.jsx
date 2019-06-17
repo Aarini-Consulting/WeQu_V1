@@ -5,7 +5,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import LoadingAnimated from '/imports/ui/pages/loading/LoadingAnimated';
-import SessionWait from './SessionWait';
+import SessionWait from '/imports/ui/pages/quizClient/SessionWait';
 
 import i18n from 'meteor/universe:i18n';
 
