@@ -25,7 +25,7 @@ Meteor.publish('users', function(selector, options) {
 Meteor.methods({
   'change.email.verify'(token) {
     var user = Meteor.users.findOne(
-      { "services.email.updateVerificationTokens.token": { $eq: token }}
+      { "services.email.updateVerificationTokens.token": token}
     );
     if(user){
       Meteor.call( 'user.update.email',user, user.services.email.updateVerificationTokens[0].address);
@@ -50,7 +50,11 @@ Meteor.methods({
       var user = Meteor.users.findOne(this.userId);
 
       if(user){
-        var verificationToken = user.services.email.updateVerficationTokens && user.services.email.updateVerficationTokens[0];
+        var verificationToken = user && user.services && user.services.email 
+        && user.services.email.updateVerficationTokens 
+        && user.services.email.updateVerficationTokens.length > 0
+        && user.services.email.updateVerficationTokens[0];
+
         var secret = Random.secret();
         if(!verificationToken){
           Meteor.users.update({_id : user._id}, 
