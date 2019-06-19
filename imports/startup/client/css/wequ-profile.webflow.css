@@ -4096,6 +4096,15 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   padding-right:1em;
 }
 
+.font-rate.padding-wrapper.no-ie{
+  text-align: left;
+  margin-top:1em;
+}
+
+.loginbox.no-ie{
+  width:75%;
+}
+
 .font-rate.f-em1{
   font-size: 1em;
   margin-top:1em;

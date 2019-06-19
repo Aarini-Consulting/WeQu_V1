@@ -88,7 +88,16 @@ Meteor.methods({
           'email': email,
           'link': Meteor.absoluteUrl(link),
         };
-        var subject = `[WeQ] Update Email`;
+
+        var firstName = user && user.profile && user.profile.firstName;
+        var lastName = user && user.profile && user.profile.lastName;
+        var subject;
+        if(firstName && lastName){
+          subject = `[WeQ] Confirm your account, ${firstName+" "+lastName}`;
+        }else{
+          subject = '[WeQ] Confirm your account';
+        }
+        
         let body = SSR.render('EmailChangeVerification', emailData);
         
         sendEmail(email, subject, body);

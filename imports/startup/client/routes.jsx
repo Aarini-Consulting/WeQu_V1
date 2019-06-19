@@ -211,11 +211,16 @@ const App = class App extends React.Component {
       return(
         <div className="fillHeight weq-bg">
           <div className="w-block noselect">
-              <div className="font-rate padding-wrapper">
-                  Sorry, we don't support this version of browser anymore.
+            <div className="loginbox no-ie" data-ix="loginbox">
+              <img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
+              <div className="font-rate padding-wrapper no-ie">
+                  <b>Did you know that your Internet Explorer is out of date?</b>
+                  <br/><br/>
+                  Since January 2016, Microsoft no longer provides supports &amp; security updates for Internet Explorer.
                   <br/>
-                  Please use a recent version of Chrome/Firefox/Safari instead.
+                  Please use a recent version of Chrome, Firefox or Safari instead.
               </div>
+            </div>
           </div>
         </div>
       )
