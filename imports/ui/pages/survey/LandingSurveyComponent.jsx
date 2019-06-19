@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import Typeform from '/imports/ui/pages/survey/Typeform';
 
+import {Group} from '/collections/group';
+
 class LandingSurveyComponent extends React.Component {
   constructor(props){
     super(props);

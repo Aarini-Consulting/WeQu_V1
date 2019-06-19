@@ -46,6 +46,10 @@ export const ReportPdfEN = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
+                {propData.groupType == "short" 
+                ?
+                <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
+                :
                 <div className="div-diagram">
                     <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
                     <div className="diagram-wrapper w-clearfix">
@@ -82,7 +86,9 @@ export const ReportPdfEN = ({propData}) => (
                         }
                     </div>
                 </div>
-                <div className="div-current-chart">
+                }
+                
+                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">
@@ -142,15 +148,27 @@ export const ReportPdfEN = ({propData}) => (
             </div>
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
-                <div className="h4 next">
-                Don't lose the momentum!
-                <br/>
-                Continue building healthy habits with our <br/>1 hour maintenance sessions.
-                <br/>
-                <br/>
-                Ask {propData.groupCreatorFirstName} for more information.
-                </div>
-                <div className="next-demo"></div>
+                {propData.groupType == "short" 
+                    ?
+                    <div className="h4 next">
+                        Become a WeQ Champion!
+                        <br/>
+                        Are you passionate about building a great team? And want to facilitate WeQ Sessions?
+                        <br/>
+                        <br/>
+                        Ask your coach about the WeQ Champion program or drop a email to <a href="mailto:contact@weq.io">contact@weq.io</a>
+                    </div>
+                    :
+                    <div className="h4 next">
+                        Don't lose the momentum!
+                        <br/>
+                        Continue building healthy habits with our <br/>1 hour maintenance sessions.
+                        <br/>
+                        <br/>
+                        Ask {propData.groupCreatorFirstName} for more information.
+                    </div>
+                }
+                <div className={`next-demo ${propData.groupType == "short" ? "short":""}`}></div>
             </div>
             </div>
             <div className="section _3-footer">

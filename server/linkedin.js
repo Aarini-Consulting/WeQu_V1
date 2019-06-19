@@ -57,7 +57,7 @@ Meteor.methods({
         }
 
         if(pictureUrl){
-            Meteor.users.update(Meteor.userId(), { 
+            Meteor.users.update(this.userId, { 
                 '$set': {
                     'profile.pictureUrl': pictureUrl,
                     'profile.pictureShape': "circle",
@@ -65,7 +65,7 @@ Meteor.methods({
                     } 
                 });
         }else{
-            Meteor.users.update(Meteor.userId(), { 
+            Meteor.users.update(this.userId, { 
                 '$set': {
                     'profile.linkedIn': linkedInData,
                     } 

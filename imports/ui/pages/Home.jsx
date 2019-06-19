@@ -15,6 +15,8 @@ import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
+import {Group} from '/collections/group';
+
 class Home extends React.Component {
     constructor(props){
         super(props);
@@ -34,12 +36,11 @@ class Home extends React.Component {
                 if(oldIndex > -1){
                     var oldGroup = this.props.groups[oldIndex];
                     if(oldGroup._id == group._id){
-                        var groupQuizStarted = !oldGroup.currentGroupQuizId && group.currentGroupQuizId;
                         var placeCardStarted = !oldGroup.isPlaceCardActive && group.isPlaceCardActive;
+                        var groupQuizStarted = !oldGroup.currentGroupQuizId && group.currentGroupQuizId;
+                        var playCardStarted = !oldGroup.playCardTypeActive && group.playCardTypeActive;
             
-                        if(groupQuizStarted || placeCardStarted){
-                            console.log("showpopup");
-                            console.log(group._id);
+                        if(groupQuizStarted || placeCardStarted || playCardStarted){
                             this.setState({ 
                                 showPopup: true,
                                 popupSelectedGroup: group

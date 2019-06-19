@@ -282,6 +282,14 @@ class EditEntry extends React.Component {
                           Français
                         </label>
                       </div>
+                      <div className="form-radio w-radio">
+                        <label className="field-label w-form-label">
+                          <input type="radio" name="locale" value="de-DE" className="w-radio-input"
+                          checked={this.state.locale == "de-DE"}
+                          onChange={this.localeChange.bind(this,"de-DE")}/>
+                          Deutsch
+                        </label>
+                      </div>
                     </div>
                     <input className="submit-button w-button" type="submit" value={i18n.getTranslation("weq.settingsEdit.SaveChanges")} onClick={this.handleLocaleSubmit.bind(this)}/>
                 </div>

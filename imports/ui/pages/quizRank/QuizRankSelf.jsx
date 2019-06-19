@@ -15,6 +15,9 @@ const T = i18n.createComponent();
 
 import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+
 const SortableItem = SortableElement(({value, disabled}) =>
     <div className={"rate-box w-clearfix" +(disabled ? " noselect":" cursor-pointer")}>
         <div className="rate-hamburger">
@@ -177,6 +180,20 @@ class QuizRankSelf extends React.Component {
                 firstSwipe: {item:this.state.items[newArray.oldIndex], startingIndex: newArray.oldIndex, newIndex: newArray.newIndex},
             });
         }
+
+        Meteor.call( 'update.rank.weight', 
+            this.props.group._id, 
+            this.props.feedbackRank._id,
+            this.state.items[newArray.oldIndex], 
+            newArray.oldIndex, 
+            newArray.newIndex, 
+            this.state.currentStep, 
+            (error, result)=>{
+            if(error){
+                console.log(error)
+            }
+        });
+
         this.setState({
             items: arrayMove(this.state.items, newArray.oldIndex, newArray.newIndex),
         });

@@ -15,13 +15,16 @@ const T = i18n.createComponent();
 import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
+import {Group} from '/collections/group';
+
 class MultipleChoice extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       savingData:false,
       quizOver:false,
-      selectedIndex:-1
+      selectedIndex:-1,
+      showModalSelectSelf:false
     };
   }
 
@@ -36,6 +39,12 @@ class MultipleChoice extends React.Component {
     }
   }
 
+  closeModal(){
+    this.setState({
+      showModalSelectSelf: false,
+    });
+  }
+
   quizFinished(){
       this.setState({
           quizOver: true,
@@ -43,9 +52,26 @@ class MultipleChoice extends React.Component {
   }
 
   answerSelected(index){
-    this.setState({
-      selectedIndex: index,
-    });
+    if(this.props.question === "BestCriticismGiver" && this.props.currentUserName){
+      if(this.props.answerOptions[index] === this.props.currentUserName){
+        allowSelect = false;
+        this.setState({
+          showModalSelectSelf: true
+        });
+
+      }else{
+        allowSelect = true;
+      }
+
+    }else{
+      allowSelect = true;
+    }
+
+    if(allowSelect){
+      this.setState({
+        selectedIndex: index,
+      });
+    }
   }
 
   renderAnswerOptions(){
@@ -103,6 +129,13 @@ class MultipleChoice extends React.Component {
                       </div>
                   </div>
                 </div>
+
+                {this.state.showModalSelectSelf &&
+                  <SweetAlert
+                  type={"quiz-select-name-self"}
+                  onCancel={this.closeModal.bind(this)}
+                  />
+                }
             </section>
           );
       }else{
@@ -122,6 +155,8 @@ export default withTracker((props) => {
               console.log(error);
           }
   });
+
+  var currentUserName;
 
   if(handleGroup.ready()){
       group = Group.findOne({_id : props.groupId});
@@ -155,7 +190,12 @@ export default withTracker((props) => {
                           if(!lastName){
                               lastName = "";
                           }
-                          return (firstName + " " + lastName);
+
+                          let userName = (firstName + " " + lastName);
+                          if(user._id === Meteor.userId()){
+                            currentUserName = userName;
+                          }
+                          return userName;
                       });
                   }
                   else{
@@ -173,6 +213,7 @@ export default withTracker((props) => {
   return {
       group:group,
       answerOptions:answerOptions,
+      currentUserName:currentUserName,
       dataReady:dataReady
   };
 })(MultipleChoice);

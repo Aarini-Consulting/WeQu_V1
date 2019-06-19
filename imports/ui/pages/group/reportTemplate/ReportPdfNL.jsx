@@ -46,6 +46,11 @@ export const ReportPdfNL = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Huidige Sessie - {propData.firstName} {propData.lastName}</div>
+                
+                {propData.groupType == "short" 
+                ?
+                <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie.</div>
+                :
                 <div className="div-diagram">
                     <div className="h4 current">Op basis van uw eigen gegevens en feedback van anderen in uw team, personaliseert het WeQsysteem uw sessie.</div>
                     <div className="diagram-wrapper w-clearfix">
@@ -82,7 +87,8 @@ export const ReportPdfNL = ({propData}) => (
                         }
                     </div>
                 </div>
-                <div className="div-current-chart">
+                }
+                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">
@@ -141,15 +147,27 @@ export const ReportPdfNL = ({propData}) => (
             </div>
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
-                <div className="h4 next">
-                    Verlies het momentum niet!
-                    <br/>
-                    Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren.
-                    <br/>
-                    <br/>
-                    Stel uw vraag aan {propData.groupCreatorFirstName}  voor meer informatie!
-                </div>
-                <div className="next-demo nl"></div>
+                {propData.groupType == "short" 
+                    ?
+                    <div className="h4 next">
+                        Word WeQ Kampioen!
+                        <br/>
+                        Ben je gepassioneerd over het bouwen van een geweldig team? En willen WeQ Sessions faciliteren?
+                        <br/>
+                        <br/>
+                        Vraag je coach over het WeQ Champion programma of stuur een e-mail naar  <a href="mailto:contact@weq.io">contact@weq.io</a>
+                    </div>
+                    :
+                    <div className="h4 next">
+                        Verlies het momentum niet!
+                        <br/>
+                        Ga verder met het onderhoudsprogramma van 1 uur om gezonde gewoontes te creëren.
+                        <br/>
+                        <br/>
+                        Stel uw vraag aan {propData.groupCreatorFirstName}  voor meer informatie!
+                    </div>
+                }
+                <div className={`next-demo ${propData.groupType == "short" ? "short":"nl"}`}></div>
             </div>
             </div>
             <div className="section _3-footer">

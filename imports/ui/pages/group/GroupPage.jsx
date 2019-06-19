@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import MenuPresentation from '/imports/ui/pages/menu/MenuPresentation';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
+import GroupPlayCardPage from './GroupPlayCardPage';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
@@ -15,6 +16,10 @@ import GroupReportPage from './GroupReportPage';
 import i18n from 'meteor/universe:i18n';
 import GroupPresentation from './GroupPresentation';
 import GroupQuizPage from './GroupQuizPage';
+import GroupTypeformSurvey from './GroupTypeformSurvey';
+
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
 
 const T = i18n.createComponent();
 
@@ -32,8 +37,7 @@ class GroupPage extends React.Component {
         showMatrixInfoPanel:undefined,
         presentationFrameLoaded:false,
         sending:false,
-        currentTab:"edit",
-        gettingTypeformResult:false
+        currentTab:"edit"
       }
   }
 
@@ -148,72 +152,35 @@ class GroupPage extends React.Component {
     });
   }
 
-  toggleMatrixInfoPanel(skillName){
-    var matrix = this.state.showMatrixInfoPanel;
+  renderUserCards(cards){
+    var shortMode = this.props.group && this.props.group.groupType == "short";
+    return cards.map((card, index) => {
+      var className = `font-number ${ card.category }`;
 
-    if(!matrix){
-      matrix = {};
-    }
+      if(shortMode){
+        className = `font-number ${ card.category } card-shape`;
+      }
 
-    if(matrix && matrix[skillName]){
-      matrix[skillName]=false;
-    }else{
-      matrix[skillName]=true;
-    }
-    this.setState({
-      showMatrixInfoPanel:matrix
+      return(
+        <div className={className} key={card.cardId}>
+          {card.cardId}
+        </div>
+      )
     });
   }
 
-  getTypeFormResult(){
-    if(!this.state.gettingTypeformResult && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
-      this.setState({
-        gettingTypeformResult: true,
-      });
+  renderUserCardsPlaceholder(){
+    var shortMode = this.props.group && this.props.group.groupType == "short";
+    return [1,2,3,4,5,6,7].map((index) => {
+      var className = `font-number placeholder`;
 
-      var supportedLocale = Meteor.settings.public.supportedLocale;
+      if(shortMode){
+        className = `font-number placeholder card-shape`;
+      }
 
-      var formIds = [];
-
-      supportedLocale.forEach((locale)=>{
-        var languageCode = locale.split("-")[0];
-        var formIdTest = Meteor.settings.public.typeformTestFormCode;
-        var formIdProd =  Meteor.settings.public.typeformProdFormCode;
-
-        var formIdSelected;
-
-        if(window.location.hostname == "app.weq.io"){
-          formIdSelected = formIdProd[languageCode];
-          if(!formIdSelected){
-            formIdSelected = formIdProd["en"];
-          }
-        }else{
-          formIdSelected = formIdTest[languageCode];
-          if(!formIdSelected){
-            formIdSelected = formIdTest["en"];
-          }
-        }
-
-        formIds.push(formIdSelected);
-      });
-
-      Meteor.call('get.all.response.typeform', this.props.group._id, formIds, this.props.group.createdAt, (error, result)=>{
-        if(error){
-          console.log(error);
-        }
-
-        this.setState({
-          gettingTypeformResult: false,
-        });
-      });
-    }
-  }
-
-  renderUserCards(cards){
-    return cards.map((card, index) => {
       return(
-        <div className={`font-number ${ card.category }`} key={card.cardId}>
-          {card.cardId}
+        <div className={className} key={"placeholder-card-"+index}>
+          #
         </div>
       )
     });
@@ -244,17 +211,26 @@ class GroupPage extends React.Component {
       }
 
       if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
+        var userCards;
+        if(this.props.group && this.props.group.groupType == "short"){
+          userCards = cardPlacement.cardPicked;
+        }else{
+          userCards = cardPlacement.cardPicked.sort((a, b)=>{
+            return (Number(a.cardId) - Number(b.cardId));
+          });
+        }
+
         return(
-          <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
+          <div className={"tap-content card w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
             <div className="tap-left card">
               <div className="font-card-username-cards ready">
                 {name}
               </div>
             </div>
             <div className="show-cards">
-                {this.renderUserCards(cardPlacement.cardPicked.sort((a, b)=>{
-                  return (Number(a.cardId) - Number(b.cardId));
-                }))}
+                {
+                  this.renderUserCards(userCards)
+                }
             </div>
           </div>
         );
@@ -268,249 +244,12 @@ class GroupPage extends React.Component {
               </div>
             </div>
             <div className="show-cards">
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
-              <div className={`font-number placeholder`}>
-                #
-              </div>
+              {this.renderUserCardsPlaceholder()}
             </div>
           </div>
         );
       }
     });
-  }
-
-  renderUsersSurvey(){
-    return this.props.users.map((user, index) => {
-      var userId = user._id;
-      var email = user.emails[0].address;
-      var readySurvey;
-      if(this.props.group.userIdsSurveyed && this.props.group.userIdsSurveyed.indexOf(userId) > -1){
-        readySurvey = true;
-      }
-
-      var cardPlacement = this.props.cardPlacements.find((cp,index)=>{
-        return cp.userId == user._id;
-      })
-
-      var odd = (index % 2) > 0;
-
-      var name;
-
-      if(user.profile.firstName && user.profile.lastName){
-        name = user.profile.firstName + " " + user.profile.lastName;
-      }else{
-        name = email;
-      }
-
-      return(
-        <div className={"tap-content w-clearfix" + (odd ? " grey-bg": "")} key={user._id}>
-          <div className="tap-left card">
-            <div className={"font-card-username "+(readySurvey ? "ready": "not-ready")}>
-              {name}
-            </div>
-          </div>
-          <div className="show-cards">
-            {
-              readySurvey 
-              ? 
-                <div className="bttn-next-card">Ready!</div>
-              : 
-              <div>
-                {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
-              </div>
-            }
-          </div>
-        </div>
-      )
-    });
-  }
-
-  renderSurveyGraph(skills){
-    if(!skills || skills.length < 1){
-      if(this.props.group && this.props.group.userIds && this.props.group.userIdsSurveyed && this.props.group.userIds.length == this.props.group.userIdsSurveyed.length){
-        return(
-          <div className="create-chart-tab">
-              <div className="create-chart-wrapper">
-                <div className="create-chart-icon-wrapper">
-                  <i className="far fa-chart-bar"></i>
-                </div>
-                {this.state.gettingTypeformResult 
-                  ?
-                  <div className="invitebttn create-chart w-button w-inline-block noselect">
-                    Loading...
-                  </div>
-                  :
-                  <div className="invitebttn create-chart w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
-                    Calculate survey result
-                  </div>
-                }
-                
-              </div>
-            </div>
-        );
-      }else{
-        return(
-          <div className="font-matric">
-            Please check again when all surveys are completed
-            {this.renderUsersSurvey()}
-          </div>
-        )
-      }
-    }
-    else{
-      var skills = skills.map((skill, index) => {
-        var leftPos = 0;
-        var total = skill.total || 0;
-        var score = skill.score || 0;
-        var formattedScore = Number.parseFloat(score).toPrecision(2);
-
-        var value = 0;
-        if(total > 0){
-          value = formattedScore/total * 100;
-        }
-        
-        if(value > 0){
-          leftPos = `calc(${ value }% - 40px)`;
-        }
-
-        var infoText = undefined;
-        var skillName = undefined;
-
-        switch(skill.name){
-          case "Psychological Safety":
-            skillName = i18n.getTranslation("weq.groupPage.PsychologicalSafety");
-            infoText = <div className="font-matric font-info">
-            <T>weq.groupPage.PsychologicalSafetyText1</T><br/>
-            <T>weq.groupPage.PsychologicalSafetyText2</T><br/>
-            <T>weq.groupPage.PsychologicalSafetyText3</T>
-            </div>
-            break;
-          case "Constructive Feedback":
-            skillName = i18n.getTranslation("weq.groupPage.ConstructiveFeedback");
-            infoText = <div className="font-matric font-info">
-            <T>weq.groupPage.ConstructiveFeedbackText1</T><br/>
-            <T>weq.groupPage.ConstructiveFeedbackText2</T><br/>
-            <T>weq.groupPage.ConstructiveFeedbackText3</T>
-            </div>
-            break;
-          case "Cognitive Bias":
-            skillName = i18n.getTranslation("weq.groupPage.CognitiveBias");
-            infoText = <div className="font-matric font-info">
-            <T>weq.groupPage.CognitiveBiasText1</T><br/>
-            <T>weq.groupPage.CognitiveBiasText2</T><br/>
-            <T>weq.groupPage.CognitiveBiasText3</T>
-            </div>
-            break;
-          case "Control over Cognitive Bias":
-            skillName = i18n.getTranslation("weq.groupPage.CognitiveBias");
-            infoText = <div className="font-matric font-info">
-            <T>weq.groupPage.CognitiveBiasText1</T><br/>
-            <T>weq.groupPage.CognitiveBiasText2</T><br/>
-            <T>weq.groupPage.CognitiveBiasText3</T>
-            </div>
-            break;
-          case "Social Norms":
-            skillName = i18n.getTranslation("weq.groupPage.SocialNorms");
-            infoText = <div className="font-matric font-info">
-            <T>weq.groupPage.SocialNormsText1</T><br/>
-            <T>weq.groupPage.SocialNormsText2</T><br/>
-            <T>weq.groupPage.SocialNormsText3</T>
-            </div>
-            break;
-          default:
-            skillName = skill.name;
-            infoText = <div className="font-matric font-info">
-            <T>weq.groupPage.NoMatrixInfo</T>
-            </div>
-            break;
-        }
-        
-        return (
-          <div key={skill.name}>
-            <div className="tap-content w-clearfix">
-              <div className="tap-left typeform-survey-graph">
-                <div className="font-matric">
-                  {skillName}
-                </div>
-                <div className="w-inline-block font-matric-info" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
-                <i className="fas fa-info-circle"></i>
-                </div>
-              </div>
-              <div className="show-numbers typeform-survey-graph">
-                <div className="chart-graph w-clearfix">
-                  <div className="chart-graph bg"></div>
-                  <div className="chart-graph active" style={{width:value + "%"}}></div>
-                  <div className="chart-number" style={{left:leftPos}}>
-                    <div className="font-chart-nr">{formattedScore}</div>
-                  </div>
-                  {/* <div className="chart-number average" style={{left:50}}> */}
-                  {/* </div> */}
-                  
-                </div>
-              </div>
-              <div className="tap-right typeform-survey-graph">
-                <div className="font-matric">
-                  {total}
-                </div>
-              </div>
-            </div>
-            {this.state.showMatrixInfoPanel && this.state.showMatrixInfoPanel[skill.name] && infoText &&
-              <div className="w-block matric-info-panel" onClick={this.toggleMatrixInfoPanel.bind(this, skill.name)}>
-                <div className="font-matric font-close">
-                  <i className="fa fa-window-close" aria-hidden="true"></i>
-                </div>
-                {infoText}
-              </div>
-            }
-            
-          </div>
-        );
-      });
-
-      return (
-        <div>
-          {skills}
-          <br/>
-          <br/>
-            <div className="div-block-right">
-              <div className="w-inline-block survey-graph-footer">
-                <div className="font-matric-refresh">
-                  {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
-                  <br/>
-                  completed the survey
-                </div>
-                {this.state.gettingTypeformResult 
-                  ?
-                  <div className="invitebttn create-chart refresh w-button w-inline-block noselect">
-                    Loading...
-                  </div>
-                  :
-                  <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
-                    Refresh
-                  </div>
-                }  
-              </div>
-          </div>
-        </div>
-      );
-    }
   }
 
   render() {
@@ -525,9 +264,7 @@ class GroupPage extends React.Component {
       }
       else if(this.state.currentTab == "survey"){
         tabContent = 
-        (<div className="tap-content-wrapper typeform-survey-graph">
-          {this.renderSurveyGraph(this.props.group.typeformGraph)}
-        </div>);
+        (<GroupTypeformSurvey group={this.props.group} users={this.props.users}/>);
       }
       else if(this.state.currentTab == "card"){
         var readySurvey;
@@ -536,23 +273,28 @@ class GroupPage extends React.Component {
         }
 
         tabContent = 
-        (<div className="tap-content-wrapper" ref="printTarget">
-          <div className="tap-content w-clearfix">
+        (<div className="tap-content-wrapper card">
+          
           {this.props.group && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
             (
-              this.props.group.isPlaceCardActive 
-              ?
-              <div className="w-inline-block game-status">In Progress</div>
-              :
-              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+              <div className="tap-content w-clearfix">
+                {this.props.group.isPlaceCardActive 
+                ?
+                <div className="w-inline-block game-status">Waiting for participants...</div>
+                :
+                <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+                }
+              </div>
             )
           }
           {this.props.group && this.props.group.isPlaceCardActive && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
-            <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
+            <div className="tap-content w-clearfix">
+              <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.stopGamePlaceCardConfirm.bind(this)}>stop</a>
+            </div>
           }
-          </div>
 
           {this.renderUsers()}
+
           {!this.props.group.isPlaceCardActive &&
             <div className="tap-content w-clearfix">
               <div className="tap-left card">
@@ -565,6 +307,9 @@ class GroupPage extends React.Component {
         tabContent = 
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
+      else if(this.state.currentTab == "play-cards"){
+        tabContent = (<GroupPlayCardPage group={this.props.group}/>);
+      }
       else if(this.state.currentTab == "report"){
         tabContent = 
         (<GroupReportPage groupId={this.props.match.params.id}/>);
@@ -573,12 +318,14 @@ class GroupPage extends React.Component {
             <section className="section home fontreleway groupbg" >
               <MenuPresentation location={this.props.location} history={this.props.history} groupName={this.props.group.groupName}/>
 
-              <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
-                <div className="tabs-menu-inner-wrapper">
+              <div className={"tabs-menu w-tab-menu"}>
+                <div className="tabs-menu-manage-session">
                   <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
                     <div>Manage session</div>
                   </div>
+                </div>
+                <div className="tabs-menu-inner-wrapper">
                   <div className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>
                     <div>Present slide</div>
@@ -595,6 +342,12 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
+                  {this.props.group && this.props.group.groupType == "short" &&
+                    <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
+                    onClick={this.toggleTabs.bind(this,"play-cards")}>
+                      <div>Play cards</div>
+                    </div>
+                  }
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>

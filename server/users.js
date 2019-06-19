@@ -6,6 +6,12 @@
 //   return Meteor.users.find({});  
 // });
 import { Random } from 'meteor/random';
+import {sendEmail} from './emailNotifications';
+
+import {Group} from '/collections/group';
+import {GroupQuizData} from '/collections/groupQuizData';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
 
 Meteor.publish('usersFiltered', function(selector, options) {
   return Meteor.users.find(selector, options);
@@ -19,7 +25,7 @@ Meteor.publish('users', function(selector, options) {
 Meteor.methods({
   'change.email.verify'(token) {
     var user = Meteor.users.findOne(
-      { "services.email.updateVerificationTokens.token": { $eq: token }}
+      { "services.email.updateVerificationTokens.token": token}
     );
     if(user){
       Meteor.call( 'user.update.email',user, user.services.email.updateVerificationTokens[0].address);
@@ -34,17 +40,21 @@ Meteor.methods({
     }
   },
   'change.email.verification.send'(email) {
-    if(Meteor.userId()){
-      var checkEmail = Meteor.users.find({_id:{$ne:Meteor.userId()},"emails.0.address":email}).fetch();
+    if(this.userId){
+      var checkEmail = Meteor.users.find({_id:{$ne:this.userId},"emails.0.address":email}).fetch();
 
       if(checkEmail.length > 0){
         throw new Meteor.Error("email already in use");
       }
 
-      var user = Meteor.users.findOne(Meteor.userId());
+      var user = Meteor.users.findOne(this.userId);
 
       if(user){
-        var verificationToken = user.services.email.updateVerficationTokens && user.services.email.updateVerficationTokens[0];
+        var verificationToken = user && user.services && user.services.email 
+        && user.services.email.updateVerficationTokens 
+        && user.services.email.updateVerficationTokens.length > 0
+        && user.services.email.updateVerficationTokens[0];
+
         var secret = Random.secret();
         if(!verificationToken){
           Meteor.users.update({_id : user._id}, 
@@ -78,15 +88,24 @@ Meteor.methods({
           'email': email,
           'link': Meteor.absoluteUrl(link),
         };
-        var subject = `[WeQ] Update Email`;
+
+        var firstName = user && user.profile && user.profile.firstName;
+        var lastName = user && user.profile && user.profile.lastName;
+        var subject;
+        if(firstName && lastName){
+          subject = `[WeQ] Confirm your account, ${firstName+" "+lastName}`;
+        }else{
+          subject = '[WeQ] Confirm your account';
+        }
+        
         let body = SSR.render('EmailChangeVerification', emailData);
-    
-        Meteor.call('sendEmail', email, subject, body);
+        
+        sendEmail(email, subject, body);
       }
     }
   },
   'store.profile.picture'(base64String) {
-    Meteor.users.update(Meteor.userId(), { 
+    Meteor.users.update(this.userId, { 
       '$set': {
           'profile.pictureUrl': base64String,
           'profile.pictureShape': "square"
@@ -94,7 +113,7 @@ Meteor.methods({
       });
   },
   'user.update.name'(firstName, lastName) {
-    Meteor.users.update(Meteor.userId(), { 
+    Meteor.users.update(this.userId, { 
       '$set': {
           // 'profile.name': firstName,
           'profile.firstName': firstName,
@@ -133,20 +152,22 @@ Meteor.methods({
     }
   },
   'user.update.gender'(gender) {
-    Meteor.users.update(Meteor.userId(), { 
+    Meteor.users.update(this.userId, { 
       '$set': {
           'profile.gender': gender,
           } 
       });
   },
   'user.set.locale'(locale) {
-    Meteor.users.update({_id: this.userId}, 
-      {$set: {
-        "profile.locale": locale,
-      }});
+    if(this.userId){
+      Meteor.users.update({_id: this.userId}, 
+        {$set: {
+          "profile.locale": locale,
+        }});
+    }
   },
   'user.delete'() {
-    var currentUser = Meteor.users.findOne({_id:Meteor.userId()});
+    var currentUser = Meteor.users.findOne({_id:this.userId});
     var userId = currentUser._id;
 
     if(currentUser){
@@ -229,7 +250,7 @@ Meteor.methods({
           "creatorId": currentUser._id,
         });
 
-      Meteor.users.remove({_id:Meteor.userId()});
+      Meteor.users.remove({_id:this.userId});
     }else{
       throw new Meteor.Error("unknown user");
     }

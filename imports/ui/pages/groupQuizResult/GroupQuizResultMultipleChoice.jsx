@@ -4,6 +4,8 @@ import i18n from 'meteor/universe:i18n';
 import GroupQuizResultGraphVerticalBar from './GroupQuizResultGraphVerticalBar';
 import LoadingGraph from '/imports/ui/pages/loading/LoadingGraph';
 
+import {Group} from '/collections/group';
+
 class GroupQuizResultMultipleChoice extends React.Component {
     constructor(props){
         super(props);
@@ -68,7 +70,8 @@ class GroupQuizResultMultipleChoice extends React.Component {
             )
         }else if(this.state.data){
             return (
-                <GroupQuizResultGraphVerticalBar data={this.state.data} isEmpty={this.state.isEmpty}/>
+                <GroupQuizResultGraphVerticalBar data={this.state.data} isEmpty={this.state.isEmpty} 
+                question={this.props.selectedQuiz && this.props.selectedQuiz.question}/>
             );
         }else{
             return(

@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import {Group} from '/collections/group';
 
 function getCategoryScoreFromString(scoreAsString){
     var score = Number(scoreAsString);
@@ -27,7 +28,7 @@ Meteor.methods({
     'calculate.typeform.score'(groupId, typeformResponses) {
         var checkGroup = Group.findOne({
             _id : groupId,
-            creatorId: Meteor.userId()
+            creatorId: this.userId
         });
 
         var scoreCostructiveFeedback = 0;
@@ -102,7 +103,7 @@ Meteor.methods({
     'get.all.response.typeform'(groupId, typeformIds,since=new Date()) {
         var checkGroup = Group.findOne({
             _id : groupId,
-            creatorId: Meteor.userId()
+            creatorId: this.userId
         });
 
         if(!checkGroup){
@@ -188,5 +189,44 @@ Meteor.methods({
         } catch (error) {
             return error;
         }
+    },
+    'get.group.typeform.average'() {
+        var allGroups = Group.find().fetch();
+
+        var combinedScore = {};
+        var combinedTotal = {};
+
+        allGroups.forEach((group,index)=>{
+            var typeformGraph = group.typeformGraph;
+
+            if(typeformGraph && typeformGraph.length > 0){
+                typeformGraph.forEach((tg,index)=>{
+                    var score = tg.score;
+                    var total = tg.total;
+
+                    if(typeof score != "number" || score < 0){
+                        score = 0;
+                    }
+
+                    if(typeof total != "number" || score < 1){
+                        total = 1;
+                    }
+
+                    if(combinedScore[tg.name]){
+                        combinedScore[tg.name] = combinedScore[tg.name] + score;
+                    }else{
+                        combinedScore[tg.name] = score;
+                    }
+
+                    if(combinedTotal[tg.name]){
+                        combinedTotal[tg.name] = combinedTotal[tg.name] + total;
+                    }else{
+                        combinedTotal[tg.name] = total;
+                    }
+                })
+            }
+        });
+
+        return {"combinedScore":combinedScore, "combinedTotal":combinedTotal}
     }
 })

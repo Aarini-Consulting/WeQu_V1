@@ -5,8 +5,12 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import LoadingAnimated from '/imports/ui/pages/loading/LoadingAnimated';
+import SessionWait from '/imports/ui/pages/quizClient/SessionWait';
 
 import i18n from 'meteor/universe:i18n';
+
+import {Group} from '/collections/group';
+import {CardPlacement} from '/collections/cardPlacement';
 
 class QuizRankPlaceCards extends React.Component {
     constructor(props){
@@ -106,7 +110,12 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     render() {
-        if(this.props.dataReady && Math.round(this.state.elapsed)  >= this.state.wait && this.props.cardPlacement && this.props.cardPlacement.cardPicked){
+        if(this.props.dataReady && this.props.group && this.props.group.groupType == "short"){
+            return(
+                <SessionWait/>
+            );
+        }
+        else if(this.props.dataReady && Math.round(this.state.elapsed)  >= this.state.wait && this.props.cardPlacement && this.props.cardPlacement.cardPicked){
             return (
                 <div className="fillHeight">
                     <section className="section summary fontreleway weq-bg">

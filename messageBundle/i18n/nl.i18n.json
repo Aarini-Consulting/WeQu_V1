@@ -130,7 +130,7 @@
         "conceptual_thinking":"conceptueel denken",
         "creative":"creatief",
         "inquisitive":"onderzoekend",
-        "analytical":"Analytisch"
+        "analytical":"analytisch"
     },
     "rankSelf":{
         "ButtonGo":"Let's go!",
@@ -147,7 +147,7 @@
         "WaitForOthers":"Wachten totdat de anderen klaar zijn.",
         "TheWholeTeamWillRank":"Het hele team zal nu de volgende persoon beoordelen:",
         "YouWillHave60Secs":"U heeft 60 seconden.",
-        "Proceed":"Doorgaan",
+        "Proceed":"Klaar!",
         "MessageDoneLine1":"Helemaal klaar!",
         "MessageDoneLine2":"Wacht alstublieft tot iedereen in de groep hun zelfbeoordeling voltooid heeft..."
     },
@@ -204,10 +204,11 @@
         "Answer7B":"Ik gaf en kreeg constructieve feedback.",
         "Answer7C":"Ik heb nieuwe, positieve eigenschappen van mijn collega's geleerd.",
         "Answer7D":"De manier waarop we de communicatie tijdens de sessie afhandelen, was effectiever dan onze gebruikelijke teamvergaderingen.",
-        "Answer7E":"Ik zie de waarde van deze sessie en ga hem aanbevelen aan anderen."
+        "Answer7E":"Ik zie de waarde van deze sessie en zou hem aanbevelen aan anderen.",
+        "Answer7F":"De coach was heel goed. I zou hem kunnen aanbevelen."
     },
     "groupQuizAnswerSubmitted":{
-        "TextLine1":"Bedankt",
-        "TextLine2":"Uw antwoord wordt ingediend"
+        "TextLine1":"Bedankt.",
+        "TextLine2":"Uw antwoord wordt ingediend."
     }
 }

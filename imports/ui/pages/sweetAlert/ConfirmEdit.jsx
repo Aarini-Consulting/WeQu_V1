@@ -53,9 +53,9 @@ export default class ConfirmEdit extends React.Component {
        var added = this.inviteAdded();
        var resend = this.inviteResend();
         return (
-            <div>
+            <div className="popup-container">
             <div className="sweet-overlay" tabIndex="-1" style={{opacity: 1.34, display: "block"}}></div>
-            <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block', marginTop: -16.5+ "em"}}>
+            <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block'}}>
                 <div className="fontreleway f-popup-title">
                     <T>weq.confirmEdit.ConfirmTitle</T>
                 </div>

@@ -147,7 +147,7 @@
         "WaitForOthers":"Waiting for others to be ready.",
         "TheWholeTeamWillRank":"The whole team will now rank:",
         "YouWillHave60Secs":"You will have 60 seconds.",
-        "Proceed":"Proceed",
+        "Proceed":"Ready",
         "MessageDoneLine1":"All done!",
         "MessageDoneLine2":"Please wait until everyone in the group completes their self-ranking..."
     },
@@ -204,10 +204,11 @@
         "Answer7B":"I gave and received some constructive feedback.",
         "Answer7C":"I learned some new, positive attributes of my colleagues.",
         "Answer7D":"The way we handle communication during the session was more effective than our usual team meetings.",
-        "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others."
+        "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others.",
+        "Answer7F":"The coach was very good. I would recommend them."
     },
     "groupQuizAnswerSubmitted":{
-        "TextLine1":"Thank you",
-        "TextLine2":"Your answer is submitted"
+        "TextLine1":"Thank you.",
+        "TextLine2":"Your answer is submitted."
     }
 }

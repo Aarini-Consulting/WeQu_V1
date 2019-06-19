@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import {Group} from '/collections/group';
+
 class InviteGroupLanding extends React.Component {
   render() {
     if(this.props.dataReady){

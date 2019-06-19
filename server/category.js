@@ -1,213 +1,220 @@
-Meteor.methods({
-    'generate.rank.category.from.csv': function() {
-        var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
+import {Group} from '/collections/group';
+import {FeedbackRank} from '/collections/feedbackRank';
+import {CardPlacement} from '/collections/cardPlacement';
+import { PlayCard } from '/collections/playCard';
 
-        if(lines.length > 0){
-            var holder={}
-            for (var i = 1; i < lines.length; i++) {
-                if(holder[lines[i][0]] && holder[lines[i][0]].subCategory){
-                    if(holder[lines[i][0]].subCategory && holder[lines[i][0]].subCategory.indexOf(lines[i][1]) < 0){
-                        holder[lines[i][0]].subCategory.push(lines[i][1]);
-                    }
-                }else{
-                    holder[lines[i][0]] = {
-                        subCategory:[lines[i][1]]
-                    };
+function generateRankCategoryFromCsv() {
+    var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
+
+    if(lines.length > 0){
+        var holder={}
+        for (var i = 1; i < lines.length; i++) {
+            if(holder[lines[i][0]] && holder[lines[i][0]].subCategory){
+                if(holder[lines[i][0]].subCategory && holder[lines[i][0]].subCategory.indexOf(lines[i][1]) < 0){
+                    holder[lines[i][0]].subCategory.push(lines[i][1]);
                 }
-            }
-
-            return holder;
-        }
-    },
-
-    'generate.card.from.csv': function() {
-        var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
-
-        if(lines.length > 0){
-            var holder={}
-            for (var i = 1; i < lines.length; i++) {
-                if(holder[lines[i][1]] && holder[lines[i][1]].cards){
-                    if(holder[lines[i][1]].cards && holder[lines[i][1]].cards.indexOf(lines[i][2]) < 0){
-                        holder[lines[i][1]].cards.push(lines[i][2]);
-                    }
-                }else{
-                    holder[lines[i][1]] = {
-                        cards:[lines[i][2]]
-                    };
-                }
-            }
-
-            return holder;
-        }
-    },
-
-    'generate.self.rank': function(userId, groupId) {
-        let groupCheck = Group.findOne({'_id': groupId});
-
-        if(!groupCheck){
-            throw (new Meteor.Error("unknown_group")); 
-        }
-
-        Meteor.call( 'generate.rank.category.from.csv', (error, result)=>{
-            if(result){
-                //result has 6 main categories
-                //each main category has 4 sub-categories
-                //user needs to get 4 sets of 6 sub-categories
-                //every set of this 6 sub-categories must have 1 randomly-selected sub-category from each category
-                //BUT sub-category that has been added to the set of 6 sub-categories CANNOT be used again for other set of 6 sub-categories
-                var steps={};
-                for(var r in result){
-                    var quiz = result[r];
-                    var subCategory = quiz.subCategory;
-
-                    for(var i = subCategory.length-1;i>=0;i--){
-                        var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                        if(steps[i]){
-                            steps[i].push(randomSub[0]);
-                        }else{
-                            steps[i]=[randomSub[0]];
-                        }
-                    }
-                }
-
-                FeedbackRank.upsert({
-                    'from': userId,
-                    'to': userId,
-                    'groupId': groupCheck._id,
-                },
-                {$set: {
-                    'rankItems': steps,
-                    }
-                });
             }else{
-                console.log("error parsing csv")
+                holder[lines[i][0]] = {
+                    subCategory:[lines[i][1]]
+                };
+            }
+        }
+
+        return holder;
+    }else{
+        return false;
+    }
+}
+
+function generateCardFromCsv() {
+    var lines = Papa.parse(Assets.getText("WeQCategory.csv")).data;
+
+    if(lines.length > 0){
+        var holder={}
+        for (var i = 1; i < lines.length; i++) {
+            if(holder[lines[i][1]] && holder[lines[i][1]].cards){
+                if(holder[lines[i][1]].cards && holder[lines[i][1]].cards.indexOf(lines[i][2]) < 0){
+                    holder[lines[i][1]].cards.push(lines[i][2]);
+                }
+            }else{
+                holder[lines[i][1]] = {
+                    cards:[lines[i][2]]
+                };
+            }
+        }
+
+        return holder;
+    }
+}
+
+export function generateSelfRank(userId, groupId) {
+    let groupCheck = Group.findOne({'_id': groupId});
+
+    if(!groupCheck){
+        throw (new Meteor.Error("unknown_group")); 
+    }
+
+    var result = generateRankCategoryFromCsv();
+    if(result){
+        //result has 6 main categories
+        //each main category has 4 sub-categories
+        //user needs to get 4 sets of 6 sub-categories
+        //every set of this 6 sub-categories must have 1 randomly-selected sub-category from each category
+        //BUT sub-category that has been added to the set of 6 sub-categories CANNOT be used again for other set of 6 sub-categories
+        var steps={};
+        var activeWeights={};
+        for(var r in result){
+            var quiz = result[r];
+            var subCategory = quiz.subCategory;
+
+            for(var i = subCategory.length-1;i>=0;i--){
+                var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
+                if(steps[i]){
+                    steps[i].push(randomSub[0]);
+                }else{
+                    steps[i]=[randomSub[0]];
+                }
+
+                if(activeWeights[i]){
+                    activeWeights[i][randomSub[0]] = false;
+                }else{
+                    activeWeights[i]=
+                        {
+                            [randomSub[0]]: false
+                        };
+                }
+            }
+        }
+
+        FeedbackRank.upsert({
+            'from': userId,
+            'to': userId,
+            'groupId': groupCheck._id,
+        },
+        {$set: {
+            'rankItems': steps,
+            'activeWeights': activeWeights
             }
         });
-    },
+    }else{
+        console.log("error parsing csv")
+    }
+}
 
-    'generate.others.rank': function(userId, groupId) {
-        let groupCheck = Group.findOne({'_id': groupId});
+export function generateOthersRank(userId, groupId) {
+    let groupCheck = Group.findOne({'_id': groupId});
 
-        if(!groupCheck){
-            throw (new Meteor.Error("unknown_group")); 
+    if(!groupCheck){
+        throw (new Meteor.Error("unknown_group")); 
+    }
+
+    //get other members in the group
+    var users = Meteor.users.find({
+            $and : [{"_id":{$ne:userId}}, 
+            {"_id":{$in:groupCheck.userIds}}],
+        },
+        {sort: { "profile.firstName": 1 }}
+    ).fetch();
+
+    if(users.length < 1){
+        throw new Meteor.Error("no_group_member_found");
+    }
+
+    //check if feedback to others already exist
+    var feedbackRankOthersExist = FeedbackRank.findOne(
+        {
+            groupId:groupCheck._id,
+            from:userId,
+            to:{$ne:userId}
         }
+    );
+    var result = generateRankCategoryFromCsv(); 
+    //only run this block if no feedback to others found
+    if(!feedbackRankOthersExist){
+        if(result){
+            //result has 6 main categories
+            //each main category has 4 sub-categories
+            //every user needs to get 1 set of 5 sub-categories
+            //this set of 5 sub-categories contains 1 randomly chosen subcategory 
+            //from 5 randomly chosen main categories
+            //if a subCategory is already chosen, NO other subCategory from the same main category can be used in the same set
+            //if a subCategory is already chosen, it cannot be used again for other user
+            //a sub categoryif can be reused for other user if all unique subCategory is already chosen 
+            //or the remaining subCategory cannot be chosen because current set already contains other subCategory from the same main category
+            
+            var numUser = users.length;
+            var numOfSet = 5;
 
-        //get other members in the group
-        var users = Meteor.users.find({
-                $and : [{"_id":{$ne:userId}}, 
-                {"_id":{$in:groupCheck.userIds}}],
-            },
-            {sort: { "profile.firstName": 1 }}
-        ).fetch();
+            var categories = JSON.parse(JSON.stringify(result));
+            for(var i=0;i<numUser;i++){
+                var selectedItemCategories=[];
+                var items=[]
+                var activeWeights={};
+                var keys = Object.keys(categories);
+                for(var i2=0;i2<numOfSet;i2++){
+                    if(keys.length >= 1){
+                        //select random category and remove it from the keys array to ensure that it won't be selected again on this set
+                        var randomKey = keys.splice(Math.floor(Math.random()*keys.length), 1);
+                        randomKey = randomKey[0];
 
-        if(users.length < 1){
-            throw new Meteor.Error("no_group_member_found");
-        }
+                        var subCategory = categories[randomKey].subCategory;
 
-        //check if feedback to others already exist
-        var feedbackRankOthersExist = FeedbackRank.findOne(
-            {
-                groupId:groupCheck._id,
-                from:userId,
-                to:{$ne:userId}
-            }
-        );
-        
-        //only run this block if no feedback to others found
-        if(!feedbackRankOthersExist){
-            Meteor.call( 'generate.rank.category.from.csv', (error, result)=>{
-                if(result){
-                    //result has 6 main categories
-                    //each main category has 4 sub-categories
-                    //every user needs to get 1 set of 5 sub-categories
-                    //this set of 5 sub-categories contains 1 randomly chosen subcategory 
-                    //from 5 randomly chosen main categories
-                    //if a subCategory is already chosen, NO other subCategory from the same main category can be used in the same set
-                    //if a subCategory is already chosen, it cannot be used again for other user
-                    //a sub categoryif can be reused for other user if all unique subCategory is already chosen 
-                    //or the remaining subCategory cannot be chosen because current set already contains other subCategory from the same main category
-                    
-                    var numUser = users.length;
-                    var numOfSet = 5;
-    
-                    var categories = JSON.parse(JSON.stringify(result));
-                    for(var i=0;i<numUser;i++){
-                        var items=[];
-                        var keys = Object.keys(categories);
-                        for(var i2=0;i2<numOfSet;i2++){
-                            if(keys.length >= 1){
-                                //select random category and remove it from the keys array to ensure that it won't be selected again on this set
-                                var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
-                                var randomCat =  categories[randomKeys];
-                                var subCategory = categories[randomKeys].subCategory;
-    
-                                //select random category and remove it from the array to ensure that it won't be selected again on this set
-                                var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                                
-                                items.push(randomSub[0]);
-                                
-                                //if all subCategories from a category is already selected, delete the category
-                                if(subCategory.length == 0){
-                                    delete categories[randomKeys];
-                                }
-                            }else{
-                                //either all unique subCategory already selected or
-                                //current set already contains a subCategory from the surviving category data
-                                var currentSet = items[items.length-1];
-                                
-                                //load fresh copy of categories
-                                categories = JSON.parse(JSON.stringify(result));
-                                keys = Object.keys(categories);
-    
-                                //removed keys that already selected in the current set
-                                for(var r in categories){
-                                    var quiz = categories[r];
-                                    var subCategory = quiz.subCategory;
-    
-                                    subCategory.some((subCat) => {
-                                        if(currentSet.indexOf(subCat) > -1){
-                                            if(keys.indexOf(r) > -1){
-                                                keys.splice(keys.indexOf(r), 1);
-                                            }
-                                            return true;
-                                        }else{
-                                            return false;
-                                        }
-                                    });
-                                }
-    
-                                //do the same thing again
-                                var randomKeys = keys.splice(Math.floor(Math.random()*keys.length), 1);
-                                var randomCat =  categories[randomKeys];
-                                var subCategory = categories[randomKeys].subCategory;
-                                var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
-                                items.push(randomSub[0]);
-                                
-                                if(subCategory.length == 0){
-                                    delete categories[randomKeys];
-                                }
-                            }
-                        }
+                        //select random subCategory and remove it from the array to ensure that it won't be selected again on this set
+                        var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
+                        selectedItemCategories.push(randomKey);
+                        items.push(randomSub[0]);
                         
-                        FeedbackRank.upsert({
-                            'from': userId,
-                            'to': users[i]._id,
-                            'groupId': groupCheck._id,
-                            
-                        },
-                        {$set: {
-                            'rankItems': {0:items},
-                            }
+                        activeWeights[randomSub[0]]=false;
+                        
+                        //if all subCategories from a category is already selected, delete the category
+                        if(subCategory.length == 0){
+                            delete categories[randomKey];
+                        }
+                    }else{
+                        //all unique subCategory already selected
+                        //load fresh copy of categories and keys
+                        categories = JSON.parse(JSON.stringify(result));
+                        keys = Object.keys(categories);
+
+                        //removed keys that is already selected in the current set
+                        keys = keys.filter((key)=>{
+                            return selectedItemCategories.indexOf(key) == -1;
                         });
-                
+                        
+                        //do the same thing again
+                        var randomKey = keys.splice(Math.floor(Math.random()*keys.length), 1);
+                        randomKey = randomKey[0];
+                        var subCategory = categories[randomKey].subCategory;
+                        var randomSub = subCategory.splice(Math.floor(Math.random()*subCategory.length), 1);
+                        items.push(randomSub[0]);
+                        activeWeights[randomSub[0]]=false;
+                        
+                        if(subCategory.length == 0){
+                            delete categories[randomKey];
+                        }
                     }
-                }else{
-                    console.log("error parsing csv")
                 }
-            });
+                
+                FeedbackRank.upsert({
+                    'from': userId,
+                    'to': users[i]._id,
+                    'groupId': groupCheck._id,
+                    
+                },
+                {$set: {
+                    'rankItems': {0:items},
+                    'activeWeights': {0:activeWeights},
+                    }
+                });
+        
+            }
+        }else{
+            console.log("error parsing csv")
         }
-    },
-    
+    }
+}
+
+Meteor.methods({
     'save.self.rank': function(groupId,rankItems,firstSwipe) {
         let groupCheck = Group.findOne({'_id': groupId});
 
@@ -215,11 +222,11 @@ Meteor.methods({
             throw (new Meteor.Error("unknown_group")); 
         }
 
-        var userCheck = Meteor.users.findOne(Meteor.userId());
+        var userCheck = Meteor.users.findOne(this.userId);
         
         var currentRank = FeedbackRank.findOne({
-            'from': Meteor.userId(),
-            'to': Meteor.userId(),
+            'from': this.userId,
+            'to': this.userId,
             'groupId': groupCheck._id
         });
         var rank;
@@ -251,8 +258,8 @@ Meteor.methods({
         }
 
         FeedbackRank.update({
-            'from': Meteor.userId(),
-            'to': Meteor.userId(),
+            'from': this.userId,
+            'to': this.userId,
             'groupId': groupCheck._id,
         },
         {$set: {
@@ -286,7 +293,7 @@ Meteor.methods({
         var userCheck = Meteor.users.findOne(userId);
         
         var currentRank = FeedbackRank.findOne({
-            'from': Meteor.userId(),
+            'from': this.userId,
             'to': userId,
             'groupId': groupCheck._id
         });
@@ -319,7 +326,7 @@ Meteor.methods({
         }
 
         FeedbackRank.update({
-            'from': Meteor.userId(),
+            'from': this.userId,
             'to': userId,
             'groupId': groupCheck._id,
         },
@@ -342,6 +349,53 @@ Meteor.methods({
             Group.update({"_id":groupCheck._id},
                 {$set : {"isPlaceCardFinished": true}
             });	
+        }
+    },
+
+    'update.rank.weight': function(groupId,rankId,item,oldPosition, newPosition,currentStep=0) {
+        let groupCheck = Group.findOne({'_id': groupId});
+
+        if(!groupCheck){
+            throw (new Meteor.Error("unknown_group")); 
+        }
+        
+        var currentRank = FeedbackRank.findOne({
+            'from': this.userId,
+            'groupId': groupCheck._id,
+            '_id':rankId
+        });
+        
+
+        if(!currentRank){
+            throw (new Meteor.Error("unknown_feedback_rank")); 
+        }
+
+        if(currentRank.activeWeights && currentRank.activeWeights[currentStep]){
+            var positiveMove = newPosition < oldPosition
+            var difference = Math.abs(newPosition - oldPosition);
+
+            var newValue=0;
+            if(typeof currentRank.activeWeights[currentStep][item] == "number"){
+                newValue = currentRank.activeWeights[currentStep][item];
+            }
+
+            if(positiveMove){
+                newValue += difference; 
+            }else{
+                newValue -= difference;
+            }
+
+            currentRank.activeWeights[currentStep][item] = newValue;
+            
+            FeedbackRank.update({
+                'from': this.userId,
+                'groupId': groupCheck._id,
+                '_id':rankId
+            },
+            {$set: {
+                'activeWeights': currentRank.activeWeights,
+                }
+            });
         }
     },
 
@@ -374,13 +428,14 @@ Meteor.methods({
 
                 //generate rank
                 users.forEach(function(user, index, _arr) {
-                    Meteor.call( 'generate.others.rank', user._id, groupCheck._id, (error, result)=>{
-                        if(error){
-                        console.log(error);
-                        }
-                    });
+                    generateOthersRank(user._id, groupCheck._id)
                 });
-        
+
+                //check if play card mode is ever used
+                if(groupCheck.playCardTypeActive){
+                    Meteor.call('stop.game.play.cards', groupId, groupCheck.playCardTypeActive);
+                }
+
                 Group.update({_id:groupId},
                     {
                         $set : {"isActive": true,"isPlaceCardActive": true},
@@ -436,7 +491,6 @@ Meteor.methods({
                     Group.update({_id:groupId},
                         {
                             $set : {
-                                "isActive":false,
                                 "isPlaceCardActive": false,
                                 "userIdsSelfRankCompleted":[]
                             }
@@ -452,7 +506,6 @@ Meteor.methods({
             throw (new Meteor.Error("game_already_started_or_finished")); 
         }
     },
-
     'end.game': function(groupId) {
         let groupCheck = Group.findOne({'_id': groupId});
 
@@ -521,7 +574,7 @@ Meteor.methods({
             throw (new Meteor.Error("group_not_started")); 
         }
 
-        var userCheck = Meteor.users.findOne(Meteor.userId());
+        var userCheck = Meteor.users.findOne(this.userId);
 
         if(!userCheck){
             throw (new Meteor.Error("unknown_user")); 
@@ -574,7 +627,7 @@ Meteor.methods({
                     }
                 });
 
-                var resultCategories = Meteor.call( 'generate.rank.category.from.csv');
+                var resultCategories = generateRankCategoryFromCsv();
                 var mainCatValues = Object.values(resultCategories);
                 var mainCatKeys = Object.keys(resultCategories);
                 //to array
@@ -634,11 +687,12 @@ Meteor.methods({
             throw new Meteor.Error("no_group_member_found");
         }
 
-        var resultCategories = Meteor.call( 'generate.rank.category.from.csv');
-        var resultCards = Meteor.call( 'generate.card.from.csv');
+        var resultCategories = generateRankCategoryFromCsv();
+        var resultCards = generateCardFromCsv();
 
         if(resultCategories){
             var categories = JSON.parse(JSON.stringify(resultCategories));
+            var cardList = JSON.parse(JSON.stringify(resultCards));
 
             users.forEach(function(user, index, _arr) {
                 var cardPlacementCheck = CardPlacement.findOne({
@@ -651,125 +705,80 @@ Meteor.methods({
                     var pickTop = 4;
                     var pickLow = 3;
 
-                    var topPicked = []
+                    var topPicked = [];
                     var lowPicked = [];
                     var cardPicked = [];
 
+                    var topPickedCategory = [];
+                    var lowPickedCategory = [];
+
                     var categoryKeys = Object.keys(categories);
 
-                    // do {
-                        //get the first 4 category from the top
-                        top.some((topRank) => {
-                            if(topPicked.length < pickTop){
-                                var categoryIndex = categoryKeys.indexOf(topRank.category);
-                                if(categoryIndex > -1){
-                                    var subCategoryIndex = categories[topRank.category].subCategory.indexOf(topRank.subCategory)
-                                    var subCategoryCards = resultCards[topRank.subCategory].cards;
+                    //get the first 4 category from the top
+                    top.forEach((topRank) => {
+                        if(topPicked.length < pickTop){
+                            var categoryIndex = categoryKeys.indexOf(topRank.category);
 
-                                    //check if cards from this subcategory still available to pick
-                                    if(subCategoryIndex > -1 && subCategoryCards.length > 0){
-                                        //selected
-                                        topPicked.push(topRank);
+                            //check if category exist and no card from the same category has been picked yet
+                            if(categoryIndex > -1 && topPickedCategory.indexOf(topRank.category) < 0){
+                                var subCategoryIndex = categories[topRank.category].subCategory.indexOf(topRank.subCategory)
+                                var subCategoryCards = cardList[topRank.subCategory].cards;
 
-                                        //pick card
-                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
-                                        cardPicked.push(
-                                            {
-                                                category:topRank.category,
-                                                subCategory:topRank.subCategory, 
-                                                cardId:randomCard[0]
-                                            });
+                                //check if cards from this subcategory still available to pick
+                                if(subCategoryIndex > -1 && subCategoryCards.length > 0){
+                                    //selected
+                                    topPicked.push(topRank);
 
-                                        //removed from subcategory pool
-                                        categories[topRank.category].subCategory.splice(subCategoryIndex, 1);
+                                    //store selected category so we know which category is already picked
+                                    topPickedCategory.push(topRank.category);
 
-                                        //removed from main category pool
-                                        categoryKeys.splice(categoryIndex, 1);
-                                    }else{
-                                         //no card available, refresh data and pick something random instead
-                                        var refreshedCategories = JSON.parse(JSON.stringify(resultCategories));
-                                        var subCategoryIndex = refreshedCategories[topRank.category].subCategory.indexOf(topRank.subCategory)
-                                        var subCategoryCards = resultCards[topRank.subCategory].cards;
-                                       
-                                        //selected
-                                        topPicked.push(topRank);
-
-                                        //pick card
-                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
-                                        cardPicked.push(
-                                            {
-                                                category:topRank.category,
-                                                subCategory:topRank.subCategory, 
-                                                cardId:randomCard[0]
-                                            });
-                                    }
+                                    //pick card and remove it from the pool
+                                    var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                    cardPicked.push(
+                                        {
+                                            category:topRank.category,
+                                            subCategory:topRank.subCategory, 
+                                            cardId:randomCard[0]
+                                        });
                                 }
-                            }else{
-                                return false;
                             }
-                        });
-                    // }
-                    // while (topPicked.length < pickTop);
-                    
+                        }
+                    });
+
                     //refresh categoryKeys before getting the remaining 3 category from the bottom
                     categoryKeys = Object.keys(categories);
-                    
 
-                    // do{
-                        //get the remaining 3 category from the bottom
-                        low.some((lowRank) => {
-                            if(lowPicked.length < pickLow){
-                                var categoryIndex = categoryKeys.indexOf(lowRank.category);
-                                if(categoryIndex > -1){
-                                    var subCategoryIndex = categories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
-                                    var subCategoryCards = resultCards[lowRank.subCategory].cards;
+                    //get the remaining 3 category from the bottom
+                    low.forEach((lowRank) => {
+                        if(lowPicked.length < pickLow){
+                            var categoryIndex = categoryKeys.indexOf(lowRank.category);
+                            
+                            //check if category exist and no card from the same category has been picked yet
+                            if(categoryIndex > -1 && lowPickedCategory.indexOf(lowRank.category) < 0){
+                                var subCategoryIndex = categories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
+                                var subCategoryCards = cardList[lowRank.subCategory].cards;
 
-                                    //check if cards from this subcategory still available to pick
-                                    if(subCategoryIndex > -1 && subCategoryCards.length > 0){
-                                        //selected
-                                        lowPicked.push(lowRank);
-                                        
-                                        //pick card
-                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
-                                        cardPicked.push(
-                                            {
-                                                category:lowRank.category,
-                                                subCategory:lowRank.subCategory, 
-                                                cardId:randomCard[0]
-                                            });
+                                //check if cards from this subcategory still available to pick
+                                if(subCategoryIndex > -1 && subCategoryCards.length > 0){
+                                    //selected
+                                    lowPicked.push(lowRank);
 
-                                        //removed from subcategory pool
-                                        categories[lowRank.category].subCategory.splice(subCategoryIndex, 1);
-
-                                        //removed keys from main category keys pool
-                                        categoryKeys.splice(categoryIndex, 1);
-                                    }else{
-                                        //no card available, refresh data and pick something random instead
-                                        var refreshedCategories = JSON.parse(JSON.stringify(resultCategories));
-                                        var subCategoryIndex = refreshedCategories[lowRank.category].subCategory.indexOf(lowRank.subCategory)
-                                        var subCategoryCards = resultCards[lowRank.subCategory].cards;
-
-                                        //selected
-                                        lowPicked.push(lowRank);
-                                        
-                                        //pick card
-                                        var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
-                                        cardPicked.push(
-                                            {
-                                                category:lowRank.category,
-                                                subCategory:lowRank.subCategory, 
-                                                cardId:randomCard[0]
-                                            });
-                                    }
+                                    //store selected category so we know which category is already picked
+                                    lowPickedCategory.push(lowRank.category);
+                                    
+                                    //pick card and remove it from the pool
+                                    var randomCard = subCategoryCards.splice(Math.floor(Math.random()*subCategoryCards.length), 1);
+                                    cardPicked.push(
+                                        {
+                                            category:lowRank.category,
+                                            subCategory:lowRank.subCategory, 
+                                            cardId:randomCard[0]
+                                        });
                                 }
                             }
-                            else{
-                                return false;
-                            }
-                        });
-                    // }
-                    // while (lowPicked.length < pickLow);
-                    var holder =  {"top":topPicked,"low":lowPicked};
+                        }
+                    });
+                    // var holder =  {"top":topPicked,"low":lowPicked};
 
                     CardPlacement.update({groupId:groupCheck._id, userId:user._id}, 
                         {$set : { 

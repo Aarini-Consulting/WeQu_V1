@@ -17,6 +17,8 @@ import {complexLinkTranslate} from '/imports/helper/complexLinkTranslate';
 import Star from '/imports/ui/stars/Star';
 import GroupQuizClientImage from '../groupQuizClient/GroupQuizClientImage';
 
+import {Group} from '/collections/group';
+
 class StarRatingMultiple extends React.Component {
   constructor(props){
     super(props);
