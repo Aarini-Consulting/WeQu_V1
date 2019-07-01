@@ -169,7 +169,9 @@
         "RankCriticismGiver":"La critique peut être difficile à gérer, selon qui la donne. Classez de haut en bas les personnes les plus difficiles à critiquer.",
         "BestCriticismGiver":"Qui a fait les meilleures critiques ?",
         "RankBehaviourImprovement":"Sur lequel des comportements ci-dessous aimeriez-vous le plus travailler ? Classez les réponses.",
-        "EvaluateSession":"Dans quelle mesure êtes-vous satisfait de l'expérience WeQ ? Évaluez la session."
+        "EvaluateSession":"Dans quelle mesure êtes-vous satisfait de l'expérience WeQ ? Évaluez la session.",
+        "HadToChooseSomeonePrefer":"If you had to choose someone to get criticism from, who would you prefer to get it from?",
+        "WhenReceivingCriticism":"When receiving criticism..."
     },
     "groupQuizAnswer":{
         "Answer1":"Nul",
@@ -205,7 +207,16 @@
         "Answer7C":"J'ai appris de nouvelles qualités positives sur mes collègues.",
         "Answer7D":"Notre façon de gérer la communication pendant la session a été plus efficace que nos réunions d’équipe habituelles.",
         "Answer7E":"Je vois l'intérêt de cette session et souhaite la recommander à d'autres.",
-        "Answer7F":"L'entraîneur était très bon. Je les recommanderais."
+        "Answer7F":"L'entraîneur était très bon. Je les recommanderais.",
+        "Answer8A":"My spouse",
+        "Answer8B":"My friend",
+        "Answer8C":"My parent",
+        "Answer8D":"My boss",
+        "Answer8E":"My colleague",
+        "Answer9A":"I sometimes felt I'm being punished.",
+        "Answer9B":"I sometimes worried that I’m offending the other person.",
+        "Answer9C":"I recognized my colleagues want to help me improve.",
+        "Answer9D":"I received insightful information that helps me improve."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Merci.",

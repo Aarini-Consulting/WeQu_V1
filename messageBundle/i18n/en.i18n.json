@@ -169,7 +169,9 @@
         "RankCriticismGiver":"Criticism can be difficult to handle, depending on who gives it. Rank from top to bottom which people are the most difficult to get criticism from.",
         "BestCriticismGiver":"Who gave the best criticism?",
         "RankBehaviourImprovement":"Which of the behaviors below would you most like to work on? Rank the answers.",
-        "EvaluateSession":"How satisfied are you with the WeQ experience? Evaluate the session."
+        "EvaluateSession":"How satisfied are you with the WeQ experience? Evaluate the session.",
+        "HadToChooseSomeonePrefer":"If you had to choose someone to get criticism from, who would you prefer to get it from?",
+        "WhenReceivingCriticism":"When receiving criticism..."
     },
     "groupQuizAnswer":{
         "Answer1":"None",
@@ -205,7 +207,15 @@
         "Answer7C":"I learned some new, positive attributes of my colleagues.",
         "Answer7D":"The way we handle communication during the session was more effective than our usual team meetings.",
         "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others.",
-        "Answer7F":"The coach was very good. I would recommend them."
+        "Answer8A":"My spouse",
+        "Answer8B":"My friend",
+        "Answer8C":"My parent",
+        "Answer8D":"My boss",
+        "Answer8E":"My colleague",
+        "Answer9A":"I sometimes felt I'm being punished.",
+        "Answer9B":"I sometimes worried that I’m offending the other person.",
+        "Answer9C":"I recognized my colleagues want to help me improve.",
+        "Answer9D":"I received insightful information that helps me improve."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Thank you.",

@@ -4319,9 +4319,10 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .user-name {
+  display:Flex;
+  flex-direction: column;
   width: 15%;
   height: 100%;
-  float: left;
   border-right: 1px solid rgba(0, 0, 0, .3);
   background-color: transparent;
 }
@@ -4346,22 +4347,15 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 }
 
 .report-name {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  height: 100%;
-  min-height: 3em;
-  align-items: center;
-  justify-content: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  white-space: nowrap;
   border-bottom: 1px solid rgba(0, 0, 0, .3);
   font-family: Raleway, sans-serif;
   color: #fff;
   font-size: 1.3em;
-  text-decoration: none;
-  word-wrap: break-word;
-  padding-left:0.5em;
-  padding-right: 0.5em;
+  padding:1em 0.5em;
 }
 
 .report-name:hover,.report-name.active {

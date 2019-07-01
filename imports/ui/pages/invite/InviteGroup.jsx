@@ -22,6 +22,8 @@ const T = i18n.createComponent();
 
 import {Group} from '/collections/group';
 
+import {groupTypeShortList} from '/imports/helper/groupTypeShort.js';
+
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);
@@ -400,9 +402,11 @@ class InviteGroup extends React.Component {
     }
 
     renderGroupType(){
-      return [{type:"long", translation:"long"},{type:"short", translation:"short"}].map((val,index,array)=>{
+      let groupTypeList=["long"];
+      groupTypeList = groupTypeList.concat(groupTypeShortList);
+      return groupTypeList.map((groupType,index,array)=>{
           return(
-              <option key={"select-type"+index} value={val.type}>{val.translation}</option>
+              <option key={"select-type"+index} value={groupType}>{groupType}</option>
           );
       })
     }

@@ -169,7 +169,9 @@
         "RankCriticismGiver":"Kritiek kan moeilijk zijn om te om te gaan, afhankelijk van wie het geeft. Zet op volgorde,  van boven naar beneden, van wie het het moeilijkt is om kritiek te krijgen.",
         "BestCriticismGiver":"Wie gaf de beste kritiek?",
         "RankBehaviourImprovement":"Welke van deze gedragingen wil je het liefst aan werken? Zet ze op volgorde van boven naar beneden.",
-        "EvaluateSession":"Hoe tevreden ben je met deze ervaring? Evalueer de sessie."
+        "EvaluateSession":"Hoe tevreden ben je met deze ervaring? Evalueer de sessie.",
+        "HadToChooseSomeonePrefer":"If you had to choose someone to get criticism from, who would you prefer to get it from?",
+        "WhenReceivingCriticism":"When receiving criticism..."
     },
     "groupQuizAnswer":{
         "Answer1":"Geen enkele keer",
@@ -205,7 +207,16 @@
         "Answer7C":"Ik heb nieuwe, positieve eigenschappen van mijn collega's geleerd.",
         "Answer7D":"De manier waarop we de communicatie tijdens de sessie afhandelen, was effectiever dan onze gebruikelijke teamvergaderingen.",
         "Answer7E":"Ik zie de waarde van deze sessie en zou hem aanbevelen aan anderen.",
-        "Answer7F":"De coach was heel goed. I zou hem kunnen aanbevelen."
+        "Answer7F":"De coach was heel goed. I zou hem kunnen aanbevelen.",
+        "Answer8A":"My spouse",
+        "Answer8B":"My friend",
+        "Answer8C":"My parent",
+        "Answer8D":"My boss",
+        "Answer8E":"My colleague",
+        "Answer9A":"I sometimes felt I'm being punished.",
+        "Answer9B":"I sometimes worried that I’m offending the other person.",
+        "Answer9C":"I recognized my colleagues want to help me improve.",
+        "Answer9D":"I received insightful information that helps me improve."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Bedankt.",

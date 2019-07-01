@@ -21,6 +21,8 @@ import GroupTypeformSurvey from './GroupTypeformSurvey';
 import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
 
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
 const T = i18n.createComponent();
 
 class GroupPage extends React.Component {
@@ -153,7 +155,7 @@ class GroupPage extends React.Component {
   }
 
   renderUserCards(cards){
-    var shortMode = this.props.group && this.props.group.groupType == "short";
+    var shortMode = this.props.group && groupTypeIsShort(this.props.group.groupType);
     return cards.map((card, index) => {
       var className = `font-number ${ card.category }`;
 
@@ -170,7 +172,7 @@ class GroupPage extends React.Component {
   }
 
   renderUserCardsPlaceholder(){
-    var shortMode = this.props.group && this.props.group.groupType == "short";
+    var shortMode = this.props.group && groupTypeIsShort(this.props.group.groupType);
     return [1,2,3,4,5,6,7].map((index) => {
       var className = `font-number placeholder`;
 
@@ -212,7 +214,7 @@ class GroupPage extends React.Component {
 
       if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
         var userCards;
-        if(this.props.group && this.props.group.groupType == "short"){
+        if(this.props.group && groupTypeIsShort(this.props.group.groupType)){
           userCards = cardPlacement.cardPicked;
         }else{
           userCards = cardPlacement.cardPicked.sort((a, b)=>{
@@ -342,7 +344,7 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
-                  {this.props.group && this.props.group.groupType == "short" &&
+                  {this.props.group && groupTypeIsShort(this.props.group.groupType) &&
                     <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
                     onClick={this.toggleTabs.bind(this,"play-cards")}>
                       <div>Play cards</div>

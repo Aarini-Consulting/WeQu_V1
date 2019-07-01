@@ -1,6 +1,8 @@
 import React from 'react';
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
 export default class GroupPresentation extends React.Component {
     constructor(props) {
         super(props);
@@ -54,7 +56,7 @@ export default class GroupPresentation extends React.Component {
 
     render() {
         var url;
-        var shortGroup = this.props.group && this.props.group.groupType == "short";
+        var shortGroup = this.props.group && groupTypeIsShort(this.props.group.groupType);
         switch(this.props.language){
             case "nl":
                 if(shortGroup){

@@ -12,6 +12,8 @@ import i18n from 'meteor/universe:i18n';
 import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
 
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
 class QuizRankPlaceCards extends React.Component {
     constructor(props){
         super(props);
@@ -110,7 +112,7 @@ class QuizRankPlaceCards extends React.Component {
     }
 
     render() {
-        if(this.props.dataReady && this.props.group && this.props.group.groupType == "short"){
+        if(this.props.dataReady && this.props.group && groupTypeIsShort(this.props.group.groupType)){
             return(
                 <SessionWait/>
             );
