@@ -21,7 +21,7 @@ import GroupTypeformSurvey from './GroupTypeformSurvey';
 import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
 
-import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
 
 const T = i18n.createComponent();
 
@@ -155,14 +155,28 @@ class GroupPage extends React.Component {
   }
 
   renderUserCards(cards){
-    var shortMode = this.props.group && groupTypeIsShort(this.props.group.groupType);
-    return cards.map((card, index) => {
+    var cardsToShow = JSON.parse(JSON.stringify(cards));
+    var groupType = this.props.group && this.props.group.groupType;
+    var shortMode =  groupType && groupTypeIsShort(groupType);
+    if(shortMode){
+      //praise
+      if(groupTypeShortList[1] === groupType){
+        //remove card #5, #6 and #7
+        cardsToShow = cardsToShow.slice(0, 4);
+      }
+      //criticism
+      else if(groupTypeShortList[2] === groupType){
+        //remove card #3 and #4
+        cardsToShow.splice(2,1);
+        cardsToShow.splice(2,1);
+      }
+    }
+    
+    return cardsToShow.map((card, index) => {
       var className = `font-number ${ card.category }`;
-
       if(shortMode){
         className = `font-number ${ card.category } card-shape`;
       }
-
       return(
         <div className={className} key={card.cardId}>
           {card.cardId}
@@ -172,14 +186,27 @@ class GroupPage extends React.Component {
   }
 
   renderUserCardsPlaceholder(){
-    var shortMode = this.props.group && groupTypeIsShort(this.props.group.groupType);
-    return [1,2,3,4,5,6,7].map((index) => {
+    var groupType = this.props.group && this.props.group.groupType;
+    var shortMode =  groupType && groupTypeIsShort(groupType);
+    var cards = [1,2,3,4,5,6,7];
+    if(shortMode){
+      //praise
+      if(groupTypeShortList[1] === groupType){
+        //remove card #5, #6 and #7
+        cards = cards.slice(0, 4);
+      }
+      //criticism
+      else if(groupTypeShortList[2] === groupType){
+        //remove card #3 and #4
+        cards.splice(2,1);
+        cards.splice(2,1);
+      }
+    }
+    return cards.map((index) => {
       var className = `font-number placeholder`;
-
       if(shortMode){
         className = `font-number placeholder card-shape`;
       }
-
       return(
         <div className={className} key={"placeholder-card-"+index}>
           #
