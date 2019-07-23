@@ -8,6 +8,8 @@ import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import i18n from 'meteor/universe:i18n';
 import Loading from '../loading/Loading';
 
+import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
+
 class PersonTurnPage extends React.Component {
     constructor(props){
         super(props);

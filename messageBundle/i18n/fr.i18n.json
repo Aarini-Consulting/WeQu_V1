@@ -170,8 +170,8 @@
         "BestCriticismGiver":"Qui a fait les meilleures critiques ?",
         "RankBehaviourImprovement":"Sur lequel des comportements ci-dessous aimeriez-vous le plus travailler ? Classez les réponses.",
         "EvaluateSession":"Dans quelle mesure êtes-vous satisfait de l'expérience WeQ ? Évaluez la session.",
-        "HadToChooseSomeonePrefer":"If you had to choose someone to get criticism from, who would you prefer to get it from?",
-        "WhenReceivingCriticism":"When receiving criticism..."
+        "HadToChooseSomeonePrefer":"Si donner et recevoir des critiques devient si facile, de qui préféreriez-vous les recevoir ?",
+        "WhenReceivingCriticism":"Lorsque vous recevez des critiques pendant la session... (évaluez les déclarations)"
     },
     "groupQuizAnswer":{
         "Answer1":"Nul",
@@ -208,15 +208,15 @@
         "Answer7D":"Notre façon de gérer la communication pendant la session a été plus efficace que nos réunions d’équipe habituelles.",
         "Answer7E":"Je vois l'intérêt de cette session et souhaite la recommander à d'autres.",
         "Answer7F":"L'entraîneur était très bon. Je les recommanderais.",
-        "Answer8A":"My spouse",
-        "Answer8B":"My friend",
-        "Answer8C":"My parent",
-        "Answer8D":"My boss",
-        "Answer8E":"My colleague",
-        "Answer9A":"I sometimes felt I'm being punished.",
-        "Answer9B":"I sometimes worried that I’m offending the other person.",
-        "Answer9C":"I recognized my colleagues want to help me improve.",
-        "Answer9D":"I received insightful information that helps me improve."
+        "Answer8A":"Mon épouse",
+        "Answer8B":"Mes amis",
+        "Answer8C":"Mes parents",
+        "Answer8D":"Mon manager",
+        "Answer8E":"Mes collègues",
+        "Answer9A":"J'ai parfois eu l'impression d'être puni.",
+        "Answer9B":"J'ai parfois peur d'offenser l'autre personne.",
+        "Answer9C":"J'ai reconnu que mes collègues veulent m'aider à m'améliorer.",
+        "Answer9D":"J'ai reçu des informations perspicaces qui m'aident à m'améliorer."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Merci.",

@@ -170,8 +170,8 @@
         "BestCriticismGiver":"Who gave the best criticism?",
         "RankBehaviourImprovement":"Which of the behaviors below would you most like to work on? Rank the answers.",
         "EvaluateSession":"How satisfied are you with the WeQ experience? Evaluate the session.",
-        "HadToChooseSomeonePrefer":"If you had to choose someone to get criticism from, who would you prefer to get it from?",
-        "WhenReceivingCriticism":"When receiving criticism..."
+        "HadToChooseSomeonePrefer":"If giving and getting criticism becomes so easy, who would you prefer to get it from?",
+        "WhenReceivingCriticism":"When receiving criticism during the session… (rate the statements)"
     },
     "groupQuizAnswer":{
         "Answer1":"None",

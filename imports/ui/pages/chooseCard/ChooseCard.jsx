@@ -5,6 +5,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import {groupTypeIsShort, groupTypeShortList} from '/imports/helper/groupTypeShort.js';
+
 export default class ChooseCard extends React.Component {
     constructor(props){
         super(props);
@@ -115,6 +117,8 @@ export default class ChooseCard extends React.Component {
     }
 
     renderCardToChoose(cardsToChoose){
+        var groupType = this.props.group.groupType;
+        
         return cardsToChoose.map((card, index)=>{
             let selected=" ";
 
@@ -123,7 +127,13 @@ export default class ChooseCard extends React.Component {
             if(this.props.selectedPlayCard.playCardType == "praise"){
                 displayNumber = index+3;
             }else if(this.props.selectedPlayCard.playCardType == "criticism"){
-                displayNumber = index+5;
+                //SHORT-CRITICSM ONLY
+                if(groupTypeShortList[2] === groupType){
+                    displayNumber = index+3;
+                }else{
+                    displayNumber = index+5;
+                }
+                
             }
 
             if(this.state.selectedCard && this.state.selectedCard.cardId == card.cardId){

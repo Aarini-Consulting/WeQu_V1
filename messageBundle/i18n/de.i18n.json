@@ -170,8 +170,8 @@
         "BestCriticismGiver":"Wer hat die beste Kritik gegeben?",
         "RankBehaviourImprovement":"An welchen der folgenden Verhaltensweisen würdest du am liebsten arbeiten? Bewerte die Antworten.",
         "EvaluateSession":"Wie zufrieden bist du mit der WeQ-Erfahrung? Bewerte die Session.",
-        "HadToChooseSomeonePrefer":"If you had to choose someone to get criticism from, who would you prefer to get it from?",
-        "WhenReceivingCriticism":"When receiving criticism..."
+        "HadToChooseSomeonePrefer":"Wenn das Geben und Erhalten von Kritik so einfach wird, von wem würdest du es vorziehen, sie zu bekommen?",
+        "WhenReceivingCriticism":"Bei Kritik während der Sitzung.... (Bewertung der Aussagen)"
     },
     "groupQuizAnswer":{
         "Answer1":"Gar nicht",
@@ -208,15 +208,15 @@
         "Answer7D":"Die Art und Weise, wie wir während der Session kommunizieren, war effektiver als unsere üblichen Teammeetings.",
         "Answer7E":"Ich sehe den Wert dieser 'Wir-Zeit'-Session und würde sie anderen empfehlen.",
         "Answer7F":"Der Trainer war gut. Ich kann ihn weiterempfehlen.",
-        "Answer8A":"My spouse",
-        "Answer8B":"My friend",
-        "Answer8C":"My parent",
-        "Answer8D":"My boss",
-        "Answer8E":"My colleague",
-        "Answer9A":"I sometimes felt I'm being punished.",
-        "Answer9B":"I sometimes worried that I’m offending the other person.",
-        "Answer9C":"I recognized my colleagues want to help me improve.",
-        "Answer9D":"I received insightful information that helps me improve."
+        "Answer8A":"Mein Partner/Ehepartner",
+        "Answer8B":"Meine Freunde",
+        "Answer8C":"Meine Eltern",
+        "Answer8D":"Mein Manager",
+        "Answer8E":"Meine Kollegen",
+        "Answer9A":"Manchmal hatte ich das Gefühl, dass ich bestraft wurde.",
+        "Answer9B":"Manchmal machte ich mir Sorgen, dass ich die andere Person beleidige.",
+        "Answer9C":"Ich habe erkannt, dass meine Kollegen mir helfen wollen, mich zu verbessern.",
+        "Answer9D":"Ich erhielt aufschlussreiche Informationen, die mir helfen, mich zu verbessern."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Danke.",
