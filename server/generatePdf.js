@@ -14,6 +14,8 @@ import i18n from 'meteor/universe:i18n';
 import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
 
+import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
+
 const getBase64String = (path) => {
   try {
     const file = fs.readFileSync(path);
@@ -204,6 +206,8 @@ Meteor.methods({
         throw (new Meteor.Error("user_not_found")); 
       }
 
+      var groupType = groupCheck.groupType;
+
       var fileName = groupCheck.groupName + "_" + user.profile.firstName + "_" + user.profile.lastName + "_" + user._id +"."+dataType;
 
       var propData = { 
@@ -212,7 +216,7 @@ Meteor.methods({
         groupName: groupCheck.groupName,
         groupCreatorFirstName: creator.profile.firstName,
         groupCreatorLastName: creator.profile.lastName,
-        groupType:groupCheck.groupType
+        groupType:groupType
       };
         
       if(groupCheck.isPlaceCardFinished){
@@ -229,6 +233,21 @@ Meteor.methods({
         var low3 = individualCardPlacement.cardPicked.reverse();
 
         var sortedCard = top4.concat(low3);
+
+        var shortMode =  groupTypeIsShort(groupType);
+        if(shortMode){
+          //praise
+          if(groupTypeShortList[1] === groupType){
+            //remove card #5, #6 and #7
+            sortedCard = sortedCard.slice(0, 4);
+          }
+          //criticism
+          else if(groupTypeShortList[2] === groupType){
+            //remove card #3 and #4
+            sortedCard.splice(2,1);
+            sortedCard.splice(2,1);
+          }
+        }
 
         sortedCard.forEach((card) => {
           var cardData = individualCardPlacement.rankOrder.find(function(element) {

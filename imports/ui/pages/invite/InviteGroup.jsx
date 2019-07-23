@@ -404,9 +404,15 @@ class InviteGroup extends React.Component {
     renderGroupType(){
       let groupTypeList=["long"];
       groupTypeList = groupTypeList.concat(groupTypeShortList);
+      let groupTypeListTranslation={};
+      groupTypeListTranslation[groupTypeList[0]] = "Long Session";
+      groupTypeListTranslation[groupTypeList[1]] = "Short Session (praise + criticism)";
+      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise)";
+      groupTypeListTranslation[groupTypeList[3]] = "Short Session (criticism)";
+
       return groupTypeList.map((groupType,index,array)=>{
           return(
-              <option key={"select-type"+index} value={groupType}>{groupType}</option>
+              <option key={"select-type"+index} value={groupType}>{groupTypeListTranslation[groupType]}</option>
           );
       })
     }

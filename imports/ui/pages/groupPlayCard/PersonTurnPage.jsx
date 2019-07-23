@@ -59,7 +59,17 @@ class PersonTurnPage extends React.Component {
         
     }
 
-    renderInstruction(playCardType, personName){
+    renderInstruction(playCardType, groupType, personName){
+        let praiseInstruction = '/img/playCard/instruction-praise.jpg';
+        let criticismInstruction = '/img/playCard/instruction-criticism.jpg';
+
+        if(groupType === groupTypeShortList[1]){
+            praiseInstruction = '/img/playCard/P_Round1.jpg';
+        }
+        else if(groupType === groupTypeShortList[2]){
+            criticismInstruction = '/img/playCard/C_Round1.jpg';
+        }
+
         if(playCardType == "praise"){
             return (
                 <div>
@@ -68,7 +78,7 @@ class PersonTurnPage extends React.Component {
                         <li><span>everyone in group will choose which card is more applicable to {personName}.</span></li>
                     </ul>
                     <div className="div-block-center">
-                        <img src={'/img/playCard/instruction-praise.jpg'}/>
+                        <img src={praiseInstruction}/>
                     </div>
                 </div>
             );
@@ -80,7 +90,7 @@ class PersonTurnPage extends React.Component {
                         <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b>.</span></li>
                     </ul>
                     <div className="div-block-center">
-                        <img src={'/img/playCard/instruction-criticism.jpg'}/>
+                        <img src={criticismInstruction}/>
                     </div>
                 </div>
             );
@@ -194,7 +204,7 @@ class PersonTurnPage extends React.Component {
                 return(
                     <React.Fragment>
                         <div className="play-card-page-title">Now it's {personName}'s turn</div>
-                        {this.renderInstruction(playCardType, personName)}
+                        {this.renderInstruction(playCardType, this.props.groupType, personName)}
 
                         <div className="button-action-person-turn">
                             {this.props.cardChosenByOtherDoneCount == (this.props.totalUser-1) 

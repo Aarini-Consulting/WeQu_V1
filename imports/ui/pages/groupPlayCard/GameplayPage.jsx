@@ -37,7 +37,7 @@ class GameplayPage extends React.Component {
                 return(
                     <div className="tap-content-wrapper play-card">
                         <React.Fragment>
-                        <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
+                        <WelcomePage groupType={this.props.groupType} selectedCardType={this.props.selectedCardType} inGameplay={true}/>
                         <div className="button-action-person-turn">
                             <div className="font-rate f-bttn play-card wait w-inline-block noselect">
                                 Waiting for result
@@ -55,7 +55,7 @@ class GameplayPage extends React.Component {
                 return(
                     <div className="tap-content-wrapper play-card">
                         <React.Fragment>
-                            <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
+                            <WelcomePage groupType={this.props.groupType} selectedCardType={this.props.selectedCardType} inGameplay={true}/>
                             <div className="button-action-person-turn">
                                 <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishPlayCardSelf.bind(this)}>
                                     Next
@@ -74,6 +74,7 @@ class GameplayPage extends React.Component {
                         <PersonTurnPage 
                         playCardType={this.props.group.playCardTypeActive}
                         groupId={this.props.group._id}
+                        groupType={this.props.group.groupType}
                         chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
                         cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
                         totalUser={this.props.group.userIds.length}
