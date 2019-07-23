@@ -62,12 +62,14 @@ class PersonTurnPage extends React.Component {
     renderInstruction(playCardType, groupType, personName){
         let praiseInstruction = '/img/playCard/instruction-praise.jpg';
         let criticismInstruction = '/img/playCard/instruction-criticism.jpg';
+        let criticismText = "read cards 5, 6, and 7 out loud.";
 
         if(groupType === groupTypeShortList[1]){
             praiseInstruction = '/img/playCard/P_Round1.jpg';
         }
         else if(groupType === groupTypeShortList[2]){
             criticismInstruction = '/img/playCard/C_Round1.jpg';
+            criticismText = "read cards 3, 4, and 5. out loud";
         }
 
         if(playCardType == "praise"){
@@ -86,7 +88,7 @@ class PersonTurnPage extends React.Component {
             return(
                 <div>
                     <ul className="play-card-page-list">
-                        <li><span><b>{personName}</b>: read cards 5, 6, and 7 out loud.</span></li>
+                        <li><span><b>{personName}</b>:{criticismText}.</span></li>
                         <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b>.</span></li>
                     </ul>
                     <div className="div-block-center">

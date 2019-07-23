@@ -11,12 +11,14 @@ export default class WelcomePage extends React.Component {
     renderInstruction(groupType, selectedCardType){
         let praiseInstruction = '/img/playCard/instruction-praise.jpg';
         let criticismInstruction = '/img/playCard/instruction-criticism.jpg';
+        let criticismText = "turn over and read cards 5, 6, and 7.";
 
         if(groupType === groupTypeShortList[1]){
             praiseInstruction = '/img/playCard/P_Round1.jpg';
         }
         else if(groupType === groupTypeShortList[2]){
             criticismInstruction = '/img/playCard/C_Round1.jpg';
+            criticismText = "turn over and read cards 3, 4, and 5.";
         }
 
         if(selectedCardType == "praise"){
@@ -35,7 +37,7 @@ export default class WelcomePage extends React.Component {
             return(
                 <div>
                     <ul className="play-card-page-list">
-                        <li><span>turn over and read cards 5, 6, and 7.</span></li>
+                        <li><span>{criticismText}</span></li>
                         <li><span>choose which of these cards is something you think <b>you could improve most</b>.</span></li>
                     </ul>
                     <div className="div-block-center">
