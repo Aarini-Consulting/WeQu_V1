@@ -221,5 +221,9 @@
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Danke.",
         "TextLine2":"Ihre Antwort wird eingereicht."
+    },
+    "sweetAlert":{
+        "SelectSelf":"I see what you want. It’s natural to be ego-centric 🙂.  But let’s counteract our biases. Think about your colleagues first.",
+        "ChooseOthers":"Choose somebody else"
     }
 }

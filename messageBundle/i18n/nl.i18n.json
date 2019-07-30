@@ -166,12 +166,12 @@
         "TeamSharedGoal":"Wat is het gezamenlijke doel van jullie team?",
         "RankDiscussionBehaviour":"Een effectieve discussie vereist verschillende gedragingen. Zet op volgorde welk gedrag het belangrijkst is, van boven naar beneden.",
         "HadToChoosePrefer":"Als ik moest kiezen, zou ik de voorkeur geven aan...",
-        "RankCriticismGiver":"Kritiek kan moeilijk zijn om te om te gaan, afhankelijk van wie het geeft. Zet op volgorde,  van boven naar beneden, van wie het het moeilijkt is om kritiek te krijgen.",
+        "RankCriticismGiver":"Kritiek kan moeilijk zijn om mee om te gaan, afhankelijk van wie het geeft. Zet op volgorde,  van boven naar beneden, van wie het het moeilijkst is om kritiek te krijgen.",
         "BestCriticismGiver":"Wie gaf de beste kritiek?",
         "RankBehaviourImprovement":"Welke van deze gedragingen wil je het liefst aan werken? Zet ze op volgorde van boven naar beneden.",
         "EvaluateSession":"Hoe tevreden ben je met deze ervaring? Evalueer de sessie.",
-        "HadToChooseSomeonePrefer":"Als het geven en krijgen van kritiek zo gemakkelijk wordt, van wie zou je het dan liever krijgen?",
-        "WhenReceivingCriticism":"Bij kritiek tijdens de sessie.... (beoordeel de verklaringen)"
+        "HadToChooseSomeonePrefer":"Als het geven en krijgen van kritiek zo makkelijk wordt, van wie zou je het dan liever krijgen?",
+        "WhenReceivingCriticism":"Wanneer kritiek ontvangen wordt tijdens de sessie.... (beoordeel de verklaringen)"
     },
     "groupQuizAnswer":{
         "Answer1":"Geen enkele keer",
@@ -213,13 +213,17 @@
         "Answer8C":"Mijn ouders",
         "Answer8D":"Mijn manager",
         "Answer8E":"Mijn collega’s",
-        "Answer9A":"Ik had soms het gevoel dat ik gestraft werd.",
-        "Answer9B":"Soms maak ik me zorgen dat ik de andere persoon beledig.",
-        "Answer9C":"Ik herkende dat mijn collega's me willen helpen om me te verbeteren.",
-        "Answer9D":"Ik kreeg inzichtelijke informatie die me helpt om me te verbeteren."
+        "Answer9A":"Had ik soms het gevoel dat ik gestraft werd.",
+        "Answer9B":"Maak ik me soms zorgen dat ik de andere persoon beledig.",
+        "Answer9C":"Herken ik dat mijn collega's me willen helpen om me te verbeteren.",
+        "Answer9D":"Kreeg ik inzichtelijke informatie die me helpt om te verbeteren."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Bedankt.",
         "TextLine2":"Uw antwoord wordt ingediend."
+    },
+    "sweetAlert":{
+        "SelectSelf":"Ik zie wat je wilt. Het is natuurlijk om ego-georiënteerd te zijn :-) Maar laten we onze vooringenomenheid tegengaan. Denk eerst maar eens aan je collega's.",
+        "ChooseOthers":"anders kiezen"
     }
 }
