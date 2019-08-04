@@ -58,47 +58,64 @@ class PersonTurnPage extends React.Component {
                 }
             );
         }
-        
+    }
+
+    renderInstructionCard(){
+        let targetPlayCard = this.props.targetPlayCard;
+        if(targetPlayCard && targetPlayCard.cardsToChoose){
+            return targetPlayCard.cardsToChoose.map((card)=>{
+                let languageCode = i18n.getLocale().split("-")[0];
+                let backgroundUrl = `https://s3-eu-west-1.amazonaws.com/wequ/cards/${languageCode}/card(${card.cardId}).png`;
+
+                return (
+                    <div className={`play-card-list-container`} key={`card-${card.cardId}`}>
+                        <img className={`play-card-display`} src={`${backgroundUrl}`}/>
+                    </div>
+                );
+            });
+        }else{
+            return(
+                <h1>nodata</h1>
+            );
+        }
     }
 
     renderInstruction(playCardType, groupType, personName){
-        let praiseInstruction = '/img/playCard/instruction-praise.jpg';
-        let criticismInstruction = '/img/playCard/instruction-criticism.jpg';
-        let criticismText = "read cards 5, 6, and 7 out loud.";
+            let criticismText = "read cards 5, 6, and 7 out loud.";
 
-        if(groupType === groupTypeShortList[1]){
-            praiseInstruction = '/img/playCard/P_Round1.jpg';
-        }
-        else if(groupType === groupTypeShortList[2]){
-            criticismInstruction = '/img/playCard/C_Round1.jpg';
-            criticismText = "read cards 3, 4, and 5. out loud";
-        }
+            if(groupType === groupTypeShortList[2]){
+                criticismText = "read cards 3, 4, and 5. out loud";
+            }
 
-        if(playCardType == "praise"){
-            return (
-                <div>
-                    <ul className="play-card-page-list">
-                        <li><span><b>{personName}</b>: read cards 3 and 4 out loud.</span></li>
-                        <li><span>everyone in group will choose which card is more applicable to {personName}.</span></li>
-                    </ul>
-                    <div className="div-block-center">
-                        <img src={praiseInstruction}/>
+            if(playCardType == "praise"){
+                return (
+                    <div>
+                        <ul className="play-card-page-list">
+                            <li><span><b>{personName}</b>: read cards 3 and 4 out loud.</span></li>
+                            <li><span>everyone in group will choose which card is more applicable to {personName}.</span></li>
+                        </ul>
+                        <div className="div-block-center">
+                            <div className={"play-card-list-result-row"}>
+                                {this.renderInstructionCard()}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            );
-        }else if(playCardType == "criticism"){
-            return(
-                <div>
-                    <ul className="play-card-page-list">
-                        <li><span><b>{personName}</b>:{criticismText}.</span></li>
-                        <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b>.</span></li>
-                    </ul>
-                    <div className="div-block-center">
-                        <img src={criticismInstruction}/>
+                );
+            }else if(playCardType == "criticism"){
+                return(
+                    <div>
+                        <ul className="play-card-page-list">
+                            <li><span><b>{personName}</b>:{criticismText}.</span></li>
+                            <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b>.</span></li>
+                        </ul>
+                        <div className="div-block-center">
+                            <div className={"play-card-list-result-row"}>
+                                {this.renderInstructionCard()}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            );
-        }
+                );
+            }
     }
 
     renderResult(){
@@ -247,7 +264,6 @@ export default withTracker((props) => {
     let personName = (firstName ? firstName : "")+" "+(lastName ? lastName : "");
     let targetPlayCard;
 
-    if(props.result && props.result.length > 0){
         let handlePlayCard = Meteor.subscribe('playCard',
             {
                 "groupId":props.groupId,
@@ -282,9 +298,7 @@ export default withTracker((props) => {
             }
             dataReady = true;
         }
-    }else{
-        dataReady = true;
-    }
+  
     
     return {
         dataReady: dataReady,
