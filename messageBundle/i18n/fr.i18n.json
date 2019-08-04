@@ -223,7 +223,7 @@
         "TextLine2":"Votre réponse est soumise."
     },
     "sweetAlert":{
-        "SelectSelf":"I see what you want. It’s natural to be ego-centric 🙂.  But let’s counteract our biases. Think about your colleagues first.",
-        "ChooseOthers":"Choose somebody else"
+        "SelectSelf":"Je vois ce que tu veux. C'est naturel d'être égocentrique 🙂 Mais contrecarrons nos préjugés. Pensez d'abord à vos collègues.",
+        "ChooseOthers":"Choisir quelqu'un d'autre"
     }
 }
