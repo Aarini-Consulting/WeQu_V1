@@ -6,6 +6,8 @@ import {PlayCard} from '/collections/playCard';
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
 import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
+
 import Loading from '../loading/Loading';
 
 import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
@@ -91,8 +93,8 @@ class PersonTurnPage extends React.Component {
                 return (
                     <div>
                         <ul className="play-card-page-list">
-                            <li><span><b>{personName}</b>: read cards 3 and 4 out loud.</span></li>
-                            <li><span>everyone in group will choose which card is more applicable to {personName}.</span></li>
+                            <li><span><b>{personName}</b> <T>weq.personTurnPage.InstructionPraiseLine1</T></span></li>
+                            <li><span><T>weq.personTurnPage.InstructionPraiseLine2</T> {personName}.</span></li>
                         </ul>
                         <div className="div-block-center">
                             <div className={"play-card-list-result-row"}>
@@ -105,8 +107,8 @@ class PersonTurnPage extends React.Component {
                 return(
                     <div>
                         <ul className="play-card-page-list">
-                            <li><span><b>{personName}</b>:{criticismText}.</span></li>
-                            <li><span>everyone in group will choose which card is more applicable to <b>{personName}</b>.</span></li>
+                            <li><span><b>{personName}</b>: {criticismText}.</span></li>
+                            <li><span><T>weq.personTurnPage.InstructionCriticismLine1</T> <b>{personName}</b>.</span></li>
                         </ul>
                         <div className="div-block-center">
                             <div className={"play-card-list-result-row"}>
@@ -198,9 +200,9 @@ class PersonTurnPage extends React.Component {
             if(this.state.showResult){
                 return(
                     <React.Fragment>
-                        <div className="play-card-page-title">Result</div>
+                        <div className="play-card-page-title"><T>weq.personTurnPage.InstructionResultTitle</T></div>
                         <ul className="play-card-page-list">
-                            <li><span><b>{personName}</b>: Ask 2 people to explain their choice, and mostly listen to the feedback. <b>{personName}</b> may ask followup questions.</span></li>
+                            <li><span><b>{personName}</b> <T>weq.personTurnPage.InstructionResultLine1</T> <b>{personName}</b> <T>weq.personTurnPage.InstructionResultLine2</T></span></li>
                         </ul>
                         <div className={"play-card-list-result-row"}>
                             {this.renderResult()}
@@ -210,11 +212,11 @@ class PersonTurnPage extends React.Component {
                             {this.state.showTargetAnswer 
                             ?
                             <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishDiscussion.bind(this)}>
-                                Finish discussion
+                                <T>weq.personTurnPage.FinishDiscussion</T>
                             </div>
                             :
                             <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.showTargetAnswer.bind(this)}>
-                                Finish discussion
+                                <T>weq.personTurnPage.FinishDiscussion</T>
                             </div>
                             }
                             
@@ -231,11 +233,11 @@ class PersonTurnPage extends React.Component {
                             {this.props.cardChosenByOtherDoneCount == (this.props.totalUser-1) 
                                 ?
                                 <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.showResult.bind(this)}>
-                                    Reveal Result
+                                    <T>weq.personTurnPage.RevealResult</T>
                                 </div>
                                 :
                                 <div className="font-rate f-bttn play-card wait w-inline-block noselect">
-                                    Waiting for result
+                                    <T>weq.personTurnPage.WaitResult</T>
                                 </div>
                             }
                         </div>

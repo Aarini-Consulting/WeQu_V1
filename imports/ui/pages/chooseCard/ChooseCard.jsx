@@ -7,6 +7,9 @@ import Loading from '/imports/ui/pages/loading/Loading';
 
 import {groupTypeIsShort, groupTypeShortList} from '/imports/helper/groupTypeShort.js';
 
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
+
 export default class ChooseCard extends React.Component {
     constructor(props){
         super(props);
@@ -160,17 +163,17 @@ export default class ChooseCard extends React.Component {
             case "praise":
             return(
                 <div className="play-card-client-text">
-                    Read your cards 3 &amp; 4 which one suits <b>YOU</b> more?
+                    <T>weq.chooseCard.InstructionSelfPraiseLine1</T> <b><T>weq.chooseCard.InstructionSelfPraiseLine1Bold</T></b> <T>weq.chooseCard.InstructionSelfPraiseLine1P2</T>
                     <br/><br/>
-                    (you have 60 seconds)
+                    <T>weq.chooseCard.InstructionSelfPraiseLine2</T>
                 </div>
             );
             case "criticism":
                 return(
                     <div className="play-card-client-text">
-                        Choose which of these cards <b>YOU</b> could improve the most?
+                        <T>weq.chooseCard.InstructionSelfCriticismLine1</T> <b><T>weq.chooseCard.InstructionSelfCriticismLine1Bold</T></b> <T>weq.chooseCard.InstructionSelfCriticismLine1P2</T>
                         <br/><br/>
-                        (you have 60 seconds)
+                        <T>weq.chooseCard.InstructionSelfCriticismLine2</T>
                     </div>
                 );
         }
@@ -184,13 +187,13 @@ export default class ChooseCard extends React.Component {
             case "praise":
                 return(
                     <div className="play-card-client-text">
-                        Which card statement suits <b>{firstName} {lastName}</b> more?
+                        <T>weq.chooseCard.InstructionOtherPraiseLine1</T> <b>{firstName} {lastName}</b> <T>weq.chooseCard.InstructionOtherPraiseLine1P2</T>
                     </div>
                 );
             case "criticism":
                 return(
                     <div className="play-card-client-text">
-                        Which card do you think <b>{firstName} {lastName}</b> could improve?
+                        <T>weq.chooseCard.InstructionOtherCriticismLine1</T> <b>{firstName} {lastName}</b> <T>weq.chooseCard.InstructionOtherCriticismLine1P2</T>
                     </div>
                 );
         }
@@ -205,7 +208,7 @@ export default class ChooseCard extends React.Component {
                 </div>
 
                 {this.state.timeoutWarning &&
-                    <div className="timeout-warning-text">Time's up!</div>
+                    <div className="timeout-warning-text"><T>weq.chooseCard.TimeUp</T></div>
                 }
                 
                 {this.renderInstruction()}

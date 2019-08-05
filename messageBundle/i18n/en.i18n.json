@@ -224,5 +224,57 @@
     "sweetAlert":{
         "SelectSelf":"I see what you want. It’s natural to be ego-centric 🙂.  But let’s counteract our biases. Think about your colleagues first.",
         "ChooseOthers":"Choose somebody else"
+    },
+    "gamePlayPage":{
+        "WaitingForResult":"Waiting for result",
+        "Next":"Next",
+        "InstructionTitle":"Hurray!",
+        "InstructionSubTitle":"You completed the round!",
+        "InstructionLine1":"Go to quiz section to reflect on your feedback experience.",
+        "InstructionLine2":"Once you're done with the quizzes, you may continue the next round.",
+        "NextRound":"Next round"
+    },
+    "personTurnPage":{
+        "InstructionPraiseLine1":": read cards 3 and 4 out loud.",
+        "InstructionPraiseLine2":"everyone in group will choose which card is more applicable to",
+        "InstructionCriticismLine1":"everyone in group will choose which card is more applicable to",
+        "InstructionResultTitle":"Result",
+        "InstructionResultLine1":": Ask 2 people to explain their choice, and mostly listen to the feedback.",
+        "InstructionResultLine2":"may ask followup questions.",
+        "FinishDiscussion":"Finish discussion",
+        "RevealResult":"Reveal Result",
+        "WaitResult":"Waiting for result"
+    },
+    "welcomePage":{
+        "InstructionPraiseLine1":"turn over and read cards 3 and 4.",
+        "InstructionPraiseLine2":"this may be difficult, but you must choose the card that you think is more applicable to",
+        "InstructionPraiseLine2Bold":"you",
+        "InstructionCriticismLine1":"choose which of these cards is something you think",
+        "InstructionCriticismLine1Bold":"you could improve most",
+        "InstructionGetStarted":"Get Started"
+    },
+    "chooseCard":{
+        "InstructionSelfPraiseLine1":"Read your cards 3 & 4 which one suits",
+        "InstructionSelfPraiseLine1Bold":"YOU",
+        "InstructionSelfPraiseLine1P2":"more?",
+        "InstructionSelfPraiseLine2":"(you have 60 seconds)",
+        "InstructionSelfCriticismLine1":"Choose which of these cards",
+        "InstructionSelfCriticismLine1Bold":"YOU",
+        "InstructionSelfCriticismLine1P2":"could improve the most?",
+        "InstructionSelfCriticismLine2":"(you have 60 seconds)",
+        "InstructionOtherPraiseLine1":"Which card statement suits",
+        "InstructionOtherPraiseLine1P2":"more?",
+        "InstructionOtherCriticismLine1":"Which card do you think",
+        "InstructionOtherCriticismLine1P2":"could improve?",
+        "TimeUp":"Time's up!"
+    },
+    "chooseCardPage":{
+        "OthersSelectingLine1":"others are selecting...",
+        "OthersSelectingLine2":"Sit back and relax.",
+        "PleaseWaitNextTurn":"Please wait until next turn starts.",
+        "OthersSelectingForYouLine1":"others are now selecting card for you.",
+        "OthersSelectingForYouLine2":"Sit back and relax.",
+        "EveryoneHasPickedForYouLine1":"Everyone has picked a card for you.",
+        "EveryoneHasPickedForYouLine2":"Please wait until next turn starts."
     }
 }

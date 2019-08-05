@@ -3,6 +3,9 @@ import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 
 import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
 
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
+
 export default class WelcomePage extends React.Component {
     constructor(props){
         super(props);
@@ -25,8 +28,8 @@ export default class WelcomePage extends React.Component {
             return (
             <div>
                 <ul className="play-card-page-list">
-                    <li><span>turn over and read cards 3 and 4.</span></li>
-                    <li><span>this may be difficult, but you must choose the card that you think is more applicable to <b>you</b>.</span></li>
+                    <li><span><T>weq.welcomePage.InstructionPraiseLine1</T></span></li>
+                    <li><span><T>weq.welcomePage.InstructionPraiseLine2</T> <b><T>weq.welcomePage.InstructionPraiseLine2Bold</T></b>.</span></li>
                 </ul>
                 <div className="div-block-center">
                     <img src={praiseInstruction}/>
@@ -38,7 +41,7 @@ export default class WelcomePage extends React.Component {
                 <div>
                     <ul className="play-card-page-list">
                         <li><span>{criticismText}</span></li>
-                        <li><span>choose which of these cards is something you think <b>you could improve most</b>.</span></li>
+                        <li><span><T>weq.welcomePage.InstructionCriticismLine1</T> <b><T>weq.welcomePage.InstructionCriticismLine1Bold</T></b>.</span></li>
                     </ul>
                     <div className="div-block-center">
                         <img src={criticismInstruction}/>
@@ -58,7 +61,7 @@ export default class WelcomePage extends React.Component {
                 {!this.props.inGameplay &&
                     <div className="button-action-person-turn">
                         <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.props.confirmStartGame}>
-                            Get Started
+                            <T>weq.welcomePage.InstructionGetStarted</T>
                         </div>
                     </div>
                 }
