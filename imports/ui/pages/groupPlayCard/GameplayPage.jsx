@@ -95,7 +95,7 @@ class GameplayPage extends React.Component {
                     <div className="tap-content-wrapper play-card-finish">
                         <React.Fragment>
                             <div className="play-card-page-title"><T>weq.gamePlayPage.InstructionTitle</T></div>
-                            <div className="play-card-page-subtitle"><T>weq.gamePlayPage.InstructionSubTitleYou</T></div>
+                            <div className="play-card-page-subtitle"><T>weq.gamePlayPage.InstructionSubTitle</T></div>
     
                             <ul className="play-card-page-list">
                                 <li><span><T>weq.gamePlayPage.InstructionLine1</T></span></li>
