@@ -58,8 +58,8 @@ class ChooseCardPage extends React.Component {
                 }else if(this.props.cardChosenSelfGroupDoneCount > 0){
                     return(
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.OthersSelectingLine1</T></div>
-                            <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.OthersSelectingLine2</T></div>
+                            <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine1</T></div>
+                            <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine2</T></div>
                             <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount)}/{(this.props.group.userIds.length)}</div>
                         </div>
                     );
@@ -86,8 +86,8 @@ class ChooseCardPage extends React.Component {
                         if(this.props.chooseCardForOtherGroupDoneCount > 0){
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.OthersSelectingLine1</T></div>
-                                    <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.OthersSelectingLine2</T></div>
+                                    <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine1</T></div>
+                                    <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine2</T></div>
                                     <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount)}/{(this.props.group.userIds.length-1)}</div>
                                 </div>
                             );
@@ -100,7 +100,7 @@ class ChooseCardPage extends React.Component {
                     }else{
                         return(
                             <div className="fillHeight weq-bg">
-                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.PleaseWaitNextTurn</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.PleaseWaitNextTurn</T></div>
                             </div>
                         );
                     }
@@ -112,16 +112,16 @@ class ChooseCardPage extends React.Component {
                                 {firstName &&
                                     <div className="font-rate padding-wrapper">Hi <b>{firstName}</b>,</div>
                                 }
-                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.OthersSelectingForYouLine1</T></div>
-                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.OthersSelectingForYouLine2</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingForYouLine1</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingForYouLine2</T></div>
                                 <div className="font-rate padding-wrapper">{(this.props.cardChosenByOtherGroupDoneCount)}/{(this.props.group.userIds.length-1)}</div>
                             </div>
                         );
                     }else{
                         return(
                             <div className="fillHeight weq-bg">
-                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.EveryoneHasPickedForYouLine1</T></div>
-                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPlace.EveryoneHasPickedForYouLine2</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.EveryoneHasPickedForYouLine1</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.EveryoneHasPickedForYouLine2</T></div>
                             </div>
                         );
                     }
