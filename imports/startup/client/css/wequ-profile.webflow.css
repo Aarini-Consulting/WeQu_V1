@@ -88,6 +88,9 @@
   animation-duration: 300ms ease;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+
+  overflow-y: scroll;
+  max-height:100vh;
 }
 
 @-webkit-keyframes zoomIn {
