@@ -207,6 +207,7 @@
         "Answer7C":"I learned some new, positive attributes of my colleagues.",
         "Answer7D":"The way we handle communication during the session was more effective than our usual team meetings.",
         "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others.",
+        "Answer7F":"The coach was very good. I would recommend them.",
         "Answer8A":"My spouse",
         "Answer8B":"My friend",
         "Answer8C":"My parent",
@@ -223,7 +224,12 @@
     },
     "sweetAlert":{
         "SelectSelf":"I see what you want. It’s natural to be ego-centric 🙂.  But let’s counteract our biases. Think about your colleagues first.",
-        "ChooseOthers":"Choose somebody else"
+        "ChooseOthers":"Choose somebody else",
+        "PlayCardGradeQuestion": "How strongly do you feel about that?",
+        "PlayCardGradeOption1": "not really",
+        "PlayCardGradeOption2": "medium amount",
+        "PlayCardGradeOption3": "very strongly",
+        "PlayCardGradeSubmit": "Submit"
     },
     "gamePlayPage":{
         "WaitingForResult":"Waiting for result",
@@ -235,22 +241,31 @@
         "NextRound":"Next round"
     },
     "personTurnPage":{
-        "InstructionPraiseLine1":": read cards 3 and 4 out loud.",
+        "InstructionPraiseLine1":"read cards 3 and 4 out loud.",
         "InstructionPraiseLine2":"everyone in group will choose which card is more applicable to",
-        "InstructionCriticismLine1":"everyone in group will choose which card is more applicable to",
+        "InstructionPraiseLine2P2":".",
+        "InstructionCriticismLine1v1":"read cards 5, 6, and 7 out loud.",
+        "InstructionCriticismLine1v2":"read cards 3, 4, and 5 out loud.",
+        "InstructionCriticismLine2":"everyone in group will choose which card is more applicable to",
+        "InstructionCriticismLine2P2":".",
         "InstructionResultTitle":"Result",
-        "InstructionResultLine1":": Ask 2 people to explain their choice, and mostly listen to the feedback.",
+        "InstructionResultLine1":"Ask 2 people to explain their choice, and mostly listen to the feedback.",
         "InstructionResultLine2":"may ask followup questions.",
         "FinishDiscussion":"Finish discussion",
         "RevealResult":"Reveal Result",
         "WaitResult":"Waiting for result"
     },
     "welcomePage":{
+        "praise":"PRAISE",
+        "criticism":"CONSTRUCTIVE FEEDBACK",
         "InstructionPraiseLine1":"turn over and read cards 3 and 4.",
         "InstructionPraiseLine2":"this may be difficult, but you must choose the card that you think is more applicable to",
         "InstructionPraiseLine2Bold":"you",
-        "InstructionCriticismLine1":"choose which of these cards is something you think",
-        "InstructionCriticismLine1Bold":"you could improve most",
+        "InstructionPraiseLine2P2":".",
+        "InstructionCriticismLine1v1":"turn over and read cards 5, 6, and 7",
+        "InstructionCriticismLine1v2":"turn over and read cards 3, 4, and 5",
+        "InstructionCriticismLine2":"choose which of these cards is something you think",
+        "InstructionCriticismLine2Bold":"you could improve most",
         "InstructionGetStarted":"Get Started"
     },
     "chooseCard":{

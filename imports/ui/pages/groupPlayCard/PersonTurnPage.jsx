@@ -83,10 +83,10 @@ class PersonTurnPage extends React.Component {
     }
 
     renderInstruction(playCardType, groupType, personName){
-            let criticismText = "read cards 5, 6, and 7 out loud.";
+            let criticismText = "weq.personTurnPage.InstructionCriticismLine1v1";
 
             if(groupType === groupTypeShortList[2]){
-                criticismText = "read cards 3, 4, and 5. out loud";
+                criticismText = "weq.personTurnPage.InstructionCriticismLine1v2";
             }
 
             if(playCardType == "praise"){
@@ -94,7 +94,7 @@ class PersonTurnPage extends React.Component {
                     <div>
                         <ul className="play-card-page-list">
                             <li><span><b>{personName}</b> <T>weq.personTurnPage.InstructionPraiseLine1</T></span></li>
-                            <li><span><T>weq.personTurnPage.InstructionPraiseLine2</T> {personName}.</span></li>
+                            <li><span><T>weq.personTurnPage.InstructionPraiseLine2</T> {personName} <T>weq.personTurnPage.InstructionPraiseLine2P2</T></span></li>
                         </ul>
                         <div className="div-block-center">
                             <div className={"play-card-list-result-row"}>
@@ -107,8 +107,8 @@ class PersonTurnPage extends React.Component {
                 return(
                     <div>
                         <ul className="play-card-page-list">
-                            <li><span><b>{personName}</b>: {criticismText}.</span></li>
-                            <li><span><T>weq.personTurnPage.InstructionCriticismLine1</T> <b>{personName}</b>.</span></li>
+                            <li><span><b>{personName}</b>: {i18n.getTranslation(criticismText)}.</span></li>
+                            <li><span><T>weq.personTurnPage.InstructionCriticismLine2</T> <b>{personName}</b> <T>weq.personTurnPage.InstructionCriticismLine2P2</T></span></li>
                         </ul>
                         <div className="div-block-center">
                             <div className={"play-card-list-result-row"}>

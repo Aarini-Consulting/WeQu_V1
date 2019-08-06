@@ -1,6 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
 
 export default class PlayCardGrade extends React.Component {
     constructor(props) {
@@ -8,7 +10,7 @@ export default class PlayCardGrade extends React.Component {
         this.defaultSmile = [false,false,false];
         this.state={
             smile: this.defaultSmile.slice(),
-            smileText: ["not really","medium amount","very strongly"],
+            smileText: ["weq.sweetAlert.PlayCardGradeOption1","weq.sweetAlert.PlayCardGradeOption2","weq.sweetAlert.PlayCardGradeOption3"],
             selectedIndex:-1,
             error:false
         }
@@ -41,7 +43,7 @@ export default class PlayCardGrade extends React.Component {
                     <div className="play-card-smile" onClick={clickEvent}>
                     <img src={`/img/playCard/smile-${index+1}.png`}/>
                     </div>
-                    <span className="play-card-smile-text">{this.state.smileText[index]}</span>
+                    <span className="play-card-smile-text">{i18n.getTranslation(this.state.smileText[index])}</span>
                 </div>
                 
             );
@@ -68,7 +70,7 @@ export default class PlayCardGrade extends React.Component {
                 </span>
                 <div className="msg-wrapper">
                     <div className="fontreleway f-popup-title f-popup-msg">
-                    How strongly do you feel about that?
+                    <T>weq.sweetAlert.PlayCardGradeQuestion</T>
                     </div>
                 </div>
 
@@ -83,7 +85,7 @@ export default class PlayCardGrade extends React.Component {
                             <div className="bttn-wrapper w-clearfix">
                                 <div className="popup-bttn" onClick={this.submitClick.bind(this)}>
                                     <div className="fontreleway f-bttn">
-                                        Submit
+                                        <T>weq.sweetAlert.PlayCardGradeSubmit</T>
                                     </div>
                                 </div>
                             </div>
