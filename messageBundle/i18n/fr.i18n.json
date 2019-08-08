@@ -284,12 +284,12 @@
         "TimeUp":"TEMPS TEMPS TERMINÉ !"
     },
     "chooseCardPage":{
-        "OthersSelectingLine1":"others are selecting...",
-        "OthersSelectingLine2":"Sit back and relax.",
-        "PleaseWaitNextTurn":"Please wait until next turn starts.",
-        "OthersSelectingForYouLine1":"others are now selecting card for you.",
-        "OthersSelectingForYouLine2":"Sit back and relax.",
-        "EveryoneHasPickedForYouLine1":"Everyone has picked a card for you.",
-        "EveryoneHasPickedForYouLine2":"Please wait until next turn starts."
+        "OthersSelectingLine1":"D'autres choisissent...",
+        "OthersSelectingLine2":"Asseyez-vous et détendez-vous.",
+        "PleaseWaitNextTurn":"Veuillez patienter jusqu'à ce que le prochain tour commence.",
+        "OthersSelectingForYouLine1":"d'autres sont en train de choisir une carte pour vous.",
+        "OthersSelectingForYouLine2":"Asseyez-vous et détendez-vous.",
+        "EveryoneHasPickedForYouLine1":"Tout le monde a choisi une carte pour toi.",
+        "EveryoneHasPickedForYouLine2":"Veuillez patienter jusqu'à ce que le prochain tour commence."
     }
 }
