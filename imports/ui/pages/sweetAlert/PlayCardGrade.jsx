@@ -53,7 +53,7 @@ export default class PlayCardGrade extends React.Component {
                     <div className="play-card-smile"  onClick={clickEvent}>
                     <img src={`/img/playCard/smile-${index+1}-grey.png`}/>         
                     </div>
-                    <span className="play-card-smile-text">{this.state.smileText[index]}</span>
+                    <span className="play-card-smile-text">{i18n.getTranslation(this.state.smileText[index])}</span>
                 </div>
             );
           }
