@@ -92,9 +92,11 @@ class ChooseCardPage extends React.Component {
                                 </div>
                             );
                         }else{
+                            return(
                             <section className="ranker-container fontreleway purple-bg">
                                 <Loading/>
                             </section>
+                            );
                         }
                         
                     }else{
@@ -132,6 +134,12 @@ class ChooseCardPage extends React.Component {
                     )
                 }
                 
+            }else{
+                return(
+                    <div className="fillHeight weq-bg">
+                        <div className="font-rate padding-wrapper">Error! this shouldn't have happened</div>
+                    </div>
+                )
             }
         }else{
             return(

@@ -116,6 +116,12 @@ class GameplayPage extends React.Component {
                         </React.Fragment>
                     </div>
                 );
+            }else{
+                return(
+                    <div className="tap-content-wrapper play-card">
+                        <h1>Error! this shouldn't have happened</h1>
+                    </div>
+                );
             }
         }else{
             return(

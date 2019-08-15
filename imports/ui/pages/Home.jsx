@@ -20,7 +20,6 @@ import {Group} from '/collections/group';
 class Home extends React.Component {
     constructor(props){
         super(props);
-        console.log(props);
         this.state={
             showPopup:false,
             popupSelectedGroup:undefined

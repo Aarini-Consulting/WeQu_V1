@@ -12,6 +12,7 @@ import {Group} from '/collections/group';
 import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
+import {PlayCard} from '/collections/playCard';
 
 Meteor.publish('usersFiltered', function(selector, options) {
   return Meteor.users.find(selector, options);
@@ -248,6 +249,13 @@ Meteor.methods({
       GroupQuizData.remove(
         {
           "creatorId": currentUser._id,
+        });
+
+      PlayCard.remove(
+        {$or : [
+          { "from": currentUser._id},
+          { "to": currentUser._id}
+          ] 
         });
 
       Meteor.users.remove({_id:this.userId});
