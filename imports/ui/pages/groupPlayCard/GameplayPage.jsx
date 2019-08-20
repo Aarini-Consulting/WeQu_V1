@@ -10,6 +10,9 @@ import PersonTurnPage from './PersonTurnPage';
 
 import Loading from '../loading/Loading';
 
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
+
 class GameplayPage extends React.Component {
     constructor(props){
         super(props);
@@ -37,10 +40,10 @@ class GameplayPage extends React.Component {
                 return(
                     <div className="tap-content-wrapper play-card">
                         <React.Fragment>
-                        <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
+                        <WelcomePage groupType={this.props.groupType} selectedCardType={this.props.selectedCardType} inGameplay={true}/>
                         <div className="button-action-person-turn">
                             <div className="font-rate f-bttn play-card wait w-inline-block noselect">
-                                Waiting for result
+                                <T>weq.gamePlayPage.WaitingForResult</T>
                             </div>
                         </div>
                         <div className="play-card-counter-wrapper">
@@ -55,10 +58,10 @@ class GameplayPage extends React.Component {
                 return(
                     <div className="tap-content-wrapper play-card">
                         <React.Fragment>
-                            <WelcomePage groupType={this.props.groupType} inGameplay={true}/>
+                            <WelcomePage groupType={this.props.groupType} selectedCardType={this.props.selectedCardType} inGameplay={true}/>
                             <div className="button-action-person-turn">
                                 <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" onClick={this.finishPlayCardSelf.bind(this)}>
-                                    Next
+                                    <T>weq.gamePlayPage.Next</T>
                                 </div>
                             </div>
                             <div className="play-card-counter-wrapper">
@@ -71,13 +74,14 @@ class GameplayPage extends React.Component {
             else if(this.props.chooseCardForOtherOwner){
                 return(
                     <div className="tap-content-wrapper play-card">
-                        <PersonTurnPage 
-                        playCardType={this.props.group.playCardTypeActive}
-                        groupId={this.props.group._id}
-                        chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
-                        cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
-                        totalUser={this.props.group.userIds.length}
-                        result={this.props.selectedUserCardResult}
+                        <PersonTurnPage
+                            playCardType={this.props.group.playCardTypeActive}
+                            groupId={this.props.group._id}
+                            groupType={this.props.group.groupType}
+                            chooseCardForOtherOwner={this.props.chooseCardForOtherOwner}
+                            cardChosenByOtherDoneCount={this.props.cardChosenByOtherDoneCount}
+                            totalUser={this.props.group.userIds.length}
+                            result={this.props.selectedUserCardResult}
                         />
                     </div>
                 );
@@ -90,14 +94,14 @@ class GameplayPage extends React.Component {
                 return(
                     <div className="tap-content-wrapper play-card-finish">
                         <React.Fragment>
-                            <div className="play-card-page-title">Hurray!</div>
-                            <div className="play-card-page-subtitle">You completed the round!</div>
+                            <div className="play-card-page-title"><T>weq.gamePlayPage.InstructionTitle</T></div>
+                            <div className="play-card-page-subtitle"><T>weq.gamePlayPage.InstructionSubTitle</T></div>
     
                             <ul className="play-card-page-list">
-                                <li><span>Go to quiz section to reflect on your feedback experience.</span></li>
+                                <li><span><T>weq.gamePlayPage.InstructionLine1</T></span></li>
                                 {nextRoundAvailable
                                     &&
-                                    <li><span>Once you're done with the quizzes, you may continue the next round.</span></li>
+                                    <li><span><T>weq.gamePlayPage.InstructionLine2</T></span></li>
                                 }
                             </ul>
                             {nextRoundAvailable
@@ -105,11 +109,17 @@ class GameplayPage extends React.Component {
                                 <div className="button-action-person-turn">
                                     <div className="font-rate f-bttn play-card w-inline-block noselect cursor-pointer" 
                                     onClick={this.nextRound.bind(this)}>
-                                        Next round
+                                        <T>weq.gamePlayPage.NextRound</T>
                                     </div>
                                 </div>
                             }
                         </React.Fragment>
+                    </div>
+                );
+            }else{
+                return(
+                    <div className="tap-content-wrapper play-card">
+                        <h1>Error! this shouldn't have happened</h1>
                     </div>
                 );
             }

@@ -21,6 +21,8 @@ import GroupTypeformSurvey from './GroupTypeformSurvey';
 import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
 
+import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
+
 const T = i18n.createComponent();
 
 class GroupPage extends React.Component {
@@ -153,14 +155,28 @@ class GroupPage extends React.Component {
   }
 
   renderUserCards(cards){
-    var shortMode = this.props.group && this.props.group.groupType == "short";
-    return cards.map((card, index) => {
+    var cardsToShow = JSON.parse(JSON.stringify(cards));
+    var groupType = this.props.group && this.props.group.groupType;
+    var shortMode =  groupType && groupTypeIsShort(groupType);
+    if(shortMode){
+      //praise
+      if(groupTypeShortList[1] === groupType){
+        //remove card #5, #6 and #7
+        cardsToShow = cardsToShow.slice(0, 4);
+      }
+      //criticism
+      else if(groupTypeShortList[2] === groupType){
+        //remove card #3 and #4
+        cardsToShow.splice(2,1);
+        cardsToShow.splice(2,1);
+      }
+    }
+    
+    return cardsToShow.map((card, index) => {
       var className = `font-number ${ card.category }`;
-
       if(shortMode){
         className = `font-number ${ card.category } card-shape`;
       }
-
       return(
         <div className={className} key={card.cardId}>
           {card.cardId}
@@ -170,14 +186,27 @@ class GroupPage extends React.Component {
   }
 
   renderUserCardsPlaceholder(){
-    var shortMode = this.props.group && this.props.group.groupType == "short";
-    return [1,2,3,4,5,6,7].map((index) => {
+    var groupType = this.props.group && this.props.group.groupType;
+    var shortMode =  groupType && groupTypeIsShort(groupType);
+    var cards = [1,2,3,4,5,6,7];
+    if(shortMode){
+      //praise
+      if(groupTypeShortList[1] === groupType){
+        //remove card #5, #6 and #7
+        cards = cards.slice(0, 4);
+      }
+      //criticism
+      else if(groupTypeShortList[2] === groupType){
+        //remove card #3 and #4
+        cards.splice(2,1);
+        cards.splice(2,1);
+      }
+    }
+    return cards.map((index) => {
       var className = `font-number placeholder`;
-
       if(shortMode){
         className = `font-number placeholder card-shape`;
       }
-
       return(
         <div className={className} key={"placeholder-card-"+index}>
           #
@@ -212,7 +241,7 @@ class GroupPage extends React.Component {
 
       if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
         var userCards;
-        if(this.props.group && this.props.group.groupType == "short"){
+        if(this.props.group && groupTypeIsShort(this.props.group.groupType)){
           userCards = cardPlacement.cardPicked;
         }else{
           userCards = cardPlacement.cardPicked.sort((a, b)=>{
@@ -342,7 +371,7 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
-                  {this.props.group && this.props.group.groupType == "short" &&
+                  {this.props.group && groupTypeIsShort(this.props.group.groupType) &&
                     <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
                     onClick={this.toggleTabs.bind(this,"play-cards")}>
                       <div>Play cards</div>
@@ -357,6 +386,9 @@ class GroupPage extends React.Component {
               <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
                   {tabContent}
               </div>
+
+              //unlike other tab content, always render "presentation" tabs
+              //this is done so it 'remembers' which slide was last on when switching between tabs
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
                 <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
                   <GroupPresentation 

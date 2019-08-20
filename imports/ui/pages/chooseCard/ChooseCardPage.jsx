@@ -10,6 +10,9 @@ import {PlayCard} from '/collections/playCard';
 
 import ChooseCard from './ChooseCard';
 
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
+
 class ChooseCardPage extends React.Component {
     constructor(props){
         super(props);
@@ -55,8 +58,8 @@ class ChooseCardPage extends React.Component {
                 }else if(this.props.cardChosenSelfGroupDoneCount > 0){
                     return(
                         <div className="fillHeight weq-bg">
-                            <div className="font-rate padding-wrapper">others are selecting...</div>
-                            <div className="font-rate padding-wrapper">Sit back and relax.</div>
+                            <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine1</T></div>
+                            <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine2</T></div>
                             <div className="font-rate padding-wrapper">{(this.props.cardChosenSelfGroupDoneCount)}/{(this.props.group.userIds.length)}</div>
                         </div>
                     );
@@ -83,21 +86,23 @@ class ChooseCardPage extends React.Component {
                         if(this.props.chooseCardForOtherGroupDoneCount > 0){
                             return(
                                 <div className="fillHeight weq-bg">
-                                    <div className="font-rate padding-wrapper">others are selecting...</div>
-                                    <div className="font-rate padding-wrapper">Sit back and relax.</div>
+                                    <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine1</T></div>
+                                    <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingLine2</T></div>
                                     <div className="font-rate padding-wrapper">{(this.props.chooseCardForOtherGroupDoneCount)}/{(this.props.group.userIds.length-1)}</div>
                                 </div>
                             );
                         }else{
+                            return(
                             <section className="ranker-container fontreleway purple-bg">
                                 <Loading/>
                             </section>
+                            );
                         }
                         
                     }else{
                         return(
                             <div className="fillHeight weq-bg">
-                                <div className="font-rate padding-wrapper">Please wait until next turn starts.</div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.PleaseWaitNextTurn</T></div>
                             </div>
                         );
                     }
@@ -109,16 +114,16 @@ class ChooseCardPage extends React.Component {
                                 {firstName &&
                                     <div className="font-rate padding-wrapper">Hi <b>{firstName}</b>,</div>
                                 }
-                                <div className="font-rate padding-wrapper">others are now selecting card for you.</div>
-                                <div className="font-rate padding-wrapper">Sit back and relax.</div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingForYouLine1</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.OthersSelectingForYouLine2</T></div>
                                 <div className="font-rate padding-wrapper">{(this.props.cardChosenByOtherGroupDoneCount)}/{(this.props.group.userIds.length-1)}</div>
                             </div>
                         );
                     }else{
                         return(
                             <div className="fillHeight weq-bg">
-                                <div className="font-rate padding-wrapper">Everyone has picked a card for you.</div>
-                                <div className="font-rate padding-wrapper">Please wait until next turn starts.</div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.EveryoneHasPickedForYouLine1</T></div>
+                                <div className="font-rate padding-wrapper"><T>weq.chooseCardPage.EveryoneHasPickedForYouLine2</T></div>
                             </div>
                         );
                     }
@@ -129,6 +134,12 @@ class ChooseCardPage extends React.Component {
                     )
                 }
                 
+            }else{
+                return(
+                    <div className="fillHeight weq-bg">
+                        <div className="font-rate padding-wrapper">Error! this shouldn't have happened</div>
+                    </div>
+                )
             }
         }else{
             return(

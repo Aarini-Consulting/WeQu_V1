@@ -52,7 +52,7 @@ class MultipleChoice extends React.Component {
   }
 
   answerSelected(index){
-    if(this.props.question === "BestCriticismGiver" && this.props.currentUserName){
+    if((this.props.question === "BestCriticismGiver" || this.props.question === "BestComplimentGiver") && this.props.currentUserName){
       if(this.props.answerOptions[index] === this.props.currentUserName){
         allowSelect = false;
         this.setState({

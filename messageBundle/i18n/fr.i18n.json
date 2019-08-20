@@ -169,7 +169,9 @@
         "RankCriticismGiver":"La critique peut être difficile à gérer, selon qui la donne. Classez de haut en bas les personnes les plus difficiles à critiquer.",
         "BestCriticismGiver":"Qui a fait les meilleures critiques ?",
         "RankBehaviourImprovement":"Sur lequel des comportements ci-dessous aimeriez-vous le plus travailler ? Classez les réponses.",
-        "EvaluateSession":"Dans quelle mesure êtes-vous satisfait de l'expérience WeQ ? Évaluez la session."
+        "EvaluateSession":"Dans quelle mesure êtes-vous satisfait de l'expérience WeQ ? Évaluez la session.",
+        "HadToChooseSomeonePrefer":"Si donner et recevoir des critiques devient si facile, de qui préféreriez-vous les recevoir ?",
+        "WhenReceivingCriticism":"Lorsque vous recevez des critiques pendant la session... (évaluez les déclarations)"
     },
     "groupQuizAnswer":{
         "Answer1":"Nul",
@@ -205,10 +207,89 @@
         "Answer7C":"J'ai appris de nouvelles qualités positives sur mes collègues.",
         "Answer7D":"Notre façon de gérer la communication pendant la session a été plus efficace que nos réunions d’équipe habituelles.",
         "Answer7E":"Je vois l'intérêt de cette session et souhaite la recommander à d'autres.",
-        "Answer7F":"L'entraîneur était très bon. Je les recommanderais."
+        "Answer7F":"L'entraîneur était très bon. Je les recommanderais.",
+        "Answer8A":"Mon épouse",
+        "Answer8B":"Mes amis",
+        "Answer8C":"Mes parents",
+        "Answer8D":"Mon manager",
+        "Answer8E":"Mes collègues",
+        "Answer9A":"J'ai parfois eu l'impression d'être puni.",
+        "Answer9B":"J'ai parfois peur d'offenser l'autre personne.",
+        "Answer9C":"J'ai reconnu que mes collègues veulent m'aider à m'améliorer.",
+        "Answer9D":"J'ai reçu des informations perspicaces qui m'aident à m'améliorer."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Merci.",
         "TextLine2":"Votre réponse est soumise."
+    },
+    "sweetAlert":{
+        "SelectSelf":"Je vois ce que tu veux. C'est naturel d'être égocentrique 🙂 Mais contrecarrons nos préjugés. Pensez d'abord à vos collègues.",
+        "ChooseOthers":"Choisir quelqu'un d'autre",
+        "PlayCardGradeQuestion": "Quelle est votre conviction à ce sujet ?",
+        "PlayCardGradeOption1": "pas vraiment",
+        "PlayCardGradeOption2": "quantité moyenne",
+        "PlayCardGradeOption3": "très fortement",
+        "PlayCardGradeSubmit": "SOUMETTRE"
+    },
+    "gamePlayPage":{
+        "WaitingForResult":"En attente du résultat",
+        "Next":"prochaine",
+        "InstructionTitle":"HOURRAY !",
+        "InstructionSubTitle":"Vous avez terminé le tour !",
+        "InstructionLine1":"Allez à la section des jeux-questionnaires pour réfléchir à votre expérience de rétroaction.",
+        "InstructionLine2":"Une fois que vous avez terminé les tests, vous pouvez continuer le tour suivant.",
+        "NextRound":"Prochain tour"
+    },
+    "personTurnPage":{
+        "InstructionPraiseLine1":"lit les cartes 3 et 4 à haute voix.",
+        "InstructionPraiseLine2":"Chaque membre du groupe choisira la carte qui s'applique le mieux à",
+        "InstructionPraiseLine2P2":".",
+        "InstructionCriticismLine1v1":"lit les cartes 5, 6 et 7 à haute voix.",
+        "InstructionCriticismLine1v2":"lit les cartes 3, 4 et 5 à haute voix.",
+        "InstructionCriticismLine2":"Chaque membre du groupe choisira la carte qui s'applique le mieux à",
+        "InstructionCriticismLine2P2":".",
+        "InstructionResultTitle":"RÉSULTAT",
+        "InstructionResultLine1":"Demandez à deux personnes d'expliquer leur choix et écoutez surtout les commentaires.",
+        "InstructionResultLine2":"peut poser des questions de suivi.",
+        "FinishDiscussion":"Terminer la discussion",
+        "RevealResult":"Montrer le résultat",
+        "WaitResult":"En attente du résultat"
+    },
+    "welcomePage":{
+        "InstructionPraiseLine1":"Retourner et lire les cartes 3 et 4.",
+        "InstructionPraiseLine2":"Cela peut être difficile, mais vous devez choisir la carte qui",
+        "InstructionPraiseLine2Bold":"vous",
+        "InstructionPraiseLine2P2":"semble la plus appropriée.",
+        "InstructionCriticismLine1v1":"Retourner et lire les cartes 5, 6, et 7",
+        "InstructionCriticismLine1v2":"Retourner et lire les cartes 3, 4, et 5",
+        "InstructionCriticismLine2":"choisir laquelle de ces cartes est quelque chose que vous pensez que",
+        "InstructionCriticismLine2Bold":"vous pourriez améliorer le plus.",
+        "InstructionGetStarted":"Commencez à travailler"
+    },
+    "chooseCard":{
+        "praise":"L'ÉLÉVATION",
+        "criticism":"RÉTROACTIONS CONSTRUCTIVES",
+        "InstructionSelfPraiseLine1":"Lisez vos cartes 3 & 4, laquelle",
+        "InstructionSelfPraiseLine1Bold":"VOUS",
+        "InstructionSelfPraiseLine1P2":"convient le mieux ?",
+        "InstructionSelfPraiseLine2":"(Vous avez 60 secondes)",
+        "InstructionSelfCriticismLine1":"choisir laquelle de ces cartes est quelque chose que vous pensez que",
+        "InstructionSelfCriticismLine1Bold":"vous",
+        "InstructionSelfCriticismLine1P2":"pourriez améliorer le plus.",
+        "InstructionSelfCriticismLine2":"(Vous avez 60 secondes)",
+        "InstructionOtherPraiseLine1":"Quel relevé de carte convient le mieux à",
+        "InstructionOtherPraiseLine1P2":"?",
+        "InstructionOtherCriticismLine1":"Quelle carte",
+        "InstructionOtherCriticismLine1P2":"que le nom d'utilisateur pourrait être amélioré ?",
+        "TimeUp":"TEMPS TEMPS TERMINÉ !"
+    },
+    "chooseCardPage":{
+        "OthersSelectingLine1":"D'autres choisissent...",
+        "OthersSelectingLine2":"Asseyez-vous et détendez-vous.",
+        "PleaseWaitNextTurn":"Veuillez patienter jusqu'à ce que le prochain tour commence.",
+        "OthersSelectingForYouLine1":"d'autres sont en train de choisir une carte pour vous.",
+        "OthersSelectingForYouLine2":"Asseyez-vous et détendez-vous.",
+        "EveryoneHasPickedForYouLine1":"Tout le monde a choisi une carte pour toi.",
+        "EveryoneHasPickedForYouLine2":"Veuillez patienter jusqu'à ce que le prochain tour commence."
     }
 }

@@ -94,7 +94,19 @@ Meteor.methods({
                             { "to" : user._id}],
                             
                     'groupId': groupCheck._id,
-                })
+                });
+
+                CardPlacement.remove(
+                {
+                    "userId": user._id
+                });
+
+                PlayCard.remove(
+                    {$or : [
+                      { "from": user._id},
+                      { "to": user._id}
+                    ]
+                });
 
                 Meteor.users.update({
                     "$and": [ 

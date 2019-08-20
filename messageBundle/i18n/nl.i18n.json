@@ -97,9 +97,9 @@
         "ConstructiveFeedbackText2":"Teamleden wisselen vaak constructieve feedback uit.",
         "ConstructiveFeedbackText3":"Dit team erkent regelmatig wat ik bereikt heb en mijn successen.",
         "CognitiveBias":"Control over Cognitive Bias",
-        "CognitiveBiasText1":"Ik heb het gevoel dat mijn team er de voorkeur aan geeft om harmonie te bewaren i.p.v. gestoord te worden door conflicten.",
-        "CognitiveBiasText2":"Een goed presterend team creëert minder fouten dan teams die middelmatig zijn.",
-        "CognitiveBiasText3":"In ons team stellen juniors regelmatig ideeën van seniors ter discussie.",
+        "CognitiveBiasText1":"Mijn collega's hebben de neiging om meer over problemen te praten dan over wat goed ging. (Negativiteitsvooroordeel)",
+        "CognitiveBiasText2":"Tijdens gesprekken zijn mijn collega's vaak bezig met zelf nadenken in plaats van te volgen wat ik probeer uit te leggen.",
+        "CognitiveBiasText3":"Het is moeilijk om de mening van mijn collega's in twijfel te trekken, ook al presenteer ik nieuwe, relevante informatie. (Confirmation bias)",
         "SocialNorms":"Social Norms",
         "SocialNormsText1":"In dit team houden teamleden informatie achter die bruikbaar kan zijn voor anderen.",
         "SocialNormsText2":"Dit team heeft een groot gevoel van gezamenlijk succes in plaats van individueel succes.",
@@ -166,10 +166,12 @@
         "TeamSharedGoal":"Wat is het gezamenlijke doel van jullie team?",
         "RankDiscussionBehaviour":"Een effectieve discussie vereist verschillende gedragingen. Zet op volgorde welk gedrag het belangrijkst is, van boven naar beneden.",
         "HadToChoosePrefer":"Als ik moest kiezen, zou ik de voorkeur geven aan...",
-        "RankCriticismGiver":"Kritiek kan moeilijk zijn om te om te gaan, afhankelijk van wie het geeft. Zet op volgorde,  van boven naar beneden, van wie het het moeilijkt is om kritiek te krijgen.",
+        "RankCriticismGiver":"Kritiek kan moeilijk zijn om mee om te gaan, afhankelijk van wie het geeft. Zet op volgorde,  van boven naar beneden, van wie het het moeilijkst is om kritiek te krijgen.",
         "BestCriticismGiver":"Wie gaf de beste kritiek?",
         "RankBehaviourImprovement":"Welke van deze gedragingen wil je het liefst aan werken? Zet ze op volgorde van boven naar beneden.",
-        "EvaluateSession":"Hoe tevreden ben je met deze ervaring? Evalueer de sessie."
+        "EvaluateSession":"Hoe tevreden ben je met deze ervaring? Evalueer de sessie.",
+        "HadToChooseSomeonePrefer":"Als het geven en krijgen van kritiek makkelijk zou zijn, van wie zou je het dan het liefste krijgen?",
+        "WhenReceivingCriticism":"Wanneer kritiek ontvangen wordt tijdens de sessie.... (beoordeel de verklaringen)"
     },
     "groupQuizAnswer":{
         "Answer1":"Geen enkele keer",
@@ -205,10 +207,89 @@
         "Answer7C":"Ik heb nieuwe, positieve eigenschappen van mijn collega's geleerd.",
         "Answer7D":"De manier waarop we de communicatie tijdens de sessie afhandelen, was effectiever dan onze gebruikelijke teamvergaderingen.",
         "Answer7E":"Ik zie de waarde van deze sessie en zou hem aanbevelen aan anderen.",
-        "Answer7F":"De coach was heel goed. I zou hem kunnen aanbevelen."
+        "Answer7F":"De coach was heel goed. I zou hem kunnen aanbevelen.",
+        "Answer8A":"Mijn partner",
+        "Answer8B":"Mijn vrienden",
+        "Answer8C":"Mijn ouders",
+        "Answer8D":"Mijn manager",
+        "Answer8E":"Mijn collega’s",
+        "Answer9A":"Had ik soms het gevoel dat ik gestraft werd.",
+        "Answer9B":"Maak ik me soms zorgen dat ik de andere persoon beledig.",
+        "Answer9C":"Herken ik dat mijn collega's me willen helpen om me te verbeteren.",
+        "Answer9D":"Kreeg ik inzichtelijke informatie die me helpt om te verbeteren."
     },
     "groupQuizAnswerSubmitted":{
         "TextLine1":"Bedankt.",
         "TextLine2":"Uw antwoord wordt ingediend."
+    },
+    "sweetAlert":{
+        "SelectSelf":"I see what you want. It’s natural to be ego-centric 🙂.  But let’s counteract our biases. Think about your colleagues first.",
+        "ChooseOthers":"Choose somebody else",
+        "PlayCardGradeQuestion": "Hoe sterk vind je dat?",
+        "PlayCardGradeOption1": "niet echt",
+        "PlayCardGradeOption2": "gemiddelde hoeveelheid",
+        "PlayCardGradeOption3": "zeer sterk",
+        "PlayCardGradeSubmit": "SUBMIT"
+    },
+    "gamePlayPage":{
+        "WaitingForResult":"Wachten op resultaat",
+        "Next":"Volgende",
+        "InstructionTitle":"HOERA!!",
+        "InstructionSubTitle":"Je hebt de ronde afgerond",
+        "InstructionLine1":"Ga naar de quiz sectie om na te denken over uw feedback ervaring.",
+        "InstructionLine2":"Als je klaar bent met de quizzen, kun je de volgende ronde verder gaan.",
+        "NextRound":"Volgende ronde"
+    },
+    "personTurnPage":{
+        "InstructionPraiseLine1":"Lees uw kaarten 3 & 4, welke past bij u meer?",
+        "InstructionPraiseLine2":"Iedereen in de groep zal kiezen welke kaart het meest van toepassing is op de",
+        "InstructionPraiseLine2P2":".",
+        "InstructionCriticismLine1v1":"lees de kaarten 5, 6 en 7 hardop.",
+        "InstructionCriticismLine1v2":"lees de kaarten 3, 4 en 5 hardop.",
+        "InstructionCriticismLine2":"Iedereen in de groep zal kiezen welke kaart het meest van toepassing is op de",
+        "InstructionCriticismLine2P2":".",
+        "InstructionResultTitle":"RESULTAAT",
+        "InstructionResultLine1":"Vraag 2 mensen om hun keuze uit te leggen en luister meestal naar de feedback. gebruiker1 1 kan vervolgvragen stellen.",
+        "InstructionResultLine2":"kan vervolgvragen stellen.",
+        "FinishDiscussion":"Discussie beëindigen",
+        "RevealResult":"toon resultaat",
+        "WaitResult":"Wachten op resultaat"
+    },
+    "welcomePage":{
+        "praise":"PRAISE",
+        "criticism":"CONSTRUCTIEVE FEEDBACK",
+        "InstructionPraiseLine1":"Draai je om en lees de kaarten 3 en 4.",
+        "InstructionPraiseLine2":"Dit kan moeilijk zijn, maar je moet de kaart kiezen waarvan je denkt dat deze voor",
+        "InstructionPraiseLine2Bold":"jou",
+        "InstructionPraiseLine2P2":"het meest geschikt is.",
+        "InstructionCriticismLine1v1":"Draai je om en lees de kaarten 5, 6, en 7",
+        "InstructionCriticismLine1v2":"Draai je om en lees de kaarten 3, 4, en 5",
+        "InstructionCriticismLine2":"kiezen welke van deze kaarten is iets wat je denkt dat",
+        "InstructionCriticismLine2Bold":"je het meest zou kunnen verbeteren.",
+        "InstructionGetStarted":"Begin"
+    },
+    "chooseCard":{
+        "InstructionSelfPraiseLine1":"Lees uw kaarten 3 & 4, welke past bij",
+        "InstructionSelfPraiseLine1Bold":"u",
+        "InstructionSelfPraiseLine1P2":"meer?",
+        "InstructionSelfPraiseLine2":"(je hebt 60 seconden de tijd)",
+        "InstructionSelfCriticismLine1":"kiezen welke van deze kaarten is iets wat je denkt dat",
+        "InstructionSelfCriticismLine1Bold":"je",
+        "InstructionSelfCriticismLine1P2":"het meest zou kunnen verbeteren.",
+        "InstructionSelfCriticismLine2":"(je hebt 60 seconden de tijd)",
+        "InstructionOtherPraiseLine1":"Welke kaartafschrift past meer bij",
+        "InstructionOtherPraiseLine1P2":"?",
+        "InstructionOtherCriticismLine1":"Welke kaart denkt u dat de",
+        "InstructionOtherCriticismLine1P2":"verbeterd kan worden?",
+        "TimeUp":"Time's up!"
+    },
+    "chooseCardPage":{
+        "OthersSelectingLine1":"anderen zijn bezig met selecteren...",
+        "OthersSelectingLine2":"Ga zitten en ontspan.",
+        "PleaseWaitNextTurn":"Wacht aub tot de volgende ronde begint.",
+        "OthersSelectingForYouLine1":"anderen selecteren momenteel een kaart voor u.",
+        "OthersSelectingForYouLine2":"Ga zitten en ontspan.",
+        "EveryoneHasPickedForYouLine1":"Iedereen heeft een kaart voor u gekozen.",
+        "EveryoneHasPickedForYouLine2":"Wacht aub tot de volgende ronde begint."
     }
 }
