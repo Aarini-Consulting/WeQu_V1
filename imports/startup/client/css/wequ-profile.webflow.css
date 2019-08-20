@@ -4919,6 +4919,51 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   padding-right:1em;
 }
 
+.email-link-error{
+  font-size:0.75rem;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.email-link-error.header{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  margin:1em;
+}
+
+.email-link-error.title-image{
+  width:6em;
+  margin:1em;
+}
+
+.email-link-error.title-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.email-link-error.title{
+  display: flex;
+  color: #313060;
+  font-size: 1rem;
+}
+
+.email-link-error.content{
+  background-color: #fff3ee;
+  padding:1em;
+  text-align: left;
+}
+
+.email-link-error.logout-bttn{
+  display: inline-block;
+  background-color: #303163;
+  padding:0.5em 1em;
+  color:#fff;
+  border-radius: 500px;
+  cursor: pointer;
+}
+
 
 @media (max-width: 991px) {
   /*.sectionname {

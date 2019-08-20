@@ -3,18 +3,48 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import i18n from 'meteor/universe:i18n';
+const T = i18n.createComponent();
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
 import {Group} from '/collections/group';
 
 class InviteGroupLanding extends React.Component {
+  logout(){
+    Session.set( "loggedOut", true);
+    Meteor.logout()
+  }
+
   render() {
     if(this.props.dataReady){
       if(this.props.currentUser && this.props.currentUser.emails[0].address != this.props.match.params.email){
           return(
               <div className="fillHeight">
-              <h1>This link is not meant for you</h1>
+                <div className="w-block">
+                  <div className="email-link-error header">
+                      <img className="email-link-error title-image" src="/img/lost.png"/>
+                      <div className="email-link-error title-wrapper">
+                        <div className="email-link-error title">
+                          We're getting confused...
+                        </div>
+                      </div>
+                  </div>
+                  <div className="email-link-error content">
+                    The link that you just opened is meant for <b>{this.props.match.params.email}</b>.
+                    <br/><br/>
+                    However, you are currently logged in as <b>{this.props.currentUser.emails[0].address}</b>.
+                    <br/>
+                    To use this link, please click the logout button below and try to open the link again.
+                    <br/><br/>
+                    <div className="div-block-center">
+                      <div className="email-link-error logout-bttn" onClick={this.logout.bind(this)}>
+                          <T>weq.settings.Logout</T>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
               </div>
           )
           
