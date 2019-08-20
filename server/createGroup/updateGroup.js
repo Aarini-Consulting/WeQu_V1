@@ -6,6 +6,7 @@ import {Group} from '/collections/group';
 import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
+import { PlayCard } from '/collections/playCard';
 
 Meteor.methods({
     'updateGroup' : function (group, language="en", data, arr_emails) {
@@ -93,7 +94,19 @@ Meteor.methods({
                             { "to" : user._id}],
                             
                     'groupId': groupCheck._id,
-                })
+                });
+
+                CardPlacement.remove(
+                {
+                    "userId": user._id
+                });
+
+                PlayCard.remove(
+                    {$or : [
+                      { "from": user._id},
+                      { "to": user._id}
+                    ]
+                });
 
                 Meteor.users.update({
                     "$and": [ 
@@ -193,6 +206,11 @@ Meteor.methods({
                 });
                 
                 CardPlacement.remove(
+                {
+                    "groupId": checkGroup._id
+                });
+
+                PlayCard.remove(
                 {
                     "groupId": checkGroup._id
                 });

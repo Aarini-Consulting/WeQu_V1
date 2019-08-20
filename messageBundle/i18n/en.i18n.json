@@ -97,9 +97,9 @@
         "ConstructiveFeedbackText2":"This team regularly recognises my achievements and successes.",
         "ConstructiveFeedbackText3":"My colleagues get easily defensive when they happen to receive criticism.",
         "CognitiveBias":"Control over Cognitive Bias",
-        "CognitiveBiasText1":"I feel that my team prefers to maintain a harmony over being disturbed by conflicts.",
-        "CognitiveBiasText2":"A high-performing team creates less errors and mistakes than those which are mediocre.",
-        "CognitiveBiasText3":"In our team, juniors regularly seek ideas from seniors.",
+        "CognitiveBiasText1":"My colleagues tend to talk more about problems than what went well. (Negativity bias)",
+        "CognitiveBiasText2":"During conversations, my colleagues are more focused on what they think instead of listening to what I’m trying to explain.",
+        "CognitiveBiasText3":"It's difficult to challenge my colleagues' opinion, even though I present new, relevant information. (Confirmation bias)",
         "SocialNorms":"Social Norms",
         "SocialNormsText1":"In meetings, one person or a small group tends to speak most of the time.",
         "SocialNormsText2":"In this team, members withhold information that might be useful for others.",
@@ -169,7 +169,9 @@
         "RankCriticismGiver":"Criticism can be difficult to handle, depending on who gives it. Rank from top to bottom which people are the most difficult to get criticism from.",
         "BestCriticismGiver":"Who gave the best criticism?",
         "RankBehaviourImprovement":"Which of the behaviors below would you most like to work on? Rank the answers.",
-        "EvaluateSession":"How satisfied are you with the WeQ experience? Evaluate the session."
+        "EvaluateSession":"How satisfied are you with the WeQ experience? Evaluate the session.",
+        "HadToChooseSomeonePrefer":"If giving and getting criticism would be easy, who would you prefer to get if from?",
+        "WhenReceivingCriticism":"When receiving criticism during the session… (rate the statements)"
     },
     "groupQuizAnswer":{
         "Answer1":"None",
@@ -205,10 +207,89 @@
         "Answer7C":"I learned some new, positive attributes of my colleagues.",
         "Answer7D":"The way we handle communication during the session was more effective than our usual team meetings.",
         "Answer7E":"I see the value of these 'we-time' sessions and would recommend it to others.",
-        "Answer7F":"The coach was very good. I would recommend them."
+        "Answer7F":"The coach was very good. I would recommend them.",
+        "Answer8A":"My spouse",
+        "Answer8B":"My friend",
+        "Answer8C":"My parent",
+        "Answer8D":"My boss",
+        "Answer8E":"My colleague",
+        "Answer9A":"I sometimes felt I'm being punished.",
+        "Answer9B":"I sometimes worried that I’m offending the other person.",
+        "Answer9C":"I recognized my colleagues want to help me improve.",
+        "Answer9D":"I received insightful information that helps me improve."
     },
     "groupQuizAnswerSubmitted":{
-        "TextLine1":"Thank you",
-        "TextLine2":"Your answer is submitted"
+        "TextLine1":"Thank you.",
+        "TextLine2":"Your answer is submitted."
+    },
+    "sweetAlert":{
+        "SelectSelf":"I see what you want. It’s natural to be ego-centric 🙂.  But let’s counteract our biases. Think about your colleagues first.",
+        "ChooseOthers":"Choose somebody else",
+        "PlayCardGradeQuestion": "How strongly do you feel about that?",
+        "PlayCardGradeOption1": "not really",
+        "PlayCardGradeOption2": "medium amount",
+        "PlayCardGradeOption3": "very strongly",
+        "PlayCardGradeSubmit": "Submit"
+    },
+    "gamePlayPage":{
+        "WaitingForResult":"Waiting for result",
+        "Next":"Next",
+        "InstructionTitle":"Hurray!",
+        "InstructionSubTitle":"You completed the round!",
+        "InstructionLine1":"Go to quiz section to reflect on your feedback experience.",
+        "InstructionLine2":"Once you're done with the quizzes, you may continue the next round.",
+        "NextRound":"Next round"
+    },
+    "personTurnPage":{
+        "InstructionPraiseLine1":"read cards 3 and 4 out loud.",
+        "InstructionPraiseLine2":"everyone in group will choose which card is more applicable to",
+        "InstructionPraiseLine2P2":".",
+        "InstructionCriticismLine1v1":"read cards 5, 6, and 7 out loud.",
+        "InstructionCriticismLine1v2":"read cards 3, 4, and 5 out loud.",
+        "InstructionCriticismLine2":"everyone in group will choose which card is more applicable to",
+        "InstructionCriticismLine2P2":".",
+        "InstructionResultTitle":"Result",
+        "InstructionResultLine1":"Ask 2 people to explain their choice, and mostly listen to the feedback.",
+        "InstructionResultLine2":"may ask followup questions.",
+        "FinishDiscussion":"Finish discussion",
+        "RevealResult":"Reveal Result",
+        "WaitResult":"Waiting for result"
+    },
+    "welcomePage":{
+        "praise":"PRAISE",
+        "criticism":"CONSTRUCTIVE FEEDBACK",
+        "InstructionPraiseLine1":"turn over and read cards 3 and 4.",
+        "InstructionPraiseLine2":"this may be difficult, but you must choose the card that you think is more applicable to",
+        "InstructionPraiseLine2Bold":"you",
+        "InstructionPraiseLine2P2":".",
+        "InstructionCriticismLine1v1":"turn over and read cards 5, 6, and 7",
+        "InstructionCriticismLine1v2":"turn over and read cards 3, 4, and 5",
+        "InstructionCriticismLine2":"choose which of these cards is something you think",
+        "InstructionCriticismLine2Bold":"you could improve most",
+        "InstructionGetStarted":"Get Started"
+    },
+    "chooseCard":{
+        "InstructionSelfPraiseLine1":"Read your cards 3 & 4 which one suits",
+        "InstructionSelfPraiseLine1Bold":"YOU",
+        "InstructionSelfPraiseLine1P2":"more?",
+        "InstructionSelfPraiseLine2":"(you have 60 seconds)",
+        "InstructionSelfCriticismLine1":"Choose which of these cards",
+        "InstructionSelfCriticismLine1Bold":"YOU",
+        "InstructionSelfCriticismLine1P2":"could improve the most?",
+        "InstructionSelfCriticismLine2":"(you have 60 seconds)",
+        "InstructionOtherPraiseLine1":"Which card statement suits",
+        "InstructionOtherPraiseLine1P2":"more?",
+        "InstructionOtherCriticismLine1":"Which card do you think",
+        "InstructionOtherCriticismLine1P2":"could improve?",
+        "TimeUp":"Time's up!"
+    },
+    "chooseCardPage":{
+        "OthersSelectingLine1":"others are selecting...",
+        "OthersSelectingLine2":"Sit back and relax.",
+        "PleaseWaitNextTurn":"Please wait until next turn starts.",
+        "OthersSelectingForYouLine1":"others are now selecting card for you.",
+        "OthersSelectingForYouLine2":"Sit back and relax.",
+        "EveryoneHasPickedForYouLine1":"Everyone has picked a card for you.",
+        "EveryoneHasPickedForYouLine2":"Please wait until next turn starts."
     }
 }

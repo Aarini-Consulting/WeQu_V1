@@ -3,7 +3,9 @@ import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
-export const ReportPdfEN = ({propData}) => (
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
+export const ReportPdfDE = ({propData}) => (
     <html>
         <head>
             <meta charSet="UTF-8"/>
@@ -17,8 +19,8 @@ export const ReportPdfEN = ({propData}) => (
             <h1 className="h1">Hey</h1>
             <h1 className="h1 username">{propData.firstName},</h1>
             <h3 className="h3 subtitle">
-                You&#x27;ve just played WeQ with your <strong>{propData.groupName}</strong>.
-                This is your report prepared by <strong>{propData.groupCreatorFirstName} {propData.groupCreatorLastName}</strong>, WeQ Master Coach.
+                Sie haben gerade WeQ gespielt als <strong>{propData.groupName}</strong>.
+                Dies ist Ihr Bericht von <strong>{propData.groupCreatorFirstName} {propData.groupCreatorLastName}</strong>, WeQ Master Coach.
             </h3>
             </div>
             <div className="section _2-content">
@@ -28,15 +30,15 @@ export const ReportPdfEN = ({propData}) => (
                 <div className="arrow-monitor"></div>
                 </div> */}
                 {/* <div className="pointer"></div> */}
-                <div className="h3 title-1">How to read this chart </div>
+                <div className="h3 title-1">Wie lesen Sie diese Tabelle?</div>
                 <div className="bar-wrapper w-clearfix">
                 {/* <div className="arrow"></div> */}
-                <div className="bar-howto">The lowest value of this <br/>Quality in your group</div>
-                <div className="bar-howto _3">Your current score <br/>(evaluated by you and others)</div>
+                <div className="bar-howto">Der niedrigste Wert dieser<br/>Qualität in Ihrer Gruppe.</div>
+                <div className="bar-howto _3">Ihre aktuelle Punktzahl <br/>(bewertet von Ihnen und ihren Teammitgliedern)</div>
                 {/* <div className="bar-howto _4">Changes from <br/>previous session</div> */}
-                <div className="bar-howto _2">The highest value of this <br/>Quality in your group</div>
+                <div className="bar-howto _2">Der höchste Wert dieser <br/>Qualität in Ihrer Gruppe.</div>
                 {/* <div className="quality-name number">+1,4</div> */}
-                <div className="quality-name">Quality name (Card#)</div>
+                <div className="quality-name">Name (Karte#)</div>
                 <div className="bar-team">
                     <div className="bar-line"></div>
                 </div>
@@ -45,13 +47,13 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
             </div>
             <div className="div-current w-clearfix">
-                <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
-                {propData.groupType == "short" 
+                <div className="h3 current">Aktuelle Sitzung - {propData.firstName} {propData.lastName}</div>
+                {groupTypeIsShort(propData.groupType) 
                 ?
                 <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
                 :
                 <div className="div-diagram">
-                    <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
+                    <div className="h4 current">Basierend auf Ihren eigenen Daten und dem Feedback anderer Teammitglieder personalisiert das WeQ-System Ihre Session.</div>
                     <div className="diagram-wrapper w-clearfix">
                         {propData.cardPicked 
                             ?
@@ -88,7 +90,7 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 }
                 
-                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
+                <div className={groupTypeIsShort(propData.groupType) ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">
@@ -147,8 +149,8 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
             </div>
             <div className="section-3">
-                <div className="h3 next">Booster Pack</div>
-                {propData.groupType == "short" 
+                <div className="h3 next">Boosterpackung</div>
+                {groupTypeIsShort(propData.groupType) 
                     ?
                     <div className="h4 next">
                         Werde ein WeQ-Champion!
@@ -156,19 +158,19 @@ export const ReportPdfEN = ({propData}) => (
                         Sind Sie leidenschaftlich am Aufbau eines großartigen Teams? Und möchten WeQ-Sitzungen erleichtern?
                         <br/>
                         <br/>
-                        Ihren Trainer nach dem WeQ Champion-Programm oder senden Sie eine E-Mail an <a href="mailto:contact@weq.io">contact@weq.io</a>
+                        Fragen Sie Ihren Trainer nach dem WeQ Champion-Programm oder senden Sie eine E-Mail an <a href="mailto:contact@weq.io">contact@weq.io</a>
                     </div>
                     :
                     <div className="h4 next">
-                        Don't lose the momentum!
+                        Verlieren Sie nicht den Schwung!
                         <br/>
-                        Continue building healthy habits with our <br/>1 hour maintenance sessions.
+                        Bauen Sie mit unserer <br/>1-stündigen Nachhaltigkeits-Session gesunde Gewohnheiten auf.
                         <br/>
                         <br/>
-                        Ask {propData.groupCreatorFirstName} for more information.
+                        Fragen Sie {propData.groupCreatorFirstName} nach weiteren Informationen.
                     </div>
                 }
-                <div className={`next-demo ${propData.groupType == "short" ? "short":""}`}></div>
+                <div className={`next-demo ${groupTypeIsShort(propData.groupType) ? "short" :""}`}></div>
             </div>
             </div>
             <div className="section _3-footer">

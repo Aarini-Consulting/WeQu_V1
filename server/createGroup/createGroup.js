@@ -4,6 +4,8 @@ import { generateSelfRank } from '../category';
 import {Group} from '/collections/group';
 import {GroupQuiz} from '/collections/groupQuiz';
 
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
 export function genGroupUserUpFront(arr_emails, arr_numbers, data){
   if(!arr_emails && !arr_numbers){
     throw (new Meteor.Error("no user to add")); 
@@ -88,7 +90,7 @@ Meteor.methods({
       throw (new Meteor.Error("need_at_least_2_players"));
     }
 
-    if(type != "short" && type != "long"){
+    if(!groupTypeIsShort(type) && type != "long"){
       throw (new Meteor.Error("invalid_type"));
     }
 
@@ -103,21 +105,52 @@ Meteor.methods({
     //get group quiz list
     var groupQuiz = GroupQuiz.find().fetch();
 
-    var groupQuizIdList = []
+    var groupQuizIdList = [];
+    var playCardTypeList = [];
+
+    
 
     if(groupQuiz.length >= 1){
-      var groupQuizQuestionForShort = ["HowOftenCompliment","BestComplimentGiver","BestCriticismGiver","RankBehaviourImprovement","EvaluateSession"]
-      var groupQuizIdListShort = [];
+      let filteredGroupList;
+      let specialGroupQuizList;
 
-      groupQuizIdList = groupQuiz.map((gq)=>{
-        if(groupQuizQuestionForShort.indexOf(gq.question) > -1){
-          groupQuizIdListShort.push(gq._id);
+      if(groupTypeIsShort(type)){
+        let questionToIdMap={};
+
+        groupQuiz.forEach((gq)=>{
+          questionToIdMap[gq.question] = gq._id;
+        });
+
+        if(type === "short"){
+          specialGroupQuizList = ["HowOftenCompliment","BestComplimentGiver","HadToChooseSomeonePrefer","WhenReceivingCriticism","RankBehaviourImprovement","EvaluateSession"];
+          groupQuizIdList = specialGroupQuizList.map((question)=>{
+            return questionToIdMap[question];
+          });
+          playCardTypeList = ["praise","criticism"];
+
+        }else if(type === "short-praise"){
+          specialGroupQuizList = ["HowOftenCompliment","BestComplimentGiver","RankBehaviourImprovement","EvaluateSession"];
+          groupQuizIdList = specialGroupQuizList.map((question)=>{
+            return questionToIdMap[question];
+          });
+          playCardTypeList = ["praise"];
         }
-        return gq._id
-      });
+        else if(type === "short-criticism"){
+          specialGroupQuizList = ["HadToChooseSomeonePrefer","WhenReceivingCriticism","RankBehaviourImprovement","EvaluateSession"];
+          groupQuizIdList = specialGroupQuizList.map((question)=>{
+            return questionToIdMap[question];
+          });
+          playCardTypeList = ["criticism"];
+        }
+      }else{
+        specialGroupQuizList = ["HadToChooseSomeonePrefer","WhenReceivingCriticism"];
+        filteredGroupList = groupQuiz.filter((gq)=>{
+          return !specialGroupQuizList.includes(gq.question);
+        });
 
-      if(type == "short"){
-        groupQuizIdList = groupQuizIdListShort;
+        groupQuizIdList = filteredGroupList.map((gq)=>{
+          return gq._id
+        });
       }
     }
 
@@ -130,6 +163,7 @@ Meteor.methods({
       isActive:false,
       isFinished:false,
       groupQuizIdList:groupQuizIdList,
+      playCardTypeList:playCardTypeList,
       groupType:type
     });
 

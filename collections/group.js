@@ -18,6 +18,21 @@ GroupSchema = new SimpleSchema({
       type: Boolean,
       label: "session active",
     },
+    "playCardTypeActive":{
+      type: String,
+      label: "play card session type",
+      optional: true
+    },
+    "playCardTypeList":{
+      type: [String],
+      label: "play card type list",
+      optional: true
+    },
+    "playCardTypeCompleted":{
+      type: [String],
+      label: "play card session type finished",
+      optional: true
+    },
     "isPlaceCardActive":{
       type: Boolean,
       label: "place card session active",
@@ -35,6 +50,11 @@ GroupSchema = new SimpleSchema({
     "userIdsSelfRankCompleted":{
       type: [String],
       label: "self rank Completed",
+      optional: true
+    },
+    "userIdsSelfChooseCompleted":{
+      type: [String],
+      label: "self pick Completed",
       optional: true
     },
     "groupLanguage":{

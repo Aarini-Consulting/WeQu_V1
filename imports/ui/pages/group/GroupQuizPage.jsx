@@ -293,6 +293,13 @@ export default withTracker((props) => {
     if(handleGroupQuiz.ready()){
       groupQuizList=GroupQuiz.find({_id : {$in:group.groupQuizIdList}}).fetch();
 
+      if(groupQuizList.length > 0){
+        //sort based on order in group collection
+        groupQuizList.sort((a,b)=>{
+          return group.groupQuizIdList.indexOf(a._id) - group.groupQuizIdList.indexOf(b._id);
+        });
+      }
+
       var handleGroupQuizData = Meteor.subscribe('groupQuizData',
       {
         "groupId": group._id,
@@ -309,6 +316,10 @@ export default withTracker((props) => {
             "groupQuizId": group.currentGroupQuizId
           }).fetch();
 
+          groupQuizDataList = GroupQuizData.find({
+            "groupId": group._id,
+          }).fetch();
+        }else{
           groupQuizDataList = GroupQuizData.find({
             "groupId": group._id,
           }).fetch();

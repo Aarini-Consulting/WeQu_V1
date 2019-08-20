@@ -79,7 +79,7 @@ if (Meteor.isServer) {
 
                 const createGroup = Meteor.server.method_handlers['createGroup'];
     
-                createGroup.apply(thisContext, [groupName, "nl", inviteDatas, emailArray]);
+                createGroup.apply(thisContext, [groupName, "nl", inviteDatas, emailArray,"long"]);
 
                 const getGroup = Group.findOne({"groupName": groupName});
     

@@ -21,6 +21,10 @@ Meteor.methods({
             FeedbackRank.remove(
                 { "groupId": gr._id}
               );
+
+            PlayCard.remove(
+                { "groupId": gr._id},
+              );
             
             CardPlacement.remove(
                 { "groupId": gr._id},

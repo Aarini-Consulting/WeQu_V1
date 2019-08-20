@@ -33,6 +33,12 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
             colorRange = ["#d1d1d1"];
         }
 
+        var hideLoser;
+
+        if(props.question === "BestCriticismGiver"){
+            hideLoser = true;
+        }
+
         
         /* data format
         var data = [
@@ -99,8 +105,13 @@ export default class GroupQuizResultGraphVerticalBar extends React.Component {
         var rect = svg.selectAll('rect')
             .data(data)
             .enter().append('rect')
-            .attr('x', (d, i) => { 
-                return xScale(d.text)
+            .attr('x', (d, i) => {
+                if(hideLoser && d.amount < yMax){
+                    return "";
+                }else{
+                    return xScale(d.text);
+                }
+                
             })
             .attr('y', (d) => {
                 return yScale(d.amount)

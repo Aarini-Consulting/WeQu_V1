@@ -10,8 +10,8 @@ export default class GroupQuizResult extends React.Component {
     if(backgroundUrl){
       style = {
         width:100+"%",
-        height:100+"%",
-        backgroundImage: `url('${backgroundUrl}'),url('/img/assets/Logo-Main_ring_animation.gif')`,
+        height:60+"vh",
+        background: `url('${backgroundUrl}'),url('/img/assets/Logo-Main_ring_animation.gif')`,
         filter:"opacity(20%)",
         backgroundSize:"contain",
         backgroundRepeat: "no-repeat",

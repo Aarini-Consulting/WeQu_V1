@@ -3,6 +3,8 @@ import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
 export const ReportPdfEN = ({propData}) => (
     <html>
         <head>
@@ -46,7 +48,7 @@ export const ReportPdfEN = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Current Session - {propData.firstName} {propData.lastName}</div>
-                {propData.groupType == "short" 
+                {groupTypeIsShort(propData.groupType) 
                 ?
                 <div className="h4 current">Based on your own data and feedback from others in your team, the WeQ system personalizes your session.</div>
                 :
@@ -88,7 +90,7 @@ export const ReportPdfEN = ({propData}) => (
                 </div>
                 }
                 
-                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
+                <div className={groupTypeIsShort(propData.groupType) ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">
@@ -148,7 +150,7 @@ export const ReportPdfEN = ({propData}) => (
             </div>
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
-                {propData.groupType == "short" 
+                {groupTypeIsShort(propData.groupType) 
                     ?
                     <div className="h4 next">
                         Become a WeQ Champion!
@@ -168,7 +170,7 @@ export const ReportPdfEN = ({propData}) => (
                         Ask {propData.groupCreatorFirstName} for more information.
                     </div>
                 }
-                <div className={`next-demo ${propData.groupType == "short" ? "short":""}`}></div>
+                <div className={`next-demo ${groupTypeIsShort(propData.groupType) ? "short":""}`}></div>
             </div>
             </div>
             <div className="section _3-footer">

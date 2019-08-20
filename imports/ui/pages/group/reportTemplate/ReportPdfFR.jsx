@@ -3,6 +3,8 @@ import {calculateChartLineWidth} from '/imports/helper/pdfCalculateChartWidth';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
+import {groupTypeIsShort} from '/imports/helper/groupTypeShort.js';
+
 export const ReportPdfFR = ({propData}) => (
     <html>
         <head>
@@ -46,16 +48,17 @@ export const ReportPdfFR = ({propData}) => (
             </div>
             <div className="div-current w-clearfix">
                 <div className="h3 current">Session Actuelle - {propData.firstName} {propData.lastName}</div>
-                {propData.groupType == "short" 
+
+                {groupTypeIsShort(propData.groupType) 
                 ?
                 <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                 :
                 <div className="div-diagram">
+                    <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                     <div className="diagram-wrapper w-clearfix">
                         {propData.cardPicked 
                             ?
                             <div className="diagram">
-                                <div className="h4 current">En fonction de vos propres données et des commentaires des autres membres de votre équipe, le système WeQ personnalise votre session.</div>
                                 <div className="diagram-position">
                                     <div className={`icon _3 badge-${ propData.cardPicked[2].subCategory }`}></div> 
                                     <div className={`icon _2 badge-${ propData.cardPicked[0].subCategory }`}></div> 
@@ -87,7 +90,7 @@ export const ReportPdfFR = ({propData}) => (
                     </div>
                 </div>
                 }
-                <div className={propData.groupType == "short" ? "div-current-chart full-width" : "div-current-chart"}>
+                <div className={groupTypeIsShort(propData.groupType) ? "div-current-chart full-width" : "div-current-chart"}>
                     <div className="chart-legend w-clearfix">
                         <div className="h35"></div>
                         <div className="bar-wrapper actual legend w-clearfix">
@@ -146,7 +149,7 @@ export const ReportPdfFR = ({propData}) => (
             </div>
             <div className="section-3">
                 <div className="h3 next">Booster Pack</div>
-                {propData.groupType == "short" 
+                {groupTypeIsShort(propData.groupType) 
                     ?
                     <div className="h4 next">
                         Devenez un champion WeQ!
@@ -166,7 +169,7 @@ export const ReportPdfFR = ({propData}) => (
                         Pour plus d'informations, contactez {propData.groupCreatorFirstName}.
                     </div>
                 }
-                <div className={`next-demo ${propData.groupType == "short" ? "short":""}`}></div>
+                <div className={`next-demo ${groupTypeIsShort(propData.groupType) ? "short":""}`}></div>
             </div>
             </div>
             <div className="section _3-footer">

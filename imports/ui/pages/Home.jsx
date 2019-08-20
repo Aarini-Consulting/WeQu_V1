@@ -36,10 +36,11 @@ class Home extends React.Component {
                 if(oldIndex > -1){
                     var oldGroup = this.props.groups[oldIndex];
                     if(oldGroup._id == group._id){
-                        var groupQuizStarted = !oldGroup.currentGroupQuizId && group.currentGroupQuizId;
                         var placeCardStarted = !oldGroup.isPlaceCardActive && group.isPlaceCardActive;
+                        var groupQuizStarted = !oldGroup.currentGroupQuizId && group.currentGroupQuizId;
+                        var playCardStarted = !oldGroup.playCardTypeActive && group.playCardTypeActive;
             
-                        if(groupQuizStarted || placeCardStarted){
+                        if(groupQuizStarted || placeCardStarted || playCardStarted){
                             this.setState({ 
                                 showPopup: true,
                                 popupSelectedGroup: group

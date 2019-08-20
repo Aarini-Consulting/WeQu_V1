@@ -12,9 +12,10 @@ export function sendEmail(to, subject, body) {
     check([to, subject], [String]);
     
     Email.send({
-        from: 'WeQ <postmaster@weq.io>',
+        from: 'WeQ <contact@weq.io>',
         to: to,
         subject: subject,
+        headers:{"Return-Path": "contact@weq.io"},
         html: body
     });
 }

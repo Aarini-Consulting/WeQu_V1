@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '/imports/ui/pages/loading/Loading';
 import MenuPresentation from '/imports/ui/pages/menu/MenuPresentation';
 import InviteGroup from '/imports/ui/pages/invite/InviteGroup';
+import GroupPlayCardPage from './GroupPlayCardPage';
 
 import SweetAlert from '/imports/ui/pages/sweetAlert/SweetAlert';
 import GroupReportPage from './GroupReportPage';
@@ -19,6 +20,8 @@ import GroupTypeformSurvey from './GroupTypeformSurvey';
 
 import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
+
+import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
 
 const T = i18n.createComponent();
 
@@ -152,14 +155,28 @@ class GroupPage extends React.Component {
   }
 
   renderUserCards(cards){
-    var shortMode = this.props.group && this.props.group.groupType == "short";
-    return cards.map((card, index) => {
+    var cardsToShow = JSON.parse(JSON.stringify(cards));
+    var groupType = this.props.group && this.props.group.groupType;
+    var shortMode =  groupType && groupTypeIsShort(groupType);
+    if(shortMode){
+      //praise
+      if(groupTypeShortList[1] === groupType){
+        //remove card #5, #6 and #7
+        cardsToShow = cardsToShow.slice(0, 4);
+      }
+      //criticism
+      else if(groupTypeShortList[2] === groupType){
+        //remove card #3 and #4
+        cardsToShow.splice(2,1);
+        cardsToShow.splice(2,1);
+      }
+    }
+    
+    return cardsToShow.map((card, index) => {
       var className = `font-number ${ card.category }`;
-
       if(shortMode){
         className = `font-number ${ card.category } card-shape`;
       }
-
       return(
         <div className={className} key={card.cardId}>
           {card.cardId}
@@ -169,14 +186,27 @@ class GroupPage extends React.Component {
   }
 
   renderUserCardsPlaceholder(){
-    var shortMode = this.props.group && this.props.group.groupType == "short";
-    return [1,2,3,4,5,6,7].map((index) => {
+    var groupType = this.props.group && this.props.group.groupType;
+    var shortMode =  groupType && groupTypeIsShort(groupType);
+    var cards = [1,2,3,4,5,6,7];
+    if(shortMode){
+      //praise
+      if(groupTypeShortList[1] === groupType){
+        //remove card #5, #6 and #7
+        cards = cards.slice(0, 4);
+      }
+      //criticism
+      else if(groupTypeShortList[2] === groupType){
+        //remove card #3 and #4
+        cards.splice(2,1);
+        cards.splice(2,1);
+      }
+    }
+    return cards.map((index) => {
       var className = `font-number placeholder`;
-
       if(shortMode){
         className = `font-number placeholder card-shape`;
       }
-
       return(
         <div className={className} key={"placeholder-card-"+index}>
           #
@@ -211,7 +241,7 @@ class GroupPage extends React.Component {
 
       if(readySurvey && startedOrFinished && cardPlacement && cardPlacement.cardPicked && cardPlacement.cardPicked.length > 0){
         var userCards;
-        if(this.props.group && this.props.group.groupType == "short"){
+        if(this.props.group && groupTypeIsShort(this.props.group.groupType)){
           userCards = cardPlacement.cardPicked;
         }else{
           userCards = cardPlacement.cardPicked.sort((a, b)=>{
@@ -279,7 +309,7 @@ class GroupPage extends React.Component {
               <div className="tap-content w-clearfix">
                 {this.props.group.isPlaceCardActive 
                 ?
-                <div className="w-inline-block game-status">In Progress</div>
+                <div className="w-inline-block game-status">Waiting for participants...</div>
                 :
                 <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
                 }
@@ -306,6 +336,9 @@ class GroupPage extends React.Component {
         tabContent = 
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
+      else if(this.state.currentTab == "play-cards"){
+        tabContent = (<GroupPlayCardPage group={this.props.group}/>);
+      }
       else if(this.state.currentTab == "report"){
         tabContent = 
         (<GroupReportPage groupId={this.props.match.params.id}/>);
@@ -314,12 +347,14 @@ class GroupPage extends React.Component {
             <section className="section home fontreleway groupbg" >
               <MenuPresentation location={this.props.location} history={this.props.history} groupName={this.props.group.groupName}/>
 
-              <div className={"tabs-menu w-tab-menu tap-underline "+ this.state.currentTab}>
-                <div className="tabs-menu-inner-wrapper">
+              <div className={"tabs-menu w-tab-menu"}>
+                <div className="tabs-menu-manage-session">
                   <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
                     <div>Manage session</div>
                   </div>
+                </div>
+                <div className="tabs-menu-inner-wrapper">
                   <div className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>
                     <div>Present slide</div>
@@ -336,6 +371,12 @@ class GroupPage extends React.Component {
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
+                  {this.props.group && groupTypeIsShort(this.props.group.groupType) &&
+                    <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
+                    onClick={this.toggleTabs.bind(this,"play-cards")}>
+                      <div>Play cards</div>
+                    </div>
+                  }
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
                     <div>Download report</div>
@@ -345,6 +386,9 @@ class GroupPage extends React.Component {
               <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"none":"block"}}>
                   {tabContent}
               </div>
+
+              //unlike other tab content, always render "presentation" tabs
+              //this is done so it 'remembers' which slide was last on when switching between tabs
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
                 <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
                   <GroupPresentation 

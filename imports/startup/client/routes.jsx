@@ -20,7 +20,7 @@ import CheckLoginVerified from './CheckLoginVerified';
 import AdminOnly from './AdminOnly';
 
 import Home from '/imports/ui/pages/Home';
-import QuizRankPage from '/imports/ui/pages/quizRank/QuizRankPage';
+import QuizClientPage from '/imports/ui/pages/quizClient/QuizClientPage';
 import InviteGroupPage from '/imports/ui/pages/invite/InviteGroupPage';
 import GroupPage from '/imports/ui/pages/group/GroupPage';
 import InviteGroupLanding from '/imports/ui/pages/invitationLanding/InviteGroupLanding';
@@ -47,6 +47,8 @@ import LinkedInPermission from '/imports/ui/pages/linkedIn/LinkedInPermission';
 import LinkedInHandler from '/imports/ui/pages/linkedIn/LinkedInHandler';
 
 import Loading from '/imports/ui/pages/loading/Loading';
+
+import {detectIE} from '/imports/helper/detectIE.js';
 
 import {getDefaultLocale} from '/imports/startup/client/getDefaultLocale';
 
@@ -181,7 +183,7 @@ const App = class App extends React.Component {
       }
     }
 
-    if(!userHasLocale){
+    if(!userHasLocale && Meteor.userId()){
       //set user's locale
       Meteor.call( 'user.set.locale', locale, ( error, response ) => {
         if ( error ) {
@@ -204,13 +206,32 @@ const App = class App extends React.Component {
   }
 
   render() {
-    if(this.state.languageLoaded){
+    var ie = detectIE();
+    if(ie && ie < 12){
+      return(
+        <div className="fillHeight weq-bg">
+          <div className="w-block noselect">
+            <div className="loginbox no-ie" data-ix="loginbox">
+              <img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
+              <div className="font-rate padding-wrapper no-ie">
+                  <b>Did you know that your Internet Explorer is out of date?</b>
+                  <br/><br/>
+                  Since January 2016, Microsoft no longer provides supports &amp; security updates for Internet Explorer.
+                  <br/>
+                  Please use a recent version of Chrome, Firefox or Safari instead.
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    else if(this.state.languageLoaded){
         return (
           <div style={{height:100+"%"}}>
           { /* Place to put layout codes here */ }
           <Switch history={history}>
               <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
-              <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizRankPage {...props}/>} {...props}/>)} />
+              <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizClientPage {...props}/>} {...props}/>)} />
               <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
               <Route exact path='/group/:id' render={(props) => (<AdminOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
               <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />

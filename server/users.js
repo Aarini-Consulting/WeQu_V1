@@ -12,6 +12,7 @@ import {Group} from '/collections/group';
 import {GroupQuizData} from '/collections/groupQuizData';
 import {FeedbackRank} from '/collections/feedbackRank';
 import {CardPlacement} from '/collections/cardPlacement';
+import {PlayCard} from '/collections/playCard';
 
 Meteor.publish('usersFiltered', function(selector, options) {
   return Meteor.users.find(selector, options);
@@ -25,7 +26,7 @@ Meteor.publish('users', function(selector, options) {
 Meteor.methods({
   'change.email.verify'(token) {
     var user = Meteor.users.findOne(
-      { "services.email.updateVerificationTokens.token": { $eq: token }}
+      { "services.email.updateVerificationTokens.token": token}
     );
     if(user){
       Meteor.call( 'user.update.email',user, user.services.email.updateVerificationTokens[0].address);
@@ -50,7 +51,11 @@ Meteor.methods({
       var user = Meteor.users.findOne(this.userId);
 
       if(user){
-        var verificationToken = user.services.email.updateVerficationTokens && user.services.email.updateVerficationTokens[0];
+        var verificationToken = user && user.services && user.services.email 
+        && user.services.email.updateVerficationTokens 
+        && user.services.email.updateVerficationTokens.length > 0
+        && user.services.email.updateVerficationTokens[0];
+
         var secret = Random.secret();
         if(!verificationToken){
           Meteor.users.update({_id : user._id}, 
@@ -84,7 +89,16 @@ Meteor.methods({
           'email': email,
           'link': Meteor.absoluteUrl(link),
         };
-        var subject = `[WeQ] Update Email`;
+
+        var firstName = user && user.profile && user.profile.firstName;
+        var lastName = user && user.profile && user.profile.lastName;
+        var subject;
+        if(firstName && lastName){
+          subject = `[WeQ] Confirm your account, ${firstName+" "+lastName}`;
+        }else{
+          subject = '[WeQ] Confirm your account';
+        }
+        
         let body = SSR.render('EmailChangeVerification', emailData);
         
         sendEmail(email, subject, body);
@@ -146,10 +160,12 @@ Meteor.methods({
       });
   },
   'user.set.locale'(locale) {
-    Meteor.users.update({_id: this.userId}, 
-      {$set: {
-        "profile.locale": locale,
-      }});
+    if(this.userId){
+      Meteor.users.update({_id: this.userId}, 
+        {$set: {
+          "profile.locale": locale,
+        }});
+    }
   },
   'user.delete'() {
     var currentUser = Meteor.users.findOne({_id:this.userId});
@@ -233,6 +249,13 @@ Meteor.methods({
       GroupQuizData.remove(
         {
           "creatorId": currentUser._id,
+        });
+
+      PlayCard.remove(
+        {$or : [
+          { "from": currentUser._id},
+          { "to": currentUser._id}
+          ] 
         });
 
       Meteor.users.remove({_id:this.userId});
