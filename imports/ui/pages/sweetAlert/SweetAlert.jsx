@@ -9,6 +9,7 @@ import ConfirmCloseCycle from './ConfirmCloseCycle';
 import ConfirmReopenCycle from './ConfirmReopenCycle';
 import PlayCardGrade from './PlayCardGrade';
 import QuizSelectNameSelf from './QuizSelectNameSelf';
+import TrialActivated from './TrialActivated';
 
 export default class SweetAlert extends React.Component {
 
@@ -55,6 +56,11 @@ export default class SweetAlert extends React.Component {
     else if(this.props.type == "quiz-select-name-self"){
         return (
             <QuizSelectNameSelf {...this.props}/>
+        );
+    }
+    else if(this.props.type == "trial-activated"){
+        return (
+            <TrialActivated {...this.props}/>
         );
     }
     else{
