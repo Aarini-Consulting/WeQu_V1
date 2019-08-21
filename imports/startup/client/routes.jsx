@@ -17,7 +17,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import {render} from 'react-dom';
 import CheckLoginVerified from './CheckLoginVerified';
-import AdminOnly from './AdminOnly';
+import GamemasterOnly from './GamemasterOnly';
 
 import Home from '/imports/ui/pages/Home';
 import QuizClientPage from '/imports/ui/pages/quizClient/QuizClientPage';
@@ -232,8 +232,8 @@ const App = class App extends React.Component {
           <Switch history={history}>
               <Route exact path='/' render={(props) => (<CheckLogin childComponent={<Home {...props}/>} {...props}/>)} />
               <Route exact path='/quiz/:gid' render={(props) => (<CheckLoginVerified childComponent={<QuizClientPage {...props}/>} {...props}/>)} />
-              <Route exact path='/invite-group' render={(props) => (<AdminOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
-              <Route exact path='/group/:id' render={(props) => (<AdminOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
+              <Route exact path='/invite-group' render={(props) => (<GamemasterOnly childComponent={<InviteGroupPage {...props}/>} {...props}/>)} />
+              <Route exact path='/group/:id' render={(props) => (<GamemasterOnly childComponent={<GroupPage {...props}/>} {...props}/>)} />
               <Route exact path='/settings' render={(props) => (<CheckLoginVerified childComponent={<Settings {...props}/>} {...props}/>)} />
               <Route exact path='/settings/:type' render={(props) => (<CheckLoginVerified childComponent={<EditEntry {...props}/>} {...props}/>)} />
               <Route exact path='/linkedin-permission/:redirect_pathname' render={(props) => (<CheckLoginVerified childComponent={<LinkedInPermission {...props}/>} {...props}/>)} />/>

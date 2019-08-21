@@ -21,6 +21,7 @@ class Home extends React.Component {
     constructor(props){
         super(props);
         this.state={
+            showTrialActivated:false,
             showPopup:false,
             popupSelectedGroup:undefined
         }
@@ -50,6 +51,16 @@ class Home extends React.Component {
                 }
             })
         }
+    }
+
+    activateTrial(){
+        Meteor.call('addRoleTrialGameMaster', Meteor.userId() , (err, result) => {
+            if(err){
+                console.log(err)
+            }else{
+                this.setState({ showTrialActivated: true });
+            }
+        });
     }
 
     renderGroups(){
@@ -89,7 +100,7 @@ class Home extends React.Component {
 
     render() {
         if(this.props.dataReady){
-            var isGameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+            var isGameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' );
             // if(this.props.currentUser && this.props.currentUser.profile  && !this.props.currentUser.profile.pictureUrl){
             //     //create random gravatar image and store it in profile
             //     var gravatar = init({
@@ -155,6 +166,19 @@ class Home extends React.Component {
                                     {this.renderGroups()}
                                 </div>
 
+                                {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) && !Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ) &&
+                                    <div className="w-block home-footer">
+                                        <div className="footer-text">
+                                            Want to run WeQ session as a coach? Request an upgrade of your account for free.
+                                        </div>
+                                        <div className="div-block-center">
+                                            <div className="footer-btn" onClick={this.activateTrial.bind(this)}>
+                                            UPGRADE
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
                                 {this.state.showPopup &&
                                     <SweetAlert
                                     type={"confirm"}
@@ -174,6 +198,14 @@ class Home extends React.Component {
                                         //     popupSelectedGroup:undefined
                                         // });
                                         this.props.history.push(`/quiz/${ this.state.popupSelectedGroup._id }`);
+                                    }}/>
+                                }
+
+                                {this.state.showTrialActivated &&
+                                    <SweetAlert
+                                    type={"trial-activated"}
+                                    onCancel={() => {
+                                        this.setState({ showTrialActivated: false });
                                     }}/>
                                 }
                             </section>

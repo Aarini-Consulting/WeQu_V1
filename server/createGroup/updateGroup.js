@@ -23,7 +23,8 @@ Meteor.methods({
             throw (new Meteor.Error("only owner can modify group")); 
         }
 
-        var gmCheck = Roles.userIsInRole( this.userId, 'GameMaster' );
+        var gmCheckTrial = Roles.userIsInRole( this.userId, 'TrialGameMaster' );
+        var gmCheck = (Roles.userIsInRole( this.userId, 'GameMaster' ) || gmCheckTrial);
 
         if(!gmCheck){
         throw (new Meteor.Error("only_gamemaster_can_create_group")); 

@@ -54,7 +54,7 @@ Meteor.methods({
       }
     },
 
-    addRoleGameMaster2(userId){
-       Roles.addUsersToRoles(userId, "GameMaster" );
+    addRoleTrialGameMaster(userId){
+       Roles.addUsersToRoles(userId, "TrialGameMaster" );
     }
 })

@@ -30,7 +30,7 @@ class InviteGroup extends React.Component {
       this.state={
         languages:Meteor.settings.public.languages,
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
-        selectedGroupType:"long",
+        selectedGroupType:"norming",
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
@@ -402,13 +402,14 @@ class InviteGroup extends React.Component {
     }
 
     renderGroupType(){
-      let groupTypeList=["long"];
+      let groupTypeList=["norming, long"];
       groupTypeList = groupTypeList.concat(groupTypeShortList);
       let groupTypeListTranslation={};
-      groupTypeListTranslation[groupTypeList[0]] = "Long Session";
-      groupTypeListTranslation[groupTypeList[1]] = "Short Session (praise + criticism)";
-      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise)";
-      groupTypeListTranslation[groupTypeList[3]] = "Short Session (criticism)";
+      groupTypeListTranslation[groupTypeList[0]] = "Norming";
+      groupTypeListTranslation[groupTypeList[1]] = "Long Session";
+      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise + criticism)";
+      groupTypeListTranslation[groupTypeList[3]] = "Short Session (praise)";
+      groupTypeListTranslation[groupTypeList[4]] = "Short Session (criticism)";
 
       return groupTypeList.map((groupType,index,array)=>{
           return(
@@ -592,13 +593,18 @@ class InviteGroup extends React.Component {
                           {this.renderLanguageList()}
                       </select>
                       <br/>
-
                       <div className="groupformtext">
                         Session type
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
                           <span className="tooltiptext">
                           Define the type of the session. You can only set it once when creating the group for the first time.
+                          {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) &&
+                            <React.Fragment>
+                              <br/>
+                              <b>Free-tier users are restricted to 'Norming' session type</b>
+                            </React.Fragment>
+                          } 
                           </span>
                         </div>
                       </div>
@@ -614,13 +620,17 @@ class InviteGroup extends React.Component {
                           value={this.state.selectedGroupType} disabled={true}>
                           {this.renderGroupType()}
                           </select>
-                        : 
+                        : Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) 
+                          ?
                           <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                           value={this.state.selectedGroupType} onChange={this.handleChangeGroupType.bind(this)}>
                               {this.renderGroupType()}
                           </select>
-                          
-                          
+                          :
+                          <select className="w-select w-inline-block pdf-download-lang-select disabled" name="language" disabled={true}
+                          value={"norming"}>
+                              {this.renderGroupType()}
+                          </select>
                       }
                       <br/>
                     </div>

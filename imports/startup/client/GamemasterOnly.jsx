@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
-class AdminOnly extends React.Component {
+class GamemasterOnly extends React.Component {
   constructor(props){
     super(props);
   }
@@ -19,7 +19,7 @@ class AdminOnly extends React.Component {
         ); 
     }else{
         if(this.props.dataReady){
-            if(this.props.currentUser && Roles.userIsInRole( Meteor.userId(), 'GameMaster' )){
+            if(this.props.currentUser && (Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ))){
                 return (
                     this.props.childComponent
                 );
@@ -53,4 +53,4 @@ export default withTracker((props) => {
     dataReady: dataReady,
     currentUser: currentUser,
   };
-})(AdminOnly);
+})(GamemasterOnly);

@@ -62,9 +62,8 @@ export function genGroupUserUpFront(arr_emails, arr_numbers, data){
 
 Meteor.methods({
   'createGroup' : function (groupName,language="en",data,arr_emails,type) {
-    var now = new Date();
-    
-    var gmCheck = Roles.userIsInRole( this.userId, 'GameMaster' );
+    var gmCheckTrial = Roles.userIsInRole( this.userId, 'TrialGameMaster' );
+    var gmCheck = (Roles.userIsInRole( this.userId, 'GameMaster' ) || gmCheckTrial);
 
     var groupNameCheckOwn = Group.findOne({groupName : groupName, creatorId:this.userId});
 
@@ -90,7 +89,11 @@ Meteor.methods({
       throw (new Meteor.Error("need_at_least_2_players"));
     }
 
-    if(!groupTypeIsShort(type) && type != "long"){
+    if(gmCheckTrial){
+      if(type !== "norming"){
+        throw (new Meteor.Error("invalid_type"));
+      }
+    }else if(!groupTypeIsShort(type) && type != "long"){
       throw (new Meteor.Error("invalid_type"));
     }
 
