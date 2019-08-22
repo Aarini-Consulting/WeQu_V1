@@ -387,9 +387,10 @@ class GroupPage extends React.Component {
                   {tabContent}
               </div>
 
-              //unlike other tab content, always render "presentation" tabs
-              //this is done so it 'remembers' which slide was last on when switching between tabs
+
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
+                //unlike other tab content, always render "presentation" tabs
+                //this is done so it 'remembers' which slide was last on when switching between tabs
                 <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
                   <GroupPresentation 
                   language={this.state.selectedGroupLanguage} 

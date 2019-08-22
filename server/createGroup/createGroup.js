@@ -93,7 +93,7 @@ Meteor.methods({
       if(type !== "norming"){
         throw (new Meteor.Error("invalid_type"));
       }
-    }else if(!groupTypeIsShort(type) && type != "long"){
+    }else if(!groupTypeIsShort(type) && type !== "long" && type !== "norming"){
       throw (new Meteor.Error("invalid_type"));
     }
 
