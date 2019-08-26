@@ -12,7 +12,7 @@ export default class GroupNormingAds extends React.Component{
                     Discover different game modules that make the team engaged in repeatable WeQ sessions.
 
                     <div className="div-block-center">
-                        <a className="group-norming-btn" href="https://meetings.hubspot.com/ohyoon/15-min-demo">
+                        <a className="group-norming-btn" href="https://calendly.com/weq/live-demo">
                             Book a live demo
                         </a>
                     </div>

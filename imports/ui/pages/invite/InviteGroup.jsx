@@ -401,7 +401,7 @@ class InviteGroup extends React.Component {
       })
     }
 
-    renderGroupType(){
+    renderGroupType(isTrial){
       let groupTypeList=["norming, long"];
       groupTypeList = groupTypeList.concat(groupTypeShortList);
       let groupTypeListTranslation={};
@@ -411,9 +411,18 @@ class InviteGroup extends React.Component {
       groupTypeListTranslation[groupTypeList[3]] = "Short Session (praise)";
       groupTypeListTranslation[groupTypeList[4]] = "Short Session (criticism)";
 
+      
+
       return groupTypeList.map((groupType,index,array)=>{
+        let disabledTrialOption = (isTrial && groupType !== groupTypeList[0]);
+        let className="select-type";
+        if(disabledTrialOption){
+          className += " noselect";
+        }
           return(
-              <option key={"select-type"+index} value={groupType}>{groupTypeListTranslation[groupType]}</option>
+              <option className={className} key={"select-type"+index} value={groupType}>
+              {groupTypeListTranslation[groupType]}
+              </option>
           );
       })
     }
@@ -627,9 +636,9 @@ class InviteGroup extends React.Component {
                               {this.renderGroupType()}
                           </select>
                           :
-                          <select className="w-select w-inline-block pdf-download-lang-select disabled" name="language" disabled={true}
+                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                           value={"norming"}>
-                              {this.renderGroupType()}
+                              {this.renderGroupType(true)}
                           </select>
                       }
                       <br/>

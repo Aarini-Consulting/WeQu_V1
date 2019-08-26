@@ -693,6 +693,12 @@
             cursor: default; 
 }
 
+.select-type.noselect{
+  background: #c5c5c5;
+  background-color: #c5c5c5;
+  cursor:not-allowed;
+}
+
 .disabled {
   pointer-events: none;
 }
@@ -4996,23 +5002,23 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   display:flex;
   width:100%;
   height:100%;
-  padding:5vw;
+  padding:8vw;
   flex-direction: row;
   justify-content: center;
   background-color: #fff;
   line-height: normal;
   font-family: Raleway, sans-serif;
-  font-size:0.75rem;
+  font-size:0.5rem;
 }
 
 .group-norming-title{
-  font-size:1rem;
+  font-size:0.8rem;
   font-weight: bold;
 }
 
 .group-norming-content{
   flex-basis:44vw;
-  padding:1vw;
+  padding:4vw;
   display:flex;
   flex-direction: column;
   justify-content: center;

@@ -48,6 +48,10 @@ Meteor.methods({
         };
         let body = SSR.render('GamemasterConfirmationEmail', emailData);
         Roles.addUsersToRoles(userId, "GameMaster" );
+
+        if(Roles.userIsInRole( userId, 'TrialGameMaster' )){
+          Roles.removeUsersFromRoles(userId, "TrialGameMaster" );
+        }
         
         sendEmail(email, subject, body);
         
@@ -55,6 +59,16 @@ Meteor.methods({
     },
 
     addRoleTrialGameMaster(userId){
-       Roles.addUsersToRoles(userId, "TrialGameMaster" );
+      var groupCreator = Meteor.users.findOne(userId);
+
+      Roles.addUsersToRoles(userId, "TrialGameMaster" );
+      var emailSubject = "Congratulations! Your account is upgraded";
+
+      var emailData = {
+        'creatorName' : (groupCreator.profile.firstName +" "+ groupCreator.profile.lastName),
+      };
+      var body;
+      body = SSR.render('GroupUpgradeNorming', emailData);
+      sendEmail(groupCreator.emails[0].address, emailSubject, body);
     }
 })

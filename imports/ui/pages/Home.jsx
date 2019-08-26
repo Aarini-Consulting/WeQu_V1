@@ -241,8 +241,28 @@ class Home extends React.Component {
                                             }
                                         </div>
                                     </div>
-                                    {/* <img src="https://orig00.deviantart.net/798a/f/2012/319/2/9/nothing_to_do_here_gif_by_cartoonzack-d5l4eqj.gif"/> */}
                                 </div>
+
+                                {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) && !Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ) &&
+                                    <div className="w-block home-footer">
+                                        <div className="footer-text">
+                                            Want to run WeQ session as a coach? Request an upgrade of your account for free.
+                                        </div>
+                                        <div className="div-block-center">
+                                            <div className="footer-btn" onClick={this.activateTrial.bind(this)}>
+                                            UPGRADE
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                {this.state.showTrialActivated &&
+                                    <SweetAlert
+                                    type={"trial-activated"}
+                                    onCancel={() => {
+                                        this.setState({ showTrialActivated: false });
+                                    }}/>
+                                }
                             </section>
                         );
                     }

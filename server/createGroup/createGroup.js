@@ -116,15 +116,26 @@ Meteor.methods({
     if(groupQuiz.length >= 1){
       let filteredGroupList;
       let specialGroupQuizList;
+      let questionToIdMap={};
 
-      if(groupTypeIsShort(type)){
-        let questionToIdMap={};
+      groupQuiz.forEach((gq)=>{
+        questionToIdMap[gq.question] = gq._id;
+      });
 
-        groupQuiz.forEach((gq)=>{
-          questionToIdMap[gq.question] = gq._id;
+      if(type === "norming"){
+        specialGroupQuizList = ["TeamSharedGoal","RankDiscussionBehaviour","RankBehaviourImprovement","EvaluateSession"];
+        groupQuizIdList = specialGroupQuizList.map((question)=>{
+          return questionToIdMap[question];
         });
-
-        if(type === "short"){
+      }
+      else if(groupTypeIsShort(type)){
+        if(type === "norming"){
+          specialGroupQuizList = ["TeamSharedGoal","RankDiscussionBehaviour","RankBehaviourImprovement","EvaluateSession"];
+          groupQuizIdList = specialGroupQuizList.map((question)=>{
+            return questionToIdMap[question];
+          });
+        }
+        else if(type === "short"){
           specialGroupQuizList = ["HowOftenCompliment","BestComplimentGiver","HadToChooseSomeonePrefer","WhenReceivingCriticism","RankBehaviourImprovement","EvaluateSession"];
           groupQuizIdList = specialGroupQuizList.map((question)=>{
             return questionToIdMap[question];
