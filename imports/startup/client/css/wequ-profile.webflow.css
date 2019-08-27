@@ -5052,6 +5052,18 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   cursor: pointer;
 }
 
+.group-norming-btn.card{
+  background-color: #05a5d5;
+}
+
+.group-norming-btn.play-cards{
+  background-color: #40BFBB;
+}
+
+.group-norming-btn.report{
+  background-color: #37AC68;
+}
+
 @media (max-width: 991px) {
   /*.sectionname {
     background-image: url('/img/Background_white20.png');

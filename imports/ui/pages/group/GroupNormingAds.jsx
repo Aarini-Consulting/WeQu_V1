@@ -9,10 +9,10 @@ export default class GroupNormingAds extends React.Component{
                         Supercharge your WeQ session with Master Coach functionalities
                     </div>
                     
-                    Discover different game modules that make the team engaged in repeatable WeQ sessions.
+                    Discover different modules that will get the team engaged in repeatable WeQ sessions.
 
                     <div className="div-block-center">
-                        <a className="group-norming-btn" href="https://calendly.com/weq/live-demo">
+                        <a className={`group-norming-btn ${this.props.currentTab}`} href="https://calendly.com/weq/live-demo">
                             Book a live demo
                         </a>
                     </div>
@@ -20,13 +20,13 @@ export default class GroupNormingAds extends React.Component{
 
                 <div className="group-norming-content right">
                     <div className="group-norming-title">
-                        Deliver data-driven learning experience
+                        Deliver data-driven learning experiences
                     </div>
                     
                     <div className="div-block-center">
                         <img className="group-norming-img" src="/img/norming.png"/>
                     </div>
-                    Multiply your coaching impact and revenue by delivering repeatable sessions to the same team.
+                    Multiply your coaching impact and your revenue by delivering repeatable sessions to the same team.
                 </div>
             </div>
         );

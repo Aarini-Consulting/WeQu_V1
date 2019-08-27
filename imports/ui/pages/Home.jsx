@@ -236,9 +236,6 @@ class Home extends React.Component {
                                     <br/>
                                         <div className="w-block noselect">
                                             <div className="fontreleway f-popup-title"><T>weq.home.NoGroupSelection</T></div>
-                                            {!isGameMaster &&
-                                                <div className="fontreleway f-popup-title"><T>weq.home.CertifiedCoach</T></div>
-                                            }
                                         </div>
                                     </div>
                                 </div>

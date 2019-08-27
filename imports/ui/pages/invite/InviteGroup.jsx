@@ -402,16 +402,15 @@ class InviteGroup extends React.Component {
     }
 
     renderGroupType(isTrial){
-      let groupTypeList=["norming, long"];
+      let groupTypeList=["norming", "long"];
       groupTypeList = groupTypeList.concat(groupTypeShortList);
       let groupTypeListTranslation={};
+
       groupTypeListTranslation[groupTypeList[0]] = "Norming";
       groupTypeListTranslation[groupTypeList[1]] = "Long Session";
-      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise + criticism)";
+      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise + constructive feedback)";
       groupTypeListTranslation[groupTypeList[3]] = "Short Session (praise)";
-      groupTypeListTranslation[groupTypeList[4]] = "Short Session (criticism)";
-
-      
+      groupTypeListTranslation[groupTypeList[4]] = "Short Session (constructive feedback)";
 
       return groupTypeList.map((groupType,index,array)=>{
         let disabledTrialOption = (isTrial && groupType !== groupTypeList[0]);

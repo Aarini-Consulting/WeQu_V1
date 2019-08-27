@@ -282,17 +282,6 @@ class GroupPage extends React.Component {
     });
   }
 
-  tabNormingCheck(){
-    if(!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || this.props.group && this.props.group.groupType === "norming"){
-      return (
-        <GroupNormingAds/>
-      );
-    }
-    else{
-      return realContentToShow;
-    }
-  }
-
   renderLockIcon(){
     if(!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || this.props.group && this.props.group.groupType === "norming"){
       return (
@@ -304,10 +293,10 @@ class GroupPage extends React.Component {
     }
   }
 
-  tabContentNormingCheck(realContentToShow){
+  tabContentNormingCheck(realContentToShow, currentTab){
     if(!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || this.props.group && this.props.group.groupType === "norming"){
       return (
-        <GroupNormingAds/>
+        <GroupNormingAds currentTab={currentTab}/>
       );
     }
     else{
@@ -366,7 +355,7 @@ class GroupPage extends React.Component {
           }
         </div>);
         
-        tabContent = this.tabContentNormingCheck(realTabContent);
+        tabContent = this.tabContentNormingCheck(realTabContent,this.state.currentTab);
 
       }
       else if(this.state.currentTab == "quiz"){
@@ -374,10 +363,10 @@ class GroupPage extends React.Component {
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
       else if(this.state.currentTab == "play-cards"){
-        tabContent = this.tabContentNormingCheck(<GroupPlayCardPage group={this.props.group}/>);
+        tabContent = this.tabContentNormingCheck(<GroupPlayCardPage group={this.props.group}/>, this.state.currentTab);
       }
       else if(this.state.currentTab == "report"){
-        tabContent = this.tabContentNormingCheck(<GroupReportPage groupId={this.props.match.params.id}/>);
+        tabContent = this.tabContentNormingCheck(<GroupReportPage groupId={this.props.match.params.id}/>,this.state.currentTab);
       }
       return(
             <section className="section home fontreleway groupbg" >
