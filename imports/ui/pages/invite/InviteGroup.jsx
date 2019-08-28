@@ -42,6 +42,7 @@ class InviteGroup extends React.Component {
         resendFailed:0,
         modifiedByUser:false,
         showConfirm:false,
+        showTrialLimitation:false,
         unsaved:false
       }
   }
@@ -93,20 +94,24 @@ class InviteGroup extends React.Component {
     );
   }
 
-  handleChangeGroupType(event) {
+  handleChangeGroupType(event, isTrial) {
     if(!this.props.group){
-      if(event.target.value && this.state.selectedGroupType != event.target.value){
-        if(!this.state.modifiedByUser){
-          this.setState({
-            modifiedByUser: true
-          });
+      if(isTrial){
+        this.setState({ showTrialLimitation: true });
+      }else{
+        if(event.target.value && this.state.selectedGroupType != event.target.value){
+          if(!this.state.modifiedByUser){
+            this.setState({
+              modifiedByUser: true
+            });
+          }
         }
+        this.setState(
+          { 
+              selectedGroupType: event.target.value,
+          }
+        );
       }
-      this.setState(
-        { 
-            selectedGroupType: event.target.value,
-        }
-      );
     }
   }
 
@@ -636,7 +641,7 @@ class InviteGroup extends React.Component {
                           </select>
                           :
                           <select className="w-select w-inline-block pdf-download-lang-select" name="language"
-                          value={"norming"}>
+                          value={"norming"} onChange={this.handleChangeGroupType.bind(this,true)}>
                               {this.renderGroupType(true)}
                           </select>
                       }
@@ -735,6 +740,14 @@ class InviteGroup extends React.Component {
                       this.createGroup();
                     }}/>
                   )
+                }
+
+                {this.state.showTrialLimitation &&
+                    <SweetAlert
+                    type={"trial-limitation"}
+                    onCancel={() => {
+                        this.setState({ showTrialLimitation: false });
+                    }}/>
                 }
             </div>
           </div>
