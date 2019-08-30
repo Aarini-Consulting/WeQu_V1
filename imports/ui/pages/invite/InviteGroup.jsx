@@ -30,7 +30,7 @@ class InviteGroup extends React.Component {
       this.state={
         languages:Meteor.settings.public.languages,
         selectedGroupLanguage:i18n.getLocale().split("-")[0],
-        selectedGroupType:"long",
+        selectedGroupType:"norming",
         info:undefined,
         inviteStatus:false,
         inviteSuccess:false,
@@ -42,6 +42,7 @@ class InviteGroup extends React.Component {
         resendFailed:0,
         modifiedByUser:false,
         showConfirm:false,
+        showTrialLimitation:false,
         unsaved:false
       }
   }
@@ -93,20 +94,24 @@ class InviteGroup extends React.Component {
     );
   }
 
-  handleChangeGroupType(event) {
+  handleChangeGroupType(event, isTrial) {
     if(!this.props.group){
-      if(event.target.value && this.state.selectedGroupType != event.target.value){
-        if(!this.state.modifiedByUser){
-          this.setState({
-            modifiedByUser: true
-          });
+      if(isTrial){
+        this.setState({ showTrialLimitation: true });
+      }else{
+        if(event.target.value && this.state.selectedGroupType != event.target.value){
+          if(!this.state.modifiedByUser){
+            this.setState({
+              modifiedByUser: true
+            });
+          }
         }
+        this.setState(
+          { 
+              selectedGroupType: event.target.value,
+          }
+        );
       }
-      this.setState(
-        { 
-            selectedGroupType: event.target.value,
-        }
-      );
     }
   }
 
@@ -401,18 +406,27 @@ class InviteGroup extends React.Component {
       })
     }
 
-    renderGroupType(){
-      let groupTypeList=["long"];
+    renderGroupType(isTrial){
+      let groupTypeList=["norming", "long"];
       groupTypeList = groupTypeList.concat(groupTypeShortList);
       let groupTypeListTranslation={};
-      groupTypeListTranslation[groupTypeList[0]] = "Long Session";
-      groupTypeListTranslation[groupTypeList[1]] = "Short Session (praise + criticism)";
-      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise)";
-      groupTypeListTranslation[groupTypeList[3]] = "Short Session (criticism)";
+
+      groupTypeListTranslation[groupTypeList[0]] = "Norming";
+      groupTypeListTranslation[groupTypeList[1]] = "Long Session";
+      groupTypeListTranslation[groupTypeList[2]] = "Short Session (praise + constructive feedback)";
+      groupTypeListTranslation[groupTypeList[3]] = "Short Session (praise)";
+      groupTypeListTranslation[groupTypeList[4]] = "Short Session (constructive feedback)";
 
       return groupTypeList.map((groupType,index,array)=>{
+        let disabledTrialOption = (isTrial && groupType !== groupTypeList[0]);
+        let className="select-type";
+        if(disabledTrialOption){
+          className += " noselect";
+        }
           return(
-              <option key={"select-type"+index} value={groupType}>{groupTypeListTranslation[groupType]}</option>
+              <option className={className} key={"select-type"+index} value={groupType}>
+              {groupTypeListTranslation[groupType]}
+              </option>
           );
       })
     }
@@ -592,13 +606,18 @@ class InviteGroup extends React.Component {
                           {this.renderLanguageList()}
                       </select>
                       <br/>
-
                       <div className="groupformtext">
                         Session type
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
                           <span className="tooltiptext">
                           Define the type of the session. You can only set it once when creating the group for the first time.
+                          {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) &&
+                            <React.Fragment>
+                              <br/>
+                              <b>Free-tier users are restricted to 'Norming' session type</b>
+                            </React.Fragment>
+                          } 
                           </span>
                         </div>
                       </div>
@@ -614,13 +633,17 @@ class InviteGroup extends React.Component {
                           value={this.state.selectedGroupType} disabled={true}>
                           {this.renderGroupType()}
                           </select>
-                        : 
+                        : Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) 
+                          ?
                           <select className="w-select w-inline-block pdf-download-lang-select" name="language"
                           value={this.state.selectedGroupType} onChange={this.handleChangeGroupType.bind(this)}>
                               {this.renderGroupType()}
                           </select>
-                          
-                          
+                          :
+                          <select className="w-select w-inline-block pdf-download-lang-select" name="language"
+                          value={"norming"} onChange={this.handleChangeGroupType.bind(this,true)}>
+                              {this.renderGroupType(true)}
+                          </select>
                       }
                       <br/>
                     </div>
@@ -717,6 +740,14 @@ class InviteGroup extends React.Component {
                       this.createGroup();
                     }}/>
                   )
+                }
+
+                {this.state.showTrialLimitation &&
+                    <SweetAlert
+                    type={"trial-limitation"}
+                    onCancel={() => {
+                        this.setState({ showTrialLimitation: false });
+                    }}/>
                 }
             </div>
           </div>

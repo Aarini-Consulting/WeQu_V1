@@ -361,7 +361,7 @@ class AdminGameMasterView extends React.Component {
                         <input type="checkbox" checked={user.roles && user.roles.indexOf("GameMaster") > -1}
                          onChange={this.handleCheckGameMaster.bind(this,user)}/>
                         <div className="slider round"></div>
-                    </label>	
+                    </label>
                     </td>
                 </tr>
             );

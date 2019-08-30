@@ -30,12 +30,16 @@ export default class Menu extends React.Component {
                 className={"text fontreleway fontmenu _1 " + this.isCurrent("/")}>
                     Home
                 </a>
-                {Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) &&
+                {(Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' )) &&
                     <a onClick={this.decideAction.bind(this,"/invite-group")} 
                     className={"text fontreleway fontmenu _2 " + this.isCurrent("/invite-group")}>
                         Groups
                     </a>
                 }
+                <a href="https://www.weq.io/shop"
+                className={"text fontreleway fontmenu _3"}>
+                    Shop
+                </a>
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
                     Settings
