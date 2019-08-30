@@ -159,6 +159,16 @@ class AdminUserView extends React.Component {
                         <div className="slider round"></div>
                     </label>	
                     </td>
+                    <td>
+                    <label className="switch">
+                        {user.roles && user.roles.indexOf("TrialGameMaster") > -1 
+                        ?
+                        "true"
+                        :
+                        "false"
+                        }
+                    </label>	
+                    </td>
                 </tr>
             );
           });
@@ -250,6 +260,7 @@ class AdminUserView extends React.Component {
                                     <th style={{textAlign:"center"}}>Created</th>
                                     <th style={{textAlign:"center"}}> Last Login</th>
                                     <th style={{textAlign:"center"}}>Game Master</th>
+                                    <th style={{textAlign:"center"}}>Pre-CMC</th>
                                 </tr>
                             </thead>
                             <tbody className="no-border-x overflow">

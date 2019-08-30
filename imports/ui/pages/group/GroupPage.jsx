@@ -22,6 +22,7 @@ import {Group} from '/collections/group';
 import {CardPlacement} from '/collections/cardPlacement';
 
 import {groupTypeIsShort,groupTypeShortList} from '/imports/helper/groupTypeShort.js';
+import GroupNormingAds from './GroupNormingAds';
 
 const T = i18n.createComponent();
 
@@ -281,6 +282,28 @@ class GroupPage extends React.Component {
     });
   }
 
+  renderLockIcon(){
+    if(!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || this.props.group && this.props.group.groupType === "norming"){
+      return (
+        <i className="fas fa-lock"></i>
+      );
+    }
+    else{
+      return false;
+    }
+  }
+
+  tabContentNormingCheck(realContentToShow, currentTab){
+    if(!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || this.props.group && this.props.group.groupType === "norming"){
+      return (
+        <GroupNormingAds currentTab={currentTab}/>
+      );
+    }
+    else{
+      return realContentToShow;
+    }
+  }
+
   render() {
     if(this.props.dataReady){
       var tabContent;
@@ -301,7 +324,7 @@ class GroupPage extends React.Component {
           readySurvey = true;
         }
 
-        tabContent = 
+        let realTabContent = 
         (<div className="tap-content-wrapper card">
           
           {this.props.group && !this.props.group.isFinished && !this.props.group.isPlaceCardFinished && readySurvey &&
@@ -331,17 +354,19 @@ class GroupPage extends React.Component {
             </div>
           }
         </div>);
+        
+        tabContent = this.tabContentNormingCheck(realTabContent,this.state.currentTab);
+
       }
       else if(this.state.currentTab == "quiz"){
         tabContent = 
         (<GroupQuizPage group={this.props.group} language={this.state.selectedGroupLanguage} cardPlacements={this.props.cardPlacements}/>);
       }
       else if(this.state.currentTab == "play-cards"){
-        tabContent = (<GroupPlayCardPage group={this.props.group}/>);
+        tabContent = this.tabContentNormingCheck(<GroupPlayCardPage group={this.props.group}/>, this.state.currentTab);
       }
       else if(this.state.currentTab == "report"){
-        tabContent = 
-        (<GroupReportPage groupId={this.props.match.params.id}/>);
+        tabContent = this.tabContentNormingCheck(<GroupReportPage groupId={this.props.match.params.id}/>,this.state.currentTab);
       }
       return(
             <section className="section home fontreleway groupbg" >
@@ -365,21 +390,21 @@ class GroupPage extends React.Component {
                   </div>
                   <div className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
-                    <div>Prepare cards</div>
+                    <div>Prepare cards &nbsp;{this.renderLockIcon()}</div>
                   </div>
                   <div className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"quiz")}>
                     <div>Do quiz</div>
                   </div>
-                  {this.props.group && groupTypeIsShort(this.props.group.groupType) &&
+                  {this.props.group && (groupTypeIsShort(this.props.group.groupType) || this.props.group.groupType === "norming") &&
                     <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
                     onClick={this.toggleTabs.bind(this,"play-cards")}>
-                      <div>Play cards</div>
+                      <div>Play cards &nbsp;{this.renderLockIcon()}</div>
                     </div>
                   }
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
-                    <div>Download report</div>
+                    <div>Download report &nbsp;{this.renderLockIcon()}</div>
                   </div>
                 </div>
               </div>
@@ -387,9 +412,10 @@ class GroupPage extends React.Component {
                   {tabContent}
               </div>
 
-              //unlike other tab content, always render "presentation" tabs
-              //this is done so it 'remembers' which slide was last on when switching between tabs
+
               {(this.state.currentTab == "presentation" || this.state.presentationFrameLoaded) &&
+                //unlike other tab content, always render "presentation" tabs
+                //this is done so it 'remembers' which slide was last on when switching between tabs
                 <div className={`tabs w-tabs ${this.state.currentTab}`} style={{display:this.state.currentTab == "presentation"?"block":"none"}}>
                   <GroupPresentation 
                   language={this.state.selectedGroupLanguage} 

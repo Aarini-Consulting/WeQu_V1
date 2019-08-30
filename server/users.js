@@ -221,19 +221,6 @@ Meteor.methods({
         }
       });
 
-      Connections.remove(
-        {$or : [
-          { "userId": currentUser._id}
-          ] 
-        });
-
-      Feedback.remove(
-        {$or : [
-          { "from": currentUser._id},
-          { "to": currentUser._id}
-          ] 
-        });
-
       FeedbackRank.remove(
         {$or : [
           { "from": currentUser._id},

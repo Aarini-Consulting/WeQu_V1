@@ -97,7 +97,9 @@ class Settings extends React.Component {
     }
 
     render() {
-    var gameMaster = Roles.userIsInRole( Meteor.userId(), 'GameMaster' );
+    var trialGameMaster = Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' );
+    var gameMaster = (Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || trialGameMaster);
+    
     var admin = Roles.userIsInRole( Meteor.userId(), 'admin' );
     var languageCode = this.state.locale.split("-")[0];
       return (
@@ -127,7 +129,13 @@ class Settings extends React.Component {
                             ?
                             <div className="fontreleway fontstatement noselect">
                                 <div className="w-block summarytext">
-                                    {i18n.getTranslation("weq.settings.AccountType",{accountType:"Team Admin"})}
+                                    {trialGameMaster 
+                                    ?
+                                        i18n.getTranslation("weq.settings.AccountType",{accountType:"Team Admin (free-tier)"})
+                                    :
+                                        i18n.getTranslation("weq.settings.AccountType",{accountType:"Team Admin"})
+                                    }
+                                    
                                 </div>
                             </div>
                             :

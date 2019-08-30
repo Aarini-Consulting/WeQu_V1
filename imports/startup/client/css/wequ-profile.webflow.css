@@ -693,6 +693,12 @@
             cursor: default; 
 }
 
+.select-type.noselect{
+  background: #c5c5c5;
+  background-color: #c5c5c5;
+  cursor:not-allowed;
+}
+
 .disabled {
   pointer-events: none;
 }
@@ -1273,6 +1279,10 @@ body {
   color: #6a62b3;
   font-size: 1.2em;
   text-align: center;
+}
+
+.fontreleway.f-popup-title.f-popup-msg.left-align {
+  text-align: left;
 }
 
 .columprogress {
@@ -3948,6 +3958,24 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   overflow-y: overlay;
 }
 
+.home-footer{
+  display:inline-block;
+  width:100%;
+  background-color:#303163;
+  padding:0.5em 0px;
+  color:#fff;
+}
+
+.footer-btn{
+  display: inline-block;
+  background-color: #fff;
+  padding:0.5em 1em;
+  margin:0.5em;
+  color:#303163;
+  border-radius: 500px;
+  cursor: pointer;
+}
+
 .group-row{
   display: flex;
   width:100%;
@@ -4416,6 +4444,11 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
 .pdf-download-lang-select {
   width:auto;
   margin-right:1em;
+}
+
+.pdf-download-lang-select.disabled {
+  cursor: not-allowed;
+  background: #eeeeee;
 }
 
 .pdf-download-bttn {
@@ -4965,6 +4998,71 @@ html.w-mod-js *[data-ix="click-trigger-skill-icon"] {
   cursor: pointer;
 }
 
+.group-norming-wrapper{
+  display:flex;
+  width:100%;
+  height:100%;
+  padding:8vw;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #fff;
+  line-height: normal;
+  font-family: Raleway, sans-serif;
+  font-size:0.5rem;
+}
+
+.group-norming-title{
+  font-size:0.8rem;
+  font-weight: bold;
+}
+
+.group-norming-content{
+  flex-basis:44vw;
+  padding:4vw;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  border:2px solid #cecbce;
+}
+
+.group-norming-content.left{
+  background-color:#fff7e5;
+  color:#303163;
+  border-right: 0px;
+  justify-content: space-around;
+}
+
+.group-norming-content.right{
+  text-align: center;
+  color:#929292;
+  border-left: 0px;
+}
+
+.group-norming-img{
+  display:inline-block;
+  width:75%;
+}
+
+.group-norming-btn{
+  display: inline-block;
+  background-color: #54bee2;
+  padding:0.5em 1em;
+  color:#fff;
+  border-radius: 500px;
+  cursor: pointer;
+}
+
+.group-norming-btn.card{
+  background-color: #05a5d5;
+}
+
+.group-norming-btn.play-cards{
+  background-color: #40BFBB;
+}
+
+.group-norming-btn.report{
+  background-color: #37AC68;
+}
 
 @media (max-width: 991px) {
   /*.sectionname {

@@ -56,6 +56,12 @@ Template.GroupCreationEmail.helpers({
     //Add any helper methods to enable default data in template
 });
 
+SSR.compileTemplate('GroupUpgradeNorming', Assets.getText('group-upgrade-norming.html'));
+
+Template.GroupCreationEmail.helpers({
+    //Add any helper methods to enable default data in template
+});
+
 SSR.compileTemplate('GroupSurveyCompletedEmail', Assets.getText('group-survey-completed-email.html'));
 
 Template.GroupSurveyCompletedEmail.helpers({
