@@ -8,24 +8,30 @@
       "local": "localhost:3000"
     },
     "verifyEmail": true,
-    "supportedLocale":["en-US","nl-NL","fr-FR","de-DE"],
+    "supportedLocale":["en-US","nl-NL","fr-FR","de-DE", "es-ES", "es-AR"],
     "languages":[
       {"name":"English","code":"en"},
       {"name":"Nederlands","code":"nl"},
       {"name":"Français","code":"fr"},
-      {"name":"Deutsch","code":"de"}
+      {"name":"Deutsch","code":"de"},
+      {"name":"Spanish","code":"es"},
+      {"name":"Spanish LATAM","code":"es-AR"}
     ],
     "typeformTestFormCode":{
       "en":"XurSNo",
       "nl":"lcFJw6",
       "fr":"iXkNwx",
-      "de":"w0ha0X"
+      "de":"w0ha0X",
+      "es-ES":"gAZo5n",
+      "es-AR":"ced8Wa"
     },
     "typeformProdFormCode":{
       "en":"RzcwbL",
       "nl":"oLBtn6",
       "fr":"pFP5QI",
-      "de":"WS4yrK"
+      "de":"WS4yrK",
+      "es-ES":"gAZo5n",
+      "es-AR":"ced8Wa"
     }
   },
   "private": {

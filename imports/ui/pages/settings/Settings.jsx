@@ -102,6 +102,7 @@ class Settings extends React.Component {
     
     var admin = Roles.userIsInRole( Meteor.userId(), 'admin' );
     var languageCode = this.state.locale.split("-")[0];
+    var languageCodeCountry = this.state.locale.split("-")[1];
       return (
         <div className="fillHeight">
         <Menu location={this.props.location} history={this.props.history}/>
@@ -191,7 +192,10 @@ class Settings extends React.Component {
                             "Français"
                         }
                         {languageCode == "de" &&
-                            "Deutsch"
+                            "Deutsch" 
+                        }
+                        {languageCode == "es" &&
+                            "Spanish" + (languageCodeCountry == "AR" ? " LATAM": "")
                         }
                         </div>
                         <div className="w-block summarytext-sub"><T>weq.settings.ChangeLanguage</T></div>

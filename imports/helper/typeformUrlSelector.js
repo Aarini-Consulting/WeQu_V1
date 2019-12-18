@@ -22,7 +22,12 @@ export function typeformUrlSelector(type, groupLanguage){
 
         if(window.location.hostname == "app.weq.io"){
             //production
-            var formId = formIdProd[languageCode];
+            var formId;
+            if (languageCode == "es") {
+                formId = formIdProd[locale];
+            } else {
+                formId = formIdProd[languageCode];
+            }
             
             //if language code is not supported, use the english typeform as default.
             if(formId){
@@ -32,7 +37,12 @@ export function typeformUrlSelector(type, groupLanguage){
             }
         }else{
             //test
-            var formId = formIdTest[languageCode];
+            var formId;
+            if (languageCode == "es") {
+                formId = formIdTest[locale];
+            } else {
+                formId = formIdTest[languageCode];
+            }
 
             //if language code is not supported, use the english typeform as default.
             if(formId){
