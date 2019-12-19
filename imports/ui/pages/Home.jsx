@@ -166,7 +166,7 @@ class Home extends React.Component {
                                     {this.renderGroups()}
                                 </div>
 
-                                {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) && !Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ) &&
+                                {/* {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) && !Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ) &&
                                     <div className="w-block home-footer">
                                         <div className="footer-text">
                                             Want to run WeQ session as a coach? Request an upgrade of your account for free.
@@ -177,7 +177,7 @@ class Home extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                } */}
 
                                 {this.state.showPopup &&
                                     <SweetAlert
@@ -240,7 +240,7 @@ class Home extends React.Component {
                                     </div>
                                 </div>
 
-                                {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) && !Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ) &&
+                                {/* {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) && !Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' ) &&
                                     <div className="w-block home-footer">
                                         <div className="footer-text">
                                             Want to run WeQ session as a coach? Request an upgrade of your account for free.
@@ -251,7 +251,7 @@ class Home extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                } */}
 
                                 {this.state.showTrialActivated &&
                                     <SweetAlert
