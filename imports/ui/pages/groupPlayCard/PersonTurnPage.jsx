@@ -67,8 +67,13 @@ class PersonTurnPage extends React.Component {
         if(targetPlayCard && targetPlayCard.cardsToChoose){
             return targetPlayCard.cardsToChoose.map((card)=>{
                 let languageCode = i18n.getLocale().split("-")[0];
-                let backgroundUrl = `https://s3-eu-west-1.amazonaws.com/wequ/cards/${languageCode}/card(${card.cardId}).png`;
-
+                let languageCodeComplete = i18n.getLocale();
+                let backgroundUrl
+                if (languageCode == 'es') {
+                    backgroundUrl = `https://s3-eu-west-1.amazonaws.com/wequ/cards/${languageCodeComplete}/card(${card.cardId}).png`;
+                }else{
+                    backgroundUrl = `https://s3-eu-west-1.amazonaws.com/wequ/cards/${languageCode}/card(${card.cardId}).png`;
+                }
                 return (
                     <div className={`play-card-list-container`} key={`card-${card.cardId}`}>
                         <img className={`play-card-display`} src={`${backgroundUrl}`}/>

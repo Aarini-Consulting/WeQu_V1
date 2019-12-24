@@ -36,10 +36,10 @@ export default class Menu extends React.Component {
                         Groups
                     </a>
                 }
-                <a href="https://www.weq.io/shop"
+                {/* <a href="https://www.weq.io/shop"
                 className={"text fontreleway fontmenu _3"}>
                     Shop
-                </a>
+                </a> */}
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
                     Settings
