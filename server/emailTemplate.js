@@ -9,6 +9,8 @@ SSR.compileTemplate('GroupInviteHtmlEmail-en', Assets.getText('group-invite-emai
 SSR.compileTemplate('GroupInviteHtmlEmail-nl', Assets.getText('group-invite-email-nl.html'));
 SSR.compileTemplate('GroupInviteHtmlEmail-fr', Assets.getText('group-invite-email-fr.html'));
 SSR.compileTemplate('GroupInviteHtmlEmail-de', Assets.getText('group-invite-email-de.html'));
+SSR.compileTemplate('GroupInviteHtmlEmail-es-AR', Assets.getText('group-invite-email-es-AR.html'));
+//TODO: Add es template 
 
 Template.GroupInviteHtmlEmail.helpers({
     //Add any helper methods to enable default data in template

@@ -14,7 +14,7 @@
       {"name":"Nederlands","code":"nl"},
       {"name":"Français","code":"fr"},
       {"name":"Deutsch","code":"de"},
-      {"name":"Spanish","code":"es"},
+      {"name":"Spanish","code":"es-ES"},
       {"name":"Spanish LATAM","code":"es-AR"}
     ],
     "typeformTestFormCode":{
