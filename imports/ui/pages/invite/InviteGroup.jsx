@@ -27,9 +27,13 @@ import {groupTypeShortList} from '/imports/helper/groupTypeShort.js';
 class InviteGroup extends React.Component {
   constructor(props){
       super(props);
+      var locale = i18n.getLocale().split("-")[0];
+      if (locale == 'es') {
+          locale = i18n.getLocale();
+      }
       this.state={
         languages:Meteor.settings.public.languages,
-        selectedGroupLanguage:i18n.getLocale().split("-")[0],
+        selectedGroupLanguage:locale,
         selectedGroupType:"norming",
         info:undefined,
         inviteStatus:false,
@@ -63,6 +67,10 @@ class InviteGroup extends React.Component {
           language = nextProps.group.groupLanguage;
         }else{
           language = i18n.getLocale().split("-")[0];
+          if (language == 'es') {
+            language = i18n.getLocale();
+          }
+          
         }
 
         this.setState({

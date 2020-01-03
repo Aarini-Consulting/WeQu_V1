@@ -71,25 +71,29 @@ export default class GroupTypeformSurvey extends React.Component {
                 var formIds = [];
 
                 supportedLocale.forEach((locale)=>{
-                var languageCode = locale.split("-")[0];
-                var formIdTest = Meteor.settings.public.typeformTestFormCode;
-                var formIdProd =  Meteor.settings.public.typeformProdFormCode;
+                  var languageCode = locale.split("-")[0];
+                  var formIdTest = Meteor.settings.public.typeformTestFormCode;
+                  var formIdProd =  Meteor.settings.public.typeformProdFormCode;
 
-                var formIdSelected;
+                  var formIdSelected;
 
-                if(window.location.hostname == "app.weq.io"){
-                    formIdSelected = formIdProd[languageCode];
-                    if(!formIdSelected){
-                    formIdSelected = formIdProd["en"];
-                    }
-                }else{
-                    formIdSelected = formIdTest[languageCode];
-                    if(!formIdSelected){
-                    formIdSelected = formIdTest["en"];
-                    }
-                }
+                  if (languageCode == 'es') {
+                    languageCode = locale
+                  }
 
-                formIds.push(formIdSelected);
+                  if(window.location.hostname == "app.weq.io"){
+                      formIdSelected = formIdProd[languageCode];
+                      if(!formIdSelected){
+                      formIdSelected = formIdProd["en"];
+                      }
+                  }else{
+                      formIdSelected = formIdTest[languageCode];
+                      if(!formIdSelected){
+                      formIdSelected = formIdTest["en"];
+                      }
+                  }
+
+                  formIds.push(formIdSelected);
                 });
 
                 Meteor.call('get.all.response.typeform', this.props.group._id, formIds, this.props.group.createdAt, (error, result)=>{

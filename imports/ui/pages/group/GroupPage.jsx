@@ -29,9 +29,14 @@ const T = i18n.createComponent();
 class GroupPage extends React.Component {
   constructor(props){
       super(props);
+      var locale = i18n.getLocale().split("-")[0];
+      if (locale == 'es') {
+        locale = i18n.getLocale();
+      }
+
       this.state={
         inviteStatus:false,
-        selectedGroupLanguage:i18n.getLocale().split("-")[0],
+        selectedGroupLanguage:locale,
         showInviteGroup:false,
         showConfirmStop:false,
         showConfirmStart:false,
@@ -49,6 +54,10 @@ class GroupPage extends React.Component {
       language = nextProps.group.groupLanguage;
     }else{
       language = i18n.getLocale().split("-")[0];
+      if (language == 'es') {
+        language = i18n.getLocale();
+      }
+     
     }
 
     if(language != this.state.selectedGroupLanguage){
@@ -56,6 +65,9 @@ class GroupPage extends React.Component {
       var langObj;
       supportedLocale.forEach((sl)=>{
         var lang = sl.split("-")[0];
+        if (lang == 'es') {
+          lang = sl;
+        }
         if(langObj){
           langObj[lang] = sl;
         }else{

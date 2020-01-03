@@ -13,14 +13,18 @@ import {Group} from '/collections/group';
 class GroupReportPage extends React.Component {
     constructor(props){
         super(props);
+        var locale = i18n.getLocale().split("-")[0];
+        if (locale == 'es') {
+            locale = i18n.getLocale();
+        }
         this.state={
           selectedUser:false,
           preview:undefined,
           loadingPreview:false,
           generatingPdf:false,
           languages:Meteor.settings.public.languages,
-          downloadIndividualLang:i18n.getLocale().split("-")[0],
-          downloadAllLang:i18n.getLocale().split("-")[0]
+          downloadIndividualLang:locale,
+          downloadAllLang:locale
         }
     }
 

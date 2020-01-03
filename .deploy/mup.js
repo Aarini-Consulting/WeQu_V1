@@ -1,16 +1,16 @@
 module.exports = {
   servers: {
     one: {
-      host: '52.29.222.185',
+      host: '52.28.201.144',
       username: 'ubuntu',
-      pem: 'C:/\Users/\yohandi/\WeQu_V1/\WeQu.pem',
+      pem: 'C:/\Users/\BrunoAmaral/\Projects/\WeQ/\WeQu_V1/\WeQu.pem',
     }
   },
 
   // Formerly named 'meteor'. Configuration for deploying the app
   app: {
-    name: 'wequ',
-    path: 'C:/\Users/\yohandi/\WeQu_V1',
+    name: 'app-test',
+    path: 'C:/\Users/\BrunoAmaral/\Projects/\WeQ/\WeQu_V1',
     // (optional, default is meteor) Plugins can provide additional types
     type: 'meteor',
     docker: {
@@ -40,58 +40,12 @@ module.exports = {
 
     },
     env: {
-      ROOT_URL: 'https://app.weq.io',
-	  MONGO_URL:'mongodb://WeQuAdmin:JZR63MSg4KenTW38@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017/wequ?ssl=true&replicaSet=WeQu-Feedback-App-shard-0&authSource=admin'
+      ROOT_URL: 'http://app-test.weq.io',
+	    MONGO_URL:'mongodb://WeQuAdmin:JZR63MSg4KenTW38@preprod-shard-00-00-tdmtm.mongodb.net:27017,preprod-shard-00-01-tdmtm.mongodb.net:27017,preprod-shard-00-02-tdmtm.mongodb.net:27017/wequ?ssl=true&replicaSet=Preprod-shard-0&authSource=admin'
     },
     // The maximum number of seconds it will wait
     // for your app to successfully start (optional, default is 60)
     deployCheckWaitTime: 180,
   }
 };
-
-
-
-*/
-
-//End of TEST mup
-/*
-module.exports = {
-  servers: {
-    one: {
-      host: '52.29.222.185',
-      username: 'ubuntu',
-      pem: '/users/aarini/Documents/GitHub/WeQu_V1/WeQu.pem',
-      // password:
-      // or leave blank for authenticate from ssh-agent
-    }
-  },
-  meteor: {
-    name: 'wequ',
-    path: '/users/aarini/Documents/GitHub/WeQu_V1',
-    servers: {
-      one: {}
-    },
-    buildOptions: {
-      serverOnly: true,
-    },
-    env: {
-      ROOT_URL: 'http://app.weq.io',
-      MAIL_URL: 'smtp://postmaster@wequ.co:Feedback12@smtp.office365.com:587',
-	  MONGO_URL: 'mongodb://WeQuAdmin:JZR63MSg4KenTW38@wequ-feedback-app-shard-00-00-tdmtm.mongodb.net:27017/wequ?ssl=true&replicaSet=WeQu-Feedback-App-shard-0&authSource=admin'
-	},
-
-    dockerImage: 'abernix/meteord',
-    deployCheckWaitTime: 180
-  },
-
-  mongo: {
-    oplog: true,
-    port: 27017,
-    servers: {
-      one: {},
-    },
-  },
-};
-
-*/
 
