@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 export default class RecoverPassword extends React.Component {
     constructor(props){
         super(props);
@@ -67,14 +71,14 @@ export default class RecoverPassword extends React.Component {
                     <div className="formarea w-container">
                         {(!this.state.resetEmailSent && !this.state.error) && 
                             <div className="w-form">
-                            <h1 className="formheader">Reset your password</h1>
-                            <p className="formtext lostpw">Enter your email address. You will receive a link to create a new password via email</p>
+                            <h1 className="formheader"><T>weq.RecoverPassword.resetYourPassword</T></h1>
+                            <p className="formtext lostpw"><T>weq.RecoverPassword.enterYourEmailAddress</T></p>
                             <form className="loginemail" data-name="Email Form" id="forgot-password" name="email-form"  onSubmit={this.handleSubmit.bind(this)}>
                             <input className="emailfield w-input" maxLength="256" placeholder="email address" type="email" required
                             value={this.state.userEmail} onChange={this.handleEmailChange.bind(this)}/>
                             <div style={{height: 6 + "px"}}></div>
                             {this.state.sendingResetEmail 
-                            ? <input className="submit-button w-button" type="submit" value="Please wait" disabled={true}/>
+                            ? <input className="submit-button w-button" type="submit" value={i18n.getTranslation("weq.RecoverPassword.pleaseWait")} disabled={true}/>
                             : <input className="submit-button w-button" type="submit" value="Get New Password"/>
                             }
                             </form>
@@ -83,25 +87,25 @@ export default class RecoverPassword extends React.Component {
                         
                         {this.state.resetEmailSent &&
                             <div className="w-form">
-                                <h1 className="formheader">Email sent!</h1>
-                                <p className="info">Check your <b>{this.state.userEmail}</b> inbox for instructions from us on how to reset the password</p>
+                                <h1 className="formheader"><T>weq.RecoverPassword.EmailSent</T></h1>
+                                <p className="info"><T>weq.RecoverPassword.CheckYour</T> <b>{this.state.userEmail}</b> <T>weq.RecoverPassword.inboxForInstructionsFrom</T></p>
                                 <br/>
                                 <br/>
-                                <div className="formtext lostpw">Unsure if that email address was correct? </div>
-                                <div className="formtext lostpw"><a onClick={this.tryAgainClick.bind(this)}>Click here</a> to try again</div>
+                                <div className="formtext lostpw"> <T>weq.RecoverPassword.UnsureIfThatEmailaddress</T></div>
+                                <div className="formtext lostpw"><a onClick={this.tryAgainClick.bind(this)}><T>weq.RecoverPassword.ClickHere</T></a> <T>weq.RecoverPassword.ToTryAgain</T></div>
                             </div>
                         }
                         {this.state.error &&
                             <div className="w-form">
-                                <h1 className="formheader">Oops!</h1>
-                                <p className="info">That doesnt seem to work, check the error below:</p>
+                                <h1 className="formheader"><T>weq.RecoverPassword.Oops</T></h1>
+                                <p className="info"><T>weq.RecoverPassword.ThatDoesntSeemtoWork</T></p>
                                 <div id="error" className="errormsg">{this.state.error}</div>
                                 <br/>
                                 <br/>
-                                <input className="submit-button w-button" type="submit" value="Try Again" onClick={this.tryAgainClick.bind(this)}/>
+                                <input className="submit-button w-button" type="submit" value={i18n.getTranslation("weq.RecoverPassword.TryAgain")} onClick={this.tryAgainClick.bind(this)}/>
                             </div>
                         } 
-                            <Link to="/login" className="loginBtn" id="signIn">Log In</Link>
+                            <Link to="/login" className="loginBtn" id="signIn"><T>weq.RecoverPassword.LogIn</T></Link>
                         </div>
                     </div>
                 </div>

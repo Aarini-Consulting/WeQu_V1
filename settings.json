@@ -8,7 +8,7 @@
       "local": "localhost:3000"
     },
     "verifyEmail": true,
-    "supportedLocale":["en-US","nl-NL","fr-FR","de-DE", "es-ES", "es-AR"],
+    "supportedLocale":["en-US","nl-NL","fr-FR","de-DE", "es-ES", "es-AR", "es"],
     "languages":[
       {"name":"English","code":"en"},
       {"name":"Nederlands","code":"nl"},

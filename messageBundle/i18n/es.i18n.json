@@ -1,5 +1,5 @@
 {
-    "_locale": "es-AR",
+    "_locale": "es",
     "_namespace": "weq",
     "settings": {
         "MyAccountTitle": "Mi cuenta",
@@ -301,11 +301,11 @@
         "clickHere": "Click Here to register again"
       },
       "Login": {
-        "emailPlaceHolder": "email address, es ar",
-        "password": "password , es ar",
-        "forgottenPassword": "Forgotten password? , es ar",
-        "pleaseWait": "Please wait... , es ar",
-        "signUP": "Sign Up , es ar"
+        "emailPlaceHolder": "email address es",
+        "password": "password es",
+        "forgottenPassword": "Forgotten password? es",
+        "pleaseWait": "Please wait... es",
+        "signUP": "Sign Up es"
       },
       "RecoverPassword": {
         "resetYourPassword": "Reset your password",

@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 class EmailVerified extends React.Component {
   constructor(props){
@@ -27,7 +30,7 @@ class EmailVerified extends React.Component {
   sendVerificationLink(event){
     event.preventDefault();
     if(Meteor.userId() && !this.state.sending){
-      $('#info').text('Please wait , processing ');  
+      $('#info').text(i18n.getTranslation("weq.EmailVerified.pleaseWait"));  
       this.setState({
         sending: true,
       });
@@ -39,7 +42,8 @@ class EmailVerified extends React.Component {
           console.log(err);
           $('#error').text(err.message);
         }else{
-          $('#info').text(`Verification sent to ${ this.props.currentUser.emails[ 0 ].address }!`, 'success');
+          //$('#info').text(`Verification sent to ${ this.props.currentUser.emails[ 0 ].address }!`, 'success');
+          $('#info').text(i18n.getTranslation("weq.EmailVerified.verificationSent",{emailAddress: this.props.currentUser.emails[ 0 ].address }));
         }
       });
     }
@@ -52,15 +56,15 @@ class EmailVerified extends React.Component {
           
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
-              <div className="alert alert-warning">You need to verify your email address before using WeQ.
+              <div className="alert alert-warning">{<T>weq.EmailVerified.verifyEmail</T>}
                 <br/>
-                <a className="resend-verification-link" onClick ={this.sendVerificationLink.bind(this)}>Resend verification link</a>
+                <a className="resend-verification-link" onClick ={this.sendVerificationLink.bind(this)}>{<T>weq.EmailVerified.resendVerification</T>}</a>
                 <br/>
                 {Meteor.userId() &&
                 <div>
                 <br/>
-                <p>Have you placed the wrong email address?</p>
-                <a onClick ={this.logout.bind(this)}>Click Here to register again</a>
+                <p>{<T>weq.EmailVerified.wrongEmail</T>}</p>
+                <a onClick ={this.logout.bind(this)}>{<T>weq.EmailVerified.clickHere</T>}</a>
                 </div>
                 }
                 

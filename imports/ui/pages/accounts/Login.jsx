@@ -5,6 +5,10 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 class Login extends React.Component {
     handleSubmit(event){
         event.preventDefault();
@@ -47,21 +51,21 @@ class Login extends React.Component {
                                     
                                     {this.props.user 
                                     ?
-                                    <input className="emailfield w-input" maxLength="256" ref="loginEmail" placeholder="email address" type="email" 
+                                    <input className="emailfield w-input" maxLength="256" ref="loginEmail" placeholder={i18n.getTranslation("weq.Login.emailPlaceHolder")} type="email" 
                                     defaultValue={this.props.user.emails[0].address} disabled={true}  
                                     required style={{textTransform:"lowercase"}}/>
                                     :
-                                    <input className="emailfield w-input" maxLength="256" ref="loginEmail" placeholder="email address" type="email" 
+                                    <input className="emailfield w-input" maxLength="256" ref="loginEmail" placeholder={i18n.getTranslation("weq.Login.emailPlaceHolder")} type="email" 
                                     required style={{textTransform:"lowercase"}}/>
                                     }
                                     
-                                    <input className="emailfield w-input" maxLength="256" ref="loginPassword" placeholder="password" required type="password"/>
-                                    <Link to="/recover-password" className="linktext">Forgotten password?</Link>
+                                    <input className="emailfield w-input" maxLength="256" ref="loginPassword" placeholder={i18n.getTranslation("weq.Login.password")} required type="password"/>
+                                    <Link to="/recover-password" className="linktext">{<T>weq.Login.forgottenPassword</T>}</Link>
                                     <input className="submit-button w-button" data-wait="Please wait..." type="submit" defaultValue="Log In"/>
                                 </form>
                                 <div id="error" className="errormsg"></div>
                                 </div>
-                                <Link to="/sign-up" id="sign-up" className="loginBtn">Sign Up</Link>
+                                <Link to="/sign-up" id="sign-up" className="loginBtn">{<T>weq.Login.signUP</T>}</Link>
                             </div>
                             </div>
                         </div>
