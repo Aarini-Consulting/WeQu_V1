@@ -346,7 +346,7 @@ class EditEntry extends React.Component {
                 {this.state.updateEmailVerificationSent &&
                     <SweetAlert
                     type={"info"}
-                    message={"Verification email sent to email, Please follow the link in the email to change your email"}
+                    message={i18n.getTranslation("weq.EditEntry.VerificationEmailSentEmailPlease")}
                     onCancel={() => {
                         this.props.history.goBack();
                     }}/>

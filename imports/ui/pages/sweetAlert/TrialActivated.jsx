@@ -1,5 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 export default class TrialActivated extends React.Component {
 
@@ -14,13 +17,13 @@ export default class TrialActivated extends React.Component {
             <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block'}}>
                 <div className="msg-wrapper">
                     <div className="fontreleway f-popup-title f-popup-msg left-align">
-                    Congratulation! 
+                    <T>weq.TrialActiveted.Congratulation</T> 
                     <br/> 
-                    Your account has been upgraded. 
+                    <T>weq.TrialActiveted.YourAccountHasBeenUpgraded</T>
                     <br/> 
-                    You now have access to free tier features of running WeQ session as a coach. 
+                    <T>weq.TrialActiveted.YouNowHaveAccessFreeTierfeaturesRunningWeQsessionCoach</T>
                     <br/> 
-                    Check your email for further instruction.
+                    <T>weq.TrialActiveted.CheckYourEmailFurtherInstruction</T>
                     </div>
                 </div>
 

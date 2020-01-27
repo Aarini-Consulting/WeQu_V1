@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
+
 export default class Menu extends React.Component {
     isCurrent(path){
         var currentPath = this.props.location.pathname;
@@ -28,12 +32,12 @@ export default class Menu extends React.Component {
             <div className="menubar w-clearfix">
                 <a onClick={this.decideAction.bind(this,"/")} 
                 className={"text fontreleway fontmenu _1 " + this.isCurrent("/")}>
-                    Home
+                    <T>weq.Menu.Home</T>
                 </a>
                 {(Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) || Roles.userIsInRole( Meteor.userId(), 'TrialGameMaster' )) &&
                     <a onClick={this.decideAction.bind(this,"/invite-group")} 
                     className={"text fontreleway fontmenu _2 " + this.isCurrent("/invite-group")}>
-                        Groups
+                       <T>weq.Menu.Groups</T>
                     </a>
                 }
                 {/* <a href="https://www.weq.io/shop"
@@ -42,7 +46,7 @@ export default class Menu extends React.Component {
                 </a> */}
                 <a onClick={this.decideAction.bind(this,"/settings")} 
                 className={"text fontreleway fontmenu _4 " + this.isCurrent("/settings")}>
-                    Settings
+                    <T>weq.Menu.Settings</T>
                 </a>
             </div>
         );

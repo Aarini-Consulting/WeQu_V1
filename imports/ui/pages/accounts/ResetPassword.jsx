@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 import Loading from '/imports/ui/pages/loading/Loading';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 class ResetPassword extends React.Component {
 
@@ -27,7 +30,7 @@ class ResetPassword extends React.Component {
         });
         }
         else{
-            $('#error').text("password mismatch");
+            $('#error').text(i18n.getTranslation("weq.ResetPassword.passwordMismatch"));
         }
         
         // Clear form
@@ -42,14 +45,14 @@ class ResetPassword extends React.Component {
                         <div className="loginwraper">
                             <div className="forgottenpw loginbox"><img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
                             <div className="formarea w-container">
-                                <h1 className="formheader">Create a new password</h1>
+                                <h1 className="formheader"><T>weq.ResetPassword.CreateNewPassword</T></h1>
                                 {/* <p className="formtext lostpw">Enter your new password below</p> */}
                                 <div className="w-form">
                                 <form className="loginemail" data-name="Email Form" id="forgot-password" name="email-form"  onSubmit={this.handleSubmit.bind(this)}>
-                                    <input className="emailfield w-input" maxLength="256" ref="newPassword" placeholder="new password" required type="password"/>
-                                    <input className="emailfield w-input" maxLength="256" ref="confirmPassword" placeholder="confirm password" required type="password"/>
+                                    <input className="emailfield w-input" maxLength="256" ref="newPassword" placeholder={i18n.getTranslation("weq.ResetPassword.newPassword")} required type="password"/>
+                                    <input className="emailfield w-input" maxLength="256" ref="confirmPassword" placeholder={i18n.getTranslation("weq.ResetPassword.confirmPassword")} required type="password"/>
                                     <div style={{height: 6 + "px"}}></div>
-                                    <input className="submit-button w-button" data-wait="Please wait..." type="submit" value="Set New Password"/>
+                                    <input className="submit-button w-button" data-wait={i18n.getTranslation("weq.ResetPassword.PleaseWait")} type="submit" value="Set New Password"/>
                                 </form>
                                     <div id="info" className="info"></div>
                                     <div id="error" className="errormsg"></div>
@@ -66,18 +69,18 @@ class ResetPassword extends React.Component {
                                 <div className="forgottenpw">
                                 <img className="image-3" src="/img/assets/WEQU_LOGO_NEW.png"/>
                                 <div className="formarea w-container">
-                                    <h1 className="formheader">Reset password link expired</h1>
+                                    <h1 className="formheader"><T>weq.ResetPassword.ResetPasswordLinkExpired</T></h1>
                                     <br/>
-                                    <p className="info">Troubleshootings: </p>
-                                    <p className="info">1. Did you make multiple request for password reset?
+                                    <p className="info"><T>weq.ResetPassword.Troubleshootings</T> </p>
+                                    <p className="info"><T>weq.ResetPassword.DidYouMakeMultipleRequestForPasswordReset</T>
                                         <br/>
-                                        Existing Reset password link expires as soon as you request a new reset password request.
+                                        <T>weq.ResetPassword.ExistingResetPasswordLinkExpires</T>
                                         <br/> 
-                                        Be sure to use the link on the last Reset password email that we sent to you.
+                                        <T>weq.ResetPassword.BeSureUseLinkTheLast</T>
                                     </p>
-                                    <p className="info">2. When did you request this password reset?
+                                    <p className="info"><T>weq.ResetPassword.WhenDidYouRequestThisPasswordReset</T>
                                         <br/>
-                                        For security reasons, Reset password link becomes invalid after 72 hours.
+                                        <T>weq.ResetPassword.ForSecurityReasonsResetPasswordLink</T>
                                         <br/>
                                     </p>
                                 </div>

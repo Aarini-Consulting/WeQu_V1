@@ -26,16 +26,16 @@ class InviteGroupLanding extends React.Component {
                       <img className="email-link-error title-image" src="/img/lost.png"/>
                       <div className="email-link-error title-wrapper">
                         <div className="email-link-error title">
-                          We're getting confused...
+                        <T>weq.InviteGroupLanding.WeAreGettingConfused</T>
                         </div>
                       </div>
                   </div>
                   <div className="email-link-error content">
-                    The link that you just opened is meant for <b>{this.props.match.params.email}</b>.
+                  <T>weq.InviteGroupLanding.TheLinkThatyouJustOpenedMeantFor</T> <b>{this.props.match.params.email}</b>.
                     <br/><br/>
-                    However, you are currently logged in as <b>{this.props.currentUser.emails[0].address}</b>.
+                    <T>weq.InviteGroupLanding.HoweverYouAreCurrentlyLogged</T> <b>{this.props.currentUser.emails[0].address}</b>.
                     <br/>
-                    To use this link, please click the logout button below and try to open the link again.
+                    <T>weq.InviteGroupLanding.ToUseThisLinkPleaseClickLogoutButton</T>
                     <br/><br/>
                     <div className="div-block-center">
                       <div className="email-link-error logout-bttn" onClick={this.logout.bind(this)}>

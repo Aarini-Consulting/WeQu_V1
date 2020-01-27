@@ -123,7 +123,7 @@ class GroupPage extends React.Component {
     }else{
       this.setState({
         showInfo: true,
-        showInfoMessage:"Each group in a WeQ session must have at least 2 players"
+        showInfoMessage: i18n.getTranslation("weq.GroupPage.EachGroupWeQsessionMust")
       });
     }
   }
@@ -135,8 +135,8 @@ class GroupPage extends React.Component {
         var msg;
         if(error.error == "not_all_invitees_finished_survey"){
           msg = 
-          (<div>All participants must complete the survey and be present before you can start the game.<br/> 
-          (Be sure to delete any members who will not be participating)</div>)
+          (<div><T>weq.GroupPage.AllParticipantsCompleteSurvey</T><br/> 
+          (<T>weq.GroupPage.BesuredeleteMembers</T>)</div>)
         }else{
           msg = error.error;
         }
@@ -344,9 +344,9 @@ class GroupPage extends React.Component {
               <div className="tap-content w-clearfix">
                 {this.props.group.isPlaceCardActive 
                 ?
-                <div className="w-inline-block game-status">Waiting for participants...</div>
+                <div className="w-inline-block game-status"><T>weq.GroupPage.WaitingParticipants</T></div>
                 :
-                <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}>Start</a>
+                <a id="submitSend" className="invitebttn w-button w-inline-block" onClick={this.confirmStartGame.bind(this)}><T>weq.GroupPage.Start</T></a>
                 }
               </div>
             )
@@ -388,35 +388,35 @@ class GroupPage extends React.Component {
                 <div className="tabs-menu-manage-session">
                   <div className={"tap edit w-inline-block w-tab-link " + (this.state.currentTab == "edit" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"edit")}>
-                    <div>Manage session</div>
+                    <div><T>weq.GroupPage.ManageSession</T></div>
                   </div>
                 </div>
                 <div className="tabs-menu-inner-wrapper">
                   <div className={"tap presentation w-inline-block w-tab-link " + (this.state.currentTab == "presentation" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"presentation")}>
-                    <div>Present slide</div>
+                    <div><T>weq.GroupPage.PresentSlide</T></div>
                   </div>
                   <div className={"tap survey w-inline-block w-tab-link " + (this.state.currentTab == "survey" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"survey")}>
-                    <div>View survey</div>
+                    <div><T>weq.GroupPage.ViewSurvey</T></div>
                   </div>
                   <div className={"tap card w-inline-block w-tab-link " + (this.state.currentTab == "card" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"card")}>
-                    <div>Prepare cards &nbsp;{this.renderLockIcon()}</div>
+                    <div><T>weq.GroupPage.PrepareCards</T> &nbsp;{this.renderLockIcon()}</div>
                   </div>
                   <div className={"tap quiz w-inline-block w-tab-link " + (this.state.currentTab == "quiz" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"quiz")}>
-                    <div>Do quiz</div>
+                    <div><T>weq.GroupPage.DoQuiz</T></div>
                   </div>
                   {this.props.group && (groupTypeIsShort(this.props.group.groupType) || this.props.group.groupType === "norming") &&
                     <div className={"tap play-cards w-inline-block w-tab-link " + (this.state.currentTab == "play-cards" && "w--current")}
                     onClick={this.toggleTabs.bind(this,"play-cards")}>
-                      <div>Play cards &nbsp;{this.renderLockIcon()}</div>
+                      <div><T>weq.GroupPage.PlayCards</T> &nbsp;{this.renderLockIcon()}</div>
                     </div>
                   }
                   <div className={"tap report w-inline-block w-tab-link tap-last " + (this.state.currentTab == "report" && "w--current")}
                   onClick={this.toggleTabs.bind(this,"report")}>
-                    <div>Download report &nbsp;{this.renderLockIcon()}</div>
+                    <div><T>weq.GroupPage.DownloadReport</T> &nbsp;{this.renderLockIcon()}</div>
                   </div>
                 </div>
               </div>
@@ -453,8 +453,8 @@ class GroupPage extends React.Component {
                 type={"confirm"}
                 message={"Everyone ready for interactive mode?"}
                 imageUrl={"/img/gameMaster/interactive.gif"}
-                confirmText={"Let's go!"}
-                cancelText={"Cancel"}
+                confirmText={i18n.getTranslation("weq.GroupPage.LetGo")}
+                cancelText={i18n.getTranslation("weq.GroupPage.Cancel")}
                 onCancel={() => {
                     this.setState({ showConfirmStart: false });
                 }}
@@ -467,8 +467,8 @@ class GroupPage extends React.Component {
               {this.state.showConfirmStop &&
                 <SweetAlert
                 type={"confirm"}
-                message={"Are you sure? You'll need to start over if you stop this now"}
-                confirmText={"Yes, stop this now"}
+                message={i18n.getTranslation("weq.GroupPage.AreYouSureYoullNeedstart")}
+                confirmText={i18n.getTranslation("weq.GroupPage.YesStopThisNow")}
                 cancelText={"Cancel"}
                 onCancel={() => {
                     this.setState({ showConfirmStop: false });

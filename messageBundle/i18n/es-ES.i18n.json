@@ -293,209 +293,211 @@
         "EveryoneHasPickedForYouLine2":"Por favor espera hasta que comience el próximo turno."
     },
     "EmailVerified": {
-        "pleaseWait": "Please wait , processing ",
-        "verificationSent": "Verification sent to {$emailAddress}!, success",
-        "verifyEmail": "You need to verify your email address before using WeQ.",
-        "resendVerification": "Resend verification link",
-        "wrongEmail": "Have you placed the wrong email address?",
-        "clickHere": "Click Here to register again"
-      },
-      "Login": {
-        "emailPlaceHolder": "email address es",
-        "password": "password es",
-        "forgottenPassword": "Forgotten password? es",
-        "pleaseWait": "Please wait... es",
-        "signUP": "Sign Up es"
-      },
-      "RecoverPassword": {
-        "resetYourPassword": "Reset your password",
-        "enterYourEmailAddress": "Enter your email address. You will receive a link to create a new password via email",
-        "pleaseWait": "Please wait",
-        "GetNewPassword": "Get New Password",
-        "EmailSent": "Email sent!",
-        "CheckYour": "Check your",
-        "inboxForInstructionsFrom": "inbox for instructions from us on how to reset the password",
-        "UnsureIfThatEmailaddress":"Unsure if that email address was correct? ",
-        "ClickHere": "Click here",
-        "ToTryAgain": " to try again",
-        "Oops": "Oops!",
-        "ThatDoesntSeemtoWork": "That doesnt seem to work, check the error below:",
-        "TryAgain": "Try Again",
-        "LogIn": "Log In"
-      },
-      "ResetPassword": {
-        "passwordMismatch": "password mismatch",
-        "CreateNewPassword": "Create a new password",
-        "newPassword": "new password",
-        "confirmPassword": "confirm password",
-        "PleaseWait": "Please wait...",
-        "SetNewPassword": "Set New Password",
-        "ResetPasswordLinkExpired": "Reset password link expired",
-        "Troubleshootings:":"Troubleshootings: ",
-        "DidYouMakeMultipleRequestForPasswordReset": "1. Did you make multiple request for password reset?",
-        "ExistingResetPasswordLinkExpires": "Existing Reset password link expires as soon as you request a new reset password request.",
-        "BeSureUseLinkTheLast": "Be sure to use the link on the last Reset password email that we sent to you.",
-        "WhenDidYouRequestThisPasswordReset": "2. When did you request this password reset?",
-        "ForSecurityReasonsResetPasswordLink": "For security reasons, Reset password link becomes invalid after 72 hours."
-      },
-      "SignUp": {
-        "firstName": "first name",
-        "lastName": "last name",
-        "emailAddress": "email address",
-        "password": "password",
-        "IhaveReadAgreeTheTerms": "I have read and agree to the Terms and Privacy Policy",
-        "WouldLikeReceiveTeamBoostingRelatedInformation": "I would like to receive team-boosting related information, offers, recommendations and updates from WeQ",
-        "PleaseWait": "Please wait...",
-        "LogIn": "Log In"
-      },
-      "VerifyEmail": {
-        "VerifyingEmail": "Verifying email....",
-        "ThereProblemConfirmingYourEmail": "There is a problem confirming your email: ",
-        "TryAgain": "Try again",
-        "YourEmailConfirmedSuccessfully": "Your email has confirmed successfully.",
-        "Next": "Next"
-      },
-      "VerifyUpdateEmail": {
-        "VerifyingEmail": "Verifying email....",
-        "YourEmailsuccessfullyUpdated": "Your email has been successfully updated.",
-        "ok": "Ok",
-        "ThereIsProblemConfirmingYourEmail": "There is a problem confirming your email: ",
-        "TryAgain": "Try again"
-      },
-      "Error": {
-        "looksLikeThatNotWorkingExpected": "looks like that's not working as expected"
-      },
-      "ReportPdf": {
-        "Hey": "Hey",
-        "YouJustPlayedWeQWithYour ": "You've just played WeQ with your ",
-        "ThisYourReportPreparedBy ": "This is your report prepared by ",
-        "WeQMasterCoach": ", WeQ Master Coach.",
-        "HowReadChart": "How to read this chart ",
-        "TheLowestValueThis ": "The lowest value of this ",
-        "QualityYourGroup": "Quality in your group",
-        "YourCurrentScore ": "Your current score ",
-        "EvaluatedByYouAndOthers)": "(evaluated by you and others)",
-        "TheHighestValueOfThis": "The highest value of this",
-        "QualityInYourGroup": "Quality in your group",
-        "QualityName": "Quality name (Card#)",
-        "CurrentSession": "Current Session - ",
-        "BasedOnYourOwnDataFeedback": "Based on your own data and feedback from others in your team, the WeQ system personalizes your session.",
-        "BoosterPack": "Booster Pack",
-        "BecomeWeQChampion": "Become a WeQ Champion!",
-        "AreYouPassionateAboutBuildingGreatTeam": "Are you passionate about building a great team? And want to facilitate WeQ Sessions?",
-        "AskYourCoachAboutTheWeQChampion": "Ask your coach about the WeQ Champion program or drop a email to ",
-        "DontLoseTheMomentum": "Don't lose the momentum!",
-        "ContinueBuildingHealthyHabitsWithOur": "Continue building healthy habits with our ",
-        "HourMaintenanceSessions": "1 hour maintenance sessions.",
-        "AskforMoreInformation": "Ask {$groupCreator} for more information."
-      },
-      "GroupNormingAds": {
-        "SuperchargeYourWeQSessionWithMasterCoachFunctionalities": "Supercharge your WeQ session with Master Coach functionalities",
-        "DiscoverDifferentModules": "Discover different modules that will get the team engaged in repeatable WeQ sessions.",
-        "BookLiveDemo": "Book a live demo",
-        "DeliverLearningExperiences": "Deliver data-driven learning experiences",
-        "MultiplyYourCoachingImpact": "Multiply your coaching impact and your revenue by delivering repeatable sessions to the same team."
-      },
-      "GroupPage": {
-        "EachGroupWeQsessionMust": "Each group in a WeQ session must have at least 2 players",
-        "AllParticipantsCompleteSurvey": "All participants must complete the survey and be present before you can start the game.",
-        "BesuredeleteMembers": "Be sure to delete any members who will not be participating",
-        "WaitingParticipants": "Waiting for participants...",
-        "Start": "Start",
-        "ManageSession": "Manage session",
-        "PresentSlide": "Present slide",
-        "ViewSurvey": "View survey",
-        "PrepareCards": "Prepare cards",
-        "DoQuiz": "Do quiz",
-        "PlayCards": "Play cards",
-        "DownloadReport": "Download report ",
-        "LetGo": "Let's go!",
-        "Cancel": "Cancel",
-        "AreYouSureYoullNeedstart": "Are you sure? You'll need to start over if you stop this now",
-        "YesStopThisNow": "Yes, stop this now"
-      },
-      "GroupPlayCardPage": {
-        "EveryoneReadyInteractivemode": "Everyone ready for interactive mode?",
-        "LetGo": "Let's go!",
-        "Cancel": "Cancel",
-        "NoPplayCardModeAssigned": "No 'play card' mode is assigned to this group",
-        "YouNeedFinishPrepareCardsFirst": "You need to finish 'Prepare Cards' first before using this features"
-      },
-      "GroupPresentation": {
-        "Invalid presentation link": "Invalid presentation link"
-      },
-      "GroupQuizPage": {
-        "SelectQuizNumberAbove": "Select quiz number above",
-        "EveryoneReadyInteractiveMode": "Everyone ready for interactive mode?",
-        "LetGo": "Let's go!",
-        "Cancel": "Cancel",
-        "NoGroupQuizFoundPleasecontactWeQSupport": "no group quiz found, please contact WeQ support",
-        "YouAreNotReadyStartQuizYet": "You are not ready to start the quiz yet"
-      },
-      "GroupReportPage": {
-        "PleaseWait": "Please wait...",
-        "Download": "Download",
-        "GroupNotFound": "group not found"
-      },
-      "GroupTypeformSurvey": {
-        "Loading": "Loading...",
-        "CalculateSurveyResult": "Calculate survey result",
-        "PleaseCheckAgainWhenAllSurveysCompleted": "Please check again when all surveys are completed",
-        "completedTheSurvey": "completed the survey",
-        "Refresh": "Refresh",
-        "Ready" :"Ready!",
-        "SurveyIncomplete": "Survey incomplete"
-      },
-      "GroupQuizClientPage": {
-        "SelectedQuizNotFound": "selected quiz not found"
-      },
-      "InviteGroupLanding": {
-        "WeAreGettingConfused": "We're getting confused...",
-        "TheLinkThatyouJustOpenedMeantFor": "The link that you just opened is meant for ",
-        "HoweverYouAreCurrentlyLogged": "However, you are currently logged in as ",
-        "ToUseThisLinkPleaseClickLogoutButton": "To use this link, please click the logout button below and try to open the link again."
-      },
-      "InviteGroup": {
-        "ErrorSendingEmail": "error sending email",
-        "CannotInviteYourself": "cannot invite yourself",
-        "UserWithSameEmailAddress": "a user with the same email address is already a member of this group"
-      },
-      "Menu": {
-        "Home": "Home",
-        "Groups":"Groups",
-        "Settings": "Settings"
-      },
-      "MenuPresentation": {
-        "Home": "Home",
-        "Groups":"Groups",
-        "Settings": "Settings"
-      },
-      "SessionFinished": {
-        "ThisSessionEnded": "this session has ended. thanks for using weq"
-      },
-      "EditEntry": {
-        "VerificationEmailSentEmailPlease": "Verification email sent to email, Please follow the link in the email to change your email"
-      },
-      "ConfirmCloseCycle": {
-        "AreYouSure": "Are you sure?",
-        "ReportWillGenerated": "A report will be generated based on the data collected so far." ,
-        "YouCanRequestReportOnlyOneTimeCycle.": "You can request report only one time per cycle." ,
-        "ItTakesHoursReturnReport.": "It takes up to 48 hours to return a report." ,
-        "OncereportRequestedCancelHours": "Once report is requested, you can cancel it within 24 hours"
-      },
-      "ConfirmReopenCycle": {
-        "AreYouSureYouWantCancelReport": "Are you sure you want to cancel the report?",
-        "no": "No",
-        "YesCancelReport": "Yes, cancel report"
-      },
-      "TrialActiveted": {
-        "Congratulation":  "Congratulation!",
-        "YourAccountHasBeenUpgraded": "Your account has been upgraded.",
-        "YouNowHaveAccessFreeTierfeaturesRunningWeQsessionCoach": "You now have access to free tier features of running WeQ session as a coach.",
-          "CheckYourEmailFurtherInstruction": "Check your email for further instruction."
-      },
-      "TrialLimitation": {
-        "YoureCurrentlyFreetierUser": "You're currently a free-tier user.",
-        "OnlyTrainedCertifiedWeQ":"Only trained certified WeQ coaches have access to advanced game modules."
-      }
+      "pleaseWait": "Por favor, espere...  ",
+      "verificationSent": "Verificación enviada a  {$emailAddress}!, éxito",
+      "verifyEmail": "Usted necesita verificar su dirección de correo electrónico antes de usar la aplicación WeQ.",
+      "resendVerification": "Reenviar el enlace de verificación",
+      "wrongEmail": "¿Ha puesto una dirección de correo electrónico incorrecta?",
+      "clickHere": "Haga clic aquí para registrarse de nuevo"
+    },
+    "Login": {
+      "emailPlaceHolder": "dirección de correo electrónico",
+      "password": "contraseña",
+      "forgottenPassword": "¿Olvidó su contraseña?",
+      "pleaseWait": "Por favor, espere...",
+      "signUP": "Inscríbete"
+    },
+    "RecoverPassword": {
+      "resetYourPassword": "Restablecer la contraseña",
+      "enterYourEmailAddress": "Introduzca su dirección de correo electrónico. Recibirá un enlace para crear una nueva contraseña por correo electrónico",
+      "pleaseWait": "Por favor, espere",
+      "GetNewPassword": "Obtener nueva contraseña",
+      "EmailSent": "Email enviado!",
+      "CheckYour": "Revise su",
+      "inboxForInstructionsFrom": "bandeja de entrada para obtener instrucciones de nosotros sobre cómo restablecer la contraseña",
+      "UnsureIfThatEmailaddress": "¿No está seguro de que la dirección de correo electrónico sea correcta?",
+      "ClickHere": "Haga clic aquí",
+      "ToTryAgain": " para intentarlo de nuevo",
+      "Oops": "Oops!",
+      "ThatDoesntSeemtoWork": "Eso no parece funcionar, compruebe el error a continuación:",
+      "TryAgain": "Inténtelo de nuevo",
+      "LogIn": "Ingresar"
+    },
+    "ResetPassword": {
+      "passwordMismatch": "Incompatibilidad de contraseña",
+      "CreateNewPassword": "Crear una nueva contraseña",
+      "newPassword": "nueva contraseña",
+      "confirmPassword": "confirmar la contraseña",
+      "PleaseWait": "Por favor, espere....",
+      "SetNewPassword": "Establecer una nueva contraseña",
+      "ResetPasswordLinkExpired": "Restablecer el enlace de la contraseña expiró",
+      "Troubleshootings:": "Solución de problemas: ",
+      "DidYouMakeMultipleRequestForPasswordReset": "1. ¿Hizo varias solicitudes de restablecimiento de la contraseña?",
+      "ExistingResetPasswordLinkExpires": "El enlace existente Restablecer contraseña caduca en cuanto se solicita una nueva solicitud de restablecimiento de contraseña.",
+      "BeSureUseLinkTheLast": "Asegúrese de utilizar el enlace en el último correo electrónico de restablecimiento de contraseña que le enviamos.",
+      "WhenDidYouRequestThisPasswordReset": "2. ¿Cuándo solicitó el restablecimiento de esta contraseña?",
+      "ForSecurityReasonsResetPasswordLink": "Por razones de seguridad, el enlace para restablecer la contraseña no es válido después de 72 horas."
+  
+    },
+    "SignUp": {
+      "firstName": "nombre de pila",
+      "lastName": "apellido",
+      "emailAddress": "dirección de correo electrónico",
+      "password": "Contraseña",
+      "IhaveReadAgreeTheTerms": "He leído y acepto los Términos y la Política de Privacidad",
+      "WouldLikeReceiveTeamBoostingRelatedInformation": "Me gustaría recibir de WeQ información, ofertas, recomendaciones y actualizaciones relacionadas con el fomento del equipo",
+      "PleaseWait": "Por favor, espere...",
+      "LogIn": "Ingresar"
+    },
+    "VerifyEmail": {
+      "VerifyingEmail": "Verificando el correo electrónico...",
+      "ThereProblemConfirmingYourEmail": "Hay un problema al confirmar su correo electrónico: ",
+      "TryAgain": "Inténtalo de nuevo",
+      "YourEmailConfirmedSuccessfully": "Su correo electrónico se ha confirmado con éxito.",
+      "Next": "Siguiente"
+    },
+    "VerifyUpdateEmail": {
+      "VerifyingEmail": "Verificando el correo electrónico...",
+      "YourEmailsuccessfullyUpdated": "Su correo electrónico ha sido actualizado con éxito.",
+      "ok": "Ok",
+      "ThereIsProblemConfirmingYourEmail": "Hay un problema al confirmar su correo electrónico: ",
+      "TryAgain": "Inténtalo de nuevo"
+    },
+  
+    "Error": {
+      "looksLikeThatNotWorkingExpected": "parece que no está funcionando como se esperaba"
+    },
+    "ReportPdf": {
+      "Hey": "Hey",
+      "YouJustPlayedWeQWithYour ": "Acabas de jugar WeQ con tu ",
+      "ThisYourReportPreparedBy ": "Este es su informe preparado por ",
+      "WeQMasterCoach": ", WeQ Master Coach.",
+      "HowReadChart": "Cómo leer esta tabla ",
+      "TheLowestValueThis ": "El valor más bajo de esta ",
+      "QualityYourGroup": "Calidad en su grupo",
+      "YourCurrentScore ": "Su puntuación actual ",
+      "EvaluatedByYouAndOthers)": "(evaluados por usted y otros)",
+      "TheHighestValueOfThis": "El valor más alto de esto",
+      "QualityInYourGroup": "Calidad en su grupo",
+      "QualityName": "Nombre de la calidad (Tarjeta#)",
+      "CurrentSession": "Sesión actual - ",
+      "BasedOnYourOwnDataFeedback": "Basado en sus propios datos y en la retroalimentación de otros en su equipo, el sistema WeQ personaliza su sesión",
+      "BoosterPack": "Booster Pack",
+      "BecomeWeQChampion": "¡Conviértete en un campeón de WeQ!",
+      "AreYouPassionateAboutBuildingGreatTeam": "¿Te apasiona construir un gran equipo? Y quieres facilitar las sesiones de WeQ?",
+      "AskYourCoachAboutTheWeQChampion": "Pregúntele a su entrenador sobre el programa WeQ Champion o envíe un correo electrónico a ",
+      "DontLoseTheMomentum": "¡No pierdas el impulso!",
+      "ContinueBuildingHealthyHabitsWithOur": "Continúe construyendo hábitos saludables con nuestro",
+      "HourMaintenanceSessions": "Sesiones de mantenimiento de 2 horas",
+      "AskforMoreInformation": "Pregunte a {$groupCreator} para más información."
+    },
+    "GroupNormingAds": {
+      "SuperchargeYourWeQSessionWithMasterCoachFunctionalities": "Supercarga tu sesión de WeQ con las funcionalidades de Master Coach",
+      "DiscoverDifferentModules": "Descubre diferentes módulos que harán que el equipo participe en sesiones repetibles de WeQ.",
+      "BookLiveDemo": "Reserva una demo en vivo",
+      "DeliverLearningExperiences": "Entregar experiencias de aprendizaje basadas en datos",
+      "MultiplyYourCoachingImpact": "Multiplica el impacto de tu entrenamiento y tus ingresos entregando sesiones repetibles al mismo equipo."
+    },
+    "GroupPage": {
+      "EachGroupWeQsessionMust": "Cada grupo en una sesión de WeQ debe tener al menos 2 jugadores",
+      "AllParticipantsCompleteSurvey": "Todos los participantes deben completar la encuesta y estar presentes antes de comenzar el juego.",
+      "BesuredeleteMembers": "Asegúrate de eliminar a los miembros que no participen",
+      "WaitingParticipants": "Esperando a los participantes...",
+      "Start": "Inicio",
+      "ManageSession": "Administrar sesión",
+      "PresentSlide": "Diapositiva presente",
+      "ViewSurvey": "Ver encuesta",
+      "PrepareCards": "Prepara las cartas",
+      "DoQuiz": "Do quiz",
+      "PlayCards": "Cartas de juego",
+      "DownloadReport": "Informe de descarga",
+      "LetGo": "Let's go!",
+      "Cancel": "Cancelar",
+      "AreYouSureYoullNeedstart": "¿Estás seguro? Necesitarás empezar de nuevo si paras esto ahora",
+      "YesStopThisNow": "Sí, detenga esto ahora"
+    },
+    "GroupPlayCardPage": {
+      "EveryoneReadyInteractivemode": "¿Está todo el mundo listo para el modo interactivo?",
+      "LetGo": "Let's go!",
+      "Cancel": "Cancelar",
+      "NoPplayCardModeAssigned": "No hay ningún modo de 'Cartas de juego' asignado a este grupo",
+      "YouNeedFinishPrepareCardsFirst": "Necesitas terminar 'Prepara las cartas' primero antes de usar esta función"
+    },
+    "GroupPresentation": {
+      "Invalidpresentationlink": "Enlace de presentación inválido"
+    },
+    "GroupQuizPage": {
+      "SelectQuizNumberAbove": "Seleccione el número de la prueba de arriba",
+      "EveryoneReadyInteractiveMode": "¿Está todo el mundo listo para el modo interactivo?",
+      "LetGo": "Let's go!",
+      "Cancel": "Cancelar",
+      "NoGroupQuizFoundPleasecontactWeQSupport": "No se ha encontrado ningún cuestionario de grupo, por favor contacte con el soporte de WeQ",
+      "YouAreNotReadyStartQuizYet": "No está listo para empezar el test todavía"
+    },
+    "GroupReportPage": {
+      "PleaseWait": "Por favor, espere...",
+      "Download": "Descargar",
+      "GroupNotFound": "Grupo no encontrado"
+    },
+    "GroupTypeformSurvey": {
+      "Loading": "Cargando...",
+      "CalculateSurveyResult": "Calcular resultado de la encuesta",
+      "PleaseCheckAgainWhenAllSurveysCompleted": "Por favor vuelva a revisar cuando todas las encuestas estén completas",
+      "completedTheSurvey": "Completó la encuesta",
+      "Refresh": "Refrescar",
+      "Ready": "¡Listo!",
+      "SurveyIncomplete": "Encuesta incompleta"
+    },
+    "GroupQuizClientPage": {
+      "SelectedQuizNotFound": "Cuestionario seleccionado no encontrado"
+    },
+    "InviteGroupLanding": {
+      "WeAreGettingConfused": "Nos estamos confundiendo...",
+      "TheLinkThatyouJustOpenedMeantFor": "El enlace que acabas de abrir es para ",
+      "HoweverYouAreCurrentlyLogged": "Sin embargo, actualmente estás conectado como ",
+      "ToUseThisLinkPleaseClickLogoutButton": "Para usar este enlace, por favor haga clic en el botón de cierre de sesión de abajo e intente abrir el enlace de nuevo."
+    },
+    "InviteGroup": {
+      "ErrorSendingEmail": "Error de envío de correo electrónico",
+      "CannotInviteYourself": "No puedes invitarte a ti mismo",
+      "UserWithSameEmailAddress": "Un usuario con la misma dirección de correo electrónico ya es miembro de este grupo"
+    },
+    "Menu": {
+      "Home": "Hogar",
+      "Groups": "Grupos",
+      "Settings": "Ajustes"
+    },
+    "MenuPresentation": {
+      "Home": "Hogar",
+      "Groups": "Grupos",
+      "Settings": "Ajustes"
+    },
+    "SessionFinished": {
+      "ThisSessionEnded": "Esta sesión ha terminado. Gracias por usar WeQ"
+    },
+    "EditEntry": {
+      "VerificationEmailSentEmailPlease": "Correo electrónico de verificación enviado al correo electrónico, Por favor, siga el enlace en el correo electrónico para cambiar su correo electrónico"
+    },
+    "ConfirmCloseCycle": {
+      "AreYouSure": "¿Estás seguro?",
+      "ReportWillGenerated": "Se generará un informe basado en los datos recogidos hasta ahora.",
+      "YouCanRequestReportOnlyOneTimeCycle.": "Puede solicitar el informe sólo una vez por ciclo",
+      "ItTakesHoursReturnReport.": "Se tarda hasta 48 horas en devolver un informe ",
+      "OncereportRequestedCancelHours": "Una vez que se solicita el informe, puede cancelarlo dentro de las 24 horas"
+    },
+    "ConfirmReopenCycle": {
+      "AreYouSureYouWantCancelReport": "¿Está seguro de que quiere cancelar el informe?",
+      "no": "No",
+      "YesCancelReport": "Sí, cancelar informe"
+    },
+    "TrialActiveted": {
+      "Congratulation": "¡Enhorabuena!!",
+      "YourAccountHasBeenUpgraded": "Su cuenta ha sido actualizada.",
+      "YouNowHaveAccessFreeTierfeaturesRunningWeQsessionCoach": "Ahora tiene acceso a las funciones gratuitas de la sesión de WeQ como entrenador.",
+      "CheckYourEmailFurtherInstruction": "Revise su correo electrónico para más instrucciones."
+    },
+    "TrialLimitation": {
+      "YoureCurrentlyFreetierUser": "Actualmente eres un usuario de nivel libre.",
+      "OnlyTrainedCertifiedWeQ": "Sólo entrenadores entrenados y certificados en WeQ tienen acceso a módulos de juego avanzados."
+    }
 }

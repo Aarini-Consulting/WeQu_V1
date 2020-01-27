@@ -162,7 +162,7 @@ class GroupReportPage extends React.Component {
                                             <div className="weq-bg white-bg-color pdf-preview-loading">
                                                 <div className="w-block noselect">
                                                     <div className="font-rate padding-wrapper">
-                                                        Please wait...
+                                                    <T>weq.GroupReportPage.PleaseWait</T>
                                                     </div>
                                                 </div>
                                             </div>
@@ -175,7 +175,7 @@ class GroupReportPage extends React.Component {
                                         ?
                                             <div className="pdf-download-wrapper">
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
-                                                Please wait....
+                                                <T>weq.GroupReportPage.PleaseWait</T>
                                                 </div>
                                             </div>
                                         :
@@ -185,7 +185,7 @@ class GroupReportPage extends React.Component {
                                                     {this.renderLanguageList()}
                                                 </select>
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdf.bind(this)}>
-                                                Download
+                                                <T>weq.GroupReportPage.Download</T>
                                                 </div>
                                             </div>
                                         }
@@ -200,7 +200,7 @@ class GroupReportPage extends React.Component {
                                         ?
                                             <div className="pdf-download-wrapper">
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix noselect">
-                                                Please wait....
+                                                <T>weq.GroupReportPage.PleaseWait</T>
                                                 </div>
                                             </div>
                                         :
@@ -211,7 +211,7 @@ class GroupReportPage extends React.Component {
                                                     {this.renderLanguageList()}
                                                 </select>
                                                 <div className="pdf-download-bttn w-inline-block w-clearfix cursor-pointer" onClick={this.downloadPdfMulti.bind(this)}>
-                                                Download
+                                                <T>weq.GroupReportPage.Download</T>
                                                 </div>
                                             </div>
                                         }
@@ -224,7 +224,7 @@ class GroupReportPage extends React.Component {
             }
             else{
                 <div className="fillHeight">
-                  <div className="emptytext group">group not found</div>
+                  <div className="emptytext group"><T>weq.GroupReportPage.GroupNotFound</T></div>
                 </div>
             }
             

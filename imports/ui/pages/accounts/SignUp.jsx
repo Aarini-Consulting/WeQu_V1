@@ -6,6 +6,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Loading from '/imports/ui/pages/loading/Loading';
 import LoadingAnimated from '../loading/LoadingAnimated';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 class SignUp extends React.Component {
 	constructor(props){
@@ -127,40 +130,40 @@ class SignUp extends React.Component {
 								{/* <a id="linkedinSignupbttn" className="linkedinbttn w-button" href="#">Sign Up With LinkedIn</a> */}
 								<div className="w-form">
 									<form className="loginemail" data-name="Email Form" name="email-form" onSubmit={this.handleSubmit.bind(this)}>
-										<input className="emailfield w-input" maxLength="256" ref="firstName" placeholder="first name" required="required" type="text"/>
-										<input className="emailfield w-input" maxLength="256" ref="lastName" placeholder="last name" required="required" type="text"/>
+										<input className="emailfield w-input" maxLength="256" ref="firstName" placeholder={i18n.getTranslation("weq.SignUp.firstName")} required="required" type="text"/>
+										<input className="emailfield w-input" maxLength="256" ref="lastName" placeholder={i18n.getTranslation("weq.SignUp.lastName")} required="required" type="text"/>
 										{this.props.user 
 										?
-										<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="email" style={{textTransform:"lowercase"}}
+										<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder={i18n.getTranslation("weq.SignUp.emailAddress")} type="email" style={{textTransform:"lowercase"}}
 										defaultValue={this.props.user.emails[0].address} disabled={true} required/>
 										:
 											this.props.email 
 											?
-											<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="email" style={{textTransform:"lowercase"}}
+											<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder={i18n.getTranslation("weq.SignUp.emailAddress")} type="email" style={{textTransform:"lowercase"}}
 											defaultValue={this.props.email} disabled={true} required/>
 											:
-											<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder="email address" type="email" style={{textTransform:"lowercase"}}
+											<input className="emailfield w-input" maxLength="256" ref="registerEmail" placeholder={i18n.getTranslation("weq.SignUp.emailAddress")} type="email" style={{textTransform:"lowercase"}}
 											required/>
 										}
-										<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder="password" required="required" type="password"/>
+										<input className="emailfield w-input" maxLength="256" ref="registerPassword" placeholder={i18n.getTranslation("weq.SignUp.password")} required="required" type="password"/>
 										<div className="formtext">
 												<input type="checkbox" ref="consentTerms" name="consentTerms" className="signup-consent"
 												checked={this.state.consentTerms}
 												onChange={this.toggleConsent.bind(this)}
 												required/>&nbsp; 
-												I have read and agree to the <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Terms</a> and <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Privacy Policy</a>.
+												<T>weq.SignUp.IhaveReadAgreeTheTerms</T> <a href="https://www.weq.io/policy/weq-app-terms-and-conditions" target="_blank" id="terms">Terms</a> and <a href="https://www.weq.io/policy/weq-app-data-process-and-privacy-policy" target="_blank" id="privacyPolicy">Privacy Policy</a>.
 
 										</div>
 										<div className="formtext">
 												<input type="checkbox" ref="consentSubs" name="consentSubs" className="signup-consent"
 												checked={this.state.consentSubs}
 												onChange={this.toggleConsent.bind(this)}/>&nbsp; 
-												I would like to receive team-boosting related information, offers, recommendations and updates from WeQ
+												<T>weq.SignUp.WouldLikeReceiveTeamBoostingRelatedInformation</T>
 										</div>
 										<input className="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up"/>
 									</form>
 									<div id="error" className="errormsg"></div>
-									<Link to="/login" className="signup" id="signIn">Log In</Link>
+									<Link to="/login" className="signup" id="signIn"><T>weq.SignUp.LogIn</T></Link>
 								</div>  
 							</div>
 						</div>

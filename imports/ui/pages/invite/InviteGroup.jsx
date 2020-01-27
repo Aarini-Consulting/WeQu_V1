@@ -384,12 +384,12 @@ class InviteGroup extends React.Component {
       if(email == this.props.currentUser.emails[0].address.toString().toLowerCase()){
         this.setState({
           inviteStatus: 'warning',
-          info: 'cannot invite yourself',
+          info: i18n.getTranslation("weq.InviteGroup.CannotInviteYourself"),
         });
       }else if(emailsArray.indexOf(email) > -1){
         this.setState({
           inviteStatus: 'warning',
-          info: 'a user with the same email address is already a member of this group',
+          info: i18n.getTranslation("weq.InviteGroup.UserWithSameEmailAddress"),
         });
       }else{
         var copyStateDataNew = this.state.newInviteDatas.slice();

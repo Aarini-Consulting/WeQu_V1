@@ -3,6 +3,9 @@ import Loading from '/imports/ui/pages/loading/Loading';
 
 import {groupTypeIsShort, groupTypeShortList} from '/imports/helper/groupTypeShort.js';
 import {getPresentationUrl} from '/imports/helper/presentationUrlLoader.js';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 
 export default class GroupPresentation extends React.Component {
@@ -84,7 +87,7 @@ export default class GroupPresentation extends React.Component {
         }else{
             return (
                 <div className="tap-content-wrapper presentation">
-                    <h1>Invalid presentation link</h1>
+                    <h1><T>weq.GroupPresentation.InvalidPresentationLink</T></h1>
                 </div>
             );
         }

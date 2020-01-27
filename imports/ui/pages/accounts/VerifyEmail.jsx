@@ -4,6 +4,9 @@ import { Redirect } from 'react-router';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Accounts } from 'meteor/accounts-base'
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 class EmailVerify extends React.Component {
   constructor(props){
@@ -64,7 +67,7 @@ class EmailVerify extends React.Component {
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
               <div className="alert alert-warning">
-              Verifying email....
+              <T>weq.VerifyEmail.VerifyingEmail</T>
               </div>
             </div>
             <div id="error"></div>
@@ -85,9 +88,9 @@ class EmailVerify extends React.Component {
           <section className="gradient1 whiteText alignCenter feed">
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
-              <p className="alert alert-warning">There is a problem confirming your email: {this.state.errorMessage}
+              <p className="alert alert-warning"><T>weq.VerifyEmail.ThereProblemConfirmingYourEmail</T> {this.state.errorMessage}
                 <br/>
-                <a className="resend-verification-link" href="/sign-up" >Try again</a>
+                <a className="resend-verification-link" href="/sign-up" ><T>weq.VerifyEmail.TryAgain</T></a>
                 <br/>
               </p>
             </div>
@@ -101,9 +104,9 @@ class EmailVerify extends React.Component {
           <section className="gradient1 whiteText alignCenter feed">
           <div className="row">
             <div className="col-md-12 col-sm-12 col-xs-12">
-              <p className="alert alert-warning">Your email has confirmed successfully.
+              <p className="alert alert-warning"><T>weq.VerifyEmail.YourEmailConfirmedSuccessfully</T>
                 <br/>
-                <a className="resend-verification-link" href="/" >Next</a>
+                <a className="resend-verification-link" href="/" ><T>weq.VerifyEmail.Next</T></a>
                 <br/>
               </p>
             </div>

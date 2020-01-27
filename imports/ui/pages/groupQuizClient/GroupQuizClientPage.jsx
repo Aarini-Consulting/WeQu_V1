@@ -8,6 +8,9 @@ import AnswerSubmitted from './AnswerSubmitted';
 
 import {GroupQuiz} from '/collections/groupQuiz';
 import {GroupQuizData} from '/collections/groupQuizData';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 class GroupQuizClientPage extends React.Component {
     constructor(props){
@@ -80,7 +83,7 @@ class GroupQuizClientPage extends React.Component {
                     return (
                         <div className="fillHeight">
                             <section className="section summary fontreleway weq-bg">
-                            selected quiz not found
+                            <T>weq.GroupQuizClientPage.SelectedQuizNotFound</T>
                             </section>
                         </div>
                     );

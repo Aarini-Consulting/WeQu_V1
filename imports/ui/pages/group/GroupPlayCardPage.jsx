@@ -8,6 +8,9 @@ import WelcomePage from '/imports/ui/pages/groupPlayCard/WelcomePage';
 import GameplayPage from '/imports/ui/pages/groupPlayCard/GameplayPage';
 
 import Loading from '/imports/ui/pages/loading/Loading';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 class GroupPlayCardPage extends React.Component {
     constructor(props){
@@ -48,10 +51,10 @@ class GroupPlayCardPage extends React.Component {
                                 {this.state.showConfirmStart &&
                                     <SweetAlert
                                     type={"confirm"}
-                                    message={"Everyone ready for interactive mode?"}
+                                    message={i18n.getTranslation("weq.GroupPlayCardPage.EveryoneReadyInteractivemode")}
                                     imageUrl={"/img/gameMaster/interactive.gif"}
-                                    confirmText={"Let's go!"}
-                                    cancelText={"Cancel"}
+                                    confirmText={i18n.getTranslation("weq.GroupPlayCardPage.LetGo")}
+                                    cancelText={i18n.getTranslation("weq.GroupPlayCardPage.Cancel")}
                                     onCancel={() => {
                                         this.setState({ showConfirmStart: false });
                                     }}
@@ -68,7 +71,7 @@ class GroupPlayCardPage extends React.Component {
                         <div className="tap-content-wrapper play-card">
                             <div className="div-block-center">
                                 <div className="ring"></div>
-                                <h1>No "play card" mode is assigned to this group</h1>
+                                <h1><T>weq.GroupPlayCardPage.NoPplayCardModeAssigned</T></h1>
                             </div>
                         </div>
                     );
@@ -78,7 +81,7 @@ class GroupPlayCardPage extends React.Component {
                     <div className="tap-content-wrapper play-card">
                         <div className="div-block-center">
                             <div className="ring"></div>
-                            <h1>You need to finish "Prepare Cards" first before using this features</h1>
+                            <h1><T>weq.GroupPlayCardPage.YouNeedFinishPrepareCardsFirst</T></h1>
                         </div>
                     </div>
                 );

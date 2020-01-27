@@ -1,5 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 export default class ConfirmCloseCycle extends React.Component {
 
@@ -13,14 +16,14 @@ export default class ConfirmCloseCycle extends React.Component {
             <div className="sweet-overlay" tabIndex="-1" style={{opacity: 1.34, display: "block"}}></div>
             <div className="sweet-alert showSweetAlert visible" data-custom-classname="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="true" data-animation="pop" data-timer="null" style={{display: 'block'}}>
                 <div className="fontreleway f-popup-title">
-                Are you sure? 
+                <T>weq.ConfirmCloseCycle.AreYouSure</T> 
                 </div>
                 <div className="msg-wrapper">
                     <div className="fontreleway f-popup-title f-popup-msg">
-                    A report will be generated based on the data collected so far. 
-                    You can request report only one time per cycle. 
-                    It takes up to 48 hours to return a report. 
-                    Once report is requested, you can cancel it within 24 hours
+                    <T>weq.ConfirmCloseCycle.ReportWillGenerated</T>
+                    <T>weq.ConfirmCloseCycle.YouCanRequestReportOnlyOneTimeCycle</T>
+                    <T>weq.ConfirmCloseCycle.ItTakesHoursReturnReport</T>
+                    <T>weq.ConfirmCloseCycle.OncereportRequestedCancelHours</T>
                     </div>
                 </div>
 

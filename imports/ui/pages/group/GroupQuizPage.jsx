@@ -10,6 +10,9 @@ import GroupQuizResult from '../groupQuiz/GroupQuizResult';
 
 import {GroupQuiz} from '/collections/groupQuiz';
 import {GroupQuizData} from '/collections/groupQuizData';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 // var defaultQuizList=[
 //   {component:"MultipleChoice", question:"How often do you get compliment?", answerOptions:["one","two","three","four"] },
@@ -203,17 +206,17 @@ class GroupQuizPage extends React.Component {
             :
               <div>
                 <div className="ring"></div>
-                <h1>Select quiz number above</h1>
+                <h1><T>weq.GroupQuizPage.SelectQuizNumberAbove</T>Select quiz number above</h1>
               </div>
           }
 
           {this.state.showConfirmStart &&
             <SweetAlert
             type={"confirm"}
-            message={"Everyone ready for interactive mode?"}
+            message={i18n.getTranslation("weq.GroupQuizPage.EveryoneReadyInteractiveMode")}
             imageUrl={"/img/gameMaster/interactive.gif"}
-            confirmText={"Let's go!"}
-            cancelText={"Cancel"}
+            confirmText={i18n.getTranslation("weq.GroupQuizPage.LetGo")}
+            cancelText={i18n.getTranslation("weq.GroupQuizPage.Cancel")}
             onCancel={() => {
                 this.setState({ showConfirmStart: false });
             }}
@@ -244,7 +247,7 @@ class GroupQuizPage extends React.Component {
               <div className="group-quiz-content white-bg-color">
                 <div>
                   <div className="ring"></div>
-                  <h1>no group quiz found, please contact WeQ support</h1>
+                  <h1><T>weq.GroupQuizPage.NoGroupQuizFoundPleasecontactWeQSupport</T></h1>
                 </div>
               </div>
             </div>
@@ -262,7 +265,7 @@ class GroupQuizPage extends React.Component {
             <div className="group-quiz-content white-bg-color">
               <div>
                 <div className="ring"></div>
-                <h1>You are not ready to start the quiz yet</h1>
+                <h1><T>weq.GroupQuizPage.YouAreNotReadyStartQuizYet</T></h1>
               </div>
             </div>
           </div>

@@ -122,11 +122,11 @@ export default class GroupTypeformSurvey extends React.Component {
                     {this.state.gettingTypeformResult 
                       ?
                       <div className="invitebttn create-chart w-button w-inline-block noselect">
-                        Loading...
+                        <T>weq.GroupTypeformSurvey.Loading</T>
                       </div>
                       :
                       <div className="invitebttn create-chart w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
-                        Calculate survey result
+                       <T>weq.GroupTypeformSurvey.CalculateSurveyResult</T>
                       </div>
                     }
                     
@@ -136,7 +136,7 @@ export default class GroupTypeformSurvey extends React.Component {
           }else{
             return(
               <div className="font-matric">
-                Please check again when all surveys are completed
+                <T>weq.GroupTypeformSurvey.PleaseCheckAgainWhenAllSurveysCompleted</T>
                 {this.renderUsersSurvey()}
               </div>
             )
@@ -285,7 +285,7 @@ export default class GroupTypeformSurvey extends React.Component {
               <div className="tap-content-footer typeform-survey-graph">
                   <div className="survey-graph-footer">
                     <div className="font-matric-refresh">
-                      Average Score
+                    <T>weq.GroupTypeformSurvey.averageScore</T> Average Score
                     </div>
                     <div className="survey-graph-footer-legend noselect">
                       <div className="chart-graph survey-graph-footer-legend ">
@@ -301,16 +301,16 @@ export default class GroupTypeformSurvey extends React.Component {
                   <div className="font-matric-refresh">
                     {this.props.group.userIdsSurveyed.length} out of {this.props.group.userIds.length} people
                     <br/>
-                    completed the survey
+                    <T>weq.GroupTypeformSurvey.completedTheSurvey</T>
                   </div>
                   {this.state.gettingTypeformResult 
                     ?
                     <div className="invitebttn create-chart refresh w-button w-inline-block noselect">
-                      Loading...
+                      <T>weq.GroupTypeformSurvey.Loading</T> Loading...
                     </div>
                     :
                     <div className="invitebttn create-chart refresh w-button w-inline-block" onClick={this.getTypeFormResult.bind(this)}>
-                      Refresh
+                      <T>weq.GroupTypeformSurvey.Refresh</T>
                     </div>
                   }  
                 </div>
@@ -350,10 +350,10 @@ export default class GroupTypeformSurvey extends React.Component {
                 {
                   readySurvey 
                   ? 
-                    <div className="bttn-next-card">Ready!</div>
+                    <div className="bttn-next-card"><T>weq.GroupTypeformSurvey.Ready</T></div>
                   : 
                   <div>
-                    {!readySurvey && <div className="bttn-next-card not-ready">Survey incomplete</div>}
+                    {!readySurvey && <div className="bttn-next-card not-ready"><T>weq.GroupTypeformSurvey.SurveyIncomplete</T></div>}
                   </div>
                 }
               </div>

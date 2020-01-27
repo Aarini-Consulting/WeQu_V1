@@ -1,4 +1,7 @@
 import React from 'react';
+import i18n from 'meteor/universe:i18n';
+
+const T = i18n.createComponent();
 
 export default class GroupNormingAds extends React.Component{
     render(){
@@ -6,27 +9,27 @@ export default class GroupNormingAds extends React.Component{
             <div className="group-norming-wrapper">
                 <div className="group-norming-content left">
                     <div className="group-norming-title">
-                        Supercharge your WeQ session with Master Coach functionalities
+                    <T>weq.GroupNormingAds.SuperchargeYourWeQSessionWithMasterCoachFunctionalities</T>
                     </div>
                     
-                    Discover different modules that will get the team engaged in repeatable WeQ sessions.
+                    <T>weq.GroupNormingAds.DiscoverDifferentModules</T>
 
                     <div className="div-block-center">
                         <a className={`group-norming-btn ${this.props.currentTab}`} href="https://calendly.com/weq/live-demo">
-                            Book a live demo
+                            <T>weq.GroupNormingAds.BookLiveDemo</T>
                         </a>
                     </div>
                 </div>
 
                 <div className="group-norming-content right">
                     <div className="group-norming-title">
-                        Deliver data-driven learning experiences
+                        <T>weq.GroupNormingAds.DeliverLearningExperiences</T>
                     </div>
                     
                     <div className="div-block-center">
                         <img className="group-norming-img" src="/img/norming.png"/>
                     </div>
-                    Multiply your coaching impact and your revenue by delivering repeatable sessions to the same team.
+                    <T>weq.GroupNormingAds.MultiplyYourCoachingImpact</T>
                 </div>
             </div>
         );

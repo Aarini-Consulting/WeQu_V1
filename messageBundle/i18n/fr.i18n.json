@@ -422,7 +422,7 @@
         "YouNeedFinishPrepareCardsFirst": "You need to finish 'Prepare Cards' first before using this features"
       },
       "GroupPresentation": {
-        "Invalid presentation link": "Invalid presentation link"
+        "InvalidPresentationLink": "Invalid presentation link"
       },
       "GroupQuizPage": {
         "SelectQuizNumberAbove": "Select quiz number above",
