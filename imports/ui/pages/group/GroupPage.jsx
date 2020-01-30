@@ -451,7 +451,7 @@ class GroupPage extends React.Component {
               {this.state.showConfirmStart &&
                 <SweetAlert
                 type={"confirm"}
-                message={"Everyone ready for interactive mode?"}
+                message={i18n.getTranslation("weq.GroupPage.EveryoneReadyInteractive")}
                 imageUrl={"/img/gameMaster/interactive.gif"}
                 confirmText={i18n.getTranslation("weq.GroupPage.LetGo")}
                 cancelText={i18n.getTranslation("weq.GroupPage.Cancel")}

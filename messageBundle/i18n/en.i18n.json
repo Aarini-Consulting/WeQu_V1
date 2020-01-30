@@ -66,7 +66,27 @@
         "ErrorNoGroupName":"Please enter a group name",
         "ErrorMaxNumberMember":"Maximum amount of group member reached",
         "ErrorMinNumberMember":"Each group in a WeQ session must have at least 2 players",
-        "ErrorUnknown":"Something went wrong"
+        "ErrorUnknown":"Something went wrong",
+        
+        "ErrorSendingEmail": "error sending email",
+        "CannotInviteYourself": "cannot invite yourself",
+        "UserWithSameEmailAddress": "a user with the same email address is already a member of this group",
+        "completed": "completed",
+        "incompleted": "incompleted",
+        "Email": "Email",
+        "SurveyStatus": "Survey Status",
+        "Actions": "Actions",
+        "Awesome": "Awesome!",
+        "YourChanges": "Your changes has been saved",
+        "AninvitationWas": "An invitation was sent to {$inviteSuccess} people",
+        "OK": "OK!",
+        "OnceCreated": "Once created, the group name is not changeable.",
+        "ChooseSimple": "Choose a simple, yet unique group name.",
+        "GroupLanguage": "Group language",
+        "DefineSessionLanguage": "Define the session language (e.g. invitation email, baseline survey, presentation and quiz questions).",
+        "SessionType": "Session type",
+        "DefineTypeSession": "Define the type of the session. You can only set it once when creating the group for the first time.",
+        "FreeSessionType": "Free-tier users are restricted to 'Norming' session type"
     },
     "confirmAdd":{
         "ConfirmTitle":"The following actions need your confirmation",
@@ -412,7 +432,8 @@
         "LetGo": "Let's go!",
         "Cancel": "Cancel",
         "AreYouSureYoullNeedstart": "Are you sure? You'll need to start over if you stop this now",
-        "YesStopThisNow": "Yes, stop this now"
+        "YesStopThisNow": "Yes, stop this now",
+        "EveryoneReadyInteractive": "Everyone ready for interactive mode?"
       },
       "GroupPlayCardPage": {
         "EveryoneReadyInteractivemode": "Everyone ready for interactive mode?",
@@ -454,11 +475,6 @@
         "TheLinkThatyouJustOpenedMeantFor": "The link that you just opened is meant for ",
         "HoweverYouAreCurrentlyLogged": "However, you are currently logged in as ",
         "ToUseThisLinkPleaseClickLogoutButton": "To use this link, please click the logout button below and try to open the link again."
-      },
-      "InviteGroup": {
-        "ErrorSendingEmail": "error sending email",
-        "CannotInviteYourself": "cannot invite yourself",
-        "UserWithSameEmailAddress": "a user with the same email address is already a member of this group"
       },
       "Menu": {
         "Home": "Home",
