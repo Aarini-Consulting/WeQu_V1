@@ -45,7 +45,9 @@
         "CompletedSession": "Completado",
         "LiveSession": "EN VIVO",
         "WaitForSession": "Por favor, espere.",
-        "JustInvited": "Empieza ya"
+        "JustInvited": "Empieza ya",
+        "Group": "Groupo",
+        "SessionStatus": "Estado de la sesión"
     },
     "inviteGroupPage":{
         "CreateNew":"Crear un nuevo grupo",
@@ -467,7 +469,8 @@
       "completedTheSurvey": "Completó la encuesta",
       "Refresh": "Refrescar",
       "Ready": "¡Listo!",
-      "SurveyIncomplete": "Encuesta incompleta"
+      "SurveyIncomplete": "Encuesta incompleta",
+      "averageScore": "Puntuación media"
     },
     "GroupQuizClientPage": {
       "SelectedQuizNotFound": "Cuestionario seleccionado no encontrado"

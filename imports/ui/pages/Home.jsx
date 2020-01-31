@@ -157,8 +157,8 @@ class Home extends React.Component {
 
                                     <div className="w-block home-group-list-wrapper">
                                         <div className="group-row">
-                                            <div className="w-inline-block group-entry-left header">Group</div>
-                                            <div className="w-inline-block group-entry-right header">Session Status</div>
+                                            <div className="w-inline-block group-entry-left header"><T>weq.home.Group</T> </div>
+                                            <div className="w-inline-block group-entry-right header"><T>weq.home.SessionStatus</T></div>
                                         </div>
                                     </div>
                                 </div>

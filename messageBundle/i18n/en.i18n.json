@@ -45,7 +45,9 @@
         "CompletedSession": "Completed",
         "LiveSession": "LIVE",
         "WaitForSession": "Please wait",
-        "JustInvited": "Get started"
+        "JustInvited": "Get started",
+        "Group": "Group",
+        "SessionStatus": "Session Status"
     },
     "inviteGroupPage":{
         "CreateNew":"Create new group",
@@ -465,7 +467,8 @@
         "completedTheSurvey": "completed the survey",
         "Refresh": "Refresh",
         "Ready" :"Ready!",
-        "SurveyIncomplete": "Survey incomplete"
+        "SurveyIncomplete": "Survey incomplete",
+        "averageScore": "Average Score"
       },
       "GroupQuizClientPage": {
         "SelectedQuizNotFound": "selected quiz not found"
