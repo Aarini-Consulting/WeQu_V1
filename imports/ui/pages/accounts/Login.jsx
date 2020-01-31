@@ -61,7 +61,7 @@ class Login extends React.Component {
                                     
                                     <input className="emailfield w-input" maxLength="256" ref="loginPassword" placeholder={i18n.getTranslation("weq.Login.password")} required type="password"/>
                                     <Link to="/recover-password" className="linktext">{<T>weq.Login.forgottenPassword</T>}</Link>
-                                    <input className="submit-button w-button" data-wait="Please wait..." type="submit" defaultValue="Log In"/>
+                                    <input className="submit-button w-button" data-wait="Please wait..." type="submit" defaultValue={i18n.getTranslation("weq.SignUp.LogIn")}/>
                                 </form>
                                 <div id="error" className="errormsg"></div>
                                 </div>

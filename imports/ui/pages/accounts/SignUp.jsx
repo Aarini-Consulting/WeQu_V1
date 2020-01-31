@@ -160,7 +160,7 @@ class SignUp extends React.Component {
 												onChange={this.toggleConsent.bind(this)}/>&nbsp; 
 												<T>weq.SignUp.WouldLikeReceiveTeamBoostingRelatedInformation</T>
 										</div>
-										<input className="submit-button w-button" data-wait="Please wait..." type="submit" value="Sign Up"/>
+										<input className="submit-button w-button" data-wait="Please wait..." type="submit" value={i18n.getTranslation("weq.Login.signUP")}/>
 									</form>
 									<div id="error" className="errormsg"></div>
 									<Link to="/login" className="signup" id="signIn"><T>weq.SignUp.LogIn</T></Link>

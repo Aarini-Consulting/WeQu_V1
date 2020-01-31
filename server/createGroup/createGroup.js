@@ -209,9 +209,18 @@ Meteor.methods({
 
     data.forEach((d)=>{
       var link = `group-invitation/${d.email}/${groupId}`
-  
-      var subject = `[WeQ] Invitation to join the group "${groupName}"` ;
-      var message = `Please join the group by clicking the invitation link ${link}`
+
+      var subject
+      var message
+
+      if (language.substring(0, 2) == 'es') {
+          subject = `[WeQ] Invitación a unirse al grupo "${groupName}"` ;
+          message = `Únase al grupo haciendo clic en el enlace de invitación ${link}`
+
+      }else {
+          subject = `[WeQ] Invitation to join the group "${groupName}"` ;
+          message = `Please join the group by clicking the invitation link ${link}`
+      }
   
       var emailData = {
         'creatorEmail': groupCreator.emails[0].address,

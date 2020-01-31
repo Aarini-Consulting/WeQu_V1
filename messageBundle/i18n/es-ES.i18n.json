@@ -45,7 +45,9 @@
         "CompletedSession": "Completado",
         "LiveSession": "EN VIVO",
         "WaitForSession": "Por favor, espere.",
-        "JustInvited": "Empieza ya"
+        "JustInvited": "Empieza ya",
+        "Group": "Groupo",
+        "SessionStatus": "Estado de la sesión"
     },
     "inviteGroupPage":{
         "CreateNew":"Crear un nuevo grupo",
@@ -66,7 +68,27 @@
         "ErrorNoGroupName":"Por favor, introduzca un nombre de grupo",
         "ErrorMaxNumberMember":"Cantidad máxiforma de miembros del grupo alcanzada",
         "ErrorMinNumberMember":"Cada grupo en una sesión de WeQ debe tener al menos 2 participantes",
-        "ErrorUnknown":"Algo salió mal"
+        "ErrorUnknown":"Algo salió mal",
+
+        "ErrorSendingEmail": "error al enviar correo electrónico",
+        "CannotInviteYourself": "no puedes invitarte",
+        "UserWithSameEmailAddress": "un usuario con la misma dirección de correo electrónico ya es miembro de este grupo",
+        "completed": "terminado",
+        "incompleted": "incompleto",
+        "Email": "Correo electrónico",
+        "SurveyStatus": "Estado de la encuesta",
+        "Actions": "Acciones",
+        "Awesome": "Increíble!",
+        "YourChanges": "Tus cambios han sido guardados",
+        "AninvitationWas": "Se envió una invitación a {$inviteSuccess} personas.",
+        "OK": "OK!",
+        "OnceCreated": "Una vez creado, el nombre del grupo no se puede cambiar.",
+        "ChooseSimple": "Elija un nombre de grupo simple pero único.",
+        "GroupLanguage": "Lenguaje grupal",
+        "DefineSessionLanguage": "Definir el idioma de la sesión (por ejemplo, correo electrónico de invitación, encuesta de base, presentación y preguntas del concurso).",
+        "SessionType": "Tipo de sesión",
+        "DefineTypeSession": "Definir el tipo de sesión. Solo puede configurarlo una vez cuando crea el grupo por primera vez.",
+        "FreeSessionType": "Los usuarios de nivel libre están restringidos al tipo de sesión 'Norming'"
     },
     "confirmAdd":{
         "ConfirmTitle":"Las siguientes acciones necesitan su confirmación",
@@ -411,10 +433,11 @@
       "DoQuiz": "Do quiz",
       "PlayCards": "Cartas de juego",
       "DownloadReport": "Informe de descarga",
-      "LetGo": "Let's go!",
+      "LetGo": "Vamonos!",
       "Cancel": "Cancelar",
       "AreYouSureYoullNeedstart": "¿Estás seguro? Necesitarás empezar de nuevo si paras esto ahora",
-      "YesStopThisNow": "Sí, detenga esto ahora"
+      "YesStopThisNow": "Sí, detenga esto ahora",
+      "EveryoneReadyInteractive": "¿Están todos listos para el modo interactivo?"
     },
     "GroupPlayCardPage": {
       "EveryoneReadyInteractivemode": "¿Está todo el mundo listo para el modo interactivo?",
@@ -446,7 +469,8 @@
       "completedTheSurvey": "Completó la encuesta",
       "Refresh": "Refrescar",
       "Ready": "¡Listo!",
-      "SurveyIncomplete": "Encuesta incompleta"
+      "SurveyIncomplete": "Encuesta incompleta",
+      "averageScore": "Puntuación media"
     },
     "GroupQuizClientPage": {
       "SelectedQuizNotFound": "Cuestionario seleccionado no encontrado"
@@ -456,11 +480,6 @@
       "TheLinkThatyouJustOpenedMeantFor": "El enlace que acabas de abrir es para ",
       "HoweverYouAreCurrentlyLogged": "Sin embargo, actualmente estás conectado como ",
       "ToUseThisLinkPleaseClickLogoutButton": "Para usar este enlace, por favor haga clic en el botón de cierre de sesión de abajo e intente abrir el enlace de nuevo."
-    },
-    "InviteGroup": {
-      "ErrorSendingEmail": "Error de envío de correo electrónico",
-      "CannotInviteYourself": "No puedes invitarte a ti mismo",
-      "UserWithSameEmailAddress": "Un usuario con la misma dirección de correo electrónico ya es miembro de este grupo"
     },
     "Menu": {
       "Home": "Hogar",

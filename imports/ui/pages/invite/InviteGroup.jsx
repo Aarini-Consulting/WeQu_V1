@@ -384,12 +384,12 @@ class InviteGroup extends React.Component {
       if(email == this.props.currentUser.emails[0].address.toString().toLowerCase()){
         this.setState({
           inviteStatus: 'warning',
-          info: i18n.getTranslation("weq.InviteGroup.CannotInviteYourself"),
+          info: i18n.getTranslation("weq.inviteGroup.CannotInviteYourself"),
         });
       }else if(emailsArray.indexOf(email) > -1){
         this.setState({
           inviteStatus: 'warning',
-          info: i18n.getTranslation("weq.InviteGroup.UserWithSameEmailAddress"),
+          info: i18n.getTranslation("weq.inviteGroup.UserWithSameEmailAddress"),
         });
       }else{
         var copyStateDataNew = this.state.newInviteDatas.slice();
@@ -465,12 +465,12 @@ class InviteGroup extends React.Component {
               {this.props.group && readySurvey 
               ?
               <div className="formstyle-header status">
-              <div className="font f_12 survey-completed">completed</div>
+              <div className="font f_12 survey-completed"><T>weq.inviteGroup.completed</T></div>
               </div>
               :this.props.group 
                 &&
                 <div className="formstyle-header status">
-                <div className="font f_12 survey-incomplete">incompleted</div>
+                <div className="font f_12 survey-incomplete"><T>weq.inviteGroup.incompleted</T></div>
                 </div>
               }
               {this.props.isEdit && newInviteIndex < 0 && !(this.props.group && this.props.group.isFinished) &&
@@ -510,23 +510,23 @@ class InviteGroup extends React.Component {
             <li className="invite-group-line-wrapper">
               <div className="font f_12">#</div>
               <div className="formstyle-header formemail">
-                <div className="font f_12">Email</div>
+                <div className="font f_12"><T>weq.inviteGroup.Email</T></div>
               </div>
               <div className="formstyle-header status">
-                <div className="font f_12">Survey Status</div>
+                <div className="font f_12"><T>weq.inviteGroup.SurveyStatus</T></div>
               </div>
             </li>
             :
             <li className="invite-group-line-wrapper">
               <div className="font f_12">#</div>
               <div className="formstyle-header formemail">
-                <div className="font f_12">Email</div>
+                <div className="font f_12"><T>weq.inviteGroup.Email</T></div>
               </div>
               <div className="formstyle-header status">
-                <div className="font f_12">Survey Status</div>
+                <div className="font f_12"><T>weq.inviteGroup.SurveyStatus</T></div>
               </div>
               <div className="formstyle-header actions">
-                <div className="font f_12">Actions</div>
+                <div className="font f_12"><T>weq.inviteGroup.Actions</T></div>
               </div>
             </li>
           )
@@ -546,10 +546,10 @@ class InviteGroup extends React.Component {
             {this.props.isEdit 
             ?
             <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
-                <div className="emptytext group">Awesome!
-                <br/>Your changes has been saved
+                <div className="emptytext group"><T>weq.inviteGroup.Awesome</T>
+                <br/><T>weq.inviteGroup.YourChanges</T>
                 {this.state.inviteSuccess && typeof this.state.inviteSuccess != "boolean" && this.state.inviteSuccess > 0 &&
-                <div><br/>An invitation was sent to {this.state.inviteSuccess} people</div>
+                <div><br/><T inviteSuccess={this.state.inviteSuccess}>weq.inviteGroup.AninvitationWas</T></div>
                 }
                 </div>
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
@@ -557,7 +557,7 @@ class InviteGroup extends React.Component {
             :
             <div className="emptymessage fillHeight"><img className="image-6" src="/img/avatar_group_2.png"/>
                 <div className="emptytext group">Awesome!
-                <br/>Your invitation is sent to {this.state.inviteSuccess} people
+                <br/><T inviteSuccess={this.state.inviteSuccess}>weq.inviteGroup.AninvitationWas</T>
                 </div>
                 <a className="invitebttn w-button" id="ok" onClick={this.handleBackArrowClick.bind(this)}>OK!</a>
             </div>
@@ -578,7 +578,7 @@ class InviteGroup extends React.Component {
                           <T>weq.inviteGroup.GroupName</T>
                           <div className="tooltip-tutorial">
                             <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
-                            <span className="tooltiptext">Once created, the group name is not changeable. </span>
+                            <span className="tooltiptext"><T>weq.inviteGroup.OnceCreated</T></span>
                           </div>
                         </div>
                         <p className="formstyle group-name noselect">{this.props.group.groupName}</p>
@@ -589,7 +589,7 @@ class InviteGroup extends React.Component {
                         <T>weq.inviteGroup.GroupNamePromptText</T>
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
-                          <span className="tooltiptext">Choose a simple, yet unique group name.<br/>Once created, the group name is not changeable. </span>
+                          <span className="tooltiptext"><T>weq.inviteGroup.ChooseSimple</T><br/><T>weq.inviteGroup.OnceCreated</T></span>
                         </div>
                       </div>
                       <input type="text" ref="groupName" maxLength="256" required="" placeholder={i18n.getTranslation("weq.inviteGroup.PlaceholderGroupName")} className="formstyle group-name w-input" autoComplete={"false"} 
@@ -603,10 +603,10 @@ class InviteGroup extends React.Component {
                   {!(this.props.group && this.props.group.isFinished) &&
                     <div>
                       <div className="groupformtext">
-                        Group language
+                        <T>weq.inviteGroup.GroupLanguage</T>
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
-                          <span className="tooltiptext">Define the session language (e.g. invitation email, baseline survey, presentation and quiz questions).</span>
+                          <span className="tooltiptext"><T>weq.inviteGroup.DefineSessionLanguage</T></span>
                         </div>
                       </div>
                       <select className="w-select w-inline-block pdf-download-lang-select" name="language"
@@ -615,15 +615,15 @@ class InviteGroup extends React.Component {
                       </select>
                       <br/>
                       <div className="groupformtext">
-                        Session type
+                       <T>weq.inviteGroup.SessionType</T>
                         <div className="tooltip-tutorial">
                           <i className="fa fa-question-circle font-white cursor-pointer" aria-hidden="true"></i>
                           <span className="tooltiptext">
-                          Define the type of the session. You can only set it once when creating the group for the first time.
+                          <T>weq.inviteGroup.DefineTypeSession</T>
                           {!Roles.userIsInRole( Meteor.userId(), 'GameMaster' ) &&
                             <React.Fragment>
                               <br/>
-                              <b>Free-tier users are restricted to 'Norming' session type</b>
+                              <b><T>weq.inviteGroup.FreeSessionType</T></b>
                             </React.Fragment>
                           } 
                           </span>

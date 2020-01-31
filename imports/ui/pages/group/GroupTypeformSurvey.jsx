@@ -285,7 +285,7 @@ export default class GroupTypeformSurvey extends React.Component {
               <div className="tap-content-footer typeform-survey-graph">
                   <div className="survey-graph-footer">
                     <div className="font-matric-refresh">
-                    <T>weq.GroupTypeformSurvey.averageScore</T> Average Score
+                    <T>weq.GroupTypeformSurvey.averageScore</T>
                     </div>
                     <div className="survey-graph-footer-legend noselect">
                       <div className="chart-graph survey-graph-footer-legend ">
