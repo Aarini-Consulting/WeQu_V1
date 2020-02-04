@@ -190,8 +190,8 @@
         "HadToChoosePrefer":"Si tuviera que elegir, preferiría ...",
         "RankCriticismGiver":"La retroalimentación puede ser difícil de sobrellevar, dependiendo de quién la haga. Clasifica de más fácil a más difícil, qué personas son las más difíciles de criticar.",
         "BestCriticismGiver":"¿Quién ha sido el mejor proveedor de retroalimentación en esta ronda?",
-        "RankBehaviourImprovement":"Which of the behaviors below would you most like to work on? Rank the answers.",
-        "EvaluateSession":"How satisfied are you with the WeQ experience? Evaluate the session.",
+        "RankBehaviourImprovement":"¿En cuál de los siguientes comportamientos te gustaría trabajar más? Clasifica las respuestas.",
+        "EvaluateSession":"¿Qué tan satisfecho está con la experiencia WeQ? Evaluar la sesión.",
         "HadToChooseSomeonePrefer":"Si dar y recibir retroalimentación se vuelve tan fácil, ¿de quién preferirías recibirlas?",
         "WhenReceivingCriticism":"Al recibir retroalimentación durante la sesión ... (califique las declaraciones)"
     },

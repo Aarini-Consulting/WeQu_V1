@@ -253,7 +253,7 @@
         "PlayCardGradeOption3": "sehr stark",
         "PlayCardGradeSubmit": "EINREICHEN"
     },
-    "gamePlayPage":{
+    "gamePlayPage":{ 
         "WaitingForResult":"Warten auf das Ergebnis",
         "Next":"Nächste",
         "InstructionTitle":"Gefeliciteerd!",
