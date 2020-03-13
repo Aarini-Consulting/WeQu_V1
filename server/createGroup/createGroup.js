@@ -143,7 +143,8 @@ Meteor.methods({
           playCardTypeList = ["praise","criticism"];
 
         }else if(type === "short-praise"){
-          specialGroupQuizList = ["HowOftenCompliment","BestComplimentGiver","RankBehaviourImprovement","EvaluateSession"];
+          //specialGroupQuizList = ["HowOftenCompliment","BestComplimentGiver","RankBehaviourImprovement","EvaluateSession"];
+          specialGroupQuizList = ["HowOftenCompliment", "WhatIsTheValueOfGiving", "HowManyPrises", "WhichFeedbackTatics"];
           groupQuizIdList = specialGroupQuizList.map((question)=>{
             return questionToIdMap[question];
           });
